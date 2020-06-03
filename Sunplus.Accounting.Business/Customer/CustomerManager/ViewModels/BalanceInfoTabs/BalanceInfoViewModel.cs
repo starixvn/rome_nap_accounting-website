@@ -27,6 +27,8 @@
 
         public decimal NetPosition { get; private set; }
 
+        public decimal PendingTransfer3rd { get; private set; }
+
         public decimal Credit =>
             SearchAccountRoleId == (int)Role.Member && AppSettings.IsCN88SiteName(CustomerSite) ?
             Utils.ToDecimal(memberCN88CreditRow["GivenCredit"]) :
@@ -52,11 +54,13 @@
             DataRow cashRow,
             decimal memberOutstandingMBC,
             decimal memberBalanceMBC,
-            decimal memberNetPositionMBC)
+            decimal memberNetPositionMBC,
+            decimal member3rdPendingTransfer)
         {
             switch (SearchAccountRoleId)
             {
-                case 1: // member
+                case 1: // member       
+                    PendingTransfer3rd = member3rdPendingTransfer;
                     ParentId = Converter.ToInt(lineInfoRow["agentId"]);
                     YesterdayCash = Converter.ToDecimal(cashRow["Yesterday_Cash"]);
 
@@ -64,7 +68,7 @@
                         Converter.ToDecimal(cashRow["outstanding"]) : memberOutstandingMBC;
 
                     Cash = IsCN88Site || IsInternalUser ? 
-                        Converter.ToDecimal(cashRow["cash"]) : memberBalanceMBC + memberOutstandingMBC;
+                        Converter.ToDecimal(cashRow["cash"]) : memberBalanceMBC + memberOutstandingMBC + PendingTransfer3rd;
 
                     NetPosition = IsCN88Site || IsInternalUser ?
                        Converter.ToDecimal(customerInfoRow["netPosition"]) : memberNetPositionMBC;
@@ -76,6 +80,7 @@
                     break;
 
                 case 2: // agent
+                    PendingTransfer3rd = Converter.ToDecimal(cashRow["PendingTransfer3rd"]);
                     ParentId = Converter.ToInt(lineInfoRow["masterid"]);
                     AccOutstanding = Converter.ToDecimal(cashRow["agentPositionTaking"]);
                     OutStanding = Converter.ToDecimal(cashRow["customerOutstanding"]);
@@ -87,6 +92,7 @@
                     break;
 
                 case 3: // master
+                    PendingTransfer3rd = Converter.ToDecimal(cashRow["PendingTransfer3rd"]);
                     ParentId = Converter.ToInt(lineInfoRow["superId"]);
                     AccOutstanding = Converter.ToDecimal(cashRow["masterPositionTaking"]);
                     OutStanding = Converter.ToDecimal(cashRow["customerOutstanding"]);
@@ -98,6 +104,7 @@
                     break;
 
                 case 4: // super
+                    PendingTransfer3rd = Converter.ToDecimal(cashRow["PendingTransfer3rd"]);
                     ParentId = 0;
                     AccOutstanding = Converter.ToDecimal(cashRow["superPositionTaking"]);
                     OutStanding = Converter.ToDecimal(cashRow["customerOutstanding"]);

@@ -124,6 +124,15 @@
                 }
             }
 
+            if(customerInfoViewModel.IsCN88 || customerInfoViewModel.IsDeposit)
+            {
+                TemplateHandler.RemoveBlock(ref balanceinfo, "3rdPendingTransfer");
+            }
+            else
+            {
+                TemplateHandler.Assign(ref balanceinfo, "{3rdPendingTransfer}", string.Format("{0:n}", customerInfoViewModel.Currency + " " + IBCUtils.FormatHandler.FormatNumber20(customerInfoViewModel.PendingTransfer3rd)));
+            }
+
             TemplateHandler.Assign(ref htmlcontent, "{BalanceInfo}", balanceinfo);
             return htmlcontent;
         }

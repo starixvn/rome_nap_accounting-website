@@ -151,6 +151,7 @@
                         decimal memberOutstandingMBC = 0;
                         decimal memberBalanceMBC = 0;
                         decimal memberNetPositionMBC = 0;
+                        decimal member3rdPendingTransfer = 0;
                         var IsInternalUser = customerInfoRow.Table.Columns.Contains("IsInternal") && 
                             Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(customerInfoRow["IsInternal"]);
 
@@ -165,6 +166,7 @@
                             var memberMBCBalanceModel = _customerDAO.GetMemberMBCBalanceModel(searchAccountId);
                             memberBalanceMBC = memberMBCBalanceModel.Balance;
                             memberNetPositionMBC = memberMBCBalanceModel.NetPosition;
+                            member3rdPendingTransfer = memberMBCBalanceModel.PendingTransfer3rd;
                         }
 
                         var customerInfoViewModel = new CustomerInfoViewModel(
@@ -177,7 +179,8 @@
                             memberCN88BetStakeRow,
                             memberOutstandingMBC,
                             memberBalanceMBC,
-                            memberNetPositionMBC);
+                            memberNetPositionMBC,
+                            member3rdPendingTransfer);
 
                         AssignCustomerSession(customerInfoViewModel);
 
