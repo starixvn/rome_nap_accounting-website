@@ -101,13 +101,19 @@ public partial class CustomerBalance : PageBase
                 strcontent.Append("'" + string.Format(cult, "{0:#,##0.00}", (Convert.IsDBNull(dr["GivenCredit"]) ? "0.00" : dr["GivenCredit"])) + "',");
                 double balance = (Convert.IsDBNull(dr["balance"]) ? 0.00 : Convert.ToDouble(dr["Balance"]));
                 double yesterdayBalance = (Convert.IsDBNull(dr["YesterdayBalance"]) ? 0.00 : Convert.ToDouble(dr["YesterdayBalance"]));
+                double pendingTransfer3rd = (Convert.IsDBNull(dr["PendingTransfer3rd"]) ? 0.00 : Convert.ToDouble(dr["PendingTransfer3rd"]));
 
                 string balanceColor = (balance < 0) ? "#ff0000" : "#0000ff";
                 string yesterdayBalanceColor = (yesterdayBalance < 0) ? "#ff0000" : "#0000ff";
+                string pendingTransfer3rdColor = (pendingTransfer3rd < 0) ? "#ff0000" : "#0000ff";
                 strcontent.Append("'" + balanceColor + "',");
                 strcontent.Append("'" + string.Format(cult, "{0:#,##0.00}", balance) + "',");
                 strcontent.Append("'" + yesterdayBalanceColor + "',");
                 strcontent.Append("'" + string.Format(cult, "{0:#,##0.00}", yesterdayBalance) + "',");
+
+                strcontent.Append("'" + pendingTransfer3rdColor + "',");
+                strcontent.Append("'" + string.Format(cult, "{0:#,##0.00}", pendingTransfer3rd) + "',");
+
                 strcontent.Append("'" + string.Format(cult, "{0:#,##0.00}", (Convert.IsDBNull(dr["Outstanding"]) ? "0.00" : dr["Outstanding"])) + "',");
                 strcontent.Append("'" + dr["Custid"].ToString() + "',");
                 strcontent.Append("'" + yesterdayBalance.ToString() + "',");

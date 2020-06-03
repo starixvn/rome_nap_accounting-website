@@ -5,16 +5,18 @@ var credit=0;
 var balanceColor=1;
 var balance=2;
 var YesterdaybalanceColor=3;
-var yesterdaybalance=4;
-var outstanding=5;
-var id=6;
-var yesterdaybalance_value=7
-var username=8;
-var lastname=10;
-var firstname = 9;
-var chkdisable = 11;
-var isclosed = 12;
-var SyncCasino = 13;
+var yesterdaybalance = 4;
+var PendingTransfer3rdColor = 5;
+var PendingTransfer3rd = 6;
+var outstanding=7;
+var id=8;
+var yesterdaybalance_value = 9;
+var username=10;
+var lastname=12;
+var firstname = 11;
+var chkdisable = 13;
+var isclosed = 14;
+var SyncCasino = 15;
 
 
 function RenderCustBalance(data, totalrow, _isDisableAll) {
@@ -25,7 +27,7 @@ function RenderCustBalance(data, totalrow, _isDisableAll) {
     content.push('<form id="frmCustBal" name="frmCustBal" method="post">');
     content.push('<table class="tbllayout" cellspacing="1px">');
 	content.push('<tr class="title">');
-	content.push('<td colspan="5"></td>');
+	content.push('<td colspan="6"></td>');
 	content.push('<td align="center">');
 	if (_isDisableAll)
 	{
@@ -42,7 +44,8 @@ function RenderCustBalance(data, totalrow, _isDisableAll) {
 	content.push('<th width="30">No.</th>');
 	content.push('<th width="110">Credit</th>');
 	content.push('<th width="110">Balance</th>');
-	content.push('<th width="110">Yesterday Balance</th>');
+    content.push('<th width="110">Yesterday Balance</th>');
+    content.push('<th width="110">3rd Party Pending Transfer</th>');
 	content.push('<th width="110">Outstanding</th>');
 	content.push('<th width="60">');
 	if (_isDisableAll) {
@@ -63,7 +66,8 @@ function RenderCustBalance(data, totalrow, _isDisableAll) {
         content.push('<td class="c">' + (i+1) + '</td>');
         content.push('<td class="r"><b>' + data[i][credit] + '</b></td>');
         content.push('<td class="r" style="color:' + data[i][balanceColor]+ ';"><b>' + data[i][balance] + '</b></td>');
-        content.push('<td class="r" style="color:' + data[i][YesterdaybalanceColor]+ ';"><b>' + data[i][yesterdaybalance] + '</b></td>');
+        content.push('<td class="r" style="color:' + data[i][YesterdaybalanceColor] + ';"><b>' + data[i][yesterdaybalance] + '</b></td>');
+        content.push('<td class="r" style="color:' + data[i][PendingTransfer3rdColor] + ';"><b>' + data[i][PendingTransfer3rd] + '</b></td>');
         content.push('<td class="r"><b>' + data[i][outstanding] + '</b></td>');
         content.push('<td class="c">');
         if (data[i][chkdisable] == "yes") {
