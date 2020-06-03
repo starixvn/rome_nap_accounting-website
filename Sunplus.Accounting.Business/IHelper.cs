@@ -14,6 +14,5 @@ namespace Sunplus.Accounting.Business
 
         string[] GetStandardCurrencyList();
 
-        IList<DangerousDetail> GetDangerSettingOriginal();
     }
 }

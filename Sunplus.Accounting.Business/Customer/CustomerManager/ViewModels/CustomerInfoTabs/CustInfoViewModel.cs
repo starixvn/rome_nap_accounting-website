@@ -110,13 +110,7 @@
 
         public string Headline => Converter.ToString2(customerInfoRow["headline"]);
 
-        public int LimitPerIP => Converter.ToInt(customerInfoRow["LimitPerIP"]);
-
-        public int Danger1 => Converter.ToInt(customerInfoRow["danger"]);
-
-        public int Danger2 => Converter.ToInt(customerInfoRow["danger2"]);
-
-        public int Danger3 => Converter.ToInt(customerInfoRow["danger3"]);
+        public int LimitPerIP => Converter.ToInt(customerInfoRow["LimitPerIP"]);     
 
         public bool HasDownline => Utils.ToBoolean(customerInfoRow["HasDownline"]);
 
@@ -131,8 +125,6 @@
         public int CN88CustStatus => Utils.ToInt32(customerInfoRow["CN88CustStatus"]);
 
         public string CN88CustStatusName => CN88CustomerStatusConstants.StatusName(this.CN88CustStatus);
-
-        public bool IsBA => Utils.ToBoolean(customerInfoRow["isba"]);
 
         public int ExchangeId => Converter.ToInt(customerInfoRow["exchangeid"]);
 

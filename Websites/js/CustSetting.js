@@ -28,12 +28,6 @@ function ClosePopup1(div) {
     $("#" + div).toggle();
     overlay(div.replace(/popup/, "overlay"));
 }
-function ClosePopUpDanger(div) {
-    $("#" + div).toggle();
-    overlay(div.replace(/popup/, "overlay"));
-    $('#dangerousAgentoverlay').css('display', 'none');
-    $("#" + currlevelbox).css('display', 'none');
-}
 
 function ClosePopUpAbnormal(div) {
     $("#" + div).toggle();

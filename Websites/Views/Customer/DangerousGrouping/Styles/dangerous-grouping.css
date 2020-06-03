@@ -1,0 +1,44 @@
+﻿.content_border {
+    border: 1px solid #7c98a4;
+}
+
+.custBtn1[disabled], .custBtn2[disabled] {
+    cursor: default;
+    opacity: 0.4;
+}
+
+.dangerSelect {
+    margin-left: 5px;
+    height: 20px;
+}
+
+.dangerous-cell {
+    width: 50px;
+    height: 20px;
+    text-align: center;
+    border: 1px solid #7c98a4;
+    transition: transform .2s;
+}
+
+.downline-content {
+    margin: 10px;
+    display: inline-flex;
+}
+
+.formUsername {
+    display: table;
+}
+
+.hoverable-cell {
+    cursor: pointer;
+}
+
+    .hoverable-cell:hover {
+        -ms-transform: scale(1.25); /* IE 9 */
+        -webkit-transform: scale(1.25); /* Safari 3-8 */
+        transform: scale(1.25);
+    }
+
+.updateContent {
+    margin-top: 10px;
+}

@@ -3,7 +3,6 @@
 using System;
 using System.Web;
 using Sunplus.Accounting.Business;
-using Sunplus.Accounting.Business.Customer;
 using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Entities.Casino;
 using Sunplus.Accounting.Core.Common;
@@ -11,7 +10,6 @@ using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using IBCUtils;
-using System.Text;
 using CasinoLibrary.SBAgent;
 using CasinoLibrary.Model.UserException;
 
@@ -115,7 +113,7 @@ public class UpdateCustomerStatus : BaseHandler
                         }
                     }
                     s = "parent.document.getElementById('AllowAutoPT').innerHTML ='" + ((status) ? "Yes" : "No") + "';";
-                    s = "parent.changeDisplayStatus();";
+                    s += "parent.changeDisplayStatus();";
                     break;
                 case "closed":
                     lockUpdate = string.Format(Resources.ErrorMsg.error_LockUpdateStatus, "CLOSED");
@@ -156,51 +154,8 @@ public class UpdateCustomerStatus : BaseHandler
                         s += "parent.HideClosedPop('ClosedStatusPop');";
 
                     }
-                    s += "parent.changeDisplayStatus();";
-
-                    try // Casino cheat
-                    {
-                        if (custcs.CasinoSync)
-                        {
-                            bool success1 = CasinoManager.UpdateCustClosed(_custid, status,
-                                                                               context.Request.UserHostAddress, customerRngSite);
-                        }
-                    }
-                    catch (ErrorException casinoEx)
-                    {
-                        Sunplus.Accounting.Core.Extensions.LogExtensions.CasinoExceptionHandler(new Exception(casinoEx.Message, casinoEx));
-                    }
-                    catch (Exception ex)
-                    {
-                        Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-                    }
-                    break;
-                case "dangerous":
-                    int level;
-                    string name = context.Request["name"].ToString();
-                    if (!Int32.TryParse(context.Request["level"] as string ?? string.Empty, out level))
-                        throw new AccException("Invalid Session");
-                    int dangertype;
-                    if (name == "Original")
-                    { dangertype = 1; }
-                    else if (name == "ABI")
-                    { dangertype = 2; }
-                    else
-                    { dangertype = 3; }
-
-                    DangerousSetting danger = new DangerousSetting();
-                    DangerousDetail dangerDetail = danger.CustomerUpdateDangerous(_accid, _custid, level, dangertype);
-                    if (dangerDetail.Id != -1)
-                    {
-                        StringBuilder result = new StringBuilder();
-                        result.Append("parent.document.getElementById('spanDangerous" + name + "').innerHTML ='" + dangerDetail.Name + "';");
-                        result.Append("parent.document.getElementById('tdvalue" + name + "').style.color ='" + dangerDetail.Color + "';");
-                        result.Append("parent.document.getElementById('tdvalue" + name + "').style.backgroundColor ='" + dangerDetail.BackgroundColor + "';");
-                        result.Append("parent.document.getElementById('currentLevel" + name + "').value ='" + level + "';");
-                        s = result.ToString();
-                    }
-
-                    break;
+                    s += "parent.changeDisplayStatus();";                   
+                    break;               
                 /*Phuong.Nguyen
                  *Add new case for HR request changing status
                  */
@@ -229,7 +184,6 @@ public class UpdateCustomerStatus : BaseHandler
                         }
                     }
                     CustomerUpdateStatus.CustomerUpdInternal(_custid, status, _accid, context.Request.UserHostAddress);
-                    //s = "parent.document.getElementById('internalUser').innerHTML ='" + ((status) ? Resources.Language.userInternal : Resources.Language.userBetting) + "';";
                     s = "parent.changeDisplayStatus();";
                     break;
                 case "disabledNumberGame"://NumberGame
@@ -272,7 +226,6 @@ public class UpdateCustomerStatus : BaseHandler
                 //End
                 default: throw new AccException("Invalid Session!");
             }
-            //s += "parent.parent.BlockUI();";            
             context.Response.Write("<script type='text/javascript'>" + s + "</script>");
         }
         catch (AccException ex)

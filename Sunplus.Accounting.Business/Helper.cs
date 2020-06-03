@@ -86,27 +86,6 @@ namespace Sunplus.Accounting.Business
             string[] result = listStandardCurrencyList.ToArray();
             Array.Sort(result);
             return result;
-        }
-
-        public IList<DangerousDetail> GetDangerSettingOriginal()
-        {
-            string configFileName = HttpContext.Current.Server.MapPath("~/App_Data/DangerousSetting.xml");
-            XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.Load(configFileName);
-            XmlNodeList levels = xmlDoc.GetElementsByTagName("level");
-
-            IList<DangerousDetail> settings = new List<DangerousDetail>();
-            foreach (XmlNode level in levels)
-            {
-                settings.Add(
-                    new DangerousDetail(
-                        Convert.ToInt32(level.Attributes["id"].Value),
-                        level.Attributes["name"].Value,
-                        level.Attributes["color"].Value,
-                        level.Attributes["background"].Value));
-            }
-
-            return settings;
-        }
+        }        
     }
 }

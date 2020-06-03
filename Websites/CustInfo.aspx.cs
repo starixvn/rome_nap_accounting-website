@@ -13,7 +13,7 @@ public partial class CustInfo : PageBase
 {
     private const byte IsAllowSearchByCustomerId = 1;
 
-    public bool isBA, isEnabled;
+    public bool isEnabled;
     public string arrAbnomalBet = string.Empty;
     public string username = string.Empty;
 
@@ -60,7 +60,6 @@ public partial class CustInfo : PageBase
         {
             Hashtable hash = customer.GetHtmlCustInfoContent(username.Trim(), IsAllowSearchByCustomerId);
             HtmlHolder.Text = CastAide.AsString(hash["strcontent"]);
-            isBA = hash.ContainsKey("isba") ? CastAide.AsBoolean(hash["isba"]) : false;
         }
         catch (Exception)
         {

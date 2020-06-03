@@ -314,25 +314,8 @@
                 else
                 {
                     TemplateHandler.RemoveBlock(ref htmlcontent, "dangerous");
-
-                    var dangerousTypes = new List<DangerousType>()
-                    {
-                        new DangerousType(customerInfoViewModel.Danger1, CustomerInfoResources.Danger1),
-                        new DangerousType(customerInfoViewModel.Danger2, CustomerInfoResources.Danger2),
-                        new DangerousType(customerInfoViewModel.Danger3, CustomerInfoResources.Danger3)
-                    };
-
-                    DangerousSetting danger = new DangerousSetting();
-                    TemplateHandler.Assign(ref htmlcontent, "{ThemePath}", WebSettings.ThemePath);
-
-                    TemplateHandler.Assign(ref htmlcontent, "{dangerousCustomer}",
-                        danger.GenDangerous(
-                            customerInfoViewModel.SearchAccountRoleId,
-                            customerInfoViewModel.ManageCustomerAccess,
-                            dangerousTypes,
-                            customerInfoViewModel.IsBA,
-                            customerInfoViewModel.SearchAccountRoleName));
                 }
+                 
             }
 
             return htmlcontent;

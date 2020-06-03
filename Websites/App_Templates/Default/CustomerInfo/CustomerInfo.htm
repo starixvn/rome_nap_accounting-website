@@ -316,15 +316,9 @@
                     <!--/dangerous-->
                     <!--edited-dangerous-->
                     <div class="col">
-                        <span class="canchange" style="font-weight: bold;" onclick="OpenCloseMenuDangerous1();">
+                        <span class="canchange" style="font-weight: bold;" onclick="parent.gotoURL('centerFr','DangerousGrouping/CustomerDanger?username={FullUserName}');">
                             Dangerous
-                            <img title="Detail" border="0" src="App_themes/Images/menu_open.gif" class="menu-open-padding-left" />
                         </span>
-                        <br />
-                        <div id="dangerousbox" style="position: absolute; display: none; background-color: #BBC7CE;
-                            color: #4D4E4E;">
-                            {dangerousCustomer}
-                        </div>
                     </div>
                     <!--/edited-dangerous-->
                     <div class="col limit-per-ip"><span class="pull-left">Limit Per IP</span>{LimitPerIP}</div>
