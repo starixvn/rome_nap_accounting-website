@@ -225,6 +225,7 @@ function UpdateSingleAccountDanger() {
     GetValidateResponse(username, dangerType, dangerLevel).then(function (validateResponse) {
         if (validateResponse !== '') {
             showAlertMessage('errMsg', validateResponse, 1);
+            parent.jQuery.unblockUI();
         } else {
             var customerDangerUpdateRequest = {
                 Customer: username,
@@ -252,11 +253,12 @@ function UpdateSingleAccountDanger() {
                 },
                 error: function (err) {
                     showAlertMessage('errMsg', 'Internal server error.', 1);
+                },
+                finally: function () {
+                    parent.jQuery.unblockUI();
                 }
             });
         }
-
-        parent.jQuery.unblockUI();
     });
 }
 
@@ -281,6 +283,7 @@ function UpdateMultipleAccountDanger() {
     GetValidateResponse(usernames, dangerType, dangerLevel).then(function (validateResponse) {
         if (validateResponse !== '') {
             showAlertMessage('errMsg', validateResponse, 1);
+            parent.jQuery.unblockUI();
         } else {
             var multipleCustomersDangerUpdateRequest = {
                 CustomerNames: usernames,
@@ -307,11 +310,12 @@ function UpdateMultipleAccountDanger() {
                 },
                 error: function (err) {
                     showAlertMessage('errMsg', 'Internal server error.', 1);
+                },
+                finally: function () {
+                    parent.jQuery.unblockUI();
                 }
             });
         }
-
-        parent.jQuery.unblockUI();
     });
 }
 
