@@ -8,7 +8,7 @@
         betListPopUp.dialog('destroy');
     }
 
-    var detailPopUp = parent.$('div[id^="dialog-modal"][id$="Details"]');
+    var detailPopUp = parent.$('div[id^="dialog-modal"]');
     detailPopUp.dialog('close');
     detailPopUp.dialog('destroy');
 }
