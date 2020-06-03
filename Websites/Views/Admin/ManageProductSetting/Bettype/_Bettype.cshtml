@@ -1,0 +1,15 @@
+﻿<div class="filterBox" style="border: solid 1px #7C98A4; height:40px;">
+    <div class="filterContent">
+        <div id="errBettypeMsg"></div>
+        <div class="floatLeft"><label for="txtBettypeId">TypeID</label></div>
+        <div class="floatLeft"><input id="txtBettypeId" type="text" class="numeric-input-int" /></div>
+        <div class="floatLeft"><label for="txtBettypeNamee">TypeNameE</label></div>
+        <div class="floatLeft"><input id="txtBettypeNamee" type="text" /></div>
+        <div class="floatLeft"><input type="button" value="Search" class="btn" onclick="SearchBettype(50, 1)" /></div>
+        <div class="floatLeft"><input type="button" value="Import From Excel" class="btn" onclick="OpenInsertSetting()" /></div>
+    </div>
+</div>
+<div style="clear: both"></div>
+<div id="gridBettypeContainer" class="grid-container">
+    <div id="gridBettypeId" class="freegrid"></div>
+</div>

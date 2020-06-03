@@ -10,4 +10,15 @@
     <Setting Key="Acc_Sporttype_Upd" SpName="Acc_Sporttype_Upd" DbName="DBPRO.bodb02.bodbAdminNet" />
     <Setting Key="Acc_Sporttype_Ins" SpName="Acc_Sporttype_Ins" DbName="DBPRO.bodb02.bodbAdminNet" />
   </Function>
+  <Function Name="Manage Product">
+    <Setting Key="Acc_Product_Sel" SpName="Acc_Product_Sel" DbName="DBPRO.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_Product_Upd" SpName="Acc_Product_Upd" DbName="DBPRO.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_Product_Ins" SpName="Acc_Product_Ins" DbName="DBPRO.bodb02.bodbAdminNet" />
+  </Function>
+  <Function Name="Manage Sport Bettype Matrix">
+    <Setting Key="Acc_SportBettypeMatrix_Sel" SpName="Acc_SportBettypeMatrix_Sel" DbName="DBPRO.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_SportBettypeMatrix_Upd" SpName="Acc_SportBettypeMatrix_Upd" DbName="DBPRO.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_SportBettypeMatrix_Ins" SpName="Acc_SportBettypeMatrix_Ins" DbName="DBPRO.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_SportBettypeMatrix_Del" SpName="Acc_SportBettypeMatrix_Del" DbName="DBPRO.bodb02.bodbAdminNet" />
+  </Function>
 </Functions>

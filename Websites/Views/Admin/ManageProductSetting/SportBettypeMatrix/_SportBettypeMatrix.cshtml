@@ -1,0 +1,50 @@
+﻿@using Sunplus.Accounting.Core.Configurations;
+@model IEnumerable<SelectListItem>
+
+<div class="filterBox" style="border: solid 1px #7C98A4; overflow: hidden;">
+    <div class="filterContent">
+        <div id="errSportBettypeMatrixMsg"></div>
+        <div class="floatLeft w50"><label for="ddlSBMProductId" class="">Product</label></div>
+        <div class="floatLeft ">
+            @Html.DropDownList("ddlSBMProductId", Model, new { id = "ddlSBMProductId" })
+        </div>
+        <div class="floatLeft w70"><label for="txtSBMSportType">SportType</label></div>
+        <div class="floatLeft "><input id="txtSBMSportType" type="text" class="w150 numeric-input-smallint" /></div>
+        <div class="floatLeft w80"><label for="txtSBMSportTypeName">SportTypeName</label></div>
+        <div class="floatLeft"><input id="txtSBMSportTypeName" type="text" class="w150" /></div>
+        <div class="clear"></div>
+        <div class="floatLeft w50"><label for="txtSBMBetType">BetType</label></div>
+        <div class="floatLeft"><input id="txtSBMBetType" type="text" class="w250 numeric-input-smallint" /></div>
+        <div class="floatLeft w70"><label for="txtSBMBetTypeName">BetTypeName</label></div>
+        <div class="floatLeft"><input id="txtSBMBetTypeName" type="text" class="w150" /></div>
+        <div class="floatLeft w80"><label for="ddlSBMEventType">EventType</label></div>
+        <div class="floatLeft">
+            <select id="ddlSBMEventType" class="w150">
+                <option value="">All</option>
+                <option value="0">[0] Can't join with any table</option>
+                <option value="1">[1] Match</option>
+                <option value="2">[2] Outright</option>
+                <option value="3">[3] VSOutright/VSRaceInfo</option>
+                <option value="4">[4] DW</option>
+                <option value="5">[5] Match3rd</option>
+            </select>
+        </div>
+        <div class="floatLeft w50"><label for="ddlSBMRefTable">RefTable</label></div>
+        <div class="floatLeft">
+            <select id="ddlSBMRefTable" class="w150">
+                <option value="">All</option>
+                <option value="0">[0] Bettrans</option>
+                <option value="1">[1] BettransRNG</option>
+                <option value="2">[2] BettransLC</option>
+                <option value="3">[3] translog</option>
+            </select>
+        </div>
+        <div class="clear middle"></div>
+        <div class="floatLeft"><input type="button" value="Search" class="btn" onclick="SearchSBM(50, 1)" /></div>
+        <div class="floatLeft"><input type="button" value="Import From Excel" class="btn" onclick="OpenInsertSetting()" /></div>
+    </div>
+</div>
+<div style="clear: both"></div>
+<div id="gridSBMContainer" class="grid-container">
+    <div id="gridSBMId" class="freegrid"></div>
+</div>

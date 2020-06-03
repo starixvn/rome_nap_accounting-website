@@ -127,6 +127,8 @@
             //html.push('<div class="ui-multiselect-widget-header ui-multiselect-helper-clearfix ui-multiselect-corner-all ui-multiselect-header">');
             //html.push('<ul class="ui-multiselect-helper-reset ui-multiselect-checkboxes" style="overflow-y:hidden;">');
             tempHtml.push('<div class="ui-multiselect-widget-header ui-multiselect-helper-clearfix ui-multiselect-header custom-ui-widget-header">');
+            if(o.showFilter)
+                tempHtml.push('<input class="ui-multiselect-widget-header-filter" type="text" />');
             tempHtml.push('<ul class="ui-multiselect-helper-reset ui-multiselect-checkboxes-head" style="overflow-y:hidden;">');
             tempHtml.push('<li style="display:inline;">');
             tempHtml.push('<label class="ui-multiselect-corner-all" style="color: #000;" for="' + id + "HeaderCheckBox" + '">');
@@ -153,13 +155,13 @@
         var InsertRow = function (tempData, index, isChild, isLastChildItem, isNoGroup, siblingGroup) {
             var tempHtml = [];
             var title = tempData.Text || "",
-            value = tempData.Value || "",
-            inputID = tempData.Id || "ui-multiselect-" + id + "-option-" + index,
-            isDisabled = !tempData.Enable,
-            labelClasses = tempData.CssClass || "",
-            liClasses = "",
-            divClasses = "ui-multiselect-div ui-multiselect-corner-all",
-            divHtml = "";
+                value = tempData.Value || "",
+                inputID = tempData.Id || "ui-multiselect-" + id + "-option-" + index,
+                isDisabled = !tempData.Enable,
+                labelClasses = tempData.CssClass || "",
+                liClasses = "",
+                divClasses = "ui-multiselect-div ui-multiselect-corner-all",
+                divHtml = "";
             if (typeof value != 'undefined') {
                 if (isDisabled) {
                     labelClasses += ' ui-multiselect-state-disabled';
@@ -204,7 +206,7 @@
                 if (isDisabled) {
                     tempHtml.push(' disabled="disabled"');
                 }
-                tempHtml.push(' />' + title + '</label>');
+                tempHtml.push(' /><span data-original-text="' + title + '">' + title + '</span></label>');
                 tempHtml.push('</div>');
 
                 if (typeof tempData.Items !== 'undefined' && tempData.Items.length > 0) {
@@ -260,9 +262,9 @@
         };
         var UpdateSelected = function () {
             var $inputs = $inputHeaderCheckBox,
-                    $checked = $inputs.filter('[checked]'),
-                    value = '',
-                    numChecked = $checked.length;
+                $checked = $inputs.filter('[checked]'),
+                value = '',
+                numChecked = $checked.length;
 
             if (numChecked === 0) {
                 value = o.noneSelectedText;
@@ -311,7 +313,7 @@
         var BindingEvent = function () {
             // build header links
             if (o.showHeader) {
-                $header.find('input').click(function (e) {
+                $header.find('input[type=checkbox]').click(function (e) {
                     var $this = $(this);
                     if ($this.attr('checked') === 'checked' || $this.attr('checked') === true) {
                         $options.find('label').not('.ui-multiselect-state-disabled').find('input').attr('checked', 'checked');
@@ -400,11 +402,11 @@
                     // hides all other options but the one clicked
                     if (others === true) {
                         $('div.ui-multiselect-options')
-                                .filter(':visible')
-                                .fadeOut(o.fadeSpeed)
-                                .prev('a.ui-multiselect')
-                                .removeClass('ui-multiselect-state-active')
-                                .trigger('mouseout');
+                            .filter(':visible')
+                            .fadeOut(o.fadeSpeed)
+                            .prev('a.ui-multiselect')
+                            .removeClass('ui-multiselect-state-active')
+                            .trigger('mouseout');
 
                         // hides the clicked options
                     } else {
@@ -436,8 +438,8 @@
 
                     // use position() if inside ui-widget-content, because offset() won't cut it.
                     var offset = $select.position(),
-                            $container = $options.find('ul:last'),
-                            top, width;
+                        $container = $options.find('ul:last'),
+                        top, width;
 
                     // calling select is active
                     $select.addClass('ui-multiselect-state-active');
@@ -518,11 +520,11 @@
                     UpdateSelected();
                 });
                 //handler chilren checkbox event
-                $this.find('input').click(function () {
+                $this.find('input[type=checkbox]').click(function () {
                     if (typeof $(this).attr('checked') === 'undefined' || $(this).attr('checked') == false) {
                         $(this).removeAttr('checked');
-                        if ($this.prev().find('input').attr('checked') === 'checked' || $this.prev().find('input').attr('checked') == true) {//true) {
-                            $this.prev().find('input').removeAttr('checked');
+                        if ($this.prev().find('input[type=checkbox]').attr('checked') === 'checked' || $this.prev().find('input[type=checkbox]').attr('checked') == true) {//true) {
+                            $this.prev().find('input[type=checkbox]').removeAttr('checked');
                             $("#" + id + "HeaderCheckBox").removeAttr('checked');
                         }
                     }
@@ -530,7 +532,7 @@
                         $(this).attr('checked', 'checked');
                         if ($this.find('input:not(:disabled)').length === ($this.find('input[checked]').length) ||
                             $this.find('input:not(:disabled)').length === ($this.find('input:checked').length)) {
-                            $this.prev().find('input').attr('checked', 'checked');
+                            $this.prev().find('input[type=checkbox]').attr('checked', 'checked');
                         }
                         checkCheckAll();
                     }
@@ -543,7 +545,7 @@
                 if ($(this).hasClass("ui-multiselect-icon-collapse")) {
                     $(this).removeClass("ui-multiselect-icon-collapse").addClass("ui-multiselect-icon-expand");
                     $options.find('ul.ui-multiselect-ul-group:not(.ui-multiselect-checkboxes):visible').hide();
-                    $options.find('span.collapseClass').removeClass('rtMinus').addClass('rtPlus'); ;
+                    $options.find('span.collapseClass').removeClass('rtMinus').addClass('rtPlus');;
                     //$(this).text('Expande All');
                 }
                 else {
@@ -552,6 +554,26 @@
                     $(this).removeClass("ui-multiselect-icon-expand").addClass("ui-multiselect-icon-collapse");
                 }
             });
+
+            //handle filter
+            if (o.showFilter) {
+                $options.find('input.ui-multiselect-widget-header-filter').keyup(function () {
+                    var filterValue = $(this).val();
+                    var filterValueToLower = filterValue.toLowerCase();
+                    $divHover.each(function () {
+                        var $displayTextSpan = $(this).find('span');
+                        var originalText = $displayTextSpan.attr('data-original-text');
+                        if (originalText.toLowerCase().indexOf(filterValueToLower) > -1) {
+                            $(this).show();
+                            $displayTextSpan.html(originalText.replace(new RegExp('(' + filterValue + ')', "ig"), '<mark class="ui-multiselect-filter-highlight">$1</mark>'));
+                        }
+                        else {
+                            $(this).hide();
+                        }
+                    });
+                });
+
+            }
         };
         //initial setup
         var InitialSetup = function () {
@@ -643,6 +665,7 @@
         showHeader: true,
         showFooter: true,
         showTooltip: true,
+        showFilter: false,
         maxHeight: 175, /* max height of the checkbox container (scroll) in pixels */
         minWidth: 215, /* min width of the entire widget in pixels. setting to 'auto' will disable */
         checkAllText: 'Check All',

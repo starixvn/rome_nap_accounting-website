@@ -1,0 +1,24 @@
+﻿@using Fanex.Tarus.Customer.Resources;
+<div id="insert-setting" class="filterContent" style="display: none;">
+    <form id="mainForm">
+        <div id="errMsg">
+        </div>
+        <div class="clear"></div>
+        <div class="b">&nbsp;&nbsp;&nbsp;Choose an excel file to upload (Format: *.xls, *.xlsx)</div>
+        <div class="clear"></div>
+
+        <div class="floatLeft">
+            <input id="uploadFile" name="uploadFile" type="file" style="width: 280px" />
+        </div>
+        <div class="floatLeft">
+            <input type="button" value="Submit" class="btn" onclick="InsertSetting()" />
+        </div>
+    </form>
+    <div style="clear: both"></div>
+    <div>
+        <span class="label-filesize-limit">
+            @Customer_Labels.Message_ExcelFileSizeLimit
+        </span>
+        <a id="sampleSettingLink" class="link-download-excel-template b" href="@Url.Content("~/Views/Admin/ManageProductSetting/Product/Product.xls")">@Customer_Labels.Message_DownloadTemplate</a>
+    </div>
+</div>
