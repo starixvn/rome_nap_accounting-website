@@ -254,7 +254,7 @@ function UpdateSingleAccountDanger() {
                 error: function (err) {
                     showAlertMessage('errMsg', 'Internal server error.', 1);
                 },
-                finally: function () {
+                complete: function () {
                     parent.jQuery.unblockUI();
                 }
             });
@@ -311,7 +311,7 @@ function UpdateMultipleAccountDanger() {
                 error: function (err) {
                     showAlertMessage('errMsg', 'Internal server error.', 1);
                 },
-                finally: function () {
+                complete: function () {
                     parent.jQuery.unblockUI();
                 }
             });
