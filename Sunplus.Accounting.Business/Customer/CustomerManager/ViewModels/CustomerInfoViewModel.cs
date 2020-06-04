@@ -39,7 +39,8 @@
             DataRow memberCN88BetStakeRow,
             decimal memberOutstandingMBC,
             decimal memberBalanceMBC,
-            decimal memberNetPositionMBC)
+            decimal memberNetPositionMBC,
+            decimal member3rdPendingTransfer)
         {
             this.customerInfoRow = customerInfoRow;
             this.lineInfoRow = lineInfoRow;
@@ -53,7 +54,7 @@
             JsParam.Add("custid", CustId);
             JsParam.Add("roleid", SearchAccountRoleId);
 
-            GetExtraCustomerInfo(customerInfoRow, lineInfoRow, cashRow, memberOutstandingMBC, memberBalanceMBC, memberNetPositionMBC);
+            GetExtraCustomerInfo(customerInfoRow, lineInfoRow, cashRow, memberOutstandingMBC, memberBalanceMBC, memberNetPositionMBC, member3rdPendingTransfer);
             GetShowedHiddenProduct(dynamicSettingtable);
         }
 
