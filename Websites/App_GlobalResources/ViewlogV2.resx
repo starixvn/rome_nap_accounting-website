@@ -2079,4 +2079,7 @@
   <data name="Disable222_4901" xml:space="preserve">
     <value>Disabled Table Game</value>
   </data>
+  <data name="IsAutoEnableADBMaster" xml:space="preserve">
+    <value>Is Auto Enable ADB Master</value>
+  </data>
 </root>

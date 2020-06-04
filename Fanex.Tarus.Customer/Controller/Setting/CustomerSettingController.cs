@@ -59,6 +59,14 @@ namespace Fanex.Tarus.Customer.Controller.Setting
             return Json(result, JsonRequestBehavior.DenyGet);
         }
 
+        [HttpPost]
+        public JsonResult UpdateAllDayBalTransferOnMaster(int custId, bool status)
+        {
+            var result = _customerSetting.UpdateAllDayBalTransferOnMaster(custId, status, AppSession.AccId, Utils.GetClientIP());
+
+            return Json(result, JsonRequestBehavior.DenyGet);
+        }
+
         public ActionResult ViewCN88CustomerStatus(int custId, string userName, int status)
         {
             return View("~/Areas/LeftPanel/Views/CN88/UpdateCN88CustomerStatus.cshtml", new CN88CustomerStatusViewModel { CustId = custId, Status = status, UserName = userName });
