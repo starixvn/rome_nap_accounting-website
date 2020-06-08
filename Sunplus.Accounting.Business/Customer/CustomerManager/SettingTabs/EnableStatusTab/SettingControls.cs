@@ -461,7 +461,7 @@
                 }
             }
 
-            return new SettingControl("ADB on Master", currentStatus, false, jsonclick, jsonmouseout, jsonmouseover, classname, statusName, roleId, false, statusName);
+            return new SettingControl("Auto Enable ADB on Master", currentStatus, false, jsonclick, jsonmouseout, jsonmouseover, classname, statusName, roleId, false, statusName);
         }
     }
 }
