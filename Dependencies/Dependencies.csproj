@@ -58,7 +58,7 @@
       <HintPath>..\packages\CN88.BetList.Core.1.0.0.8\lib\net461\CN88.BetList.Core.dll</HintPath>
     </Reference>
     <Reference Include="CN88.BetList.ESports, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CN88.BetList.ESports.1.0.0.4-esport3-02\lib\net461\CN88.BetList.ESports.dll</HintPath>
+      <HintPath>..\packages\CN88.BetList.ESports.1.0.0.4\lib\net461\CN88.BetList.ESports.dll</HintPath>
     </Reference>
     <Reference Include="CN88.BetList.Keno, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\CN88.BetList.Keno.1.0.0.1\lib\net461\CN88.BetList.Keno.dll</HintPath>
@@ -147,7 +147,7 @@
       <HintPath>..\packages\Fanex.BetList.Core.RemotingRef.1.1.0.1\lib\net461\Fanex.BetList.Core.RemotingRef.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.ESports, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.ESports.1.0.1-esport3-03\lib\net40\Fanex.BetList.ESports.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.ESports.1.0.1\lib\net40\Fanex.BetList.ESports.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.GlobalGaming, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.GlobalGaming.1.0.0.7\lib\net40\Fanex.BetList.GlobalGaming.dll</HintPath>
@@ -408,7 +408,7 @@
       <HintPath>..\packages\Fanex.Result.Core.SexyGaming.1.0.0.0\lib\net40\Fanex.Result.Core.SexyGaming.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Result.Core.Sportsbook, Version=1.2.6.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core-Sportsbook.1.2.6.3-esport3-02\lib\net40\Fanex.Result.Core.Sportsbook.dll</HintPath>
+      <HintPath>..\packages\Fanex.Result.Core-Sportsbook.1.2.6.3\lib\net40\Fanex.Result.Core.Sportsbook.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Result.Core.VirtualGames, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.VirtualGames.1.0.0.0\lib\net40\Fanex.Result.Core.VirtualGames.dll</HintPath>
