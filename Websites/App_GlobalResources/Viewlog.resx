@@ -3249,10 +3249,10 @@
   <data name="Disable242_3201" xml:space="preserve">
     <value>Disabled IBCBet Live Casino</value>
   </data>
-   <data name="ION" xml:space="preserve">
+  <data name="ION" xml:space="preserve">
     <value>ION</value>
   </data>
   <data name="Disable225_5601" xml:space="preserve">
-    <value>Disabled ION Live Casino</value>
+    <value>Disabled ION</value>
   </data>
 </root>
