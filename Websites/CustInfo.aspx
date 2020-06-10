@@ -93,30 +93,7 @@
         );
 
         var currlevelbox = "";
-        function OpenCloseMenuDangerous(obj, divid, isBA, currentLevel) {
-            //            if (divid == "divLevelOriginal") {
-            //                if (isBA == "True" || currentLevel == 100) {
-            //                    return false;
-            //                }
-            //            }
-            if (currlevelbox == divid) {
-                $(".divLevel").hide();
-                currlevelbox = "";
-            }
-            else {
-                $(".divLevel").hide();
-                $("#" + divid).show();
-                var top = obj.offsetTop;
-                $("#" + divid).css('top', top + "px");
-                currlevelbox = divid;
-            }
-
-        }
-
-        function OpenCloseMenuDangerous1() {
-            //$('#dangerousbox').css('display', ($('#dangerousbox').css('display') == 'inline') ? 'none' : 'inline');
-            $('#dangerousbox').toggle();
-        }
+           
 
         function OpenCloseMenuAbnormal() {
 

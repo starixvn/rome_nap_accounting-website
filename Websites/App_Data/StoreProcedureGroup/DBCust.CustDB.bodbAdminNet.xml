@@ -104,7 +104,6 @@
     <Setting Key="Acc_CustAllowListUpd" SpName="Acc_CustAllowListUpd" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdAutoSuspend" SpName="Acc_CustomerUpdAutoSuspend" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="UpdateCustomerStatusAbnormal" SpName="Acc_CustomerUpdAbnormal" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdDangercust" SpName="Acc_CustomerUpdDangercust" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdImportant" SpName="Acc_CustomerUpdImportant" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdPwdReset" SpName="Acc_CustomerUpdPwdReset" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CS_Acc_CustomerUpdPwdReset" SpName="CS_Acc_CustomerUpdPwdReset" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -308,7 +307,9 @@
     <Setting Key="Acc_CustomerSelUnSyncRNG" SpName="Acc_CustomerSelUnSyncRNG" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="NAP API - Update Dangerous Customers">
-    <Setting Key="Acc_CustomerUpdDangerCustList" SpName="Acc_CustomerUpdDangerCustList" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerSelDangerCust" SpName="Acc_CustomerSelDangerCust" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerUpdDangercust" SpName="Acc_CustomerUpdDangercust" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerCheckDangerCustList" SpName="Acc_CustomerCheckDangerCustList" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Check allow downlines">
     <Setting Key="Acc_CustomerSelCheckAllowedDownlines" SpName="Acc_CustomerSelCheckAllowedDownlines" DbName="DBCust.CustDB.bodbAdminNet" />

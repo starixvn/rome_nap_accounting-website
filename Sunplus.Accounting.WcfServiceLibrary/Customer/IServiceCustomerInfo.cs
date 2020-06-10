@@ -36,10 +36,7 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Customer
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
         Result UpdateCustomerSite(int custId, string newSite);
-
-        [OperationContract]
-        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
-        DangerousDetail UpdateDangerousCustomerSer(int custId, int updateDownline, int dangerType, int dangerLevel);
+       
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]

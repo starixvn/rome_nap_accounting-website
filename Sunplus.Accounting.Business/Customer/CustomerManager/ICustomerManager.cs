@@ -24,8 +24,6 @@ namespace Sunplus.Accounting.Business.Customer
 
         Result UpdateCustomerSite(int custId, string newSite);
 
-        DangerousDetail UpdateDangerousCustomer(int custId, int updateDownline, int dangerType, int dangerLevel);
-
         CustomerExRate SelectCustomerExRate(string username);
 
         Result CustomerCrossTransferInsert(

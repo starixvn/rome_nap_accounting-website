@@ -485,50 +485,6 @@ body {
     height: 65px;
 }
 
-/*Dangerous box*/
-.divLevel {
-    background: #BBC7CE none repeat scroll 0%;
-    width: 100px;
-    left: 130px;
-    position: absolute;
-    z-index: 102;
-    display: none;
-}
-
-#dangerousbox {
-    border: solid 1px #C6D0E3;
-    background: #ffffff none repeat scroll 0%;
-    width: 130px;
-    left: 10px;
-    position: absolute;
-    z-index: 102;
-}
-
-.tbldangerlevel {
-    line-height: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    text-align: center;
-    background-color: #fff;
-    width: 100px;
-    border-collapse: collapse;
-    height: 200px;
-    overflow: auto;
-}
-
-#divLevelABI {
-    border: 1px solid #C6D0E3;
-}
-
-.danger-div {
-    width: 50%;
-    border-bottom: solid 1px #C6D0E3;
-    display: inline-block;
-}
-
-.danger-div:first-of-type {
-    width: 100%;
-}
 
 .pagerbox {
     display: none;

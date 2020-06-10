@@ -1,0 +1,48 @@
+﻿@model IList<Fanex.Tarus.Customer.DangerousGrouping.Models.DangerDetail>
+<div style="display:inline-block; width: 420px">
+    <div class="bg_table">
+        <form class="formUsername">
+            <div style="float: left; display:grid;">
+                <label for="usernames">
+                    Username(s)<span style="color: red;">*</span>(separated by comma ','):
+                    <span style="float: none;" id="multipleNoteMessageInfo" class="note-info-message" title=""></span>
+                </label>
+                <textarea style="margin-top: 5px;" id="usernames" rows="4" cols="45"></textarea>
+            </div>
+        </form>
+    </div>
+    <div class="updateContent bg_table">
+        <form>
+            <div style="margin:10px;display: flex;align-items: center;">
+                <label for="multipleDangerousType">Dangerous Type: </label>
+                <select id="multipleDangerousType" class="dangerSelect">
+                    <option selected disabled hidden>Choose type to update dangerous</option>
+                    <option value="Origin">Original</option>
+                    <option value="ABI">ABI</option>
+                    <option value="OtherSports">Other Sports</option>
+                </select>
+                <div id="selectedMultipleLevelContent" style="margin-left: 30px; display:none; align-items:center;">
+                    <label>Selected DangerLevel: </label>
+                    <div id="selectedMultipleDangerLevel" class="dangerous-cell" style="color: white; background-color: red; margin-left: 5px; display: grid;">
+                        <p style="margin: auto;">None</p>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div id="multipleLevelSelectContent" class="hide">
+            <div style="margin: 10px; display: inline-flex;">
+                <input type="checkbox" id="isMultipleApplyAllDownlines" />
+                <label for="isMultipleApplyAllDownlines" style="margin: auto;">Apply for all downlines</label>
+            </div>
+            @Html.Partial("~/Views/Customer/DangerousGrouping/_DangerousList.cshtml", Model)
+            <table cellpadding="0" cellspacing="0" border="0" style="margin-left: 10px; margin-bottom: 10px;">
+                <tbody>
+                    <tr>
+                        <td id="btn1UpdateMultiple" class="custBtn1" disabled="disabled"></td>
+                        <td id="btnUpdateMultiple" class="custBtn2 hand" disabled="disabled" onclick="UpdateMultipleAccountDanger()">Update</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

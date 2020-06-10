@@ -78,6 +78,7 @@ namespace Fanex.Tarus.BetList.Business.Results
         {
             return new ResultSetting
             {
+                IsPopupOpenFromBetList = true,
                 IsOutright = false,
                 IsParlayPopUp = true,
                 IsPopUp = true,

@@ -1,0 +1,65 @@
+﻿@using Sunplus.Accounting.Core.Configurations;
+@model IList<Fanex.Tarus.Customer.DangerousGrouping.Models.DangerDetail>
+<html>
+<head>
+    <link href="@Url.Content("~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/App_Themes/Public/common.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/App_Themes/Public/table.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Views/Customer/DangerousGrouping/Styles/dangerous-grouping.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div class="main" style="display:inline-flex;">
+        <div class="maincontent">
+            <table border="0" cellpadding="0" cellspacing="0" class="maincontent_header">
+                <tbody>
+                    <tr>
+                        <td class="maincontent_headerL"></td>
+                        <td class="maincontent_headerC">
+                            Edit Dangerous Grouping
+                        </td>
+                        <td class="maincontent_headerR"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="maincontent_box">
+                <table>
+                    <tr>
+                        <td class="b">
+                            &nbsp;&nbsp;Select Mode:&nbsp;
+                        </td>
+                        <td class="b">
+                            <select id="selectModeOption" class="dangerSelect">
+                                <option value="Multiple">Multiple Accounts</option>
+                                <option value="Single">Single Account</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div>
+                <div class="mainContent" style="margin-top:10px; width: 420px;">
+                    <div id="errMsg">
+                    </div>
+                    <div id="tab_content_Multiple" style="margin-top:10px; margin-bottom:2px;">
+                        @Html.Partial("~/Views/Customer/DangerousGrouping/MultipleAccounts/_MultipleAccounts.cshtml", Model)
+                    </div>
+                    <div id="tab_content_Single" style="display: none;margin-top:10px;">
+                        @Html.Partial("~/Views/Customer/DangerousGrouping/SingleAccount/_SingleAccount.cshtml", Model)
+                    </div>
+                </div>
+                <form id="noteMessage" style="display:none;">
+                    <p>For deposit accounts: Cannot update dangerous level for Super or Master accounts.</p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var customerDanger = @(Html.Raw(Json.Encode(ViewBag.CustomerDanger)));
+    </script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-1.8.2.min.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-ui-1.9.1.min.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/js/common.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Views/Customer/DangerousGrouping/Scripts/dangerous-grouping.js?v=" + WebSettings.Version)"></script>
+</body>
+</html>

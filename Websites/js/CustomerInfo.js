@@ -123,11 +123,7 @@ function changeStatus(type, hasDownLine) {
                 if (!confirm("Are you sure you want to change Special status for this customer?"))
                     return;
                 yes = ($('#special').attr('class').indexOf("chkuncheck") > -1);
-                break;
-            case "dangerous":
-                if (!confirm("Are you sure you want to change " + type + " status for this customer?")) return;
-                yes = (document.getElementById('dangerous').innerHTML == "No");
-                break;
+                break;          
             case "autompt":
                 if (!confirm("Are you sure you want to change Auto MPT status for this customer?"))
                     return;
@@ -266,39 +262,6 @@ function ViewVRHistory(CustID, UserName) {
         null);
 }
 
-function OpenCloseMenuDangerous() {
-    $('#divLevel').css('display', ($('#divLevel').css('display') == 'inline') ? 'none' : 'inline');
-}
-function ChangeDangerousLevelMember(typename, level, name, color) {
-    if (isDigitOnly(level) == false) {
-        return false;
-    }
-
-    if (level < 0 || level > 50) {
-        return false;
-    }
-    if ($('#box_02_headertext').parent().is('.memberDisabled')) {
-        alert("This account was disabled");
-        $("#" + currlevelbox).css('display', 'none');
-        $('#dangerousAgentoverlay').css('display', 'none');
-    }
-    else {
-        var curLevel = document.getElementById('currentLevel' + typename.replace(/ /, "")).value;
-        if (curLevel == level || !confirm("Are you sure you want to change " + typename + " dangerous level to '" + name + "' for this customer?")) {
-            if (currlevelbox != "") {
-                $("#" + currlevelbox).css('display', 'none');
-            }
-            return;
-        }
-        if (currlevelbox != "") {
-            $("#" + currlevelbox).css('display', 'none');
-        }
-        var _URL = 'Handlers/UpdateCustomerStatus.ashx?type=dangerous&status=false&level=' + level + '&name=' + typename.replace(/ /, "") + "&custid=" + GetCustId();
-        var fr = self.frames['frmUpdate'];
-        if (typeof fr != 'undefined' && fr) fr.location.href = _URL;
-    }
-}
-
 function ChangeAbnormalLevel(level) {
     if (isDigitOnly(level) == false) {
         return false;
@@ -417,37 +380,6 @@ function replaceAll(text, strA, strB) {
         text = text.replace(strA, strB);
     }
     return text;
-}
-
-/* New version */
-// function change dangerous for agent/super/master
-function ChangeDangerousLevel(typename, type, level) {
-    if (isDigitOnly(level) == false) {
-        return false;
-    }
-
-    if (parseInt(level) < 0 || parseInt(level) > 50) {
-        return false;
-    }
-
-    if ($('#box_02_headertext').parent().is('.memberDisabled')) {
-        alert("This account was disabled");
-        $("#" + currlevelbox).css('display', 'none');
-        $('#AbnormalAgentoverlay').css('display', 'none');
-    }
-    else {
-        var curLevel = document.getElementById('currentLevel' + typename.replace(/ /, "")).value;
-
-        if (curLevel == level) {
-            if (currlevelbox != "") {
-                $("#" + currlevelbox).css('display', 'none');
-            }
-        }
-        else {
-            $('#dangerousAgentpopup' + type + "_" + level).toggle();
-            overlay("dangerousAgentoverlay");
-        }
-    }
 }
 
 function ChangeAbnormalLevelAgent(level) {
@@ -623,17 +555,6 @@ function collapseInfo() {
     }
 }
 
-function changeDisableDangerAgent(type, level) {
-    if ($('#disabledDangerchk' + type + "_" + level).attr('checked')) {
-        $('#disabledangerouschkDL' + type + "_" + level).attr('disabled', false);
-        $('#UpdateDangerous' + type + "_" + level).attr("disabled", false);
-    }
-    else {
-        $('#disabledangerouschkDL' + type + "_" + level).attr('disabled', true);
-        $('#UpdateDangerous' + type + "_" + level).attr("disabled", true);
-    }
-}
-
 function changeDisableAbnormalAgent(level) {
     if ($('#disabledAbnormalchk' + level).attr('checked')) {
         $('#disableAbnormalchkDL' + level).attr('disabled', false);
@@ -649,90 +570,6 @@ function isDigitOnly(s) {
     // Check if string is a whole number(digits only).
     var isWhole_re = /^\s*\d+\s*$/;
     return String(s).search(isWhole_re) != -1;
-}
-
-function UpdateDangerousCustomer(typename, type, level) {
-    var custId = GetCustId();
-    var updateDownline = "0";
-
-    if ($('#box_02_headertext').parent().is('.memberDisabled')) {
-        alert("This account was disabled");
-        $("#" + currlevelbox).css('display', 'none');
-        $('#dangerousAgentoverlay').css('display', 'none');
-    }
-    else {
-        if ($('#disabledangerouschkDL' + type + "_" + level).attr('checked')) {
-            updateDownline = "1";
-        }
-        if (level == "None") level = "0";
-        var param = { "custId": custId, "updateDownline": updateDownline, "dangerType": type, "dangerLevel": level };
-        var resultDialog = false;
-        if (updateDownline == "0") {
-            resultDialog = confirm("Are you sure you want to change " + typename + " dangerous level to '" + level + "' for this customer?");
-        }
-        else {
-            resultDialog = confirm("Are you sure you want to change " + typename + " dangerous level to '" + level + "' for this customer and all downlines?");
-        }
-        if (resultDialog) {
-            if (PTBlockUI) PTBlockUI();
-            $.ajax({
-                type: "POST",
-                url: "Services/WCF/Customer/ServiceCustomerInfo.svc/UpdateDangerousCustomerSer",
-                data: $.toJSON(param),
-                contentType: "application/json; charset=utf-8",
-                success: function (rs) {
-                    var resetLevelLabel = function (span, rs) {
-                        document.getElementById('currentLevel' + typename.replace(/ /, "")).value = rs.Name;
-
-                        $(span).parent()[0].style.backgroundColor = rs.BackgroundColor;
-                        $(span).parent()[0].style.color = rs.Color;
-                        $(span).html(rs.Name)
-                    }
-                    if (rs && rs.Id !== -1) {
-                        switch (typename) {
-                            case "Original":
-                                {
-                                    resetLevelLabel(document.getElementById("spanDangerousOriginal"), rs);
-                                    break;
-                                }
-                            case "ABI":
-                                {
-                                    resetLevelLabel(document.getElementById("spanDangerousABI"), rs);
-                                    break;
-                                }
-                            case "Other Sports":
-                                {
-                                    resetLevelLabel(document.getElementById("spanDangerousOtherSports"), rs);
-                                    break;
-                                }
-                        }
-                    }
-                    else {
-                        alert(rs.Color);
-                    }
-
-                    ClosePopUpDanger("dangerousAgentpopup" + type + "_" + level);
-                    if (currlevelbox != "") {
-                        $("#" + currlevelbox).css('display', 'none');
-                    }
-                    if (PTUnBlockUI) PTUnBlockUI();
-                }
-                , error: function (xhr) {
-                    if (PTUnBlockUI) PTUnBlockUI();
-                    if (xhr.status === 403) {
-                        var denyObject = $.parseJSON(xhr.responseText);
-                        alert(denyObject.ErrorMessage);
-                    }
-                }
-            });
-        }
-        else {
-            ClosePopUpDanger("dangerousAgentpopup" + type + "_" + level);
-            if (currlevelbox != "") {
-                $("#" + currlevelbox).css('display', 'none');
-            }
-        }
-    }
 }
 
 function UpdateAbnormalCustomer(level) {

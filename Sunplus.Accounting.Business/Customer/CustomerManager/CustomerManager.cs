@@ -1,10 +1,5 @@
 ﻿namespace Sunplus.Accounting.Business.Customer
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Data;
-    using System.Web;
     using ConfigureDirectAccount;
     using Core.Common;
     using Core.Extensions;
@@ -26,10 +21,14 @@
     using Fanex.Tarus.Security.Domain;
     using Fanex.Tarus.Security.Services;
     using Security;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Web;
     using static Fanex.Tarus.Infrastructure.Common.Enumerations;
-    using Result = Entities.Result;
     using ConverterCommon = Fanex.Common.Converter;
-    using System.Linq;
+    using Result = Entities.Result;
 
     public partial class CustomerManager : ICustomerManager
     {
@@ -214,7 +213,6 @@
                         htmlcontent = RenderSettingTabs(htmlcontent, customerInfoRow, dynamicSettingtable, customerInfoViewModel);
                         RenderCN88Customer(ref htmlcontent, customerInfoViewModel);
                         RenderCommonInfo(ref htmlcontent, customerInfoViewModel);
-                        arrcontent.Add("isba", customerInfoViewModel.SearchAccountRoleId == (int)Role.Headline ? false : customerInfoViewModel.IsBA);
                     }
                 }
 
@@ -269,21 +267,7 @@
             result = _customerDAO.UpdateCustomerSite(custId, newSite, AppSession.AccId, HttpContext.Current.Request.UserHostAddress);
 
             return result;
-        }
-
-        public DangerousDetail UpdateDangerousCustomer(int custId, int updateDownline, int dangerType, int dangerLevel)
-        {
-            var result = new Result();
-            if (custId <= 0)
-            {
-                result = new Result { ErrorCode = 1, ErrorMessage = "Invalid Username" };
-            }
-            result = _customerDAO.UpdateLevelDangerous(custId, updateDownline, dangerType, dangerLevel, AppSession.AccId,
-                                                       HttpContext.Current.Request.UserHostAddress);
-            return result.ErrorCode > 0 ?
-                new DangerousDetail(-1, "white", result.ErrorMessage) :
-                helper.GetDangerSettingOriginal().ToList().FirstOrDefault(setting => setting.Id.Equals(dangerLevel));
-        }
+        }       
 
         public CustomerExRate SelectCustomerExRate(string username)
         {

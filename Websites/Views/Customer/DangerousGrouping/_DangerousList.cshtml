@@ -1,0 +1,22 @@
+﻿@model IList<Fanex.Tarus.Customer.DangerousGrouping.Models.DangerDetail>
+<table style="margin:10px;border-collapse: collapse;">
+    <tr>
+        <td class="dangerous-cell hoverable-cell" style="color: @Model[0].Color; background-color: @Model[0].BackgroundColor;" onclick="selectDangerLevel('@Model[0].Name', '@Model[0].Id', '@Model[0].Color', '@Model[0].BackgroundColor')">@Model[0].Name</td>
+    </tr>
+    @{
+        var columns = Math.Ceiling((double)@Model.Count / 10);
+    }
+    @for (int row = 0; row < 10; row++)
+    {
+        <tr>
+            @for (int column = 0; column < columns; column++)
+            {
+                var index = 10 * column + row + 1;
+                if (index < @Model.Count)
+                {
+                    <td class="dangerous-cell hoverable-cell" style="color: @Model[index].Color; background-color: @Model[index].BackgroundColor;" onclick="selectDangerLevel('@Model[index].Name', '@Model[index].Id', '@Model[index].Color', '@Model[index].BackgroundColor')">@Model[index].Name</td>
+                }
+            }
+        </tr>
+    }
+</table>
