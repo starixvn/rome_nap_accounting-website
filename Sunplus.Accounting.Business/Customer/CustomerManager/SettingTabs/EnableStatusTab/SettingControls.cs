@@ -433,5 +433,35 @@
 
             return new SettingControl("All-Day Bal Transfer", currentStatus, false, jsonclick, jsonmouseout, jsonmouseover, classname, statusName, roleId, false, statusName);
         }
+
+        private SettingControl GetSettingControlAllDayBalTransferOnMaster(
+            int roleId,
+            bool isManageCustomerAccess,
+            string statusName, 
+            bool currentStatus,
+            bool currentStatusOfADB)
+        {
+            string classname = string.Empty;
+            string jsonclick = string.Empty;
+            string jsonmouseover = string.Empty;
+            string jsonmouseout = string.Empty;
+
+            if (isManageCustomerAccess)
+            {
+                if (currentStatusOfADB)
+                {
+                    classname = "canchange";
+                    jsonclick = "return ChangeAllDayBalTransferOnMaster();";
+                    jsonmouseout = "UnTip()";
+                    jsonmouseover = "Tip('Check to auto enable ADB mode on Master', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)";
+                }
+                else
+                {
+                    classname = "cannotchange";
+                }
+            }
+
+            return new SettingControl("Auto Enable ADB on Master", currentStatus, false, jsonclick, jsonmouseout, jsonmouseover, classname, statusName, roleId, false, statusName);
+        }
     }
 }

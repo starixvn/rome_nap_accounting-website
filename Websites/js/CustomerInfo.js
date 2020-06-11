@@ -752,10 +752,33 @@ function ChangeAllDayBalTransfer(roleId) {
     }
 }
 
+function ChangeAllDayBalTransferOnMaster() {
+    var checked = $("#AllDayBalTransferOnMaster").hasClass("chkchecked");
+    if (confirm("Are you sure you want to change \"Auto Enable ADB on Master\" mode for " + GetCustName() + " ?")) {
+        UpdateAllDayBalTransferOnMaster({ custid: GetCustId(), status: !checked});
+    }
+}
+
 function UpdateAllDayBalTransfer(params) {
     $.ajax({
         type: "POST",
         url: "CustomerSetting/UpdateAllDayBalTransfer",
+        data: JSON.stringify(params),
+        contentType: "application/json; charset=utf-8",
+        success: function (rs) {
+            changeDisplayStatus();
+            if (PTUnBlockUI) PTUnBlockUI();
+        },
+        error: function (e) {
+            if (PTUnBlockUI) PTUnBlockUI();
+        }
+    });
+}
+
+function UpdateAllDayBalTransferOnMaster(params) {
+    $.ajax({
+        type: "POST",
+        url: "CustomerSetting/UpdateAllDayBalTransferOnMaster",
         data: JSON.stringify(params),
         contentType: "application/json; charset=utf-8",
         success: function (rs) {

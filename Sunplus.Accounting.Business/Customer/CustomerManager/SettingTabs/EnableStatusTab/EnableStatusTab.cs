@@ -97,6 +97,7 @@
 
             htmlcontent = RenderSuspendedControl(htmlcontent, customerInfoViewModel);
             htmlcontent = RenderAllDayBalTransferControl(htmlcontent, customerInfoViewModel);
+            htmlcontent = RenderAllDayBalTransferOnMasterControl(htmlcontent, customerInfoViewModel);
             htmlcontent = RenderSelectedBettingControl(htmlcontent, customerInfoViewModel);
 
             htmlcontent = RenderAutoMasterControl(htmlcontent, customerInfoViewModel);
@@ -649,6 +650,30 @@
             else
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "allDayBalTransferControl");
+            }
+
+            return htmlcontent;
+        }
+
+        private string RenderAllDayBalTransferOnMasterControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
+        {
+            if (customerInfoViewModel.SearchAccountRoleId == 4)
+            {
+                var allDayBalTransferControlSettingGroup = new SettingGroup();
+
+                allDayBalTransferControlSettingGroup.Add(
+                    GetSettingControlAllDayBalTransferOnMaster(
+                        customerInfoViewModel.SearchAccountRoleId,
+                        customerInfoViewModel.ManageCustomerAccess,
+                        "AllDayBalTransferOnMaster",
+                        customerInfoViewModel.AllDayBalTransferOnMaster,
+                        customerInfoViewModel.AllDayBalTransfer));
+
+                TemplateHandler.Assign(ref htmlcontent, "{allDayBalTransferControlOnMaster}", allDayBalTransferControlSettingGroup.GetHTMLSettingControl());
+            }
+            else
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "allDayBalTransferControlOnMaster");
             }
 
             return htmlcontent;

@@ -419,6 +419,7 @@
     <Compile Include="Criteria\AutoTransferAll\UpdatedTransferCriteria.cs" />
     <Compile Include="Criteria\AutoTransferAll\InsertAgentsFromPopupCriteria.cs" />
     <Compile Include="Criteria\AutoTransferAll\SelectTransferAgentCriteria.cs" />
+    <Compile Include="Criteria\CreditCustomer\UpdateAllDayBalTransferOnMasterCriteria.cs" />
     <Compile Include="Criteria\CreditCustomer\UpdateAllDayBalTransferCriteria.cs" />
     <Compile Include="Criteria\CustomerLogin\RemoveOTPCriteria.cs" />
     <Compile Include="Criteria\EditLicensee\GetLicenseeInfoCriteria.cs" />
