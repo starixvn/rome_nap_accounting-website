@@ -50,7 +50,8 @@
                 {SportContants.RNG_RNGGame, "RNGCasino_Details"},
                 {SportContants.RNG_MiniGame, "RNGCasino_Details"},
                 {SportContants.RNG_Mobile, "RNGCasino_Details"},
-                {SportContants.Sabaclub, "Sabaclub_Details"}
+                {SportContants.Sabaclub, "Sabaclub_Details"},
+                {SportContants.IonCasino, "IONLiveCasino_Details"}
             };
 
             return fileNameMapper.ContainsKey(sportType) ?
@@ -67,7 +68,8 @@
             if (sportType == SportContants.AllBet ||
                 sportType == SportContants.SaGaming ||
                 sportType == SportContants.SexyGaming ||
-                sportType == SportContants.GTCasino)
+                sportType == SportContants.GTCasino ||
+                sportType == SportContants.IonCasino)
             {
                 return GetLiveCasinoTickets(refNo, custId, transType);
             }
@@ -80,7 +82,8 @@
             if (sportType == SportContants.Voidbridge ||
                 sportType == SportContants.PP ||
                 sportType == SportContants.CardClub ||
-                sportType == SportContants.Spadegaming)
+                sportType == SportContants.Spadegaming ||
+                sportType == SportContants.RNGWar)
             {
                 return GetMacauGamesTickets(refNo, custId, transType);
             }

@@ -9,6 +9,8 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Xml.Linq;
 using DNAide.Core;
+using Fanex.BetList.Core.Entities;
+using Fanex.BetList.Core.TicketHelper;
 using Fanex.Common;
 using Sunplus.Accounting.Business.Customer;
 using Sunplus.Accounting.Core.Cache;
@@ -449,7 +451,8 @@ namespace Sunplus.Accounting.Business.LogDisplay
                             var regxBettypeId = new Regex("[0-9]+");
                             var matchBettypeId = regxBettypeId.Match(bettypeMatch.Value);
                             var bettypeText = string.Format("bettype=\"{0}\"", matchBettypeId.Value);
-                            var replaceText = string.Format("bettype=\"{0}\"", GetBettypeName(matchBettypeId.Value));
+                            var bettypeId = Converter.To<int>(matchBettypeId.Value);
+                            var replaceText = string.Format("bettype=\"{0}\"", GetBettypeName(bettypeId));
 
                             // trackingVal = trackingVal.Replace(bettypeText, replaceText);
                             trackingVal = ReplaceIgnoreCase(trackingVal, bettypeText, replaceText);
@@ -477,7 +480,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
                     }
 
                     #endregion sporttypes
-                    
+
 
                     #region SystemId
 
@@ -539,29 +542,18 @@ namespace Sunplus.Accounting.Business.LogDisplay
             return tracking;
         }
 
-        private string GetBettypeName(object bettype)
+        private string GetBettypeName(int bettype)
         {
-            if (Converter.To<int>(bettype) == 2401)
+            var bettypeShowProductName = new Dictionary<int, string>
             {
-                return LogFormater.GetResourceName("AllbetNormalGames");
-            }
+                { 2401,LogFormater.GetResourceName("AllbetNormalGames") },
+                { 3001,LogFormater.GetResourceName("SAGaming") },
+                { 3101,LogFormater.GetResourceName("SexyGaming") },
+                { 5601,LogFormater.GetResourceName("ION")},
+            };
 
-            if (Converter.To<int>(bettype) == 3001)
-            {
-                return LogFormater.GetResourceName("SAGaming");
-            }
+            return bettypeShowProductName.ContainsKey(bettype) ? bettypeShowProductName[bettype] : CacheRef.GetBettype(bettype);
 
-            if (Converter.To<int>(bettype) == 3101)
-            {
-                return LogFormater.GetResourceName("SexyGaming");
-            }
-
-            if (Converter.To<int>(bettype) == 3201)
-            {
-                return LogFormater.GetResourceName("GTCasino");
-            }
-
-            return CacheRef.GetBettype(bettype);
         }
 
         private List<TrackingGroup> _GetSportGroup(
@@ -807,7 +799,8 @@ namespace Sunplus.Accounting.Business.LogDisplay
                             var elm = LogFormater.FormatElement(attr, filter, null);
                             if (isGoldDeluxeGameType)
                             {
-                                elm.Val = GetBettypeName(attr.Value);
+                                var bettypeId = Converter.To<int>(attr.Value);
+                                elm.Val = GetBettypeName(bettypeId);
                             }
 
                             trackingNode.Vals.Add(elm);

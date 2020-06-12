@@ -263,6 +263,15 @@
         public static bool IsTableGames(int betTypeId)
             => 4901 <= betTypeId && betTypeId <= 5000;
 
+        public static int GetSportFromBetTypeId(int betTypeId)
+        {
+            if (5601 <= betTypeId && betTypeId <= 5699)
+                return SportContants.IonCasino;
+
+            return 0;
+        }
+            
+
         #endregion StaticMethods
     }
 }

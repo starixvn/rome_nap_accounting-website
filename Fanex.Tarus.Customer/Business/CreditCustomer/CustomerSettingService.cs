@@ -330,6 +330,19 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
             return _customerSettingDataAccess.UpdateAllDayBalTransfer(criteria);
         }
 
+        public Tarus.Customer.Entities.Result UpdateAllDayBalTransferOnMaster(int custId, bool isAllDayBalTransfer, int userId, string ip)
+        {
+            ICriteria criteria = new UpdateAllDayBalTransferOnMasterCriteria
+            {
+                CustId = custId,
+                IsAutoEnableADBMaster = isAllDayBalTransfer,
+                UserId = userId,
+                IP = ip
+            };
+
+            return _customerSettingDataAccess.UpdateAllDayBalTransfer(criteria);
+        }
+
         public CreditRangeModel GetCreditRangeModel(int searchAccountId, bool isMember)
         {
             var credit = _customerSettingDataAccess.GetCreditRangeModel(new SelectCreditRangeCriteria(searchAccountId));

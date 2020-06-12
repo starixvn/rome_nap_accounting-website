@@ -2079,4 +2079,7 @@
   <data name="Disable222_4901" xml:space="preserve">
     <value>Disabled Table Game</value>
   </data>
+  <data name="Disable224_5500" xml:space="preserve">
+    <value>Disabled RNG War</value>
+  </data>
 </root>
