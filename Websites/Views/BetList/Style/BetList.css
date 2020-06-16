@@ -611,14 +611,6 @@ span.ui-dialog-title-dialog-modal-TennisResult {
     margin-right: 2px;
 }
 
-.sagaming-bet-id {
-    color: #bbb;
-}
-
-.sagaming-bet-type-name {
-    color: #696969;
-}
-
 .sexygaming-bet-id {
     color: #bbb;
 }
@@ -646,4 +638,9 @@ span.ui-dialog-title-dialog-modal-TennisResult {
 
 .leagueName > .bet-type-name {
     color: #696969;
+}
+
+.bet-id {
+    color: #bbb;
+    font-weight: 600;
 }
