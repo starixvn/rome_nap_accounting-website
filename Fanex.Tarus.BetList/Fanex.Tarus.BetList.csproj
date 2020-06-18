@@ -138,8 +138,8 @@
     <Reference Include="Fanex.BetList.SabaClub, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.SabaClub.1.0.0\lib\net40\Fanex.BetList.SabaClub.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.SAGaming, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.SAGaming.1.0.0.1\lib\net40\Fanex.BetList.SAGaming.dll</HintPath>
+    <Reference Include="Fanex.BetList.SAGaming, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.SAGaming.1.0.0.2\lib\net40\Fanex.BetList.SAGaming.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.SexyGaming, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.SexyGaming.1.0.0.2\lib\net40\Fanex.BetList.SexyGaming.dll</HintPath>
@@ -234,8 +234,8 @@
     <Reference Include="Fanex.Result.Core.RemotingRef, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.RemotingRef.1.0.4\lib\net461\Fanex.Result.Core.RemotingRef.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Result.Core.SAGaming, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core.SAGaming.1.0.0.1\lib\net40\Fanex.Result.Core.SAGaming.dll</HintPath>
+    <Reference Include="Fanex.Result.Core.SAGaming, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Result.Core.SAGaming.1.0.0.2\lib\net40\Fanex.Result.Core.SAGaming.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Result.Core.SexyGaming, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.SexyGaming.1.0.0.0\lib\net40\Fanex.Result.Core.SexyGaming.dll</HintPath>
@@ -287,9 +287,6 @@
     </Reference>
     <Reference Include="LiveCasinoResult, Version=1.0.1.8, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.AllBetCasino.1.0.1.9\lib\net40\LiveCasinoResult.dll</HintPath>
-    </Reference>
-    <Reference Include="LiveCasinoResultForSA, Version=1.0.1.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core.SAGaming.1.0.0.1\lib\net40\LiveCasinoResultForSA.dll</HintPath>
     </Reference>
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.8\lib\net40-full\log4net.dll</HintPath>
@@ -667,12 +664,6 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>BetListResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Content\Fanex.Result\Allbet\css\images\layout\" />
-    <Folder Include="Content\Fanex.Result\Allbet\template\public\game_result\Poker\" />
-    <Folder Include="Content\Fanex.Result\Allbet\template\public\game_result\Roulette\" />
-    <Folder Include="Content\Fanex.Result\Allbet\template\public\game_result\Sicbo\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
