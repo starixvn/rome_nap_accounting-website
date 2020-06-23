@@ -608,7 +608,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
                 if (sport.Id == 1)
                 {
                     // soccer
-                    if (hasElements)
+                    if (hasElements && actionId != 2012)
                     {
                         rex = new Regex("v[0-9]", RegexOptions.IgnoreCase);
                         sportVals = (from attr in attrs
