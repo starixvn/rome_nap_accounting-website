@@ -271,23 +271,6 @@
                     "Update RNG Lottery Status"));
             }
 
-            if (!renderLeftPanelParameter.IsShowSabaVirtualSports)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "EnableSabaVirtualSports");
-            } else
-            {
-                TemplateHandler.Assign(
-                    ref htmlcontent,
-                    "{SabaVirtualSportsOnClickFunction}",
-                    _renderLeftPanelService.GetProductStatusJsFunction(
-                    customerInfoViewModel.IsDeposit,
-                    customerInfoViewModel.CustId,
-                    customerInfoViewModel.UserName,
-                    customerInfoViewModel.SearchAccountRoleId,
-                    Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdSabaVirtualSports,
-                    "Update Saba Virtual Sports Status"));
-            }
-
             return htmlcontent;
         }
 
@@ -525,6 +508,20 @@
                                                renderLeftPanelParameter,
                                                "Update Virtual Games Status",
                                                Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdVirtualGames);
+                            break;
+
+                        case "54":
+                            _renderLeftPanelService.RenderEnableProductBoxDCS2(
+                                               row1,
+                                               productRow,
+                                               sg,
+                                               ref htmlcontent,
+                                               isManageCustomerAccess,
+                                               "SabaVirtualSports",
+                                               renderLeftPanelParameter.IsShowSabaVirtualSports,
+                                               renderLeftPanelParameter,
+                                               "Update Saba Virtual Sports Status",
+                                               Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdSabaVirtualSports);
                             break;
                     }
                 }

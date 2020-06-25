@@ -205,7 +205,7 @@ namespace Sunplus.Accounting.Business.Customer
             string title,
             int productId = 0)
         {
-            if (isSupport)
+           if (isSupport)
             {
                 bool isDisabled = Utils.ToBoolean(productInfo["IsDisabled"]);
                 bool disableDownlines = Utils.ToBoolean(productInfo["IsDisabledDownline"]);
