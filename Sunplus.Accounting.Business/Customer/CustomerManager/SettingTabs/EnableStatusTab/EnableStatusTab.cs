@@ -50,7 +50,8 @@
                 IsShowNG2 = !customerInfoViewModel.HideEnabledCheckBoxNG2Credit,
                 IsShowRNGLottery = !customerInfoViewModel.HideRNGLottery,
                 IsShowVirtualGames = !customerInfoViewModel.HideVirtualGames,
-                IsShowSabaclub = !customerInfoViewModel.HideSabaclub
+                IsShowSabaclub = !customerInfoViewModel.HideSabaclub,
+                IsShowSabaVirtualSports = !customerInfoViewModel.HideSabaVirtualSports
             };
 
             htmlcontent = RenderClosedStatus(htmlcontent, customerInfoViewModel);
@@ -268,6 +269,23 @@
                     customerInfoViewModel.SearchAccountRoleId,
                     Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdRNGLottery,
                     "Update RNG Lottery Status"));
+            }
+
+            if (!renderLeftPanelParameter.IsShowSabaVirtualSports)
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "EnableSabaVirtualSports");
+            } else
+            {
+                TemplateHandler.Assign(
+                    ref htmlcontent,
+                    "{SabaVirtualSportsOnClickFunction}",
+                    _renderLeftPanelService.GetProductStatusJsFunction(
+                    customerInfoViewModel.IsDeposit,
+                    customerInfoViewModel.CustId,
+                    customerInfoViewModel.UserName,
+                    customerInfoViewModel.SearchAccountRoleId,
+                    Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdSabaVirtualSports,
+                    "Update Saba Virtual Sports Status"));
             }
 
             return htmlcontent;
