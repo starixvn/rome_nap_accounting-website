@@ -18,6 +18,8 @@
     <link href="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Grid.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/js/MultipleSelect/jquery.multiselect.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Pagination.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Views/Admin/Style/bootstrap-toggle.css")" rel="stylesheet" type="text/css"/>
+    
     <style>
         .floatLeft {
             float: left;
@@ -49,6 +51,7 @@
                             <li id="tab_2"><a href="javascript:SwitchTab('tab_2', 'tab_content_2');"><span>Sport</span></a></li>
                             <li id="tab_3"><a href="javascript:SwitchTab('tab_3', 'tab_content_3');"><span>Bet Type</span></a></li>
                             <li id="tab_4"><a href="javascript:SwitchTab('tab_4', 'tab_content_4');"><span>Sport Bettype Matrix</span></a></li>
+                            <li id="tab_5"><a href="javascript:SwitchTab('tab_5', 'tab_content_5');"><span>Can See</span></a></li>
                         </ul>
                     </div>
                 </div>
@@ -65,6 +68,9 @@
             <div id="tab_content_4" style="display: none;margin-top:38px">
                 @Html.Partial("~/Views/Admin/ManageProductSetting/SportBettypeMatrix/_SportBettypeMatrix.cshtml")
             </div>
+            <div id="tab_content_5" style="display: none;margin-top:38px">
+                @Html.Partial("~/Views/Admin/ManageProductSetting/CanSee/_index.cshtml")
+            </div>
         </div>
     </div>
     @Html.Partial("~/Views/Admin/ManageProductSetting/_UploadSetting.cshtml")
@@ -72,8 +78,11 @@
     @Html.Partial("~/Views/Admin/ManageProductSetting/Sport/_UpdateSport.cshtml")
     @Html.Partial("~/Views/Admin/ManageProductSetting/Product/_UpdateProduct.cshtml")
     @Html.Partial("~/Views/Admin/ManageProductSetting/SportBettypeMatrix/_UpdateSportBettypeMatrix.cshtml")
+
     <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-1.8.2.min.js?v=" + WebSettings.Version)"></script>
+
     <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-ui-1.9.1.min.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Views/Admin/Js/bootstrap-toggle.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Grid.js?v=" + WebSettings.Version)"></script>
     <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Pagination.js?v=" + WebSettings.Version)"></script>
     <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/moment.js?v=" + WebSettings.Version)"></script>
@@ -89,6 +98,7 @@
     <script type="text/javascript" src="@Url.Content("~/Views/Admin/ManageProductSetting/Sport/Scripts/Sport.js?v=" + @WebSettings.Version)"></script>
     <script type="text/javascript" src="@Url.Content("~/Views/Admin/ManageProductSetting/Product/Scripts/Product.js?v=" + @WebSettings.Version)"></script>
     <script type="text/javascript" src="@Url.Content("~/Views/Admin/ManageProductSetting/SportBettypeMatrix/Scripts/SportBettypeMatrix.js?v=" + @WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Views/Admin/ManageProductSetting/CanSee/Scripts/Index.js?v=" + @WebSettings.Version)"></script>
     <script type="text/javascript">
         var hasHostPermission = @Json.Encode(hasHostPermission);
         var rootUrl = "@(new Uri(Request.Url, Url.Content("~")))";

@@ -1,0 +1,32 @@
+﻿@using Fanex.Tarus.Admin.ManageProductSetting.ViewModel;
+@model ManageProductSettingViewModel
+
+<div class="filterBox" style="border: solid 1px #7C98A4; height:40px;">
+    <div class="filterContent">
+        <div id="errSportMsg"></div>
+        <div class="floatLeft w50"><label for="ddlSBMSportTypesId" class="">SportType</label></div>
+        <div class="floatLeft ">
+            @Html.DropDownList("ddlCanSeeSportTypeId", Model.SportTypes, new { id = "ddlCanSeeSportTypeId" })
+        </div>
+        <div class="floatLeft"><label for="txtBetType">BetType</label></div>
+        <div class="floatLeft"><input id="txtBetType" type="text" class="numeric-input-tinyint" /></div>
+        <div class="floatLeft"><label for="txtBetTypeName">BetTypeName</label></div>
+        <div class="floatLeft"><input id="txtBetTypeName" type="text" /></div>
+        <div class="floatLeft w105"><label for="ddlSBMCurrencyId" class="">CurrencyName</label></div>
+        <div class="floatLeft ">
+            @Html.DropDownList("ddlCanSeeCurrencyId", Model.Currencies, new { id = "ddlCanSeeCurrencyId" })
+        </div>
+
+        <div class="floatLeft w50"><label for="ddlSBMSiteNameId" class="">SiteName</label></div>
+        <div class="floatLeft ">
+            @Html.DropDownList("ddlCanSeeSiteNameId", Model.Sites, new { id = "ddlCanSeeSiteNameId" })
+        </div>
+
+        <div class="floatLeft"><input type="button" value="Search" class="btn" onclick="SearchCanSee()" /></div>
+        <div class="floatLeft"><input type="button" value="Import From Excel" class="btn" onclick="OpenInsertSetting()" /></div>
+    </div>
+</div>
+<div style="clear: both"></div>
+<div id="gridSportContainer" class="grid-container">
+    <div id="gridCanSee" class="freegrid"></div>
+</div>

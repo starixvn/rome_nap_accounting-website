@@ -375,4 +375,10 @@
     <Setting Key="Acc_SuperPrefixDel" SpName="Acc_SuperPrefixDel" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
     <Setting Key="Acc_SuperPrefixIns" SpName="Acc_SuperPrefixIns" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
   </Function>
+  <Function Name="Admin - Manage Product Setting">
+    <Setting Key="Acc_ManageCansee_Del" SpName="Acc_ManageCansee_Del" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
+    <Setting Key="Acc_ManageCansee_Ins" SpName="Acc_ManageCansee_Ins" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
+    <Setting Key="Acc_ManageCansee_Upd" SpName="Acc_ManageCansee_Upd" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
+    <Setting Key="Acc_ManageCansee_Sel" SpName="Acc_ManageCansee_Sel" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
+  </Function>
 </Functions>

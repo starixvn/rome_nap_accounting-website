@@ -1,12 +1,13 @@
 ﻿@using Sunplus.Accounting.Core.Configurations;
-@model IEnumerable<SelectListItem>
+@using Fanex.Tarus.Admin.ManageProductSetting.ViewModel;
+@model ManageProductSettingViewModel
 
 <div class="filterBox" style="border: solid 1px #7C98A4; overflow: hidden;">
     <div class="filterContent">
         <div id="errSportBettypeMatrixMsg"></div>
         <div class="floatLeft w50"><label for="ddlSBMProductId" class="">Product</label></div>
         <div class="floatLeft ">
-            @Html.DropDownList("ddlSBMProductId", Model, new { id = "ddlSBMProductId" })
+            @Html.DropDownList("ddlSBMProductId", Model.Products, new { id = "ddlSBMProductId" })
         </div>
         <div class="floatLeft w70"><label for="txtSBMSportType">SportType</label></div>
         <div class="floatLeft "><input id="txtSBMSportType" type="text" class="w150 numeric-input-smallint" /></div>
