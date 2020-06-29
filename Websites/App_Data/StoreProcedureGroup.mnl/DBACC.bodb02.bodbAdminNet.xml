@@ -88,4 +88,8 @@
   <Function Name="Permission - Detect Customer Id">
     <Setting Key="Acc_CustomerDetectCustId" SpName="Acc_CustomerDetectCustId" DbName="DBACC.bodb02.bodbAdminNet" Plain="0" />
   </Function>
+  <Function Name="Manage Sporttype">
+    <Setting Key="Acc_SporttypeSel" SpName="Acc_SporttypeSel" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_ExchangeCurrencySel" SpName="Acc_ExchangeCurrencySel" DbName="DBACC.bodb02.bodbAdminNet" />
+  </Function>
 </Functions>

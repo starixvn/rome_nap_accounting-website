@@ -128,11 +128,11 @@ function UpdateCanSee_LaunchedLevel() {
                     BetType: $(option).attr("data-bettype"),
                     Currency: $(option).attr("data-currency"),
                     SiteId: $(option).attr("data-siteid"),
-                    IsTest: $(option).attr("data-istest")=="false" ? "0" : "1",
+                    IsTest: $(option).attr("data-istest") == "false" ? "0" : "1",
                     LaunchedLevel: launchedlevel_new ? "1" : "0"
                 });
             }
-            
+
         });
 
         $.ajax({
@@ -140,7 +140,7 @@ function UpdateCanSee_LaunchedLevel() {
             url: 'UpdateCanSee',
             type: 'POST',
             dataType: 'json',
-            data: JSON.stringify({ 'Entities': rows }),
+            data: JSON.stringify({ 'Entities': rows, 'ColumnMode': 2 }),
             success: function (result) {
                 if (result.ErrorCode === 0) {
                     SearchCanSee();
@@ -184,7 +184,7 @@ function UpdateCanSee_IsTest() {
             url: 'UpdateCanSee',
             type: 'POST',
             dataType: 'json',
-            data: JSON.stringify({ 'Entities': rows }),
+            data: JSON.stringify({ 'Entities': rows, 'ColumnMode': 1 }),
             success: function (result) {
                 if (result.ErrorCode === 0) {
                     SearchCanSee();
