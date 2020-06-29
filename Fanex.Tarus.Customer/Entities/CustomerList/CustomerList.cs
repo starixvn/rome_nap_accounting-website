@@ -51,9 +51,6 @@ namespace Fanex.Tarus.Customer.Entities.CustomerList
 
         public bool IsHideVirtualGames { get; set; }
 
-        public bool IsHideSabaVirtualSports { get; set; }
-
-
         public int ParentMasterDirect { get; set; } // just for Direct Master
         public bool DoubleCommLosingUpline { get; set; } // just for Direct Master
         public bool IsLicensee { get; set; }
