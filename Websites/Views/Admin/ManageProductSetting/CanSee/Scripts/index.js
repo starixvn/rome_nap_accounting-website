@@ -53,7 +53,7 @@ function RenderCanSeeTable(data) {
         });
         row.Columns.push({
             Name: 'Delete',
-            Value: '<input type="checkbox" ' + checkboxDelete + ' class="cansee_checkbox_delete_row" data-sporttype="' + data[i].SportType +
+            Value: '<input type="checkbox" ' + checkboxDelete + ' onclick="delete_row_click()" class="cansee_checkbox_delete_row" data-sporttype="' + data[i].SportType +
                 '" data-bettype="' + data[i].BetType + '" data-currency="' + data[i].Currency + '" data-siteid="' + data[i].SiteId + '" />'
         });
         bodyRows.push(row);
@@ -110,135 +110,150 @@ function BindElement() {
         $('#gridCanSee').find('.cansee_checkbox_launchedlevel_row').bootstrapToggle(toggleValue);
     });
 }
+
+function delete_row_click() {
+    var flag = true;
+    $(".cansee_checkbox_delete_row").each(function () {
+        if (this.checked === false && !this.disabled)
+            flag = false;
+    });
+    $("#canseeCheckAll").attr('checked', flag);
+}
+
 function canseeCheckAllDelete(checkboxall) {
     $('#gridCanSee').find('.cansee_checkbox_delete_row').not(':disabled').prop('checked', checkboxall.checked);
 }
 
 function UpdateCanSee_LaunchedLevel() {
-    if (confirm('Are you sure you want to update LaunchedLevel on these rows?')) {
-        parent.BlockUI();
-        var rows = [];
-        var checkboxs = $('#gridCanSee').find('.cansee_checkbox_launchedlevel_row');
-        checkboxs.each(function (index, option) {
-            var launchedlevel_old = $(option).attr("data-launchedlevel") === "1";
-            var launchedlevel_new = $(option).prop("checked");
-            if (launchedlevel_old !== launchedlevel_new) {
-                rows.push({
-                    SportType: $(option).attr("data-sporttype"),
-                    BetType: $(option).attr("data-bettype"),
-                    Currency: $(option).attr("data-currency"),
-                    SiteId: $(option).attr("data-siteid"),
-                    IsTest: $(option).attr("data-istest") == "false" ? "0" : "1",
-                    LaunchedLevel: launchedlevel_new ? "1" : "0"
-                });
-            }
+    var rows = [];
+    var checkboxs = $('#gridCanSee').find('.cansee_checkbox_launchedlevel_row');
+    checkboxs.each(function (index, option) {
+        var launchedlevel_old = $(option).attr("data-launchedlevel") === "1";
+        var launchedlevel_new = $(option).prop("checked");
+        if (launchedlevel_old !== launchedlevel_new) {
+            rows.push({
+                SportType: $(option).attr("data-sporttype"),
+                BetType: $(option).attr("data-bettype"),
+                Currency: $(option).attr("data-currency"),
+                SiteId: $(option).attr("data-siteid"),
+                IsTest: $(option).attr("data-istest") == "false" ? "0" : "1",
+                LaunchedLevel: launchedlevel_new ? "1" : "0"
+            });
+        }
 
-        });
-
-        $.ajax({
-            contentType: 'application/json; charset=utf-8',
-            url: 'UpdateCanSee',
-            type: 'POST',
-            dataType: 'json',
-            data: JSON.stringify({ 'Entities': rows, 'ColumnMode': 2 }),
-            success: function (result) {
-                if (result.ErrorCode === 0) {
-                    SearchCanSee();
-                } else {
-                    alert(result.ErrorMessage);
+    });
+    if (rows.length > 0) {
+        if (confirm('Are you sure you want to update LaunchedLevel on these rows?')) {
+            parent.BlockUI();
+            $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                url: 'UpdateCanSee',
+                type: 'POST',
+                dataType: 'json',
+                data: JSON.stringify({ 'Entities': rows, 'ColumnMode': 2 }),
+                success: function (result) {
+                    if (result.ErrorCode === 0) {
+                        SearchCanSee();
+                    } else {
+                        alert(result.ErrorMessage);
+                    }
+                },
+                error: function (xhr) {
+                    alert('Internal Server Error.');
+                },
+                complete: function () {
+                    parent.jQuery.unblockUI();
                 }
-            },
-            error: function (xhr) {
-                alert('Internal Server Error.');
-            },
-            complete: function () {
-                parent.jQuery.unblockUI();
-            }
-        });
+            });
+        }
     }
+    
 }
 
 function UpdateCanSee_IsTest() {
-    if (confirm('Are you sure you want to update IsTest on these rows?')) {
-        parent.BlockUI();
-        var rows = [];
-        var checkboxs = $('#gridCanSee').find('.cansee_checkbox_istest_row');
-        checkboxs.each(function (index, option) {
-            var isTest_old = $(option).attr("data-istest") === "true";
-            var isTest_new = $(option).prop("checked");
-            if (isTest_old !== isTest_new) {
-                rows.push({
-                    SportType: $(option).attr("data-sporttype"),
-                    BetType: $(option).attr("data-bettype"),
-                    Currency: $(option).attr("data-currency"),
-                    SiteId: $(option).attr("data-siteid"),
-                    IsTest: isTest_new ? "1" : "0",
-                    LaunchedLevel: $(option).attr("data-launchedlevel")
-                });
-            }
+    var rows = [];
+    var checkboxs = $('#gridCanSee').find('.cansee_checkbox_istest_row');
+    checkboxs.each(function (index, option) {
+        var isTest_old = $(option).attr("data-istest") === "true";
+        var isTest_new = $(option).prop("checked");
+        if (isTest_old !== isTest_new) {
+            rows.push({
+                SportType: $(option).attr("data-sporttype"),
+                BetType: $(option).attr("data-bettype"),
+                Currency: $(option).attr("data-currency"),
+                SiteId: $(option).attr("data-siteid"),
+                IsTest: isTest_new ? "1" : "0",
+                LaunchedLevel: $(option).attr("data-launchedlevel")
+            });
+        }
 
-        });
+    });
+    if (rows.length > 0) {
+        if (confirm('Are you sure you want to update IsTest on these rows?')) {
+            parent.BlockUI();
 
-        $.ajax({
-            contentType: 'application/json; charset=utf-8',
-            url: 'UpdateCanSee',
-            type: 'POST',
-            dataType: 'json',
-            data: JSON.stringify({ 'Entities': rows, 'ColumnMode': 1 }),
-            success: function (result) {
-                if (result.ErrorCode === 0) {
-                    SearchCanSee();
-                } else {
-                    alert(result.ErrorMessage);
+            $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                url: 'UpdateCanSee',
+                type: 'POST',
+                dataType: 'json',
+                data: JSON.stringify({ 'Entities': rows, 'ColumnMode': 1 }),
+                success: function (result) {
+                    if (result.ErrorCode === 0) {
+                        SearchCanSee();
+                    } else {
+                        alert(result.ErrorMessage);
+                    }
+                },
+                error: function (xhr) {
+                    alert('Internal Server Error.');
+                },
+                complete: function () {
+                    parent.jQuery.unblockUI();
                 }
-            },
-            error: function (xhr) {
-                alert('Internal Server Error.');
-            },
-            complete: function () {
-                parent.jQuery.unblockUI();
-            }
-        });
-    }
+            });
+        }
+    }    
 }
 
 function DeleteCanSee() {
-    if (confirm('Are you sure you want to delete these rows?')) {
-        parent.BlockUI();
-        var rows = [];
-        var checkboxs = $('#gridCanSee').find('.cansee_checkbox_delete_row');
-        checkboxs.each(function (index, option) {
-            if ($(option).prop("checked")) {
-                rows.push({
-                    SportType: $(option).attr("data-sporttype"),
-                    BetType: $(option).attr("data-bettype"),
-                    Currency: $(option).attr("data-currency"),
-                    SiteId: $(option).attr("data-siteid")
-                });
-            }
-        });
-
-        $.ajax({
-            contentType: 'application/json; charset=utf-8',
-            url: 'DeleteCanSee',
-            type: 'POST',
-            dataType: 'json',
-            data: JSON.stringify({ 'Entities': rows }),
-            success: function (result) {
-                if (result.ErrorCode === 0) {
-                    alert('Deleted successfully.');
-                    SearchCanSee();
-                } else {
-                    alert(result.ErrorMessage);
+    var rows = [];
+    var checkboxs = $('#gridCanSee').find('.cansee_checkbox_delete_row');
+    checkboxs.each(function (index, option) {
+        if ($(option).prop("checked")) {
+            rows.push({
+                SportType: $(option).attr("data-sporttype"),
+                BetType: $(option).attr("data-bettype"),
+                Currency: $(option).attr("data-currency"),
+                SiteId: $(option).attr("data-siteid")
+            });
+        }
+    });
+    if (rows.length > 0) {
+        if (confirm('Are you sure you want to delete these rows?')) {
+            parent.BlockUI();
+            $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                url: 'DeleteCanSee',
+                type: 'POST',
+                dataType: 'json',
+                data: JSON.stringify({ 'Entities': rows }),
+                success: function (result) {
+                    if (result.ErrorCode === 0) {
+                        alert('Deleted successfully.');
+                        SearchCanSee();
+                    } else {
+                        alert(result.ErrorMessage);
+                    }
+                },
+                error: function (xhr) {
+                    alert('Internal Server Error.');
+                },
+                complete: function () {
+                    parent.jQuery.unblockUI();
                 }
-            },
-            error: function (xhr) {
-                alert('Internal Server Error.');
-            },
-            complete: function () {
-                parent.jQuery.unblockUI();
-            }
-        });
+            });
+        }
     }
 }
 
