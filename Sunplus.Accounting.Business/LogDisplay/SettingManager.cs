@@ -33,6 +33,8 @@ namespace Sunplus.Accounting.Business.LogDisplay
 
         private readonly NewLicenseeLogFormatter _newLicenseeLogFormatter;
 
+        private int[] listBetsettingActionIDLicensee = new int[] { 2012, 2013, 2019, 2036};
+
         public SettingManager(ILogDisplayDAO logDAO, CN88LogFormatter cn88LogFormatter, NewLicenseeLogFormatter newLicenseeLogFormatter)
         {
             _logDAO = logDAO;
@@ -608,7 +610,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
                 if (sport.Id == 1)
                 {
                     // soccer
-                    if (hasElements && actionId != 2012)
+                    if (hasElements && !listBetsettingActionIDLicensee.Contains(actionId))
                     {
                         rex = new Regex("v[0-9]", RegexOptions.IgnoreCase);
                         sportVals = (from attr in attrs
