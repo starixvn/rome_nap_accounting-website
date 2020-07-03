@@ -288,6 +288,7 @@ function RenderMultiSelect(id) {
 }
 
 $(document).ready(function () {
+    $("#ddlCanSeeSportTypeId").select2();
     RenderMultiSelect('ddlCanSeeCurrencyId');
     RenderMultiSelect('ddlCanSeeSiteNameId');
 });

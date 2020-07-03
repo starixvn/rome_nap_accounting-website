@@ -1,24 +1,25 @@
 ﻿@using Fanex.Tarus.Admin.ManageProductSetting.ViewModel;
 @model ManageProductSettingViewModel
 
-<div class="filterBox" style="border: solid 1px #7C98A4; height:40px;">
+<div class="filterBox" style="border: solid 1px #7C98A4; overflow: hidden;">
     <div class="filterContent">
         <div id="errSportMsg"></div>
-        <div class="floatLeft w50"><label for="ddlSBMSportTypesId" class="">SportType</label></div>
-        <div class="floatLeft ">
-            @Html.DropDownList("ddlCanSeeSportTypeId", Model.SportTypes, new { id = "ddlCanSeeSportTypeId" })
+        <div class="floatLeft w80"><label for="ddlSBMSportTypesId" class="">SportType</label></div>
+        <div class="floatLeft w250">
+            @Html.DropDownList("ddlCanSeeSportTypeId", Model.SportTypes, new { id = "ddlCanSeeSportTypeId", @class = "w250" })
         </div>
-        <div class="floatLeft"><label for="txtBetType">BetType</label></div>
-        <div class="floatLeft"><input id="txtBetType" type="text" class="numeric-input-tinyint" /></div>
-        <div class="floatLeft"><label for="txtBetTypeName">BetTypeName</label></div>
-        <div class="floatLeft"><input id="txtBetTypeName" type="text" /></div>
-        <div class="floatLeft w105"><label for="ddlSBMCurrencyId" class="">CurrencyName</label></div>
-        <div class="floatLeft ">
+        <div class="floatLeft w80"><label for="txtBetType">BetType</label></div>
+        <div class="floatLeft"><input id="txtBetType" type="text" class="w250 numeric-input-smallint" /></div>
+        <div class="floatLeft w80"><label for="txtBetTypeName">BetTypeName</label></div>
+        <div class="floatLeft"><input id="txtBetTypeName" type="text" class="w250" /></div>
+        <div class="clear"></div>
+        <div class="floatLeft w80"><label for="ddlSBMCurrencyId" class="">CurrencyName</label></div>
+        <div class="floatLeft w250">
             @Html.DropDownList("ddlCanSeeCurrencyId", Model.Currencies, new { id = "ddlCanSeeCurrencyId" })
         </div>
 
-        <div class="floatLeft w50"><label for="ddlSBMSiteNameId" class="">SiteName</label></div>
-        <div class="floatLeft ">
+        <div class="floatLeft w80"><label for="ddlSBMSiteNameId" class="">SiteName</label></div>
+        <div class="floatLeft w250">
             @Html.DropDownList("ddlCanSeeSiteNameId", Model.Sites, new { id = "ddlCanSeeSiteNameId" })
         </div>
 
