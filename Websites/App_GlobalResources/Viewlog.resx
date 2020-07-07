@@ -3255,4 +3255,10 @@
   <data name="Disable225_5601" xml:space="preserve">
     <value>Disabled ION</value>
   </data>
+  <data name="BS1" xml:space="preserve">
+    <value>Add Bet Setting Sportsbook</value>
+  </data>
+  <data name="BS2" xml:space="preserve">
+    <value>Add Bet Setting Non-Sportsbook</value>
+  </data>
 </root>

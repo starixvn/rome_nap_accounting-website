@@ -11,6 +11,8 @@
 
         private readonly IRemotingRefService _remotingRefService;
 
+        private readonly List<string> listBetSettingByProduct = new List<string>() { "BS", "BS2" };
+
         public NewLicenseeLogFormatter() : this(null)
         { }
 
@@ -33,17 +35,29 @@
             {
                 foreach (var ele in xmlLoad.Elements())
                 {
-                    if(ele.Name.LocalName.Equals("GeneralInfo"))
+                    if (ele.Name.LocalName.Equals("GeneralInfo"))
                     {
                         detail.Vals.Add(ParseGeneralInfo(ele));
                     }
-                    else if(ele.Name.LocalName.Equals("PT"))
+                    else if (ele.Name.LocalName.Equals("PT"))
                     {
                         detail.Vals.Add(ParsePositionTaking(ele));
                     }
-                    else if (ele.Name.LocalName.Equals("BS"))
+                    else if (listBetSettingByProduct.Contains(ele.Name.LocalName))
                     {
                         detail.Vals.Add(ParseBetSetting(ele));
+                    }
+                    else if (ele.Name.LocalName.Equals("BS1"))
+                    {
+                        detail.Vals.Add(ParseSportsbookBetSetting(ele));
+                    }
+                    else if (ele.Name.LocalName.Equals("SL"))
+                    {
+                        var SLNodes = ParseStakeLevel(ele);
+                        foreach (var node in SLNodes)
+                        {
+                            detail.Vals.Add(node);
+                        }
                     }
                 }
             }
@@ -103,6 +117,60 @@
             }
 
             return trackingNode;
+        }
+
+        private TrackingNode ParseSportsbookBetSetting(XElement element)
+        {
+            var trackingNode = new TrackingNode();
+            trackingNode.Vals = new List<TrackingElement>();
+            trackingNode.Groups = new List<TrackingGroup>();
+            trackingNode.N = LogFormater.GetResourceName(element.Name.LocalName);
+            foreach (var ele in element.Elements())
+            {
+                var trackingGroup = new TrackingGroup();
+                trackingGroup.N = _remotingRefService.GetSportName(ele.Attribute("ID").Value, "en-US");
+                trackingGroup.Vals = new List<TrackingElement>();
+                foreach (var attr in ele.Attributes())
+                {
+                    if (!attr.Name.LocalName.Equals("ID"))
+                    {
+                        trackingGroup.Vals.Add(LogFormater.FormatElement(attr));
+                    }
+                }
+
+                trackingNode.Groups.Add(trackingGroup);
+            }
+
+            return trackingNode;
+        }
+
+        private List <TrackingNode> ParseStakeLevel(XElement element)
+        {
+            var trackingNodes = new List<TrackingNode>();
+            foreach (var product in element.Elements())
+            {
+                var productNode = new TrackingNode();                
+                productNode.N = "Stake Level " + _remotingRefService.GetResourceDataByRefIdAndResourceId("Product", product.Attribute("ID").Value, "en-US", null);
+                productNode.Vals = new List<TrackingElement>();
+                productNode.Groups = new List<TrackingGroup>();
+                foreach (var bettype in product.Elements())
+                {
+                    var bettypeGroup = new TrackingGroup();
+                    bettypeGroup.N = _remotingRefService.GetBetTypeName(bettype.Attribute("ID").Value, "en-US");
+                    bettypeGroup.Vals = new List<TrackingElement>();
+                    foreach (var attr in bettype.Attributes())
+                    {
+                        if (!attr.Name.LocalName.Equals("ID"))
+                        {
+                            bettypeGroup.Vals.Add(LogFormater.FormatElement(attr));
+                        }
+                    }
+                    productNode.Groups.Add(bettypeGroup);
+                }
+                trackingNodes.Add(productNode);
+            }
+
+            return trackingNodes;
         }
     }
 }
