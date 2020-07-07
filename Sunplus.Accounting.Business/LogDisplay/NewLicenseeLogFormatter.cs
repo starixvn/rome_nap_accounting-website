@@ -84,7 +84,7 @@
             {
                 trackingNode.Vals.Add(new TrackingElement()
                 {
-                    N = _remotingRefService.GetResourceDataByRefIdAndResourceId("Product", ele.Attribute("ID").Value, "en-US", null),
+                    N = GetGroupName("Product", ele.Attribute("ID").Value),
                     P = ele.Attribute("ID").Name.LocalName,
                     Val = ele.Attribute("PT").Value
                 });
@@ -124,7 +124,7 @@
             foreach (var product in element.Elements())
             {
                 var productNode = new TrackingNode();
-                productNode.N = "Stake Level " + _remotingRefService.GetResourceDataByRefIdAndResourceId("Product", product.Attribute("ID").Value, "en-US", null);
+                productNode.N = "Stake Level " + GetGroupName("Product", product.Attribute("ID").Value);
                 productNode.Vals = new List<TrackingElement>();
                 productNode.Groups = new List<TrackingGroup>();
                 foreach (var bettype in product.Elements())
