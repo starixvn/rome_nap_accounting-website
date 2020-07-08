@@ -1,4 +1,6 @@
-﻿@model IEnumerable<SelectListItem> 
+﻿@using Fanex.Tarus.Admin.ManageProductSetting.ViewModel;
+
+@model ManageProductSettingViewModel
 <style>
     .setting-edit {
         width: 180px;
@@ -21,7 +23,7 @@
         <tr>
             <td><label for="SBMProduct">Product</label></td>
             <td>
-                @Html.DropDownList("SBMProductId", Model, new { id = "SBMProductId", @class = "setting-edit" })
+                @Html.DropDownList("SBMProductId", Model.Products, new { id = "SBMProductId", @class = "setting-edit" })
             </td>
             <td></td>
             <td></td>

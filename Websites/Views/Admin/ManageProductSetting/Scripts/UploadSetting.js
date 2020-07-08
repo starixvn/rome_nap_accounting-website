@@ -17,6 +17,9 @@ $(document).ready(function () {
             case "tab_4":
                 action = 'InsertSportBettypeMatrix';
                 break;
+            case "tab_5":
+                action = 'InsertCanSee';
+                break;
         }
         var formData = new FormData(form[0]);
         $.ajax({
@@ -28,8 +31,8 @@ $(document).ready(function () {
             enctype: 'multipart/form-data',
             data: formData,
             success: function (result) {
-                showAlertMessage('errMsg', result.ErrorCode == 0 ? 'Updated successfully.' : result.ErrorMessage, result.ErrorCode == 0 ? 0 : 1);
-                if (result.ErrorCode == 0) {
+                showAlertMessage('errMsg', result.ErrorCode === 0 ? 'Updated successfully.' : result.ErrorMessage, result.ErrorCode === 0 ? 0 : 1);
+                if (result.ErrorCode === 0) {
                     setTimeout(function () {
                         $('#insert-setting').dialog('close');
                         Search();
@@ -57,13 +60,13 @@ var InsertSetting = function () {
 
 function ValidateUploadFile() {
     var filename = $('#uploadFile').val();
-    if (filename == '' || filename == undefined) {
+    if (filename === '' || filename == undefined) {
         showAlertMessage('errMsg', 'Please select file to upload.', 1);
         return false;
     }
 
     var extfilename = filename.substring(filename.lastIndexOf('.') + 1, filename.length).toLowerCase();
-    if (extfilename != 'xls' && extfilename != 'xlsx') {
+    if (extfilename !== 'xls' && extfilename !== 'xlsx') {
         showAlertMessage('errMsg', 'Sorry, You choose invalid file extension. Please choose an Excel file (.xls or .xlsx)', 1);
         return false;
     }

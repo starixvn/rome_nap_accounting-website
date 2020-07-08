@@ -41,6 +41,10 @@ function Search() {
         case "tab_4":
             SearchSBM(50, 1);
             break;
+        case "tab_5":
+            SearchCanSee();
+            break;
+
     }
 }
 function UpdateSampleUrl() {
@@ -57,6 +61,9 @@ function UpdateSampleUrl() {
         case "tab_4":
             $('#sampleSettingLink').prop("href", rootUrl + "Views/Admin/ManageProductSetting/SportBettypeMatrix/SportBettypeMatrix.xls");
             break;
+        case "tab_5":
+            $('#sampleSettingLink').prop("href", rootUrl + "Views/Admin/ManageProductSetting/CanSee/CanSee.xls");
+            break;
     }
 }
 
@@ -68,6 +75,6 @@ function OpenInsertSetting() {
         title: 'Import From Excel',
         modal: true,
         width: 700,
-        height: 200,
+        height: 200
     });
 }
