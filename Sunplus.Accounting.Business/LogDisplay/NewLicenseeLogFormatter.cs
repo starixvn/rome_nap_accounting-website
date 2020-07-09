@@ -155,11 +155,23 @@
             }
             else if (elementName == "Sport")
             {
+                if (Id == "1999")
+                {
+                    return "Soccer Parlay";
+                }
+                else if (Id == "999")
+                {
+                    return "Mix Sports Parlay";
+                }
                 return _remotingRefService.GetSportName(Id, "en-US");
+            }
+            else if (elementName == "Bettype")
+            {
+                return _remotingRefService.GetBetTypeName(Id, "en-US");
             }
             else
             {
-                return _remotingRefService.GetBetTypeName(Id, "en-US");
+                return LogFormater.GetResourceName(elementName);
             }
         }
     }
