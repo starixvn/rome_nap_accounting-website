@@ -649,6 +649,19 @@ function showProgressiveJackpotWonDetails(transId, custId, betType) {
     openResultsPopUp(param);
 }
 
+function showPPJackpotWonDetails(transId, custId, betType) {
+    var param = {
+        url: "RNGCasinoBetList/JackpotDetails",
+        title: "Pramatic Jackpot Won Details",
+        jsonParam: { TransId: transId, CustId: custId, BetType: betType },
+        width: 1030,
+        height: 600
+    };
+
+    openResultsPopUp(param);
+}
+
+
 // -------------------- Functions whose name must name by Fanex.Toco
 function ViewRNGCasinoResult(matchId, race, betType, sportType, refNo, winlostDate, custId) {
     var params = $.param({
