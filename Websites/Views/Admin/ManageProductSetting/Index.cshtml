@@ -102,7 +102,7 @@
     <script type="text/javascript" src="@Url.Content("~/Views/Admin/ManageProductSetting/CanSee/Scripts/Index.js?v=" + @WebSettings.Version)"></script>
     <script type="text/javascript">
         var hasHostPermission = @Json.Encode(hasHostPermission);
-        var rootUrl = "@(new Uri(Request.Url, Url.Content("~")))";
+        var rootUrl = "@Url.Content("~")";
     </script>
 </body>
 </html>
