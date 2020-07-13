@@ -2082,4 +2082,7 @@
   <data name="Disable224_5500" xml:space="preserve">
     <value>Disabled RNG War</value>
   </data>
+  <data name="Disable98_1" xml:space="preserve">
+    <value>Disabled Saba Virtual Sports</value>
+  </data>
 </root>

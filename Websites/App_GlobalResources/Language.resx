@@ -2472,4 +2472,10 @@
   <data name="FinanceAccessDenied" xml:space="preserve">
     <value>You are not authorized to view this account</value>
   </data>
+  <data name="enableSabaVirtualSports" xml:space="preserve">
+    <value>Saba Virtual Sports</value>
+  </data>
+  <data name="lblDisabledSabaVirtualSportsUpline" xml:space="preserve">
+    <value>Saba Virtual Sports has been disabled at upline</value>
+  </data>
 </root>

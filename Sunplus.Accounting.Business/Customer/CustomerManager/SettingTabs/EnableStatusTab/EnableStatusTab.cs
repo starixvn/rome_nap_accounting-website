@@ -50,7 +50,8 @@
                 IsShowNG2 = !customerInfoViewModel.HideEnabledCheckBoxNG2Credit,
                 IsShowRNGLottery = !customerInfoViewModel.HideRNGLottery,
                 IsShowVirtualGames = !customerInfoViewModel.HideVirtualGames,
-                IsShowSabaclub = !customerInfoViewModel.HideSabaclub
+                IsShowSabaclub = !customerInfoViewModel.HideSabaclub,
+                IsShowSabaVirtualSports = !customerInfoViewModel.HideSabaVirtualSports
             };
 
             htmlcontent = RenderClosedStatus(htmlcontent, customerInfoViewModel);
@@ -507,6 +508,20 @@
                                                renderLeftPanelParameter,
                                                "Update Virtual Games Status",
                                                Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdVirtualGames);
+                            break;
+
+                        case "54":
+                            _renderLeftPanelService.RenderEnableProductBoxDCS2(
+                                               row1,
+                                               productRow,
+                                               sg,
+                                               ref htmlcontent,
+                                               isManageCustomerAccess,
+                                               "SabaVirtualSports",
+                                               renderLeftPanelParameter.IsShowSabaVirtualSports,
+                                               renderLeftPanelParameter,
+                                               "Update Saba Virtual Sports Status",
+                                               Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdSabaVirtualSports);
                             break;
                     }
                 }
