@@ -1,0 +1,70 @@
+﻿@using Sunplus.Accounting.Core.Configurations;
+@{
+    Page.Title = "Licensee Code";
+}
+<html>
+<head>
+    <link href="@Url.Content("~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/App_Themes/Public/common.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/App_Themes/Public/input.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/App_Themes/Public/table.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/App_Themes/Public/Message.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Grid.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/js/MultipleSelect/jquery.multiselect.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Pagination.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Views/LicenseeCode/Styles/index.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div class="main">
+        <div class="maincontent">
+            <table border="0" cellpadding="0" cellspacing="0" class="maincontent_header">
+                <tbody>
+                    <tr>
+                        <td class="maincontent_headerL"></td>
+                        <td class="maincontent_headerC">
+                            Manage Licensee Code
+                        </td>
+                        <td class="maincontent_headerR"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="maincontent_box">
+                <table>
+                    <tr>
+                        <td class="b">
+                            &nbsp;&nbsp;Licensee:&nbsp;
+                        </td>
+                        <td class="b">
+                            @Html.DropDownList("selectLicensee", (IEnumerable<SelectListItem>)ViewBag.Licensees, new { id = "selectLicensee" })
+                        </td>
+                        <td class="b">
+                            &nbsp;&nbsp;Status:&nbsp;
+                        </td>
+                        <td class="b">
+                            @Html.DropDownList("selectStatus", (IEnumerable<SelectListItem>)ViewBag.Status, new { id = "selectStatus" })
+                        </td>
+                        <td style="float: left; display:flex; margin-left:10px;">
+                            <input class="btn" style="margin: auto;" type="submit" onclick="Search()" value="Submit" />
+                            <span style="margin: auto 5px;" id="btnSearchLicensee" title=""></span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div>
+                <div class="mainContent" style="margin-top:10px; width: 517px;">
+                    <div id="errMsg"></div>
+                    <div id="gridLicenseeCode" class="freegrid"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @Html.Partial("~/Views/LicenseeCode/_Add.cshtml")
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-1.8.2.min.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-ui-1.9.1.min.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Grid.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Pagination.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/js/MultipleSelect/jquery.multiselect.min.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/js/common.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Views/LicenseeCode/Scripts/index.js?v=" + WebSettings.Version)"></script>
+</body>
+</html>

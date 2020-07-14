@@ -1,0 +1,24 @@
+﻿.confirmMsg {
+    padding: 10px;
+    text-align: center;
+}
+
+.filterbox {
+    min-height: 100%;
+    margin-top: 4px;
+    padding-top: 4px;
+    padding-bottom: 5px;
+    background: url(../App_Themes/Images/Banner/bg_head_tb.jpg) repeat-x scroll left bottom #FFFFFF;
+    border: 1px solid #7C98A4;
+    text-align: left;
+}
+
+.statusNA {
+    padding: 5px 0;
+    background-color: darkgray;
+}
+
+.statusCN {
+    padding: 5px 0;
+    background-color: greenyellow;
+}
