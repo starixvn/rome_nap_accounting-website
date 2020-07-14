@@ -267,7 +267,8 @@
         {
             if (5601 <= betTypeId && betTypeId <= 5699)
                 return SportContants.IonCasino;
-
+            if (1021 <= betTypeId && betTypeId <= 1099)
+                return SportContants.KenoLottery;
             return 0;
         }
             
