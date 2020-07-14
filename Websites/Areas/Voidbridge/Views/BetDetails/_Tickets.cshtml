@@ -82,29 +82,39 @@ var isShowWinLoss = statusTemp != "running";
         </td>
         <td class="r">
             <div class="column-winloss table-cell">
-                @if (statusTemp == "running" || statusTemp == "waiting")
+                @if (betdetail.Ticket.BetTypeId.Equals(4297))
                 {
                     <div class="margin-top-5">
                         -
                     </div>
                 }
-                else if (statusTemp == "void" || statusTemp == "reject")
-                {
-                    <div class="margin-top-5">
-                        0.00
-                    </div>
-                }
                 else
                 {
-                    <div>
-                        <div class="@betlistHelper.IsNegative(betdetail.Ticket.Winlost) margin-top-5">
-                            @winlost.Format(2)
-                        </div>
+                    if (statusTemp == "running" || statusTemp == "waiting")
+                    {
                         <div class="margin-top-5">
-                            @playerComm.Format(2)
+                            -
                         </div>
-                    </div>
+                    }
+                    else if (statusTemp == "void" || statusTemp == "reject")
+                    {
+                        <div class="margin-top-5">
+                            0.00
+                        </div>
+                    }
+                    else
+                    {
+                        <div>
+                            <div class="@betlistHelper.IsNegative(betdetail.Ticket.Winlost) margin-top-5">
+                                @winlost.Format(2)
+                            </div>
+                            <div class="margin-top-5">
+                                @playerComm.Format(2)
+                            </div>
+                        </div>
+                    }
                 }
+
             </div>
         </td>
         <td class="c">

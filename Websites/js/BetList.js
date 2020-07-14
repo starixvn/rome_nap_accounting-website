@@ -652,7 +652,7 @@ function showProgressiveJackpotWonDetails(transId, custId, betType) {
 function showPPJackpotWonDetails(transId, custId, betType) {
     var param = {
         url: "RNGCasinoBetList/JackpotDetails",
-        title: "Pramatic Jackpot Won Details",
+        title: "PP Jackpot Won Details",
         jsonParam: { TransId: transId, CustId: custId, BetType: betType },
         width: 1030,
         height: 600
