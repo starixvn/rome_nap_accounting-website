@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Fanex.CustomerSetting.Module.Core.Models;
 using Fanex.Tarus.Customer.DangerousGrouping.Criterias;
 using Fanex.Tarus.Customer.DangerousGrouping.DataAccess;
@@ -78,7 +79,7 @@ namespace Fanex.Tarus.Customer.DangerousGrouping.Services
 
         public Result UpdateMultipleCustomersDanger(MultipleCustomersDangerUpdateRequest multipleCustomersDangerUpdateRequest, int userId, string userHostAddress)
         {
-            var usernames = multipleCustomersDangerUpdateRequest.CustomerNames.Split(',');
+            var usernames = multipleCustomersDangerUpdateRequest.CustomerNames.Split(',').Distinct();
             foreach (var username in usernames)
             {
                 var criteria = new UpdateCustomerDangerCriteria
