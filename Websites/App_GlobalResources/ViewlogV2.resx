@@ -2085,4 +2085,14 @@
   <data name="Disable98_1" xml:space="preserve">
     <value>Disabled Saba Virtual Sports</value>
   </data>
+  <data name="disable202_1527" xml:space="preserve">
+    <value>Disabled Lucky28</value>
+  </data>
+  <data name="disable202_1528" xml:space="preserve">
+    <value>Disabled Max Keno (20+1)</value>
+  </data>
+  <data name="disable202_1529" xml:space="preserve">
+    <value>Disabled 
+Max Keno (20+1) 2</value>
+  </data>
 </root>
