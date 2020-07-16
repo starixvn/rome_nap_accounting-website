@@ -25,30 +25,35 @@
             <td>
                 @Html.DropDownList("SBMProductId", Model.Products, new { id = "SBMProductId", @class = "setting-edit" })
             </td>
+            <td style="width: 40px;"></td>
             <td></td>
             <td></td>
         </tr>
         <tr>
             <td><label for="SBMSportType">SportType</label></td>
             <td><span id="SBMSportType"></span></td>
+            <td style="width: 40px;"></td>
             <td><label for="SBMSportTypeName">SportTypeName</label></td>
             <td><span id="SBMSportTypeName"></span></td>
         </tr>
         <tr>
             <td><label for="SBMBetType">BetType</label></td>
             <td><span id="SBMBetType"></span></td>
+            <td style="width: 40px;"></td>
             <td><label for="SBMBetTypeName">BetTypeName</label></td>
             <td><span id="SBMBetTypeName"></span></td>
         </tr>
         <tr>
             <td><label for="SBMIsLive">IsLive</label></td>
             <td><input id="SBMIsLive" type="checkbox" disabled /></td>
+            <td style="width: 40px;"></td>
             <td><label for="SBMEnabled">Enabled</label></td>
             <td><input id="SBMEnabled" type="checkbox" /></td>
         </tr>
         <tr>
             <td><label for="SBMIsTest">IsTest</label></td>
             <td><input id="SBMIsTest" type="checkbox" /></td>
+            <td style="width: 40px;"></td>
             <td><label for="SBMProduct">EventType</label></td>
             <td>
                 <select id="SBMEventType" class="setting-edit">
@@ -64,6 +69,7 @@
         <tr>
             <td><label for="SBMSubProduct">SubProduct</label></td>
             <td><input id="SBMSubProduct" type="text" class="setting-edit" maxlength="500" /></td>
+            <td style="width: 40px;"></td>
             <td><label for="SBMRefTable">RefTable</label></td>
             <td>
                 <select id="SBMRefTable" class="setting-edit">
@@ -75,7 +81,7 @@
             </td>
         </tr>
         <tr>
-            <td colspan="4" style="text-align: center">
+            <td colspan="5" style="text-align: center">
                 <input id="btnSBMUpdate" class="btn" type="button" value="Submit" />
             </td>
         </tr>

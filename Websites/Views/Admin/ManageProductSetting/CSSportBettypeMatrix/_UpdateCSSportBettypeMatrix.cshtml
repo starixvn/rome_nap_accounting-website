@@ -1,0 +1,103 @@
+﻿@using Fanex.Tarus.Admin.ManageProductSetting.ViewModel;
+@model ManageProductSettingViewModel
+<style>
+    .setting-edit {
+        width: 180px;
+        height: 18px;
+    }
+
+    label {
+        font-weight: bold;
+        padding-right: 10px;
+    }
+
+    .hint-note {
+        line-height: 10px !important;
+    }
+
+    .mgl40 {
+        margin-left: 40px;
+    }
+</style>
+<form id="edit-cs-sbm-form" style="display: none;">
+    <div id="updateCSSBMErrMsg">
+    </div>
+    <table style="line-height: 28px; margin-top: 10px; border-collapse: collapse;">
+        <tr>
+            <td><label for="CSSBMProduct">Product</label></td>
+            <td>
+                @Html.DropDownList("CSSBMProductId", Model.Products, new { id = "CSSBMProductId", @class = "setting-edit" })
+            </td>
+            <td style="width: 40px;"></td>  
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><label for="CSSBMSportType">SportType</label></td>
+            <td><span id="CSSBMSportType"></span></td>
+            <td style="width: 40px;"></td>
+            <td><label for="CSSBMSportTypeName">SportTypeName</label></td>
+            <td><span id="CSSBMSportTypeName"></span></td>
+        </tr>
+        <tr>
+            <td><label for="CSSBMBetType">BetType</label></td>
+            <td><span id="CSSBMBetType"></span></td>
+            <td style="width: 40px;"></td>
+            <td><label for="CSSBMBetTypeName">BetTypeName</label></td>
+            <td><span id="CSSBMBetTypeName"></span></td>
+        </tr>
+        <tr>
+            <td><label for="CSSBMIsLive">IsLive</label></td>
+            <td><input id="CSSBMIsLive" type="checkbox" disabled /></td>
+            <td style="width: 40px;"></td>
+            <td><label for="CSSBMEnabled">Enabled</label></td>
+            <td><input id="CSSBMEnabled" type="checkbox" /></td>
+        </tr>
+        <tr>
+            <td><label for="CSSBMIsTest">IsTest</label></td>
+            <td><input id="CSSBMIsTest" type="checkbox" /></td>
+            <td style="width: 40px;"></td>
+            <td><label for="CSSBMProduct">EventType</label></td>
+            <td>
+                <select id="CSSBMEventType" class="setting-edit">
+                    <option value="0">[0] Can't join with any table</option>
+                    <option value="1">[1] Match</option>
+                    <option value="2">[2] Outright</option>
+                    <option value="3">[3] VSOutright/VSRaceInfo</option>
+                    <option value="4">[4] DW</option>
+                    <option value="5">[5] Match3rd</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><label for="CSSBMSubProduct">SubProduct</label></td>
+            <td><input id="CSSBMSubProduct" type="text" class="setting-edit" style="width: 174px;" maxlength="500" /></td>
+            <td style="width: 40px;"></td>
+            <td><label for="CSSBMRefTable">RefTable</label></td>
+            <td>
+                <select id="CSSBMRefTable" class="setting-edit">
+                    <option value="0">[0] Bettrans</option>
+                    <option value="1">[1] BettransRNG</option>
+                    <option value="2">[2] BettransLC</option>
+                    <option value="3">[3] translog</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><label for="CSSBMSportTypeGroup">SportTypeGroup</label></td>
+            <td>
+                <select id="CSSBMSportTypeGroup" class="setting-edit"></select>
+            </td>
+            <td style="width: 40px;"></td>
+            <td><label for="CSSBMBetTypeGroup">BetTypeGroup</label></td>
+            <td>
+                <select id="CSSBMBetTypeGroup" class="setting-edit"></select>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="5" style="text-align: center">
+                <input id="btnCSSBMUpdate" class="btn" type="button" value="Submit" />
+            </td>
+        </tr>
+    </table>
+</form>

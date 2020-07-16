@@ -104,7 +104,7 @@ function reRenderSBMAfterPaged(currentPageIndex, itemsPerPage) {
 
 function EditSBM(index) {
     $('#updateSBMErrMsg').html('');
-    $('#SBMProductId').val(cachedSBMData.SportBettypeMatrixEntities[index].ProductId);
+    $('#SBMProductId').val(cachedSBMData.SportBettypeMatrixEntities[index].ProductId).trigger('change');
     $('#SBMSportType').html(cachedSBMData.SportBettypeMatrixEntities[index].SportType);
     $('#SBMSportTypeName').html(cachedSBMData.SportBettypeMatrixEntities[index].SportTypeName);
     $('#SBMBetType').html(cachedSBMData.SportBettypeMatrixEntities[index].BetType);
@@ -112,16 +112,16 @@ function EditSBM(index) {
     $('#SBMIsLive').prop('checked', cachedSBMData.SportBettypeMatrixEntities[index].IsLive === 'True' ? true : false);
     $('#SBMEnabled').prop('checked', cachedSBMData.SportBettypeMatrixEntities[index].Enabled === 'True' ? true : false);
     $('#SBMIsTest').prop('checked', cachedSBMData.SportBettypeMatrixEntities[index].IsTest === 'True' ? true : false);
-    $('#SBMEventType').val(cachedSBMData.SportBettypeMatrixEntities[index].EventType);
+    $('#SBMEventType').val(cachedSBMData.SportBettypeMatrixEntities[index].EventType).trigger('change');
     $('#SBMSubProduct').val(cachedSBMData.SportBettypeMatrixEntities[index].SubProduct);
-    $('#SBMRefTable').val(cachedSBMData.SportBettypeMatrixEntities[index].RefTable);
+    $('#SBMRefTable').val(cachedSBMData.SportBettypeMatrixEntities[index].RefTable).trigger('change');
     $('#btnSBMUpdate').off();
     $('#btnSBMUpdate').click(function () { return UpdateSBM(index); });
     $('#edit-sbm-form').dialog({
         title: 'Edit Sport Bettype Matrix',
         modal: true,
-        width: 600,
-        height: 400,
+        width: 606,
+        height: 'auto',
     });
 }
 
@@ -222,4 +222,7 @@ function RenderMultiSelect(id) {
 
 $(document).ready(function () {
     RenderMultiSelect('ddlSBMProductId');
+    $("#SBMProductId").select2();
+    $("#SBMEventType").select2();
+    $("#SBMRefTable").select2();
 });

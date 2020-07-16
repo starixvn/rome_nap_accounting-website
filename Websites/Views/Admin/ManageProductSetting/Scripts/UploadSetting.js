@@ -18,6 +18,12 @@ $(document).ready(function () {
                 action = 'InsertSportBettypeMatrix';
                 break;
             case "tab_5":
+                action = 'InsertCSSportBettypeMatrix';
+                break;
+            case "tab_6":
+                action = 'InsertRefResource';
+                break;
+            case "tab_7":
                 action = 'InsertCanSee';
                 break;
         }
