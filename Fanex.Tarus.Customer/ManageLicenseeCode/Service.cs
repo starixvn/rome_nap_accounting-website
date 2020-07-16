@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
+    using Sunplus.Accounting.DataAccess.Report;
     using Fanex.CustomerSetting.Module.Core.Models;
     using Fanex.Tarus.Customer.ManageLicenseeCode.Criterias;
     using Fanex.Tarus.Customer.ManageLicenseeCode.Models;
@@ -25,12 +26,10 @@
     public class Service : IService
     {
         private readonly IDataAccess dataAccess;
-        private readonly BalanceUp balanceUp;
 
         public Service()
         {
             dataAccess = new DataAccess();
-            balanceUp = dataAccess.GetBalanceUp();
         }
         public IEnumerable<SelectListItem> GetActiveLicensee()
         {
@@ -48,7 +47,7 @@
         {
             var criteria = new LicenseeTransferCodeSelCriteria
             {
-                MoveBetsDay = balanceUp.MoveBetsDay,
+                MoveBetsDay = ReportUtils.BalanceUp.MoveBetsDay,
                 LicenseeIds = request.LicenseeIds,
                 StatusIds = request.StatusIds,
                 PageIndex = request.PageIndex,

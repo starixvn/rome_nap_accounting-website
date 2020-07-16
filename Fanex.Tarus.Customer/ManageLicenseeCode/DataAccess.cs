@@ -12,8 +12,6 @@
 
     public interface IDataAccess
     {
-        BalanceUp GetBalanceUp();
-
         IEnumerable<Licensee> GetActiveLicensee();
 
         SelLicenseeCodeResponse GetLicenseeCode(LicenseeTransferCodeSelCriteria criteria);
@@ -25,36 +23,6 @@
     }
     public class DataAccess : IDataAccess
     {
-        public BalanceUp GetBalanceUp()
-        {
-            try
-            {
-                using (var objDb = new ObjectDb("Age_SelBalanceUpDay"))
-                {
-                    using (var reader = objDb.ExecuteReader())
-                    {
-                        if (reader.Read())
-                        {
-                            var balanceUp = new BalanceUp
-                            {
-                                BalanceUpDay = DateTime.Parse(reader["BalanceUpDay"].ToString()),
-                                MoveBetsDay = DateTime.Parse(reader["MoveBetsDay"].ToString())
-                            };
-
-                            return balanceUp;
-                        }
-                    }
-
-                    return null;
-                }
-            }
-            catch (Exception ex)
-            {
-                LogExtensions.ExceptionHandler(ex);
-                return null;
-            }
-        }
-
         public IEnumerable<Licensee> GetActiveLicensee()
         {
             try
