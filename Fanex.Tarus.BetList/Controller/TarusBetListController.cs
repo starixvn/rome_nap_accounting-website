@@ -78,7 +78,7 @@ namespace Fanex.Tarus.BetList.Controller
             ViewBag.ToDate = toDate == dateTmp ? DateTime.Today : toDate;
             ViewBag.IsCredit = isDeposit;
             ViewBag.IsCN88 = isCN88;
-            ViewBag.TicketStatus = TicketStatusConstants.List.Select(i => new SelectListItem { Text = BetListResources.ResourceManager.GetString(i.Value), Value = i.Key.ToString()});
+            ViewBag.TicketStatus = TicketStatusConstants.List.Select(i => new SelectListItem { Text = BetListResources.ResourceManager.GetString(i.Value), Value = i.Key.ToString() });
             return View("~/Views/BetList/BetlistByCustInfo/Index.cshtml");
         }
 
@@ -138,14 +138,14 @@ namespace Fanex.Tarus.BetList.Controller
             return new EmptyResult();
         }
 
-        public ActionResult ExportJackpotDetails(long transId, int custId, int betType)
+        public ActionResult ExportJackpotDetails(long transId, int custId, int betType, string title)
         {
             IBetDetailsExporter exporter = new BetDetailsExporter();
 
             var response = System.Web.HttpContext.Current.Response;
             response.Clear();
             response.ContentType = "application/vnd.ms-excel";
-            response.AddHeader("Content-Disposition", string.Format("attachment; filename={0}.xls", "ProgressiveJackotWon_Details"));
+            response.AddHeader("Content-Disposition", string.Format("attachment; filename={0}.xls", title.Replace(" ", string.Empty)));
 
             var ticketDetails = exporter.GetJackpotDetails(transId, custId, betType);
             exporter.Export(ticketDetails, response.OutputStream, SportContants.RNG_RNGGame);

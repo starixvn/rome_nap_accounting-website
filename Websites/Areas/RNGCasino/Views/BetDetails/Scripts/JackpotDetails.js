@@ -37,6 +37,7 @@ var JackpotDetailsManager = function () {
             transId: transId,
             custId: custId,
             betType: betType,
+            title: title
         };
 
         gridContainer = $("#jackpot-details");
@@ -47,7 +48,8 @@ var JackpotDetailsManager = function () {
             var exportData = {
                 transId: formData.transId,
                 custId: formData.custId,
-                betType: formData.betType
+                betType: formData.betType,
+                title: formData.title
             };
             var url = window.rootUrl + "TarusBetList/ExportJackpotDetails?" + $.param(exportData);
             $("#frmExportExcel").attr("src", url);
