@@ -124,7 +124,7 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enabling/Disabling this status does not affect E-Sports.
+        ///   Looks up a localized string similar to Enabling/Disabling this status does not affect E-Sports &amp; Basketball.
         /// </summary>
         public static string Apply_Virtual_Rate_Notes {
             get {
