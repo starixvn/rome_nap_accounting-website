@@ -15,7 +15,7 @@ namespace Fanex.Tarus.Customer.Business.LicenseeDcsSetting
 
         IEnumerable<ProductSettingTypeEntity> GetProducts();
 
-        decimal GetPositionTaking(int productId, int superId);
+        List<PTEntity> GetPositionTaking(int productId, int superId);
 
         IEnumerable<BetSettingEntity> GetBetSettings(int productId, int superId, int agentId);
 
@@ -30,7 +30,7 @@ namespace Fanex.Tarus.Customer.Business.LicenseeDcsSetting
         Result UpdatePositionTaking(
             int productId,
             int superId,
-            decimal superPT,
+            List<PTEntity> superPT,
             IEnumerable<int> agentIds,
             bool isAgentOnly,
             int userId,

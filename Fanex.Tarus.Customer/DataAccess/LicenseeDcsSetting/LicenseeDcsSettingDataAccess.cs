@@ -25,11 +25,11 @@ namespace Fanex.Tarus.Customer.DataAccess.LicenseeDcsSetting
         public IEnumerable<ProductSettingTypeEntity> GetProducts(ICriteria criteria)
             => ExecuteDataReader(criteria, GetProductSettingType);
 
-        public decimal GetPositionTaking(ICriteria criteria)
+        public List<PTEntity> GetPositionTaking(ICriteria criteria)
         {
             var entities = ExecuteDataReader(criteria, GetPositionTaking);
 
-            return entities == null || !entities.Any() ? 0 : entities.First();
+            return entities.ToList();
         }
 
         public IEnumerable<BetSettingEntity> GetBetSettings(ICriteria criteria)
@@ -57,19 +57,20 @@ namespace Fanex.Tarus.Customer.DataAccess.LicenseeDcsSetting
             }
 
             var result = from super in supers
-                    join agent in agents
-                    on new { super.SportType, super.BetType }
-                    equals new { agent.SportType, agent.BetType }
-                    select new BetSettingEntity() {
-                        SportType = super.SportType,
-                        BetType = super.BetType,
-                        MinBet = agent.MinBet,
-                        SuperMinBet = super.MinBet,
-                        MaxBet = agent.MaxBet,
-                        SuperMaxBet = super.MaxBet,
-                        MaxPerMatch = agent.MaxPerMatch,
-                        SuperMaxPerMatch = super.MaxPerMatch
-                    };
+                         join agent in agents
+                         on new { super.SportType, super.BetType }
+                         equals new { agent.SportType, agent.BetType }
+                         select new BetSettingEntity()
+                         {
+                             SportType = super.SportType,
+                             BetType = super.BetType,
+                             MinBet = agent.MinBet,
+                             SuperMinBet = super.MinBet,
+                             MaxBet = agent.MaxBet,
+                             SuperMaxBet = super.MaxBet,
+                             MaxPerMatch = agent.MaxPerMatch,
+                             SuperMaxPerMatch = super.MaxPerMatch
+                         };
 
             return result.ToList();
         }
@@ -170,8 +171,15 @@ namespace Fanex.Tarus.Customer.DataAccess.LicenseeDcsSetting
                 reader["productname"].ToString(),
                 Convert.ToByte(reader["settingtype"]));
 
-        private static decimal GetPositionTaking(IDataReader reader)
-            => Convert.ToDecimal(reader["agentpt"]);
+        private static PTEntity GetPositionTaking(IDataReader reader)
+            => new PTEntity
+            {
+                AgentPT = Convert.ToDecimal(reader["agentpt"]),
+                SportType = Convert.ToInt32(reader["sporttype"]),
+                BetType = Convert.ToInt32(reader["bettype"]),
+                IsLive = Convert.ToBoolean(reader["islive"])
+            };
+
 
         private static BetSettingEntity GetBetSetting(IDataReader reader)
             => new BetSettingEntity(

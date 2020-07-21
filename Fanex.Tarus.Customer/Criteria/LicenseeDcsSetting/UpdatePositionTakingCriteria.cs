@@ -1,11 +1,16 @@
-﻿namespace Fanex.Tarus.Customer.Criteria.LicenseeDcsSetting
+﻿using System.Collections.Generic;
+using System.Text;
+using Fanex.NAP.Framework.Data;
+using Fanex.Tarus.Customer.Entities.LicenseeDcsSetting;
+
+namespace Fanex.Tarus.Customer.Criteria.LicenseeDcsSetting
 {
     internal sealed class UpdatePositionTakingCriteria : NonQueryCriteria
     {
         public UpdatePositionTakingCriteria(
             int productId,
             int superId,
-            decimal superPT,
+            List<PTEntity> PTList,
             int agentId,
             bool isAgentOnly,
             int userId,
@@ -13,7 +18,7 @@
         {
             ProductId = productId;
             SuperId = superId;
-            PT = superPT;
+            this.PTList = PTList;
             AgentId = agentId;
             IsAgentOnly = isAgentOnly;
             UserId = userId;
@@ -24,8 +29,35 @@
 
         public int SuperId { get; }
 
-        public decimal PT { get; }
+        [SpParam(Ignored = true)]
+        public List<PTEntity> PTList { get; }
 
+        public string PT
+        {
+            get
+            {
+                var builder = new StringBuilder();
+                builder.Append("<ROOT>");
+                foreach (var entity in PTList)
+                {
+                    builder.Append("<PT ");
+                    builder.Append("SportType = \"" + entity.SportType + "\" ");
+                    builder.Append("BetType = \"" + entity.BetType + "\" ");
+                    var pt = entity.AgentPT;
+                    if (0 <= pt && pt <= 1)
+                    {
+                        pt *= 100;
+                    }
+
+                    builder.Append("PT = \"" + pt + "\" ");
+                    builder.Append("IsLive = \"" + (entity.IsLive?"1":"0") + "\" ");
+                    builder.Append("/>");
+                }
+
+                builder.Append("</ROOT>");
+                return builder.ToString();
+            }
+        }
         public int AgentId { get; }
 
         public bool IsAgentOnly { get; }
@@ -34,6 +66,6 @@
             => "Acc_Dep_CustSetting_PositionTakingSettingUpd";
 
         public override bool IsValid()
-            => base.IsValid() && ProductId > 0 && 0 <= PT && PT <= 100 && AgentId > 0;
+            => base.IsValid() && ProductId > 0 && AgentId > 0 && PTList.Count > 0;
     }
 }
