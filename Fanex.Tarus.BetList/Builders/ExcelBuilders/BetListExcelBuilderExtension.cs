@@ -80,16 +80,22 @@
 
             var rtfHelper = builder.RTFHelper;
             var rtfNumber = new RTFNumber(rtfHelper.RTFRenderer, rtfHelper.PosFont, rtfHelper.NegFont);
-
-            if (!string.IsNullOrEmpty(winlossModel.WinLoss))
+            if(ticket.BetTypeId == 4297)
             {
-                rtfNumber.Render(winlossModel.WinLoss + "\n");
+                rtfNumber.Render("-");
             }
-
-            if (winlossModel.ShowComm && !string.IsNullOrEmpty(winlossModel.Comm))
+            else
             {
-                rtfHelper.RTFRenderer.AddText(winlossModel.Comm, rtfHelper.PosFont);
-            }
+                if (!string.IsNullOrEmpty(winlossModel.WinLoss))
+                {
+                    rtfNumber.Render(winlossModel.WinLoss + "\n");
+                }
+
+                if (winlossModel.ShowComm && !string.IsNullOrEmpty(winlossModel.Comm))
+                {
+                    rtfHelper.RTFRenderer.AddText(winlossModel.Comm, rtfHelper.PosFont);
+                }
+            }            
 
             var rtfWinloss = rtfHelper.RTFRenderer.Render();
             rtfHelper.RTFRenderer.Clear();

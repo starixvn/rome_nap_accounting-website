@@ -638,16 +638,31 @@ function ShowBonusDetails(refCode, transId) {
 }
 
 function showProgressiveJackpotWonDetails(transId, custId, betType) {
+    var title = "Progressive Jackpot Won Details";
     var param = {
         url: "RNGCasinoBetList/JackpotDetails",
-        title: "Progressive Jackpot Won Details",
-        jsonParam: { TransId: transId, CustId: custId, BetType: betType },
+        title: title,
+        jsonParam: { TransId: transId, CustId: custId, BetType: betType, Title: title },
         width: 1030,
         height: 600
     };
 
     openResultsPopUp(param);
 }
+
+function showPPJackpotWonDetails(transId, custId, betType) {
+    var title = "PP Jackpot Won Details";
+    var param = {
+        url: "RNGCasinoBetList/JackpotDetails",
+        title: title,
+        jsonParam: { TransId: transId, CustId: custId, BetType: betType, Title: title },
+        width: 1030,
+        height: 600
+    };
+
+    openResultsPopUp(param);
+}
+
 
 // -------------------- Functions whose name must name by Fanex.Toco
 function ViewRNGCasinoResult(matchId, race, betType, sportType, refNo, winlostDate, custId) {
