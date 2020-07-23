@@ -11,6 +11,8 @@
 
         private readonly IRemotingRefService _remotingRefService;
 
+        private readonly List<string> listBetSettingKey= new List<string>() { "BS", "BS1", "BS2" };
+
         public NewLicenseeLogFormatter() : this(null)
         { }
 
@@ -18,6 +20,7 @@
         {
             _remotingRefService = remotingRefService ?? new RemotingRefService();
         }
+
         public bool IsNewLicenseeActionId(int actionId) => actionId == logActionId;
 
         public TrackingLog GenerateDetail(string trackingValue, string spName, string actionName)
@@ -33,17 +36,25 @@
             {
                 foreach (var ele in xmlLoad.Elements())
                 {
-                    if(ele.Name.LocalName.Equals("GeneralInfo"))
+                    if (ele.Name.LocalName.Equals("GeneralInfo"))
                     {
                         detail.Vals.Add(ParseGeneralInfo(ele));
                     }
-                    else if(ele.Name.LocalName.Equals("PT"))
+                    else if (ele.Name.LocalName.Equals("PT"))
                     {
                         detail.Vals.Add(ParsePositionTaking(ele));
                     }
-                    else if (ele.Name.LocalName.Equals("BS"))
+                    else if (listBetSettingKey.Contains(ele.Name.LocalName))
                     {
                         detail.Vals.Add(ParseBetSetting(ele));
+                    }
+                    else if (ele.Name.LocalName.Equals("SL"))
+                    {
+                        var SLNodes = ParseStakeLevel(ele);
+                        foreach (var node in SLNodes)
+                        {
+                            detail.Vals.Add(node);
+                        }
                     }
                 }
             }
@@ -69,10 +80,11 @@
             var trackingNode = new TrackingNode();
             trackingNode.Vals = new List<TrackingElement>();
             trackingNode.N = LogFormater.GetResourceName(element.Name.LocalName);
-            foreach(var ele in element.Elements())
+            foreach (var ele in element.Elements())
             {
-                trackingNode.Vals.Add(new TrackingElement() {
-                    N =_remotingRefService.GetResourceDataByRefIdAndResourceId("Product", ele.Attribute("ID").Value, "en-US", null),
+                trackingNode.Vals.Add(new TrackingElement()
+                {
+                    N = GetGroupName("Product", ele.Attribute("ID").Value),
                     P = ele.Attribute("ID").Name.LocalName,
                     Val = ele.Attribute("PT").Value
                 });
@@ -80,6 +92,7 @@
 
             return trackingNode;
         }
+
         private TrackingNode ParseBetSetting(XElement element)
         {
             var trackingNode = new TrackingNode();
@@ -89,7 +102,7 @@
             foreach (var ele in element.Elements())
             {
                 var trackingGroup = new TrackingGroup();
-                trackingGroup.N = _remotingRefService.GetResourceDataByRefIdAndResourceId("Product", ele.Attribute("ID").Value, "en-US", null);
+                trackingGroup.N = GetGroupName(ele.Name.ToString(), ele.Attribute("ID").Value);
                 trackingGroup.Vals = new List<TrackingElement>();
                 foreach (var attr in ele.Attributes())
                 {
@@ -103,6 +116,63 @@
             }
 
             return trackingNode;
+        }
+
+        private List<TrackingNode> ParseStakeLevel(XElement element)
+        {
+            var trackingNodes = new List<TrackingNode>();
+            foreach (var product in element.Elements())
+            {
+                var productNode = new TrackingNode();
+                productNode.N = "Stake Level " + GetGroupName("Product", product.Attribute("ID").Value);
+                productNode.Vals = new List<TrackingElement>();
+                productNode.Groups = new List<TrackingGroup>();
+                foreach (var bettype in product.Elements())
+                {
+                    var bettypeGroup = new TrackingGroup();
+                    bettypeGroup.N = GetGroupName(bettype.Name.ToString(), bettype.Attribute("ID").Value);
+                    bettypeGroup.Vals = new List<TrackingElement>();
+                    foreach (var attr in bettype.Attributes())
+                    {
+                        if (!attr.Name.LocalName.Equals("ID"))
+                        {
+                            bettypeGroup.Vals.Add(LogFormater.FormatElement(attr));
+                        }
+                    }
+                    productNode.Groups.Add(bettypeGroup);
+                }
+                trackingNodes.Add(productNode);
+            }
+
+            return trackingNodes;
+        }
+
+        private string GetGroupName(string elementName, string Id)
+        {
+            if (elementName == "Product")
+            {
+                return _remotingRefService.GetResourceDataByRefIdAndResourceId("Product", Id, "en-US", null);
+            }
+            else if (elementName == "Sport")
+            {
+                if (Id == "1999")
+                {
+                    return "Soccer Parlay";
+                }
+                else if (Id == "999")
+                {
+                    return "Mix Sports Parlay";
+                }
+                return _remotingRefService.GetSportName(Id, "en-US");
+            }
+            else if (elementName == "Bettype")
+            {
+                return _remotingRefService.GetBetTypeName(Id, "en-US");
+            }
+            else
+            {
+                return LogFormater.GetResourceName(elementName);
+            }
         }
     }
 }
