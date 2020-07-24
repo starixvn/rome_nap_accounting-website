@@ -21,4 +21,18 @@
     <Setting Key="Acc_SportBettypeMatrix_Ins" SpName="Acc_SportBettypeMatrix_Ins" DbName="DBPRO.bodb02.bodbAdminNet" />
     <Setting Key="Acc_SportBettypeMatrix_Del" SpName="Acc_SportBettypeMatrix_Del" DbName="DBPRO.bodb02.bodbAdminNet" />
   </Function>
+  <Function Name="Manage CN88 Sport Bettype Matrix">
+    <Setting Key="Acc_CS_SportBettypeMatrix_Sel" SpName="Acc_CS_SportBettypeMatrix_Sel" DbName="DBPRO.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_CS_SportBettypeMatrix_Upd" SpName="Acc_CS_SportBettypeMatrix_Upd" DbName="DBPRO.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_CS_SportBettypeMatrix_Ins" SpName="Acc_CS_SportBettypeMatrix_Ins" DbName="DBPRO.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_CS_SportBettypeMatrix_Del" SpName="Acc_CS_SportBettypeMatrix_Del" DbName="DBPRO.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_CS_SportGroup_Sel" SpName="Acc_CS_SportGroup_Sel" DbName="DBPRO.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_CS_BettypeGroup_Sel" SpName="Acc_CS_BettypeGroup_Sel" DbName="DBPRO.bodb02.bodbAdminNet" />
+  </Function>
+  <Function Name="Manage RefResource">
+    <Setting Key="Acc_RefResource_Del" SpName="Acc_RefResource_Del" DbName="DBPRO.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_RefResource_Ins" SpName="Acc_RefResource_Ins" DbName="DBPRO.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_RefResource_Sel" SpName="Acc_RefResource_Sel" DbName="DBPRO.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_RefResource_Upd" SpName="Acc_RefResource_Upd" DbName="DBPRO.bodb02.bodbAdminNet" />
+  </Function>
 </Functions>

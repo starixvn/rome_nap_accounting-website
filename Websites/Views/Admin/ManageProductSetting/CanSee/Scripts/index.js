@@ -63,14 +63,14 @@ function RenderCanSeeTable(data) {
     {
         columns: [
             { HeaderText: "SportType", Width: 50, Name: "SportType", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: "SportTypeName", Width: 200, Name: "SportTypeName", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "SportTypeName", Width: 100, Name: "SportTypeName", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "BetType", Width: 50, Name: "BetType", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "BetTypeName", Width: 200, Name: "BetTypeName", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "Currency", Width: 50, Name: "Currency", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: "CurrencyName", Width: 200, Name: "CurrencyName", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "CurrencyName", Width: 100, Name: "CurrencyName", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "SiteId", Width: 50, Name: "SiteId", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: "SiteName", Width: 200, Name: "SiteName", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: "IsLaunched", Width: 100, Name: "IsLaunched", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "SiteName", Width: 100, Name: "SiteName", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "IsLaunched", Width: 80, Name: "IsLaunched", HeaderAlign: "center", CellAlign: "center" },
             {
                 HeaderText: 'IsTest <br/>' +
                     '<img class="edit-entity" title="Save" src="../App_Themes/Images/btUpdateL.gif" style="cursor: pointer" width="14" height="14" onclick="UpdateCanSee_IsTest()" >' +
@@ -87,7 +87,7 @@ function RenderCanSeeTable(data) {
                 HeaderText:
                     'Delete <br/> <img class="edit-entity" title="You cannot delete row(s) which IsTest is Pro." src="../App_Themes/Images/icn_del.png" style="cursor: pointer" onclick="DeleteCanSee()" >' +
                     '&nbsp;&nbsp;<input type="checkbox" id="canseeCheckAll" onclick="canseeCheckAllDelete(this)" />',
-                Width: 120, Name: "Delete", HeaderAlign: "center", CellAlign: "center"
+                Width: 60, Name: "Delete", HeaderAlign: "center", CellAlign: "center"
             }
         ],
         bodyRows: bodyRows,

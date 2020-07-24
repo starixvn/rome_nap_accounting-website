@@ -42,9 +42,14 @@ function Search() {
             SearchSBM(50, 1);
             break;
         case "tab_5":
+            GetGroupsAndSearchCSSBM(50, 1);
+            break;
+        case "tab_6":
+            SearchRefResource(50, 1);
+            break;
+        case "tab_7":
             SearchCanSee();
             break;
-
     }
 }
 function UpdateSampleUrl() {
@@ -62,6 +67,12 @@ function UpdateSampleUrl() {
             $('#sampleSettingLink').prop("href", rootUrl + "Views/Admin/ManageProductSetting/SportBettypeMatrix/SportBettypeMatrix.xls");
             break;
         case "tab_5":
+            $('#sampleSettingLink').prop("href", rootUrl + "Views/Admin/ManageProductSetting/CSSportBettypeMatrix/CS_SportBettypeMatrix.xls");
+            break;
+        case "tab_6":
+            $('#sampleSettingLink').prop("href", rootUrl + "Views/Admin/ManageProductSetting/RefResource/RefResource.xls");
+            break;
+        case "tab_7":
             $('#sampleSettingLink').prop("href", rootUrl + "Views/Admin/ManageProductSetting/CanSee/CanSee.xls");
             break;
     }
@@ -76,5 +87,37 @@ function OpenInsertSetting() {
         modal: true,
         width: 700,
         height: 200
+    });
+}
+
+
+function RenderMultiSelect(id) {
+    var multiselectData = [];
+    var options = $('#' + id + ' > option');
+    $('#' + id + ' > option').each(function () {
+        var $this = $(this);
+        multiselectData.push({
+            Id: id + $this.attr('value'),
+            Value: $this.attr('value'),
+            Text: $this.html(),
+            Checked: true,
+            Enable: true,
+            CssClass: "",
+            Items: []
+        });
+    });
+
+
+    $('#' + id).multiSelect({
+        minWidth: 255,
+        maxHeight: 450,
+        shadow: true,
+        showHeader: true,
+        isCheckAll: true,
+        showFooter: false,
+        showFilter: true,
+        checkAllText: "All",
+        listData: multiselectData,
+        noItemText: "No item selected."
     });
 }
