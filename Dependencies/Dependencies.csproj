@@ -168,9 +168,8 @@
     <Reference Include="Fanex.BetList.Keno, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Keno.1.2.0\lib\net40\Fanex.BetList.Keno.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.KenoLottery, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.KenoLottery.1.2.0\lib\net40\Fanex.BetList.KenoLottery.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Fanex.BetList.KenoLottery, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.KenoLottery.1.3.0\lib\net40\Fanex.BetList.KenoLottery.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.MetricGaming, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.MetricGaming.1.1.0\lib\net40\Fanex.BetList.MetricGaming.dll</HintPath>
@@ -254,8 +253,8 @@
     <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.4.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.2.0.4.5\lib\net461\Fanex.CustomerSetting.Module.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Keno.KenoResources, Version=1.0.2.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.Keno.KenoResources.1.0.2.1\lib\net461\Fanex.CustomerSetting.Module.Keno.KenoResources.dll</HintPath>
+    <Reference Include="Fanex.CustomerSetting.Module.Keno.KenoResources, Version=1.0.2.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.Keno.KenoResources.1.0.2.2\lib\net461\Fanex.CustomerSetting.Module.Keno.KenoResources.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Keno.KenoSetting, Version=2.0.1.7, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.CustomerSetting.Module.Keno.Setting.2.0.1.7\lib\net461\Fanex.CustomerSetting.Module.Keno.KenoSetting.dll</HintPath>
