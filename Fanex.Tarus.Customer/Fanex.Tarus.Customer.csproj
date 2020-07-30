@@ -601,6 +601,7 @@
     <Compile Include="Entities\JsonWithoutNullField.cs" />
     <Compile Include="Entities\LicenseeDcsSetting\StakeLevelEntity.cs" />
     <Compile Include="Entities\LicenseeDcsSetting\StakeLevelGroupEntity.cs" />
+    <Compile Include="Entities\LicenseeDcsSetting\PTEntity.cs" />
     <Compile Include="Entities\LockUnsuspend\LockUnsuspendResultEntity.cs" />
     <Compile Include="Entities\ManageRobots2\RobotStatus.cs" />
     <Compile Include="Entities\Player3rd\Player3rd.cs" />

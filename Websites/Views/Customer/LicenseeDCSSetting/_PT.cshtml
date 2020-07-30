@@ -9,12 +9,16 @@
         <tr class="title">
             <td colspan="2">@LicenseeDcsSettingLabels.PositionTaking <span>(@Model.ShowSuperOrAgentNames())</span></td>
         </tr>
-        <tr>
-            <td class="halfwidth">@Model.ProductName</td>
-            <td>
-                @Html.DropDownList("ptDropDown", Model.PositionTakingList, new { @class = "halfwidth" })
-            </td>
-        </tr>
+        @foreach (var pt in Model.SuperPT)
+        {
+            <tr data-sporttype="@pt.SportType" data-bettype="@pt.BetType" data-pt="@pt.AgentPTPercent" data-islive="@pt.IsLive" class="ptrow_js">
+                <td class="halfwidth">@pt.BetTypeName</td>
+                <td>
+                    @Html.DropDownList("ptDropDown" + pt.BetType, Model.PositionTakingList(pt.AgentPTPercent), new { @class = "halfwidth dropdownpt" })
+                </td>
+            </tr>
+        }
+
     </tbody>
 </table>
 <button type="button" class="update-setting-button mT5" id="btnUpdatePT" disabled="disabled">@LicenseeDcsSettingLabels.Update</button>

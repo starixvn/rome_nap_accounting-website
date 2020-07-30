@@ -30,13 +30,9 @@ namespace Fanex.Tarus.Customer.Business.LicenseeDcsSetting
         public IEnumerable<ProductSettingTypeEntity> GetProducts()
             => _settingDataAccess.GetProducts(new GetProductCriteria());
 
-        public decimal GetPositionTaking(int productId, int superId)
-        {
-            decimal pt = _settingDataAccess.GetPositionTaking(
+        public List<PTEntity> GetPositionTaking(int productId, int superId)
+            => _settingDataAccess.GetPositionTaking(
                 new GetPositionTakingCriteria(productId, superId));
-
-            return 0 <= pt && pt <= 100 ? pt / 100 : pt;
-        }
 
         public IEnumerable<BetSettingEntity> GetBetSettings(int productId, int superId, int agentId)
             => _settingDataAccess.GetBetSettings(
@@ -103,7 +99,7 @@ namespace Fanex.Tarus.Customer.Business.LicenseeDcsSetting
         public Result UpdatePositionTaking(
             int productId,
             int superId,
-            decimal superPT,
+            List<PTEntity> superPT,
             IEnumerable<int> agentIds,
             bool isAgentOnly,
             int userId,
@@ -238,17 +234,12 @@ namespace Fanex.Tarus.Customer.Business.LicenseeDcsSetting
         private Result UpdatePositionTaking(
             int productId,
             int superId,
-            decimal superPT,
+            List<PTEntity> superPT,
             int agentId,
             bool isAgentOnly,
             int userId,
             string ip)
-        {
-            if (0 <= superPT && superPT <= 1)
-            {
-                superPT *= 100;
-            }
-
+        { 
             ICriteria criteria = new UpdatePositionTakingCriteria(productId, superId, superPT, agentId, isAgentOnly, userId, ip);
 
             return _settingDataAccess.ExecuteNonQuery(criteria);
