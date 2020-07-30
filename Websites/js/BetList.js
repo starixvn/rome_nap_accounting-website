@@ -611,7 +611,7 @@ function showAGCasinoDetails(refno, winlossDate, custId, transType) {
 function showSabaClubDetails(refno, winlossDate, custId, transType) {
     var rngCasinoParam = {
         url: "RNGCasinoBetList/BetDetails",
-        title: "Sabaclub Details",
+        title: "Saba.club Details",
         jsonParam: { TransId: refno, Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 200, PageSize: 500 },
         width: 1030,
         height: 600
@@ -840,6 +840,10 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
         case 186: // Virtual Tennis.
             return getVirtualHRAndTennisParam(matchid, sporttype);
 
+        case 200: // Saba.Club
+            // custId, gameroundid, gameid, siteId
+            return getSabaClubParam(betcheck, transdesc, bettype, matchcode);
+
         case 208:
         case 209:
         case 210: // RNG Casino.
@@ -880,7 +884,6 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
         case 165:
             // custId, gameTypeId, transId3rd, viewerLevel
             return getCardClubParam(betcheck, bettype, sporttype, matchcode);
-
         default:
             return undefined;
     }
@@ -1055,6 +1058,18 @@ function getCardClubParam(custId, gameTypeId, sportType, transId3rd) {
     };
 }
 
+function getSabaClubParam(custId, gameRoundId, gameId, siteId) {
+
+    return {
+        url: "../Report/ViewSabaClubResult.aspx",
+        title: "Saba.club Result",
+        jsonParam: { custId: custId, GameRoundId: gameRoundId, GameId: gameId, SiteId: siteId },
+        width: 945,
+        height: 500,
+        iframe: "innerFrameSabaclubResult"
+    };
+}
+
 function getMacauGamesParam(matchcode, betcheck) {
     return {
         url: "../Report/ViewVoidbridgeResult.aspx",
@@ -1171,7 +1186,7 @@ function openResultsPopUp(resultParam) {
     var url = resultParam.url + "?" + $.param(resultParam.jsonParam);
     var width = resultParam.width || 600;
     var height = resultParam.height || 500;
-    var popupName = resultParam.title.replace(/\s/g, "").replace(/\//g, "");
+    var popupName = resultParam.title.replace(/\s/g, "").replace(/\//g, "").replace(".","");
     var resizable = resultParam.resizable == undefined ? true : resultParam.resizable;
 
     if (resultParam.iframe) {
