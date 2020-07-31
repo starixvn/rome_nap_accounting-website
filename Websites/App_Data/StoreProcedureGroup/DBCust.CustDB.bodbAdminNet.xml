@@ -383,6 +383,6 @@
     <Setting Key="Acc_ManageCansee_Sel" SpName="Acc_ManageCansee_Sel" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
   </Function>
   <Function Name="UM On product">
-    <Setting Key="Acc_CheckUM" SpName="Acc_CheckUM" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CheckUM" SpName="Acc_CheckUM_uat4" DbName="DBCUST.CustDB.bodbAdminNet" />
   </Function>
 </Functions>

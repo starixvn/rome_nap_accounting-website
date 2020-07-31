@@ -140,7 +140,7 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
                 errorResults.Add(new Result()
                 {
                     ErrorCode = "1000",
-                    ErrorMessage = "Invalid Data format!"
+                    ErrorMessage = errMsg
                 });
             }
             return errorResults;
