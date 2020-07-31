@@ -122,7 +122,8 @@
             string name,
             bool currStatus,
             bool hasDownLine,
-            bool UpLineStatus)
+            bool UpLineStatus,
+            bool lockUnsuspend)
         {
             string classname = string.Empty;
             string jsonclick = string.Empty;
@@ -148,7 +149,16 @@
                 classname = (currStatus) ? "chkchecked" : "chkuncheck";
             }
 
-            return new SettingControl(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblSuspended"), currStatus, false, jsonclick, jsonmouseout, jsonmouseover, classname, name, 0, false, string.Empty);
+            return new SettingControl(RenderSuspendedLabel(lockUnsuspend), currStatus, false, jsonclick, jsonmouseout, jsonmouseover, classname, name, 0, false, string.Empty);
+        }
+
+        private string RenderSuspendedLabel(bool lockUnsuspend)
+        {
+            if (!lockUnsuspend)
+            {
+                return ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblSuspended");
+            }
+            return "<span style=\"color:red;\">" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblSuspended") + " (locked)</span>";
         }
 
         private SettingControl GetSettingControlNumberGame(

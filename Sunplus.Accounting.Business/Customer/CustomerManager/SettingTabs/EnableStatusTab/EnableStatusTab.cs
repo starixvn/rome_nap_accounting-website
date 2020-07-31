@@ -9,10 +9,8 @@
     using DataAccess;
     using DNAide.Web;
     using Entities;
-    using GlobalResources;
     using Security;
     using System;
-    using System.Collections.Generic;
     using System.Data;
 
     public partial class CustomerManager
@@ -160,7 +158,13 @@
 
             TemplateHandler.Assign(ref htmlcontent, "{closedCustomer}", closedStatusBlock);
 
+            TemplateHandler.Assign(ref htmlcontent, "{ClosedLabel}", RenderClosedLabel(customerInfoViewModel.LockUnsuspend));
             return htmlcontent;
+        }
+
+        private string RenderClosedLabel(bool lockUnsuspend)
+        {
+            return lockUnsuspend ? "<span style=\"color:red;\">Closed (locked)</span>" : "Closed";
         }
 
         private string AssignTemplateValue(string htmlcontent)
@@ -317,7 +321,6 @@
                 {
                     TemplateHandler.RemoveBlock(ref htmlcontent, "dangerous");
                 }
-                 
             }
 
             return htmlcontent;
@@ -443,6 +446,7 @@
                                                "Update Virtual Sports Status",
                                                5);
                             break;
+
                         case "22":
                             _renderLeftPanelService.RenderEnableProductBoxDCS2(
                                                row1,
@@ -456,6 +460,7 @@
                                                "Update Macau Games Status",
                                                22);
                             break;
+
                         case "23":
                             _renderLeftPanelService.RenderEnableProductBoxDCS2(
                                                row1,
@@ -469,6 +474,7 @@
                                                "Update " + _remotingRefService.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2") + " Status",
                                                23);
                             break;
+
                         case "24":
                             _renderLeftPanelService.RenderEnableProductBoxDCS2(
                                                row1,
@@ -482,6 +488,7 @@
                                                "Update Fishing World Status",
                                                24);
                             break;
+
                         case "27":
                             _renderLeftPanelService.RenderEnableProductBoxDCS2(
                                                row1,
@@ -648,7 +655,7 @@
 
         private string RenderAllDayBalTransferControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
         {
-            if (customerInfoViewModel.SearchAccountRoleId == 4 || 
+            if (customerInfoViewModel.SearchAccountRoleId == 4 ||
                 (customerInfoViewModel.IsShowAllDayBalTransfer && customerInfoViewModel.SearchAccountRoleId == 3))
             {
                 var allDayBalTransferControlSettingGroup = new SettingGroup();
@@ -704,9 +711,12 @@
                     "suspended",
                     customerInfoViewModel.Suspend,
                     customerInfoViewModel.SearchAccountRoleId > 1,
-                    customerInfoViewModel.CustParent.IsSuspended));
+                    customerInfoViewModel.CustParent.IsSuspended,
+                    customerInfoViewModel.LockUnsuspend)
+                );
 
             TemplateHandler.Assign(ref htmlcontent, "{suspendedControl}", suspendedControlSettingGroup.GetHTMLSettingControl());
+
             return htmlcontent;
         }
 
