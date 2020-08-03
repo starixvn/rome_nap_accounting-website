@@ -56,7 +56,7 @@
             <td>Effective Date <span class="asterisk" style="display: @displayAsterisk">*</span></td>
             <td>
                 @Html.Raw(Sunplus.Accounting.Core.Web.Controls.Calendar.GenCalendarControl(
-                minDate.ToString("yyyyMMdd"),
+                DateTime.Today.ToString("yyyyMMdd"),
                 "99991231",
                 "effdate",
                 "../",
