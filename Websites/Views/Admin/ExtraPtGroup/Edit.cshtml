@@ -74,7 +74,7 @@
             <td>End Date</td>
             <td>
                 @Html.Raw(Sunplus.Accounting.Core.Web.Controls.Calendar.GenCalendarControl(
-                minDate.ToString("yyyyMMdd"),
+                DateTime.Today.ToString("yyyyMMdd"),
                 "99991231",
                 "enddate",
                 "../",
