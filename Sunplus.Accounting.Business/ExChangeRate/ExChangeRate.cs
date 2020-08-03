@@ -74,7 +74,9 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 TemplateHandler.Assign(ref exRow, "standardCode", CastAide.AsString(dr["currencyCode"]));
                 TemplateHandler.Assign(ref exRow, "BaseRate", CastAide.AsString(dr["actualrate"]));
                 TemplateHandler.Assign(ref exRow, "MinBet", NumberFormat.DecFormat(dr["MinBet"], 0));
-                TemplateHandler.Assign(ref exRow, "MinBetLive", NumberFormat.DecFormat(dr["MinBetLive"], 0));               
+                TemplateHandler.Assign(ref exRow, "MinBetLive", NumberFormat.DecFormat(dr["MinBetLive"], 0));
+                TemplateHandler.Assign(ref exRow, "OfferSite", NumberFormat.DecFormat(dr["OfferSite"], 0));
+                TemplateHandler.Assign(ref exRow, "IsActive", CastAide.AsBoolean(dr["IsActive"]) ? " checked='checked'" : "");
                 TemplateHandler.Assign(ref exRow, "exrateId", exid);
                 TemplateHandler.Assign(ref exRow, "description", CastAide.AsString(dr["Description"]));
 

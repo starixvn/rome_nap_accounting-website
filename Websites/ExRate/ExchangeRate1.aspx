@@ -58,13 +58,13 @@
                     </td>
                 </tr>
             </table>
-            <div class="maincontent_box" style="width: 445px;">
+            <div class="maincontent_box" style="width: 572px;">
                 <div id="ErrMsg">
                 </div>
                 <asp:Literal ID="ExRateAddContentHtml" runat="server"></asp:Literal>
             </div>
             <div id="sContent" style="margin-top: 5px">
-                <div id="divExhangeRate" class="content-warper" style="width: 448px">
+                <div id="divExhangeRate" class="content-warper" style="width: 575px">
                     <div class="content-toolbox bgtitle">
                         <div id="gridtitle" class="gridtitle">Exchange Rate</div>
                         <div class="btngroup">
@@ -94,7 +94,15 @@
                                     <td style="border-bottom: none 0px;">
                                         <div class="c" style="width:73px">
                                             Min Bet Live</div>
-                                    </td>                                 
+                                    </td>
+                                    <td style="border-bottom: none 0px;">
+                                        <div class="c" style="width:73px">
+                                            OfferSite</div>
+                                    </td> 
+                                    <td style="border-bottom: none 0px;">
+                                        <div class="c" style="width:48px">
+                                            IsActive</div>
+                                    </td>                                  
                                     <td style="border-bottom: none 0px;">
                                         <div class="c" style="width:48px">
                                             Edit</div>
