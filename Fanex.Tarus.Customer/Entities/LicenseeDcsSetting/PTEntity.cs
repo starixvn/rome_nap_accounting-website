@@ -10,6 +10,8 @@ namespace Fanex.Tarus.Customer.Entities.LicenseeDcsSetting
 
         public int SportType { get; set; }
 
+        public string SportTypeName => CacheRef.GetSportName(SportType);
+
         public int BetType { get; set; }
 
         public string BetTypeName

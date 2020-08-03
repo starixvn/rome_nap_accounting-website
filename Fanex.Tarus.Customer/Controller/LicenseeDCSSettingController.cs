@@ -61,10 +61,12 @@ namespace Fanex.Tarus.Customer.Controller
             // Get first AgentId.
             var agentIds = ConvertToIntArray(model.AgentIds).ToList();
 
-            if (agentIds.Count == 1)
+            if (agentIds.Count > 1)
             {
-                model.SuperPT = _settingService.GetPositionTaking(model.ProductId, agentIds[0]);
+                agentIds = new List<int> { 0 };
             }
+
+            model.SuperPT = _settingService.GetPositionTaking(model.ProductId, agentIds[0]);
 
             return PartialView("~/Views/Customer/LicenseeDCSSetting/_PT.cshtml", model);
         }
