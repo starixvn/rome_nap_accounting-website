@@ -35,10 +35,12 @@
             <input type="text" class="w70" name="txtEx" id="txtMinbetLive" value="{MinbetLive}" onkeypress="return CheckDecNumber_ExRate(event);" />
         </td>
         <td>
-            <input type="text" class="w70" name="txtEx" id="txtOfferSite" value="{OfferSite}" onkeypress="return CheckDecNumber_ExRate(event);" />
+            <select class="w70" id="selOfferSite">
+                {OfferSite}
+            </select>
         </td>
         <td>
-            <input type="checkbox" class="w40" name="txtEx" id="ckbIsActive" value="{IsActive}" />
+            <input type="checkbox" class="w40" name="txtEx" id="ckbIsActive" {IsActive} value="true"/>
         </td>
     </tr>
     <tr>

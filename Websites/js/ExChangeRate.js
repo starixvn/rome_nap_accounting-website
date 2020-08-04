@@ -74,6 +74,8 @@ function InsertExChangeRate() {
         param += '&Code=' + $('#tbxStandardCurrency').val();
         param += '&Description=' + $('#tbxDescription').val();
         param += '&MultipliedBy=' + $('#tbxMultipliedBy').val();
+        param += '&OfferSite=' + $('#selOfferSite').val();
+        param += '&IsActive=' + $('#ckbIsActive').val();
         
         try{parent.BlockUI();}catch(e){}
 
@@ -112,6 +114,8 @@ function UpdateEditExChangeRate() {
         param += '&Code=' + $('#tbxStandardCurrency').val();
         param += '&Description=' + $('#tbxDescription').val();
         param += '&MultipliedBy=' + $('#tbxMultipliedBy').val();
+        param += '&OfferSite=' + $('#selOfferSite').val();
+        param += '&IsActive=' + $('#ckbIsActive').val();
 
         try{parent.BlockUI();}catch(e){}
 
@@ -145,7 +149,7 @@ function UpdateEditExChangeRate() {
 function UpdateExChangeRate(exrateId) {
     var url = 'ExRate/EditRate.aspx?exrateId=' + exrateId;
   
-    parent.OpenPopup(url, "Edit Exchange Rate", 750, 220, true, true, window, 2000, null, null);
+    parent.OpenPopup(url, "Edit Exchange Rate", 870, 220, true, true, window, 2000, null, null);
 }
 
 

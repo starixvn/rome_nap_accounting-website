@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Web;
+using System.Web.UI.HtmlControls;
 using CasinoLibrary.Model.UserException;
 using CasinoLibrary.SBAgent;
 using DNAide.Core;
@@ -75,8 +76,6 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 TemplateHandler.Assign(ref exRow, "BaseRate", CastAide.AsString(dr["actualrate"]));
                 TemplateHandler.Assign(ref exRow, "MinBet", NumberFormat.DecFormat(dr["MinBet"], 0));
                 TemplateHandler.Assign(ref exRow, "MinBetLive", NumberFormat.DecFormat(dr["MinBetLive"], 0));
-                TemplateHandler.Assign(ref exRow, "OfferSite", NumberFormat.DecFormat(dr["OfferSite"], 0));
-                TemplateHandler.Assign(ref exRow, "IsActive", CastAide.AsBoolean(dr["IsActive"]) ? " checked='checked'" : "");
                 TemplateHandler.Assign(ref exRow, "exrateId", exid);
                 TemplateHandler.Assign(ref exRow, "description", CastAide.AsString(dr["Description"]));
 
@@ -107,7 +106,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
 
         #region InsertExChangeRate
 
-        public string InsertExChangeRate(string actualrate, string currency, string minbet, string minbetlive, string Code, string Description, string MultipliedBy)
+        public string InsertExChangeRate(string actualrate, string currency, string minbet, string minbetlive, string Code, string Description, string MultipliedBy, string offerSite, bool isActive)
         {
             string msg = "";
             try
@@ -118,8 +117,10 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 hash.Add("currency", currency.Trim());
                 hash.Add("minbet", minbet);
                 hash.Add("minbetlive", minbetlive);
+                hash.Add("offersite", offerSite);
+                hash.Add("isactive", isActive);
 
-              
+
 
                 hash.Add("ip", HttpContext.Current.Request.UserHostAddress);
                 hash.Add("errcode", 0);
@@ -162,9 +163,8 @@ namespace Sunplus.Accounting.Business.ExChangeRate
 
         #region EditExchangeRate
 
-        public string EditExchangeRate(int exid)
+        public string EditExchangeRate(int exid, HtmlInputText tbxStandardCurrency)
         {
-
             string tpl = WebUtils.LoadTemplateBySystem("ExRate/ExRateAdd.htm");
             TemplateHandler.Assign(ref tpl, "function", "UpdateEditExChangeRate();");
             TemplateHandler.Assign(ref tpl, "Function_Reset", "ResetValueWhenEdit();");
@@ -182,13 +182,18 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                     TemplateHandler.Assign(ref tpl, "submit", "Submit");
                     TemplateHandler.Assign(ref tpl, "reset", "Reset");
                     TemplateHandler.Assign(ref tpl, "Currency", CastAide.AsString(dr["currency"]));
+                    TemplateHandler.Assign(ref tpl, "MultipliedBy", CastAide.AsString(dr["MultipliedBy"]));
+                    TemplateHandler.Assign(ref tpl, "Description", CastAide.AsString(dr["Description"]));
                     TemplateHandler.Assign(ref tpl, "BaseRate", CastAide.AsString(dr["actualrate"]));
                     TemplateHandler.Assign(ref tpl, "Minbet", CastAide.AsString(dr["minbet"]));
-                    TemplateHandler.Assign(ref tpl, "MinbetLive", CastAide.AsString(dr["minbetlive"]));                    
+                    TemplateHandler.Assign(ref tpl, "MinbetLive", CastAide.AsString(dr["minbetlive"]));
+                    TemplateHandler.Assign(ref tpl, "OfferSite", BuildOfferSiteSelection(CastAide.AsString(dr["offersite"])));
+                    TemplateHandler.Assign(ref tpl, "IsActive", CastAide.AsBoolean(dr["isactive"])? " checked": "");
                     TemplateHandler.Assign(ref tpl, "exrateId", exid);
-                    TemplateHandler.Assign(ref tpl, "Code", CastAide.AsString(dr["Code"]));
+                    tbxStandardCurrency.Value = CastAide.AsString(dr["Code"]);
                 }
             }
+
             return tpl;
         }
 
@@ -220,7 +225,8 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                     ex.Minbet = CastAide.AsString(dr["minbet"]);
                     list.Add(ex.Minbet);
                     ex.MinbetLive = CastAide.AsString(dr["minbetlive"]);
-                    list.Add(ex.MinbetLive);                  
+                    list.Add(ex.MinbetLive);
+
                     list.Add(ex.USDRate);
                     ex.Code = CastAide.AsString(dr["Code"]);
                     list.Add(ex.Code);
@@ -259,7 +265,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
 
         #region UpdateEditExChangeRate
 
-        public string UpdateEditExChangeRate(int exid, string actualrate, string currency, string minbet, string minbetlive, string Description, string MultipliedBy, string Code)
+        public string UpdateEditExChangeRate(int exid, string actualrate, string currency, string minbet, string minbetlive, string Description, string MultipliedBy, string Code, string offerSite, bool isActive)
         {
             string msg = "";
             try
@@ -270,7 +276,9 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 hash.Add("actualrate", actualrate);
                 hash.Add("currency", currency);
                 hash.Add("minbet", minbet);
-                hash.Add("minbetlive", minbetlive);               
+                hash.Add("minbetlive", minbetlive);
+                hash.Add("offersite", offerSite);
+                hash.Add("isactive", isActive);
 
                 hash.Add("ip", HttpContext.Current.Request.UserHostAddress);
                 hash.Add("errcode", 0);
@@ -337,6 +345,13 @@ namespace Sunplus.Accounting.Business.ExChangeRate
         private string changeColor(string value)
         {
             return "<span style='color:blue'>" + value + "</span>";
+        }
+
+        private string BuildOfferSiteSelection(string offerSite)
+        {
+            return "<option value=\"0\""+ (offerSite == "0"? " selected" : "") + ">All</option>" +
+                "<option value = \"1\"" + (offerSite == "1" ? " selected" : "") + "> Credit </option>" +
+                "<option value = \"2\"" + (offerSite == "2" ? " selected" : "") + "> Deposit </option>";
         }
     }
 }

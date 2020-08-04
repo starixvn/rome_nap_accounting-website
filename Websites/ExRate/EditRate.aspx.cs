@@ -21,24 +21,6 @@ public partial class EditRate : PageBase
         {
             Page.Title = "Edit Exchange Rate";
             exrateEditHeader.Text = Resources.Language.editExchangeRate;
-            ExChangeRate ex = new ExChangeRate();
-            int exRateId = Convert.ToInt32(Request["exrateId"]);
-            List<string> list = ex.EditExchangeRate1(exRateId);
-            IExchangeRateService exchangeRate = CommonBootStrapper.Locator.GetInstance<IExchangeRateService>();
-            exrateEditContent.Text = exchangeRate.GenNewRate4Update();
-            exrateEditContent.Text = exrateEditContent.Text.Replace("{Currency}", list[0]);
-            exrateEditContent.Text = exrateEditContent.Text.Replace("{BaseRate}", list[1]);
-            exrateEditContent.Text = exrateEditContent.Text.Replace("{Minbet}", list[2]);
-            exrateEditContent.Text = exrateEditContent.Text.Replace("{MinbetLive}", list[3]);         
-            tbxStandardCurrency.Value = list[5];
-            exrateEditContent.Text = exrateEditContent.Text.Replace("{Description}", list[6]);
-            exrateEditContent.Text = exrateEditContent.Text.Replace("{MultipliedBy}", list[7]);
-
-            exrateEditContent.Text = exrateEditContent.Text.Replace("{submit}", "Submit");
-            exrateEditContent.Text = exrateEditContent.Text.Replace("{reset}", "Reset");
-
-            exrateEditContent.Text = exrateEditContent.Text.Replace("{function}", "javascript:UpdateEditExChangeRate();");
-            exrateEditContent.Text = exrateEditContent.Text.Replace("{Function_Reset}", "javascript:ResetValueWhenEdit();");
 
             IHelperService helperService = new HelperService();
             string[] arrStandardCurrency = helperService.GetStandardCurrencyList();
@@ -48,14 +30,17 @@ public partial class EditRate : PageBase
                 selectStandardCurrency.Items.Add(new ListItem(sc, sc));
             }
 
-            for (int i = 0; i < selectStandardCurrency.Items.Count; ++i )
-            {
-                if (selectStandardCurrency.Items[i].Value == list[5])
-                {
-                    selectStandardCurrency.SelectedIndex = i;
-                    break;
-                }
-            }
+            ExChangeRate ex = new ExChangeRate();
+            int exRateId = Convert.ToInt32(Request["exrateId"]);
+            exrateEditContent.Text = ex.EditExchangeRate(exRateId, tbxStandardCurrency);
+            
+
+            exrateEditContent.Text = exrateEditContent.Text.Replace("{submit}", "Submit");
+            exrateEditContent.Text = exrateEditContent.Text.Replace("{reset}", "Reset");
+
+            exrateEditContent.Text = exrateEditContent.Text.Replace("{function}", "javascript:UpdateEditExChangeRate();");
+            exrateEditContent.Text = exrateEditContent.Text.Replace("{Function_Reset}", "javascript:ResetValueWhenEdit();");
+
             selectStandardCurrency.Disabled = true;
         }
         catch (Exception)
