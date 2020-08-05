@@ -75,7 +75,7 @@ function InsertExChangeRate() {
         param += '&Description=' + $('#tbxDescription').val();
         param += '&MultipliedBy=' + $('#tbxMultipliedBy').val();
         param += '&OfferSite=' + $('#selOfferSite').val();
-        param += '&IsActive=' + $('#ckbIsActive').val();
+        param += '&IsActive=' + $('#ckbIsActive')[0].checked;
         
         try{parent.BlockUI();}catch(e){}
 
@@ -115,7 +115,7 @@ function UpdateEditExChangeRate() {
         param += '&Description=' + $('#tbxDescription').val();
         param += '&MultipliedBy=' + $('#tbxMultipliedBy').val();
         param += '&OfferSite=' + $('#selOfferSite').val();
-        param += '&IsActive=' + $('#ckbIsActive').val();
+        param += '&IsActive=' + $('#ckbIsActive')[0].checked;
 
         try{parent.BlockUI();}catch(e){}
 
