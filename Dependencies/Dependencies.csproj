@@ -191,8 +191,8 @@
     <Reference Include="Fanex.BetList.RNGWar, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.RNGWar.1.0.0.1\lib\net40\Fanex.BetList.RNGWar.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.SabaClub, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.SabaClub.1.0.0\lib\net40\Fanex.BetList.SabaClub.dll</HintPath>
+    <Reference Include="Fanex.BetList.SabaClub, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.SabaClub.1.0.0.1\lib\net40\Fanex.BetList.SabaClub.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.SAGaming, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.SAGaming.1.0.0.4\lib\net40\Fanex.BetList.SAGaming.dll</HintPath>
@@ -405,6 +405,9 @@
     </Reference>
     <Reference Include="Fanex.Result.Core.RemotingRef, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.RemotingRef.1.0.4\lib\net461\Fanex.Result.Core.RemotingRef.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Result.Core.SabaClub, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Result.Core.SabaClub.1.0.0.1\lib\Fanex.Result.Core.SabaClub.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Result.Core.SAGaming, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.SAGaming.1.0.0.3\lib\net40\Fanex.Result.Core.SAGaming.dll</HintPath>
