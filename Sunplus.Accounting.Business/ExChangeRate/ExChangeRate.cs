@@ -78,6 +78,8 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 TemplateHandler.Assign(ref exRow, "MinBetLive", NumberFormat.DecFormat(dr["MinBetLive"], 0));
                 TemplateHandler.Assign(ref exRow, "exrateId", exid);
                 TemplateHandler.Assign(ref exRow, "description", CastAide.AsString(dr["Description"]));
+                TemplateHandler.Assign(ref exRow, "OfferSite", GetOfferSiteName(CastAide.AsString(dr["offersite"])));
+                TemplateHandler.Assign(ref exRow, "IsActive", CastAide.AsBoolean(dr["isactive"]) ? " checked" : "");
 
                 if (!Permissions.GetHostPermission(Enumerations.Functions.ExRates.ExchangeRate))
                 {
@@ -352,6 +354,21 @@ namespace Sunplus.Accounting.Business.ExChangeRate
             return "<option value=\"0\""+ (offerSite == "0"? " selected" : "") + ">All</option>" +
                 "<option value = \"1\"" + (offerSite == "1" ? " selected" : "") + "> Credit </option>" +
                 "<option value = \"2\"" + (offerSite == "2" ? " selected" : "") + "> Deposit </option>";
+        }
+        
+        public static string GetOfferSiteName(string offerSiteId)
+        {
+            switch (offerSiteId)
+            {
+                case "0":
+                    return "All";
+                case "1":
+                    return "Credit";
+                case "2":
+                    return "Deposit";
+                default:
+                    return string.Empty;
+            }
         }
     }
 }

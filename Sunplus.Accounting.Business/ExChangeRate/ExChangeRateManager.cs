@@ -159,7 +159,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                     {
                         if (j == 5)
                         {
-                            ws.Cells[indexrow, j].Value = GetOfferSite(dr[arrContent[j]].ToString());
+                            ws.Cells[indexrow, j].Value = ExChangeRate.GetOfferSiteName(dr[arrContent[j]].ToString());
                         } else if (j == 6)
                         {
                             ws.Cells[indexrow, j].Value = dr[arrContent[j]].ToString();
@@ -218,21 +218,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
         }
 
         #endregion IsValidExtension
-
-        private string GetOfferSite(string offerSiteId)
-        {
-            switch (offerSiteId)
-            {
-                case "0":
-                    return "All";
-                case "1":
-                    return "Credit";
-                case "2":
-                    return "Deposit";
-                default:
-                    return string.Empty;
-            }
-        }
+        
         [DataContract]
         public class ExchangeRateResult
         {
