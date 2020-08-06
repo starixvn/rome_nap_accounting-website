@@ -118,6 +118,8 @@
 
         public bool HideCheckBoxVirtualSports { get; private set; } = true;
 
+        public bool LockUnsuspend => Utils.ToBoolean(customerInfoRow["LockUnsuspend"]);
+
         public CustomerDetail CustParent
         {
             get
