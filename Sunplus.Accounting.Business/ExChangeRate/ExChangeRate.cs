@@ -108,7 +108,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
 
         #region InsertExChangeRate
 
-        public string InsertExChangeRate(string actualrate, string currency, string minbet, string minbetlive, string Code, string Description, string MultipliedBy, string offerSite, bool isActive)
+        public string InsertExChangeRate(string actualrate, string currency, string minbet, string minbetlive, string Code, string Description, string MultipliedBy, string offerSite)
         {
             string msg = "";
             try
@@ -120,9 +120,6 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 hash.Add("minbet", minbet);
                 hash.Add("minbetlive", minbetlive);
                 hash.Add("offersite", offerSite);
-                hash.Add("isactive", isActive);
-
-
 
                 hash.Add("ip", HttpContext.Current.Request.UserHostAddress);
                 hash.Add("errcode", 0);

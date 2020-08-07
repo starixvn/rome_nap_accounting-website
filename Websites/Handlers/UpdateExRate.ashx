@@ -40,7 +40,7 @@ public class UpdateExRate : IHttpHandler,IRequiresSessionState {
             if (context.Request["type"] == "insert")
             {
 
-                errMsg = exRate.InsertExChangeRate(actualRate, currency, minbet, minbetlive, Code, Description, MultipliedBy, OfferSite, IsActive);
+                errMsg = exRate.InsertExChangeRate(actualRate, currency, minbet, minbetlive, Code, Description, MultipliedBy, OfferSite);
                 if (errMsg.Length > 0)
                     context.Response.Write("no|" + errMsg);
                 else

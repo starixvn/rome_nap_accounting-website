@@ -58,7 +58,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 TemplateHandler.Assign(ref tpl, "Minbet", "");
                 TemplateHandler.Assign(ref tpl, "MinbetLive", "");
                 TemplateHandler.Assign(ref tpl, "OfferSite", ExChangeRateHelper.BuildOfferSiteSelection(string.Empty));
-                TemplateHandler.Assign(ref tpl, "IsActive", " checked");
+                TemplateHandler.Assign(ref tpl, "IsActive", " checked disabled");
                 TemplateHandler.Assign(ref tpl, "submit", "Submit");
                 TemplateHandler.Assign(ref tpl, "reset", "Reset");
                 TemplateHandler.Assign(ref tpl, "function", "InsertExChangeRate();");
