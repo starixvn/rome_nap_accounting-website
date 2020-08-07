@@ -57,7 +57,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 TemplateHandler.Assign(ref tpl, "BaseRate", "");
                 TemplateHandler.Assign(ref tpl, "Minbet", "");
                 TemplateHandler.Assign(ref tpl, "MinbetLive", "");
-                TemplateHandler.Assign(ref tpl, "OfferSite", "0");
+                TemplateHandler.Assign(ref tpl, "OfferSite", ExChangeRateHelper.BuildOfferSiteSelection(string.Empty));
                 TemplateHandler.Assign(ref tpl, "IsActive", " checked");
                 TemplateHandler.Assign(ref tpl, "submit", "Submit");
                 TemplateHandler.Assign(ref tpl, "reset", "Reset");
@@ -159,7 +159,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                     {
                         if (j == 5)
                         {
-                            ws.Cells[indexrow, j].Value = ExChangeRate.GetOfferSiteName(dr[arrContent[j]].ToString());
+                            ws.Cells[indexrow, j].Value = ExChangeRateHelper.GetOfferSiteName(dr[arrContent[j]].ToString());
                         } else if (j == 6)
                         {
                             ws.Cells[indexrow, j].Value = dr[arrContent[j]].ToString();

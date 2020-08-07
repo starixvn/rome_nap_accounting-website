@@ -418,6 +418,7 @@
     <Compile Include="Customer\MoveCustomer.cs" />
     <Compile Include="Customer\CustomerManager\SettingTabs\EnableStatusTab\RenderLeftPanelManager.cs" />
     <Compile Include="Customer\CustomerManager\SettingTabs\EnableStatusTab\RenderLeftPanelParameter.cs" />
+    <Compile Include="ExChangeRate\ExChangeRateHelper.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="IHelper.cs" />
     <Compile Include="LogDisplay\CN88LogFormatter.cs" />
