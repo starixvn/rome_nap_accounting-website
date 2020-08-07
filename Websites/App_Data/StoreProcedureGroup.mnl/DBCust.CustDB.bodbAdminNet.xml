@@ -387,5 +387,6 @@
   </Function>
   <Function Name="UM On product">
     <Setting Key="Acc_CheckUM" SpName="Acc_CheckUM" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CheckUM_MultipleCustProductStatus" SpName="Acc_CheckUM_MultipleCustProductStatus" DbName="DBCUST.CustDB.bodbAdminNet" />
   </Function>
 </Functions>
