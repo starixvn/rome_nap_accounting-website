@@ -510,6 +510,20 @@ function showSGDetails(transId, winlossDate, custId, transType) {
     openResultsPopUp(voidbridgeParam);
 }
 
+function showPGSoftDetails(transId, winlossDate, custId, transType) {
+    var voidbridgeParam = {
+        url: "VoidbridgeBetList/BetDetails",
+        title: "PG Soft Details",
+        jsonParam: { TransId: transId, TransType: transType, CustId: custId, SportType: 232, PageSize: 500 },
+        width: 1030,
+        height: 600,
+        resizable: false
+    };
+
+    openResultsPopUp(voidbridgeParam);
+}
+
+
 function showVideoPokerGameDetails(transId, winlossDate, custId, transType) {
     var voidbridgeParam = {
         url: "VoidbridgeBetList/BetDetails",
