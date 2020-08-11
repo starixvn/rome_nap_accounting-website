@@ -149,7 +149,7 @@ function showCloneHint(ptGrid) {
         }
     }
     hint = hint + '</ul></div>';
-    top = top + 40;
+    top = top + 80;
     // Show tooltip
     var yPosition = 70;
     if (context.roleId == 4) {
