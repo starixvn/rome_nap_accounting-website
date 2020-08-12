@@ -239,7 +239,7 @@ namespace Fanex.Tarus.Customer.Business.LicenseeDcsSetting
             bool isAgentOnly,
             int userId,
             string ip)
-        { 
+        {
             ICriteria criteria = new UpdatePositionTakingCriteria(productId, superId, superPT, agentId, isAgentOnly, userId, ip);
 
             return _settingDataAccess.ExecuteNonQuery(criteria);

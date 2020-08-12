@@ -58,7 +58,7 @@
                     var bettype = $(option).attr("data-bettype");
                     var isLive = $(option).attr("data-islive");
                     var pt_old = $(option).attr("data-pt");
-                    var pt_new = $("#ptDropDown" + bettype).val();
+                    var pt_new = $("#ptDropDown_" + bettype + "_" + sportType).val();
                     if (pt_old !== pt_new) {
                         pts.push({
                             SportType: sportType,
