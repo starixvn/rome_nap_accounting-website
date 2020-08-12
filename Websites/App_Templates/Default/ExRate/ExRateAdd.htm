@@ -9,30 +9,39 @@
         <td>Multiplied By</td>
         <td>Base Rate</td>
         <td>Min Bet</td>
-        <td>Min Bet Live</td> 
+        <td>Min Bet Live</td>
+        <td>Offer Site</td>
+        <td>Active</td>
     </tr>
    
     <tr bgcolor='white'>
-      <td>
-        <input type="text" class="w70" {ReadOnly}  name="txtEx" id="txtCurrency" value="{Currency}"/>
-      </td>
-      <td id="tdStandardCurrency">
-      </td>
-      <td>
-        <input type="text" class="w120" id="tbxDescription" value="{Description}" />
-      </td>
-      <td>
-        <input type="text" class="w120" id="tbxMultipliedBy" value="{MultipliedBy}" />  
-      </td>
-      <td>
-        <input type="text" class="w70" name="txtEx"  id="txtBaseRate" value="{BaseRate}" onkeypress="return CheckDecNumber_ExRate(event);"/>
-      </td>
-      <td>
-	    <input type="text" class="w70" name="txtEx"  id="txtMinbet" value="{Minbet}" onkeypress="return CheckDecNumber_ExRate(event);"/>
-      </td>
-      <td>
-	    <input type="text" class="w70" name="txtEx"  id="txtMinbetLive" value="{MinbetLive}" onkeypress="return CheckDecNumber_ExRate(event);"/>
-      </td>     
+        <td>
+            <input type="text" class="w70" {ReadOnly} name="txtEx" id="txtCurrency" value="{Currency}" />
+        </td>
+        <td id="tdStandardCurrency"></td>
+        <td>
+            <input type="text" class="w120" id="tbxDescription" value="{Description}" />
+        </td>
+        <td>
+            <input type="text" class="w120" id="tbxMultipliedBy" value="{MultipliedBy}" />
+        </td>
+        <td>
+            <input type="text" class="w70" name="txtEx" id="txtBaseRate" value="{BaseRate}" onkeypress="return CheckDecNumber_ExRate(event);" />
+        </td>
+        <td>
+            <input type="text" class="w70" name="txtEx" id="txtMinbet" value="{Minbet}" onkeypress="return CheckDecNumber_ExRate(event);" />
+        </td>
+        <td>
+            <input type="text" class="w70" name="txtEx" id="txtMinbetLive" value="{MinbetLive}" onkeypress="return CheckDecNumber_ExRate(event);" />
+        </td>
+        <td>
+            <select class="w70" id="selOfferSite">
+                {OfferSite}
+            </select>
+        </td>
+        <td>
+            <input type="checkbox" class="w40" name="txtEx" id="ckbIsActive" {IsActive} value="true"/>
+        </td>
     </tr>
     <tr>
         <td colspan="12" style="border-right:0px none; text-align:right">
