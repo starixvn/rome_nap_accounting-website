@@ -474,7 +474,7 @@ var VirtualRateController = function () {
         }
 
         __confirm("Update Virtual Rate", viewResources.VirtualRate_UpdateConfirm,
-                325, 150, null,
+                325, 210, null,
                 function () {
                     __close(false, null, null, null);
                     self.blockUI();
