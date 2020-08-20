@@ -831,7 +831,7 @@ var ViewPT = {
     viewCommFromDynamicSettingFormat: function () {
         $('#err').html('');
         $('#sContent').html('');
-        $("#frmSportsbook2").attr('src', "../../../Matrix/ViewCustomerSettingMatrix?productId=" + $("#ddlProduct").val() + "&showFilter=false&settingTypeId=" + ($("#ddlProduct").val() == "20" ? "5" : $("#ddlProduct").val() == "26" ? "14" : "3") + "&customerName=" + $("#txtUsername").val());
+        $("#frmSportsbook2").attr('src', "../../../Matrix/ViewCustomerSettingMatrix?productId=" + $("#ddlProduct").val() + "&showFilter=false&settingTypeId=3&customerName=" + $("#txtUsername").val());
         $("#frmSportsbook2").show();
         parent.jQuery.unblockUI();
     },
