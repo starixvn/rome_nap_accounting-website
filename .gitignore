@@ -48,3 +48,4 @@ CasinoLibrary.txt
 .vs/*
 *.snk
 /Fanex.NAP.Site.v3.ncrunchsolution.user
+*.orig
