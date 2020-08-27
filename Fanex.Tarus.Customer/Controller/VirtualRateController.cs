@@ -84,5 +84,12 @@ namespace Fanex.Tarus.Customer.Controller
         {
             return View("~/Areas/CustomerSetting/Views/VirtualRate/SportBetTypesReferences/Index.cshtml", _virtualRateService.GetSportBetTypeReferences(criteria));
         }
+
+        [HttpPost]
+        [AuthenticateHost]
+        public JsonResult GetConfirmUpdateMessage(int custId)
+        {
+            return Json(_virtualRateService.GetConfirmUpdateMessage(custId));
+        }
     }
 }

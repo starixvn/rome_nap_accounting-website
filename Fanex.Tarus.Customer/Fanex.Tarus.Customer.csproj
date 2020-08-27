@@ -466,6 +466,7 @@
     <Compile Include="Criteria\ViewPeriodsCN88\UpdateHeadlinePeriodCriteria.cs" />
     <Compile Include="Criteria\ViewPT\IsDepositCustomerCriteria.cs" />
     <Compile Include="Criteria\VirtualRate\GetSportBetTypeReferencesCriteria.cs" />
+    <Compile Include="Criteria\VirtualRate\GetVRAutoAdjustSporttypeCriteria.cs" />
     <Compile Include="Criteria\VirtualRate\UpdateSettingsCriteria.cs" />
     <Compile Include="Criteria\VirtualRate\UploadRate\CheckImportCriteria.cs" />
     <Compile Include="Criteria\VirtualRate\UploadRate\DeleteTempRateCriteria.cs" />

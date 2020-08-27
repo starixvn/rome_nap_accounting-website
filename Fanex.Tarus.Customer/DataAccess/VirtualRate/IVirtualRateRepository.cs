@@ -15,5 +15,7 @@
         List<HistoryLogEntity> HistoryLog(ViewHistoryLogCriteria criteria);
 
         List<SportBetTypeReferencesEntity> GetSportBetTypeReferences(GetSportBetTypeReferencesCriteria criteria);
+
+        int GetCustomerSelVRAutoAdjustSporttype(GetVRAutoAdjustSporttypeCriteria criteria);
     }
 }

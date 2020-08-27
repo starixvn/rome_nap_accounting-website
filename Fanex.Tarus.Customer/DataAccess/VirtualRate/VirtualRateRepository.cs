@@ -194,5 +194,20 @@
 
             return result;
         }
+
+        public int GetCustomerSelVRAutoAdjustSporttype(GetVRAutoAdjustSporttypeCriteria criteria)
+        {
+            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                objDb.AssignParamValues(criteria.GetSpParams());
+                var reader = objDb.ExecuteReader();
+                if (reader.Read())
+                {
+                    return Converter.ToInt(reader["SportType"]);
+                }
+            }
+
+            return 0;
+        }
     }
 }

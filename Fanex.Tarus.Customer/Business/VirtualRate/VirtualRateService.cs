@@ -25,6 +25,10 @@
 
         private readonly IUploadVirtualRateService _uploadVirtualRateService;
 
+        private const int Mansion88Happy8SportType = 99;
+
+        private const int HaifaIBOSportType = 100;
+
         public VirtualRateService()
             : this(null, null)
         {
@@ -285,6 +289,25 @@
             }
 
             return historyLogDetailList;
+        }
+
+        public string GetConfirmUpdateMessage(int custId)
+        {
+            var criteria = new GetVRAutoAdjustSporttypeCriteria { CustID = custId };
+
+            var sportType = _virtualRateRepository.GetCustomerSelVRAutoAdjustSporttype(criteria);
+
+            if(sportType == Mansion88Happy8SportType)
+            {
+                return Resources.Customer_Labels.VirtualRate_UpdateConfirm_SportType99;
+            }
+
+            if(sportType == HaifaIBOSportType)
+            {
+                return Resources.Customer_Labels.VirtualRate_UpdateConfirm_SportType100;
+            }
+
+            return Resources.Customer_Labels.VirtualRate_UpdateConfirm;
         }
     }
 }
