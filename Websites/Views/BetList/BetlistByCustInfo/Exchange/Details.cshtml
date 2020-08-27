@@ -65,7 +65,7 @@
                             </td>
                             <td class="r">
                                 <div class="width100 table-cell">
-                                    @ticket.OddsRequest.Format(2)
+                                    @ticket.OddsRequestText
                                 </div>
                             </td>
                             <td class="r">
@@ -77,7 +77,7 @@
                                 <div class="width100 table-cell">
                                     @if (ticket.HasLiability)
                                     {
-                                        @ticket.Liability.Format(2)
+                                        @ticket.Liability
                                     }
                                     else
                                     {
@@ -88,7 +88,7 @@
                             </td>
                             <td class="r">
                                 <div class="width100 table-cell">
-                                    @ticket.OddsMatched.Format(2)
+                                    @ticket.OddsMatchedText
                                 </div>
                             </td>
                         </tr>

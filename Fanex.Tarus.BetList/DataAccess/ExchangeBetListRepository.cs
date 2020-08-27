@@ -79,7 +79,9 @@
                 SelectionName = Convert.ToString(reader["SelectionName"]),
                 Stake = Convert.ToDecimal(reader["Stake"]),
                 Type = Convert.ToString(reader["Type"]),
-                Winlost = Convert.ToDecimal(reader["WinLost"])
+                Winlost = Convert.ToDecimal(reader["WinLost"]),
+                CategoryType = Convert.ToInt32(reader["CategoryType"]),
+                FancyBetRuns = Convert.ToDecimal(reader["FancyBetRuns"])
             };
         }
     }
