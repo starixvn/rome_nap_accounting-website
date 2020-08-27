@@ -2,7 +2,7 @@
 using Fanex.Result.Core.SabaClub;
 using Fanex.Tarus.Infrastructure.Extensions;
 
-public partial class Report_ViewCardClubResult : System.Web.UI.Page
+public partial class Report_ViewSabaClubResult : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -11,11 +11,14 @@ public partial class Report_ViewCardClubResult : System.Web.UI.Page
 
         try
         {
+            var sportType = int.Parse(Request.QueryString["SportType"]);
+
             result = service.GetResult(
                 Request.QueryString["custId"],
                 Request.QueryString["GameRoundId"],
                 Request.QueryString["GameId"],
-                Request.QueryString["SiteId"]);
+                Request.QueryString["SiteId"],
+                sportType);
             if (string.IsNullOrEmpty(result))
             {
                 result = "<div class=\"alertboxerr\"><div>There is no information available</div></div>";

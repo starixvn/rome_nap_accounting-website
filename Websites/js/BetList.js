@@ -879,7 +879,7 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
 
         case 200: // Saba.Club
             // custId, gameroundid, gameid, siteId
-            return getSabaClubParam(betcheck, transdesc, bettype, matchcode);
+            return getSabaClubParam(betcheck, transdesc, bettype, matchcode, sporttype);
 
         case 208:
         case 209:
@@ -1118,12 +1118,12 @@ function getCardClubParam(custId, gameTypeId, sportType, transId3rd) {
     };
 }
 
-function getSabaClubParam(custId, gameRoundId, gameId, siteId) {
+function getSabaClubParam(custId, gameRoundId, gameId, siteId, sportType) {
 
     return {
         url: "../Report/ViewSabaClubResult.aspx",
         title: "Saba.club Result",
-        jsonParam: { custId: custId, GameRoundId: gameRoundId, GameId: gameId, SiteId: siteId },
+        jsonParam: { custId: custId, GameRoundId: gameRoundId, GameId: gameId, SiteId: siteId, SportType: sportType },
         width: 945,
         height: 500,
         iframe: "innerFrameSabaclubResult"
