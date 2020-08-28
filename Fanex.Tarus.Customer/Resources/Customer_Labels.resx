@@ -519,10 +519,4 @@
   <data name="Apply_Virtual_Rate_Notes" xml:space="preserve">
     <value>Enabling/Disabling this status does not affect E-Sports &amp; Basketball</value>
   </data>
-  <data name="VirtualRate_UpdateConfirm_SportType99" xml:space="preserve">
-    <value>Are you sure that you want to update these virtual rate values for this account and all of its downlines except Auto Adjusted Members? For the members who are waiting for the performance checking, only new virtual rate for soccer will be applied, the other sports will be kept unchanged.</value>
-  </data>
-  <data name="VirtualRate_UpdateConfirm_SportType100" xml:space="preserve">
-    <value>Are you sure that you want to update these virtual rate values for this account and all of its downlines except Auto Adjusted Members and ones waiting for performance checking.</value>
-  </data>
 </root>

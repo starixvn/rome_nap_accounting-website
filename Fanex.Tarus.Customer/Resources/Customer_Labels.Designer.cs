@@ -1024,24 +1024,6 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure that you want to update these virtual rate values for this account and all of its downlines except Auto Adjusted Members and ones waiting for performance checking..
-        /// </summary>
-        public static string VirtualRate_UpdateConfirm_SportType100 {
-            get {
-                return ResourceManager.GetString("VirtualRate_UpdateConfirm_SportType100", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Are you sure that you want to update these virtual rate values for this account and all of its downlines except Auto Adjusted Members? For the members who are waiting for the performance checking, only new virtual rate for soccer will be applied, the other sports will be kept unchanged..
-        /// </summary>
-        public static string VirtualRate_UpdateConfirm_SportType99 {
-            get {
-                return ResourceManager.GetString("VirtualRate_UpdateConfirm_SportType99", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Are you sure that you want to update this Virtual Exchange Rate value for this account?.
         /// </summary>
         public static string VirtualRate_UpdateConfirmMember {

@@ -2,12 +2,14 @@
 
 namespace Fanex.Tarus.Customer.Criteria.VirtualRate
 {
-    public class GetVRAutoAdjustSporttypeCriteria : CriteriaBase
+    public class GetVRAutoAdjustUpdateMessageCriteria : CriteriaBase
     {
         public int CustID { get; set; }
 
+        public string Message { get; set; }
+
         public override string GetSettingKey()
-            => "Acc_CustomerSelVRAutoAdjust_Sporttype";
+            => "Acc_CustomerVRAdjust_Confirm";
 
         public override bool IsValid()
             => CustID > 0;
