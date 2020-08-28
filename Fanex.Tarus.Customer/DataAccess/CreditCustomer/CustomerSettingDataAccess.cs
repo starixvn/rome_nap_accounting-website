@@ -43,7 +43,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
                 using (ObjectDb objDB = new ObjectDb("Acc_ExchangeSel"))
                 {
                     objDB.AddInParameter("system", DbType.String, system.ToUpper());
-                    objDB.AddInParameter("OfferSite", DbType.Int16, OfferSiteCredit);
+                    objDB.AddInParameter("mode", DbType.Int16, OfferSiteCredit);
                     using (var reader = objDB.ExecuteReader())
                     {
                         if (reader != null)

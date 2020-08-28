@@ -15,7 +15,7 @@ namespace Fanex.Tarus.Customer.Criteria.NewLicensee
     /// </summary>
     public class GetCurrenciesBySystemCriteria
     {
-        public int OfferSite { get; set; }
+        public int mode { get; set; }
 
         public string GetSettingKey()
         {

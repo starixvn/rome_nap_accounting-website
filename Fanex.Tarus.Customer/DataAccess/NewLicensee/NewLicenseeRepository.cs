@@ -32,7 +32,7 @@ namespace Fanex.Tarus.Customer.DataAccess.NewLicensee
             List<Currency> result = new List<Currency>();
             using (ObjectDb objDb = new ObjectDb(criteria.GetSettingKey()))
             {
-                objDb.AddInParameter("OfferSite", DbType.Int16, criteria.OfferSite);
+                objDb.AddInParameter("mode", DbType.Int16, criteria.mode);
                 var dataset = objDb.ExecuteDataSet();
                 if (dataset != null && dataset.Tables.Count > 0)
                 {
