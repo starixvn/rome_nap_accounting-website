@@ -1,6 +1,5 @@
 ﻿namespace Fanex.Tarus.BetList.Criteria
 {
-    using System;
     using Fanex.NAP.Framework.Data;
 
     public class ExchangeBetDetailCriteria : CriteriaBase
@@ -8,7 +7,7 @@
         [SpParam(SqlParamName = "CustID")]
         public int CustId { get; set; }
 
-        public int BetId { get; set; }
+        public long BetId { get; set; }
 
         [SpParam(Ignored = true)]
         public string Type { get; set; }

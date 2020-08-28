@@ -69,6 +69,7 @@
 
         private ExchangeDetailTicket GetDetailTicket(IDataReader reader)
         {
+            const int betfairCatogory = 1;
             return new ExchangeDetailTicket
             {
                 BetId = Convert.ToInt64(reader["BetId"]),
@@ -80,8 +81,8 @@
                 Stake = Convert.ToDecimal(reader["Stake"]),
                 Type = Convert.ToString(reader["Type"]),
                 Winlost = Convert.ToDecimal(reader["WinLost"]),
-                CategoryType = Convert.ToInt32(reader["CategoryType"]),
-                FancyBetRuns = Convert.ToDecimal(reader["FancyBetRuns"])
+                CategoryType = reader["CategoryType"] != DBNull.Value ? Convert.ToInt32(reader["CategoryType"]) : betfairCatogory,
+                FancyBetRuns = reader["FancyBetRuns"] != DBNull.Value ? Convert.ToDecimal(reader["FancyBetRuns"]) : 0
             };
         }
     }

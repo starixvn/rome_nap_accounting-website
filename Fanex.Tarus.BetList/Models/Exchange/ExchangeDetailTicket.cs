@@ -25,7 +25,7 @@ namespace Fanex.Tarus.BetList.Models.Exchange
             {
                 const int Fancybet = 2;
                      
-                return CategoryType == Fancybet ? $"{FancyBetRuns}/{OddsAvg}": OddsAvg.Format(2);
+                return CategoryType == Fancybet ? $"{Decimal.ToInt32(FancyBetRuns)}/{Decimal.ToInt32(OddsAvg)}": OddsAvg.Format(2);
             }
         }
         public decimal Stake { get; set; }

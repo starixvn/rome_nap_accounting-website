@@ -40,9 +40,10 @@
         public IEnumerable<ExchangeTicket> GetBetDetail(ExchangeBetDetailCriteria criteria)
         {
             var details = dynamicRepository.Fetch<ExchangeTicket>(criteria);
+            var hasLiability = new List<string> { "back", "yes" };
             foreach (var detail in details)
             {
-                detail.HasLiability = !criteria.Type.Equals("back", StringComparison.InvariantCultureIgnoreCase);
+                detail.HasLiability = !hasLiability.Contains(criteria.Type.ToLowerInvariant());
             }
 
             return details;
