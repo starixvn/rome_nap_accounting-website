@@ -11090,6 +11090,7 @@ var ProductStatusSettingBase = /** @class */ (function () {
         return headers;
     };
     ProductStatusSettingBase.prototype.onSuccess = function (data) {
+        var _this = this;
         var html = [];
         var isSuccess = true;
         this.$.each(data, function (index, result) {
@@ -11107,7 +11108,10 @@ var ProductStatusSettingBase = /** @class */ (function () {
             html.push(result.Message);
             html.push("</div></div>");
         });
-        this.showMixedMessagesAndReloadLeftPanel(html.join(""), isSuccess);
+        this.showMixedMessages(html.join(""));
+        if (isSuccess && this.$topWindow.reloadLeftPanel) {
+            setTimeout(function () { return _this.$topWindow.reloadLeftPanel(); }, this.$timeoutDefault);
+        }
     };
     ProductStatusSettingBase.prototype.showMessage = function (code, message) {
         var html = ['<div class="', code === 0 ? "alertsuccess" : "alerterror", '"><div>', message, "</div></div>"].join("");
@@ -11115,14 +11119,10 @@ var ProductStatusSettingBase = /** @class */ (function () {
         messageDiv.html(html).removeClass("hide");
         this.$.unblockUI();
     };
-    ProductStatusSettingBase.prototype.showMixedMessagesAndReloadLeftPanel = function (html, isSuccess) {
-        var _this = this;
+    ProductStatusSettingBase.prototype.showMixedMessages = function (html) {
         var messageDiv = this.$("#sectionMessage");
         messageDiv.html(html).removeClass("hide");
         this.$.unblockUI();
-        if (isSuccess && this.$topWindow.reloadLeftPanel) {
-            setTimeout(function () { return _this.$topWindow.reloadLeftPanel(); }, this.$timeoutDefault);
-        }
     };
     return ProductStatusSettingBase;
 }());
