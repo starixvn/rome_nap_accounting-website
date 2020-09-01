@@ -11089,12 +11089,25 @@ var ProductStatusSettingBase = /** @class */ (function () {
         headers["__RequestVerificationToken"] = token;
         return headers;
     };
-    ProductStatusSettingBase.prototype.onSuccess = function (result) {
-        var _this = this;
-        this.showMessage(result.Code, result.Message);
-        if (result.Code == 0) {
-            setTimeout(function () { return _this.$topWindow.reloadLeftPanel(); }, this.$timeoutDefault);
-        }
+    ProductStatusSettingBase.prototype.onSuccess = function (data) {
+        var html = [];
+        var isSuccess = true;
+        this.$.each(data, function (index, result) {
+            var className;
+            if (result.Code !== 0) {
+                className = "alerterror";
+                isSuccess = false;
+            }
+            else {
+                className = "alertsuccess";
+            }
+            html.push('<div class="');
+            html.push(className);
+            html.push('"><div>');
+            html.push(result.Message);
+            html.push("</div></div>");
+        });
+        this.showMixedMessagesAndReloadLeftPanel(html.join(""), isSuccess);
     };
     ProductStatusSettingBase.prototype.showMessage = function (code, message) {
         var html = ['<div class="', code === 0 ? "alertsuccess" : "alerterror", '"><div>', message, "</div></div>"].join("");
@@ -11102,13 +11115,25 @@ var ProductStatusSettingBase = /** @class */ (function () {
         messageDiv.html(html).removeClass("hide");
         this.$.unblockUI();
     };
+    ProductStatusSettingBase.prototype.showMixedMessagesAndReloadLeftPanel = function (html, isSuccess) {
+        var _this = this;
+        var messageDiv = this.$("#sectionMessage");
+        messageDiv.html(html).removeClass("hide");
+        this.$.unblockUI();
+        if (isSuccess && this.$topWindow.reloadLeftPanel) {
+            setTimeout(function () { return _this.$topWindow.reloadLeftPanel(); }, this.$timeoutDefault);
+        }
+    };
     return ProductStatusSettingBase;
 }());
 //# sourceMappingURL=product-status-setting-base.js.map
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
