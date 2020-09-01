@@ -19,6 +19,7 @@ namespace Fanex.Tarus.Customer.Controller.NewLicensee
     public class NewLicenseeController : BaseController
     {
         private readonly INewLicenseeService _newLicenseeService;
+        private const int OfferDepositSite = 2;
 
         public NewLicenseeController()
             : this(null)
@@ -32,7 +33,9 @@ namespace Fanex.Tarus.Customer.Controller.NewLicensee
 
         public List<Currency> GetCurrenciesBySystem()
         {
-            var currencies = _newLicenseeService.GetCurrenciesBySystem(new GetCurrenciesBySystemCriteria());
+            var currencies = _newLicenseeService.GetCurrenciesBySystem(new GetCurrenciesBySystemCriteria() {
+                mode = OfferDepositSite
+            });
             return currencies;
         }
     }

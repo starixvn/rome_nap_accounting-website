@@ -49,7 +49,7 @@ namespace Fanex.Tarus.Customer.Controller.CustomerList
             int UserID = superId ?? 0;
             model = _customerList.GetMasterList(UserID, pageSize, pageIndex, null, null, null, null, null, doubleCommSuper);
 
-            ViewBag.Currencies = _customerList.GetCurrencyList();
+            //ViewBag.Currencies = _customerList.GetCurrencyList();
             return View("~/Views/Customer/CustomerList/Default/Master/MasterList.cshtml", model);
 
         }

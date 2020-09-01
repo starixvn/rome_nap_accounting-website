@@ -10,13 +10,12 @@
 
 namespace Fanex.Tarus.Customer.DataAccess.NewLicensee
 {
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Data;
     using DNAide.Core;
     using Fanex.Data;
     using Fanex.Tarus.Customer.Criteria.NewLicensee;
     using Fanex.Tarus.Customer.Entities.NewLicensee;
+    using System.Collections.Generic;
+    using System.Data;
 
     /// <summary>
     /// TODO: Update summary.
@@ -30,32 +29,25 @@ namespace Fanex.Tarus.Customer.DataAccess.NewLicensee
         /// <returns>Currency List.</returns>
         public List<Currency> GetCurrenciesBySystem(GetCurrenciesBySystemCriteria criteria)
         {
-            var dataTable = new DataTable();
-            Hashtable param = new Hashtable();
+            List<Currency> result = new List<Currency>();
             using (ObjectDb objDb = new ObjectDb(criteria.GetSettingKey()))
             {
-                objDb.AssignParamValues(param);
+                objDb.AddInParameter("mode", DbType.Int16, criteria.mode);
                 var dataset = objDb.ExecuteDataSet();
                 if (dataset != null && dataset.Tables.Count > 0)
                 {
-                    dataTable = dataset.Tables[0];
-                }
-            }
-
-            List<Currency> result = new List<Currency>();
-            if (dataTable != null && dataTable.Rows.Count > 0)
-            {
-                foreach (DataRow row in dataTable.Rows)
-                {
-                    result.Add(new Currency
+                    var dataTable = dataset.Tables[0];
+                    foreach (DataRow row in dataTable.Rows)
                     {
-                        Id = CastAide.AsString(row["exchangeid"]),
-                        Value = CastAide.AsString(row["currency"]),
-                        Code = CastAide.AsString(row["code"])
-                    });
+                        result.Add(new Currency
+                        {
+                            Id = CastAide.AsString(row["exchangeid"]),
+                            Value = CastAide.AsString(row["currency"]),
+                            Code = CastAide.AsString(row["code"])
+                        });
+                    }
                 }
             }
-
             return result;
         }
     }

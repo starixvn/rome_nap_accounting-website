@@ -30,60 +30,7 @@
                     <td class="maincontent_headerR">
                     </td>
                 </tr>
-            </table>
-            <div id="filter" class="maincontent_box hidden" style="width: 99%;">
-                <table>
-                    <tr>
-                        <td>
-                            <font class="b">Keyword</font>
-                        </td>
-                        <td>
-                            <input id="txtSearch" class="txt" type="text" onkeypress="return On_KeyPress(event);"
-                                onblur="on_Blur();" onfocus="On_Focus();" value="All" name="txtSearch" />
-                        </td>
-                        <td style="width: 66px;">
-                            <font class="b">First Letter:</font>
-                        </td>
-                        <td style="width: 60px;">
-                            <select id="listAlpha" class="w60" name="listAlpha">
-                                @foreach (var Alpha in arrAlpha)
-                                {
-                                    <option value="@Alpha">@Alpha</option>
-                                }
-                            </select>
-                        </td>
-                        <td style="width: 55px;">
-                            <font class="b">Currency:</font>
-                        </td>
-                        <td style="width: 60px;">
-                            @Html.DropDownList("listCurrency", new SelectList(ViewBag.Currencies.ToArray(), "Value", "Name", -1))
-                        </td>
-                        <td style="width: 40px;">
-                            <font class="b">Status:</font>
-                        </td>
-                        <td style="width: 60px;">
-                            <select id="listType" class="w60" name="listType">
-                                <option value="">All</option>
-                                <option value="0">Active</option>
-                                <option value="1">Closed</option>
-                            </select>
-                        </td>
-                        <td style="width: 85px;">
-                            <font class="b">Double Comm:</font>
-                        </td>
-                        <td style="width: 80px;">
-                            <select id="DComm" class="80px" name="DComm">
-                                <option value="">All</option>
-                                <option value="1">Allowed</option>
-                                <option value="0">Disallowed</option>
-                            </select>
-                        </td>
-                        <td>
-                            <input class="btn" type="button" id="btnSearch" value="Search" onclick="masterList.getMasterList(true);" />
-                        </td>
-                    </tr>
-                </table>
-            </div>
+            </table>         
             <div id="masterlistMain"  style="margin-top:  @(Model.ParentId == 0 ? new HtmlString("2px") : new HtmlString("0px"))" >
                 @Html.Partial("~/Views/Customer/CustomerList/Default/Master/_MasterListPartial.cshtml", Model)
             </div>

@@ -34,6 +34,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
         /// </summary>
         /// <param name="system">Name of system</param>
         /// <returns>List of currency (name and id)</returns>
+        private const int OfferSiteCredit = 1;
         public List<Currency> GetCurrencyList(string system)
         {
             var currencies = new List<Currency>();
@@ -42,6 +43,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
                 using (ObjectDb objDB = new ObjectDb("Acc_ExchangeSel"))
                 {
                     objDB.AddInParameter("system", DbType.String, system.ToUpper());
+                    objDB.AddInParameter("mode", DbType.Int16, OfferSiteCredit);
                     using (var reader = objDB.ExecuteReader())
                     {
                         if (reader != null)
