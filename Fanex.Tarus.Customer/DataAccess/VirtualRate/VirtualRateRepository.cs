@@ -194,5 +194,16 @@
 
             return result;
         }
+
+        public string GetVRAutoAdjustUpdateMessage(GetVRAutoAdjustUpdateMessageCriteria criteria)
+        {
+            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                objDb.AssignParamValues(criteria.GetSpParams());
+                objDb.ExecuteNonQuery();
+
+                return objDb.GetOuputParams()["message"].ToString();
+            }
+        }
     }
 }

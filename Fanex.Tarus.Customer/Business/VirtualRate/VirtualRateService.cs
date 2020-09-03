@@ -286,5 +286,12 @@
 
             return historyLogDetailList;
         }
+
+        public string GetConfirmUpdateMessage(int custId)
+        {
+            var criteria = new GetVRAutoAdjustUpdateMessageCriteria { CustID = custId };
+
+           return _virtualRateRepository.GetVRAutoAdjustUpdateMessage(criteria);
+        }
     }
 }

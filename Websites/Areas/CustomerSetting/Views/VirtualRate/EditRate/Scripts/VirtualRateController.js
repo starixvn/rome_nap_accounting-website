@@ -472,50 +472,64 @@ var VirtualRateController = function () {
         } else {
             $("#result-message").empty();
         }
+        var url = window.rootUrl + "VirtualRate/GetConfirmUpdateMessage";
+        var params = {
+            custId: custId
+        };
+        $.ajax({
+            type: "POST",
+            url: url,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(params),
+            success: function (rs) {
+                __confirm("Update Virtual Rate", rs,
+                    325, 210, null,
+                    function () {
+                        __close(false, null, null, null);
+                        self.blockUI();
+                        var criteria = $.extend({}, customerVirtualRateModel);
+                        criteria.EnableVirtualRate = $("#chk-enable").attr("checked") ? true : false;
+                        var sportLength = customerVirtualRateModel.SportVirtualRateList.length;
 
-        __confirm("Update Virtual Rate", viewResources.VirtualRate_UpdateConfirm,
-                325, 210, null,
-                function () {
-                    __close(false, null, null, null);
-                    self.blockUI();
-                    var criteria = $.extend({}, customerVirtualRateModel);
-                    criteria.EnableVirtualRate = $("#chk-enable").attr("checked") ? true : false;
-                    var sportLength = customerVirtualRateModel.SportVirtualRateList.length;
+                        var isCopyFromSport = $("#button-copy-sport-settings-" + self.Constants.SportType.Soccer).hasClass("icon-copy-setting-checked");
+                        var isCopyFromBasketball = $("#button-copy-sport-settings-" + self.Constants.SportType.Basketball).hasClass("icon-copy-setting-checked");
 
-                    var isCopyFromSport = $("#button-copy-sport-settings-" + self.Constants.SportType.Soccer).hasClass("icon-copy-setting-checked");
-                    var isCopyFromBasketball = $("#button-copy-sport-settings-" + self.Constants.SportType.Basketball).hasClass("icon-copy-setting-checked");
+                        criteria.LastSettings = self.cachedData.oldSettings;
+                        for (var i = 0; i < sportLength; i++) {
+                            var sport = customerVirtualRateModel.SportVirtualRateList[i];
+                            var isCopyFromBetType = $("#button-copy-bettype-settings-" + sport.Id).hasClass("icon-copy-setting-checked");
 
-                     criteria.LastSettings = self.cachedData.oldSettings;
-                    for (var i = 0; i < sportLength; i++) {
-                        var sport = customerVirtualRateModel.SportVirtualRateList[i];
-                        var isCopyFromBetType = $("#button-copy-bettype-settings-" + sport.Id).hasClass("icon-copy-setting-checked");
-
-                        if (!isCopyFromSport) { // Check "Copy Settings of Basketball" button is checked.
-                            isCopyFromSport = isCopyFromBasketball && sport.Id !== self.Constants.SportType.Soccer;
-                        }
-
-                        if (sport.SubSportList && sport.SubSportList.length) {
-                            var subSportListLength = sport.SubSportList.length;
-                            for (var k = 0; k < subSportListLength; k++) {
-                                var subSport = sport.SubSportList[k];
-                                self.updateSubSportBetTypeRate(sport, subSport, isCopyFromSport, isCopyFromBetType, criteria, i, k);
+                            if (!isCopyFromSport) { // Check "Copy Settings of Basketball" button is checked.
+                                isCopyFromSport = isCopyFromBasketball && sport.Id !== self.Constants.SportType.Soccer;
                             }
-                        } else {
-                            self.updateBetTypeRate(sport, isCopyFromSport, isCopyFromBetType, criteria, i);
-                        }
-                    }
 
-                    self.CallAjax(self,
-                    window.rootUrl + "VirtualRate/UpdateSettings",
-                    criteria,
-                    self.renderUpdateResult,
-                    self.renderUpdateResult,
-                    self.unblockUI);
-                },
-                function () {
-                    __close(false, null, null, null);
-                },
-                null, false);
+                            if (sport.SubSportList && sport.SubSportList.length) {
+                                var subSportListLength = sport.SubSportList.length;
+                                for (var k = 0; k < subSportListLength; k++) {
+                                    var subSport = sport.SubSportList[k];
+                                    self.updateSubSportBetTypeRate(sport, subSport, isCopyFromSport, isCopyFromBetType, criteria, i, k);
+                                }
+                            } else {
+                                self.updateBetTypeRate(sport, isCopyFromSport, isCopyFromBetType, criteria, i);
+                            }
+                        }
+
+                        self.CallAjax(self,
+                            window.rootUrl + "VirtualRate/UpdateSettings",
+                            criteria,
+                            self.renderUpdateResult,
+                            self.renderUpdateResult,
+                            self.unblockUI);
+                    },
+                    function () {
+                        __close(false, null, null, null);
+                    },
+                    null, false);
+            },
+            error: function (jqXHR, event, ajaxSettings) {
+            }
+        });
     };
 
     self.updateBetTypeRate = function (sport, isCopyFromSport, isCopyFromBetType, criteria, i) {

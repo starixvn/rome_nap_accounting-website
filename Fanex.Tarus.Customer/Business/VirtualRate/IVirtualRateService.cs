@@ -23,5 +23,7 @@
         Result DeleteTempRate();
 
         List<SportBetTypeReferencesModel> GetSportBetTypeReferences(GetSportBetTypeReferencesCriteria criteria);
+
+        string GetConfirmUpdateMessage(int custId);
     }
 }
