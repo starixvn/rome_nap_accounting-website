@@ -510,6 +510,20 @@ function showSGDetails(transId, winlossDate, custId, transType) {
     openResultsPopUp(voidbridgeParam);
 }
 
+function showPGSoftDetails(transId, winlossDate, custId, transType) {
+    var voidbridgeParam = {
+        url: "VoidbridgeBetList/BetDetails",
+        title: "PG Soft Details",
+        jsonParam: { TransId: transId, TransType: transType, CustId: custId, SportType: 232, PageSize: 500 },
+        width: 1030,
+        height: 600,
+        resizable: false
+    };
+
+    openResultsPopUp(voidbridgeParam);
+}
+
+
 function showVideoPokerGameDetails(transId, winlossDate, custId, transType) {
     var voidbridgeParam = {
         url: "VoidbridgeBetList/BetDetails",
@@ -851,8 +865,12 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
 
         case 224: //RNG War
             return getRNGWarCasinoParam(matchcode, betcheck);
+
         case 225: // ION Casino
             return getIONCasinoParam(matchcode, betcheck);
+
+        case 232: // PG Soft
+            return getPGSoftCasinoParam(matchcode, betcheck);
 
         case 241: // BBIN
             return getBBinParam(transdesc, matchcode, bettype);
@@ -1030,6 +1048,17 @@ function getRNGWarCasinoParam(matchcode, betcheck) {
         height: 500
     };
 }
+
+function getPGSoftCasinoParam(matchcode, betcheck) {
+    return {
+        url: "ThirdParty/Result",
+        title: "PG Soft Result",
+        jsonParam: { custId: betcheck, gameId: matchcode, productId: 55 },
+        width: 945,
+        height: 800
+    };
+}
+
 
 function getCardClubParam(custId, gameTypeId, sportType, transId3rd) {
     var sportName = "Card Club";
