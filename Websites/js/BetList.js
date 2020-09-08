@@ -876,7 +876,7 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
 
         case 186: // Virtual Tennis.
             return getVirtualHRAndTennisParam(matchid, sporttype);
-
+        case 150:
         case 200: // Saba.Club
             // custId, gameroundid, gameid, siteId
             return getSabaClubParam(betcheck, transdesc, bettype, matchcode, sporttype);
