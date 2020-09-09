@@ -67,7 +67,7 @@
                                 }
 
                                 var usernamesArray = usernamesValue.split(",");
-                                if (usernamesArray.length > 50) {
+                                if (usernamesArray.length > 500) {
                                     showAlertMessage("errMsg", "The function can only create up to 50 accounts per request.", 1);
                                     return;
                                 }
