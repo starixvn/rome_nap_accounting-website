@@ -341,10 +341,10 @@ namespace Sunplus.Accounting.Presentation
                 return false;
             }
 
-            if (usernames.Split(',').Select(m => m.Trim()).ToList().Count > 50)
+            if (usernames.Split(',').Select(m => m.Trim()).ToList().Count > 500)
             {
                 TemplateHandler.Assign(ref from, "{msg}",
-                    "<script>showAlertMessage('errMsg','The function can only create up to 50 accounts per request.',1);</script>");
+                    "<script>showAlertMessage('errMsg','The function can only create up to 500 accounts per request.',1);</script>");
                 return false;
             }
 
