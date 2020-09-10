@@ -310,6 +310,7 @@ table {
         table.number-game .cl-warrior,
         table.number-game .cl-lblOEFT,
         table.number-game .cl-lbl1stball,
+        table.number-game .cl-lbl2ndball,
         table.number-game .cl-lastball {
             width: 70px;
         }
