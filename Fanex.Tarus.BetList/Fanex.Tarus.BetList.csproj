@@ -502,6 +502,7 @@
     <Compile Include="Business\Results\IScoreInformationService.cs" />
     <Compile Include="Business\Results\ScoreInformationService.cs" />
     <Compile Include="Business\SystemParlayExcel.cs" />
+    <Compile Include="Constants\ExchangeTypeConstants.cs" />
     <Compile Include="Constants\BetListConstants.cs" />
     <Compile Include="Constants\BetTypeContants.cs" />
     <Compile Include="Constants\CommonConstants.cs" />

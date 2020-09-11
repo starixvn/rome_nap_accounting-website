@@ -1,4 +1,5 @@
 ﻿using System;
+using Fanex.Tarus.BetList.Constants;
 using Fanex.Tarus.BetList.Extensions;
 
 namespace Fanex.Tarus.BetList.Models.Exchange
@@ -20,17 +21,11 @@ namespace Fanex.Tarus.BetList.Models.Exchange
         public decimal OddsAvg { get; set; }
 
         public string OddsAvgText
-        {
-            get
-            {
-                const int Fancybet = 2;
-                     
-                return CategoryType == Fancybet ? $"{Decimal.ToInt32(FancyBetRuns)}/{Decimal.ToInt32(OddsAvg)}": OddsAvg.Format(2);
-            }
-        }
+            => CategoryType == ExchangeTypeConstants.Fancybet ? $"{Decimal.ToInt32(FancyBetRuns)}/{Decimal.ToInt32(OddsAvg)}" : OddsAvg.Format(2);
+
         public decimal Stake { get; set; }
 
-        public decimal Winlost { get; set; }        
+        public decimal Winlost { get; set; }
 
         public int CategoryType { get; set; }
 
