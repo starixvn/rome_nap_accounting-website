@@ -220,6 +220,9 @@
     <Reference Include="Fanex.BetList.Voidbridge, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Voidbridge.1.2.0\lib\net40\Fanex.BetList.Voidbridge.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.BetList.WM, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.WM.1.0.0-beta-01\lib\net40\Fanex.BetList.WM.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.Caching, Version=1.0.404.95, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Caching.1.0.0404.95\lib\net40\Fanex.Caching.dll</HintPath>
       <Private>True</Private>

@@ -9,6 +9,7 @@
     var ng2Text = hasNG2Permission ? "/" + Fanex.Tarus.Infrastructure.Caching.CacheRef.GetProductName(23) : string.Empty;
     var allowedProducts = new System.Text.StringBuilder();
     allowedProducts.Append("Casino/Keno/Gold Deluxe/Metricgaming/Colossus Bets/AG Casino/Macau Games/Allbet/ION/AE Casino/IBCBet Live Casino")
+        .Append("/WM")
         .Append(ng2Text)
         .Append("/Fishing World")
         .Append("/Lottery/Table Game");
@@ -126,7 +127,7 @@
                             <td class="text-left" colspan="8">
                                 <div id="ref-no-info-msg" class="info-msg">
                                     @allowedProducts.ToString() tickets with win loss dates from @ViewBag.BalanceUpDay.ToShortDateString() are supported.
-                                    For Allbet/SA Gaming/AE Casino/IBCBet Live Casino/BBIN, the search result includes the related tickets with the same GameID.<br />
+                                    For Allbet/SA Gaming/AE Casino/IBCBet Live Casino/BBIN/WM, the search result includes the related tickets with the same GameID.<br />
                                     For Sportsbook, the search result includes the related Bonus/Cash tickets.
                                 </div>
                             </td>
@@ -168,6 +169,7 @@
                                     }
                                     <option value="42">@CacheRef.GetProductName(42)</option>
                                     <option value="55">@CacheRef.GetProductName(55)</option>
+                                    <option value="51">@CacheRef.GetProductName(51)</option>
                                     <option value="56">@CacheRef.GetProductName(56)</option>
                                 </select>
                             </td>

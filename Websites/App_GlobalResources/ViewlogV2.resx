@@ -2101,4 +2101,7 @@ Max Keno (20+1) 2</value>
   <data name="discountmyanmarodds" xml:space="preserve">
     <value>Myanmar Odds</value>
   </data>
+  <data name="Disable233_3401" xml:space="preserve">
+    <value>Disabled WM</value>
+  </data>
 </root>
