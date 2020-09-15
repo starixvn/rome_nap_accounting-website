@@ -165,6 +165,9 @@
     <Reference Include="Fanex.BetList.IONCasino, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.IONCasino.1.0.0\lib\net40\Fanex.BetList.IONCasino.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.BetList.Joker, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.Joker.1.0.0-beta-01\lib\net40\Fanex.BetList.Joker.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.BetList.Keno, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Keno.1.2.0\lib\net40\Fanex.BetList.Keno.dll</HintPath>
     </Reference>
