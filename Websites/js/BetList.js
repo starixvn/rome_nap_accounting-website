@@ -577,7 +577,7 @@ function showTodayRunningBetsDetails(refno, winlossDate, custId, transType) {
 function showSexyGamingBetDetails(refno, winlossDate, custId, transType) {
     var params = {
         url: "AGCasinoBetList/BetDetails",
-        title: "Sexy Gaming - Detailed Bet list - " + winlossDate.split(" ")[0],
+        title: "AE Casino - Detailed Bet list - " + winlossDate.split(" ")[0],
         jsonParam: { Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 243, PageSize: 500 },
         width: 1040,
         height: 600
@@ -1009,7 +1009,7 @@ function getLiveCasinoParam(transdesc, betcheck, bettype, sporttype) {
     var sporttypes = {};
     sporttypes["211"] = "Allbet Result";
     sporttypes["242"] = "IBCBet Live Casino Result";
-    sporttypes["243"] = "Sexy Gaming Result";
+    sporttypes["243"] = "AE Casino Result";
     sporttypes["244"] = "SA Gaming Result";
     var resultPageBySportTypes = {};
     resultPageBySportTypes["211"] = "Report/ViewAllbetCasinoResult.aspx";
