@@ -68,7 +68,7 @@
             if (sportType == SportContants.AllBet ||
                 sportType == SportContants.SaGaming ||
                 sportType == SportContants.SexyGaming ||
-                sportType == SportContants.GTCasino ||
+                sportType == SportContants.GTCasino ||                
                 sportType == SportContants.IonCasino)
             {
                 return GetLiveCasinoTickets(refNo, custId, transType);
@@ -92,6 +92,7 @@
                 sportType == SportContants.RNG_RNGGame ||
                 sportType == SportContants.RNG_MiniGame ||
                 sportType == SportContants.RNG_Mobile ||
+                sportType == SportContants.Joker ||
                 sportType == SportContants.Sabaclub)
             {
                 return GetRNGCasinoOrFishingWorldTickets(refNo, custId, transType);

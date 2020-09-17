@@ -3261,4 +3261,7 @@
   <data name="BS2" xml:space="preserve">
     <value>Add Bet Setting Non-Sportsbook</value>
   </data>
+  <data name="Disable234_6401" xml:space="preserve">
+    <value>Disabled Joker</value>
+  </data>
 </root>
