@@ -89,15 +89,21 @@ function EditBettype(index) {
     $('#TypeNameMMR').val(cachedBettypeData.BettypeEntities[index].TypeNameMMR);
     $('#TypeNameHI').val(cachedBettypeData.BettypeEntities[index].TypeNameHI);
     $('#DisplayedTypeID').val(cachedBettypeData.BettypeEntities[index].DisplayedTypeID);
+    $('#LicSpreadBetTypeGroupId').val(cachedBettypeData.BettypeEntities[index].LicSpreadBetTypeGroupId);
     $('#edit-bettype-form').dialog({
         title: 'Edit Bettype',
         modal: true,
-        width: 700,
-        height: 700,
+        width: 'auto',
+        height: 700
     });
 }
 
 function UpdateBettype() {
+    if ($('#LicSpreadBetTypeGroupId ').val() === '') {
+        showAlertMessage('updateBettypeErrMsg', "LicSpreadBetTypeGroupId cannot be null.", 1);
+        return;
+    }
+
     parent.BlockUI();
     $.ajax({
         url: 'UpdateBettype',
@@ -126,11 +132,12 @@ function UpdateBettype() {
             ParentTypeid: $('#ParentTypeid').val(),
             TypeNameMMR: $('#TypeNameMMR').val(),
             TypeNameHI: $('#TypeNameHI').val(),
-            DisplayedTypeID: $('#DisplayedTypeID ').val()
+            DisplayedTypeID: $('#DisplayedTypeID ').val(),
+            LicSpreadBetTypeGroupId: $('#LicSpreadBetTypeGroupId ').val()
         },
         success: function (result) {
-            showAlertMessage('updateBettypeErrMsg', result.ErrorCode == 0 ? 'Updated successfully.' : result.ErrorMessage, result.ErrorCode == 0 ? 0 : 1);
-            if (result.ErrorCode == 0) {
+            showAlertMessage('updateBettypeErrMsg', result.ErrorCode === 0 ? 'Updated successfully.' : result.ErrorMessage, result.ErrorCode === 0 ? 0 : 1);
+            if (result.ErrorCode === 0) {
                 setTimeout(function () {
                     $('#edit-bettype-form').dialog('close');
                     SearchBettype(50, 1);
