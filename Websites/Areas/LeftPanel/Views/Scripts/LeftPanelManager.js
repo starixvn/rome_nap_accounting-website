@@ -86,17 +86,14 @@ var LeftPanelManager = function () {
         };
         var url = "ProductStatusSetting/Index?" + $.param(param);
         var width = 680;
-        var height = 270;
+        var height = 320;
         if (productId === 8) {
             height = 520;
-        } else if (productId === 41) {
-            height = 360;
-            width = 800;
-        } else if (productId === 33) {
+        } else if (productId === 41 || productId === 33) {
             height = 400;
             width = 800;
         } else if (productId === 44) {
-            height = 320;
+            height = 360;
         }
 
         parent.OpenNextPopup("ProductStatusSetting", url, title, width, height, true, false, window, 0, null, null);
