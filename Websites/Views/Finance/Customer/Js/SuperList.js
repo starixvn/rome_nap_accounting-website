@@ -1,8 +1,7 @@
 ﻿var superList = {
     init: function () {
         this.pageIndex = 0;
-        this.pageSize = 100;
-        this.fillCurrencyList();
+        this.pageSize = 100;        
         if ($.browser.msie) {
             $("#txtSearch").focus(function () {
                 var val = $(this).val().replace(/ /g, '');
@@ -38,12 +37,7 @@
 
         this.getData();
     },
-    fillCurrencyList: function () {
-        $("#listCurrency").append('<option selected="selected" value="">All</option>');
-        $(currencyList).each(function () {
-            $("#listCurrency").append('<option value="' + this.Id + '">' + this.Name + '</option>');
-        });
-    },
+   
     getPostParam: function () {
         var params = [];
         var roleId = $("#hiddenRoleId").val();
