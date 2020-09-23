@@ -268,8 +268,8 @@
       <HintPath>..\packages\Fanex.CustomerSetting.Module.ProgressiveBonus.1.0.0.1\lib\net40\Fanex.CustomerSetting.Module.ProgressiveBonus.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.SearchCopy, Version=2.0.6.7, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.SearchCopy.NAP.2.0.6.7\lib\net461\Fanex.CustomerSetting.Module.SearchCopy.dll</HintPath>
+    <Reference Include="Fanex.CustomerSetting.Module.SearchCopy, Version=2.0.6.9, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.SearchCopy.NAP.2.0.6.9-hf01\lib\net461\Fanex.CustomerSetting.Module.SearchCopy.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Security, Version=2.0.0.6, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.CustomerSetting.Security.2.0.0.6\lib\net40\Fanex.CustomerSetting.Security.dll</HintPath>
@@ -339,11 +339,11 @@
     <Reference Include="Fanex.Nap.SSO, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Nap.SSO.1.0.0.7\lib\net40\Fanex.Nap.SSO.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.ProductStatus.Setting, Version=1.0.2.8, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.ProductStatus.Setting.1.0.2.8\lib\net461\Fanex.ProductStatus.Setting.dll</HintPath>
+    <Reference Include="Fanex.ProductStatus.Setting, Version=1.0.2.9, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.ProductStatus.Setting.1.0.2.9\lib\net461\Fanex.ProductStatus.Setting.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.PTEngine, Version=1.0.5.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.PTEngine.1.0.5.3\lib\net40\Fanex.PTEngine.dll</HintPath>
+    <Reference Include="Fanex.PTEngine, Version=1.0.5.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.PTEngine.1.0.5.4\lib\net40\Fanex.PTEngine.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.PTSetting.BettypeReference, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.PTSetting.BettypeReference.1.0.0.2\lib\net461\Fanex.PTSetting.BettypeReference.dll</HintPath>
@@ -477,8 +477,8 @@
     <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.2.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.2.5\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Tarus.Security, Version=1.0.1.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Security.1.0.1.6\lib\net40\Fanex.Tarus.Security.dll</HintPath>
+    <Reference Include="Fanex.Tarus.Security, Version=1.0.1.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Security.1.0.1.7\lib\net40\Fanex.Tarus.Security.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Statements, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Statements.1.0.0.0\lib\net40\Fanex.Tarus.Statements.dll</HintPath>

@@ -152,8 +152,8 @@
     <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.2.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.2.5\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Tarus.Security, Version=1.0.1.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Security.1.0.1.6\lib\net40\Fanex.Tarus.Security.dll</HintPath>
+    <Reference Include="Fanex.Tarus.Security, Version=1.0.1.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Security.1.0.1.7\lib\net40\Fanex.Tarus.Security.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Statements, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Statements.1.0.0.0\lib\net40\Fanex.Tarus.Statements.dll</HintPath>
