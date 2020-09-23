@@ -680,13 +680,13 @@ function selectTranferTime() {
         if (obj("rdDaily").checked) {
             var o = obj("errTransfer");
             if (o) o.innerHTML = "";
-	    }
-	    var transfercondition_message = document.getElementById("transfercondition_message").innerHTML;
-	    if (transfercondition_message.length > 0) {
-	        document.getElementById("rdWeekly").disabled = true;
-	        for (var j = 0; j < elements.length; j++) {
-	            elements[j].disabled = true;
-	        }
+        }
+        var transfercondition_message = document.getElementById("transfercondition_message").innerHTML;
+        if (transfercondition_message.length > 0) {
+            document.getElementById("rdWeekly").disabled = true;
+            for (var j = 0; j < elements.length; j++) {
+                elements[j].disabled = true;
+            }
         }
     }
     catch (ex) { }
@@ -876,8 +876,7 @@ function getRealTop(el) {
             tempEl = tempEl.offsetParent;
         }
     }
-    catch (e)
-    { }
+    catch (e) { }
 
     return yPos;
 }
@@ -891,8 +890,7 @@ function getRealLeft(el) {
             tempEl = tempEl.offsetParent;
         }
     }
-    catch (e)
-    { }
+    catch (e) { }
 
     return xPos;
 }
@@ -1095,7 +1093,7 @@ function PTBlockUI() {
     if (parent.BlockUI) {
         try { parent.BlockUI(); } catch (e) { }
     }
-        //Called inside a frame set (#centerFr)
+    //Called inside a frame set (#centerFr)
     else {
         if (parent.parent.BlockUI) {
             parent.parent.BlockUI();
@@ -1394,7 +1392,7 @@ function SiteRendering(selectControlId, rootPath) {
     });
 }
 
-function SiteRenderingCreditAndDeposit(selectControlId, rootPath) {
+function SiteRenderingCreditOnly(selectControlId, rootPath, isCreditOnly) {
     $.ajax({
         type: "POST",
         url: rootPath + "Services/WCF/HelperService.svc/GetSiteList",
@@ -1404,24 +1402,12 @@ function SiteRenderingCreditAndDeposit(selectControlId, rootPath) {
             var objSelectControl = $("#" + selectControlId);
             objSelectControl.append("<option>Select</option>");
             var totalSiteDTO = objSite.length;
-            for (var i = 0; i < totalSiteDTO; i++) {
-                var siteDTO = objSite[i];
-                if (siteDTO.Sites != null && siteDTO.Sites.length > 0) {
-                    var totalSite = siteDTO.Sites.length;
-                    if (totalSite == 1) {
-                        objSelectControl.append("<option>" + siteDTO.Sites[0].Name + "</option>")
-                    }
-                    else {
-                        var optgroup = "<optgroup label=" + siteDTO.Name + ">";
-                        for (var j = 0; j < totalSite; j++) {
-                            optgroup += "<option>" + siteDTO.Sites[j].Name + "</option>";
-
-                        }
-                        optgroup += "</optgroup>";
-                        objSelectControl.append(optgroup);
-                    }
+            var siteDTO = objSite[0];
+            if (siteDTO.Sites != null && siteDTO.Sites.length > 0) {
+                var totalSite = siteDTO.Sites.length;
+                for (var j = 0; j < totalSite; j++) {
+                    objSelectControl.append("<option>" + siteDTO.Sites[j].Name + "</option>");
                 }
-
             }
         },
         error: Error

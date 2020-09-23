@@ -1,4 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="ChangeSite.aspx.cs" Inherits="Customer_ChangeSite" %>
+
 <%@ Import Namespace="Sunplus.Accounting.Core.Configurations" %>
 
 
@@ -14,33 +15,27 @@
     <script src="../js/jquery.json-2.2.min.js" type="text/javascript"></script>
     <script src="../js/common.js?v=<%=WebSettings.Version%>" type="text/javascript"></script>
     <script type="text/javascript">
-        $(document).ready(
-            function () {
-                var username = gup('UserName');
-                if (username != null && username != "") {
-                    var divUserName = $('#divUsername');
-                    var roleId = gup('RoleId');
-                    if (roleId == 4)
-                        divUserName.html('Super ');
-                    else if (roleId == 3)
-                        divUserName.html('Master ');
-                    else if (roleId == 2)
-                        divUserName.html('Agent ');
-                    divUserName.append(username);
-                   
-                    
-                }
-                var custId = gup('CustId');
-                var currSite = gup('Site');
-                if (currSite != null && currSite != "")
-                    $("#spCurrSite").html(currSite);
-                SiteRenderingCreditAndDeposit('Site', "../");
+        $(document).ready(function () {
+            var username = gup('UserName');
+            if (username != null && username != "") {
+                var divUserName = $('#divUsername');
+                var roleId = gup('RoleId');
+                if (roleId == 4)
+                    divUserName.html('Super ');
+                else if (roleId == 3)
+                    divUserName.html('Master ');
+                else if (roleId == 2)
+                    divUserName.html('Agent ');
+                divUserName.append(username);
+
+
             }
-
-        );
-            
-
-           
+            var custId = gup('CustId');
+            var currSite = gup('Site');
+            if (currSite != null && currSite != "")
+                $("#spCurrSite").html(currSite);
+            SiteRenderingCreditOnly('Site', "../");
+        });
     </script>
 </head>
 <body>
@@ -48,17 +43,14 @@
         <table cellspacing="0px" cellpadding="0px" border="0" class="maincontent_header">
             <tbody>
                 <tr>
-                    <td class="maincontent_headerL">
+                    <td class="maincontent_headerL"></td>
+                    <td class="maincontent_headerC fixfont">Move Site
                     </td>
-                    <td class="maincontent_headerC fixfont">
-                        Move Site
-                    </td>
-                    <td class="maincontent_headerR">
-                    </td>
+                    <td class="maincontent_headerR"></td>
                 </tr>
             </tbody>
         </table>
-        <div class="maincontent_box" style="width:350px">
+        <div class="maincontent_box" style="width: 350px">
             <div style="display: none;" id="trMsg">
                 <div id="dvMsg">
                 </div>
@@ -67,24 +59,22 @@
                 class="tbllayout">
                 <tbody>
                     <tr>
-                        <td class="l b">
-                            Move site for:
+                        <td class="l b">Move site for:
                         </td>
                         <td class="l b">
-                            <div id="divUsername"><input type="text" name="txtUserName" id="txtUserName" title="Please input user name" style="width: 100px;"><input type="button" onclick="GetSiteInfo();" value="Submit" name="btnGetSite" id="btnGetSite" class="btn"></div>
+                            <div id="divUsername">
+                                <input type="text" name="txtUserName" id="txtUserName" title="Please input user name" style="width: 100px;"><input type="button" onclick="GetSiteInfo();" value="Submit" name="btnGetSite" id="btnGetSite" class="btn"></div>
                         </td>
                     </tr>
                     <tr>
-                        <td class="b l">
-                            Current site:
+                        <td class="b l">Current site:
                         </td>
                         <td class="l">
                             <b><span id="spCurrSite"></span></b>
                         </td>
                     </tr>
                     <tr>
-                        <td class="b l">
-                            Move to new site:
+                        <td class="b l">Move to new site:
                         </td>
                         <td class="l">
                             <select style="width: 100px;" name="Site" id="Site">
@@ -106,7 +96,7 @@
         var cust = new Customer();
         function UpdateMoveSite() {
             var CustId = gup('CustId');
-            if(CustId == "")
+            if (CustId == "")
                 CustId = cust.CustId;
             var NewSite = $('#Site').val();
             var CurrSite = $('#spCurrSite').html();
@@ -128,29 +118,29 @@
                 var param = { custId: CustId, newSite: NewSite };
 
                 $.ajax(
-                 {
-                     type: "POST",
-                     url: "../Services/WCF/Customer/ServiceCustomerInfo.svc/UpdateCustomerSite",
-                     data: $.toJSON(param),
-                     contentType: "application/json; charset=utf-8",
-                     success: function (rs) {
-                         $('#trMsg').show();
-                         if(rs.ErrorCode == 0)
-                             showAlertMessage('dvMsg', 'Move site successfully!', 0);
-                         else
-                             showAlertMessage('dvMsg', rs.ErrorMessage, 1);
-                         try { parent.jQuery.unblockUI(); } catch (e) { }
-                     },
-                     error: function (xhr) {
-                         if (xhr.status === 403) {
-                             var denyObject = $.parseJSON(xhr.responseText);
-                             $('#trMsg').show();
-                             showAlertMessage('dvMsg', denyObject.ErrorMessage, 1);
-                         }
-                         try { parent.jQuery.unblockUI(); } catch (e) { }
-                     }
-                 }
-             );
+                    {
+                        type: "POST",
+                        url: "../Services/WCF/Customer/ServiceCustomerInfo.svc/UpdateCustomerSite",
+                        data: $.toJSON(param),
+                        contentType: "application/json; charset=utf-8",
+                        success: function (rs) {
+                            $('#trMsg').show();
+                            if (rs.ErrorCode == 0)
+                                showAlertMessage('dvMsg', 'Move site successfully!', 0);
+                            else
+                                showAlertMessage('dvMsg', rs.ErrorMessage, 1);
+                            try { parent.jQuery.unblockUI(); } catch (e) { }
+                        },
+                        error: function (xhr) {
+                            if (xhr.status === 403) {
+                                var denyObject = $.parseJSON(xhr.responseText);
+                                $('#trMsg').show();
+                                showAlertMessage('dvMsg', denyObject.ErrorMessage, 1);
+                            }
+                            try { parent.jQuery.unblockUI(); } catch (e) { }
+                        }
+                    }
+                );
             }
         }
 
@@ -170,44 +160,43 @@
 
             try { parent.BlockUI(); } catch (e) { }
 
-            var param = {username: UserName};
+            var param = { username: UserName };
             $.ajax(
-                 {
-                     type: "POST",
-                     url: "../Services/WCF/Customer/ServiceCustomerInfo.svc/GetCustomerInfoMoveSite",
-                     data: $.toJSON(param),
-                     dataType: 'json',
-                     contentType: "application/json; charset=utf-8",
-                     success: function (custdetail) {
-                         cust = custdetail;
-                         if (cust.ErrorCode > 0)
-                         {
-                             $('#trMsg').show();
-                             showAlertMessage('dvMsg', cust.ErrorMessage, 1);
-                             $('#Move').attr('disabled', true);
-                         }
-                         else if (cust.CustId == 0) {
-                             $('#trMsg').show();
-                             showAlertMessage('dvMsg', "Invalid username. Please try again.", 1);
-                             $('#Move').attr('disabled', true);
-                         }
-                         else {
-                             $("#spCurrSite").html(cust.Site);
-                         }
+                {
+                    type: "POST",
+                    url: "../Services/WCF/Customer/ServiceCustomerInfo.svc/GetCustomerInfoMoveSite",
+                    data: $.toJSON(param),
+                    dataType: 'json',
+                    contentType: "application/json; charset=utf-8",
+                    success: function (custdetail) {
+                        cust = custdetail;
+                        if (cust.ErrorCode > 0) {
+                            $('#trMsg').show();
+                            showAlertMessage('dvMsg', cust.ErrorMessage, 1);
+                            $('#Move').attr('disabled', true);
+                        }
+                        else if (cust.CustId == 0) {
+                            $('#trMsg').show();
+                            showAlertMessage('dvMsg', "Invalid username. Please try again.", 1);
+                            $('#Move').attr('disabled', true);
+                        }
+                        else {
+                            $("#spCurrSite").html(cust.Site);
+                        }
 
-                         try { parent.jQuery.unblockUI(); } catch (e) { }
-                     },
-                     error: function (xhr) {
-                         if (xhr.status === 403) {
-                             var denyObject = $.parseJSON(xhr.responseText);
-                             $('#trMsg').show();
-                             showAlertMessage('dvMsg', denyObject.ErrorMessage, 1);
-                             $('#Move').attr('disabled', true);
-                         }
-                         try { parent.jQuery.unblockUI(); } catch (e) { }
-                     }
-                 }
-             );
+                        try { parent.jQuery.unblockUI(); } catch (e) { }
+                    },
+                    error: function (xhr) {
+                        if (xhr.status === 403) {
+                            var denyObject = $.parseJSON(xhr.responseText);
+                            $('#trMsg').show();
+                            showAlertMessage('dvMsg', denyObject.ErrorMessage, 1);
+                            $('#Move').attr('disabled', true);
+                        }
+                        try { parent.jQuery.unblockUI(); } catch (e) { }
+                    }
+                }
+            );
         }
 
         function OnEnter(e) {
@@ -222,18 +211,18 @@
             var param = '';
             param += 'mode=2';
             $.ajax(
-                 {
-                     type: "POST",
-                     url: "../Handlers/UpdateMoveSite.ashx",
-                     data: param,
-                     success: function (rs) {
-                         var RoleIdUpline = rs;
-                         $('#RoleIdUpline').val(RoleIdUpline);
-                         return false;
-                     }
+                {
+                    type: "POST",
+                    url: "../Handlers/UpdateMoveSite.ashx",
+                    data: param,
+                    success: function (rs) {
+                        var RoleIdUpline = rs;
+                        $('#RoleIdUpline').val(RoleIdUpline);
+                        return false;
+                    }
 
-                 }
-             );
+                }
+            );
         }
 
         function changeUserName() {
