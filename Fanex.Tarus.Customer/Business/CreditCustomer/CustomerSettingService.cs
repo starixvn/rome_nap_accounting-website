@@ -30,6 +30,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
     using Sunplus.Accounting.Entities.Casino;
     using Sunplus.Accounting.Entities.Customer;
     using System;
+    using System.Linq;
     using System.Collections;
     using System.Collections.Generic;
     using System.Data;
@@ -77,84 +78,46 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
         /// </summary>
         /// <param name="paramerters">Paramerter contains agent id</param>
         /// <returns>List Of Group</returns>
-        public List<MemberGroup> GetListMemberGroup(int agentId)
+        public IEnumerable<MemberGroup> GetListMemberGroup(int agentId)
         {
             List<MemberGroup> listMemberGroup = new List<MemberGroup>();
-            try
+            var ht = new Hashtable();
+            ht.Add("custid", agentId);
+            DataTable dt = _customerSettingDataAccess.GetCustomerInfoForMemberGroup(ht);
+            var site = dt.Rows[0]["site"].ToString().ToLower();
+            var currency = dt.Rows[0]["currency"].ToString().ToLower();
+            var currencies = CustomerSection.Instance[CustomerSection.CustomerCollections.Currencies];
+            var sites = CustomerSection.Instance[CustomerSection.CustomerCollections.Sites];
+            var group = currencies.Cast<CustomerElement>().FirstOrDefault(i => i.Name == "default").Group;
+
+            if (dt.Rows.Count > 0)
             {
-                var ht = new Hashtable();
-                ht.Add("custid", agentId);
-                DataTable dt = _customerSettingDataAccess.GetCustomerInfoForMemberGroup(ht);
-                var currenciesGroup = CustomerSection.Instance[CustomerSection.CustomerCollections.Currencies];
-
-                var currencies = "a,b,c,d";
-                if (dt.Rows.Count > 0)
+                var siteGroup = sites.Cast<CustomerElement>().FirstOrDefault(i => i.Name == site);
+                if (siteGroup != null)
                 {
-                    var sitesGroup = CustomerSection.Instance[CustomerSection.CustomerCollections.Sites];
-
-                    if (dt.Rows[0]["site"].ToString().ToLower() == "ibsbet")
-                    {
-                        foreach (CustomerElement currency in sitesGroup)
-                        {
-                            if (currency.Name == "ibsbet")
-                            {
-                                currencies = currency.Group;
-                                break;
-                            }
-                        }
-                    }
-                    else if (dt.Rows[0]["site"].ToString().ToLower() == "766666")
-                    {
-                        currencies = "a";
-                    }
-                    else if (dt.Rows[0]["currency"].ToString().ToLower() == "won")
-                    {
-                        foreach (CustomerElement currency in currenciesGroup)
-                        {
-                            if (currency.Name == "won")
-                            {
-                                currencies = currency.Group;
-                                break;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        foreach (CustomerElement currency in currenciesGroup)
-                        {
-                            if (currency.Name == "other")
-                            {
-                                currencies = currency.Group;
-                                break;
-                            }
-                        }
-                    }
+                    group = siteGroup.Group;
                 }
                 else
                 {
-                    foreach (CustomerElement currency in currenciesGroup)
+                    var currencyGroup = currencies.Cast<CustomerElement>().FirstOrDefault(i => i.Name == currency);
+                    if (currencyGroup != null)
                     {
-                        if (currency.Name == "default")
-                        {
-                            currencies = currency.Group;
-                            break;
-                        }
+                        group = currencyGroup.Group;
                     }
-                }
-                var arr = currencies.Split(',');
-                foreach (string groupName in arr)
-                {
-                    listMemberGroup.Add(new MemberGroup
-                    {
-                        GroupName = groupName,
-                        GroupValue = groupName
-                    });
+
                 }
             }
-            catch (Exception ex)
+
+            var arr = group.Split(',');
+            foreach (var groupName in arr)
             {
-                LogExtensions.ExceptionHandler(ex);
+                listMemberGroup.Add(new MemberGroup
+                {
+                    GroupName = groupName,
+                    GroupValue = groupName
+                });
             }
+
             return listMemberGroup;
         }
 
@@ -322,7 +285,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
             {
                 CustId = custId,
                 IsAllDayBalTransfer = isAllDayBalTransfer,
-                IsIncludedDownline= isIncludedDownline,
+                IsIncludedDownline = isIncludedDownline,
                 UserId = userId,
                 IP = ip
             };

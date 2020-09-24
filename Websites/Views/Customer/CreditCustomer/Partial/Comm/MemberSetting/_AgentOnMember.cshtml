@@ -1,11 +1,24 @@
 ﻿@using Fanex.Tarus.Customer.CreditCustomer.Entities;
 @using Sunplus.Accounting.Core.Configurations;
 @model Fanex.Tarus.Customer.CreditCustomer.Entities.CustomerSettingView
+@{
+    bool isShowMyanmarOdds = false;
+    if (Model.IsSuperSetting && Model.IsInsertPage)
+    {
+        isShowMyanmarOdds = true;
+    }
+    else
+    {
+        if (!string.IsNullOrEmpty(Model.SiteName))
+        {
+            isShowMyanmarOdds = Model.SiteName.Equals("76666B");
+        }
+    }
+}
 <table class="tblcollapse" width="100%">
     <!--header-->
     <tr class="title">
-        <td>
-        </td>
+        <td></td>
         <td>
             @Resources.Language.CommissionForAgent
         </td>
@@ -21,11 +34,10 @@
         </td>
         <td>
             <input class="selectcomm" type="text" id="txtHDPOUOE" name="txtHDPOUOE" disabled="disabled"
-                data-bind="value: customer.commissionSetting.groupA" style="text-align: right;" />
+                   data-bind="value: customer.commissionSetting.groupA" style="text-align: right;" />
         </td>
         <td>
-            <select class="selectcomm" name="listHDPOUOE" id="listHDPOUOE">
-            </select>
+            <select class="selectcomm" name="listHDPOUOE" id="listHDPOUOE"></select>
         </td>
     </tr>
     <!--/HDPOUOE-->
@@ -36,11 +48,10 @@
         </td>
         <td>
             <input class="selectcomm" type="text" id="txt1X2" name="txt1X2" disabled="disabled"
-                data-bind="value: customer.commissionSetting.discount1x2" style="text-align: right;" />
+                   data-bind="value: customer.commissionSetting.discount1x2" style="text-align: right;" />
         </td>
         <td>
-            <select class="selectcomm" name="list1X2" id="list1X2">
-            </select>
+            <select class="selectcomm" name="list1X2" id="list1X2"></select>
         </td>
     </tr>
     <!--/1x2-->
@@ -51,14 +62,30 @@
         </td>
         <td>
             <input class="selectcomm" type="text" id="txtOtherBettypes" name="txtOtherBettypes"
-                disabled="disabled" data-bind="value: customer.commissionSetting.discountCS"
-                style="text-align: right;" />
+                   disabled="disabled" data-bind="value: customer.commissionSetting.discountCS"
+                   style="text-align: right;" />
         </td>
         <td>
-            <select class="selectcomm" name="listOtherBettypes" id="listOtherBettypes">
-            </select>
+            <select class="selectcomm" name="listOtherBettypes" id="listOtherBettypes"></select>
         </td>
     </tr>
-    <!--/other-->   
-   
+    <!--/other-->
+    @if (isShowMyanmarOdds)
+    {
+        <!--MyanmarOdds-->
+        <tr>
+            <td class="r" style="width: 25%;">
+                Myanmar Odds
+            </td>
+            <td>
+                <input class="selectcomm" type="text" id="txtDiscountMyanmarOdds" name="txtDiscountMyanmarOdds"
+                       disabled="disabled" data-bind="value: customer.commissionSetting.discountMyanmarOdds"
+                       style="text-align: right;" />
+            </td>
+            <td>
+                <select class="selectcomm" name="listMyanmarOdds" id="listMyanmarOdds"></select>
+            </td>
+        </tr>
+        <!--/MyanmarOdds-->
+    }
 </table>

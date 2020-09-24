@@ -117,14 +117,15 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                         superItem._1x2 = CastAide.AsDouble(row["discount1x2"]);
 
                         superItem.Others = CastAide.AsDouble(row["discountcs"]);
+                        superItem.DiscountMyanmarOdds = CastAide.AsDouble(row["discountMyanmarOdds"]);
                         superItem.IsHideSportsbook2 = !WebSettings.IsShowSportsbook2;
                         superItem.IsHideLiveCasino = !WebSettings.IsShowLiveCasino;
                         superItem.IsHideVoidbridge = !WebSettings.IsShowVoidbridge;
                         superItem.IsHideFishingWorld = !WebSettings.IsShowFishingWorld;
                         superItem.IsHideVirtualSports = !WebSettings.EnableVirtualSports;
                         superItem.IsHideVirtualGames = !WebSettings.IsShowVirtualGames;
-                        superItem.isDoubleComm = CastAide.AsBoolean(row["doublecommlosing"]);                    
-
+                        superItem.isDoubleComm = CastAide.AsBoolean(row["doublecommlosing"]);
+                        superItem.IsMyanmarOdds = CastAide.AsBoolean(row["IsMyanmarOdds"]);
                         superItem.LastLoginIP = IpManagement.ReplaceVNIP(row["lastloginip"] == null ? string.Empty : row["lastloginip"].ToString());
 
                         superItem.IsSynCasinoUpline = CastAide.AsBoolean(row.Table.Columns.Contains("synccasino") ? row["synccasino"] : false);
@@ -258,7 +259,8 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                           CastAide.AsBoolean(row["HideVirtualSportsUpline"]);
                         masterItem.IsHideVirtualGames = !WebSettings.IsShowVirtualGames ||
                           CastAide.AsBoolean(row["HideVirtualGamesUpline"]);
-                        masterItem.isDoubleComm = CastAide.AsBoolean(row["doublecommlosing"]);                    
+                        masterItem.isDoubleComm = CastAide.AsBoolean(row["doublecommlosing"]);
+                        masterItem.DiscountMyanmarOdds = CastAide.AsDouble(row["discountMyanmarOdds"]);
 
                         masterItem.LastLoginIP = IpManagement.ReplaceVNIP(row["lastloginip"] == null ? string.Empty : row["lastloginip"].ToString());
                         masterItem.IsSynCasinoUpline = CastAide.AsBoolean(row.Table.Columns.Contains("synccasino") ? row["synccasino"] : false);
@@ -333,8 +335,8 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
 
                         agentItem._1x2 = CastAide.AsDouble(row["discount1x2"]);
 
-                        agentItem.Others = CastAide.AsDouble(row["discountcs"]);                     
-                      
+                        agentItem.Others = CastAide.AsDouble(row["discountcs"]);
+                        agentItem.DiscountMyanmarOdds = CastAide.AsDouble(row["discountMyanmarOdds"]);
                         agentItem.IsHideSportsbook2 = !WebSettings.IsShowSportsbook2 || CastAide.AsBoolean(row["HideMuayThai"]);                       
 
                         agentItem.IsHideLiveCasino = !WebSettings.IsShowLiveCasino || IsHideLiveCasino(row);
@@ -348,8 +350,8 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                            CastAide.AsBoolean(row["HideVirtualSportsUpline"]);
                         agentItem.IsHideVirtualGames = !WebSettings.IsShowVirtualGames ||
                            CastAide.AsBoolean(row["HideVirtualGamesUpline"]);
-                        agentItem.isDoubleComm = CastAide.AsBoolean(row["doublecommlosing"]);                     
-
+                        agentItem.isDoubleComm = CastAide.AsBoolean(row["doublecommlosing"]);
+                        agentItem.IsMyanmarOdds = CastAide.AsBoolean(row["IsMyanmarOdds"]);
                         agentItem.LastLoginIP = IpManagement.ReplaceVNIP(row["lastloginip"] == null ? string.Empty : row["lastloginip"].ToString());
 
                         agentItem.IsSynCasinoUpline = CastAide.AsBoolean(row.Table.Columns.Contains("synccasino") ? row["synccasino"] : false);
@@ -423,7 +425,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                         memberItem.GroupD = CastAide.AsDouble(row["playerdiscountcs"]);
 
                         memberItem._1x2 = CastAide.AsDouble(row["discount1x2"]);
-
+                        memberItem.DiscountMyanmarOdds = CastAide.AsDouble(row["playerdiscountMyanmarOdds"]);
                         memberItem.Others = CastAide.AsDouble(row["playerdiscount1x2"]);                      
                      
                         memberItem.IsHideSportsbook2 = !WebSettings.IsShowSportsbook2 || CastAide.AsBoolean(row["HideMuayThai"]);                       
@@ -440,7 +442,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                         memberItem.IsHideVirtualGames = !WebSettings.IsShowVirtualGames ||
                             CastAide.AsBoolean(row["HideVirtualGamesUpline"]);
                         memberItem.isDoubleComm = CastAide.AsBoolean(row["doublecommlosing"]);
-                      
+                        memberItem.IsMyanmarOdds = CastAide.AsBoolean(row["IsMyanmarOdds"]);
 
                         memberItem.LastLoginIP = IpManagement.ReplaceVNIP(row["lastloginip"] == null ? string.Empty : row["lastloginip"].ToString());
                         memberItem.IsSynCasinoUpline = CastAide.AsBoolean(row.Table.Columns.Contains("synccasino") ? row["synccasino"] : false);

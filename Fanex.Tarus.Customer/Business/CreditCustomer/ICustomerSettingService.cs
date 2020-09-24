@@ -39,7 +39,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
         /// </summary>
         /// <param name="paramerters">Paramerter contains agent id</param>
         /// <returns>List Of Group</returns>
-        List<MemberGroup> GetListMemberGroup(int agentId);
+        IEnumerable<MemberGroup> GetListMemberGroup(int agentId);
 
         /// <summary>
         /// This function will update status after insert customer success

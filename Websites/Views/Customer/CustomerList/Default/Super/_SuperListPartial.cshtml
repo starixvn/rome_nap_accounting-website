@@ -92,7 +92,7 @@
 {
 var bg = rowCSS(superItem);
 var idAllow = superItem.ChildID.ToString() + '_' + superItem.UserName;
-string siteName = string.Empty;
+string siteName = superItem.IsMyanmarOdds ? "76666B" : string.Empty;
 
     <tr name="tr_@superItem.ChildID" class="@bg">
         <td>
@@ -212,6 +212,7 @@ string siteName = string.Empty;
 @helper renderContent(Fanex.Tarus.Customer.Entities.CustomerList.CustomerList superItem, Hashtable hash)
 {
 var bg = rowCSS(superItem);
+    string discountMyanmarOdss = superItem.IsMyanmarOdds ? superItem.DiscountMyanmarOdds.ToString() : "N/A";
     <tr name="tr_@superItem.ChildID" class="@bg" style="height: 20px;">
         <td>
             <div class="table-cell c" style="width: 40px; height: 18px;">
@@ -311,15 +312,16 @@ var bg = rowCSS(superItem);
             <div class="table-cell c" style="width: 70px; height: 18px;">             
             </div>
         </td>
-      
+        <td>
+            <div class="table-cell c" style="width: 70px; height: 18px;">
+                @discountMyanmarOdss
+            </div>
+        </td>
         <td>
             <div class="table-cell c" style="width: 90px; height: 18px;">
                 <a onclick="ViewIP('@superItem.LastLoginIP')">@superItem.LastLoginIP</a>
             </div>
-        </td>
-        <td>
-          
-        </td>
+        </td>       
     </tr>
 }
 <div id="SuperListgrid" class="freegrid hidden">

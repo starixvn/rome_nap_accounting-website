@@ -302,7 +302,9 @@
         if (_IsVisibleVirtualRate == "True") {
             initWidth += 65;
         }     
-
+        if (_isParentMyanmarOdds == "True") {
+            initWidth += 75;
+        }
         MemberList.gridOption.gridWidth = initWidth;
     }
 };

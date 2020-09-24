@@ -1,22 +1,39 @@
 ﻿@using Fanex.Tarus.Customer.CreditCustomer.Entities;
 @using Sunplus.Accounting.Core.Configurations;
 @model Fanex.Tarus.Customer.CreditCustomer.Entities.CustomerSettingView
+@{
+    bool isShowMyanmarOdds = false;
+    if (Model.IsSuperSetting && Model.IsInsertPage)
+    {
+        isShowMyanmarOdds = true;
+    }
+    else
+    {
+        if (!string.IsNullOrEmpty(Model.SiteName))
+        {
+            isShowMyanmarOdds = Model.SiteName.Equals("76666B");
+        }
+    }
+}
 <table class="tblcollapse" width="100%">
     <!--header-->
     <tr class="title">
+        <td></td>
         <td>
+            @Resources.Language.CommissionForMaster
         </td>
-        <td>@Resources.Language.CommissionForMaster
+        <td>
+            @Resources.Language.CommissionForAgent
         </td>
-        <td>@Resources.Language.CommissionForAgent
-        </td>
-        <td>@Resources.Language.CommissionForMember
+        <td>
+            @Resources.Language.CommissionForMember
         </td>
     </tr>
     <!--/header-->
     <!--HDPOUOE-->
     <tr>
-        <td class="r" style="width: 25%;">@Resources.Language.lblAsianHDC_OU_OE
+        <td class="r" style="width: 25%;">
+            @Resources.Language.lblAsianHDC_OU_OE
         </td>
         <td>
             <span data-bind="text: customer.commissionSetting2.playerDiscount"></span>
@@ -31,7 +48,8 @@
     <!--/HDPOUOE-->
     <!--1x2-->
     <tr>
-        <td class="r" style="width: 25%;">@Resources.Language.lbl1x2
+        <td class="r" style="width: 25%;">
+            @Resources.Language.lbl1x2
         </td>
         <td>
             <span data-bind="text: customer.commissionSetting2.playerDiscount1x2"></span>
@@ -46,7 +64,8 @@
     <!--/1x2-->
     <!--other-->
     <tr>
-        <td class="r" style="width: 25%;">@Resources.Language.lblOtherBettypes
+        <td class="r" style="width: 25%;">
+            @Resources.Language.lblOtherBettypes
         </td>
         <td>
             <span data-bind="text: customer.commissionSetting2.playerDiscountCs"></span>
@@ -58,5 +77,24 @@
             <span data-bind="text: customer.commissionSetting.playerDiscountCs"></span>
         </td>
     </tr>
-    <!--/other-->   
+    <!--/other-->
+    @if (isShowMyanmarOdds)
+    {
+        <!--MyanmarOdds-->
+        <tr>
+            <td class="r" style="width: 25%;">
+                Myanmar Odds
+            </td>
+            <td>
+                <span data-bind="text: customer.commissionSetting2.playerDiscountMyanmarOdds"></span>
+            </td>
+            <td>
+                <span data-bind="text: customer.commissionSetting.discountMyanmarOdds"></span>
+            </td>
+            <td>
+                <span data-bind="text: customer.commissionSetting.playerDiscountMyanmarOdds"></span>
+            </td>
+        </tr>
+        <!--/MyanmarOdds-->
+    }
 </table>

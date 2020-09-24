@@ -1,7 +1,20 @@
 ﻿@using Fanex.Tarus.Customer.CreditCustomer.Entities;
 @using Sunplus.Accounting.Core.Configurations;
 @model Fanex.Tarus.Customer.CreditCustomer.Entities.CustomerSettingView
-
+@{
+    bool isShowMyanmarOdds = false;
+    if (Model.IsSuperSetting && Model.IsInsertPage)
+    {
+        isShowMyanmarOdds = false;
+    }
+    else
+    {
+        if (!string.IsNullOrEmpty(Model.SiteName))
+        {
+            isShowMyanmarOdds = Model.SiteName.Equals("76666B");
+        }
+    }
+}
 @if (Model.IsUpdateMinMaxPt)
 {
     <table class="tblcollapse" style="width:750px; margin-bottom: 10px;">
@@ -43,8 +56,8 @@ else if ((Model.IsSuperSetting && Model.IsMemberSetting) || (Model.IsMasterSetti
             <td class="l" style="width:16%"><span data-bind="text: customer.firstName"></span></td>
             <td class="r" style="width:16%">@Resources.Language.lblLastname</td>
             <td class="l" style="width:16%"><span data-bind="text: customer.lastName"></span></td>
-        </tr>          
-        <tr>           
+        </tr>
+        <tr>
             <td class="r" style="width:16%">@Resources.Language.Phone</td>
             <td class="l" style="width:16%"><span data-bind="text: customer.phone"></span></td>
             <td class="r" style="width:16%">@Resources.Language.lblMobilePhone</td>
@@ -75,365 +88,334 @@ else if ((Model.IsSuperSetting && Model.IsMemberSetting) || (Model.IsMasterSetti
                 {
                     @Html.Partial("~/Views/Customer/CreditCustomer/Partial/Comm/MemberSetting/_MasterOnMember.cshtml", Model)
                 }
-                
+
             </td>
         </tr>
     </table>
 }
 else
 {
-<table class="tblcollapse" style="width: 850px; margin-bottom: 10px;">
-    <tr class="title">
-        <td colspan="4">
-            @Model.TitlePage
-        </td>
-    </tr>
-    <!--not-edit-->
-    @if (Model.IsInsertPage == true)
-    {
-        <tr class="{edit-hidden}">
-            <td class="l" width="15%">
-                @Resources.Language.lblUsername
-            </td>
-            <td class="l" width="35%">
-                <input class="f8 w130" maxlength="30" type="text" name="txtUsername" id="txtUsername"
-                    data-bind="value: customer.userName" />
-            </td>
-            <td class="l" width="15%">
-                @Resources.Language.Password
-            </td>
-            <td class="l" width="35%">
-                <input type="password" maxlength="30" class="f8 w130" name="txtPwd" id="txtPwd" data-bind="value: customer.password" />
+    <table class="tblcollapse" style="width: 850px; margin-bottom: 10px;">
+        <tr class="title">
+            <td colspan="4">
+                @Model.TitlePage
             </td>
         </tr>
-    }
-    <!--/not-edit-->
-    <tr>
-        <td class="l" @if (!Model.IsInsertPage)
-                      {
-                        @: width="12%"
-                      }>
-            @Resources.Language.lblFirstname
-        </td>
-        <td class="l" @if (!Model.IsInsertPage)
-                      {
-                        @: width="45%"
-                      }>
-            <input class="f8 w130" maxlength="50" name="txtFirstname" id="txtFirstname" data-bind="value: customer.firstName" />
-        </td>
-        <td class="l" @if (!Model.IsInsertPage)
-                      {
-                        @: width="12%"
-                      }>
-            @Resources.Language.lblLastname
-        </td>
-        <td class="l" @if (!Model.IsInsertPage)
-                      {
-                        @: width="31%"
-                      }>
-            <input class="f8 w130" maxlength="50" name="txtLastname" id="txtLastname" data-bind="value: customer.lastName" />
-        </td>
-    </tr>
-    <tr>
-        <td class="l">
-            @Resources.Language.Phone
-        </td>
-        <td class="l">
-            <input class="f8 w130" maxlength="50" name="txtPhone" id="txtPhone" data-bind="value: customer.phone" />
-        </td>
-        <td class="l">
-            @Resources.Language.lblMobilePhone
-        </td>
-        <td class="l">
-            <input class="f8 w130" maxlength="50" name="txtMobile" id="txtMobile" data-bind="value: customer.mobilePhone" />
-        </td>
-    </tr>
-    <tr class="{site-curr-hidden}">
-        @if (Model.IsInsertPage && Model.IsSuperSetting)
+        <!--not-edit-->
+        @if (Model.IsInsertPage == true)
         {
-            <!--site-super-->
-            <td class="l">
-                @Resources.Language.Site
-            </td>
-            <td class="l">
-                <select name="listSite" id="listSite" class="select-group">
-                    <option>Select</option>
-                    @foreach (Sites sites in (List<Sites>)ViewData["listSite"])
-                    {
-                        <optgroup label="@sites.Name">
-                            @foreach (Site site in sites.ListSite)
-                            {
-                                <option id="@site.Id" value="@site.Name" >@site.Name</option>
-                            }
-                        </optgroup>
-                    }
-                </select>
-            </td>
-            <!--/site-super-->
-                    //fax
-            <td class="l">
-                @Resources.Language.lblFax
-            </td>
-            <td class="l">
-                <input class="f8 w130" maxlength="50" name="txtFax" id="txtFax" data-bind="value: customer.fax" />
-            </td>
+            <tr class="{edit-hidden}">
+                <td class="l" width="15%">
+                    @Resources.Language.lblUsername
+                </td>
+                <td class="l" width="35%">
+                    <input class="f8 w130" maxlength="30" type="text" name="txtUsername" id="txtUsername"
+                           data-bind="value: customer.userName" />
+                </td>
+                <td class="l" width="15%">
+                    @Resources.Language.Password
+                </td>
+                <td class="l" width="35%">
+                    <input type="password" maxlength="30" class="f8 w130" name="txtPwd" id="txtPwd" data-bind="value: customer.password" />
+                </td>
+            </tr>
         }
-        else
-        {
-            //edit page here
-        }
-    </tr>
-    <!--MinMaxPT-->
-    <tr>
-        <td class="l">
-            @if (Model.IsMemberSetting)
+        <!--/not-edit-->
+        <tr>
+            <td class="l" @if (!Model.IsInsertPage) { @: width="12%"
+                }>
+                @Resources.Language.lblFirstname
+            </td>
+            <td class="l" @if (!Model.IsInsertPage) { @: width="45%"
+                }>
+                <input class="f8 w130" maxlength="50" name="txtFirstname" id="txtFirstname" data-bind="value: customer.firstName" />
+            </td>
+            <td class="l" @if (!Model.IsInsertPage) { @: width="12%"
+                }>
+                @Resources.Language.lblLastname
+            </td>
+            <td class="l" @if (!Model.IsInsertPage) { @: width="31%"
+                }>
+                <input class="f8 w130" maxlength="50" name="txtLastname" id="txtLastname" data-bind="value: customer.lastName" />
+            </td>
+        </tr>
+        <tr>
+            <td class="l">
+                @Resources.Language.Phone
+            </td>
+            <td class="l">
+                <input class="f8 w130" maxlength="50" name="txtPhone" id="txtPhone" data-bind="value: customer.phone" />
+            </td>
+            <td class="l">
+                @Resources.Language.lblMobilePhone
+            </td>
+            <td class="l">
+                <input class="f8 w130" maxlength="50" name="txtMobile" id="txtMobile" data-bind="value: customer.mobilePhone" />
+            </td>
+        </tr>
+        <tr class="{site-curr-hidden}">
+            @if (Model.IsInsertPage && Model.IsSuperSetting)
             {
-                @Resources.Language.lblMemberMaxCredit
-            }
-            else if (Model.IsMasterSetting)
-            {
-                @Resources.Language.lblMasterMaxCredit
-            }
-            else if (Model.IsAgentSetting)
-            {
-                @Resources.Language.lblAgentMaxCredit
+                <!--site-super-->
+                <td class="l">
+                    @Resources.Language.Site
+                </td>
+                <td class="l">
+                    <select name="listSite" id="listSite" class="select-group">
+                        <option>Select</option>
+                        @foreach (Sites sites in (List<Sites>)ViewData["listSite"])
+                        {
+                            <optgroup label="@sites.Name">
+                                @foreach (Site site in sites.ListSite)
+                                {
+                                    <option id="@site.Id" value="@site.Name">@site.Name</option>
+                                }
+                            </optgroup>
+                        }
+                    </select>
+                </td>
+                <!--/site-super-->
+                //fax
+                <td class="l">
+                    @Resources.Language.lblFax
+                </td>
+                <td class="l">
+                    <input class="f8 w130" maxlength="50" name="txtFax" id="txtFax" data-bind="value: customer.fax" />
+                </td>
             }
             else
             {
-                @:Max Credit
-            
+                //edit page here
             }
-        </td>
-        <td class="l">
-            <!--accMaxcredit-->
-            <input class="f8 w130" maxlength="18" name="txtCredit" id="txtCredit" data-bind="value: customer.credit"
-                onkeyup="return Fanex.FormatNumber(event, true);"
-                @if (Model.CanEditCredit == false)
+        </tr>
+        <!--MinMaxPT-->
+        <tr>
+            <td class="l">
+                @if (Model.IsMemberSetting)
                 {
-                         @:  onmouseout="UnTip()" onmouseover="Tip('You do not have permission on update credit.',ABOVE, true,OFFSETX, -100, PADDING, 4, FONTCOLOR, '#FF0000');" readonly="" style="background-color: rgb(232, 232, 232); border: 1px solid rgb(127, 157, 185); color: rgb(160, 160, 160); text-align:right;" maxlength="14" class="f8 w130"
-                    //, BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 4)" readonly="" style="background-color: rgb(232, 232, 232); border: 1px solid rgb(127, 157, 185); color: rgb(160, 160, 160);" maxlength="14" class="f8 w130"
+                    @Resources.Language.lblMemberMaxCredit
+                }
+                else if (Model.IsMasterSetting)
+                {
+                    @Resources.Language.lblMasterMaxCredit
+                }
+                else if (Model.IsAgentSetting)
+                {
+                    @Resources.Language.lblAgentMaxCredit
                 }
                 else
                 {
-                         @: style="text-align:right;"
-                     }
-                /><!--/accMaxcredit-->
-            <!--extMaxcredit-->
-            @if (Model.IsInsertPage && (Model.IsMasterSetting || Model.IsAgentSetting || Model.IsMemberSetting))
-            {
-                <span name="lblExtCredit" id="lblExtCredit"></span>
-                @:<=
+                    @:Max Credit
+
+                }
+            </td>
+            <td class="l">
+                <!--accMaxcredit-->
+                <input class="f8 w130" maxlength="18" name="txtCredit" id="txtCredit" data-bind="value: customer.credit"
+                       onkeyup="return Fanex.FormatNumber(event, true);"
+                       @if (Model.CanEditCredit == false) { @: onmouseout="UnTip()" onmouseover="Tip('You do not have permission on update credit.',ABOVE, true,OFFSETX, -100, PADDING, 4, FONTCOLOR, '#FF0000');" readonly="" style="background-color: rgb(232, 232, 232); border: 1px solid rgb(127, 157, 185); color: rgb(160, 160, 160); text-align:right;" maxlength="14" class="f8 w130"
+                       //, BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 4)" readonly="" style="background-color: rgb(232, 232, 232); border: 1px solid rgb(127, 157, 185); color: rgb(160, 160, 160);" maxlength="14" class="f8 w130" } else { @: style="text-align:right;"
+                       } /><!--/accMaxcredit-->
+                <!--extMaxcredit-->
+                @if (Model.IsInsertPage && (Model.IsMasterSetting || Model.IsAgentSetting || Model.IsMemberSetting))
+                {
+                    <span name="lblExtCredit" id="lblExtCredit"></span>
+                    @:<=
                     <span class="normal" id="txtCreditMax"></span>
-            }
-            else if (Model.IsInsertPage == false && (Model.IsSuperSetting))
-            {
-                @:>=
-                <span class="normal" id="txtCreditMin"></span>
-            }
-            else if (Model.IsInsertPage == false && (Model.IsMasterSetting || Model.IsAgentSetting))
-            {
-                @:>=
-                <span class="normal" id="txtCreditMin"></span>
-                @:and <=
-                            <span class="normal" id="txtCreditMax"></span>
-            }
-            else if (Model.IsInsertPage == false && (Model.IsMemberSetting))
-            {
-                @:<=
+                }
+                else if (Model.IsInsertPage == false && (Model.IsSuperSetting))
+                {
+                    @:>=
+                    <span class="normal" id="txtCreditMin"></span>
+                }
+                else if (Model.IsInsertPage == false && (Model.IsMasterSetting || Model.IsAgentSetting))
+                {
+                    @:>=
+                    <span class="normal" id="txtCreditMin"></span>
+                    @:and <=
                     <span class="normal" id="txtCreditMax"></span>
+                }
+                else if (Model.IsInsertPage == false && (Model.IsMemberSetting))
+                {
+                    @:<=
+                    <span class="normal" id="txtCreditMax"></span>
+                }
+            </td>
+            @if (Model.IsInsertPage && Model.IsSuperSetting)
+            {
+                <!--currency-->
+                <td class="l">
+                    @Resources.Language.Currency
+                </td>
+                <td class="l">
+                    <select class="select-group" name="listCurrency" id="listCurrency">
+                        <option>Select</option>
+                        @foreach (Currency currency in (List<Currency>)ViewData["listCurrency"])
+                        {
+                            <option value="@currency.Value">@currency.Text</option>
+                        }
+                    </select>
+                </td>
+                <!--/currency-->
             }
-        </td>
+            else
+            {
+                //edit page here
+                //if (Model.IsInsertPage)
+                //{
+                //fax
+                <td class="l">
+                    @Resources.Language.lblFax
+                </td>
+                <td class="l">
+                    <input class="f8 w130" maxlength="50" name="txtFax" id="txtFax" data-bind="value: customer.fax" />
+                </td>
+                //}
+            }
+        </tr>
         @if (Model.IsInsertPage && Model.IsSuperSetting)
         {
-            <!--currency-->
-            <td class="l">
-                @Resources.Language.Currency
-            </td>
-            <td class="l">
-                <select class="select-group" name="listCurrency" id="listCurrency">
-                    <option>Select</option>
-                    @foreach (Currency currency in (List<Currency>)ViewData["listCurrency"])
-                    {
-                        <option value="@currency.Value" >@currency.Text</option>
-                    }
-                </select>
-            </td>
-            <!--/currency-->
+            <!--Internal-->
+            <tr>
+                <td class="l">
+                    @Resources.Language.lblInternalUser
+                </td>
+                <td class="l" style="text-align: left;">
+                    <input type="checkbox" id="chbInternal" name="chbInternal" data-bind="checked: customer.isInternal" />
+                </td>
+                <td class="r" colspan="4"></td>
+            </tr>
+            <!--/Internal-->
         }
         else
         {
-            //edit page here
-            //if (Model.IsInsertPage)
-            //{
-            //fax
-            <td class="l">
-                @Resources.Language.lblFax
-            </td>
-            <td class="l">
-                <input class="f8 w130" maxlength="50" name="txtFax" id="txtFax" data-bind="value: customer.fax" />
-            </td>
-            //}
-        }
-    </tr>
-    @if (Model.IsInsertPage && Model.IsSuperSetting)
-    {
-        <!--Internal-->
-        <tr>
-            <td class="l">
-                @Resources.Language.lblInternalUser
-            </td>
-            <td class="l" style="text-align: left;">
-                <input type="checkbox" id="chbInternal" name="chbInternal" data-bind="checked: customer.isInternal" />
-            </td>
-            <td class="r" colspan="4">
-            </td>
-        </tr>
-        <!--/Internal-->
-    }
-    else
-    {
-        if (Model.IsMasterSetting && Model.IsInsertPage == true)
-        {
-        <tr>
-            <td colspan="2">
-            </td>
-            <td class="l">
-                Allow Auto PT
-            </td>
-            <td class="l" style="text-align: left;">
-                <input type="checkbox" id="chbAllowAutoPT" name="chbAllowAutoPT" data-bind="checked: customer.statusSetting.disableAutoMPT" />
-            </td>
-        </tr>
-        }
-        else if (Model.IsAgentSetting)
-        {
-        <tr>
-            <td class="l">
-                @Resources.Language.lblMemberMaxCredit
-            </td>
-            <td class="l" style="text-align: left;">
-                <input class="f8 w130" maxlength="18" name="txtMemberCredit" id="txtMemberCredit"
-                    value="0" onkeyup="return Fanex.FormatNumber(event, true);"
-                     @if (Model.CanEditCredit == false)
-                     {
-                         @:  onmouseout="UnTip()" onmouseover="Tip('You do not have permission on update credit.',ABOVE, true,OFFSETX, -100, PADDING, 4, FONTCOLOR, '#FF0000');" readonly="" style="background-color: rgb(232, 232, 232); border: 1px solid rgb(127, 157, 185); color: rgb(160, 160, 160); text-align:right;" maxlength="14" class="f8 w130"
-                    //, BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 4)" readonly="" style="background-color: rgb(232, 232, 232); border: 1px solid rgb(127, 157, 185); color: rgb(160, 160, 160);" maxlength="14" class="f8 w130"
-                     }
-                     else
-                     {
-                         @: style="text-align:right;"
-                     }
-                    /><!--/accMaxcredit-->
-                @if (Model.IsInsertPage)
-                {
-                    @:<= <span class="normal" id="txtMemberCreditMax"></span>
-                }
-                else
-                {
-                    @:>= <span class="normal" id="txtMemberCreditMin"></span> and <= <span class="normal" id="txtMemberCreditMax"></span>
-                }
+            if (Model.IsMasterSetting && Model.IsInsertPage == true)
+            {
+                <tr>
+                    <td colspan="2"></td>
+                    <td class="l">
+                        Allow Auto PT
+                    </td>
+                    <td class="l" style="text-align: left;">
+                        <input type="checkbox" id="chbAllowAutoPT" name="chbAllowAutoPT" data-bind="checked: customer.statusSetting.disableAutoMPT" />
+                    </td>
+                </tr>
+            }
+            else if (Model.IsAgentSetting)
+            {
+                <tr>
+                    <td class="l">
+                        @Resources.Language.lblMemberMaxCredit
+                    </td>
+                    <td class="l" style="text-align: left;">
+                        <input class="f8 w130" maxlength="18" name="txtMemberCredit" id="txtMemberCredit"
+                               value="0" onkeyup="return Fanex.FormatNumber(event, true);"
+                               @if (Model.CanEditCredit == false) { @: onmouseout="UnTip()" onmouseover="Tip('You do not have permission on update credit.',ABOVE, true,OFFSETX, -100, PADDING, 4, FONTCOLOR, '#FF0000');" readonly="" style="background-color: rgb(232, 232, 232); border: 1px solid rgb(127, 157, 185); color: rgb(160, 160, 160); text-align:right;" maxlength="14" class="f8 w130"
+                               //, BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 4)" readonly="" style="background-color: rgb(232, 232, 232); border: 1px solid rgb(127, 157, 185); color: rgb(160, 160, 160);" maxlength="14" class="f8 w130" } else { @: style="text-align:right;"
+                               } /><!--/accMaxcredit-->
+                        @if (Model.IsInsertPage)
+                        {
+                            @:<= <span class="normal" id="txtMemberCreditMax"></span>
+                        }
+                        else
+                        {
+                            @:>= <span class="normal" id="txtMemberCreditMin"></span> and <= <span class="normal" id="txtMemberCreditMax"></span>
+                        }
 
-            </td>
-            <td colspan="2">
-            </td>
-        </tr>
-            if (Model.IsInsertPage == false)
+                    </td>
+                    <td colspan="2"></td>
+                </tr>
+                if (Model.IsInsertPage == false)
+                {
+                    <tr>
+                        <td class="l">
+                            @Resources.Language.lblStatusClosed
+                        </td>
+                        <td class="l">
+                            <input type="checkbox" onclick="" class="" name="chkClosed"
+                                   id="chkClosed" data-bind="checked: customer.statusSetting.closed">
+                        </td>
+                        <td class="l"></td>
+                        <td class="l"></td>
+                    </tr>
+                }
+            }
+            else if (Model.IsMemberSetting)
+            {
+                <tr>
+                    <td class="l">
+                        @Resources.Language.lblGroup
+                    </td>
+                    <td class="l">
+                        @if (Model.IsInsertPage)
+                        {
+                            <select name="ddlUGruop" id="ddlUGruop">
+                                @foreach (MemberGroup membergroup in (List<MemberGroup>)ViewData["listMemberGroup"])
+                                {
+                                    <option value="@membergroup.GroupValue">@membergroup.GroupName</option>
+                                }
+                            </select>
+                        }
+                        else
+                        {
+                            <span name="lblGroup" id="lblGroup"></span>
+                        }
+                    </td>
+                    <td class="l">
+                        @Resources.Language.lblStatusClosed
+                    </td>
+                    <td class="l">
+                        <input type="checkbox" onclick="" class="" name="chkClosed" id="chkClosed"
+                               @if (Model.IsInsertPage) { @: data-bind="checked: customer.statusSetting.closed, disable: customer.statusSetting.closed"
+                               } else { @: data-bind="checked: customer.statusSetting.closed"
+                               }>
+                    </td>
+                </tr>
+            }
+            else if (Model.IsInsertPage == false)
             {
                 <tr>
                     <td class="l">
                         @Resources.Language.lblStatusClosed
                     </td>
                     <td class="l">
-                        <input type="checkbox" onclick="" class="" name="chkClosed"
-                               id="chkClosed" data-bind="checked: customer.statusSetting.closed">
+                        <input type="checkbox" onclick="" class="" name="chkClosed" id="chkClosed" data-bind="checked: customer.statusSetting.closed">
                     </td>
-                    <td class="l">
-                    </td>
-                    <td class="l">
-                    </td>
+                    <td class="l"></td>
+                    <td class="l"></td>
                 </tr>
             }
         }
-        else if (Model.IsMemberSetting)
-        {
-        <tr>
-            <td class="l">
-                @Resources.Language.lblGroup
-            </td>
-            <td class="l">
-                @if (Model.IsInsertPage)
-                {
-                    <select name="ddlUGruop" id="ddlUGruop">
-                        @foreach (MemberGroup membergroup in (List<MemberGroup>)ViewData["listMemberGroup"])
-                        {
-                            <option value="@membergroup.GroupValue" >@membergroup.GroupName</option>
-                        }
-                    </select>
-                }
-                else
-                {
-                    <span name="lblGroup" id="lblGroup"></span>
-                }
-            </td>
-            <td class="l">
-                @Resources.Language.lblStatusClosed
-            </td>
-            <td class="l">
-                <input type="checkbox" onclick="" class="" name="chkClosed" id="chkClosed" 
-                @if (Model.IsInsertPage)
-                {
-                    @:data-bind="checked: customer.statusSetting.closed, disable: customer.statusSetting.closed"
-                }
-                else
-                {
-                    @:data-bind="checked: customer.statusSetting.closed"
-                }
-                >
+        <tr class="title">
+            <td colspan="4">
+                Commission
             </td>
         </tr>
-        }
-        else if (Model.IsInsertPage == false)
-        {
         <tr>
-            <td class="l">
-                @Resources.Language.lblStatusClosed
-            </td>
-            <td class="l">
-                <input type="checkbox" onclick="" class="" name="chkClosed" id="chkClosed" data-bind="checked: customer.statusSetting.closed">
-            </td>
-            <td class="l">
-            </td>
-            <td class="l">
-            </td>
-        </tr>
-        }
-    }
-    <tr class="title">
-        <td colspan="4">
-            Commission
-        </td>
-    </tr>
-    <tr>
-        <td colspan="4">
-            @if (Model.IsMemberSetting == false)
-            {
-                if (Model.IsSuperSetting && Model.IsInsertPage)
+            <td colspan="4">
+                @if (Model.IsMemberSetting == false)
                 {
-                     @Html.Partial("~/Views/Customer/CreditCustomer/Partial/Comm/SMASetting/_CommForAddNewSuper.cshtml")
+                    if (Model.IsSuperSetting && Model.IsInsertPage)
+                    {
+                        @Html.Partial("~/Views/Customer/CreditCustomer/Partial/Comm/SMASetting/_CommForAddNewSuper.cshtml")
+                    }
+                    else
+                    {
+                        @Html.Partial("~/Views/Customer/CreditCustomer/Partial/Comm/SMASetting/_CommForTheRest.cshtml")
+                    }
                 }
                 else
                 {
-                       @Html.Partial("~/Views/Customer/CreditCustomer/Partial/Comm/SMASetting/_CommForTheRest.cshtml")
+                    @Html.Partial("~/Views/Customer/CreditCustomer/Partial/Comm/MemberSetting/_AgentOnMember.cshtml", Model)
                 }
-            }
-            else
-            {
-                  @Html.Partial("~/Views/Customer/CreditCustomer/Partial/Comm/MemberSetting/_AgentOnMember.cshtml", Model)
-            }
-        </td>
-    </tr>
-    <!--/MinMaxPT-->
-</table>
+            </td>
+        </tr>
+        <!--/MinMaxPT-->
+    </table>
 }
 @Html.Hidden("code", Fanex.Tarus.Security.Services.Encryptor.Code)
+    <script language="javascript" type="text/javascript">
+
+    var _isShowMyanmarOdds = "@isShowMyanmarOdds";
+    </script>
 <script src="~/js/encode.js"></script>
