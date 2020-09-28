@@ -83,6 +83,7 @@
                 sportType == SportContants.PP ||
                 sportType == SportContants.CardClub ||
                 sportType == SportContants.Spadegaming ||
+                sportType == SportContants.PGSoft ||
                 sportType == SportContants.RNGWar)
             {
                 return GetMacauGamesTickets(refNo, custId, transType);
