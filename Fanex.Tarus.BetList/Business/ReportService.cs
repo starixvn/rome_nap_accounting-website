@@ -271,6 +271,9 @@
                 return SportContants.KenoLottery;
             if(6001 <= betTypeId && betTypeId <=6300)
                 return SportContants.PGSoft;
+            if (6401 <= betTypeId && betTypeId <= 6700)
+                return SportContants.Joker;
+
             return 0;
         }
             

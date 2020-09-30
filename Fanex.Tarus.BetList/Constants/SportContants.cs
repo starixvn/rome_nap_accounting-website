@@ -78,5 +78,6 @@
         public const int RNGWar = 224;
         public const int IonCasino = 225;
         public const int PGSoft = 232;
+        public const int Joker = 234;
     }
 }

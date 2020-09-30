@@ -574,6 +574,18 @@ function showTodayRunningBetsDetails(refno, winlossDate, custId, transType) {
     openResultsPopUp(params);
 }
 
+function showJokerBetDetails(transId, winlossDate, custId, transType) {
+    var jokerParam = {
+        url: "RNGCasinoBetList/BetDetails",
+        title: "Joker - Detailed Bet list - " + winlossDate.split(" ")[0],
+        jsonParam: { TransId: transId, TransType: transType, CustId: custId, SportType: 234, PageSize: 500 },
+        width: 1030,
+        height: 600
+    };
+
+    openResultsPopUp(jokerParam);
+}
+
 function showSexyGamingBetDetails(refno, winlossDate, custId, transType) {
     var params = {
         url: "AGCasinoBetList/BetDetails",
@@ -902,6 +914,10 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
         case 165:
             // custId, gameTypeId, transId3rd, viewerLevel
             return getCardClubParam(betcheck, bettype, sporttype, matchcode);
+
+        case 234:
+            return getJokerParam(transdesc, betcheck, matchcode);
+
         default:
             return undefined;
     }
@@ -1147,6 +1163,16 @@ function getPPParam(matchcode, betcheck) {
         jsonParam: { custId: betcheck, gameId: matchcode, productId: 32 },
         width: 945,
         height: 500
+    };
+}
+
+function getJokerParam(gameId, custId, gameCode) {
+    return {
+        url: "ThirdParty/Result",
+        title: "Joker Result",
+        jsonParam: { custId: custId, gameId: gameId, gameCode: gameCode, productId: 56 },
+        width: 945,
+        height: 800
     };
 }
 
