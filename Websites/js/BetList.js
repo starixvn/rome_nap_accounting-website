@@ -882,7 +882,7 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
             return getIONCasinoParam(matchcode, betcheck);
 
         case 232: // PG Soft
-            return getPGSoftCasinoParam(matchcode, betcheck);
+            return getPGSoftCasinoParam(transdesc, betcheck, matchcode);
 
         case 241: // BBIN
             return getBBinParam(transdesc, matchcode, bettype);
@@ -1065,11 +1065,11 @@ function getRNGWarCasinoParam(matchcode, betcheck) {
     };
 }
 
-function getPGSoftCasinoParam(matchcode, betcheck) {
+function getPGSoftCasinoParam(gameId, custId, gameCode) {
     return {
         url: "ThirdParty/Result",
         title: "PG Soft Result",
-        jsonParam: { custId: betcheck, gameId: matchcode, productId: 55 },
+        jsonParam: { custId: custId, gameId: gameId, gameCode: gameCode, productId: 55 },
         width: 945,
         height: 800
     };

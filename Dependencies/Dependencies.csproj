@@ -184,8 +184,8 @@
     <Reference Include="Fanex.BetList.NumberGame, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.NumberGame.1.3.0\lib\net40\Fanex.BetList.NumberGame.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.PGSoft, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.PGSoft.1.0.0\lib\net40\Fanex.BetList.PGSoft.dll</HintPath>
+    <Reference Include="Fanex.BetList.PGSoft, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.PGSoft.1.0.1\lib\net40\Fanex.BetList.PGSoft.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.PP, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.PP.1.4.0\lib\net40\Fanex.BetList.PP.dll</HintPath>
@@ -402,6 +402,9 @@
     <Reference Include="Fanex.Result.Core.NumberGame, Version=1.0.3.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core-NumberGame.1.0.3.1\lib\net40\Fanex.Result.Core.NumberGame.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.Result.Core.PGSoft, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Result.Core.PGSoft.1.0.0.0\lib\Fanex.Result.Core.PGSoft.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.Result.Core.PP, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.PP.1.0.0.0\lib\Fanex.Result.Core.PP.dll</HintPath>
       <Private>True</Private>
@@ -432,8 +435,8 @@
       <HintPath>..\packages\Fanex.Result.Core.Voidbridge.1.0.2\lib\net40\Fanex.Result.Core.Voidbridge.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Result.ThirdParty, Version=1.1.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.ThirdParty.1.1.0.1\lib\net461\Fanex.Result.ThirdParty.dll</HintPath>
+    <Reference Include="Fanex.Result.ThirdParty, Version=1.1.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Result.ThirdParty.1.1.0.2\lib\net461\Fanex.Result.ThirdParty.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.ActivityTracking, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.ActivityTracking.1.0.0.5\lib\net40\Fanex.Tarus.ActivityTracking.dll</HintPath>
