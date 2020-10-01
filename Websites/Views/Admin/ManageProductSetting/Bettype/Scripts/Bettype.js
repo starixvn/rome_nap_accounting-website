@@ -90,6 +90,7 @@ function EditBettype(index) {
     $('#TypeNameHI').val(cachedBettypeData.BettypeEntities[index].TypeNameHI);
     $('#DisplayedTypeID').val(cachedBettypeData.BettypeEntities[index].DisplayedTypeID);
     $('#LicSpreadBetTypeGroupId').val(cachedBettypeData.BettypeEntities[index].LicSpreadBetTypeGroupId);
+    $('#Is3rdParty').prop('checked', cachedBettypeData.BettypeEntities[index].Is3rdParty === 'True' ? true : false);
     $('#edit-bettype-form').dialog({
         title: 'Edit Bettype',
         modal: true,
@@ -133,7 +134,8 @@ function UpdateBettype() {
             TypeNameMMR: $('#TypeNameMMR').val(),
             TypeNameHI: $('#TypeNameHI').val(),
             DisplayedTypeID: $('#DisplayedTypeID ').val(),
-            LicSpreadBetTypeGroupId: $('#LicSpreadBetTypeGroupId ').val()
+            LicSpreadBetTypeGroupId: $('#LicSpreadBetTypeGroupId ').val(),
+            Is3rdParty: $('#Is3rdParty').is(":checked")
         },
         success: function (result) {
             showAlertMessage('updateBettypeErrMsg', result.ErrorCode === 0 ? 'Updated successfully.' : result.ErrorMessage, result.ErrorCode === 0 ? 0 : 1);
