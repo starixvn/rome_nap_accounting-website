@@ -104,7 +104,10 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
                     {
                         group = currencyGroup.Group;
                     }
-
+                    else
+                    {
+                        group = currencies.Cast<CustomerElement>().FirstOrDefault(i => i.Name == "other").Group;
+                    }
                 }
             }
 
