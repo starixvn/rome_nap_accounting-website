@@ -32,6 +32,11 @@
                 <tbody>
                     <tr>
                         <td>
+                            <div id="notAllowedSuperPrefixes_multiple"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
                             <div class="sourceAccount">Source @(isSuper ? "Super" : "Member"): <span class="b">@Model.CustName</span></div>
                         </td>
                     </tr>
@@ -192,7 +197,9 @@
             custLevel: @customer.RoleId,
             uplineId: @Model.ParentId,
             isSyncNG2: @Convert.ToBoolean(customer.IsSyncNG2).ToString().ToLowerInvariant(),
-            disableNG2: @Convert.ToBoolean(customer.DisableNG2).ToString().ToLowerInvariant()
+            disableNG2: @Convert.ToBoolean(customer.DisableNG2).ToString().ToLowerInvariant(),
+            isSuper: @isSuper.ToString().ToLowerInvariant(),
+            getSuperPrefixesUrl: "@Url.Content("~/AddNewSuper/GetSuperPrefixes")"
         };
     </script>
     <script type="text/javascript" src="@Url.Content("~/js/encode.js")"></script>

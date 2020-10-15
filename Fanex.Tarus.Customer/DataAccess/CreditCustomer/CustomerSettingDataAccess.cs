@@ -243,5 +243,25 @@ namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
                     0);
             }
         }
+
+        public IEnumerable<SuperPrefix> GetSuperPrefixes(ICriteria criteria)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    while (reader.Read())
+                    {
+                        yield return new SuperPrefix
+                        {
+                            GroupName = reader.ToString("GroupName"),
+                            Prefix = reader.ToString("Prefix"),
+                            AllowNewSuper = reader.ToBoolean("AllowNewSuper")
+                        };
+                    }
+
+                }
+            }
+        }
     }
 }

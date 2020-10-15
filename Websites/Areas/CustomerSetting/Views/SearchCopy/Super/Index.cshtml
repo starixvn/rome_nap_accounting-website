@@ -14,6 +14,7 @@
     <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Views/SearchCopy/Scripts/ModuleSearchCopy.js?v=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version"></script>
     <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Views/SearchCopy/Scripts/SearchCopyController.js?v=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version"></script>
     <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Views/SearchCopy/Scripts/RemoveSetting.js?v=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version"></script>
+    <script type="text/javascript" src="@Url.Content("~/Assets/Js/SuperPrefixGetter.js?v=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version"></script>
 }
 
 <script type="text/javascript">
@@ -75,6 +76,7 @@
                             ng-change="showSetting();" name="listType"></select>
                 </div>
             </div>
+            <div id="notAllowedSuperPrefixes_step2" style="width: 668px"></div>
             <div class="settingInfo" style="overflow: auto;margin-top:-1px;">
                 @Html.Partial("~/Areas/CustomerSetting/Views/SearchCopy/Super/GeneralInformation.cshtml")
                 <div id="divSport" class="bg_table" style="width: 99%">

@@ -34,6 +34,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
     using System.Collections;
     using System.Collections.Generic;
     using System.Data;
+    using System.Linq;
     using static Infrastructure.Common.Enumerations;
 
     /// <summary>
@@ -411,5 +412,13 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
             criteria.Password = Encryption.CfsEnCode(criteria.Password);
             return _customerSettingDataAccess.ExecuteNonQuery(criteria);
         }
+
+        public dynamic GetSuperPrefixes(SuperPrefixCriteria criteria)
+            => _customerSettingDataAccess.GetSuperPrefixes(criteria)
+            .GroupBy(item => item.GroupName, item => item.Prefix, (groupName, prefixes) => new
+            {
+                GroupName = groupName,
+                Prefixes = string.Join(", ", prefixes)
+            });
     }
 }

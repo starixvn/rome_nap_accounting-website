@@ -7,6 +7,7 @@
 
 namespace Fanex.Tarus.Customer.CreditCustomer.Business
 {
+    using Criteria.CreditCustomer;
     using Customer.Entities.CN88;
     using Fanex.PTEngine.BusinessObjects;
     using Fanex.Tarus.Customer.CreditCustomer.Entities;
@@ -89,5 +90,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
         CustomerSetting.Module.Core.Models.Result UpdateHeadlinePossess(UpdateHeadlinePossessCriteria criteria);
 
         CustomerSetting.Module.Core.Models.Result AddNewHeadline(AddNewHeadlineCriteria criteria);
+
+        dynamic GetSuperPrefixes(SuperPrefixCriteria criteria);
     }
 }
