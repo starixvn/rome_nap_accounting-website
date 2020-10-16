@@ -89,7 +89,7 @@ namespace Fanex.Tarus.Customer.DataAccess.Casino
             return result;
         }
 
-        public IDictionary<string, Result> SyncCustomers(IList<SyncCustomerEntity> customers)
+        public IDictionary<string, Result> SyncCustomers(IList<SyncCustomerEntity> customers, byte settingStatus)
         {
             var result = new Dictionary<string, Result>();
             var custIBC = new SuperServicesImpl();
@@ -100,7 +100,7 @@ namespace Fanex.Tarus.Customer.DataAccess.Casino
                 CSCustomerDetail cust = new CSCustomerDetail();
                 try
                 {
-                    cust = CasinoManager.GetCustInfoIBC(customer.CustId);
+                    cust = CasinoManager.GetCustInfoIBC(customer.CustId, settingStatus);
                     var enableJackpot = custIBC.IsEnabledJackpot(customer.UplineId);
                     inserted = new CasinoLibrary.SBAgent.Customer().
                         AutoInsertAccount("01",
@@ -143,7 +143,7 @@ namespace Fanex.Tarus.Customer.DataAccess.Casino
                 {
                     try
                     {
-                        var disabled = CasinoManager.GetCustInfoIBC(customer.UplineId).CasinoDisabled;
+                        var disabled = CasinoManager.GetCustInfoIBC(customer.UplineId, settingStatus).CasinoDisabled;
                         var res = CasinoManager.UpdateCSStatus(customer.CustId, true, disabled, true, cust.SiteName);
                         result.Add(customer.Username, new Result { ErrorCode = res ? 0 : 1 });
                     }

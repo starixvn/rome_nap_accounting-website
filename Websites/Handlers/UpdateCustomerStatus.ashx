@@ -46,7 +46,7 @@ public class UpdateCustomerStatus : BaseHandler
             {
                 case "suspended":
                     lockUpdate = string.Format(Resources.ErrorMsg.error_LockUpdateStatus, "SUSPENDED");
-                    CSCustomerDetail custcs = Sunplus.Accounting.DataAccess.APIClient.IBCLibProvider.Instance.GetBasicCustInfoIBC(_custid);
+                    CSCustomerDetail custcs = Sunplus.Accounting.DataAccess.APIClient.IBCLibProvider.Instance.GetBasicCustInfoIBC(_custid, WebSettings.SettingStatus);
                     try
                     {
 
@@ -95,7 +95,7 @@ public class UpdateCustomerStatus : BaseHandler
                 case "autompt":
                     Sunplus.Accounting.DataAccess.IBCDLL.Accounting.CustomerUpdateStatus.CustomerUpdateAutoMPT(_accid, _custid, status, context.Request.UserHostAddress);
 
-                    custcs = Sunplus.Accounting.DataAccess.APIClient.IBCLibProvider.Instance.GetBasicCustInfoIBC(_custid);
+                    custcs = Sunplus.Accounting.DataAccess.APIClient.IBCLibProvider.Instance.GetBasicCustInfoIBC(_custid, WebSettings.SettingStatus);
                     if (custcs.CasinoSync)
                     {
                         var casinoSync = new Customer();
@@ -117,7 +117,7 @@ public class UpdateCustomerStatus : BaseHandler
                     break;
                 case "closed":
                     lockUpdate = string.Format(Resources.ErrorMsg.error_LockUpdateStatus, "CLOSED");
-                    custcs = Sunplus.Accounting.DataAccess.APIClient.IBCLibProvider.Instance.GetBasicCustInfoIBC(_custid);
+                    custcs = Sunplus.Accounting.DataAccess.APIClient.IBCLibProvider.Instance.GetBasicCustInfoIBC(_custid, WebSettings.SettingStatus);
                     try
                     {
 

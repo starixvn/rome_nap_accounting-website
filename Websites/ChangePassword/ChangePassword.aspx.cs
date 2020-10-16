@@ -137,7 +137,7 @@ public partial class ChangePassword_ChangePassword : RequiredAuthorizationPage
     {
         try
         {
-            CSCustomerDetail custcs = Sunplus.Accounting.DataAccess.APIClient.IBCLibProvider.Instance.GetBasicCustInfoIBC(custid);
+            CSCustomerDetail custcs = Sunplus.Accounting.DataAccess.APIClient.IBCLibProvider.Instance.GetBasicCustInfoIBC(custid, WebSettings.SettingStatus);
             if (WebSettings.disableCS && custcs.CasinoSync)
             {
                 errMsg = string.Format(Resources.ErrorMsg.error_LockUpdateStatus, "CHANGE PASSWORD");

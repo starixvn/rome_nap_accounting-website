@@ -29,6 +29,7 @@
     using static Fanex.Tarus.Infrastructure.Common.Enumerations;
     using ConverterCommon = Fanex.Common.Converter;
     using Result = Entities.Result;
+    using WebSettings = Sunplus.Accounting.Core.Configurations.WebSettings;
 
     public partial class CustomerManager : ICustomerManager
     {
@@ -108,7 +109,7 @@
         {
             try
             {
-                return IBCProvider.IBCCustomer.GetCustomerStatus(custId);
+                return IBCProvider.IBCCustomer.GetCustomerStatus(custId, WebSettings.SettingStatus);
             }
             catch (Exception ex)
             {

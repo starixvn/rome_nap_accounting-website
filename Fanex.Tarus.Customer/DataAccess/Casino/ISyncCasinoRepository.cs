@@ -11,6 +11,6 @@
 
         SyncCustomerModel GetUnsyncedCustomers(GetUnsyncedListCriteria criteria);
 
-        IDictionary<string, Result> SyncCustomers(IList<SyncCustomerEntity> customers);
+        IDictionary<string, Result> SyncCustomers(IList<SyncCustomerEntity> customers, byte settingStatus);
     }
 }

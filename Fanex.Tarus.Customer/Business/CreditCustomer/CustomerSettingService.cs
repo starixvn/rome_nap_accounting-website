@@ -196,7 +196,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
         public CustDetail GetUplineStatusCusdetail(int uplineId)
         {
             var uplineDetail = new CSCustomerDetail();
-            uplineDetail = IBCProvider.IBCCustomer.GetBasicCustInfoIBC(uplineId);
+            uplineDetail = IBCProvider.IBCCustomer.GetBasicCustInfoIBC(uplineId, WebSettings.SettingStatus);
 
             var customer = new CustDetail();
             customer.SuperId = uplineDetail.SIBCCustID;

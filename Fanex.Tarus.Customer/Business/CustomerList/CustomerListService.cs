@@ -29,7 +29,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
             _customerListAccess = customerListAccess ?? new CustomerListAccess();
             _customerSettingDataAccess = customerSettingDataAccess ?? new CustomerSettingDataAccess();
         }
-        public CustomerListModel GetSuperList(int pageSize, int pageIndex, string searchText, string selectAlpha, string selectCurreny, string dComm, string statusParam)
+        public CustomerListModel GetSuperList(int pageSize, int pageIndex, string searchText, string selectAlpha, string selectCurreny, string dComm, string statusParam, int settingStatus)
         {
             try
             {
@@ -72,6 +72,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
 
                 hash.Add("pageindex", pageIndex);
                 hash.Add("pagesize", pageSize);
+                hash.Add("system", AppSession.SYSTEM.ToString().ToUpper());
                 hash.Add("system", AppSession.SYSTEM.ToString().ToUpper());
                 hash.Add("totalitems", totalChildren);
                 hash.Add("userid", AppSession.AccId);
@@ -144,7 +145,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
 
             return new CustomerListModel();
         }
-        public CustomerListModel GetMasterList(int superID, int pageSize, int pageIndex, string searchText, string selectAlpha, string selectCurreny, string dComm, string statusParam, string doubleCommSuper)
+        public CustomerListModel GetMasterList(int superID, int pageSize, int pageIndex, string searchText, string selectAlpha, string selectCurreny, string dComm, string statusParam, string doubleCommSuper, int settingStatus)
         {
             try
             {
@@ -155,6 +156,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                 var dtMasterList = new DataSet();
                 hash.Add("userid", AppSession.AccId);
                 hash.Add("srecommend", superID);
+                hash.Add("settingstatus", settingStatus);
                 hash.Add("pagesize", pageSize);
                 hash.Add("pageindex", pageIndex);
                 hash.Add("totalpages", totalPages);
@@ -281,7 +283,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
 
             return new CustomerListModel();
         }
-        public CustomerListModel GetAgentList(int masterId, int pageSize, int pageIndex, string doubleCommMaster)
+        public CustomerListModel GetAgentList(int masterId, int pageSize, int pageIndex, string doubleCommMaster, int settingStatus)
         {
             try
             {
@@ -294,6 +296,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                 hash.Add("totalpages", totalPages);
                 hash.Add("totalitems", totalChildren);
                 hash.Add("system", AppSession.SYSTEM.ToString().ToUpper());
+                hash.Add("settingstatus", settingStatus);
                 hash.Add("userid", AppSession.AccId);
                 var dtAgentList = _customerListAccess.GetCustomerList("Acc_CustomerSelByMAg", hash, ref totalPages, ref totalChildren);
 
@@ -372,7 +375,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
 
             return new CustomerListModel();
         }
-        public CustomerListModel GetMemberList(int agentId, int pageSize, int pageIndex, int isInternal, string doubleCommAgent)
+        public CustomerListModel GetMemberList(int agentId, int pageSize, int pageIndex, int isInternal, string doubleCommAgent, int settingStatus)
         {
             try
             {
@@ -385,6 +388,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                 hash.Add("pagesize", pageSize);
                 hash.Add("totalpages", totalPages);
                 hash.Add("totalitems", totalChildren);
+                hash.Add("settingstatus", settingStatus);
                 hash.Add("system", AppSession.SYSTEM.ToString().ToUpper());
                 var dtMemberList = _customerListAccess.GetCustomerList("Acc_CustomerSelByAg", hash, ref totalPages, ref totalChildren);
 

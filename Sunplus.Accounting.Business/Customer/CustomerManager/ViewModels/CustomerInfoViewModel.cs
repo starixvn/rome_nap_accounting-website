@@ -126,7 +126,7 @@
             {
                 if (customerDetail == null)
                 {
-                    customerDetail = ParentId > 0 ? IBCProvider.IBCCustomer.GetCustomerStatus(ParentId) : new CustomerDetail();
+                    customerDetail = ParentId > 0 ? IBCProvider.IBCCustomer.GetCustomerStatus(ParentId, WebSettings.SettingStatus) : new CustomerDetail();
                 }
 
                 return customerDetail;

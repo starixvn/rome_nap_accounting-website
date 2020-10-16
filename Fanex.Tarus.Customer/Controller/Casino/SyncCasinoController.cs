@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using System.Linq;
 using Fanex.Tarus.Customer.Criteria.Casino;
 using Fanex.Tarus.Customer.Requests.Casino;
+using Sunplus.Accounting.Core.Configurations;
 
 namespace Fanex.Tarus.Customer.Controller.Casino
 {
@@ -38,7 +39,7 @@ namespace Fanex.Tarus.Customer.Controller.Casino
         public ActionResult Sync(string customers)
         {
             var customerModel = JsonConvert.DeserializeObject<SyncCustomerModel>(customers);
-            var result = _service.SyncCustomers(customerModel);
+            var result = _service.SyncCustomers(customerModel, WebSettings.SettingStatus);
 
             return Json(result);
         }
