@@ -1,0 +1,28 @@
+﻿<div class="filterBox" style="border: solid 1px #7C98A4; height:80px;">
+    <div class="filterContent">
+        <div id="errDWLListMsg"></div>
+        <div class="floatLeft w80"><label for="txtDWLListCustId">CustId</label></div>
+        <div class="floatLeft"><input id="txtDWLListCustId" type="text" class="numeric-input-int" /></div>
+        <div class="floatLeft w80"><label for="txtDWLListUsername">Username</label></div>
+        <div class="floatLeft"><input id="txtDWLListUsername" type="text" /></div>
+        <div class="clear"></div>
+        <div class="floatLeft w80"><label for="txtDWLListProductId">ProductId</label></div>
+        <div class="floatLeft"><input id="txtDWLListProductId" type="text" class="numeric-input-tinyint" /></div>
+        <div class="floatLeft w80"><label for="txtDWLListProduct">Product</label></div>
+        <div class="floatLeft"><input id="txtDWLListProduct" type="text" /></div>
+        <div class="floatLeft w80"><label for="txtDWLListIsDeleted">IsDeleted</label></div>
+        <div class="floatLeft">
+            <select id="txtDWLListIsDeleted" class="w80">
+                <option value="">All</option>
+                <option value="1">1</option>
+                <option value="0" selected>0</option>
+            </select>
+        </div>
+        <div class="floatLeft"><input type="button" value="Search" class="btn" onclick="SearchDWLList()" /></div>
+        <div class="floatLeft"><input type="button" value="Import From Excel" class="btn" onclick="OpenInsertSetting()" /></div>
+    </div>
+</div>
+<div style="clear: both"></div>
+<div id="gridDWLListContainer" class="grid-container">
+    <div id="gridDWLListId" class="freegrid"></div>
+</div>

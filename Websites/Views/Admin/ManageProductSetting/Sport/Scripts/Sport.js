@@ -91,8 +91,8 @@ function EditSport(index) {
     $('#edit-sport-form').dialog({
         title: 'Edit Sport',
         modal: true,
-        width: 700,
-        height: 600,
+        width: 'auto',
+        height: 600
     });
 }
 
