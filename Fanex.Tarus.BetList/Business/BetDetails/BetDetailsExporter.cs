@@ -69,7 +69,8 @@
                 sportType == SportContants.SaGaming ||
                 sportType == SportContants.SexyGaming ||
                 sportType == SportContants.GTCasino ||                
-                sportType == SportContants.IonCasino)
+                sportType == SportContants.IonCasino ||
+                sportType == SportContants.WM)
             {
                 return GetLiveCasinoTickets(refNo, custId, transType);
             }
