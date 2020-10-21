@@ -382,6 +382,13 @@
     <Setting Key="Acc_ManageCansee_Ins" SpName="Acc_ManageCansee_Ins" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
     <Setting Key="Acc_ManageCansee_Upd" SpName="Acc_ManageCansee_Upd" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
     <Setting Key="Acc_ManageCansee_Sel" SpName="Acc_ManageCansee_Sel" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
+    <Setting Key="Acc_UMTool_GetProductSettingByFunction" SpName="Acc_UMTool_GetProductSettingByFunction" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_UMTool_Configuration_Sel" SpName="Acc_UMTool_Configuration_Sel" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_UMTool_Configuration_Upd" SpName="Acc_UMTool_Configuration_Upd" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_UMTool_Configuration_Ins" SpName="Acc_UMTool_Configuration_Ins" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_UMTool_Configuration_Del" SpName="Acc_UMTool_Configuration_Del" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_UMTool_InUMWarning_Check" SpName="Acc_UMTool_InUMWarning_Check" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_UMTool_Configuration_Del_OldData" SpName="Acc_UMTool_Configuration_Del_OldData" DbName="DBCUST.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="UM On product">
     <Setting Key="Acc_CheckUM" SpName="Acc_CheckUM" DbName="DBCUST.CustDB.bodbAdminNet" />

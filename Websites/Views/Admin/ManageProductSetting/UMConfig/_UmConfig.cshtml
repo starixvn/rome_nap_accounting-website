@@ -1,0 +1,23 @@
+﻿<link href="@Url.Content("~/App_Themes/Public/Message.css")" rel="stylesheet" type="text/css" />
+<style>
+    .um-overtime td {
+        background: #D3D3D3 !important;
+    }
+</style>
+<div id="UMConfigAccessDenied" class="alertboxerr display-none" style="border: none;">
+    <div>
+        @Resources.Error.AccessDenied
+    </div>
+</div>
+<div id="UMConfigContent">
+    <div class="filterBox" style="border: solid 1px #7C98A4; overflow: hidden;">
+        <div class="filterContent">
+            <div class="floatLeft"><input type="button" value="Add New" class="btn" onclick="OpenNewUMConfig()" /></div>
+            <div class="floatLeft"><input type="button" value="Delete Old Data" class="btn" onclick="DeleteOldData()" /></div>
+        </div>
+    </div>
+    <div style="clear: both"></div>
+    <div id="gridUMConfigContainer" class="grid-container">
+        <div id="gridUMConfigId" class="freegrid"></div>
+    </div>
+</div>

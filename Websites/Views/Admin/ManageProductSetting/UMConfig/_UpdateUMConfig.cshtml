@@ -1,0 +1,74 @@
+﻿<style>
+    textarea {
+        resize: none;
+    }
+
+    label {
+        font-weight: bold;
+    }
+</style>
+<form id="edit-umConfig-form" style="display: none;">
+    <div id="updateUMConfigErrMsg">
+    </div>
+    <table style="line-height: 28px; margin-top: 10px; border-collapse: collapse;">
+        <tr>
+            <td><label for="UpdUMFunctionType">FunctionType</label></td>
+            <td><span id="UpdUMFunctionType" /></td>
+            <td style="width: 40px;"></td>
+            <td><label for="UpdUMUsername">Username</label></td>
+            <td><span id="UpdUMUsername" /></td>
+        </tr>
+        <tr>
+            <td><label for="UpdUMProductName">ProductName</label></td>
+            <td><span id="UpdUMProductName" /></td>
+            <td style="width: 40px;"></td>
+            <td><label for="UpdUMShowTime">ShowTime<span style="color: red;">*</span></label></td>
+            <td>
+                <input class="setting-calendar" id="UpdUMShowTime" type="text" />
+                <input class="img-date-selector" onclick="return false;" alt="" id="UpdUMShowTime_Trigger" title="Date selector"
+                       width="18" height="17" src="../App_Themes/Images/calendar.gif" type="image" />
+            </td>
+        </tr>
+        <tr>
+            <td><label for="UpdUMSportName">SportName</label></td>
+            <td><span id="UpdUMSportName" /></td>
+            <td style="width: 40px;"></td>
+            <td><label for="UpdUMBeginTime">BeginTime<span style="color: red;">*</span></label></td>
+            <td>
+                <input class="setting-calendar" id="UpdUMBeginTime" type="text" />
+                <input class="img-date-selector" onclick="return false;" alt="" id="UpdUMBeginTime_Trigger" title="Date selector"
+                       width="18" height="17" src="../App_Themes/Images/calendar.gif" type="image" />
+            </td>
+        </tr>
+        <tr>
+            <td><label for="UpdUMSettingType">SettingType</label></td>
+            <td><span id="UpdUMSettingType" /></td>
+            <td style="width: 40px;"></td>
+            <td><label for="UpdUMEndTime">EndTime<span style="color: red;">*</span></label></td>
+            <td>
+                <input class="setting-calendar" id="UpdUMEndTime" type="text" />
+                <input class="img-date-selector" onclick="return false;" alt="" id="UpdUMEndTime_Trigger" title="Date selector"
+                       width="18" height="17" src="../App_Themes/Images/calendar.gif" type="image" />
+            </td>
+        </tr>
+        <tr>
+            <td><label for="UpdUMSite">Site</label></td>
+            <td><span id="UpdUMSite" /></td>
+            <td style="width: 40px;"></td>
+            <td><label for="UpdUMLockAddingNew">LockAddingNew</label></td>
+            <td><input id="UpdUMLockAddingNew" type="checkbox" /></td>
+        </tr>
+        <tr>
+            <td><label for="UpdUMCurrency">Currency</label></td>
+            <td><span id="UpdUMCurrency" /></td>
+            <td style="width: 40px;"></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td colspan="5" style="text-align: center">
+                <input class="btn" type="button" value="Submit" id="btnUpdateUMConfig" />
+            </td>
+        </tr>
+    </table>
+</form>

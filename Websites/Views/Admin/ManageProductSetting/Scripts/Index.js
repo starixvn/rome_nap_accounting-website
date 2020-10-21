@@ -25,6 +25,7 @@ function SwitchTab(id, contentId) {
     $('#' + id).addClass('current');
     $('#' + contentId).show();
     UpdateSampleUrl();
+    Search();
 }
 
 function Search() {
@@ -52,6 +53,9 @@ function Search() {
             break;
         case "tab_8":
             SearchResetWinning();
+            break;
+        case "tab_9":
+            GetInitDataAndSearchAllUMConfig();
             break;
         default:
             break;
@@ -82,6 +86,9 @@ function UpdateSampleUrl() {
             break;
         case "tab_8":
             UpdateResetWinningSampleUrl();
+            break;
+        case "tab_9":
+            $('#sampleSettingLink').prop("href", rootUrl + "Views/Admin/ManageProductSetting/UMConfig/UMConfig.xls");
             break;
         default:
             break;
