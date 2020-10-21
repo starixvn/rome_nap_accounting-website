@@ -233,8 +233,13 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                     {
                         Status = !WebSettings.Disable1x2Comm,
                         Name = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lbl1x2")
-                    };                  
-
+                    };
+                    var myanmarOdds = new AllowViewSport()
+                    {
+                        Status = true,
+                        Name =
+                            ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "MyanmarOdds")
+                    };
                     if (roleId <= (int)Role.Super)
                     {
                         var superCom = new Commission()
@@ -251,7 +256,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                             },
                             GroupB = new AllowViewSport()
                             {
-                                Status = true,
+                                Status = !CastAide.AsBoolean(rComm["IsMyanmarOdds"]),
                                 Name = groupB.Name,
                                 Comm =
                                                                NumberFormat.DecFormat(
@@ -260,7 +265,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                             },
                             GroupC = new AllowViewSport()
                             {
-                                Status = true,
+                                Status = !CastAide.AsBoolean(rComm["IsMyanmarOdds"]),
                                 Name = groupC.Name,
                                 Comm =
                                                                NumberFormat.DecFormat(
@@ -269,7 +274,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                             },
                             GroupD = new AllowViewSport()
                             {
-                                Status = true,
+                                Status = !CastAide.AsBoolean(rComm["IsMyanmarOdds"]),
                                 Name = groupD.Name,
                                 Comm =
                                                                NumberFormat.DecFormat(
@@ -291,7 +296,13 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                                 Comm =
                                                                NumberFormat.DecFormat(rComm[string.Format(_com1x2, 4)],
                                                                                       4)
-                            },                          
+                            },
+                            MyanmarOdds = new AllowViewSport()
+                            {
+                                Status = CastAide.AsBoolean(rComm["IsMyanmarOdds"]),
+                                Name = myanmarOdds.Name,
+                                Comm = NumberFormat.DecFormat(rComm["MyanmarOddsComm_4"], 4)
+                            },
                             GameComm = new AllowViewSport()
                             {
                                 Status = gameComm.Status,
@@ -317,7 +328,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                             },
                             GroupB = new AllowViewSport()
                             {
-                                Status = true,
+                                Status = !CastAide.AsBoolean(rComm["IsMyanmarOdds"]),
                                 Name = groupB.Name,
                                 Comm =
                                                                 NumberFormat.DecFormat(
@@ -325,7 +336,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                             },
                             GroupC = new AllowViewSport()
                             {
-                                Status = true,
+                                Status = !CastAide.AsBoolean(rComm["IsMyanmarOdds"]),
                                 Name = groupC.Name,
                                 Comm =
                                                                 NumberFormat.DecFormat(
@@ -333,7 +344,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                             },
                             GroupD = new AllowViewSport()
                             {
-                                Status = true,
+                                Status = !CastAide.AsBoolean(rComm["IsMyanmarOdds"]),
                                 Name = groupD.Name,
                                 Comm =
                                                                 NumberFormat.DecFormat(
@@ -353,7 +364,13 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                                 Name = onexTwo.Name,
                                 Comm =
                                                                 NumberFormat.DecFormat(rComm[string.Format(_com1x2, 3)], 4)
-                            },                           
+                            },
+                            MyanmarOdds = new AllowViewSport()
+                            {
+                                Status = CastAide.AsBoolean(rComm["IsMyanmarOdds"]),
+                                Name = myanmarOdds.Name,
+                                Comm = NumberFormat.DecFormat(rComm["MyanmarOddsComm_3"], 4)
+                            },
                             GameComm = new AllowViewSport()
                             {
                                 Status = gameComm.Status,
@@ -377,20 +394,20 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                             },
                             GroupB = new AllowViewSport()
                             {
-                                Status = true,
+                                Status = !CastAide.AsBoolean(rComm["IsMyanmarOdds"]),
                                 Name = groupB.Name,
                                 Comm = NumberFormat.DecFormat(rComm[string.Format(_comGroupB, 2)], 4)
                             },
                             GroupC = new AllowViewSport()
                             {
-                                Status = true,
+                                Status = !CastAide.AsBoolean(rComm["IsMyanmarOdds"]),
                                 Name = groupC.Name,
                                 Comm = NumberFormat.DecFormat(rComm[string.Format(_comGroupC, 2)],
                                                                                       4)
                             },
                             GroupD = new AllowViewSport()
                             {
-                                Status = true,
+                                Status = !CastAide.AsBoolean(rComm["IsMyanmarOdds"]),
                                 Name = groupD.Name,
                                 Comm = NumberFormat.DecFormat(rComm[string.Format(_comGroupD, 2)],
                                                                                       4)
@@ -406,7 +423,13 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                                 Status = onexTwo.Status,
                                 Name = onexTwo.Name,
                                 Comm = NumberFormat.DecFormat(rComm[string.Format(_com1x2, 2)], 4)
-                            },                          
+                            },
+                            MyanmarOdds = new AllowViewSport()
+                            {
+                                Status = CastAide.AsBoolean(rComm["IsMyanmarOdds"]),
+                                Name = myanmarOdds.Name,
+                                Comm = NumberFormat.DecFormat(rComm["MyanmarOddsComm_2"], 4)
+                            },
                             GameComm = new AllowViewSport()
                             {
                                 Status = gameComm.Status,
@@ -462,7 +485,12 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                                 Name = onexTwo.Name,
                                 Comm = NumberFormat.DecFormat(rComm["comm_5"], 4)
                             },
-                         
+                            MyanmarOdds = new AllowViewSport()
+                            {
+                                Status = CastAide.AsBoolean(rComm["IsMyanmarOdds"]),
+                                Name = myanmarOdds.Name,
+                                Comm = NumberFormat.DecFormat(rComm["MyanmarOddsComm_1"], 4)
+                            },
                             GameComm = new AllowViewSport()
                             {
                                 Status = gameComm.Status,

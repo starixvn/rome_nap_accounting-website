@@ -87,7 +87,9 @@ anmb.initCommission = function () {
     Fanex.PTEngine.PT_SetSelect(document.getElementById('listHDPOUOE'), 0, commissionSetting.groupA, Fanex.PTEngine.COMMISSION_STEP, commissionSetting.groupA);
     Fanex.PTEngine.PT_SetSelect(document.getElementById('listOtherBettypes'), 0, commissionSetting.discountCS, Fanex.PTEngine.COMMISSION_STEP, commissionSetting.discountCS);
     Fanex.PTEngine.PT_SetSelect(document.getElementById('list1X2'), 0, commissionSetting.discount1x2, Fanex.PTEngine.COMMISSION_STEP, commissionSetting.discount1x2);
- 
+    if (parseBool2(_isShowMyanmarOdds)) {
+        Fanex.PTEngine.PT_SetSelect(document.getElementById('listMyanmarOdds'), 0, Math.max(commissionSetting.discountMyanmarOddsMax, commissionSetting.discountMyanmarOdds), Fanex.PTEngine.COMMISSION_STEP, commissionSetting.discountMyanmarOdds);
+    }
     $('#ddlUGruop').change(function () {
         var $this = $(this);
         var lastCharacter = $this.val()[$this.val().length - 1];
@@ -137,7 +139,9 @@ anmb.checkValidInput = function () {
     commissionSetting.playerDiscount = $('#listHDPOUOE').val();
     commissionSetting.playerDiscount1x2 = $('#list1X2').val();
     commissionSetting.playerDiscountCs = $('#listOtherBettypes').val();
-  
+    if (parseBool2(_isShowMyanmarOdds)) {
+        commissionSetting.playerDiscountMyanmarOdds = $('#listMyanmarOdds').val();
+    }
     // get user group
     customer.group = $('#ddlUGruop').val();
     //get pt setting

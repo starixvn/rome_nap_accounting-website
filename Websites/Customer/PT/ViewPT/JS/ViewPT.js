@@ -571,22 +571,31 @@ var ViewPT = {
                     <tr class="ViewPTHeader b">\
                         <td width="60">&nbsp;</td>\
                         <td >Group A</td>\
-                        <td>Group B</td>\
-                        <td>Group C</td>\
-                        <td>Group D</td>\
+                        {{if ($data.Comm[0].MyanmarOdds != null && !$data.Comm[0].MyanmarOdds.Status)}}\
+                            <td>Group B</td>\
+                            <td>Group C</td>\
+                            <td>Group D</td>\
+                        {{/if}}\
                         <td>Other</td>\
                         <!--1X2-->\
                             <td>1x2</td>\
                         <!--/1X2-->\
+                        <!--myanmarodds-->\
+                        {{if ($data.Comm[0].MyanmarOdds != null && $data.Comm[0].MyanmarOdds.Status)}}\
+                            <td>Myanmar Odds</td>\
+                        {{/if}}\
+                        <!--/myanmarodds-->\
                     </tr>\
                     <!--row-->\
                     {{each(i, current) $data.Comm}}\
                         <tr class="trbgov">\
                             <td class="tdtitle b">${RoleName}</td>\
                             <td>${GroupA.Comm}</td>\
-				            <td>${GroupB.Comm}</td>\
-			                <td>${GroupC.Comm}</td>\
-			                <td>${GroupD.Comm}</td>\
+				            {{if (MyanmarOdds != null && !MyanmarOdds.Status)}}\
+                                <td>${GroupB.Comm}</td>\
+                                <td>${GroupC.Comm}</td>\
+                                <td>${GroupD.Comm}</td>\
+                            {{/if}}\
                             <td>${Other.Comm}</td>\
                             <!--1X2-->\
                             {{if (OneXTwo != null && OneXTwo.Status)}}\
@@ -594,6 +603,11 @@ var ViewPT = {
                             {{/if}}\
                             <!--/1X2-->\
                             <!--/numbergame-->\
+                            <!--myanmarodds-->\
+                            {{if (MyanmarOdds != null && MyanmarOdds.Status)}}\
+                                <td>${MyanmarOdds.Comm}</td>\
+                            {{/if}}\
+                            <!--/myanmarodds-->\
                         </tr>\
                     {{/each}}\
                     <!--/row-->\

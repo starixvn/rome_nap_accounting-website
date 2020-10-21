@@ -2478,4 +2478,7 @@
   <data name="lblDisabledSabaVirtualSportsUpline" xml:space="preserve">
     <value>Saba Virtual Sports has been disabled at upline</value>
   </data>
+  <data name="MyanmarOdds" xml:space="preserve">
+    <value>MyanmarOdds</value>
+  </data>
 </root>

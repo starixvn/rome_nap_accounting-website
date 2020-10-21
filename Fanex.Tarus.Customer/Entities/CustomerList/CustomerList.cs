@@ -39,9 +39,11 @@ namespace Fanex.Tarus.Customer.Entities.CustomerList
         public double GroupB { get; set; }
         public double GroupC { get; set; }
         public double GroupD { get; set; }
+        public double DiscountMyanmarOdds { get; set; }
         public double _1x2 { get; set; }
         public double Others { get; set; }   
-        public string LastLoginIP { get; set; }      
+        public string LastLoginIP { get; set; }
+        public bool IsMyanmarOdds { get; set; }
         public bool IsSynCasinoUpline { get; set; }      
         public bool IsHideSportsbook2 { get; set; }       
         public bool IsHideLiveCasino { get; set; }

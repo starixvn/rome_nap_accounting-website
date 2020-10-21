@@ -2098,4 +2098,7 @@ Max Keno (20+1) 2</value>
   <data name="Disable232_6001" xml:space="preserve">
     <value>Disabled PG Soft</value>
   </data>
+  <data name="discountmyanmarodds" xml:space="preserve">
+    <value>Myanmar Odds</value>
+  </data>
 </root>
