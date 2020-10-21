@@ -89,13 +89,13 @@ BetList.BetListByRefNo = (function ($) {
         $betId.removeAttr("disabled");
         $playerId3rd.attr("disabled", "disabled");
 
-        var productIdSetDisabledGameId = ["22", "24", "32", "36", "52", "55", "56"];
+        var productIdSetDisabledGameId = ["22", "24", "32", "34", "36", "52", "55", "56"];
         var selProductValue = $selectedProduct.val();
         if (selProductValue === "-1") {
             $gameId.attr("disabled", "disabled");
             $betId.attr("disabled", "disabled");
         }
-        else if (productIdSetDisabledGameId.indexOf(selProductValue)!==-1) {
+        else if (productIdSetDisabledGameId.indexOf(selProductValue) !== -1) {
             $gameId.attr("disabled", "disabled");
         } else if (selProductValue === "33" || selProductValue === "42") {
             $gameId.attr("disabled", "disabled");
@@ -139,12 +139,12 @@ BetList.BetListByRefNo = (function ($) {
         }
 
         var productRequireBetIdAndGameId = ["12", "21", "30", "46", "47", "39"];
-        if (productRequireBetIdAndGameId.indexOf(selProductValue)!==-1 && $gameId.val().trim() === "" && $betId.val().trim() === "") {
+        if (productRequireBetIdAndGameId.indexOf(selProductValue) !== -1 && $gameId.val().trim() === "" && $betId.val().trim() === "") {
             showError("Either GameID or BetID is required");
             return false;
         }
 
-        var productRequireBetId = ["22", "24", "32", "36", "52", "55", "56"];
+        var productRequireBetId = ["22", "24", "32", "34", "36", "52", "55", "56"];
         if ((isSabaclub || productRequireBetId.indexOf(selProductValue) !== -1) && $betId.val().trim() === "") {
             showError("BetID is required");
             return false;
