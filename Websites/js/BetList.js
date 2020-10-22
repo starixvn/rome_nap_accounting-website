@@ -527,7 +527,7 @@ function showPGSoftDetails(transId, winlossDate, custId, transType) {
 function showVideoPokerGameDetails(transId, winlossDate, custId, transType) {
     var voidbridgeParam = {
         url: "VoidbridgeBetList/BetDetails",
-        title: "Card Club - Detail Tickets - " + winlossDate.split(" ")[0],
+        title: "Arcadia Gaming - Detail Tickets - " + winlossDate.split(" ")[0],
         jsonParam: { TransId: transId, TransType: transType, CustId: custId, SportType: 165, PageSize: 500 },
         width: 1030,
         height: 600,
@@ -1077,7 +1077,7 @@ function getPGSoftCasinoParam(gameId, custId, gameCode) {
 
 
 function getCardClubParam(custId, gameTypeId, sportType, transId3rd) {
-    var sportName = "Card Club";
+    var sportName = "Arcadia Gaming";
     var bettypeNames = {};
     bettypeNames["1401"] = "8 Cards";
     bettypeNames["1402"] = "Hold'em";

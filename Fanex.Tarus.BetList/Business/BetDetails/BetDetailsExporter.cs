@@ -45,7 +45,7 @@
                 {SportContants.Voidbridge, "MacauGames_Details"},
                 {SportContants.FishingWorld, "FishingWorld_Details"},
                 {SportContants.PP, "PP_Details"},
-                {SportContants.CardClub, "CardClub_Details"},
+                {SportContants.CardClub, "ArcadiaGaming_Details"},
                 {SportContants.Spadegaming, "Spadegaming_Details"},
                 {SportContants.RNG_RNGGame, "RNGCasino_Details"},
                 {SportContants.RNG_MiniGame, "RNGCasino_Details"},
