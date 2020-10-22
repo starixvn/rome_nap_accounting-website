@@ -987,13 +987,13 @@ function getVirtualHRParam(matchid, sporttype) {
             resultParam.title = "Virtual Horse Racing";
             break;
         case 182:
-            resultParam.title = "Virtual Greyhound";
+            resultParam.title = "Virtual Greyhounds";
             break;
         case 183:
             resultParam.title = "Virtual Speedway";
             break;
         case 184:
-            resultParam.title = "Virtual Motor Racing";
+            resultParam.title = "Virtual Motorsports";
             break;
         case 185:
             resultParam.title = "Virtual Cycling";
