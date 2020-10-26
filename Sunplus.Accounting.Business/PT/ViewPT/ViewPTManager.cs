@@ -688,7 +688,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
 
 
 
-                    var numberOfDecimalDigits = (byte)(sportId == Constants.Sport.NumberGame ? 3 : 2);
+                    byte numberOfDecimalDigits = 3;
 
                     if (roleId < (int)Role.Agent)
                     {
