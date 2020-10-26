@@ -19,7 +19,7 @@
         {
             var result = GetBetDetail(criteria);
 
-            return View("~/Areas/AGCasino/Views/BetDetails/Index.cshtml", result);
+            return View("~/Areas/BBin/Views/BetDetails/Index.cshtml", result);
         }
 
         [HttpGet]
@@ -27,7 +27,7 @@
         {
             var result = GetBetDetail(criteria);
 
-            return View("~/Areas/AGCasino/Views/BetDetails/_Tickets.cshtml", result);
+            return View("~/Areas/BBin/Views/BetDetails/_Tickets.cshtml", result);
         }
 
         [NonAction]
