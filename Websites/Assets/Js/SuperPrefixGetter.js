@@ -1,0 +1,38 @@
+﻿var getNotAllowedNewSuperPrefixes = function () {
+    if (parent.level !== "super") { return; }
+
+    $.ajax({
+        type: "POST",
+        url: parent.getSuperPrefixesUrl,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        data: JSON.stringify({
+            groupName: null,
+            prefix: null,
+            allowNewSuper: false
+        }),
+        success: function (data) {
+            var $notAllowedSuperPrefixes = $("#notAllowedSuperPrefixes");
+            var $notAllowedSuperPrefixesStepOne = $("#notAllowedSuperPrefixes_step1");
+            var $notAllowedSuperPrefixesStepTwo = $("#notAllowedSuperPrefixes_step2");
+            if (data && data.length > 0) {
+                var warningStepTwo = "For 789y site, the following username prefixes are not allowed for new accounts anymore";
+                var warningStepOne = `<span class="start">${warningStepTwo}</span>`;
+                $.each(data, function (index, item) {
+                    warningStepOne += `<br /><span style="margin-left: 20px">- ${item.GroupName}: ${item.Prefixes}</span>`;
+                    warningStepTwo += `<br />- ${item.GroupName}: ${item.Prefixes}`;
+                });
+                $notAllowedSuperPrefixes.addClass("noteMsg");
+                $notAllowedSuperPrefixes.html(warningStepTwo);
+                $notAllowedSuperPrefixesStepOne.html(warningStepOne);
+                $notAllowedSuperPrefixesStepTwo.html(warningStepTwo);
+                $notAllowedSuperPrefixesStepTwo.addClass("noteMsg");
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) { }
+    });
+};
+
+$(function () {
+    getNotAllowedNewSuperPrefixes();
+});

@@ -7,6 +7,8 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
     using Fanex.PTEngine.BusinessObjects;
     using Fanex.Tarus.Customer.CreditCustomer.Business;
     using Fanex.Tarus.Customer.CreditCustomer.Entities;
+    using Fanex.Tarus.Customer.CreditCustomer.Requests;
+    using Fanex.Tarus.Customer.Criteria.CreditCustomer;
     using Fanex.Tarus.Web.Controllers.Filters;
     using Module.NG2.Entities;
     using Module.NG2.Services;
@@ -155,6 +157,15 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
             // Return result
             return Json(result);
         }
+
+        [HttpPost]
+        public ActionResult GetSuperPrefixes(SuperPrefixQuery query)
+            => Json(_customerSettingService.GetSuperPrefixes(new SuperPrefixCriteria
+            {
+                GroupName = query.GroupName,
+                Prefix = query.Prefix,
+                AllowNewSuper = query.AllowNewSuper
+            }), JsonRequestBehavior.DenyGet);
 
         /// <summary>
         /// This function will check a customer pemission for insert function

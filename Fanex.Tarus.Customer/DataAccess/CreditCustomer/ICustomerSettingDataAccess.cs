@@ -53,5 +53,6 @@ namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
 
         CreditRangeModel GetMemberCreditRangeModel(ICriteria criteria);
 
+        IEnumerable<SuperPrefix> GetSuperPrefixes(ICriteria criteria);
     }
 }

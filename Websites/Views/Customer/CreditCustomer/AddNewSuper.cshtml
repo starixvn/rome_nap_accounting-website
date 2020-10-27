@@ -24,6 +24,7 @@
 <script type="text/javascript" src="@Url.Content("~/js/BlockUI.js")"></script>
 <script type="text/javascript" src="@Url.Content("~/Views/Customer/CreditCustomer/Js/CommonCustomerSetting.js?v=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version"></script>
 <script type="text/javascript" src="@Url.Content("~/Views/Customer/CreditCustomer/Js/AddNewSuper.js?v=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version"></script>
+<script type="text/javascript" src="@Url.Content("~/Assets/Js/SuperPrefixGetter.js?v=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version"></script>
 @*header*@
 <div class="maincontent">
     <table border="0" cellpadding="0px" cellspacing="0px" class="maincontent_header">
@@ -67,6 +68,7 @@
         <div class="noteMsg">
             @Html.Raw(Resources.Language.SMAUnlimitedBetSettingWarningMessage)
         </div>
+        <div id="notAllowedSuperPrefixes"></div>
         @Html.Partial("~/Views/Customer/CreditCustomer/CustInfoPartialView.cshtml", Model, tempViewDataDictionary)
         @*betting limit and position taking*@
         @Html.Partial("~/Views/Customer/CreditCustomer/BettingLimitAndPositionTakingPartialView.cshtml")

@@ -325,6 +325,36 @@ $.fn.forceNumber = function () {
                 return confirmationMessage;
             }
         });
+
+        getNotAllowedNewSuperPrefixes();
+    }
+
+    function getNotAllowedNewSuperPrefixes() {
+        if (!vm.isSuper) { return; }
+
+        $.ajax({
+            type: "POST",
+            url: vm.getSuperPrefixesUrl,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify({
+                groupName: null,
+                prefix: null,
+                allowNewSuper: false
+            }),
+            success: function (data) {
+                var $notAllowedSuperPrefixesMultiple = $("#notAllowedSuperPrefixes_multiple");
+                if (data && data.length > 0) {
+                    var warning = "For 789y site, the following username prefixes are not allowed for new accounts anymore";
+                    $.each(data, function (index, item) {
+                        warning += `<br />- ${item.GroupName}: ${item.Prefixes}`;
+                    });
+                    $notAllowedSuperPrefixesMultiple.addClass("noteMsg");
+                    $notAllowedSuperPrefixesMultiple.html(warning);
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) { }
+        });
     }
 
     initialize();
