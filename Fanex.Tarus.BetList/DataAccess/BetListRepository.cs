@@ -351,6 +351,7 @@
                                 TransId = Converter.To<long>(r["transid"]),
                                 RefNo = Converter.ToString2(r["refno"]),
                                 WinlostDate = Converter.ToDateTime(r["winlostdate"]),
+                                TransDate = Converter.ToDateTime(r["transdate"]),
                                 BetTypeId = Converter.To<int>(r["bettype"]),
                                 HomeId = Converter.To<long>(r["homeid"]),
                                 AwayId = Converter.To<long>(r["awayid"]),
