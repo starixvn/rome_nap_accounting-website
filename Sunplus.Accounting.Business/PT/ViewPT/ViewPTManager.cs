@@ -694,15 +694,15 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                     {
                         var memberPt = new PositionTakingInfo()
                         {
-                            Super = NumberFormat.DecFormat(dr["s1"], numberOfDecimalDigits),
-                            Master = NumberFormat.DecFormat(dr["m1"], numberOfDecimalDigits),
-                            Agent = NumberFormat.DecFormat(dr["a1"], numberOfDecimalDigits),
-                            SuperAuto = NumberFormat.DecFormat(dr["u1"], numberOfDecimalDigits),
+                            Super = FormatPTValue(dr["s1"]),
+                            Master = FormatPTValue(dr["m1"]),
+                            Agent = FormatPTValue(dr["a1"]),
+                            SuperAuto = FormatPTValue(dr["u1"]),
                             SuperIsAuto =
                                 (CastAide.AsBoolean(dr["i1"], false))
                                     ? " checked='checked'"
                                     : string.Empty,
-                            MasterAuto = NumberFormat.DecFormat(dr["um1"], numberOfDecimalDigits),
+                            MasterAuto = FormatPTValue(dr["um1"]),
                             MasterIsAuto =
                                 (CastAide.AsBoolean(dr["im1"], false))
                                     ? " checked='checked'"
@@ -715,20 +715,20 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                     {
                         var agentPt = new PositionTakingInfo()
                         {
-                            Master = NumberFormat.DecFormat(dr["m2"], numberOfDecimalDigits),
-                            Agent = NumberFormat.DecFormat(dr["a2"], numberOfDecimalDigits),
-                            SuperAuto = NumberFormat.DecFormat(dr["um2"], numberOfDecimalDigits),
+                            Master = FormatPTValue(dr["m2"]),
+                            Agent = FormatPTValue(dr["a2"]),
+                            SuperAuto = FormatPTValue(dr["um2"]),
                             SuperIsAuto =
                                 (CastAide.AsBoolean(dr["im2"], false))
                                     ? " checked='checked'"
                                     : string.Empty,
-                            MasterAuto = NumberFormat.DecFormat(dr["um2"], numberOfDecimalDigits),
+                            MasterAuto = FormatPTValue(dr["um2"]),
                             MasterIsAuto =
                                 (CastAide.AsBoolean(dr["im2"], false))
                                     ? " checked='checked'"
                                     : string.Empty,
-                            MinPt = NumberFormat.DecFormat(dr["n2"], numberOfDecimalDigits),
-                            MaxPt = NumberFormat.DecFormat(dr["l2"], numberOfDecimalDigits)
+                            MinPt = FormatPTValue(dr["n2"]),
+                            MaxPt = FormatPTValue(dr["l2"])
                         };
                         ptCurrent.Agent = agentPt;
                     }
@@ -737,15 +737,15 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                     {
                         var masterPt = new PositionTakingInfo()
                         {
-                            Super = NumberFormat.DecFormat(dr["s3"], numberOfDecimalDigits),
-                            Master = NumberFormat.DecFormat(dr["m3"], numberOfDecimalDigits),
-                            SuperAuto = NumberFormat.DecFormat(dr["u3"], numberOfDecimalDigits),
+                            Super = FormatPTValue(dr["s3"]),
+                            Master = FormatPTValue(dr["m3"]),
+                            SuperAuto = FormatPTValue(dr["u3"]),
                             SuperIsAuto =
                                 (CastAide.AsBoolean(dr["i3"], false))
                                     ? " checked='checked'"
                                     : string.Empty,
-                            MinPt = NumberFormat.DecFormat(dr["n3"], numberOfDecimalDigits),
-                            MaxPt = NumberFormat.DecFormat(dr["l3"], numberOfDecimalDigits)
+                            MinPt = FormatPTValue(dr["n3"]),
+                            MaxPt = FormatPTValue(dr["l3"])
                         };
                         ptCurrent.Master = masterPt;
                     }
@@ -754,11 +754,11 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                     {
                         var superPt = new PositionTakingInfo()
                         {
-                            Super = NumberFormat.DecFormat(dr["s4"], numberOfDecimalDigits),
-                            Master = NumberFormat.DecFormat(dr["m4"], numberOfDecimalDigits),
-                            Agent = NumberFormat.DecFormat(dr["a4"], numberOfDecimalDigits),
-                            MinPt = NumberFormat.DecFormat(dr["n4"], numberOfDecimalDigits),
-                            MaxPt = NumberFormat.DecFormat(dr["l4"], numberOfDecimalDigits)
+                            Super = FormatPTValue(dr["s4"]),
+                            Master = FormatPTValue(dr["m4"]),
+                            Agent = FormatPTValue(dr["a4"]),
+                            MinPt = FormatPTValue(dr["n4"]),
+                            MaxPt = FormatPTValue(dr["l4"])
                         };
                         ptCurrent.Super = superPt;
                     }
@@ -841,7 +841,6 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
 
                     var ptCurrent = new PositionTakingDTO();
                     var masterDisableAutoPt = false; // Need to assign 
-                    byte PtDecimalNumber = 3;
                     foreach (DataRow dr in dtPt.Rows)
                     {
                         int currentRoleId = CastAide.AsInt16(dr["roleid"].ToString());
@@ -864,18 +863,18 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
 
                             var superPt = new PositionTakingInfo()
                             {
-                                Super = NumberFormat.DecFormat(dr["sPT"], PtDecimalNumber),
-                                Master = NumberFormat.DecFormat(dr["mPT"], PtDecimalNumber),
-                                Agent = NumberFormat.DecFormat(dr["aPT"], PtDecimalNumber),
-                                MinPt = NumberFormat.DecFormat(dr["MinPT"], PtDecimalNumber),
-                                SuperAuto = NumberFormat.DecFormat(dr["AutoPT"], PtDecimalNumber),
+                                Super = FormatPTValue(dr["sPT"]),
+                                Master = FormatPTValue(dr["mPT"]),
+                                Agent = FormatPTValue(dr["aPT"]),
+                                MinPt = FormatPTValue(dr["MinPT"]),
+                                SuperAuto = FormatPTValue(dr["AutoPT"]),
                                 SuperIsAuto =
                                                       (CastAide.AsBoolean(dr["isAutoPT"], false))
                                                           ? " checked='checked'"
                                                           : string.Empty,
                                 Com = IBCUtils.FormatHandler.FormatNumber4(dr["RollingRate"]),
                                 MasterIsAuto = CastAide.AsBoolean(dr["IsMAutoPT"]) ? " checked='checked'" : string.Empty,
-                                MasterAuto = NumberFormat.DecFormat(dr["MAutoPT"], PtDecimalNumber)
+                                MasterAuto = FormatPTValue(dr["MAutoPT"])
                             };
                             ptCurrent.Super = superPt;
                         }
@@ -884,18 +883,18 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                         {
                             var masterPt = new PositionTakingInfo()
                             {
-                                Super = NumberFormat.DecFormat(dr["sPT"], PtDecimalNumber),
-                                Master = NumberFormat.DecFormat(dr["mPT"], PtDecimalNumber),
-                                Agent = NumberFormat.DecFormat(dr["aPT"], PtDecimalNumber),
-                                MinPt = NumberFormat.DecFormat(dr["MinPT"], PtDecimalNumber),
-                                SuperAuto = NumberFormat.DecFormat(dr["AutoPT"], PtDecimalNumber),
+                                Super = FormatPTValue(dr["sPT"]),
+                                Master = FormatPTValue(dr["mPT"]),
+                                Agent = FormatPTValue(dr["aPT"]),
+                                MinPt = FormatPTValue(dr["MinPT"]),
+                                SuperAuto = FormatPTValue(dr["AutoPT"]),
                                 SuperIsAuto =
                                                        (CastAide.AsBoolean(dr["isAutoPT"], false))
                                                            ? " checked='checked'"
                                                            : string.Empty,
                                 Com = IBCUtils.FormatHandler.FormatNumber4(dr["RollingRate"]),
                                 MasterIsAuto = CastAide.AsBoolean(dr["IsMAutoPT"]) ? " checked='checked'" : string.Empty,
-                                MasterAuto = NumberFormat.DecFormat(dr["MAutoPT"], PtDecimalNumber)
+                                MasterAuto = FormatPTValue(dr["MAutoPT"])
                             };
                             ptCurrent.Master = masterPt;
                         }
@@ -904,17 +903,17 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                         {
                             var agentPt = new PositionTakingInfo()
                             {
-                                Super = NumberFormat.DecFormat(dr["sPT"], PtDecimalNumber),
-                                Master = NumberFormat.DecFormat(dr["mPT"], PtDecimalNumber),
-                                Agent = NumberFormat.DecFormat(dr["aPT"], PtDecimalNumber),
-                                MinPt = NumberFormat.DecFormat(dr["MinPT"], PtDecimalNumber),
-                                SuperAuto = NumberFormat.DecFormat(dr["AutoPT"], PtDecimalNumber),
+                                Super = FormatPTValue(dr["sPT"]),
+                                Master = FormatPTValue(dr["mPT"]),
+                                Agent = FormatPTValue(dr["aPT"]),
+                                MinPt = FormatPTValue(dr["MinPT"]),
+                                SuperAuto = FormatPTValue(dr["AutoPT"]),
                                 SuperIsAuto = (CastAide.AsBoolean(dr["isAutoPT"], false))
                                                           ? " checked='checked'"
                                                           : string.Empty,
                                 Com = IBCUtils.FormatHandler.FormatNumber4(dr["RollingRate"]),
                                 MasterIsAuto = CastAide.AsBoolean(dr["IsMAutoPT"]) ? " checked='checked'" : string.Empty,
-                                MasterAuto = NumberFormat.DecFormat(dr["MAutoPT"], PtDecimalNumber)
+                                MasterAuto = FormatPTValue(dr["MAutoPT"])
                             };
                             ptCurrent.Agent = agentPt;
                         }
@@ -923,17 +922,17 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                         {
                             var memberPt = new PositionTakingInfo()
                             {
-                                Super = NumberFormat.DecFormat(dr["sPT"], PtDecimalNumber),
-                                Master = NumberFormat.DecFormat(dr["mPT"], PtDecimalNumber),
-                                Agent = NumberFormat.DecFormat(dr["aPT"], PtDecimalNumber),
-                                MinPt = NumberFormat.DecFormat(dr["MinPT"], PtDecimalNumber),
-                                SuperAuto = NumberFormat.DecFormat(dr["AutoPT"], PtDecimalNumber),
+                                Super = FormatPTValue(dr["sPT"]),
+                                Master = FormatPTValue(dr["mPT"]),
+                                Agent = FormatPTValue(dr["aPT"]),
+                                MinPt = FormatPTValue(dr["MinPT"]),
+                                SuperAuto = FormatPTValue(dr["AutoPT"]),
                                 SuperIsAuto = (CastAide.AsBoolean(dr["isAutoPT"], false))
                                                            ? " checked='checked'"
                                                            : string.Empty,
                                 Com = IBCUtils.FormatHandler.FormatNumber4(dr["RollingRate"]),
                                 MasterIsAuto = CastAide.AsBoolean(dr["IsMAutoPT"]) ? " checked='checked'" : string.Empty,
-                                MasterAuto = NumberFormat.DecFormat(dr["MAutoPT"], PtDecimalNumber)
+                                MasterAuto = FormatPTValue(dr["MAutoPT"])
                             };
                             ptCurrent.Member = memberPt;
                         }
@@ -1076,6 +1075,10 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
             }
 
             return products;
+        }
+        private static string FormatPTValue(object positionTakingValue)
+        {
+            return string.Format("{0:G29}", decimal.Parse(positionTakingValue.ToString()));
         }
     }
 }

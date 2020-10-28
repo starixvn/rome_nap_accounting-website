@@ -15,14 +15,6 @@
 
     public class GoldDeluxePT
     {
-        private static byte NumberOfDecimalDigits
-        {
-            get
-            {
-                return (byte)2;
-            }
-        }
-
         public ViewPtDTO ViewPositionTaking(ViewGoldDeluxePTCriteria criteria)
         {
             var result = new ViewPtDTO();
@@ -260,7 +252,7 @@
 
         private string FormatPTValue(object positionTakingValue)
         {
-            return NumberFormat.DecFormat(positionTakingValue, NumberOfDecimalDigits);
+            return string.Format("{0:G29}", decimal.Parse(positionTakingValue.ToString()));
         }
 
         private string CheckIsAutoBox(bool isCheck)
