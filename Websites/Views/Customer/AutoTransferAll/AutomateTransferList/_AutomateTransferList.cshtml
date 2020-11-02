@@ -100,8 +100,16 @@
             </div>
         </td>
         <td>
-            <div class="width100 table-cell c">
-                <input @isDisabled class="btn" type="button" id="btnTransferAll_@autoTransfer.CustId" value="Transfer All" onclick="automateTransferAll.confirmClearBalance('@autoTransfer.UserName',@autoTransfer.CustId);" />
+            <div class="width100 tranfer-all c">
+                @if (string.IsNullOrEmpty(isDisabled))
+                {
+                    <input type="checkbox" id="ckbTransferAll__@autoTransfer.CustId" onclick="automateTransferAll.AddOrRemoveTranferUsernameList('@autoTransfer.UserName',@autoTransfer.CustId);" />
+                }
+                else
+                {
+                    <input type="checkbox" class="hidden"/>
+                }
+                <input @isDisabled class="btn btn-tranfer-all" type="button" id="btnTransferAll_@autoTransfer.CustId" value="Transfer All" onclick="automateTransferAll.confirmClearBalance('@autoTransfer.UserName',@autoTransfer.CustId);" />
                 &nbsp;
             </div>
         </td>
@@ -141,7 +149,8 @@
                         </th>
                         <th>
                             <div class="width150 height34 table-cell">
-                                Transfer Type</div>
+                                Transfer Type
+                            </div>
                         </th>
                         <th>
                             <div class="width150 height34 table-cell">
@@ -152,8 +161,11 @@
                                 Status</div>
                         </th>
                         <th>
-                            <div class="width100 height34 table-cell">
-                                Transfer Balance</div>
+                            <div class="width100 height30 table-cell">
+                                Transfer Balance
+                            </div>
+                            <input type="checkbox" id="ckbTransferAll" style="vertical-align:middle;" />
+                            <input disabled class="btn btn-tranfer-all" type="button" id="btnTransferAll" value="Transfer All" onclick="automateTransferAll.confirmTransferAll();" style="vertical-align:middle;" />
                         </th>
                         <th>
                             <div class="width50 height34 table-cell">
@@ -231,5 +243,6 @@
     </div>
 </div>
 <script type="text/javascript">
-   var _length = @Model.TotalRows;
+    var _length = @Model.TotalRows;
+    var pageData = @Html.Raw(Json.Encode(Model.AutoTransfers));
 </script>

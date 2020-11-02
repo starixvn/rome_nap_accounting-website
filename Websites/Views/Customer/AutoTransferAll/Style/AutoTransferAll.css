@@ -236,3 +236,12 @@ tr.even td,table.validUsers tr.even td {
        width: 355px !important;
       height: 100px !important;
 }
+
+.tranfer-all {
+    display: flex;
+}
+
+.btn-tranfer-all {
+    margin-left: auto !important;
+    margin-right: 0;
+}

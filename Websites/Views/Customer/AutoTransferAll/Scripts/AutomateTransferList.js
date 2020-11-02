@@ -6,6 +6,7 @@ Fanex.Accounting.AutomateTransferList = function () {
     me.autoTransferListCriteria = {
         userName: '',
         status: '',
+        failureReason: 'All',
         pageIndex: 1,
         pageSize: 50
     };
@@ -32,6 +33,9 @@ Fanex.Accounting.AutomateTransferList = function () {
         current_page: 1
     };
 
+    me.canTransferUsernames = [];
+    me.selectedTransferUsernames = [];
+
     me.getAutoTransfers = function (isFromSearchButton) {
         try { parent.BlockUI(); } catch (e) { }
         $("#err").hide();
@@ -46,6 +50,8 @@ Fanex.Accounting.AutomateTransferList = function () {
                 if (typeof _length != "undefined") {
                     me.gridRender();
                 }
+
+                me.InitCanTranferUsername(pageData);
             },
             error: function () {
                 parent.jQuery.unblockUI();
@@ -91,6 +97,7 @@ Fanex.Accounting.AutomateTransferList = function () {
 
         me.autoTransferListCriteria.userName = username;
         me.autoTransferListCriteria.status = $('#ddlFilterStatus').val();
+        me.autoTransferListCriteria.failureReason = $('#ddlFilterReason').val();
     };
 
     me.trim = function (str) {
@@ -332,6 +339,101 @@ Fanex.Accounting.AutomateTransferList = function () {
         });
 
         $("#usernamesTextarea").resizable();
+    };
+
+    me.confirmTransferAll = function () {
+        $("#tblconfirmUpdated").html("Do you want to transfer all transferable rows on this page?");
+        $("#tblconfirmUpdated").dialog({
+            title: "Updated Transfer",
+            autoOpen: false,
+            height: 120,
+            width: 300,
+            modal: true,
+            buttons: {
+                "Submit": function () {
+                    me.clearBalance(username, custId);
+                    $("#tblconfirmUpdated").dialog("close");
+                },
+                "Cancel": function () {
+                    $("#tblconfirmUpdated").dialog("close");
+                }
+            },
+            close: function (event, ui) { }
+        });
+        $('a.ui-dialog-titlebar-close').show();
+        $("#tblconfirmUpdated").dialog("open");
+    };
+
+    me.InitCanTranferUsername = function (data) {
+        me.canTransferUsernames = [];
+        me.selectedTransferUsernames = [];
+        if (data.length > 0) {
+            for (var i = 0; i < data.length; i++) {
+                var autoTransfer = data[i];
+                if (autoTransfer.StatusName.trim().toLowerCase() === "failed") {
+                    me.canTransferUsernames.push({
+                        username: autoTransfer.UserName,
+                        custId: autoTransfer.CustId
+                    });
+                }
+            }
+        }
+
+        me.InitSelectorEvent();
+    };
+
+    me.InitSelectorEvent = function () {
+        if (me.canTransferUsernames.length > 0) {
+            $('#ckbTransferAll').removeClass("hidden");
+            $('#ckbTransferAll').change(function () {
+                var isChecked = this.checked;
+                $('[id^="ckbTransferAll__"]').each(function () {
+                    this.checked = isChecked;
+                });
+                $('#btnTransferAll').attr('disabled', !isChecked);
+                if (isChecked) {
+                    me.selectedTransferUsernames = me.canTransferUsernames.map((item) => item);
+                } else {
+                    me.selectedTransferUsernames = [];
+                }
+            });
+
+            $('[id^="ckbTransferAll__"]').change(function () {
+                var isChecked = this.checked;
+                if (isChecked) {
+                    $('#btnTransferAll').attr('disabled', false);
+                }
+            });
+        } else {
+            $('#ckbTransferAll').addClass("hidden");
+        }
+    };
+
+    me.AddOrRemoveTranferUsernameList = function (username, custId) {
+        var isCheck = $('#ckbTransferAll__' + custId).is(':checked');
+        for (var i = 0; i < me.selectedTransferUsernames.length; i++) {
+            if (me.selectedTransferUsernames[i].username === username) {
+                me.selectedTransferUsernames.splice(i, 1);
+            }
+        }
+        if (isCheck) {
+            me.selectedTransferUsernames.push({
+                username: username,
+                custId: custId
+            });
+        } else {
+            $('#ckbTransferAll').prop('checked', false);
+        }
+
+        if (me.selectedTransferUsernames.length === 0) {
+            $('#ckbTransferAll').prop('checked', false);
+            $('#btnTransferAll').attr('disabled', true);
+        }
+
+        if (me.canTransferUsernames.length > 0 && me.canTransferUsernames.length === me.selectedTransferUsernames.length) {
+            $('#ckbTransferAll').prop('checked', true);
+        }
+        
     };
 };
 
