@@ -35,6 +35,8 @@ Fanex.Accounting.AutomateTransferList = function () {
 
     me.canTransferUsernames = [];
     me.selectedTransferUsernames = [];
+    me.ErrorTransferAllCust = [];
+    me.IsFromTransferAll = false;
 
     me.getAutoTransfers = function (isFromSearchButton) {
         try { parent.BlockUI(); } catch (e) { }
@@ -344,14 +346,14 @@ Fanex.Accounting.AutomateTransferList = function () {
     me.confirmTransferAll = function () {
         $("#tblconfirmUpdated").html("Do you want to transfer all transferable rows on this page?");
         $("#tblconfirmUpdated").dialog({
-            title: "Updated Transfer",
+            title: "Updated Transfer All",
             autoOpen: false,
             height: 120,
             width: 300,
             modal: true,
             buttons: {
                 "Submit": function () {
-                    me.clearBalance(username, custId);
+                    me.clearAllSelectedBalance();
                     $("#tblconfirmUpdated").dialog("close");
                 },
                 "Cancel": function () {
@@ -362,6 +364,55 @@ Fanex.Accounting.AutomateTransferList = function () {
         });
         $('a.ui-dialog-titlebar-close').show();
         $("#tblconfirmUpdated").dialog("open");
+    };
+
+    me.clearAllSelectedBalance = function () {
+        $("#err").empty().hide();
+        if (me.selectedTransferUsernames.length > 0) {
+            try { parent.BlockUI(); } catch (e) { }
+            me.clearAllSelectedBalanceSequentially();
+        }
+    };
+
+    me.clearAllSelectedBalanceSequentially = function () {
+        if (me.selectedTransferUsernames.length > 0) {
+            var params = { username: me.selectedTransferUsernames[0].username, transferType: $('#ddlTranferType_' + me.selectedTransferUsernames[0].custId).val(), custId: me.selectedTransferUsernames[0].custId };
+            $.ajax({
+                type: "POST",
+                url: window.rootUrl + 'AutoTransferAll/ClearBalance',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(params),
+                success: function (result) {
+                    if (result.ErrorCode != 0) {
+                        me.ErrorTransferAllCust.push(params);
+                    }
+                },
+                error: function () {
+                    me.ErrorUsernames.push(params.username);
+                },
+                complete: function () {
+                    me.selectedTransferUsernames.splice(0, 1);
+                    if (me.selectedTransferUsernames.length === 0) {
+                        me.IsFromTransferAll = true;
+                        me.getAutoTransfers(false);
+                    } else {
+                        me.clearAllSelectedBalanceSequentially();
+                    }
+                }
+            });
+        }
+    };
+
+    me.ShowTransferAllResult = function () {
+        if (me.ErrorTransferAllCust.length > 0) {
+            var usernames = me.ErrorTransferAllCust.map(e => e.username).join(",");
+            $("#err").show().html("<div class='alerterror'>Transfer All failed with Usernames: " + usernames + "</div>");
+        } else {
+            $("#err").show().html("<div class='alertsuccess'>Transfer All completed successfully!</div>");
+        }
+        me.ErrorTransferAllCust = [];
+        me.IsFromTransferAll = false;
     };
 
     me.InitCanTranferUsername = function (data) {

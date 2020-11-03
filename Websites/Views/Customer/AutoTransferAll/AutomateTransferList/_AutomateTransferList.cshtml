@@ -245,4 +245,7 @@
 <script type="text/javascript">
     var _length = @Model.TotalRows;
     var pageData = @Html.Raw(Json.Encode(Model.AutoTransfers));
+    if (automateTransferAll.IsFromTransferAll) {
+        automateTransferAll.ShowTransferAllResult();
+    }
 </script>
