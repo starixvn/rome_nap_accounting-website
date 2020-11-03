@@ -344,9 +344,9 @@ Fanex.Accounting.AutomateTransferList = function () {
     };
 
     me.confirmTransferAll = function () {
-        $("#tblconfirmUpdated").html("Do you want to transfer all transferable rows on this page?");
+        $("#tblconfirmUpdated").html("Do you want to transfer all selected rows on this page?");
         $("#tblconfirmUpdated").dialog({
-            title: "Updated Transfer All",
+            title: "Multiple Transfer All",
             autoOpen: false,
             height: 120,
             width: 300,
