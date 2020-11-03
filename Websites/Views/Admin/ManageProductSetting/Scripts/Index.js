@@ -50,6 +50,11 @@ function Search() {
         case "tab_7":
             SearchCanSee();
             break;
+        case "tab_8":
+            SearchResetWinning();
+            break;
+        default:
+            break;
     }
 }
 function UpdateSampleUrl() {
@@ -74,6 +79,11 @@ function UpdateSampleUrl() {
             break;
         case "tab_7":
             $('#sampleSettingLink').prop("href", rootUrl + "Views/Admin/ManageProductSetting/CanSee/CanSee.xls");
+            break;
+        case "tab_8":
+            UpdateResetWinningSampleUrl();
+            break;
+        default:
             break;
     }
 }

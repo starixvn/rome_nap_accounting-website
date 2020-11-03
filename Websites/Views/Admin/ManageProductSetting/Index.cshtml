@@ -36,6 +36,10 @@
             border: 1px solid #7C98A4;
             text-align: left;
         }
+
+        .w180 {
+            width: 180px;
+        }
     </style>
 </head>
 <body>
@@ -55,11 +59,12 @@
                             <li id="tab_5"><a href="javascript:SwitchTab('tab_5', 'tab_content_5');"><span>CS Sport Bettype Matrix</span></a></li>
                             <li id="tab_6"><a href="javascript:SwitchTab('tab_6', 'tab_content_6');"><span>RefResource</span></a></li>
                             <li id="tab_7"><a href="javascript:SwitchTab('tab_7', 'tab_content_7');"><span>Can See</span></a></li>
+                            <li id="tab_8"><a href="javascript:SwitchTab('tab_8', 'tab_content_8');"><span>Reset Winning</span></a></li>
                         </ul>
                     </div>
                 </div>
             </div>
-            <div id="tab_content_1" style="margin-top:38px; margin-bottom:2px">
+            <div id="tab_content_1" style="margin-top:38px;">
                 @Html.Partial("~/Views/Admin/ManageProductSetting/Product/_Product.cshtml")
             </div>
             <div id="tab_content_2" style="display: none;margin-top:38px">
@@ -80,6 +85,9 @@
             <div id="tab_content_7" style="display: none;margin-top:38px">
                 @Html.Partial("~/Views/Admin/ManageProductSetting/CanSee/_index.cshtml")
             </div>
+            <div id="tab_content_8" style="display: none;margin-top:38px">
+                @Html.Partial("~/Views/Admin/ManageProductSetting/ResetWinning/_ResetWinning.cshtml")
+            </div>
         </div>
     </div>
     @Html.Partial("~/Views/Admin/ManageProductSetting/_UploadSetting.cshtml")
@@ -89,6 +97,8 @@
     @Html.Partial("~/Views/Admin/ManageProductSetting/SportBettypeMatrix/_UpdateSportBettypeMatrix.cshtml")
     @Html.Partial("~/Views/Admin/ManageProductSetting/RefResource/_UpdateRefResource.cshtml")
     @Html.Partial("~/Views/Admin/ManageProductSetting/CSSportBettypeMatrix/_UpdateCSSportBettypeMatrix.cshtml")
+    @Html.Partial("~/Views/Admin/ManageProductSetting/ResetWinning/_UpdateDWLList.cshtml")
+    @Html.Partial("~/Views/Admin/ManageProductSetting/ResetWinning/_UpdateDWLListExtraPT.cshtml")
     <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-1.8.2.min.js?v=" + WebSettings.Version)"></script>
     <script type="text/javascript" src="@Url.Content("~/js/select2/select2.min.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-ui-1.9.1.min.js?v=" + WebSettings.Version)"></script>
@@ -100,6 +110,7 @@
     <script type="text/javascript" src="@Url.Content("~/js/Calendar2/js/jscal2.js?v=" + WebSettings.Version)"></script>
     <script type="text/javascript" src="@Url.Content("~/js/Calendar2/js/lang/en.js?v=" + WebSettings.Version)"></script>
     <script type="text/javascript" src="@Url.Content("~/js/MultipleSelect/jquery.multiselect.min.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/js/jQuery/Number/jquery.formattyping.js?v=" + WebSettings.Version)"></script>
     <script type="text/javascript" src="@Url.Content("~/js/jquery.NAPNumericInput.js?v=" + WebSettings.Version)"></script>
     <script type="text/javascript" src="@Url.Content("~/js/common.js?v=" + WebSettings.Version)"></script>
     <script type="text/javascript" src="@Url.Content("~/Views/Admin/ManageProductSetting/Scripts/Index.js?v=" + @WebSettings.Version)"></script>

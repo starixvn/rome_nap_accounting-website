@@ -66,7 +66,8 @@ namespace Fanex.Tarus.BetList.DataAccess.Results
                 Favourite = reader["IsFavor"] != DBNull.Value ? reader["IsFavor"].ToString() : string.Empty,
                 RowCount = reader["RowCount"] != DBNull.Value ? int.Parse(reader["RowCount"].ToString()) : 0,
                 SCROfMatch = reader["SCR"] != DBNull.Value ? reader["SCR"].ToString() : string.Empty,
-                TFOfMatch = reader["TF"] != DBNull.Value ? reader["TF"].ToString() : string.Empty
+                TFOfMatch = reader["TF"] != DBNull.Value ? reader["TF"].ToString() : string.Empty,
+                Status = reader["OddsStatus"] != DBNull.Value ? reader["OddsStatus"].ToString() : string.Empty
             };
         }
     }

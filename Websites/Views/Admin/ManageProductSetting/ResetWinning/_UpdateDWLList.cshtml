@@ -1,0 +1,35 @@
+﻿<form id="edit-dwllist-form" style="display: none;">
+    <div id="updateDWLListErrMsg">
+    </div>
+    <table style="line-height: 28px; margin-top: 10px; border-collapse: collapse;">
+        <tr>
+            <td><label for="DWLListCustId">CustId</label></td>
+            <td><span id="DWLListCustId" /></td>
+        </tr>
+        <tr>
+            <td><label for="DWLListUsername">Username</label></td>
+            <td><span id="DWLListUsername" /></td>
+        </tr>
+        <tr>
+            <td><label for="DWLListProduct">Product</label></td>
+            <td><span id="DWLListProduct" /></td>
+        </tr>
+        <tr>
+            <td><label for="DWLListProductId">ProductId<span style="color: red;">*</span></label></td>
+            <td><input class="numeric-input-tinyint w180" id="DWLListProductId" /></td>
+        </tr>
+        <tr>
+            <td><label for="DWLListSeq">Seq<span style="color: red;">*</span></label></td>
+            <td><input class="numeric-input-tinyint w180" id="DWLListSeq" /></td>
+        </tr>
+        <tr>
+            <td><label for="DWLListIsDeleted">IsDeleted</label></td>
+            <td><input id="DWLListIsDeleted" type="checkbox" value="1" /></td>
+        </tr>
+        <tr>
+            <td colspan="5" style="text-align: center">
+                <input class="btn" type="button" value="Update" id="btnDWLListUpdate" />
+            </td>
+        </tr>
+    </table>
+</form>

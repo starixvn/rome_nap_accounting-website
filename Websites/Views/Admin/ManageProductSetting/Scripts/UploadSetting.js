@@ -26,6 +26,9 @@ $(document).ready(function () {
             case "tab_7":
                 action = 'InsertCanSee';
                 break;
+            case "tab_8":
+                action = GetInsertResetWinningAction();
+                break;
         }
         var formData = new FormData(form[0]);
         $.ajax({
@@ -60,9 +63,9 @@ var InsertSetting = function () {
         return;
     }
 
-    try { parent.BlockUI(); } catch (e) { }
+    parent.BlockUI();
     form.submit();
-}
+};
 
 function ValidateUploadFile() {
     var filename = $('#uploadFile').val();

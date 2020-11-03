@@ -1,0 +1,28 @@
+﻿<div class="filterBox" style="border: solid 1px #7C98A4; height:80px;">
+    <div class="filterContent">
+        <div id="errDWLListExtraMsg"></div>
+        <div class="floatLeft w80"><label for="txtDWLListExtraCustId">CustId</label></div>
+        <div class="floatLeft"><input id="txtDWLListExtraCustId" type="text" class="numeric-input-int" /></div>
+        <div class="floatLeft w80"><label for="txtDWLListExtraUsername">Username</label></div>
+        <div class="floatLeft"><input id="txtDWLListExtraUsername" type="text" /></div>
+        <div class="floatLeft w80"><label for="txtDWLListExtraGroupId">GroupId</label></div>
+        <div class="floatLeft"><input id="txtDWLListExtraGroupId" type="text" class="numeric-input-int" /></div>
+        <div class="clear"></div>
+        <div class="floatLeft w80"><label for="txtDWLListExtraGroupName">GroupName</label></div>
+        <div class="floatLeft"><input id="txtDWLListExtraGroupName" type="text" /></div>
+        <div class="floatLeft w80"><label for="txtDWLListExtraIsDisabled">IsDisabled</label></div>
+        <div class="floatLeft">
+            <select id="txtDWLListExtraIsDisabled" class="w80">
+                <option value="">All</option>
+                <option value="1">1</option>
+                <option value="0" selected>0</option>
+            </select>
+        </div>
+        <div class="floatLeft"><input type="button" value="Search" class="btn" onclick="SearchDWLListExtra()" /></div>
+        <div class="floatLeft"><input type="button" value="Import From Excel" class="btn" onclick="OpenInsertSetting()" /></div>
+    </div>
+</div>
+<div style="clear: both"></div>
+<div id="gridDWLListExtraPTContainer" class="grid-container">
+    <div id="gridDWLListExtraPT" class="freegrid"></div>
+</div>
