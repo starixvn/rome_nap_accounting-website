@@ -86,7 +86,8 @@
                 ShowTime = Converter.ToString2(r["showtime"]),
                 EventDate = Converter.ToDateTime(r["eventdate"]),
                 Status = Converter.ToString2(r["status"]),
-                SettlementStatus = r.Table.Columns.Contains("SettlementStatus") ? Convert.ToByte(r["SettlementStatus"]) : (byte)0
+                SettlementStatus = r.Table.Columns.Contains("SettlementStatus") ? Convert.ToByte(r["SettlementStatus"]) : (byte)0,
+                TransDate = Converter.ToDateTime(r["TransDate"])
             };
 
             IList<TicketDto> betDetails = _betListRepository.Fetch<TicketDto>(criteria, mapTicketObjectFunction);

@@ -1075,7 +1075,6 @@ function getPGSoftCasinoParam(gameId, custId, gameCode) {
     };
 }
 
-
 function getCardClubParam(custId, gameTypeId, sportType, transId3rd) {
     var sportName = "Arcadia Gaming";
     var bettypeNames = {};
@@ -1090,6 +1089,7 @@ function getCardClubParam(custId, gameTypeId, sportType, transId3rd) {
     bettypeNames["1903"] = "OddEven";
     bettypeNames["1904"] = "Lotto3";
     bettypeNames["1905"] = "11HiLo";
+    bettypeNames["1906"] = "Bonus";
     var betTypeName = bettypeNames[gameTypeId];
     var title = sportName + " - " + betTypeName;
 
