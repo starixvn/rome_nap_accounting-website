@@ -193,7 +193,7 @@
     <Setting Key="Customer_ConfigureDirectAccount_UpdateStatusEffect" SpName="Acc_CustDirectListAffected" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Agent's yesterday balance">
-    <Setting Key="Acc_CustomerSelAutoTransferAgent" SpName="Acc_CustomerSelAutoTransferAgent_xtest" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerSelAutoTransferAgent" SpName="Acc_CustomerSelAutoTransferAgent" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
     <Setting Key="Acc_CustomerInsAutoTransferAgent" SpName="Acc_CustomerInsAutoTransferAgent" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
     <Setting Key="Acc_CustomerCheckValidAutoTransferAgent" SpName="Acc_CustomerCheckValidAutoTransferAgent" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
     <Setting Key="Acc_CustomerInsAutoTransferAgentFromFile" SpName="Acc_CustomerInsAutoTransferAgentFromFile" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
