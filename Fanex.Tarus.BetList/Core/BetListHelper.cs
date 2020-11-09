@@ -100,6 +100,7 @@
         {
             return string.Format("{0:G29}", input * 100) + BetListResources.Symbol_Percent;
         }
+
         public string PercentFormat20(decimal input)
         {
             var isInputInterger = (input * 100) % 1 == 0;
@@ -107,6 +108,7 @@
                 Math.Round(input * 100, 0).ToString() + BetListResources.Symbol_Percent :
                 Math.Round(input * 100, 2).ToString() + BetListResources.Symbol_Percent;
         }
+
         public bool IsShowOddsWithChoice(int betTypeId)
         {
             return betTypeId == BetTypeContants.MixParlay || betTypeId == BetTypeContants.SystemParlay;

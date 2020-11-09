@@ -1078,7 +1078,12 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
         }
         private static string FormatPTValue(object positionTakingValue)
         {
-            return string.Format("{0:G29}", decimal.Parse(positionTakingValue.ToString()));
+            decimal value;
+            if (Decimal.TryParse(positionTakingValue.ToString(), out value))
+            {
+                return string.Format("{0:G29}", value);
+            }
+            return string.Empty;
         }
     }
 }
