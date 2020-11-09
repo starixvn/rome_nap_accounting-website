@@ -20,6 +20,8 @@ namespace Fanex.Tarus.Customer.Criteria.AutoTransferAll
 
         public string Status { get; set; }
 
+        public string FailureReason { get; set; }
+
         public int PageSize { get; set; }
 
         public int PageIndex { get; set; }
