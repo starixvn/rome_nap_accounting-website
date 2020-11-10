@@ -306,6 +306,10 @@ span.cannotchangeinternal {
     background-color: #ccc7ba !important;
 }
 
+.closed-byArchive, .closed-byArchive td {
+    background-color: #969696 !important;
+}
+
 .closed-byAdmin, .closed-byAdmin td {
     background-color: #b3a2c7 !important;
 }
@@ -419,7 +423,7 @@ span.cannotchangeinternal {
     overflow: auto;
 }
 
-.display-none{
+.display-none {
     display: none;
 }
 
@@ -503,16 +507,18 @@ span.cannotchangeinternal {
             background-color: #f5f5f5;
         }
 
-.status-count-active{
+.status-count-active {
     color: #006600;
 }
 
 .status-count-view-only {
     color: #0000ff;
 }
+
 .status-count-suspended {
     color: #000000;
 }
+
 .status-count-inactive {
     color: #ff0000;
 }
