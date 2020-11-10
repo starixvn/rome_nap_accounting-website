@@ -121,6 +121,7 @@ function InitAddNewUMConfig() {
     cachedSelectProductSetting = null;
     cachedSelectSportSetting = null;
     cachedSelectSettingType = null;
+    hideAlertMessage("newUMConfigErrMsg");
     var functionTypeSelection = $("#UMFunctionType");
     functionTypeSelection.empty();
     if (cachedUMConfigSetting) {
@@ -139,11 +140,13 @@ function InitAddNewUMConfig() {
     UMProductName.append(productDefaultOption);
 
     var UMSportName = $("#UMSportName");
+    UMSportName.empty();
     var sportDefaultOption = new Option('SportName', '', true, true);
     sportDefaultOption.disabled = true;
     UMSportName.append(sportDefaultOption);
 
     var UMSettingType = $("#UMSettingType");
+    UMSettingType.empty();
     var settingDefaultOption = new Option('SettingType', '', true, true);
     settingDefaultOption.disabled = true;
     UMSettingType.append(settingDefaultOption);
