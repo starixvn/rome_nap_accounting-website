@@ -184,7 +184,7 @@ function ValidateUMData(divError, beginTime, endTime, showTime) {
     }
 
     if (IsOverUMTime(endTime)) {
-        showAlertMessage(divError, "EndTime must be larger Today", 1);
+        showAlertMessage(divError, "The End Time must be greater than Current time.", 1);
         return false;
     }
 
