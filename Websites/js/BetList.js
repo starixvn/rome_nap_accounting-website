@@ -633,6 +633,17 @@ function showAGCasinoDetails(refno, winlossDate, custId, transType) {
 
     openResultsPopUp(params);
 }
+function showWMBetDetails (refno, winlossDate, custId, transType) {
+    var params = {
+        url: "AGCasinoBetList/BetDetails",
+        title: "WM - Detailed Bet list - " + winlossDate.split(" ")[0],
+        jsonParam: { Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 233, PageSize: 500 },
+        width: 1040,
+        height: 600
+    };
+
+    openResultsPopUp(params);
+}
 
 function showSabaClubDetails(refno, winlossDate, custId, transType) {
     var rngCasinoParam = {
@@ -891,6 +902,7 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
         case 242: // GTCasino.
         case 243: // SexyGaming.
         case 244: // SaGaming.
+        case 233: // WM             
             return getLiveCasinoParam(transdesc, matchcode, bettype, sporttype);
 
         case 212: // Macau Games.
@@ -1027,11 +1039,14 @@ function getLiveCasinoParam(transdesc, betcheck, bettype, sporttype) {
     sporttypes["242"] = "IBCBet Live Casino Result";
     sporttypes["243"] = "AE Casino Result";
     sporttypes["244"] = "SA Gaming Result";
+    sporttypes["233"] = "WM Result";
+
     var resultPageBySportTypes = {};
     resultPageBySportTypes["211"] = "Report/ViewAllbetCasinoResult.aspx";
     resultPageBySportTypes["242"] = "Report/ViewGTCasinoResult.aspx";
     resultPageBySportTypes["243"] = "Report/ViewSexyGamingResult.aspx";
     resultPageBySportTypes["244"] = "Report/ViewSAGamingResult.aspx";
+    resultPageBySportTypes["233"] = "Report/ViewWMResult.aspx";
 
     var title = sporttypes[sporttype];
     var url = resultPageBySportTypes[sporttype];
