@@ -225,6 +225,10 @@ function AddNewUMConfig() {
 }
 
 function AppendNewUMConfig() {
+    var usernamesArray = $("#UMUsername").val().split(',').filter(function (item, pos, self) {
+        return self.indexOf(item) === pos;
+    });
+
     var umConfig = {
         FunctionType: $('#UMFunctionType').val(),
         FunctionTypeName: $('#UMFunctionType option:selected').text(),
@@ -244,7 +248,7 @@ function AppendNewUMConfig() {
         EndTime: $("#UMEndTime").val(),
         ShowTime: $("#UMShowTime").val(),
         LockAddingNew: $('#UMLockAddingNew').is(":checked"),
-        Username: $("#UMUsername").val()
+        Username: usernamesArray.join(',')
     };
 
     cachedNewUMConfigs.push(umConfig);
@@ -540,6 +544,14 @@ function UpdateUMConfig(index) {
 }
 
 $(document).ready(function () {
+    $("#UMUsername").on('keydown', function (e) {
+        var el = this;
+        setTimeout(function () {
+            el.style.cssText = 'width:100%; height:auto; padding:0';
+            el.style.cssText = 'width:100%; height:' + el.scrollHeight + 'px';
+        }, 0);
+    });
+
     $("#UMFunctionType").change(function () {
         var functionType = $('#UMFunctionType').val();
         cachedSelectFunctionSetting = cachedUMConfigSetting.find(element => element.FunctionType === functionType);
