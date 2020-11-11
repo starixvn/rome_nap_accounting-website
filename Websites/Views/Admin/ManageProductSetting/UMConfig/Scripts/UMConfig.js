@@ -598,6 +598,12 @@ $(document).ready(function () {
             var usernamesArray = usernamesValue.split(",").filter(item => item.length > 0);
             usernames.val(usernamesArray.join(","));
         }
+
+        var el = this;
+        setTimeout(function () {
+            el.style.cssText = 'width:100%; height:auto; padding:0';
+            el.style.cssText = 'width:100%; height:' + el.scrollHeight + 'px';
+        }, 0);
     });
 });
 
