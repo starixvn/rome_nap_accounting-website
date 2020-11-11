@@ -157,6 +157,7 @@ function InitAddNewUMConfig() {
     $("#UMBeginTime").val("");
     $('#UMLockAddingNew').prop('checked', false);
     $("#UMUsername").val("");
+    $('#UMUsername').attr('style', 'width: 100%;');
 }
 
 function ValidateUMData(divError, beginTime, endTime, showTime) {
@@ -164,25 +165,28 @@ function ValidateUMData(divError, beginTime, endTime, showTime) {
         showAlertMessage(divError, "ShowTime is required.", 1);
         return false;
     }
-    if (endTime === "") {
-        showAlertMessage(divError, "EndTime is required.", 1);
-        return false;
-    }
+
     if (beginTime === "") {
         showAlertMessage(divError, "BeginTime is required.", 1);
         return false;
     }
+
+    if (endTime === "") {
+        showAlertMessage(divError, "EndTime is required.", 1);
+        return false;
+    }
+
     var beginDate = new Date(beginTime);
     var endDate = new Date(endTime);
     var showDate = new Date(showTime);
 
-    if (beginDate >= endDate) {
-        showAlertMessage(divError, "The Begin Time must be less than End Time.", 1);
+    if (showDate >= beginDate) {
+        showAlertMessage(divError, "The Show Time must be less than Begin Time.", 1);
         return false;
     }
 
-    if (showDate >= beginDate) {
-        showAlertMessage(divError, "The Show Time must be less than Begin Time.", 1);
+    if (beginDate >= endDate) {
+        showAlertMessage(divError, "The Begin Time must be less than End Time.", 1);
         return false;
     }
 
@@ -225,7 +229,7 @@ function AddNewUMConfig() {
 }
 
 function AppendNewUMConfig() {
-    var usernamesArray = $("#UMUsername").val().split(',').filter(function (item, pos, self) {
+    var usernamesArray = $("#UMUsername").val().replace(/<[^>]+>/g, "").split(',').filter(function (item, pos, self) {
         return self.indexOf(item) === pos;
     });
 
