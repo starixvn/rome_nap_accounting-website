@@ -273,6 +273,8 @@
                 return SportContants.PGSoft;
             if (3401 <= betTypeId && betTypeId <= 3499)
                 return SportContants.WM;
+            if (3501 <= betTypeId && betTypeId <= 3599)
+                return SportContants.BigGame;
             if (6401 <= betTypeId && betTypeId <= 6700)
                 return SportContants.Joker;
             if (5701 <= betTypeId && betTypeId <= 5799)

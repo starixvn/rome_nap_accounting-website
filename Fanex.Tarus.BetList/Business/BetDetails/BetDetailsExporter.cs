@@ -72,7 +72,8 @@
                 sportType == SportContants.GTCasino ||                
                 sportType == SportContants.IonCasino ||
                 sportType == SportContants.WM||
-                sportType == SportContants.GDG)
+                sportType == SportContants.GDG ||
+                sportType == SportContants.BigGame)
             {
                 return GetLiveCasinoTickets(refNo, custId, transType);
             }

@@ -655,6 +655,18 @@ function showGDGBetDetails(refno, winlossDate, custId, transType) {
 
     openResultsPopUp(params);
 }
+function showBGBetDetails(refno, winlossDate, custId, transType) {
+    var params = {
+        url: "AGCasinoBetList/BetDetails",
+        title: "BG - Detailed Bet list - " + winlossDate.split(" ")[0],
+        jsonParam: { Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 239, PageSize: 500 },
+        width: 1040,
+        height: 600
+    };
+
+    openResultsPopUp(params);
+}
+
 function showSabaClubDetails(refno, winlossDate, custId, transType) {
     var rngCasinoParam = {
         url: "RNGCasinoBetList/BetDetails",
@@ -910,6 +922,8 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
 
         case 236: // GDG
             return getGDGParam(transdesc, betcheck, matchcode, league);
+        case 239: // BG
+            return getBGParam(transdesc, betcheck, league, matchcode);
 
         case 241: // BBIN
             return getBBinParam(transdesc, matchcode, bettype);
@@ -1112,6 +1126,16 @@ function getPGSoftCasinoParam(gameId, custId, gameCode) {
         title: "PG Soft Result",
         jsonParam: { custId: custId, gameId: gameId, gameCode: gameCode, productId: 55 },
         width: 945,
+        height: 800
+    };
+}
+
+function getBGParam(transId3rd, custId, currencyId, siteId) {
+    return {
+        url: "ThirdParty/Result",
+        title: "BG Result",
+        jsonParam: { custId: custId, gameId: transId3rd, gameCode: currencyId, siteid: siteId, productId: 57 },
+        width: 850,
         height: 800
     };
 }
