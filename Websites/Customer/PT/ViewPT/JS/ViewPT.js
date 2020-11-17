@@ -742,8 +742,10 @@ var ViewPT = {
             case 191: // Virtual Soccer Nation
             case 192: // Virtual Soccer World Cup
             case 193: // Virtual Basketball
+            case 231: // Leap Gaming
                 ViewPT.viewPTBasedOnKindOfCustomer(userName, sportId, betTypeId, isLive, 5);
                 break;
+
             case 23:
                 ViewPT.viewPTBasedOnKindOfCustomer(userName, 0, 0, isLive, 23);
                 break;
