@@ -45,14 +45,6 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
 
         public static Dictionary<int, string> Bettypes { get; set; }
 
-        public static byte NumberOfDecimalDigits
-        {
-            get
-            {
-                return (byte)2;
-            }
-        }
-
         /// <summary>
         /// Gets the active bet types.
         /// </summary>
@@ -335,7 +327,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
 
         private string FormatPTValue(object positionTakingValue)
         {
-            return NumberFormat.DecFormat(positionTakingValue, NumberOfDecimalDigits);
+            return string.Format("{0:G29}", decimal.Parse(positionTakingValue.ToString()));
         }
 
         private string CheckIsAutoBox(bool isCheck)

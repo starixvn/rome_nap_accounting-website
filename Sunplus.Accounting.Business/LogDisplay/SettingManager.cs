@@ -641,7 +641,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
                 {
                     sportVals = (from attr in attrs
                                  where GetMixedSportTag(attr.Name.ToString()) && !hidden.Contains<string>(attr.Name.ToString())
-                                 select new TrackingElement() { N = LogFormater.GetResourceName(attr.Name.ToString()), Val = attr.Value, P = attr.Name.ToString() }).ToList();
+                                 select new TrackingElement() { N = LogFormater.GetResourceName(attr.Name.ToString()), Val = FormatDecimalTrailingZeros(attr.Value), P = attr.Name.ToString() }).ToList();
                 }
                 else if (180 <= sport.Id && sport.Id <= 186)
                 {
@@ -980,6 +980,16 @@ namespace Sunplus.Accounting.Business.LogDisplay
         private string getPValueOfCN88(string sporttype, string bettype, string inplay)
         {
             return "cn88_" + sporttype + "_" + bettype + "_" + inplay + "_";
+        }
+
+        private static string FormatDecimalTrailingZeros(string strValue)
+        {
+            decimal value;
+            if (Decimal.TryParse(strValue, out value))
+            {
+                return string.Format("{0:G29}", value);
+            }
+            return strValue;
         }
     }
 }

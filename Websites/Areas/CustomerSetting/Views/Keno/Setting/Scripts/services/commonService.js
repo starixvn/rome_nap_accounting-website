@@ -15,13 +15,13 @@ KenoModule.service('commonService', function () {
     }
 
     this.roundPTValue = function (value) {
-        return Math.round(value * 100) / 100;
+        return Math.round(value * 1000) / 1000;
     }
 
     this.getRangePTValue = function (max, min) {
         var ptValue = {
-            stepValue: 0.01,
-            roundValue: 100
+            stepValue: 0.005,
+            roundValue: 1000
         };
 
         return getRangeValue(max, min, ptValue.stepValue, ptValue.roundValue);

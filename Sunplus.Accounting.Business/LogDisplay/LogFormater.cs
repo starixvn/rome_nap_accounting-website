@@ -53,33 +53,31 @@ namespace Sunplus.Accounting.Business.LogDisplay
                     var formatId = CastAide.AsInt32(logFormater.Value);
                     elm.Val = GetValue(formatId, elm.Val);
                 }
+                else
+                {
+                    elm.Val = FormatDecimalTrailingZeros(elm.Val);
+                }
             }
             return elm;
         }
 
         public static string GetValue(int formatId, string val)
-        {
-            var strVal = string.Empty;
+        {           
             switch (formatId)
             {
                 case 1:
-                    strVal = FormatTransferOption(val);
-                    break;
-
+                    return FormatTransferOption(val);
                 case 2:
-                    strVal = ReplaceIP(val);
-                    break;
-
+                    return ReplaceIP(val);
                 case 3:
-                    strVal = string.IsNullOrWhiteSpace(val) ? val : Convert.ToDouble(val).ToString("N0");
-                    break;
+                    return string.IsNullOrWhiteSpace(val) ? val : FormatDecimalTrailingZeros(val);
                 case 4:
-                    strVal = GetResourceName(val);
-                    break;
+                    return GetResourceName(val);
                 default:
                     break;
-            }
-            return strVal;
+            }          
+              
+            return FormatDecimalTrailingZeros(val);
         }
 
         public static string FormatTransferOption(string str)
@@ -149,6 +147,15 @@ namespace Sunplus.Accounting.Business.LogDisplay
             if (matched)
                 param = param + action.Prefix;
             return param;
+        }
+        private static string FormatDecimalTrailingZeros(string strValue)
+        {
+            decimal value;
+            if (Decimal.TryParse(strValue, out value))
+            {
+                return  string.Format("{0:G29}", value);
+            }
+            return strValue;
         }
     }
 }

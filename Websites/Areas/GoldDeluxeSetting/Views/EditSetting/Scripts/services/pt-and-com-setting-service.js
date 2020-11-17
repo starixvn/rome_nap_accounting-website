@@ -6,8 +6,8 @@
 
         settingViewModel.Setting.PositionTaking = positionTaking;
         settingViewModel.Setting.Commission.Commission = commission;
-        settingViewModel.IsUpdatePTAllMembers = uplinePTOnMember.isApplyNewUplinePositionTaking,
-        settingViewModel.PTOnMember = uplinePTOnMember.newUplinePositionTaking
+        settingViewModel.IsUpdatePTAllMembers = uplinePTOnMember.isApplyNewUplinePositionTaking;
+        settingViewModel.PTOnMember = uplinePTOnMember.newUplinePositionTaking;
 
         $http({
             method: 'POST',
