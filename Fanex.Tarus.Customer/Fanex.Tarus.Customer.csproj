@@ -81,7 +81,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Casino, Version=2.0.4.7, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.Casino.2.0.4.7-Beta3\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.Casino.2.0.4.7\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.4.8, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.2.0.4.8\lib\net461\Fanex.CustomerSetting.Module.Core.dll</HintPath>
@@ -110,8 +110,8 @@
       <HintPath>..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.PTEngine, Version=1.0.5.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.PTEngine.1.0.6.1-Beta1\lib\net40\Fanex.PTEngine.dll</HintPath>
+    <Reference Include="Fanex.PTEngine, Version=1.0.6.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.PTEngine.1.0.6.1\lib\net40\Fanex.PTEngine.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.PTVirtualSports, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.PTVirtualSports.1.0.0.3\lib\net40\Fanex.PTVirtualSports.dll</HintPath>
