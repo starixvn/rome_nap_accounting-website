@@ -7,8 +7,10 @@
 <html>
 <head>
     <link rel="stylesheet" href="@Url.Content("~/js/select2/select2.min.css")" />
+    <link href="@Url.Content("~/App_Themes/Public/Message.css")" rel="stylesheet" type="text/css">
     <link href="@Url.Content("~/js/Calendar2/css/jscal2.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/js/Calendar2/css/border-radius.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/js/DateTimePicker/css/jquery.datetimepicker.min.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/App_Themes/Public/common.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
@@ -40,6 +42,10 @@
         .w180 {
             width: 180px;
         }
+        
+        .word-break {
+            word-break: break-all;
+        }
     </style>
 </head>
 <body>
@@ -60,6 +66,7 @@
                             <li id="tab_6"><a href="javascript:SwitchTab('tab_6', 'tab_content_6');"><span>RefResource</span></a></li>
                             <li id="tab_7"><a href="javascript:SwitchTab('tab_7', 'tab_content_7');"><span>Can See</span></a></li>
                             <li id="tab_8"><a href="javascript:SwitchTab('tab_8', 'tab_content_8');"><span>Reset Winning</span></a></li>
+                            <li id="tab_9"><a href="javascript:SwitchTab('tab_9', 'tab_content_9');"><span>UMConfig</span></a></li>
                         </ul>
                     </div>
                 </div>
@@ -88,6 +95,9 @@
             <div id="tab_content_8" style="display: none;margin-top:38px">
                 @Html.Partial("~/Views/Admin/ManageProductSetting/ResetWinning/_ResetWinning.cshtml")
             </div>
+            <div id="tab_content_9" style="display: none;margin-top:38px">
+                @Html.Partial("~/Views/Admin/ManageProductSetting/UMConfig/_UMConfig.cshtml")
+            </div>
         </div>
     </div>
     @Html.Partial("~/Views/Admin/ManageProductSetting/_UploadSetting.cshtml")
@@ -99,6 +109,8 @@
     @Html.Partial("~/Views/Admin/ManageProductSetting/CSSportBettypeMatrix/_UpdateCSSportBettypeMatrix.cshtml")
     @Html.Partial("~/Views/Admin/ManageProductSetting/ResetWinning/_UpdateDWLList.cshtml")
     @Html.Partial("~/Views/Admin/ManageProductSetting/ResetWinning/_UpdateDWLListExtraPT.cshtml")
+    @Html.Partial("~/Views/Admin/ManageProductSetting/UMConfig/_UpdateUMConfig.cshtml")
+    @Html.Partial("~/Views/Admin/ManageProductSetting/UMConfig/_NewUMConfig.cshtml")
     <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-1.8.2.min.js?v=" + WebSettings.Version)"></script>
     <script type="text/javascript" src="@Url.Content("~/js/select2/select2.min.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-ui-1.9.1.min.js?v=" + WebSettings.Version)"></script>
@@ -109,6 +121,7 @@
     <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/numeral.js?v=" + WebSettings.Version)"></script>
     <script type="text/javascript" src="@Url.Content("~/js/Calendar2/js/jscal2.js?v=" + WebSettings.Version)"></script>
     <script type="text/javascript" src="@Url.Content("~/js/Calendar2/js/lang/en.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/js/DateTimePicker/js/jquery.datetimepicker.full.min.js?v=" + WebSettings.Version)"></script>
     <script type="text/javascript" src="@Url.Content("~/js/MultipleSelect/jquery.multiselect.min.js?v=" + WebSettings.Version)"></script>
     <script type="text/javascript" src="@Url.Content("~/js/jQuery/Number/jquery.formattyping.js?v=" + WebSettings.Version)"></script>
     <script type="text/javascript" src="@Url.Content("~/js/jquery.NAPNumericInput.js?v=" + WebSettings.Version)"></script>
@@ -122,6 +135,7 @@
     <script type="text/javascript" src="@Url.Content("~/Views/Admin/ManageProductSetting/CanSee/Scripts/Index.js?v=" + @WebSettings.Version)"></script>
     <script type="text/javascript" src="@Url.Content("~/Views/Admin/ManageProductSetting/RefResource/Scripts/RefResource.js?v=" + @WebSettings.Version)"></script>
     <script type="text/javascript" src="@Url.Content("~/Views/Admin/ManageProductSetting/CSSportBettypeMatrix/Scripts/CSSportBettypeMatrix.js?v=" + @WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Views/Admin/ManageProductSetting/UMConfig/Scripts/UMConfig.js?v=" + @WebSettings.Version)"></script>
     <script type="text/javascript">
         var hasHostPermission = @Json.Encode(hasHostPermission);
         var rootUrl = "@Url.Content("~")";

@@ -1,0 +1,79 @@
+﻿@using Fanex.Tarus.Admin.ManageProductSetting.ViewModel;
+@model ManageProductSettingViewModel
+<style>
+    .icon-add-um {
+        cursor: pointer;
+        vertical-align: bottom;
+        margin-left: 10px;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+    }
+</style>
+<div id="new-umconfig-popup" style="display: none; min-height: 500px;">
+    <div style="display: flex;">
+        <div class="filterBox" style="border: solid 1px #7C98A4;">
+            <div class="filterContent">
+                <div class="floatLeft w200">
+                    <select id="UMFunctionType" class="setting-edit" title="FunctionType"></select>
+                </div>
+                <div class="floatLeft w200">
+                    <select id="UMProductName" class="setting-edit" title="ProductName">
+                        <option value="" disabled selected>ProductName</option>
+                    </select>
+                </div>
+                <div class="floatLeft w200">
+                    <select id="UMSportName" class="setting-edit" title="SportName">
+                        <option value="" disabled selected>SportName</option>
+                    </select>
+                </div>
+                <div class="floatLeft w200">
+                    <select id="UMSettingType" class="setting-edit" title="SettingType">
+                        <option value="" disabled selected>SettingType</option>
+                    </select>
+                </div>
+                <div class="floatLeft w100">
+                    @Html.DropDownList("UMSite",  Model.UMSites, new { id = "UMSite", title = "Site" })
+                </div>
+                <div class="floatLeft w100">
+                    @Html.DropDownList("UMCurrency", Model.UMCurrencies, new { id = "UMCurrency", title = "Currency" })
+                </div>
+                <div class="clear"></div>
+                <div class="floatLeft w200">
+                    <input class="setting-calendar" id="UMShowTime" readonly type="text" placeholder="ShowTime (GMT+8)" title="ShowTime (GMT+8)" />
+                    <input class="img-date-selector" onclick="return false;" alt="" id="UMShowTime_Trigger" title="Date selector"
+                           width="18" height="17" src="../App_Themes/Images/calendar.gif" type="image" />
+                </div>
+                <div class="floatLeft w200">
+                    <input class="setting-calendar" id="UMBeginTime" readonly type="text" placeholder="BeginTime (GMT+8)" title="BeginTime (GMT+8)" />
+                    <input class="img-date-selector" onclick="return false;" alt="" id="UMBeginTime_Trigger" title="Date selector"
+                           width="18" height="17" src="../App_Themes/Images/calendar.gif" type="image" />
+                </div>
+                <div class="floatLeft w200">
+                    <input class="setting-calendar" id="UMEndTime" readonly type="text" placeholder="EndTime (GMT+8)" title="EndTime (GMT+8)" />
+                    <input class="img-date-selector" onclick="return false;" alt="" id="UMEndTime_Trigger" title="Date selector"
+                           width="18" height="17" src="../App_Themes/Images/calendar.gif" type="image" />
+                </div>
+                <div class="floatLeft" w200>
+                    <label for="UMLockAddingNew">LockAddingNew</label>
+                    <input id="UMLockAddingNew" type="checkbox" />
+
+                </div>
+                <div class="clear"></div>
+                <div class="floatLeft" style="box-sizing: border-box; width: 100%;"><textarea id="UMUsername" rows="2" placeholder="Username" style="width:100%;"></textarea></div>
+            </div>
+        </div>
+        <div style="position: relative;">
+            <img alt="Add" title="Add" class="icon-add-um" src="../App_Themes/Images/icn_add.png" onclick="AddNewUMConfig()" />
+        </div>
+    </div>
+
+    <div style="clear: both"></div>
+    <div id="newUMConfigErrMsg" style="margin-top: 20px; word-break: break-all;"></div>
+    <div id="gridUMNewContainer" class="grid-container">
+        <div id="gridUMNewId" class="freegrid"></div>
+        <div style="text-align: center">
+            <input class="btn" type="button" value="Submit" onclick="SubmitAddNewUMConfig();" />
+        </div>
+    </div>
+</div>
