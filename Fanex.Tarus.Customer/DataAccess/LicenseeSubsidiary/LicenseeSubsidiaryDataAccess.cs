@@ -28,14 +28,14 @@ namespace Fanex.Tarus.Customer.DataAccess.LicenseeSubsidiary
             }
         }
 
-        public Result Create(ICriteria criteria)
+        public SubsidiaryResult Create(ICriteria criteria)
             => ExecuteNonQuery(criteria);
 
-        private static Result ExecuteNonQuery(ICriteria criteria)
+        private static SubsidiaryResult ExecuteNonQuery(ICriteria criteria)
         {
             if (!criteria.IsValid())
             {
-                return new Result(400, LicenseeDcsSettingLabels.BadRequest);
+                return new SubsidiaryResult(400, LicenseeDcsSettingLabels.BadRequest);
             }
 
             using (var db = new ObjectDb(criteria.GetSettingKey()))
@@ -43,9 +43,11 @@ namespace Fanex.Tarus.Customer.DataAccess.LicenseeSubsidiary
                 db.ExecuteNonQuery(criteria.GetSpParams());
                 var outputParams = db.GetOuputParams();
 
-                return new Result(
+                return new SubsidiaryResult(
                     Convert.ToInt32(outputParams["errcode"]),
-                    outputParams["errmsg"].ToString());
+                    outputParams["errmsg"].ToString(),
+                    Convert.ToInt32(outputParams["custid"]),
+                    Convert.ToInt32(outputParams["existedcustid"]));
             }
         }
     }
