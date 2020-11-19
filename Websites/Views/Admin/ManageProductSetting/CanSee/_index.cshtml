@@ -20,7 +20,7 @@
 
         <div class="floatLeft w80"><label for="ddlSBMSiteNameId" class="">SiteName</label></div>
         <div class="floatLeft w250">
-            @Html.DropDownList("ddlCanSeeSiteNameId", Model.Sites, new { id = "ddlCanSeeSiteNameId" })
+            @Html.DropDownList("ddlCanSeeSiteNameId", Model.Sites, new { id = "ddlCanSeeSiteNameId", @class = "w250" })
         </div>
 
         <div class="floatLeft"><input type="button" value="Search" class="btn" onclick="SearchCanSee()" /></div>

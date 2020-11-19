@@ -8,7 +8,7 @@
             BetType: $('#txtBetType').val(),
             BetTypeName: $('#txtBetTypeName').val(),
             Currencies: $('#ddlCanSeeCurrencyId').multiSelect("getCheckedItems").join(),
-            SiteIds: $('#ddlCanSeeSiteNameId').multiSelect("getCheckedItems").join()
+            SiteID: $('#ddlCanSeeSiteNameId').val()
         },
         success: function (data) {
             RenderCanSeeTable(data);
@@ -289,6 +289,6 @@ function RenderMultiSelect(id) {
 
 $(document).ready(function () {
     $("#ddlCanSeeSportTypeId").select2();
+    $("#ddlCanSeeSiteNameId").select2();
     RenderMultiSelect('ddlCanSeeCurrencyId');
-    RenderMultiSelect('ddlCanSeeSiteNameId');
 });
