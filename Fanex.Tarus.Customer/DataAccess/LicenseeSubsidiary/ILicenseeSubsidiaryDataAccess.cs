@@ -8,6 +8,6 @@ namespace Fanex.Tarus.Customer.DataAccess.LicenseeSubsidiary
     {
         IEnumerable<string> Generate(ICriteria criteria);
 
-        Result Create(ICriteria criteria);
+        SubsidiaryResult Create(ICriteria criteria);
     }
 }

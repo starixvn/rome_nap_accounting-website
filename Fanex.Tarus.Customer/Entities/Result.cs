@@ -10,11 +10,6 @@
 
 namespace Fanex.Tarus.Customer.Entities
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
@@ -43,5 +38,24 @@ namespace Fanex.Tarus.Customer.Entities
     public class ResultCasinoComm : Result
     {
         public string valueComm { get; set; }
+    }
+
+    public class SubsidiaryResult : Result
+    {
+        public SubsidiaryResult() : base() { }
+
+        public SubsidiaryResult(int errCode, string errMsg) : base(errCode, errMsg) { }
+
+        public SubsidiaryResult(int errCode, string errMsg, int custId, int existedCustId) : base(errCode, errMsg)
+        {
+            CustId = custId;
+            ExistedCustId = existedCustId;
+        }
+
+        public int CustId { get; }
+
+        public int ExistedCustId { get; }
+
+        public bool IsSuccess => ErrorCode == 0;
     }
 }
