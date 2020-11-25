@@ -6,6 +6,7 @@ using Fanex.Tarus.Customer.Entities;
 using IBCUtils;
 using Sunplus.Accounting.Business;
 using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Extensions;
 
 namespace Fanex.Tarus.Customer.Business.LicenseeSubsidiary
@@ -39,7 +40,7 @@ namespace Fanex.Tarus.Customer.Business.LicenseeSubsidiary
         {
             try
             {
-                var customerInfo = CasinoManager.GetCustInfoIBC(existedCustId);
+                var customerInfo = CasinoManager.GetCustInfoIBC(existedCustId, WebSettings.SettingStatus);
                 if (!customerInfo.CasinoSync)
                 {
                     return;
