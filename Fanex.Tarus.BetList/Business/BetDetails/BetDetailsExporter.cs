@@ -147,7 +147,7 @@
                         .AddTrans(ticket, ticketHelper)
                         .AddChoice(ticket, ticketHelper, ticketData)
                         .AddOdds(ticket, ticketData, funcGetOddsTypeName)
-                        .AddStake(ticket)
+                        .AddStake(ticket, ticketHelper)
                         .AddWinLoss(ticket)
                         .AddStatus(ticket, ticketHelper, ticketData, AppSession.ViewIPVN || WebSettings.IPVNReplace == "1")
                         .AddPTComm(ticket, ticketData, RoleIdConstants.Super)
