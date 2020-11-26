@@ -1006,7 +1006,7 @@ function getHappy5Param(matchid) {
 function getLeapGamingParam(transDesc) {
     return {
         url: "Report/ViewLeapGamingResult.aspx",
-        title: "Virtual Sports 3",
+        title: "Result",
         jsonParam: { TransDesc: transDesc },
         width: 800,
         height: 300

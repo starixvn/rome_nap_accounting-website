@@ -26,14 +26,9 @@ namespace Fanex.Tarus.BetList.Business.Results
         {
             return new ResultSetting
             {
-                SportType = SportType.GoldDeluxe,
-                IsOutright = false,
-                IsParlayPopUp = false,
+                SportType = SportType.LeapGamingVirtualSports,
                 IsPopUp = true,
-                LanguageCode = "en-US",
-                VisibleMatchCodeIDColumn = false,
-                VisiblePopUpTitle = true,
-                HighlightWinnerTeam = true
+                LanguageCode = "en-US"
             };
         }
     }
