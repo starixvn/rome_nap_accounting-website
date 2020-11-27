@@ -62,7 +62,7 @@
             return detail;
         }
 
-        private TrackingNode ParseGeneralInfo(XElement element)
+        protected virtual TrackingNode ParseGeneralInfo(XElement element)
         {
             var trackingNode = new TrackingNode();
             trackingNode.Vals = new List<TrackingElement>();

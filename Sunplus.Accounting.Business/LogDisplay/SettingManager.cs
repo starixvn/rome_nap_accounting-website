@@ -33,13 +33,20 @@ namespace Sunplus.Accounting.Business.LogDisplay
 
         private readonly NewLicenseeLogFormatter _newLicenseeLogFormatter;
 
+        private readonly NewCurrencyForLicenseeLogFormatter _newCurrencyForLicenseeLogFormatter;
+
         private int[] listBetsettingActionIDLicensee = new int[] { 2012, 2013, 2019, 2036};
 
-        public SettingManager(ILogDisplayDAO logDAO, CN88LogFormatter cn88LogFormatter, NewLicenseeLogFormatter newLicenseeLogFormatter)
+        public SettingManager(
+            ILogDisplayDAO logDAO, 
+            CN88LogFormatter cn88LogFormatter, 
+            NewLicenseeLogFormatter newLicenseeLogFormatter,
+            NewCurrencyForLicenseeLogFormatter newCurrencyForLicenseeLogFormatter)
         {
             _logDAO = logDAO;
             _cn88LogFormatter = cn88LogFormatter ?? new CN88LogFormatter();
             _newLicenseeLogFormatter = newLicenseeLogFormatter ?? new NewLicenseeLogFormatter();
+            _newCurrencyForLicenseeLogFormatter = newCurrencyForLicenseeLogFormatter ?? new NewCurrencyForLicenseeLogFormatter();
         }
 
         public Sunplus.Accounting.Entities.LogDisplay.ResultLog GetLogDisplay(LogParam param)
@@ -371,6 +378,11 @@ namespace Sunplus.Accounting.Business.LogDisplay
             if (_newLicenseeLogFormatter.IsNewLicenseeActionId(actionId))
             {
                 return _newLicenseeLogFormatter.GenerateDetail(trackingValue, spName, actionName);
+            }
+
+            if (_newCurrencyForLicenseeLogFormatter.IsNewCurrencyForLicenseeActionId(actionId))
+            {
+                return _newCurrencyForLicenseeLogFormatter.GenerateDetail(trackingValue, spName, actionName);
             }
 
             return _ParseTrackingValue(trackingValue, actionId, actionName, spName);
