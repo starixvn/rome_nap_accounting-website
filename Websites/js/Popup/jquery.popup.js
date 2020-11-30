@@ -26,6 +26,7 @@ function popup() {
     this.height = 0;
     this.title = "";
     this.titleColor = "black";
+    this.proDomain = "accounting.oneops.net";
     this.backgroundColor = "#E8F4FE";
 };
 
@@ -157,7 +158,7 @@ popup.prototype.headPartial1 = function (p) {
     var width_head_right = 23;
     var width_head_center = this.width - (width_head_left + width_head_right);
     jQuery(p).append
-    ("\
+        ("\
         <div ug_head_left='true' style='float:left; background-image:url(\"" + this.imgPath + "L_top.png" + "\"); width:" + width_head_left + "px; height:" + height_head + "px;'>\
         </div>\
         <div ug_head_center='true' style='cursor:move;position:relative;float:left; background-image:url(\"" + this.imgPath + "C_top.png" + "\"); width:" + width_head_center + "px; height:" + height_head + "px'>\
@@ -184,33 +185,33 @@ popup.prototype.headPartial1 = function (p) {
         if (e.pageX >= _moveTarget.mouseLeft) {
             if (e.pageY >= _moveTarget.mouseTop) {
                 jQuery(p).offset(
-                {
-                    left: jQuery(p).offset().left + (e.pageX - _moveTarget.mouseLeft),
-                    top: jQuery(p).offset().top + (e.pageY - _moveTarget.mouseTop)
-                });
+                    {
+                        left: jQuery(p).offset().left + (e.pageX - _moveTarget.mouseLeft),
+                        top: jQuery(p).offset().top + (e.pageY - _moveTarget.mouseTop)
+                    });
             }
             else {
                 jQuery(p).offset(
-                {
-                    left: jQuery(p).offset().left + (e.pageX - _moveTarget.mouseLeft),
-                    top: jQuery(p).offset().top - (_moveTarget.mouseTop - e.pageY)
-                });
+                    {
+                        left: jQuery(p).offset().left + (e.pageX - _moveTarget.mouseLeft),
+                        top: jQuery(p).offset().top - (_moveTarget.mouseTop - e.pageY)
+                    });
             }
         }
         else {
             if (e.pageY >= _moveTarget.mouseTop) {
                 jQuery(p).offset(
-                {
-                    left: jQuery(p).offset().left - (_moveTarget.mouseLeft - e.pageX),
-                    top: jQuery(p).offset().top + (e.pageY - _moveTarget.mouseTop)
-                });
+                    {
+                        left: jQuery(p).offset().left - (_moveTarget.mouseLeft - e.pageX),
+                        top: jQuery(p).offset().top + (e.pageY - _moveTarget.mouseTop)
+                    });
             }
             else {
                 jQuery(p).offset(
-                {
-                    left: jQuery(p).offset().left - (_moveTarget.mouseLeft - e.pageX),
-                    top: jQuery(p).offset().top - (_moveTarget.mouseTop - e.pageY)
-                });
+                    {
+                        left: jQuery(p).offset().left - (_moveTarget.mouseLeft - e.pageX),
+                        top: jQuery(p).offset().top - (_moveTarget.mouseTop - e.pageY)
+                    });
             }
         }
         _moveTarget.mouseLeft = e.pageX;
@@ -222,8 +223,8 @@ popup.prototype.headPartial1 = function (p) {
     }, this);
 
     jQuery(ug_head_center).mousedown(_moveTarget._onmousedown)
-    .mouseup(_moveTarget._onmouseup)
-    .mousemove(_moveTarget._onmousemove);
+        .mouseup(_moveTarget._onmouseup)
+        .mousemove(_moveTarget._onmousemove);
 
     jQuery(document).mousemove(_moveTarget._onmousemove).mouseup(_moveTarget._onmouseup);
 };
@@ -236,12 +237,12 @@ popup.prototype.createCloseButton = function (p) {
     jQuery(ug_close_img).mouseover(jQuery.proxy(function () {
         jQuery(this.divPopup).find("div[ug_close_img]").css("background-position", "0px 18px");
     }, this))
-    .mouseout(jQuery.proxy(function () {
-        jQuery(this.divPopup).find("div[ug_close_img]").css("background-position", "0px 0px");
-    }, this))
-    .click(jQuery.proxy(function () {
-        this.closePopup();
-    }, this));
+        .mouseout(jQuery.proxy(function () {
+            jQuery(this.divPopup).find("div[ug_close_img]").css("background-position", "0px 0px");
+        }, this))
+        .click(jQuery.proxy(function () {
+            this.closePopup();
+        }, this));
 };
 
 popup.prototype.body = function (p) {
@@ -252,7 +253,7 @@ popup.prototype.body = function (p) {
     var width_mid_right = 23;
     var width_mid_center = this.width - (width_mid_left + width_mid_right);
     jQuery(p).append
-    ("\
+        ("\
         <div ug_mid_left='true' style='float:left; background-image:url(\"" + this.imgPath + "mid_L.png" + "\"); width:" + width_mid_left + "px; height:" + height_mid + "px;'>\
         </div>\
         <div ug_mid_center='true' style='float:left; background-color:" + this.backgroundColor + "; width:" + width_mid_center + "px; height:" + height_mid + "px'>\
@@ -278,7 +279,7 @@ popup.prototype.bottom = function (p) {
     var width_bottom_right = 22;
     var width_bottom_center = this.width - (width_bottom_left + width_bottom_right);
     jQuery(p).append
-    ("\
+        ("\
         <div ug_bottom_left='true' style='float:left; background-image:url(\"" + this.imgPath + "L_bottom.png" + "\"); width:" + width_bottom_left + "px; height:" + height_bottom + "px;'>\
         </div>\
         <div ug_bottom_center='true' style='float:left; background-image:url(\"" + this.imgPath + "C_bottom.png" + "\"); width:" + width_bottom_center + "px; height:" + height_bottom + "px'>\
@@ -303,13 +304,12 @@ popup.prototype.addButtons = function (p) {
 
 popup.prototype.getAppPath = function () {
     var baseURL = location.origin;
-
-    if (baseURL.indexOf('localhost') >= 0) {
+    if (baseURL.indexOf('localhost') >= 0 || baseURL.indexOf(this.proDomain) >= 0) {
         return baseURL + "/";
     } else {
         return baseURL + "/" + location.pathname.split('/')[1].toString() + "/";
     }
-}
+};
 
 //------------------------------------------------------------------------------------------------------------------------------------
 
@@ -378,13 +378,13 @@ popup.prototype.createCloseButton2 = function (p) {
     jQuery(ug_close_img).mouseover(jQuery.proxy(function () {
         jQuery(this.divPopup).find("div[ug_close_img]").css("background-position", "0px 18px");
     }, this))
-    .mouseout(jQuery.proxy(function () {
-        jQuery(this.divPopup).find("div[ug_close_img]").css("background-position", "0px 0px");
-    }, this))
-    .click(jQuery.proxy(function () {
-        jQuery(this.divPopup).hide();
-        this.onclose();
-    }, this));
+        .mouseout(jQuery.proxy(function () {
+            jQuery(this.divPopup).find("div[ug_close_img]").css("background-position", "0px 0px");
+        }, this))
+        .click(jQuery.proxy(function () {
+            jQuery(this.divPopup).hide();
+            this.onclose();
+        }, this));
 };
 
 jQuery.fn.initPopup = function (options) {
