@@ -644,7 +644,17 @@ function showWMBetDetails (refno, winlossDate, custId, transType) {
 
     openResultsPopUp(params);
 }
+function showGDGBetDetails(refno, winlossDate, custId, transType) {
+    var params = {
+        url: "AGCasinoBetList/BetDetails",
+        title: "GDG - Detailed Bet list - " + winlossDate.split(" ")[0],
+        jsonParam: { Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 236, PageSize: 500 },
+        width: 1040,
+        height: 600
+    };
 
+    openResultsPopUp(params);
+}
 function showSabaClubDetails(refno, winlossDate, custId, transType) {
     var rngCasinoParam = {
         url: "RNGCasinoBetList/BetDetails",
@@ -895,6 +905,9 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
         case 232: // PG Soft
             return getPGSoftCasinoParam(transdesc, betcheck, matchcode);
 
+        case 236: // GDG
+            return getGDGParam(transdesc, betcheck, matchcode);
+
         case 241: // BBIN
             return getBBinParam(transdesc, matchcode, bettype);
 
@@ -902,7 +915,7 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
         case 242: // GTCasino.
         case 243: // SexyGaming.
         case 244: // SaGaming.
-        case 233: // WM             
+        case 233: // WM
             return getLiveCasinoParam(transdesc, matchcode, bettype, sporttype);
 
         case 212: // Macau Games.
@@ -1089,6 +1102,17 @@ function getPGSoftCasinoParam(gameId, custId, gameCode) {
         height: 800
     };
 }
+
+function getGDGParam(transId3rd, custId, gameId3rd) {
+    return {
+        url: "ThirdParty/Result",
+        title: "GDG Result",
+        jsonParam: { custId: custId, gameId: transId3rd, gameCode: gameId3rd, productId: 59 },
+        width: 850,
+        height: 800
+    };
+}
+
 
 function getCardClubParam(custId, gameTypeId, sportType, transId3rd) {
     var sportName = "Arcadia Gaming";

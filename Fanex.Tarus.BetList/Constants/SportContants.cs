@@ -80,5 +80,6 @@
         public const int PGSoft = 232;
         public const int WM = 233;
         public const int Joker = 234;
+        public const int GDG = 236;
     }
 }
