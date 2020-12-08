@@ -1,14 +1,23 @@
 ﻿function SearchCanSee() {
     parent.BlockUI();
+
+    var sportTypes = $('#ddlCanSeeSportTypeId').multiSelect("getCheckedItems");
+    var sites = $('#ddlCanSeeSiteNameId').multiSelect("getCheckedItems");
+    if (sportTypes.length > 1 && sites.length > 1) {
+        alert("You can only select multiple options on SportType dropdownlist or on SiteName dropdownlist at the same time.");
+        parent.jQuery.unblockUI();
+        return;
+    }
+
     $.ajax({
         url: 'SelectCanSee',
         type: 'GET',
         data: {
-            SportType: $('#ddlCanSeeSportTypeId').val(),
+            SportTypes: sportTypes.join(),
             BetType: $('#txtBetType').val(),
             BetTypeName: $('#txtBetTypeName').val(),
             Currencies: $('#ddlCanSeeCurrencyId').multiSelect("getCheckedItems").join(),
-            SiteID: $('#ddlCanSeeSiteNameId').val()
+            SiteIDs: sites.join()
         },
         success: function (data) {
             RenderCanSeeTable(data);
@@ -167,7 +176,7 @@ function UpdateCanSee_LaunchedLevel() {
             });
         }
     }
-    
+
 }
 
 function UpdateCanSee_IsTest() {
@@ -213,7 +222,7 @@ function UpdateCanSee_IsTest() {
                 }
             });
         }
-    }    
+    }
 }
 
 function DeleteCanSee() {
@@ -257,15 +266,15 @@ function DeleteCanSee() {
     }
 }
 
-function RenderMultiSelect(id) {
+function RenderMultiSelect(id, checkAll = true) {
     var multiselectData = [];
-    $('#' + id + ' > option').each(function () {
+    $('#' + id + ' > option').each(function (index, _) {
         var $this = $(this);
         multiselectData.push({
             Id: id + $this.attr('value'),
             Value: $this.attr('value'),
             Text: $this.html(),
-            Checked: true,
+            Checked: checkAll || index === 0,
             Enable: true,
             CssClass: "",
             Items: []
@@ -273,12 +282,13 @@ function RenderMultiSelect(id) {
     });
 
 
+
     $('#' + id).multiSelect({
         minWidth: 255,
         maxHeight: 450,
         shadow: true,
         showHeader: true,
-        isCheckAll: true,
+        isCheckAll: checkAll,
         showFooter: false,
         showFilter: true,
         checkAllText: "All",
@@ -288,7 +298,7 @@ function RenderMultiSelect(id) {
 }
 
 $(document).ready(function () {
-    $("#ddlCanSeeSportTypeId").select2();
-    $("#ddlCanSeeSiteNameId").select2();
+    RenderMultiSelect('ddlCanSeeSportTypeId', false);
+    RenderMultiSelect('ddlCanSeeSiteNameId');
     RenderMultiSelect('ddlCanSeeCurrencyId');
 });
