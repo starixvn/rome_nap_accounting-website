@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using Fanex.Tarus.Customer.Entities.LicenseeDcsSetting;
 
@@ -6,6 +7,8 @@ namespace Fanex.Tarus.Customer.ViewModels.LicenseeDcsSetting
 {
     public sealed class PTViewModel : BaseSettingViewModel
     {
+        private readonly int[] ListporductSupportFourDecimal = new int[] { 16 };
+
         public PTViewModel()
         {
             SuperPT = new List<PTEntity>();
@@ -19,7 +22,9 @@ namespace Fanex.Tarus.Customer.ViewModels.LicenseeDcsSetting
         {
             string value;
 
-            for (decimal i = 1; i >= 0; i -= 0.005M)
+            decimal step = ListporductSupportFourDecimal.Contains(ProductId) ? 0.0005M : 0.005M;
+
+            for (decimal i = 1; i >= 0; i -= step)
             {
                 value = i.ToString("G4");
 
