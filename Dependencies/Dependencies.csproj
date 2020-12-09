@@ -324,8 +324,8 @@
       <HintPath>..\packages\Fanex.Module.NG2.NAP.1.0.1.5\lib\net40\Fanex.Module.NG2.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Module.RNGCasino, Version=2.0.0.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Module.RNGCasino.2.0.0.9\lib\net461\Fanex.Module.RNGCasino.dll</HintPath>
+    <Reference Include="Fanex.Module.RNGCasino, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Module.RNGCasino.2.0.1-GOF-01\lib\net461\Fanex.Module.RNGCasino.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Module.Statement, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Module.Statement.1.0.0.7\lib\net40\Fanex.Module.Statement.dll</HintPath>
@@ -499,8 +499,8 @@
     <Reference Include="Fanex.Tarus.Web.Models, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Web.Models.1.0.0.7\lib\net40\Fanex.Tarus.Web.Models.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Voidbridge.BetDetail, Version=2.0.0.8, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Voidbridge.BetDetail.2.0.0.8\lib\net461\Fanex.Voidbridge.BetDetail.dll</HintPath>
+    <Reference Include="Fanex.Voidbridge.BetDetail, Version=2.0.0.9, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Voidbridge.BetDetail.2.0.0.9-GOF-01\lib\net461\Fanex.Voidbridge.BetDetail.dll</HintPath>
     </Reference>
     <Reference Include="FanexOneyed.RobotTrap, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\FanexOneyed.RobotTrap.1.0.0.0\lib\net40\FanexOneyed.RobotTrap.dll</HintPath>
