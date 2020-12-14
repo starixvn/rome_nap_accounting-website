@@ -30,9 +30,9 @@ namespace Fanex.Tarus.BetList.Extensions
         /// <param name="betDetail">The bet detail.</param>
         /// <param name="builder">The builder.</param>
         /// <returns>The stake.</returns>
-        public static string BuildStake(this TicketDetail betDetail, ref BetListHTMLBuilder builder)
+        public static string BuildStake(this TicketDetail betDetail, ref BetListHTMLBuilder builder, ITicketHelper ticketHelper)
         {
-            string stakeBuilder = builder.BuildStake(betDetail.Ticket);
+            string stakeBuilder = builder.BuildStake(betDetail.Ticket, ticketHelper);
 
             if (betDetail.IsShowOtExRate)
             {

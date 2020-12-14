@@ -209,7 +209,7 @@
 
                         builder.AddChoice(betdetail.Ticket, ticketHelper, outputLiveCasino)
                                .AddOdds(betdetail.Ticket, outputLiveCasino, funcGetOddsTypeName)
-                               .AddStake(betdetail.Ticket);
+                               .AddStake(betdetail.Ticket, ticketHelper);
 
                         builder.AddWinLoss(betdetail.Ticket);
 

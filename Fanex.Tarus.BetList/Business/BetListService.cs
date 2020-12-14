@@ -231,7 +231,7 @@ namespace Fanex.Tarus.BetList.Business
 
                         betDetail.TransDateHtml = builder.BuildTrans(betDetail.Ticket);
                         betDetail.ChoiceHtml = builder.BuildChoice(betDetail.Ticket, ticketHelper, outputLiveCasino, false);
-                        betDetail.StakeHtml = BetListExtension.BuildStake(betDetail, ref builder);
+                        betDetail.StakeHtml = BetListExtension.BuildStake(betDetail, ref builder, ticketHelper);
                         betDetail.OddHtml = builder.BuildOdds(betDetail.Ticket, outputLiveCasino, funcGetOddsTypeName);
                         betDetail.StatusHtml = betListHelper.BuildStatus(betDetail.Ticket, ticketHelper, outputLiveCasino, factory, builder);
                     }
@@ -469,7 +469,7 @@ namespace Fanex.Tarus.BetList.Business
 
                     betDetail.TransDateHtml = builder.BuildTrans(betDetail.Ticket);
                     betDetail.ChoiceHtml = builder.BuildChoice(betDetail.Ticket, ticketHelper, ticketData, false);
-                    betDetail.StakeHtml = BetListExtension.BuildStake(betDetail, ref builder);
+                    betDetail.StakeHtml = BetListExtension.BuildStake(betDetail, ref builder, ticketHelper);
                     betDetail.OddHtml = builder.BuildOdds(betDetail.Ticket, ticketData, funcGetOddsTypeName);
                     betDetail.StatusHtml = betlistHelper.BuildStatus(betDetail.Ticket, ticketHelper, ticketData, factory, builder);
 
@@ -614,7 +614,7 @@ namespace Fanex.Tarus.BetList.Business
 
                         betDetail.TransDateHtml = builder.BuildTrans(betDetail.Ticket);
                         betDetail.ChoiceHtml = builder.BuildChoice(betDetail.Ticket, ticketHelper, outputLiveCasino, false);
-                        betDetail.StakeHtml = BetListExtension.BuildStake(betDetail, ref builder);
+                        betDetail.StakeHtml = BetListExtension.BuildStake(betDetail, ref builder, ticketHelper);
                         betDetail.OddHtml = builder.BuildOdds(betDetail.Ticket, outputLiveCasino, funcGetOddsTypeName);
                         betDetail.StatusHtml = betListHelper.BuildStatus(betDetail.Ticket, ticketHelper, outputLiveCasino, factory, builder);
                     }
@@ -668,7 +668,7 @@ namespace Fanex.Tarus.BetList.Business
 
                         betDetail.TransDateHtml = builder.BuildTrans(betDetail.Ticket);
                         betDetail.ChoiceHtml = builder.BuildChoice(betDetail.Ticket, ticketHelper, outputLiveCasino, false);
-                        betDetail.StakeHtml = BetListExtension.BuildStake(betDetail, ref builder);
+                        betDetail.StakeHtml = BetListExtension.BuildStake(betDetail, ref builder, ticketHelper);
                         betDetail.OddHtml = builder.BuildOdds(betDetail.Ticket, outputLiveCasino, funcGetOddsTypeName);
                         betDetail.StatusHtml = betListHelper.BuildStatus(betDetail.Ticket, ticketHelper, outputLiveCasino, factory, builder);
                     }
@@ -1023,7 +1023,7 @@ namespace Fanex.Tarus.BetList.Business
 
                         betDetail.TransDateHtml = builder.BuildTrans(betDetail.Ticket);
                         betDetail.ChoiceHtml = builder.BuildChoice(betDetail.Ticket, ticketHelper, outputLiveCasino, false);
-                        betDetail.StakeHtml = BetListExtension.BuildStake(betDetail, ref builder);
+                        betDetail.StakeHtml = BetListExtension.BuildStake(betDetail, ref builder, ticketHelper);
                         betDetail.OddHtml = builder.BuildOdds(betDetail.Ticket, outputLiveCasino, funcGetOddsTypeName);
                         betDetail.StatusHtml = betlistHelper.BuildStatus(betDetail.Ticket, ticketHelper, outputLiveCasino, factory, builder);
                     }
@@ -1226,7 +1226,7 @@ namespace Fanex.Tarus.BetList.Business
 
                         betDetail.TransDateHtml = builder.BuildTrans(betDetail.Ticket);
                         betDetail.ChoiceHtml = builder.BuildChoice(betDetail.Ticket, ticketHelper, outputLiveCasino, false);
-                        betDetail.StakeHtml = BetListExtension.BuildStake(betDetail, ref builder);
+                        betDetail.StakeHtml = BetListExtension.BuildStake(betDetail, ref builder, ticketHelper);
                         betDetail.OddHtml = builder.BuildOdds(betDetail.Ticket, outputLiveCasino, funcGetOddsTypeName);
                         betDetail.StatusHtml = betListHelper.BuildStatus(betDetail.Ticket, ticketHelper, outputLiveCasino, factory, builder);
                     }

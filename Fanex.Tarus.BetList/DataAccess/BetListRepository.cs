@@ -333,7 +333,8 @@
                                 BetTypeId = 29,
                                 Handicap1 = Converter.ToDecimal(r["hdp1"]),
                                 Handicap2 = Converter.ToDecimal(r["hdp2"]),
-                                BetCheck = Converter.ToString2(r["BetCheck"])                                
+                                BetCheck = Converter.ToString2(r["BetCheck"]),
+                                ExtraInfo = Converter.ToString2(r["ExtraInfo"])
                             },
                             ChoiceHtml = string.Empty,
                             OddHtml = string.Empty,

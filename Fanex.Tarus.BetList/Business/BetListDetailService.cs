@@ -37,7 +37,7 @@
                 ticketDetail.TransDateHtml = builder.BuildTrans(ticketDetail.Ticket);
                 ticketDetail.ChoiceHtml = builder.BuildChoice(ticket, ticketHelper, null, false);
                 ticketDetail.OddHtml = builder.BuildOdds(ticket, null, ticketHelper.GetOddsTypeNameById);
-                ticketDetail.StakeHtml = BetListExtension.BuildStake(ticketDetail, ref builder);
+                ticketDetail.StakeHtml = BetListExtension.BuildStake(ticketDetail, ref builder, ticketHelper);
 
                 var statusBuilder = builder.CreateStatusBuilder(ticket.BetTypeId);
                 var statusBlock = statusBuilder.Render(ticket, ticketHelper, null, true);
@@ -95,7 +95,7 @@
                         OddHtml = builder.BuildOdds(ticket, null, ticketHelper.GetOddsTypeNameById)
                     };
 
-                    ticketDetail.StakeHtml = BetListExtension.BuildStake(ticketDetail, ref builder);
+                    ticketDetail.StakeHtml = BetListExtension.BuildStake(ticketDetail, ref builder, ticketHelper);
                     ticketDetail.StatusHtml = betListHelper.BuildStatus(ticketDetail.Ticket, ticketHelper, new List<ITicketData>(), factory, builder);
 
                     ticketDetails.Add(ticketDetail);
