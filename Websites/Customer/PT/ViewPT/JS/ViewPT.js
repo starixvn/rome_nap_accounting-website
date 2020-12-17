@@ -728,6 +728,7 @@ var ViewPT = {
             case 224: //RNG War
             case 225: // ION
             case 233: // WM
+            case 236: // GDG
                 ViewPT.viewPTBasedOnKindOfCustomer(userName, sportId, betTypeId, isLive);
                 break;
             case 180: // Virtual Soccer

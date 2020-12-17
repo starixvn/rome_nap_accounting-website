@@ -275,6 +275,8 @@
                 return SportContants.WM;
             if (6401 <= betTypeId && betTypeId <= 6700)
                 return SportContants.Joker;
+            if (5701 <= betTypeId && betTypeId <= 5799)
+                return SportContants.GDG;
 
             return 0;
         }
