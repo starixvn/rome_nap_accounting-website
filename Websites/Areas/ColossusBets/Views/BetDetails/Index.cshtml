@@ -52,15 +52,15 @@
                 "<td class='win-loss'>" + BuilderExtension.BuildColossusBetsWinLoss(detailTicket.Winlost) + "</td>" +
                 "<td class='c status'>" + BuilderExtension.BuildColossusBetsDetailStatus(detailTicket.Status) + "</td>" +
                 "<td class='r'><div id='comm_" + detailTicket.TransId + "' class='width60 table-cell'>" +
-                    "<span>" + (detailTicket.CommStatus == "1" ? "2x" : string.Empty) + " " + BetListHelper.PercentFormat20(detailTicket.SuperDiscount) + "</span>" +
+                    "<span>" + (detailTicket.CommStatus == "1" ? "2x" : string.Empty) + " " + BetListHelper.PercentFormat(detailTicket.SuperDiscount) + "</span>" +
                     (statusTemp != "running" ? "<div class=\"margin-top-5\">" + detailTicket.SuperComm.Format(2) + "</div>" : "") +
                 "</div></td>" +
                 "<td class='r'><div class='width60 table-cell'>" +
-                    "<span>" + (detailTicket.CommStatus == "1" ? "2x" : string.Empty) + " " + BetListHelper.PercentFormat20(detailTicket.MasterDiscount) + "</span>" +
+                    "<span>" + (detailTicket.CommStatus == "1" ? "2x" : string.Empty) + " " + BetListHelper.PercentFormat(detailTicket.MasterDiscount) + "</span>" +
                     (statusTemp != "running" ? "<div class=\"margin-top-5\">" + detailTicket.AgentComm.Format(2) + "</div>" : "") +
                 "</div></td>" +
                 "<td class='r'><div class='width60 table-cell'>" +
-                   "<span>" + (detailTicket.CommStatus == "1" ? "2x" : string.Empty) + " " + BetListHelper.PercentFormat20(detailTicket.AgentDiscount) + "</span>" +
+                   "<span>" + (detailTicket.CommStatus == "1" ? "2x" : string.Empty) + " " + BetListHelper.PercentFormat(detailTicket.AgentDiscount) + "</span>" +
                     (statusTemp != "running" ? "<div class=\"margin-top-5\">" + detailTicket.Comm.Format(2) + "</div>" : "") +
                 "</div></td>" +
                 "<td class='l note'>" +
