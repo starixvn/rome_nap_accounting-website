@@ -902,6 +902,9 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
         case 225: // ION Casino
             return getIONCasinoParam(matchcode, betcheck);
 
+        case 231: // Leap Gaming
+            return getLeapGamingParam(transdesc);
+
         case 232: // PG Soft
             return getPGSoftCasinoParam(transdesc, betcheck, matchcode);
 
@@ -995,6 +998,16 @@ function getHappy5Param(matchid) {
         url: "Report/ViewHappy5Result.aspx",
         title: "Happy 5",
         jsonParam: { matchid: matchid },
+        width: 800,
+        height: 300
+    };
+}
+
+function getLeapGamingParam(transDesc) {
+    return {
+        url: "Report/ViewLeapGamingResult.aspx",
+        title: "Result",
+        jsonParam: { TransDesc: transDesc },
         width: 800,
         height: 300
     };
