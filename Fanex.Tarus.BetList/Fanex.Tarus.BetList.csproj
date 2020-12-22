@@ -218,6 +218,9 @@
       <HintPath>..\packages\Fanex.Result.Core.Happy5.1.0.0.0\lib\net40\Fanex.Result.Core.Happy5.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.Result.Core.Happy5LinkedGames, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Result.Core.Happy5LinkedGames.1.0.0-beta-03\lib\Fanex.Result.Core.Happy5LinkedGames.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.Result.Core.Joker, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.Joker.1.0.0.0\lib\Fanex.Result.Core.Joker.dll</HintPath>
     </Reference>
