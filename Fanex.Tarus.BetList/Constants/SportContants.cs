@@ -82,5 +82,6 @@
         public const int BigGame = 239;
         public const int Joker = 234;
         public const int GDG = 236;
+        public const int MaxGame = 237;
     }
 }
