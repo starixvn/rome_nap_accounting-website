@@ -49,7 +49,7 @@ public partial class Others_Menu : System.Web.UI.Page
         }
 
         Thread.Sleep(2000);
-        DbResult db = CustomerManager.CheckAllowedCurrencyAll(CastAide.AsInt32(custID));
+        DbResult db = CustomerManager.CheckAllowedCurrencyAll(CastAide.AsInt32(custID), WebSettings.SettingStatus);
         AllowedCS = CastAide.AsBoolean(db.Outputs["allowedcs"]);
 
         int roleid = CastAide.AsInt32(queryStringParams[2].Split('=')[1]);

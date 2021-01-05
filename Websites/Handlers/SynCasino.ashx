@@ -12,6 +12,7 @@ using System.Data;
 using BLL;
 using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Entities.Casino;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Helper;
@@ -89,7 +90,7 @@ public class UpdateCSSetting : BaseHandler
             return;
         }
 
-        CSCustomerDetail custInfo = Sunplus.Accounting.Business.CasinoManager.GetCustInfoIBC(custid);
+        CSCustomerDetail custInfo = Sunplus.Accounting.Business.CasinoManager.GetCustInfoIBC(custid, WebSettings.SettingStatus);
 
         string roleid;
         HttpRequest request = null;
@@ -187,17 +188,17 @@ public class UpdateCSSetting : BaseHandler
                 Sunplus.Accounting.DataAccess.APIClient.IBCLibProvider pCustInfo = new Sunplus.Accounting.DataAccess.APIClient.IBCLibProvider();
                 if (custInfo.RoleId.ToString() == "3")
                 {
-                    parentCustInfo = pCustInfo.GetCustInfoIBC(custInfo.SIBCCustID);
+                    parentCustInfo = pCustInfo.GetCustInfoIBC(custInfo.SIBCCustID, WebSettings.SettingStatus);
                 }
 
                 else if (custInfo.RoleId.ToString() == "2")
                 {
-                    parentCustInfo = pCustInfo.GetCustInfoIBC(custInfo.MIBCCustID);
+                    parentCustInfo = pCustInfo.GetCustInfoIBC(custInfo.MIBCCustID, WebSettings.SettingStatus);
                 }
 
                 else if (custInfo.RoleId.ToString() == "1")
                 {
-                    parentCustInfo = pCustInfo.GetCustInfoIBC(custInfo.AIBCCustID);
+                    parentCustInfo = pCustInfo.GetCustInfoIBC(custInfo.AIBCCustID, WebSettings.SettingStatus);
                 }
 
                 if (parentCustInfo != null)

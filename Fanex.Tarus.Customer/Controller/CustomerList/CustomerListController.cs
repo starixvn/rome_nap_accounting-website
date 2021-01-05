@@ -7,6 +7,7 @@ namespace Fanex.Tarus.Customer.Controller.CustomerList
     using Fanex.Tarus.Web.Controllers;
     using Fanex.Tarus.Web.Controllers.Filters;
     using Sunplus.Accounting.Core.Common;
+    using Sunplus.Accounting.Core.Configurations;
     using System.Collections.Generic;
     using System.Web.Mvc;
 
@@ -27,7 +28,7 @@ namespace Fanex.Tarus.Customer.Controller.CustomerList
             int pageSize = 50;
             int pageIndex = 1;
 
-            model = _customerList.GetSuperList(pageSize, pageIndex, null, null, null, null, null);          
+            model = _customerList.GetSuperList(pageSize, pageIndex, null, null, null, null, null, WebSettings.SettingStatus);          
             ViewBag.Currencies = _customerList.GetCurrencyList();
             return View("~/Views/Customer/CustomerList/Default/Super/SuperList.cshtml", model);
         }
@@ -36,7 +37,7 @@ namespace Fanex.Tarus.Customer.Controller.CustomerList
         public ActionResult SuperList(int pageSize, int pageIndex, string searchText, string selectAlpha, string selectCurreny, string dComm, string status)
         {
             CustomerListModel model = new CustomerListModel();
-            model = _customerList.GetSuperList(pageSize, pageIndex, searchText, selectAlpha, selectCurreny, dComm, status);
+            model = _customerList.GetSuperList(pageSize, pageIndex, searchText, selectAlpha, selectCurreny, dComm, status, WebSettings.SettingStatus);
             return PartialView("~/Views/Customer/CustomerList/Default/Super/_SuperListPartial.cshtml", model);
         }
 
@@ -47,7 +48,7 @@ namespace Fanex.Tarus.Customer.Controller.CustomerList
             int pageIndex = 1;
 
             int UserID = superId ?? 0;
-            model = _customerList.GetMasterList(UserID, pageSize, pageIndex, null, null, null, null, null, doubleCommSuper);
+            model = _customerList.GetMasterList(UserID, pageSize, pageIndex, null, null, null, null, null, doubleCommSuper, WebSettings.SettingStatus);
 
             //ViewBag.Currencies = _customerList.GetCurrencyList();
             return View("~/Views/Customer/CustomerList/Default/Master/MasterList.cshtml", model);
@@ -60,7 +61,7 @@ namespace Fanex.Tarus.Customer.Controller.CustomerList
             CustomerListModel model = new CustomerListModel();
             ViewBag.synccasinoUpline = synccasinoUpline;
             int UserID = superId ?? 0;
-            model = _customerList.GetMasterList(UserID, pageSize, pageIndex, searchText, selectAlpha, selectCurreny, dComm, status, doubleCommSuper);
+            model = _customerList.GetMasterList(UserID, pageSize, pageIndex, searchText, selectAlpha, selectCurreny, dComm, status, doubleCommSuper, WebSettings.SettingStatus);
             return PartialView("~/Views/Customer/CustomerList/Default/Master/_MasterListPartial.cshtml", model);
         }
 
@@ -70,7 +71,7 @@ namespace Fanex.Tarus.Customer.Controller.CustomerList
             int pageSize = 50;
             int pageIndex = 1;
 
-            model = _customerList.GetAgentList(masterId, pageSize, pageIndex, doubleCommMaster);
+            model = _customerList.GetAgentList(masterId, pageSize, pageIndex, doubleCommMaster, WebSettings.SettingStatus);
             return View("~/Views/Customer/CustomerList/Default/Agent/AgentList.cshtml", model);
 
         }
@@ -79,7 +80,7 @@ namespace Fanex.Tarus.Customer.Controller.CustomerList
         public ActionResult AgentList(int masterId, int pageSize, int pageIndex, string doubleCommMaster, string synccasinoUpline)
         {
             CustomerListModel model = new CustomerListModel();
-            model = _customerList.GetAgentList(masterId, pageSize, pageIndex, doubleCommMaster);
+            model = _customerList.GetAgentList(masterId, pageSize, pageIndex, doubleCommMaster, WebSettings.SettingStatus);
             ViewBag.synccasinoUpline = synccasinoUpline;            
             return PartialView("~/Views/Customer/CustomerList/Default/Agent/_AgentListPartial.cshtml", model);
         }
@@ -89,7 +90,7 @@ namespace Fanex.Tarus.Customer.Controller.CustomerList
             CustomerListModel model = new CustomerListModel();
             int pageSize = 50;
             int pageIndex = 1;
-            model = _customerList.GetMemberList(agentId, pageSize, pageIndex, 0, doubleCommAgent);   
+            model = _customerList.GetMemberList(agentId, pageSize, pageIndex, 0, doubleCommAgent, WebSettings.SettingStatus);   
             return View("~/Views/Customer/CustomerList/Default/Member/MemberList.cshtml", model);
 
         }
@@ -98,7 +99,7 @@ namespace Fanex.Tarus.Customer.Controller.CustomerList
         public ActionResult MemberList(int agentId, int pageSize, int pageIndex, int type, string doubleCommAgent, string synccasinoUpline)
         {
             CustomerListModel model = new CustomerListModel();
-            model = _customerList.GetMemberList(agentId, pageSize, pageIndex, type, doubleCommAgent);
+            model = _customerList.GetMemberList(agentId, pageSize, pageIndex, type, doubleCommAgent, WebSettings.SettingStatus);
             ViewBag.synccasinoUpline = synccasinoUpline;
             return PartialView("~/Views/Customer/CustomerList/Default/Member/_MemberListPartial.cshtml", model);
 

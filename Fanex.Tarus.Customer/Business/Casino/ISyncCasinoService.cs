@@ -9,6 +9,6 @@
 
         SyncCustomerModel GetUnsyncedCustomers(GetUnsyncedListCriteria criteria);
 
-        SyncCustomerModel SyncCustomers(SyncCustomerModel model);
+        SyncCustomerModel SyncCustomers(SyncCustomerModel model, byte settingStatus);
     }
 }

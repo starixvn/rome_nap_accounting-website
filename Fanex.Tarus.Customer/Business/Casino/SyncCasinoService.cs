@@ -29,7 +29,7 @@
         public SyncCustomerModel GetUnsyncedCustomers(GetUnsyncedListCriteria criteria)
             => _repository.GetUnsyncedCustomers(criteria);
 
-        public SyncCustomerModel SyncCustomers(SyncCustomerModel model)
+        public SyncCustomerModel SyncCustomers(SyncCustomerModel model, byte settingStatus)
         {
             foreach (var item in model.Usernames)
             {
@@ -38,7 +38,7 @@
             }
 
             var usernames = model.Usernames.Where(c => c.IsSelected).ToList();
-            var result = _repository.SyncCustomers(usernames);
+            var result = _repository.SyncCustomers(usernames, settingStatus);
             foreach (var item in result)
             {
                 var customer = usernames.FirstOrDefault(c => c.Username.Equals(item.Key, StringComparison.OrdinalIgnoreCase));
