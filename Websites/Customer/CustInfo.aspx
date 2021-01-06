@@ -8,7 +8,7 @@
 </head>
 <body>
     <pre>
-        <%=Newtonsoft.Json.JsonConvert.SerializeObject(new Sunplus.Accounting.DataAccess.APIClient.IBCLibProvider().GetBasicCustInfoIBC(Convert.ToInt32(Request.QueryString["custid"])), Newtonsoft.Json.Formatting.Indented) %>
+        <%=Newtonsoft.Json.JsonConvert.SerializeObject(new Sunplus.Accounting.DataAccess.APIClient.IBCLibProvider().GetBasicCustInfoIBC(Convert.ToInt32(Request.QueryString["custid"]), Sunplus.Accounting.Core.Configurations.WebSettings.SettingStatus), Newtonsoft.Json.Formatting.Indented) %>
     </pre>
 </body>
 </html>

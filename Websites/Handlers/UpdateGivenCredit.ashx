@@ -11,16 +11,19 @@ using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using IBCUtils.Web;
 using System.Text;
 using IBCUtils;
+using Sunplus.Accounting.Core.Configurations;
 
 
-public class UpdateGivenCredit :BaseHandler {
-    
-    public override void ProcessRequest (HttpContext context) {
+public class UpdateGivenCredit : BaseHandler
+{
+
+    public override void ProcessRequest(HttpContext context)
+    {
         base.ProcessRequest(context);
-        
+
         try
-        {       
-            
+        {
+
             context.Response.ContentType = "text/html";
             string sAmount = context.Request["amount"] as string ?? string.Empty;
             if (string.IsNullOrEmpty(sAmount)) throw new AccException("Invalid amount!");
@@ -30,7 +33,7 @@ public class UpdateGivenCredit :BaseHandler {
             int _custid = CustId;
             if (_custid == -1) throw new AccException(IbcError.USERNAME_UNAVAILABLE_MSG);
 
-            var custDetail = IBCProvider.IBCCustomer.GetBasicCustInfoIBC(_custid);
+            var custDetail = IBCProvider.IBCCustomer.GetBasicCustInfoIBC(_custid, WebSettings.SettingStatus);
             if (custDetail.IBCCustID == 0)
             {
                 context.Response.Write("<script type='text/javascript'>alert('Invalid Customer!!');</script>");
@@ -47,19 +50,21 @@ public class UpdateGivenCredit :BaseHandler {
                 context.Response.Write("<script type='text/javascript'>" + s.ToString() + "</script>");
             }
 
-        }        
+        }
         catch (AccException ex)
         {
-            context.Response.Write("<script type='text/javascript'>alert('" + ex.Message.ToString() + "');</script>");  
+            context.Response.Write("<script type='text/javascript'>alert('" + ex.Message.ToString() + "');</script>");
         }
         catch (Exception ex)
         {
             Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-        }            
+        }
     }
- 
-    public override bool IsReusable {
-        get {
+
+    public override bool IsReusable
+    {
+        get
+        {
             return false;
         }
     }
