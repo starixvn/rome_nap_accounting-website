@@ -191,7 +191,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.BetList.NumberGame, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.NumberGame.1.4.0-beta-03\lib\net40\Fanex.BetList.NumberGame.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.NumberGame.1.4.0-beta-04\lib\net40\Fanex.BetList.NumberGame.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.PGSoft, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.PGSoft.1.0.1\lib\net40\Fanex.BetList.PGSoft.dll</HintPath>
@@ -460,8 +460,8 @@
     <Reference Include="Fanex.Result.Core.WM, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.WM.1.0.0.1\lib\net40\Fanex.Result.Core.WM.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Result.ThirdParty, Version=1.1.0.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.ThirdParty.1.1.0.4-BG-02\lib\net461\Fanex.Result.ThirdParty.dll</HintPath>
+    <Reference Include="Fanex.Result.ThirdParty, Version=1.1.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Result.ThirdParty.1.1.0.5-BG-01\lib\net461\Fanex.Result.ThirdParty.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.ActivityTracking, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.ActivityTracking.1.0.0.5\lib\net40\Fanex.Tarus.ActivityTracking.dll</HintPath>

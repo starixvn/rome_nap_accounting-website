@@ -1241,7 +1241,7 @@ function getHappy5LinkedGamesParam(custId, transId3rd) {
         title: "Happy 5 Linked Games Result",
         jsonParam: { productId: 3, custId: custId, transId3rd: transId3rd  },
         width: 945,
-        height: 500
+        height: 700
     };
 }
 
