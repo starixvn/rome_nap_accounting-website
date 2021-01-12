@@ -909,7 +909,7 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
             return getPGSoftCasinoParam(transdesc, betcheck, matchcode);
 
         case 236: // GDG
-            return getGDGParam(transdesc, betcheck, matchcode);
+            return getGDGParam(transdesc, betcheck, matchcode, league);
 
         case 241: // BBIN
             return getBBinParam(transdesc, matchcode, bettype);
@@ -1116,11 +1116,11 @@ function getPGSoftCasinoParam(gameId, custId, gameCode) {
     };
 }
 
-function getGDGParam(transId3rd, custId, gameId3rd) {
+function getGDGParam(transId3rd, custId, gameId3rd, siteId) {
     return {
         url: "ThirdParty/Result",
         title: "GDG Result",
-        jsonParam: { custId: custId, gameId: transId3rd, gameCode: gameId3rd, productId: 59 },
+        jsonParam: { custId: custId, gameId: transId3rd, gameCode: gameId3rd, productId: 59, siteId: siteId },
         width: 850,
         height: 800
     };
