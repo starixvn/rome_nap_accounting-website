@@ -25,7 +25,7 @@
                                                             $scope.uplinePTOnMember.newUplinePositionTaking,
                                                             0,
                                                             $scope.uplinePTOnMember.newUplinePositionTaking,
-                                                            fanex.goldDeluxeSetting.PT_INTERVAL);
+                            fanex.goldDeluxeSetting.PT_INTERVAL, fanex.goldDeluxeSetting.PT_DECIMAL);
                         me.$presetOnMemberModal.modal({
                             backdrop: 'static',
                             show: true,
@@ -42,7 +42,8 @@
                                                             $scope.uplinePTOnMember.newUplinePositionTaking,
                                                             0,
                                                             $scope.uplinePTOnMember.newUplinePositionTaking,
-                                                            fanex.goldDeluxeSetting.PT_INTERVAL);
+                            fanex.goldDeluxeSetting.PT_INTERVAL, fanex.goldDeluxeSetting.PT_DECIMAL);
+
                         me.$presetOnMemberModal.modal({
                             backdrop: 'static',
                             show: true,
