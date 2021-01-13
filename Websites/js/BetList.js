@@ -890,7 +890,7 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
             return getHappy5Param(matchid);
 
         case 168: // Happy5 Linked Games
-            return getHappy5LinkedGamesParam(betid, refno);
+            return getLinkedGamesParam(betid, refno);
 
         case 181:
         case 182:
@@ -1235,9 +1235,9 @@ function getVirtualGamesParam(betcheck) {
     };
 }
 
-function getHappy5LinkedGamesParam(custId, transId3rd) {
+function getLinkedGamesParam(custId, transId3rd) {
     return {
-        url: "ThirdParty/Happy5LinkedGamesResult",
+        url: "ThirdParty/LinkedGamesResult",
         title: "Happy 5 Linked Games Result",
         jsonParam: { productId: 3, custId: custId, transId3rd: transId3rd  },
         width: 945,

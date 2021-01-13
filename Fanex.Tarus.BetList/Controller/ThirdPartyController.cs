@@ -2,7 +2,7 @@
 {
     using System.Web.Mvc;
     using CustomerSetting.Module.Core.Web.Controllers;
-    using Fanex.Result.Core.Happy5LinkedGames;
+    using Fanex.Result.Core.LinkedGames;
     using Fanex.Result.Core.VirtualGames;
     using Fanex.Result.ThirdParty.Models;
     using Infrastructure.Caching;
@@ -40,10 +40,10 @@
             return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(productName, new SuccessResult(result)));
         }
 
-        public ActionResult Happy5LinkedGamesResult(int productId, string custId, string transId3rd)
+        public ActionResult LinkedGamesResult(int productId, string custId, string transId3rd)
         {
             var productName = CacheRef.GetProductName(productId);
-            var service = new Happy5LinkedGamesResult();
+            var service = new LinkedGamesResult();
             var result = service.GetResult(custId, transId3rd, isDesktop: true);
 
             return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(productName, new SuccessResult(result)));
