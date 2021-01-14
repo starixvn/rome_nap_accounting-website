@@ -20,7 +20,7 @@
                 case fanex.goldDeluxeSetting.customerLevel.Master:
                     if (settingViewModel.Setting.PositionTaking.Is3
                         && !currentPt.Is3) {
-                        $scope.uplinePTOnMember.newUplinePositionTaking = fanex.roundNumber(currentPt.S4 - currentPt.M3);
+                        $scope.uplinePTOnMember.newUplinePositionTaking = fanex.roundNumber(currentPt.S4 - currentPt.M3, fanex.goldDeluxeSetting.PT_DECIMAL);
                         $scope.uplinePTOnMemberOptions = fanex.createOptionsFromRange(
                                                             $scope.uplinePTOnMember.newUplinePositionTaking,
                                                             0,
@@ -37,7 +37,7 @@
                 case fanex.goldDeluxeSetting.customerLevel.Agent:
                     if (settingViewModel.Setting.PositionTaking.Im2
                         && !currentPt.Im2) {
-                        $scope.uplinePTOnMember.newUplinePositionTaking = fanex.roundNumber(currentPt.M3 - currentPt.A2);
+                        $scope.uplinePTOnMember.newUplinePositionTaking = fanex.roundNumber(currentPt.M3 - currentPt.A2, fanex.goldDeluxeSetting.PT_DECIMAL);
                         $scope.uplinePTOnMemberOptions = fanex.createOptionsFromRange(
                                                             $scope.uplinePTOnMember.newUplinePositionTaking,
                                                             0,
