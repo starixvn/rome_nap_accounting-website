@@ -655,6 +655,18 @@ function showGDGBetDetails(refno, winlossDate, custId, transType) {
 
     openResultsPopUp(params);
 }
+function showBGBetDetails(refno, winlossDate, custId, transType) {
+    var params = {
+        url: "AGCasinoBetList/BetDetails",
+        title: "BG - Detailed Bet list - " + winlossDate.split(" ")[0],
+        jsonParam: { Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 239, PageSize: 500 },
+        width: 1040,
+        height: 600
+    };
+
+    openResultsPopUp(params);
+}
+
 function showSabaClubDetails(refno, winlossDate, custId, transType) {
     var rngCasinoParam = {
         url: "RNGCasinoBetList/BetDetails",
@@ -877,6 +889,9 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
         case 164: // Happy5
             return getHappy5Param(matchid);
 
+        case 168: // Happy5 Linked Games
+            return getLinkedGamesParam(betid, refno);
+
         case 181:
         case 182:
         case 183:
@@ -910,6 +925,8 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
 
         case 236: // GDG
             return getGDGParam(transdesc, betcheck, matchcode, league);
+        case 239: // BG
+            return getBGParam(transdesc, betcheck, league, matchcode);
 
         case 241: // BBIN
             return getBBinParam(transdesc, matchcode, bettype);
@@ -1116,6 +1133,16 @@ function getPGSoftCasinoParam(gameId, custId, gameCode) {
     };
 }
 
+function getBGParam(transId3rd, custId, currencyId, siteId) {
+    return {
+        url: "ThirdParty/Result",
+        title: "BG Result",
+        jsonParam: { custId: custId, gameId: transId3rd, gameCode: currencyId, siteid: siteId, productId: 57 },
+        width: 850,
+        height: 800
+    };
+}
+
 function getGDGParam(transId3rd, custId, gameId3rd, siteId) {
     return {
         url: "ThirdParty/Result",
@@ -1207,6 +1234,17 @@ function getVirtualGamesParam(betcheck) {
         height: 500
     };
 }
+
+function getLinkedGamesParam(custId, transId3rd) {
+    return {
+        url: "ThirdParty/LinkedGamesResult",
+        title: "Happy 5 Linked Games Result",
+        jsonParam: { productId: 3, custId: custId, transId3rd: transId3rd  },
+        width: 945,
+        height: 800
+    };
+}
+
 
 function getPPParam(matchcode, betcheck) {
     return {
