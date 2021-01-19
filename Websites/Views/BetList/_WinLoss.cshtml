@@ -14,9 +14,10 @@
     }
 
     bool betListStatement = ViewData["BetListStatement"] != null && Convert.ToBoolean(ViewData["BetListStatement"]);
+    var jackpotBettype = new List<int> { 4297, 1698 };
 }
 <div class="margin-top-5">
-    @if (ticket.BetTypeId.Equals(4297)) // PP Jackpot Contribution
+    @if (jackpotBettype.Contains(ticket.BetTypeId))
     {
         <span> - </span>
     }
