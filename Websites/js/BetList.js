@@ -574,6 +574,18 @@ function showTodayRunningBetsDetails(refno, winlossDate, custId, transType) {
     openResultsPopUp(params);
 }
 
+function showMaxGameBetDetails(transId, winlossDate, custId, transType) {
+    var jokerParam = {
+        url: "RNGCasinoBetList/BetDetails",
+        title: "MaxGame - Detailed Bet list - " + winlossDate.split(" ")[0],
+        jsonParam: { TransId: transId, TransType: transType, CustId: custId, SportType: 237, PageSize: 500 },
+        width: 1030,
+        height: 600
+    };
+
+    openResultsPopUp(jokerParam);
+}
+
 function showJokerBetDetails(transId, winlossDate, custId, transType) {
     var jokerParam = {
         url: "RNGCasinoBetList/BetDetails",
@@ -963,6 +975,9 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
         case 234:
             return getJokerParam(transdesc, betcheck, matchcode);
 
+        case 237: //MaxGame
+            return getMaxGameParam(betcheck, transdesc, bettype, matchcode, betid);
+
         default:
             return undefined;
     }
@@ -1230,6 +1245,24 @@ function getVirtualGamesParam(betcheck) {
         url: "ThirdParty/VirtualGamesResult",
         title: "Virtual Games Result",
         jsonParam: { productId: 38, gameId: betcheck },
+        width: 945,
+        height: 500
+    };
+}
+
+function getMaxGameParam(custId, transId3rd, betType, endTime, siteId) {
+    return {
+        url: "ThirdParty/MaxGameResult",
+        title: "MaxGame Result",
+        jsonParam:
+        {
+            productId: 60,
+            custId: custId,
+            transId3rd: transId3rd,
+            betType: betType,
+            EndTime: endTime,
+            SiteId: siteId
+        },
         width: 945,
         height: 500
     };

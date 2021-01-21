@@ -2109,4 +2109,7 @@ Max Keno (20+1) 2</value>
   <data name="Disable239_3501" xml:space="preserve">
     <value>Disabled BG</value>
   </data>
+  <data name="Disable237_5401" xml:space="preserve">
+    <value>Disabled MaxGame</value>
+  </data>
 </root>

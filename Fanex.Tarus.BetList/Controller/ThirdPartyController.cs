@@ -3,6 +3,7 @@
     using System.Web.Mvc;
     using CustomerSetting.Module.Core.Web.Controllers;
     using Fanex.Result.Core.LinkedGames;
+    using Fanex.Result.Core.MaxGame;
     using Fanex.Result.Core.VirtualGames;
     using Fanex.Result.ThirdParty.Models;
     using Infrastructure.Caching;
@@ -45,6 +46,15 @@
             var productName = CacheRef.GetProductName(productId);
             var service = new LinkedGamesResult();
             var result = service.GetResult(custId, transId3rd, isDesktop: true);
+
+            return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(productName, new SuccessResult(result)));
+        }
+        
+        public ActionResult MaxGameResult(int productId, string custId, string transId3rd, int betType, string endTime, string siteId)
+        {
+            var productName = CacheRef.GetProductName(productId);
+            var service = new MaxGameResult();
+            var result = service.GetResult(custId, transId3rd, betType, endTime, siteId);
 
             return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(productName, new SuccessResult(result)));
         }

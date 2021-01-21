@@ -729,6 +729,7 @@ var ViewPT = {
             case 225: // ION
             case 233: // WM
             case 236: // GDG
+            case 237: // MaxGame
             case 239: // BigGame
                 ViewPT.viewPTBasedOnKindOfCustomer(userName, sportId, betTypeId, isLive);
                 break;
