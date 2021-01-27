@@ -1,0 +1,7 @@
+﻿.w170 { width: 170px; }
+input:read-only { background-color: #fff; }
+.tblcollapse thead th { background-color: #cadceb; font-weight: bold; }
+.tblcollapse thead th, .tblcollapse tbody td { padding: 5px 2px; }
+.tblcollapse tbody tr:hover { background-color: #ffddfe; }
+.bg-red { background-color: #ff6961; }
+.bg-yellow { background-color: #fff3c8; }
