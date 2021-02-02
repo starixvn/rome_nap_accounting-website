@@ -1,0 +1,166 @@
+﻿@using Sunplus.Accounting.Core.Configurations;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles
+{
+    <link href="@Url.Content("~/App_Themes/Public/table.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/App_Themes/Public/commonIOM.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Scripts/_Libs/jQuery/Styles/jquery-ui-1.9.1.custom.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Views/Admin/MoveBetSchedule/Styles/Index.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+}
+
+@section Scripts
+{
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-ui-1.9.1.min.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Views/Admin/MoveBetSchedule/Scripts/Index.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript">
+        var minDay = '@DateTime.Now.AddMonths(-6).ToString("MM/dd/yyyy")';
+        var currentDay = '@DateTime.Now.ToString("MM/dd/yyyy")';
+        var sevenDaysFromToday='@DateTime.Now.AddDays(7).ToString("MM/dd/yyyy")';
+    </script>
+}
+
+<div class="main">
+    <div id="divMainHeader">
+        <div id="left_tab1">
+            <ul>
+                <li class="lefticon"></li>
+                <li class="current"><span>Move Bet Schedule</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="maincontent">
+        <div class="filterBox">
+            <div id="default-movebet">
+                <h3>Default Move Bet Days</h3>
+                <table id="tbl-default-movebet" class="tbl-default-movebet">
+                    <thead>
+                        <tr>
+                            <th>Move Bet Day <br /> (GMT -4)</th>
+                            <th class="current-day">Monday</th>
+                            <th>Tuesday</th>
+                            <th>Wednesday</th>
+                            <th>Thurday</th>
+                            <th>Friday</th>
+                            <th>Saturday</th>
+                            <th>Sunday</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < 7; i++)
+                        {
+                            @RenderRow(i);
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div id="update-movebet" class="update-movebet">
+                <form id="form-filter-movebet" class="form-inline">
+                    <h3 class="form-title">Adjust Move Bet Days</h3>
+                    <div class="form-control">
+                        <label>From</label>
+                        <input type="text" class="txtdate" id="txtFromDate" readonly="readonly" />
+                    </div>
+                    <div class="form-control">
+                        <label>To</label>
+                        <input type="text" class="txtdate" id="txtToDate" readonly="readonly" />
+                    </div>
+                </form>
+                <table id="tbl-update-movebet" class="tbl-update-movebet">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th colspan="7" class="month-year-wrapper">
+                                <h2 class="month-year">February 2021</h2>
+                                <span class="ui-icon  ui-icon-triangle-1-w"></span>
+                                <span class="ui-icon  ui-icon-triangle-1-e"></span>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>Move Bet Day <br /> (GMT -4)</th>
+                            <th>
+                                <label>Mon</label>
+                                <input type="checkbox" />
+                                <div class="current-day date-box">
+                                    <span>1</span>
+                                </div>
+                            </th>
+                            <th>
+                                <label>Tue</label>
+                                <input type="checkbox" />
+                                <div class="date-box">
+                                    <span>2</span>
+                                </div>
+                            </th>
+                            <th>
+                                <label>Wed</label>
+                                <input type="checkbox" />
+                                <div class="date-box">
+                                    <span>3</span>
+                                </div>
+                            </th>
+                            <th>
+                                <label>Thu</label>
+                                <input type="checkbox" />
+                                <div class="date-box">
+                                    <span>4</span>
+                                </div>
+                            </th>
+                            <th>
+                                <label>Fri</label>
+                                <input type="checkbox" />
+                                <div class="date-box">
+                                    <span>5</span>
+                                </div>
+                            </th>
+                            <th>
+                                <label>Sat</label>
+                                <input type="checkbox" />
+                                <div class="date-box">
+                                    <span>6</span>
+                                </div>
+                            </th>
+                            <th>
+                                <label>Sun</label>
+                                <input type="checkbox" />
+                                <div class="date-box">
+                                    <span>7</span>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < 7; i++)
+                        {
+                            @RenderRow(i);
+                        }
+                    </tbody>
+                </table>
+                <form id="form-update-movebet" class="form-update-movebet">
+                    <button type="submit">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@helper RenderRow(int i)
+{
+    <tr>
+        @if (i == 0)
+        {
+            <td rowspan="7" align="center">For Days</td>
+        }
+        <td class="current-day"><input type="checkbox" disabled /><label>Current date - @i (Sat)</label></td>
+        <td><input type="checkbox" disabled /><label>Current date - @i (Sun)</label></td>
+        <td><input type="checkbox" checked disabled /><label>Current date - @i (Mon)</label></td>
+        <td><input type="checkbox" checked disabled /><label>Current date - @i (Tue)</label></td>
+        <td><input type="checkbox" disabled /><label>Current date - @i (Wed)</label></td>
+        <td><input type="checkbox" disabled /><label>Current date - @i (Thu)</label></td>
+        <td><input type="checkbox" disabled /><label>Current date - @i (Fri)</label></td>
+    </tr>
+}

@@ -1,0 +1,103 @@
+﻿.filterBox {
+    padding: 1.25rem;
+    width: 1200px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+    table th {
+        font-weight: normal;
+        padding: 8px;
+        text-align: center;
+    }
+
+.date-box {
+    width: 30px;
+    height: 30px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+    .date-box span {
+        line-height: 25px;
+    }
+
+    .date-box.current-day {
+        background-color: #8db4e2;
+        border-radius: 50%;
+    }
+
+        .date-box.current-day span {
+            color: white;
+        }
+
+.form-inline .form-title {
+    display: inline-block;
+}
+
+.form-inline .form-control {
+    display: inline-block;
+    margin-left: 16px;
+    margin-right: 16px;
+}
+
+    .form-inline .form-control label {
+        margin-right: 5px;
+    }
+
+.form-update-movebet {
+    margin-top: 16px;
+    text-align: right;
+}
+
+    .form-update-movebet button {
+        background-color: #dce6f2;
+        border: 1px solid #7C98A4;
+        width: 100px;
+    }
+
+.month-year-wrapper {
+    text-align: left;
+}
+
+    .month-year-wrapper .month-year {
+        display: inline-block;
+        text-align: center;
+        width: 120px;
+    }
+
+    .month-year-wrapper span {
+        display: inline-block;
+    }
+
+.tbl-default-movebet {
+    border: 1px solid #7C98A4;
+}
+
+    .tbl-default-movebet th, .tbl-default-movebet td {
+        border: 1px solid #7C98A4;
+    }
+
+    .tbl-default-movebet th {
+        background-color: #8db4e2;
+    }
+
+    .tbl-default-movebet td {
+        border-bottom: none;
+        border-top: none;
+    }
+
+        .tbl-default-movebet th.current-day, .tbl-default-movebet td.current-day {
+            background-color: #e6b8b7;
+        }
+
+.tbl-update-movebet thead tr:nth-child(2) th:not(:first-child) {
+    border-bottom: 1px solid #7C98A4;
+}
+
+.update-movebet {
+    padding-top: 16px;
+}
