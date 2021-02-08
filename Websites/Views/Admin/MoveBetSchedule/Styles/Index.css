@@ -3,6 +3,28 @@
     width: 1200px;
 }
 
+.hidden {
+    display: none !important;
+}
+
+.invisible {
+    visibility: hidden !important;
+}
+
+.icon {
+    width: 15px;
+    height: 15px;
+    background-size: 15px 15px;
+}
+
+.next-icon {
+    background-image: url('../svg/right-arrow.svg');
+}
+
+.previous-icon {
+    background-image: url('../svg/left-arrow.svg');
+}
+
 table {
     border-collapse: collapse;
     width: 100%;
@@ -17,12 +39,11 @@ table {
 .date-box {
     width: 30px;
     height: 30px;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 3px auto;
 }
 
     .date-box span {
-        line-height: 25px;
+        line-height: 2.75;
     }
 
     .date-box.current-day {
@@ -57,20 +78,26 @@ table {
         background-color: #dce6f2;
         border: 1px solid #7C98A4;
         width: 100px;
+        height: 25px;
     }
 
 .month-year-wrapper {
     text-align: left;
 }
 
-    .month-year-wrapper .month-year {
+    .month-year-wrapper .month-year-label {
         display: inline-block;
+        font-size: 1.5em;
+        line-height: 1.5;
         text-align: center;
+        vertical-align: middle;
         width: 120px;
     }
 
     .month-year-wrapper span {
         display: inline-block;
+        line-height: 1.5;
+        vertical-align: middle;
     }
 
 .tbl-default-movebet {
@@ -94,10 +121,17 @@ table {
             background-color: #e6b8b7;
         }
 
-.tbl-update-movebet thead tr:nth-child(2) th:not(:first-child) {
-    border-bottom: 1px solid #7C98A4;
-}
-
 .update-movebet {
     padding-top: 16px;
 }
+
+tr.tr-date td {
+    font-weight: normal;
+    padding: 8px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+    tr.tr-date td.td-date {
+        border-bottom: 1px solid #7C98A4;
+    }
