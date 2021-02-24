@@ -1,0 +1,64 @@
+﻿@using Fanex.Tarus.Customer.Resources
+@using Fanex.Tarus.Customer.Extensions
+@using Fanex.Tarus.Customer.Helpers
+@using Fanex.Tarus.Customer.Entities.BetCreditHistory
+@using Result = Fanex.Tarus.Customer.Entities.Result;
+@{
+    Layout = null;
+    var result = Model.Item1;
+    var betCreditHistory = Model.Item2;
+}
+@model Tuple<Result, IList<BetCreditHistoryItem>>
+@if (result.ErrorCode != 0)
+{
+    <div class="alertboxerr">
+        <div>@result.ErrorMessage</div>
+    </div>
+}
+else
+{
+    <table class="tblcollapse" id="table-betCreditHistory">
+        <thead>
+            <tr>
+                <th>@BetCreditHistoryLabels.ActionDateTime</th>
+                <th>@BetCreditHistoryLabels.WinLossDate</th>
+                <th>@BetCreditHistoryLabels.RefNo</th>
+                <th>@BetCreditHistoryLabels.ActualStake</th>
+                <th>@BetCreditHistoryLabels.WinLoss</th>
+                <th>@BetCreditHistoryLabels.PlayerComm</th>
+                <th>@BetCreditHistoryLabels.BalanceChange</th>
+                <th>@BetCreditHistoryLabels.NewBalance</th>
+                <th>@BetCreditHistoryLabels.GivenCredit</th>
+                <th>@BetCreditHistoryLabels.BetCredit</th>
+                <th>@BetCreditHistoryLabels.Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (betCreditHistory.Count > 0)
+            {
+                foreach (var item in betCreditHistory)
+                {
+                    <tr @(item.IsHilightedRow ? "class=bg-yellow" : string.Empty)>
+                        <td>@item.ActionDate.ToLongDateWithSlash()</td>
+                        <td>@item.WinLossDate.ToShortDateWithSlash()</td>
+                        <td>@item.RefNo</td>
+                        <td class="r">@NumberFormater.FormatNumber(item.ActualStake)</td>
+                        <td class="r">@NumberFormater.FormatNumber(item.WinLoss)</td>
+                        <td class="r">@NumberFormater.FormatNumber(item.PlayerComm)</td>
+                        <td class="r">@NumberFormater.FormatNumber(item.BalanceChange)</td>
+                        <td class="r">@NumberFormater.FormatNumber(item.NewBalance)</td>
+                        <td class="r">@NumberFormater.FormatNumber(item.GivenCredit)</td>
+                        <td class="r @(item.IsReddenBetCredit ? "bg-red" : string.Empty)">@NumberFormater.FormatNumber(item.BetCredit)</td>
+                        <td class="l">@item.Action</td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="11">@Customer_Labels.Message_NoData.TrimEnd('.')</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

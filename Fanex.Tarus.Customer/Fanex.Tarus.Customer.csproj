@@ -308,6 +308,7 @@
     <Compile Include="Business\AutoSuspend\IAutoSuspendService.cs" />
     <Compile Include="Business\AutoTransferAll\AutoTransferAllService.cs" />
     <Compile Include="Business\AutoTransferAll\IAutoTransferAllService.cs" />
+    <Compile Include="Business\BetCreditHistory\BetCreditHistoryService.cs" />
     <Compile Include="Business\Casino\ISyncCasinoService.cs" />
     <Compile Include="Business\Casino\SyncCasinoService.cs" />
     <Compile Include="Business\CN88\MoveSuper\IMoveSuperService.cs" />
@@ -364,6 +365,7 @@
     <Compile Include="Constants\RoleIdConstants.cs" />
     <Compile Include="Controller\AGCasinoController.cs" />
     <Compile Include="Controller\AutoTransferAll\AutoTransferAllController.cs" />
+    <Compile Include="Controller\BetCreditHistoryController.cs" />
     <Compile Include="Controller\Casino\SyncCasinoController.cs" />
     <Compile Include="Controller\Chatbot\ChatbotController.cs" />
     <Compile Include="Controller\CN88Customer\MoveCN88SuperController.cs" />
@@ -394,6 +396,7 @@
     <Compile Include="Criteria\AutoTransferAll\CheckValidAgentsFromFileCriteria.cs" />
     <Compile Include="Criteria\AutoTransferAll\ClearBalanceDownlineCriteria.cs" />
     <Compile Include="Criteria\AutoTransferAll\InsertAgentsFromFileCriteria.cs" />
+    <Compile Include="Criteria\BetCreditHistory\GetBetCreditHistoryCriteria.cs" />
     <Compile Include="Criteria\BetTrade\GetBetTradeStatusCriteria.cs" />
     <Compile Include="Criteria\BetTrade\UpdateBetTradeStatusCriteria.cs" />
     <Compile Include="Criteria\Casino\GetUnsyncedListCriteria.cs" />
@@ -493,6 +496,7 @@
     <Compile Include="DataAccess\AGCasino\IAGCasinoRepository.cs" />
     <Compile Include="DataAccess\AutoTransferAll\AutoTransferAllAccess.cs" />
     <Compile Include="DataAccess\AutoTransferAll\IAutoTransferAllAccess.cs" />
+    <Compile Include="DataAccess\BetCreditHistory\BetCreditHistoryDataAccess.cs" />
     <Compile Include="DataAccess\Casino\ISyncCasinoRepository.cs" />
     <Compile Include="DataAccess\Casino\SyncCasinoRepository.cs" />
     <Compile Include="DataAccess\CN88\MoveSuper\IMoveSuperDataAccess.cs" />
@@ -576,6 +580,7 @@
     <Compile Include="Entities\AutoTransferAll\ValidAgents.cs" />
     <Compile Include="Entities\AutoTransferAll\ValidAgent.cs" />
     <Compile Include="Entities\BaseModel.cs" />
+    <Compile Include="Entities\BetCreditHistory\BetCreditHistoryItem.cs" />
     <Compile Include="Entities\CN88\CreditRangeModel.cs" />
     <Compile Include="Entities\CN88\MoveSuper\HeadlineUsernameSuggestion.cs" />
     <Compile Include="Entities\CN88\MoveSuper\SearchSuperModel.cs" />
@@ -611,7 +616,9 @@
     <Compile Include="Entities\SettingCustomer\Suspend\UnsuspendDownlineDetail.cs" />
     <Compile Include="Entities\SettingCustomer\Suspend\Single\SingleUpdateAffectedDownline.cs" />
     <Compile Include="Entities\ViewPeriodsCN88\HeadlinePeriods.cs" />
+    <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Helpers\HmacAuthenticator.cs" />
+    <Compile Include="Helpers\NumberFormater.cs" />
     <Compile Include="Helpers\RestClientHelper.cs" />
     <Compile Include="ManageLicenseeCode\Criterias\LicenseeSelCriteria.cs" />
     <Compile Include="ManageLicenseeCode\Criterias\LicenseeTransferCodeSelCriteria.cs" />
@@ -634,6 +641,11 @@
     <Compile Include="Requests\CustomerSetting\Suspend\GetMultipleSuspendCustomerInfoQuery.cs" />
     <Compile Include="Requests\CustomerSetting\Suspend\GetSingleSuspendCustomerInfoQuery.cs" />
     <Compile Include="Requests\GetMessageLogsQuery.cs" />
+    <Compile Include="Resources\BetCreditHistoryLabels.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BetCreditHistoryLabels.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Customer_Labels.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -715,6 +727,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\BetCreditHistoryLabels.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>BetCreditHistoryLabels.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Customer_Labels.resx">
       <SubType>Designer</SubType>
       <Generator>PublicResXFileCodeGenerator</Generator>

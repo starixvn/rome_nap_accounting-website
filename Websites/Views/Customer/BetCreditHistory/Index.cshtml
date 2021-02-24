@@ -1,0 +1,57 @@
+﻿@using Fanex.Tarus.Customer.Resources
+@using Fanex.Tarus.Customer.Extensions
+@{
+    Layout = null;
+    var version = Sunplus.Accounting.Core.Configurations.WebSettings.Version;
+}
+@model DateTime
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="@Url.Content("~/App_Themes/Public/common.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/App_Themes/Public/input.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/App_Themes/Public/Message.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/App_Themes/Public/table.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/Views/Customer/BetCreditHistory/Styles/BetCreditHistory.css?v=" + version)" />
+</head>
+<body>
+    <div class="maincontent">
+        <table border="0" cellpadding="0" cellspacing="0" class="maincontent_header">
+            <tr>
+                <td class="maincontent_headerL"></td>
+                <td class="maincontent_headerC">@BetCreditHistoryLabels.BetCreditHistory</td>
+                <td class="maincontent_headerR"></td>
+            </tr>
+        </table>
+        <form action="#" method="get" class="bg_table mT5" id="form-betCreditHistory">
+            <table border="0" class="filter_table">
+                <tr>
+                    <td class="b">@BetCreditHistoryLabels.Member</td>
+                    <td class="w170">
+                        <input type="text" id="txt-member" maxlength="30" autocomplete="off" />
+                    </td>
+                    <td class="b">@BetCreditHistoryLabels.From</td>
+                    <td class="w130">
+                        <input type="text" class="txtdate" value="@Model.ToShortDateWithSlash()" readonly="readonly" id="txt-fromDate" />
+                    </td>
+                    <td class="b">@BetCreditHistoryLabels.To</td>
+                    <td class="w130">
+                        <input type="text" class="txtdate" value="@DateTime.Today.ToShortDateWithSlash()" readonly="readonly" id="txt-toDate" />
+                    </td>
+                    <td>
+                        <button type="submit" class="btn">&nbsp;&nbsp;&nbsp;@BetCreditHistoryLabels.Submit&nbsp;&nbsp;&nbsp;</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <div class="bg_table hide" id="boxContent"></div>
+    </div>
+    <script type="text/javascript">var rootUrl = "@Url.Content("~")";</script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-1.8.2.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/js/jQuery/UI/jquery-ui-1.8.10.custom.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Views/Customer/BetCreditHistory/Scripts/BetCreditHistory.js?v=" + version)"></script>
+</body>
+</html>
