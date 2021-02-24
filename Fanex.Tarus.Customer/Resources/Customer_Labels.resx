@@ -519,4 +519,10 @@
   <data name="Apply_Virtual_Rate_Notes" xml:space="preserve">
     <value>Enabling/Disabling this status does not affect E-Sports &amp; Basketball</value>
   </data>
+  <data name="VirtualRate_LockVRLabel" xml:space="preserve">
+    <value>Virtual Rate Lock Status</value>
+  </data>
+  <data name="VirtualRate_LockVRNotes" xml:space="preserve">
+    <value>Ticked means no auto adjustment or indirect update</value>
+  </data>
 </root>

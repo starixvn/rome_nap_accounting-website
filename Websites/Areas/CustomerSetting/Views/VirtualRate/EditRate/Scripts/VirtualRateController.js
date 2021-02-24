@@ -43,6 +43,8 @@ var VirtualRateController = function () {
             self.enableEditSetting(isEnable);
         });
 
+        $("#chk-lockVR").attr("checked", customerVirtualRateModel.LockVirtualRateStatus ? "checked" : null);
+
         self.bindingEvent();
         self.enableEditSetting(customerVirtualRateModel.EnableVirtualRate);
 
@@ -490,6 +492,7 @@ var VirtualRateController = function () {
                         self.blockUI();
                         var criteria = $.extend({}, customerVirtualRateModel);
                         criteria.EnableVirtualRate = $("#chk-enable").attr("checked") ? true : false;
+                        criteria.LockVirtualRateStatus = $("#chk-lockVR").attr("checked") ? true : false;
                         var sportLength = customerVirtualRateModel.SportVirtualRateList.length;
 
                         var isCopyFromSport = $("#button-copy-sport-settings-" + self.Constants.SportType.Soccer).hasClass("icon-copy-setting-checked");
