@@ -228,8 +228,15 @@
                 return historyLogDetailList;
             }
 
-            if (historyLog.ActionId == UpdateTypeConstants.Status ||
-                historyLog.ActionId == UpdateTypeConstants.VRLock ||
+            if (historyLog.ActionId == UpdateTypeConstants.VRLock)
+            {
+                historyLogDetailList.Add(new HistoryLogDetailModel
+                {
+                    UpdateType = historyLog.ActionId,
+                    VRLock = Converter.ToInt(xmlLoad.Attribute("VRLock").Value) != 0
+                });
+            }
+            else if (historyLog.ActionId == UpdateTypeConstants.Status ||
                 historyLog.ActionId == UpdateTypeConstants.LicenseeStatus)
             {
                 if (historyLog.ActionId == UpdateTypeConstants.VRLock)
