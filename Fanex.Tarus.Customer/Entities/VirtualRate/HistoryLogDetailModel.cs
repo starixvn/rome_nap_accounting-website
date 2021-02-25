@@ -18,6 +18,8 @@ namespace Fanex.Tarus.Customer.Entities.VirtualRate
     {
         public bool EnableVirtualRate { get; set; }
 
+        public bool VRLock { get; set; }
+
         public int UpdateType { get; set; }
 
         public int SportId { get; set; }
