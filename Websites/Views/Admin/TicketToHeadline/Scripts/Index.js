@@ -1,10 +1,12 @@
 ﻿var form;
+var showNotifyHeadlinesButtonForProducts = [1, 3, 5, 27];
 $(document).ready(function () {
     ajax_form($('#mainForm'), function (result) {
         RenderData(result);
     });
 
     form = $('#mainForm');
+    InitNotifyHeadlinesButton();
 });
 
 function GetData() {
@@ -17,6 +19,14 @@ function GetData() {
     try { parent.BlockUI(); } catch (e) { }
     form.attr('action', 'GetData');
     form.submit();
+}
+
+function NotifyHeadline() {
+    if (confirm("The CRM service will send Notifications and create Feedbacks. Are you sure you want to do it?")) {
+        try { parent.BlockUI(); } catch (e) { }
+        form.attr('action', 'NotifyHeadline');
+        form.submit();
+    }
 }
 
 function GetExcelFile() {
@@ -33,12 +43,23 @@ function GetExcelFile() {
 }
 
 function RenderData(data) {
-    if (data.ErrorMessage != null) {
-        showAlertMessage('errMsg', data.ErrorMessage, 1);
-        try { parent.jQuery.unblockUI(); } catch (e) { }
-        return;
+    if (data.IsNotifyHeadline && data.ErrorCode == 0) {
+        showAlertMessage('errMsg', "Notify Headline Successfully!", 0);
     }
 
+    if (data.ErrorCode != 0) {
+        if (data.ErrorCode == 200) {
+            alert(data.ErrorMessage);
+            return;
+        }
+        showAlertMessage('errMsg', data.ErrorMessage, 1);
+        try { parent.jQuery.unblockUI(); } catch (e) { }
+        if (data.ErrorCode > 100)
+            return;
+    }
+
+    $('#notifyHeadlines').prop('disabled', data.ErrorCode != 0);
+    
     var bodyRows = [];
     var rowCount = data.TicketToHeadlineCollection.length;
     var mergeRowNumGroupHeadline = 0;
@@ -49,7 +70,7 @@ function RenderData(data) {
     var mergeRowNumAgent = 0;
     var cacheGroupHeadline = '';
     var currentBGColor = '';
-    for (i = 0 ; i < rowCount; i++) {
+    for (i = 0; i < rowCount; i++) {
         var row = { Columns: [] };
         row.Columns.push({ Name: 'RowNum', Value: data.TicketToHeadlineCollection[i].RowNum });
 
@@ -105,38 +126,50 @@ function RenderData(data) {
 
 
     var gridOptions =
-       {
-           columns: [
-               { HeaderText: "#", Width: 40, Name: "RowNum", HeaderAlign: "center", CellAlign: "center" },
-               { HeaderText: "Group Headline", Width: 150, Name: "GroupHeadline", HeaderAlign: "center", CellAlign: "center" },
-               { HeaderText: "Headline Type", Width: 100, Name: "HeadlineType", HeaderAlign: "center", CellAlign: "center" },
-               { HeaderText: "Currency", Width: 80, Name: "Currency", HeaderAlign: "center", CellAlign: "center" },
-               { HeaderText: "Super", Width: 200, Name: "Super", HeaderAlign: "center", CellAlign: "left", AllowTruncate: true },
-               { HeaderText: "Master", Width: 200, Name: "Master", HeaderAlign: "center", CellAlign: "left", AllowTruncate: true },
-               { HeaderText: "Agent", Width: 200, Name: "Agent", HeaderAlign: "center", CellAlign: "left", AllowTruncate: true },
-               { HeaderText: "Member", Width: 200, Name: "Member", HeaderAlign: "center", CellAlign: "left", AllowTruncate: true },
-               { HeaderText: "Ref No", Width: 150, Name: "RefNo", HeaderAlign: "center", CellAlign: "left", AllowTruncate: true }
-           ],
-           bodyRows: bodyRows,
-           gridExpandHeight: 200,
-           showTitle: true,
-           titleInfo: {
-               text: 'List of tickets with their headlines retrieved'
-           },
-           showPager: true,
-           customPager: true,
-           showDistinctRow: false,
-           pagerOption: {
-               itemsPerPage: parseInt($('#PageSize').val()),
-               currentPage: parseInt($('#PageIndex').val()) - 1,
-               itemsPerPageArray: [50, 100, 150, 200],
-               pagerSelectCallBack: reRenderAfterPaged,
-               totalItem: data.TotalRows
-           }
-       };
+        {
+            columns: [
+                { HeaderText: "#", Width: 40, Name: "RowNum", HeaderAlign: "center", CellAlign: "center" },
+                { HeaderText: "Group Headline", Width: 150, Name: "GroupHeadline", HeaderAlign: "center", CellAlign: "center" },
+                { HeaderText: "Headline Type", Width: 100, Name: "HeadlineType", HeaderAlign: "center", CellAlign: "center" },
+                { HeaderText: "Currency", Width: 80, Name: "Currency", HeaderAlign: "center", CellAlign: "center" },
+                { HeaderText: "Super", Width: 200, Name: "Super", HeaderAlign: "center", CellAlign: "left", AllowTruncate: true },
+                { HeaderText: "Master", Width: 200, Name: "Master", HeaderAlign: "center", CellAlign: "left", AllowTruncate: true },
+                { HeaderText: "Agent", Width: 200, Name: "Agent", HeaderAlign: "center", CellAlign: "left", AllowTruncate: true },
+                { HeaderText: "Member", Width: 200, Name: "Member", HeaderAlign: "center", CellAlign: "left", AllowTruncate: true },
+                { HeaderText: "Ref No", Width: 150, Name: "RefNo", HeaderAlign: "center", CellAlign: "left", AllowTruncate: true }
+            ],
+            bodyRows: bodyRows,
+            gridExpandHeight: 200,
+            showTitle: true,
+            titleInfo: {
+                text: 'List of tickets with their headlines retrieved'
+            },
+            showPager: true,
+            customPager: true,
+            showDistinctRow: false,
+            pagerOption: {
+                itemsPerPage: parseInt($('#PageSize').val()),
+                currentPage: parseInt($('#PageIndex').val()) - 1,
+                itemsPerPageArray: [50, 100, 150, 200],
+                pagerSelectCallBack: reRenderAfterPaged,
+                totalItem: data.TotalRows
+            }
+        };
 
     $('#gridId').fanexGrid(gridOptions);
     try { parent.jQuery.unblockUI(); } catch (e) { }
+}
+
+function InitNotifyHeadlinesButton() {
+    $('#productId').change(function () {
+        var productId = $(this).val();
+        if (showNotifyHeadlinesButtonForProducts.indexOf(parseInt(productId)) >= 0)
+            $('#notifyHeadlines').show();
+        else
+            $('#notifyHeadlines').hide();
+    });
+
+    $('#productId').change();
 }
 
 function toggleColor(colorCss) {
