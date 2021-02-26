@@ -238,24 +238,12 @@
             }
             else if (historyLog.ActionId == UpdateTypeConstants.Status ||
                 historyLog.ActionId == UpdateTypeConstants.LicenseeStatus)
-            {
-                if (historyLog.ActionId == UpdateTypeConstants.VRLock)
+            {                
+                historyLogDetailList.Add(new HistoryLogDetailModel
                 {
-                    historyLogDetailList.Add(new HistoryLogDetailModel
-                    {
-                        UpdateType = historyLog.ActionId,
-                        VRLock = Converter.ToInt(xmlLoad.Attribute("VRLock").Value) != 0
-                    });
-                }
-                else
-                {
-                    historyLogDetailList.Add(new HistoryLogDetailModel
-                    {
-                        UpdateType = historyLog.ActionId,
-                        EnableVirtualRate = Converter.ToInt(xmlLoad.Attribute("EnableVirtualrate").Value) != 0
-                    });
-                }
-                
+                    UpdateType = historyLog.ActionId,
+                    EnableVirtualRate = Converter.ToInt(xmlLoad.Attribute("EnableVirtualrate").Value) != 0
+                });
             }
             else
             {
