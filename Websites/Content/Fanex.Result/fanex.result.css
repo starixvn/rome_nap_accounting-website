@@ -694,10 +694,3 @@ table.fn-rs tbody .cl-total .result {
 .width-30 {
     width: 30%;
 }
-table.fn-rs .cl-result.homeColor {
-    color: #6678e0;
-}
-
-table.fn-rs .cl-result.awayColor {
-    color: #008d95;
-}
