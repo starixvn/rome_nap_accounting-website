@@ -734,6 +734,18 @@ function showPPJackpotWonDetails(transId, custId, betType) {
     openResultsPopUp(param);
 }
 
+function showSabaClubJackpotWonDetails(transId, custId, betType) {
+    var title = "Saba.club Jackpot Won Details";
+    var param = {
+        url: "RNGCasinoBetList/JackpotDetails",
+        title: title,
+        jsonParam: { TransId: transId, CustId: custId, BetType: betType, Title: title },
+        width: 1030,
+        height: 600
+    };
+
+    openResultsPopUp(param);
+}
 
 // -------------------- Functions whose name must name by Fanex.Toco
 function ViewRNGCasinoResult(matchId, race, betType, sportType, refNo, winlostDate, custId) {

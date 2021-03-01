@@ -76,11 +76,12 @@
 
         public static BetListExcelBuilder AddWinLoss(this BetListExcelBuilder builder, ITicket ticket)
         {
+            var jackpotBettype = new List<int> { 4297, 1698 };
             var winlossModel = new WinLossModel(ticket);
 
             var rtfHelper = builder.RTFHelper;
             var rtfNumber = new RTFNumber(rtfHelper.RTFRenderer, rtfHelper.PosFont, rtfHelper.NegFont);
-            if(ticket.BetTypeId == 4297)
+            if(jackpotBettype.Contains(ticket.BetTypeId))
             {
                 rtfNumber.Render("-");
             }
