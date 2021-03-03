@@ -9,6 +9,7 @@ var HistoryLogController = function () {
         UpdateType: {
             Status: 806,
             VRLock: 829,
+            VRLockOther: 830,
             Rate: 801,
             LicenseeStatus: 2802,
             LicenseeRate: 2800
@@ -118,6 +119,7 @@ var HistoryLogController = function () {
                     var detailHistoryLog = historyLog.HistoryLogDetailList[j];
                     if (detailHistoryLog.UpdateType == self.Constants.UpdateType.Status ||
                         detailHistoryLog.UpdateType == self.Constants.UpdateType.VRLock ||
+                        detailHistoryLog.UpdateType == self.Constants.UpdateType.VRLockOther ||
                         detailHistoryLog.UpdateType == self.Constants.UpdateType.LicenseeStatus) {
                         if (isFirstRow) {
                             firstInfo = {
@@ -134,6 +136,14 @@ var HistoryLogController = function () {
                                     Name: "ColSport",
                                     Value: viewResources.VRLock + ": " +
                                         (detailHistoryLog.VRLock ? viewResources.Enabled : viewResources.Disabled),
+                                    MergeColNumber: maxColumnNumber - 3
+                                });
+                            }
+                            else if (detailHistoryLog.UpdateType == self.Constants.UpdateType.VRLockOther) {
+                                columns.push({
+                                    Name: "ColSport",
+                                    Value: viewResources.VRLockOther + ": " +
+                                        (detailHistoryLog.VRLockOther ? viewResources.Enabled : viewResources.Disabled),
                                     MergeColNumber: maxColumnNumber - 3
                                 });
                             }
@@ -207,6 +217,14 @@ var HistoryLogController = function () {
                 Name: "ColSport",
                 Value: viewResources.VRLock + ": " +
                     (logInfo.VRLock ? viewResources.Enabled : viewResources.Disabled),
+                MergeColNumber: (maxColumnNumber - 3)
+            });
+        }
+        else if (logInfo.UpdateType == self.Constants.UpdateType.VRLockOther) {
+            columns.push({
+                Name: "ColSport",
+                Value: viewResources.VRLockOther + ": " +
+                    (logInfo.VRLockOther ? viewResources.Enabled : viewResources.Disabled),
                 MergeColNumber: (maxColumnNumber - 3)
             });
         }

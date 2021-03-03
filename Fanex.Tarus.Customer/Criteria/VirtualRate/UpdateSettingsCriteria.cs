@@ -33,6 +33,8 @@ namespace Fanex.Tarus.Customer.Criteria.VirtualRate
 
         public bool LockVirtualRateStatus { get; set; }
 
+        public bool LockVirtualRateOtherStatus { get; set; }
+
         public decimal MaxVirtualRate { get; set; }
 
         public decimal MinVirtualRate { get; set; }
@@ -86,7 +88,8 @@ namespace Fanex.Tarus.Customer.Criteria.VirtualRate
             Hashtable storeProcedureParams = new Hashtable();
             storeProcedureParams.Add("custid", CustId);
             storeProcedureParams.Add("enablevirtualrate", EnableVirtualRate);
-            storeProcedureParams.Add("vrlockedstatus", LockVirtualRateStatus);
+            storeProcedureParams.Add("vrlockedstatus_soccer", LockVirtualRateStatus);
+            storeProcedureParams.Add("vrockedstatus_os", LockVirtualRateOtherStatus);
             if (EnableVirtualRate)
             {
                 storeProcedureParams.Add("virtualmultiplier", VirtualRateParam());

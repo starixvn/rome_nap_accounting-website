@@ -1285,11 +1285,20 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Virtual Rate Lock.
+        ///   Looks up a localized string similar to Other Sports Virtual Rate Lock.
         /// </summary>
-        public static string VRLock {
+        public static string VRLockOther {
             get {
-                return ResourceManager.GetString("VRLock", resourceCulture);
+                return ResourceManager.GetString("VRLockOther", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Soccer Virtual Rate Lock.
+        /// </summary>
+        public static string VRLockSoccer {
+            get {
+                return ResourceManager.GetString("VRLockSoccer", resourceCulture);
             }
         }
     }

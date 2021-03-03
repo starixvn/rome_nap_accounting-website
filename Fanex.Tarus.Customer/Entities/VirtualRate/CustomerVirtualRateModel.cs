@@ -28,6 +28,8 @@ namespace Fanex.Tarus.Customer.Entities.VirtualRate
 
         public bool LockVirtualRateStatus { get; set; }
 
+        public bool LockVirtualRateOtherStatus { get; set; }
+
         public decimal MaxVirtualRate { get; set; }
 
         public decimal MinVirtualRate { get; set; }

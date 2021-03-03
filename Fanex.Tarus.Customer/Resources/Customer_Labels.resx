@@ -525,7 +525,10 @@
   <data name="VirtualRate_LockVRNotes" xml:space="preserve">
     <value>Ticked means no auto adjustment or indirect update</value>
   </data>
-  <data name="VRLock" xml:space="preserve">
-    <value>Virtual Rate Lock</value>
+  <data name="VRLockSoccer" xml:space="preserve">
+    <value>Soccer Virtual Rate Lock</value>
+  </data>
+  <data name="VRLockOther" xml:space="preserve">
+    <value>Other Sports Virtual Rate Lock</value>
   </data>
 </root>
