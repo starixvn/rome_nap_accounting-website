@@ -89,7 +89,7 @@ namespace Fanex.Tarus.Customer.Criteria.VirtualRate
             storeProcedureParams.Add("custid", CustId);
             storeProcedureParams.Add("enablevirtualrate", EnableVirtualRate);
             storeProcedureParams.Add("vrlockedstatus_soccer", LockVirtualRateStatus);
-            storeProcedureParams.Add("vrockedstatus_os", LockVirtualRateOtherStatus);
+            storeProcedureParams.Add("vrlockedstatus_os", LockVirtualRateOtherStatus);
             if (EnableVirtualRate)
             {
                 storeProcedureParams.Add("virtualmultiplier", VirtualRateParam());
