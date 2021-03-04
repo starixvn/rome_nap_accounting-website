@@ -292,7 +292,7 @@
     <value>There is no data.</value>
   </data>
   <data name="VirtualRate_UpdateWarning" xml:space="preserve">
-    <value>Note: Update will take effect to all downlines</value>
+    <value>Note:  Update will take effect to all non-locked downlines</value>
   </data>
   <data name="ClickToViewPTInfo" xml:space="preserve">
     <value>Click To View PT Info</value>

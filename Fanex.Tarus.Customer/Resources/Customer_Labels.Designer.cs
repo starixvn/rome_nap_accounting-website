@@ -1060,7 +1060,7 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Note: Update will take effect to all downlines.
+        ///   Looks up a localized string similar to Note:  Update will take effect to all non-locked downlines.
         /// </summary>
         public static string VirtualRate_UpdateWarning {
             get {
