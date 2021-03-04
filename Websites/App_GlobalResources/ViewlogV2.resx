@@ -2105,11 +2105,18 @@ Max Keno (20+1) 2</value>
     <value>Disabled WM</value>
   </data>
   <data name="Disable236_5701" xml:space="preserve">
-    <value>Disabled GDG</value> </data>
+    <value>Disabled GDG</value>
+  </data>
   <data name="Disable239_3501" xml:space="preserve">
     <value>Disabled BG</value>
   </data>
   <data name="Disable237_5401" xml:space="preserve">
     <value>Disabled MaxGame</value>
+  </data>
+  <data name="PaymentDate" xml:space="preserve">
+    <value>Payment Date</value>
+  </data>
+  <data name="RefNo" xml:space="preserve">
+    <value>Ref. No.</value>
   </data>
 </root>
