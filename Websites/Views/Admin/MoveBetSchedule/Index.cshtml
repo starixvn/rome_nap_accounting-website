@@ -1,5 +1,7 @@
 ﻿@using Sunplus.Accounting.Core.Configurations;
 
+@model IEnumerable<Fanex.Tarus.Admin.Entities.MoveBetSchedule.MoveBetDay>
+
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -18,8 +20,10 @@
     <script type="text/javascript" src="@Url.Content("~/Views/Admin/MoveBetSchedule/Scripts/MoveBetSchedule.js?v=" + WebSettings.Version)"></script>
     <script type="text/javascript" src="@Url.Content("~/Views/Admin/MoveBetSchedule/Scripts/Index.js?v=" + WebSettings.Version)"></script>
     <script type="text/javascript">
-        var currentDay = '@DateTime.Now.ToString("MM/dd/yyyy")';
-        var sevenDaysFromToday='@DateTime.Now.AddDays(6).ToString("MM/dd/yyyy")';
+        var currentDay = '@DateTime.Today.ToString("MM/dd/yyyy")';
+        var sevenDaysFromToday = '@DateTime.Today.AddDays(6).ToString("MM/dd/yyyy")';
+        var defaultMoveBetSchedule = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model, Newtonsoft.Json.Formatting.Indented));
+        var url = '@Url.Content("~/MoveBetSchedule/GetMoveBetSchedule")';
     </script>
 }
 

@@ -13,6 +13,10 @@
     this.currentDay = currentDay;
     this.sevenDaysFromToday = sevenDaysFromToday;
 
+    this.days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    this.defaultMoveBetSchedule = defaultMoveBetSchedule;
+    this.url = url;
+
     this.init = function () {
         this.cacheDOMElements();
         this.renderDateRangePicker();
@@ -63,7 +67,12 @@
 
             for (var column = 0; column < 7; column++) {
                 var day = column + 1 === 7 ? 0 : column + 1;
-                var option = defaultMoveBetSchedule[days[day]][row];
+                var backDay = day - row - 1 < 0 ? 7 + day - row - 1 : day - row - 1;
+                var option = {
+                    checked: this.defaultMoveBetSchedule[day].Options[row],
+                    label: `Current date - ${row + 1} (${this.days[backDay]})`
+                };
+
                 tr.append(`<td class="${day === currentWeekDay ? 'current-day' : ''}">
                              <input
                                  type = "checkbox"
@@ -79,9 +88,32 @@
     };
 
     this.renderMoveBetSchedule = function () {
-        var fromDate = this.$fromDate.datepicker('getDate'),
-            toDate = this.$toDate.datepicker('getDate');
-        this.$tblMoveBetSchedule.renderMoveBetSchedule({ fromDate, toDate });
+        var param = {
+            FromDate: this.$fromDate.val(),
+            ToDate: this.$toDate.val()
+        };
+
+        this.setDatePickerDisabledOption(true);
+
+        this.$.ajax({
+            type: 'POST',
+            url: this.url,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            data: JSON.stringify(param),
+            success: function (data) {
+                self.$tblMoveBetSchedule.renderMoveBetSchedule({ data });
+            },
+            error: function (xhr, textStatus, thrownError) { },
+            complete: function (xhr, textStatus) {
+                self.setDatePickerDisabledOption(false);
+            }
+        });
+    };
+
+    this.setDatePickerDisabledOption = function (disabled) {
+        this.$fromDate.datepicker('option', 'disabled', disabled);
+        this.$toDate.datepicker('option', 'disabled', disabled);
     };
 }
 
