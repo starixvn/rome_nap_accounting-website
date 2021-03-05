@@ -517,14 +517,14 @@
       <HintPath>..\packages\Fanex.Tarus.Balance.1.0.0.4\lib\net40\Fanex.Tarus.Balance.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Tarus.Business.Implement, Version=1.0.0.12, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Business.Implement.1.0.1.3-NotifyHeadline02\lib\net40\Fanex.Tarus.Business.Implement.dll</HintPath>
+    <Reference Include="Fanex.Tarus.Business.Implement, Version=1.0.1.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Business.Implement.1.0.1.3-NotifyHeadline03\lib\net40\Fanex.Tarus.Business.Implement.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Tarus.DataAccess.Implement, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.DataAccess.Implement.1.0.1-NotifyHeadline01\lib\net40\Fanex.Tarus.DataAccess.Implement.dll</HintPath>
+    <Reference Include="Fanex.Tarus.DataAccess.Implement, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.DataAccess.Implement.1.0.1-NotifyHeadline02\lib\net40\Fanex.Tarus.DataAccess.Implement.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Tarus.Entities, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Entities.1.0.0.6-NotifyHeadline01\lib\net40\Fanex.Tarus.Entities.dll</HintPath>
+    <Reference Include="Fanex.Tarus.Entities, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Entities.1.0.0.6-NotifyHeadline02\lib\net40\Fanex.Tarus.Entities.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Excels, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Excels.1.0.0.2\lib\net40\Fanex.Tarus.Excels.dll</HintPath>
@@ -549,11 +549,11 @@
     <Reference Include="Fanex.Tarus.User, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.User.1.0.0.5\lib\net40\Fanex.Tarus.User.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Tarus.Web.Controllers, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Web.Controller.1.0.1.1-NotifyHeadline01\lib\net40\Fanex.Tarus.Web.Controllers.dll</HintPath>
+    <Reference Include="Fanex.Tarus.Web.Controllers, Version=1.0.1.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Web.Controller.1.0.1.1-NotifyHeadline02\lib\net40\Fanex.Tarus.Web.Controllers.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Tarus.Web.Models, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Web.Models.1.0.0.8-NotifyHeadline01\lib\net40\Fanex.Tarus.Web.Models.dll</HintPath>
+    <Reference Include="Fanex.Tarus.Web.Models, Version=1.0.0.8, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Web.Models.1.0.0.8-NotifyHeadline02\lib\net40\Fanex.Tarus.Web.Models.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Voidbridge.BetDetail, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Voidbridge.BetDetail.2.0.1\lib\net461\Fanex.Voidbridge.BetDetail.dll</HintPath>
