@@ -2122,4 +2122,7 @@ Max Keno (20+1) 2</value>
   <data name="Disable169_3611" xml:space="preserve">
     <value>Disabled Sports Lottery</value>
   </data>
+  <data name="Disable238_7001" xml:space="preserve">
+    <value>Disabled Habanero</value>
+  </data>
 </root>

@@ -285,7 +285,8 @@
                 return SportContants.MaxGame;
             if (3701 <= betTypeId && betTypeId <= 3799)
                 return SportContants.PPLiveCasino;
-
+            if (7001 <= betTypeId && betTypeId <= 7300)
+                return SportContants.Habanero;
             return 0;
         }
 

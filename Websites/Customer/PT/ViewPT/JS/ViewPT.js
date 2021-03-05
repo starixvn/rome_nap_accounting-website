@@ -733,6 +733,7 @@ var ViewPT = {
             case 236: // GDG
             case 237: // MaxGame
             case 239: // BigGame
+            case 238: // Habanero
                 ViewPT.viewPTBasedOnKindOfCustomer(userName, sportId, betTypeId, isLive);
                 break;
             case 180: // Virtual Soccer

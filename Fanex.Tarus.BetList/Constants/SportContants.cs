@@ -85,5 +85,6 @@
         public const int MaxGame = 237;
         public const int SportsLottery = 169;
         public const int PPLiveCasino = 170;
+        public const int Habanero = 238;
     }
 }
