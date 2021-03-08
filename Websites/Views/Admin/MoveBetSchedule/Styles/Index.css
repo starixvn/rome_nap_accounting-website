@@ -25,6 +25,14 @@
     background-image: url('../svg/left-arrow.svg');
 }
 
+span.error {
+    color: #dc3545 !important;
+}
+
+span.success {
+    color: #28a745 !important;
+}
+
 table {
     border-collapse: collapse;
     width: 100%;

@@ -9,15 +9,30 @@
     this.$toDate = null;
     this.$tblDefaultMoveBetSchedule = null;
     this.$tblMoveBetSchedule = null;
+    this.$resultMessage = null;
 
     this.currentDay = currentDay;
     this.sevenDaysFromToday = sevenDaysFromToday;
 
     this.days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     this.defaultMoveBetSchedule = defaultMoveBetSchedule;
-    this.url = url;
+    this.getMoveBetScheduleUrl = getMoveBetScheduleUrl;
+    this.updateMoveBetScheduleUrl = updateMoveBetScheduleUrl;
 
     this.init = function () {
+        this.$.ajaxSetup({
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            beforeSend: function (xhr, settings) {
+                window.parent.BlockUI();
+            },
+            error: function (xhr, textStatus, thrownError) { },
+            complete: function (xhr, textStatus) {
+                window.parent.$.unblockUI();
+            }
+        });
+
         this.cacheDOMElements();
         this.renderDateRangePicker();
         this.renderDefaultMoveBetSchedule();
@@ -29,6 +44,7 @@
         this.$toDate = this.$('#txtToDate');
         this.$tblDefaultMoveBetSchedule = this.$('#tbl-default-movebet');
         this.$tblMoveBetSchedule = this.$('#tbl-movebet-schedule');
+        this.$resultMessage = this.$('#result-message');
     };
 
     this.renderDateRangePicker = function () {
@@ -93,27 +109,41 @@
             ToDate: this.$toDate.val()
         };
 
-        this.setDatePickerDisabledOption(true);
-
         this.$.ajax({
-            type: 'POST',
-            url: this.url,
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
+            url: this.getMoveBetScheduleUrl,
             data: JSON.stringify(param),
             success: function (data) {
-                self.$tblMoveBetSchedule.renderMoveBetSchedule({ data });
-            },
-            error: function (xhr, textStatus, thrownError) { },
-            complete: function (xhr, textStatus) {
-                self.setDatePickerDisabledOption(false);
+                self.$tblMoveBetSchedule.renderMoveBetSchedule({ data, onSave: self.onSave.bind(self) });
             }
         });
     };
 
-    this.setDatePickerDisabledOption = function (disabled) {
-        this.$fromDate.datepicker('option', 'disabled', disabled);
-        this.$toDate.datepicker('option', 'disabled', disabled);
+    this.onSave = function (data) {
+        var param = {
+            File: data,
+            FromDate: this.$fromDate.val(),
+            ToDate: this.$toDate.val()
+        };
+
+        this.$.ajax({
+            url: this.updateMoveBetScheduleUrl,
+            data: JSON.stringify(param),
+            success: function (result) {
+                if (!result) {
+                    self.showMessage.call(self, 'Invalid request.', 'error');
+                }
+                else if (result.ErrorCode === 0) {
+                    self.showMessage.call(self, 'Successful.', 'success');
+                } else {
+                    self.showMessage.call(self, result.ErrorMessage, 'error');
+                }
+            }
+        });
+    };
+
+    this.showMessage = function (message, className) {
+        this.$resultMessage.removeClass().addClass(className);
+        this.$resultMessage.text(message);
     };
 }
 

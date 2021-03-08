@@ -23,7 +23,8 @@
         var currentDay = '@DateTime.Today.ToString("MM/dd/yyyy")';
         var sevenDaysFromToday = '@DateTime.Today.AddDays(6).ToString("MM/dd/yyyy")';
         var defaultMoveBetSchedule = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model, Newtonsoft.Json.Formatting.Indented));
-        var url = '@Url.Content("~/MoveBetSchedule/GetMoveBetSchedule")';
+        var getMoveBetScheduleUrl = '@Url.Content("~/MoveBetSchedule/GetMoveBetSchedule")';
+        var updateMoveBetScheduleUrl = '@Url.Content("~/MoveBetSchedule/UpdateMoveBetSchedule")';
     </script>
 }
 
@@ -58,7 +59,7 @@
                 </table>
             </div>
             <div id="update-movebet" class="update-movebet">
-                <form id="form-filter-movebet" class="form-inline">
+                <div id="form-filter-movebet" class="form-inline">
                     <h3 class="form-title">Adjust Move Bet Days</h3>
                     <div class="form-control">
                         <label>From</label>
@@ -68,7 +69,7 @@
                         <label>To</label>
                         <input type="text" class="txtdate" id="txtToDate" readonly="readonly" />
                     </div>
-                </form>
+                </div>
                 <table id="tbl-movebet-schedule" class="tbl-movebet-schedule">
                     <thead>
                         <tr>
@@ -82,9 +83,10 @@
                     </thead>
                     <tbody></tbody>
                 </table>
-                <form id="form-update-movebet" class="form-update-movebet">
-                    <button type="submit">Save</button>
-                </form>
+                <div id="form-update-movebet" class="form-update-movebet">
+                    <span id="result-message"></span>
+                    <button id="btn-save" type="submit">Save</button>
+                </div>
             </div>
         </div>
     </div>

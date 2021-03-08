@@ -6,7 +6,9 @@
 
     var $monthAndYearEl = null,
         $previousIconEl = null,
-        $nextIconEl = null;
+        $nextIconEl = null,
+        $btnSave = null,
+        onSaveCallBack = null;
 
     var forwardStep = 1,
         backwardStep = -1;
@@ -23,12 +25,14 @@
         return '#' + elId;
     };
 
-    var renderCheckBox = function (classes, key, checked = false, disabled = false, label = null, labelPosition = 'end') {
+    var renderCheckBox = function (classes, key, name, value, checked = false, disabled = false, label = null, labelPosition = 'end') {
         return `${label && labelPosition === 'start' ? `<label>${label}</label>` : ''}
                 <input
                     type="checkbox"
                     class="${classes}"
                     data-key="${key}"
+                    data-name="${name}"
+                    value="${value}"
                     ${checked ? 'checked' : ''}
                     ${disabled ? 'disabled' : ''}
                 />
@@ -71,9 +75,28 @@
         this.find(`.secondary-checkbox[data-key="${key}"]`).prop('disabled', !el.checked);
     };
 
+    var onSave = function () {
+        var $this = this,
+            data = '<ROOT>';
+        $this.find('.primary-checkbox').each(function () {
+            if (this.checked && !$(this).prop('disabled')) {
+                var key = $(this).data('key'),
+                    option = `<File ${$(this).data('name')}="${$(this).val()}"`;
+                $this.find(`.secondary-checkbox[data-key="${key}"]`).each(function () {
+                    option += ` ${$(this).data('name')}="${this.checked ? 1 : 0}"`;
+                });
+                data += `${option} />`;
+            }
+        });
+
+        data += '</ROOT>';
+        onSaveCallBack(data);
+    };
+
     var registerEvents = function () {
         $nextIconEl.off('click').on('click', move.bind(this, forwardStep));
         $previousIconEl.off('click').on('click', move.bind(this, backwardStep));
+        $btnSave.off('click').on('click', onSave.bind(this));
         this.find('.primary-checkbox').off('change').on('change', onChange.bind(this));
     };
 
@@ -122,10 +145,11 @@
 
                 var disabled = dataIndex >= length,
                     checked = weekDay !== 0 && weekDay !== 6,
-                    weekDayName = days[weekDay];
+                    weekDayName = days[weekDay],
+                    value = date.toLocaleDateString();
 
                 tr.append(`<td class="td-date">
-                             ${renderCheckBox('primary-checkbox', dataIndex, checked && !disabled, disabled, weekDayName, 'start')}
+                             ${renderCheckBox('primary-checkbox', dataIndex, 'MBDate', value, checked && !disabled, disabled, weekDayName, 'start')}
                              <div class="date-box ${isToday(date) ? 'current-day' : ''}">
                                 <span>${date.getDate()}</span>
                              </div>
@@ -137,9 +161,10 @@
                             disabled: weekDay === 0 || weekDay === 6,
                             checked: options[row],
                             label: `Current date - ${row + 1} (${days[backDay]})`
-                        };
+                        },
+                        name = `Isbackday${row + 1}`;
 
-                    rows[row].append(`<td>${renderCheckBox('secondary-checkbox', dataIndex, option.checked, option.disabled || disabled, option.label)}</td>`);
+                    rows[row].append(`<td>${renderCheckBox('secondary-checkbox', dataIndex, name, '', option.checked, option.disabled || disabled, option.label)}</td>`);
                 }
 
                 dataIndex++;
@@ -156,7 +181,9 @@
             data: null,
             monthAndYearElId: 'month-year-label',
             previousIconElId: 'previous-icon',
-            nextIconElId: 'next-icon'
+            nextIconElId: 'next-icon',
+            btnSave: 'btn-save',
+            onSave: function () { }
         };
 
         $.extend(defaultOptions, options);
@@ -164,6 +191,8 @@
         $monthAndYearEl = this.find(transformElId(defaultOptions.monthAndYearElId));
         $previousIconEl = this.find(transformElId(defaultOptions.previousIconElId));
         $nextIconEl = this.find(transformElId(defaultOptions.nextIconElId));
+        $btnSave = $(transformElId(defaultOptions.btnSave));
+        onSaveCallBack = defaultOptions.onSave;
 
         renderMoveBetSchedule.call(this, defaultOptions.data || []);
 
