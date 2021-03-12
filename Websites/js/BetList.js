@@ -645,7 +645,7 @@ function showAGCasinoDetails(refno, winlossDate, custId, transType) {
 
     openResultsPopUp(params);
 }
-function showWMBetDetails (refno, winlossDate, custId, transType) {
+function showWMBetDetails(refno, winlossDate, custId, transType) {
     var params = {
         url: "AGCasinoBetList/BetDetails",
         title: "WM - Detailed Bet list - " + winlossDate.split(" ")[0],
@@ -747,6 +747,22 @@ function showSabaClubJackpotWonDetails(transId, custId, betType) {
     openResultsPopUp(param);
 }
 
+function showPragmaticLiveCasinoBetsDetails(refno, winlossDate, custId, transType) {
+    var title = "PP Live Casino - Detailed Bet list - " + winlossDate.split(" ")[0];
+    showBetDetailsOnBettransLC(refno, winlossDate, custId, transType, title);
+}
+
+function showBetDetailsOnBettransLC(refno, winlossDate, custId, transType, title) {
+    var params = {
+        url: "AGCasinoBetList/BetDetails",
+        title: title,
+        jsonParam: { Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 236, PageSize: 500 },
+        width: 1040,
+        height: 600
+    };
+
+    openResultsPopUp(params);
+}
 // -------------------- Functions whose name must name by Fanex.Toco
 function ViewRNGCasinoResult(matchId, race, betType, sportType, refNo, winlostDate, custId) {
     var params = $.param({
@@ -935,7 +951,7 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
         case 208:
         case 209:
         case 210: // RNG Casino.
-            return getRNGCasinoParam(matchid, race, bettype, sporttype, refno, winlostdate);        
+            return getRNGCasinoParam(matchid, race, bettype, sporttype, refno, winlostdate);
 
         case 224: //RNG War
             return getRNGWarCasinoParam(matchcode, betcheck);
@@ -1136,7 +1152,7 @@ function getBBinParam(transdesc, betcheck, bettype) {
     return {
         url: "Report/ViewBBinResult.aspx",
         title: "BBIN Result",
-        jsonParam: { transDesc: transdesc, betcheck: betcheck},
+        jsonParam: { transDesc: transdesc, betcheck: betcheck },
         width: 945,
         height: 500
     };
@@ -1296,7 +1312,7 @@ function getLinkedGamesParam(custId, transId3rd) {
     return {
         url: "ThirdParty/LinkedGamesResult",
         title: "Happy 5 Linked Games Result",
-        jsonParam: { productId: 3, custId: custId, transId3rd: transId3rd  },
+        jsonParam: { productId: 3, custId: custId, transId3rd: transId3rd },
         width: 945,
         height: 800
     };
@@ -1388,7 +1404,7 @@ function openResultsPopUp(resultParam) {
     var url = resultParam.url + "?" + $.param(resultParam.jsonParam);
     var width = resultParam.width || 600;
     var height = resultParam.height || 500;
-    var popupName = resultParam.title.replace(/\s/g, "").replace(/\//g, "").replace(".","");
+    var popupName = resultParam.title.replace(/\s/g, "").replace(/\//g, "").replace(".", "");
     var resizable = resultParam.resizable == undefined ? true : resultParam.resizable;
 
     if (resultParam.iframe) {
