@@ -749,14 +749,14 @@ function showSabaClubJackpotWonDetails(transId, custId, betType) {
 
 function showPragmaticLiveCasinoBetsDetails(refno, winlossDate, custId, transType) {
     var title = "PP Live Casino - Detailed Bet list - " + winlossDate.split(" ")[0];
-    showBetDetailsOnBettransLC(refno, winlossDate, custId, transType, title);
+    showBetDetailsOnBettransLC(170, refno, winlossDate, custId, transType, title);
 }
 
-function showBetDetailsOnBettransLC(refno, winlossDate, custId, transType, title) {
+function showBetDetailsOnBettransLC(sportTypeId, refno, winlossDate, custId, transType, title) {
     var params = {
         url: "AGCasinoBetList/BetDetails",
         title: title,
-        jsonParam: { Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 236, PageSize: 500 },
+        jsonParam: { Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: sportTypeId, PageSize: 500 },
         width: 1040,
         height: 600
     };
