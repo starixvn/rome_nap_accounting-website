@@ -292,7 +292,7 @@
     <value>There is no data.</value>
   </data>
   <data name="VirtualRate_UpdateWarning" xml:space="preserve">
-    <value>Note: Update will take effect to all downlines</value>
+    <value>Note:  Update will take effect to all non-locked downlines</value>
   </data>
   <data name="ClickToViewPTInfo" xml:space="preserve">
     <value>Click To View PT Info</value>
@@ -518,5 +518,17 @@
   </data>
   <data name="Apply_Virtual_Rate_Notes" xml:space="preserve">
     <value>Enabling/Disabling this status does not affect E-Sports &amp; Basketball</value>
+  </data>
+  <data name="VirtualRate_LockVRLabel" xml:space="preserve">
+    <value>Virtual Rate Lock Status</value>
+  </data>
+  <data name="VirtualRate_LockVRNotes" xml:space="preserve">
+    <value>Ticked means no auto adjustment or indirect update</value>
+  </data>
+  <data name="VRLockSoccer" xml:space="preserve">
+    <value>Soccer Virtual Rate Lock</value>
+  </data>
+  <data name="VRLockOther" xml:space="preserve">
+    <value>Other Sports Virtual Rate Lock</value>
   </data>
 </root>

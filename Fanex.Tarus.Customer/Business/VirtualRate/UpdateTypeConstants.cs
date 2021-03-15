@@ -18,6 +18,10 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
 
         public const int Rate = 801;
 
+        public const int VRLock = 829;
+
+        public const int VRLockOther = 830;
+
         public const int LicenseeStatus = 2802;
 
         public const int LicenseeRate = 2800;

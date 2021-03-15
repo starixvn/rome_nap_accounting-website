@@ -1015,6 +1015,24 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Virtual Rate Lock Status.
+        /// </summary>
+        public static string VirtualRate_LockVRLabel {
+            get {
+                return ResourceManager.GetString("VirtualRate_LockVRLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ticked means no auto adjustment or indirect update.
+        /// </summary>
+        public static string VirtualRate_LockVRNotes {
+            get {
+                return ResourceManager.GetString("VirtualRate_LockVRNotes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure that you want to update these virtual rate values for this account and all of its downlines except Auto Adjusted Members? For the members who are waiting for the performance checking, only new virtual rate for soccer will be applied, the other sports will be kept unchanged..
         /// </summary>
         public static string VirtualRate_UpdateConfirm {
@@ -1042,7 +1060,7 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Note: Update will take effect to all downlines.
+        ///   Looks up a localized string similar to Note:  Update will take effect to all non-locked downlines.
         /// </summary>
         public static string VirtualRate_UpdateWarning {
             get {
@@ -1263,6 +1281,24 @@ namespace Fanex.Tarus.Customer.Resources {
         public static string Volleyball {
             get {
                 return ResourceManager.GetString("Volleyball", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Other Sports Virtual Rate Lock.
+        /// </summary>
+        public static string VRLockOther {
+            get {
+                return ResourceManager.GetString("VRLockOther", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Soccer Virtual Rate Lock.
+        /// </summary>
+        public static string VRLockSoccer {
+            get {
+                return ResourceManager.GetString("VRLockSoccer", resourceCulture);
             }
         }
     }

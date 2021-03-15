@@ -221,13 +221,22 @@
         {
             var historyLogDetailList = new List<HistoryLogDetailModel>();
             var xmlLoad = XElement.Parse(historyLog.TrackingValue);
-            if (xmlLoad.Attribute("EnableVirtualrate") == null &&
-                !xmlLoad.HasElements)
-            {
-                return historyLogDetailList;
+            if (historyLog.ActionId == UpdateTypeConstants.VRLockOther) {
+                historyLogDetailList.Add(new HistoryLogDetailModel
+                {
+                    UpdateType = historyLog.ActionId,
+                    VRLockOther = Converter.ToInt(xmlLoad.Attribute("VRLock").Value) != 0
+                });
             }
-
-            if (historyLog.ActionId == UpdateTypeConstants.Status ||
+            else if (historyLog.ActionId == UpdateTypeConstants.VRLock)
+            {
+                historyLogDetailList.Add(new HistoryLogDetailModel
+                {
+                    UpdateType = historyLog.ActionId,
+                    VRLock = Converter.ToInt(xmlLoad.Attribute("VRLock").Value) != 0
+                });
+            }
+            else if (historyLog.ActionId == UpdateTypeConstants.Status ||
                 historyLog.ActionId == UpdateTypeConstants.LicenseeStatus)
             {
                 historyLogDetailList.Add(new HistoryLogDetailModel

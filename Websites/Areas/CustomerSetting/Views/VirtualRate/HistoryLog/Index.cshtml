@@ -1,8 +1,9 @@
 ﻿@using Fanex.Tarus.Customer.Entities.VirtualRate;
 @using Fanex.Tarus.Customer.Resources;
 @using Newtonsoft.Json;
+@using Sunplus.Accounting.Core.Configurations;
 @model HistoryLogReportModel
-@{    
+@{
     ViewBag.Title = Customer_Labels.Virtual_Rate;
     Layout = "";
     var historyLogReport = JsonConvert.SerializeObject(Model);
@@ -25,11 +26,11 @@
     <script type="text/javascript" src="~/js/BlockUI.js"></script>
     <script type="text/javascript" src="~/js/Utils/FormatLibs/NumberFormat/numeral.js"></script>
     <script type="text/javascript" src="~/js/jQuery/FanexGrid/Fanex.Grid.js"></script>
-    <script type="text/javascript" src="~/Areas/CustomerSetting/Views/VirtualRate/HistoryLog/Scripts/HistoryLogController.js"></script>
+    <script type="text/javascript" src="~/Areas/CustomerSetting/Views/VirtualRate/HistoryLog/Scripts/HistoryLogController.js?v=@WebSettings.Version"></script>
     <script type="text/javascript">
         window.rootUrl = '@Url.Content("~")';
-        var historyLogReport= @Html.Raw(historyLogReport); 
-         var viewResources = {           
+        var historyLogReport= @Html.Raw(historyLogReport);
+         var viewResources = {
             System_Error: '@Customer_Labels.System_Error',
             Symbol_No:'@Customer_Labels.No',
             Date:'@Customer_Labels.Date',
@@ -42,12 +43,13 @@
             Live: '@Customer_Labels.Live',
             NonLive: '@Customer_Labels.Non_Live',
             There_is_no_data: '@Customer_Labels.There_is_no_data',
-
             Bet_Type: '@Customer_Labels.Bet_Type',
             Live_NonLive: '@Customer_Labels.Live_NonLive',
             Virtual_Rate: '@Customer_Labels.Virtual_Rate',
             Disabled: '@Customer_Labels.Disabled',
-            Enabled: '@Customer_Labels.Enabled'
+            Enabled: '@Customer_Labels.Enabled',
+            VRLock: '@Customer_Labels.VRLockSoccer',
+            VRLockOther: '@Customer_Labels.VRLockOther',
         };
     </script>
 </div>
