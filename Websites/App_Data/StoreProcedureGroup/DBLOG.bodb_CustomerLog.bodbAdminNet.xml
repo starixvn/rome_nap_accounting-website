@@ -5,7 +5,7 @@
     <Setting Key="UserLog_UserControlSelTotalRecords" SpName="Acc_UserLog_UserControlSelTotalRecords" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
   </Function>
   <Function Name="Customer">
-    <Setting Key="Customer_VirtualRate_GetLog" SpName="Acc_CustomerSelVirtualRateHistory_UAT4" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
+    <Setting Key="Customer_VirtualRate_GetLog" SpName="Acc_CustomerSelVirtualRateHistory" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
   </Function>
   <Function Name="Customer - Log">
     <Setting Key="GetLogSetting" SpName="NAP_UserLog_RunSPSel" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
