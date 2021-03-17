@@ -1,8 +1,5 @@
 ﻿namespace Fanex.Tarus.BetList.Business.BetDetails
 {
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
     using Builders.ExcelBuilders;
     using Constants;
     using Fanex.BetList.Core.Builder;
@@ -24,6 +21,9 @@
     using Sunplus.Accounting.Business;
     using Sunplus.Accounting.Core.Common;
     using Sunplus.Accounting.Core.Configurations;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
 
     public class BetDetailsExporter : IBetDetailsExporter
     {
@@ -52,7 +52,8 @@
                 {SportContants.RNG_Mobile, "RNGCasino_Details"},
                 {SportContants.Sabaclub, "Sabaclub_Details"},
                 {SportContants.IonCasino, "IONLiveCasino_Details"},
-                {SportContants.GDG, "GDG_Details"}
+                {SportContants.GDG, "GDG_Details"},
+                {SportContants.PPLiveCasino, "PPLiveCasino_Details"}
             };
 
             return fileNameMapper.ContainsKey(sportType) ?
@@ -69,11 +70,12 @@
             if (sportType == SportContants.AllBet ||
                 sportType == SportContants.SaGaming ||
                 sportType == SportContants.SexyGaming ||
-                sportType == SportContants.GTCasino ||                
+                sportType == SportContants.GTCasino ||
                 sportType == SportContants.IonCasino ||
-                sportType == SportContants.WM||
+                sportType == SportContants.WM ||
                 sportType == SportContants.GDG ||
-                sportType == SportContants.BigGame)
+                sportType == SportContants.BigGame ||
+                sportType == SportContants.PPLiveCasino)
             {
                 return GetLiveCasinoTickets(refNo, custId, transType);
             }
