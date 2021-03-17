@@ -26,7 +26,7 @@
 
         public ActionResult Result(ThirdPartyResultBaseQuery message)
         {
-            var productName = CacheRef.GetProductName(message.ProductId);
+            var productName = CacheRef.GetProductName(message.ProductId) + " Result";
             var productService = serviceFactory.CreateProductResultService(message.ProductId);
             var result = productService.GetDetailLink(message);
 
@@ -35,7 +35,7 @@
 
         public ActionResult SportsLotteryResult(int productId, string custId, string transId3rd)
         {
-            var productName = CacheRef.GetProductName(productId);
+            var productName = CacheRef.GetProductName(productId) + " Result";
             var service = new SportsLotteryResult();
             var result = service.GetResultDetail(custId, transId3rd, isDesktop: true);
 
@@ -44,7 +44,7 @@
 
         public ActionResult VirtualGamesResult(int productId, string gameId)
         {
-            var productName = CacheRef.GetProductName(productId);
+            var productName = CacheRef.GetProductName(productId) + " Result";
             var service = new VirtualGamesResult();
             var result = service.GetDetailResult(gameId, "d");
 
@@ -53,7 +53,7 @@
 
         public ActionResult LinkedGamesResult(int productId, string custId, string transId3rd)
         {
-            var productName = CacheRef.GetProductName(productId);
+            var productName = CacheRef.GetProductName(productId) + " Result";
             var service = new LinkedGamesResult();
             var result = service.GetResult(custId, transId3rd, isDesktop: true);
 
@@ -62,7 +62,7 @@
 
         public ActionResult MaxGameResult(int productId, string custId, string transId3rd, int betType, string endTime, string siteId)
         {
-            var productName = CacheRef.GetProductName(productId);
+            var productName = CacheRef.GetProductName(productId) + " Result";
             var service = new MaxGameResult();
             var result = service.GetResult(custId, transId3rd, betType, endTime, siteId);
 
