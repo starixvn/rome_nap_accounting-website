@@ -2481,4 +2481,7 @@
   <data name="MyanmarOdds" xml:space="preserve">
     <value>MyanmarOdds</value>
   </data>
+  <data name="CopyVirtualRate" xml:space="preserve">
+    <value>Copy Virtual Rate</value>
+  </data>
 </root>

@@ -1,0 +1,70 @@
+﻿@using Sunplus.Accounting.Core.Configurations;
+@{
+    Page.Title = @Resources.Language.CopyVirtualRate;
+}
+@section Styles{
+    <link href="@Url.Content("~/App_Themes/Public/commonIOM.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Views/CopyVRSetting/Styles/Index.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Grid.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+}
+@section Scripts{
+    <script type="text/javascript" src="@Url.Content("~/Views/CopyVRSetting/Scripts/Index.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Grid.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/js/common.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript">
+        var lang = {
+            AccessDenied: '@Resources.Error.AccessDenied'
+        };
+    </script>
+}
+<div class="main">
+    <div id="divMainHeader" class="">
+        <div id="left_tab1">
+            <ul>
+                <li class="lefticon"></li>
+                <li class="current"><span>@Resources.Language.CopyVirtualRate</span></li>
+            </ul>
+        </div>
+    </div>
+    <div class="maincontent">
+        <div class="filterBox">
+            <div class="filterContent">
+                <div id="errMsg" class="errMsg"></div>
+                <table border="0">
+                    <tr>
+                        <td>
+                            Source Account <span style="color: red">*</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" id="txtSourceMember" maxlength="30" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Copy VR to members <span style="color: red">*</span> (Maximum 500 members separated by comma ',')
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <textarea id="txtDestinationMembers" cols="100" rows="7"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="button" class="btn" id="btnSubmit" value="Submit" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>VR Status, VR Lock Status and VR Setting of all sports (excluding Basketball and Esports) will be copied to the selected members.</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
