@@ -21,7 +21,6 @@ function GetData() {
     try { parent.BlockUI(); } catch (e) { }
     form.attr('action', 'GetData');
     form.submit();
-    $('#uploadFile').val('');
 }
 
 function NotifyHeadline() {
@@ -29,7 +28,6 @@ function NotifyHeadline() {
         try { parent.BlockUI(); } catch (e) { }
         form.attr('action', 'NotifyHeadline');
         form.submit();
-        $('#uploadFile').val('');
     }
 }
 
@@ -43,7 +41,6 @@ function GetExcelFile() {
     try { parent.BlockUI(); } catch (e) { }
     form.attr('action', 'ExportExcel');
     form.submit();
-    $('#uploadFile').val('');
     try { parent.jQuery.unblockUI(); } catch (e) { }
 }
 
