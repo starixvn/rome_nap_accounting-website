@@ -275,6 +275,8 @@
                 return SportContants.WM;
             if (3501 <= betTypeId && betTypeId <= 3599)
                 return SportContants.BigGame;
+            if (3611 <= betTypeId && betTypeId <= 3620)
+                return SportContants.SportsLottery;
             if (6401 <= betTypeId && betTypeId <= 6700)
                 return SportContants.Joker;
             if (5701 <= betTypeId && betTypeId <= 5799)

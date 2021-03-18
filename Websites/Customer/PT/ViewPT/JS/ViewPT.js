@@ -711,6 +711,7 @@ var ViewPT = {
             case 43: // esport
             case 44: // Sportsbook 2
             case 50: // Cricket
+            case 169: // Sports Lottery
             case 211: // Allbet
             case 241: // BBIN
             case 242: // GT Casino
@@ -725,7 +726,7 @@ var ViewPT = {
             case 220:
             case 207:
             case 222: // Table Game
-            case 224: //RNG War
+            case 224: // RNG War
             case 225: // ION
             case 233: // WM
             case 236: // GDG

@@ -916,6 +916,8 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
         case 168: // Happy5 Linked Games
             return getLinkedGamesParam(betid, refno);
 
+        case 169: // Sports Lottery
+            return getSportsLotteryParam(betcheck, transdesc);
         case 181:
         case 182:
         case 183:
@@ -1280,6 +1282,16 @@ function getMaxGameParam(custId, transId3rd, betType, endTime, siteId) {
     };
 }
 
+function getSportsLotteryParam(custId, transId3rd) {
+    return {
+        url: "ThirdParty/SportsLotteryResult",
+        title: "Sports Lottery Result",
+        jsonParam: { productId: 63, custId: custId, transId3rd: transId3rd },
+        width: 945,
+        height: 800
+    };
+
+}
 function getLinkedGamesParam(custId, transId3rd) {
     return {
         url: "ThirdParty/LinkedGamesResult",

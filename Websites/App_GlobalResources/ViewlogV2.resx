@@ -2119,4 +2119,7 @@ Max Keno (20+1) 2</value>
   <data name="RefNo" xml:space="preserve">
     <value>Ref. No.</value>
   </data>
+  <data name="Disable169_3611" xml:space="preserve">
+    <value>Disabled Sports Lottery</value>
+  </data>
 </root>
