@@ -142,7 +142,7 @@ BetList.BetListByRefNo = (function ($) {
             return false;
         }
 
-        var productRequireBetIdAndGameId = ["12", "21", "30", "45", "46", "47", "39", "51", "59", "57"];
+        var productRequireBetIdAndGameId = ["12", "21", "30", "45", "46", "47", "39", "51", "59", "57", "65"];
         if (productRequireBetIdAndGameId.indexOf(selProductValue) !== -1 && $gameId.val().trim() === "" && $betId.val().trim() === "") {
             showError("Either GameID or BetID is required");
             return false;
@@ -154,7 +154,7 @@ BetList.BetListByRefNo = (function ($) {
             return false;
         }
 
-        var productRequiredGameId3rd = ["38", "63", "65"];
+        var productRequiredGameId3rd = ["38", "63"];
         if ((productRequiredGameId3rd.indexOf(selProductValue) !== -1 && $gameId.val().trim() === "")) {
             showError("GameID (3rd) is required");
             return false;
