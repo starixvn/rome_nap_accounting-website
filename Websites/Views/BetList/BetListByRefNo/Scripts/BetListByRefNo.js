@@ -103,6 +103,10 @@ BetList.BetListByRefNo = (function ($) {
         } else if (selProductValue === "38" || selProductValue === "63") {
             $betId.attr("disabled", "disabled");
         }
+
+        if (selProductValue === "65") {
+            $gameId.removeAttr("disabled");
+        }
     };
 
     function selectSearchByRef() {
@@ -150,7 +154,7 @@ BetList.BetListByRefNo = (function ($) {
             return false;
         }
 
-        var productRequiredGameId3rd = ["38", "63"];
+        var productRequiredGameId3rd = ["38", "63", "65"];
         if ((productRequiredGameId3rd.indexOf(selProductValue) !== -1 && $gameId.val().trim() === "")) {
             showError("GameID (3rd) is required");
             return false;
