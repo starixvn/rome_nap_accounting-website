@@ -154,6 +154,10 @@
                     <tr>
                         <td colspan="@tableColumnCount">
                             <input id="btnSubmit1" type="button" value="@Customer_Labels.Update" name="btnSubmit" class="btn" />
+                            @if (AppSession.CustRoleId > 2)
+                            {
+                                <input type = "checkbox" />
+                            }
                         </td>
                     </tr>
 
