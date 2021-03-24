@@ -1,0 +1,30 @@
+﻿@using Fanex.Tarus.Customer.Resources;
+<form id="updateLicenseeCode" style="display: none;">
+    <div id="updErrorMsg1"></div>
+    <div id="updErrorMsg2"></div>
+    <div id="updWarningMsg1"></div>
+    <div id="updWarningMsg2"></div>
+    <table style="line-height: 28px; margin-top: 10px; border-collapse: collapse;">
+        <tr>
+            <td colspan="2">Are you sure you want to save the change?</td>
+        </tr>
+        <tr>
+            <td><label for="NewStatus">Status:</label></td>
+            <td><span id="NewStatus" /></td>
+        </tr>
+        <tr>
+            <td><label for="UpdateFromDate">From date:</label></td>
+            <td>
+                <input class="setting-calendar" id="UpdateFromDate" />
+                <input class="hidden" id="valueUpdateFromDate" />
+            </td>
+        </tr>
+        <tr>
+            <td><label for="UpdateToDate">To date:</label></td>
+            <td>
+                <input class="setting-calendar" id="UpdateToDate" />
+                <input class="hidden" id="valueUpdateToDate" />
+            </td>
+        </tr>
+    </table>
+</form>

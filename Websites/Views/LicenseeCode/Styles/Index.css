@@ -22,3 +22,13 @@
     padding: 5px 0;
     background-color: greenyellow;
 }
+
+.statusON {
+    padding: 5px 0;
+    background-color: green;
+}
+
+.statusOFF {
+    padding: 5px 0;
+    background-color: red;
+}

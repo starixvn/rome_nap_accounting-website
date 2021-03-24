@@ -17,9 +17,9 @@
 
         SelLicenseeCodeResponse GetLicenseeCodes(SearchRequest request);
 
-        Result AddLicenseeCodes(UpdNewLicenseeCodeRequest licenseeCode, int userId, string ip);
+        NonQueryResponse AddLicenseeCodes(UpdNewLicenseeCodeRequest licenseeCode, int userId, string ip);
 
-        Result UpdateLicenseeCodes(UpdNewLicenseeCodeRequest licenseeCode, int userId, string ip);
+        NonQueryResponse UpdateLicenseeCodes(UpdNewLicenseeCodeRequest licenseeCode, int userId, string ip);
 
         IEnumerable<Result> ValidateLicenseeCodes(UpdNewLicenseeCodeRequest licenseeCode);
     }
@@ -84,13 +84,15 @@
             return status;
         }
 
-        public Result AddLicenseeCodes(UpdNewLicenseeCodeRequest licenseeCode, int userId, string ip)
+        public NonQueryResponse AddLicenseeCodes(UpdNewLicenseeCodeRequest licenseeCode, int userId, string ip)
         {
             var criteria = new LicenseeTransferCodeInsCriteria
             {
                 LicenseeName = licenseeCode.LicenseeName,
                 LicenseeCode = licenseeCode.LicenseeCode,
                 CodeStatus = licenseeCode.CodeStatus,
+                FromDate = licenseeCode.FromDate,
+                ToDate = licenseeCode.ToDate,
                 UserId = userId,
                 IP = ip,
                 Language = "E",
@@ -98,16 +100,20 @@
                 ErrorMessage = string.Empty
             };
 
-            return dataAccess.ExecuteNonQuery(criteria);
+            return dataAccess.ExecuteNonQueryWithResultValidate(criteria);
         }
 
-        public Result UpdateLicenseeCodes(UpdNewLicenseeCodeRequest licenseeCode, int userId, string ip)
+        public NonQueryResponse UpdateLicenseeCodes(UpdNewLicenseeCodeRequest licenseeCode, int userId, string ip)
         {
             var criteria = new LicenseeTransferCodeUpdCriteria
             {
                 LicenseeName = licenseeCode.LicenseeName,
                 LicenseeCode = licenseeCode.LicenseeCode,
                 CodeStatus = licenseeCode.CodeStatus,
+                FromDate = licenseeCode.FromDate,
+                ToDate = licenseeCode.ToDate,
+                FromDateOld = licenseeCode.FromDateOld,
+                ToDateOld = licenseeCode.ToDateOld,
                 UserId = userId,
                 IP = ip,
                 Language = "E",
@@ -115,7 +121,7 @@
                 ErrorMessage = string.Empty
             };
 
-            return dataAccess.ExecuteNonQuery(criteria);
+            return dataAccess.ExecuteNonQueryWithResultValidate(criteria);
         }
 
         public IEnumerable<Result> ValidateLicenseeCodes(UpdNewLicenseeCodeRequest licenseeCode)
@@ -123,7 +129,11 @@
             var criteria = new LicenseeTransferCodeValidateCriteria
             {
                 LicenseeName = licenseeCode.LicenseeName,
-                LicenseeCode = licenseeCode.LicenseeCode
+                LicenseeCode = licenseeCode.LicenseeCode,
+                FromDate = licenseeCode.FromDate,
+                ToDate = licenseeCode.ToDate,
+                FromDateOld = licenseeCode.FromDateOld,
+                ToDateOld = licenseeCode.ToDateOld
             };
 
             return dataAccess.ValidateLicenseeCode(criteria);

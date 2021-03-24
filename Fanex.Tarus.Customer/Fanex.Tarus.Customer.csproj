@@ -633,6 +633,7 @@
     <Compile Include="ManageLicenseeCode\LicenseeCodeController.cs" />
     <Compile Include="ManageLicenseeCode\DataAccess.cs" />
     <Compile Include="ManageLicenseeCode\Models\LicenseeCode.cs" />
+    <Compile Include="ManageLicenseeCode\Models\NonQueryResponse.cs" />
     <Compile Include="ManageLicenseeCode\Models\SelLicenseeCodeResponse.cs" />
     <Compile Include="ManageLicenseeCode\Request\SearchRequest.cs" />
     <Compile Include="ManageLicenseeCode\Request\UpdNewLicenseeCodeRequest.cs" />
