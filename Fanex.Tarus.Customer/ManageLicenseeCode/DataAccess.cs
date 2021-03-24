@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using Fanex.Common;
     using Fanex.CustomerSetting.Module.Core.Models;
     using Fanex.Data;
@@ -16,7 +17,7 @@
 
         SelLicenseeCodeResponse GetLicenseeCode(LicenseeTransferCodeSelCriteria criteria);
 
-        Result ExecuteNonQuery(ICriteria criteria);
+        NonQueryResponse ExecuteNonQueryWithResultValidate(ICriteria criteria);
 
 
         IEnumerable<Result> ValidateLicenseeCode(LicenseeTransferCodeValidateCriteria criteria);
@@ -80,7 +81,9 @@
                                 RowNumber = int.Parse(reader["RowNumber"].ToString()),
                                 Name = reader["LicenseeName"].ToString(),
                                 Code = reader["LicenseeCode"].ToString(),
-                                Status = reader["LicenseeStatus"].ToString()
+                                Status = reader["LicenseeStatus"].ToString(),
+                                FromDate = Convert.IsDBNull(reader["FromDate"]) ? string.Empty : Convert.ToDateTime(reader["FromDate"]).ToString("MMM dd, yyyy", DateTimeFormatInfo.InvariantInfo),
+                                ToDate = Convert.IsDBNull(reader["ToDate"]) ? string.Empty : Convert.ToDateTime(reader["ToDate"]).ToString("MMM dd, yyyy", DateTimeFormatInfo.InvariantInfo),
                             };
 
                             licenseeCodes.Add(licensee);
@@ -90,6 +93,9 @@
                     }
 
                     var output = db.GetOuputParams();
+                    response.CurrentBillingMonth = Convert.IsDBNull(output["currentbillingmonth"])
+                        ? string.Empty
+                        : DateTime.Parse(output["currentbillingmonth"].ToString()).ToString("MMM, yyyy", DateTimeFormatInfo.InvariantInfo);
                     response.Totals = int.Parse(output["totalrows"].ToString());
 
                     return response;
@@ -133,7 +139,7 @@
 
                         return results;
                     }
-                    
+
                 }
             }
             catch (Exception ex)
@@ -144,7 +150,7 @@
             }
         }
 
-        public Result ExecuteNonQuery(ICriteria criteria)
+        public NonQueryResponse ExecuteNonQueryWithResultValidate(ICriteria criteria)
         {
             try
             {
@@ -155,21 +161,44 @@
 
                 using (var db = new ObjectDb(criteria.GetSettingKey()))
                 {
-                    db.ExecuteNonQuery(criteria.GetSpParams());
-                    var outputParams = db.GetOuputParams();
-                    var result = new Result(Converter.ToInt(outputParams["errorcode"]), Converter.ToString2(outputParams["errormessage"]));
+                    using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                    {
+                        var validateResults = new List<Result>();
+                        while (reader.Read())
+                        {
+                            validateResults.Add(new Result
+                            {
+                                ErrorCode = int.Parse(reader["ErrorId"].ToString()),
+                                ErrorMessage = reader["ErrorMessage"].ToString()
+                            });
+                        }
 
-                    return result;
+                        var outputParams = db.GetOuputParams();
+                        var result = new Result(Converter.ToInt(outputParams["errorcode"]), Converter.ToString2(outputParams["errormessage"]));
+
+                        return new NonQueryResponse
+                        {
+                            ValidateResponse = validateResults,
+                            NonQueryResult = result
+                        };
+                    }
+
                 }
             }
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
 
-                return new Result
+                var result = new Result
                 {
                     ErrorCode = -1,
                     ErrorMessage = "Internal server error."
+                };
+
+                return new NonQueryResponse
+                {
+                    ValidateResponse = new List<Result>(),
+                    NonQueryResult = result
                 };
             }
         }

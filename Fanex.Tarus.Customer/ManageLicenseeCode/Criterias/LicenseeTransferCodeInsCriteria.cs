@@ -10,6 +10,10 @@
 
         public bool CodeStatus { get; set; }
 
+        public string FromDate { get; set; }
+
+        public string ToDate { get; set; }
+
         public int UserId { get; set; }
 
         public string IP { get; set; }
