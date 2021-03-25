@@ -444,6 +444,9 @@
       <HintPath>..\packages\Fanex.Result.Core.PP.1.0.0.0\lib\Fanex.Result.Core.PP.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.Result.Core.PPLiveCasino, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Result.Core.PPLiveCasino.1.0.0-beta-01\lib\net461\Fanex.Result.Core.PPLiveCasino.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.Result.Core.Racing, Version=1.1.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core-Racing.1.1.0.1\lib\net40\Fanex.Result.Core.Racing.dll</HintPath>
     </Reference>

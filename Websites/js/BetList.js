@@ -934,6 +934,10 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
 
         case 169: // Sports Lottery
             return getSportsLotteryParam(betcheck, transdesc);
+
+        case 170: // PP Live Casino
+            return getPPLiveCasinoParam(betcheck, transdesc, bettype);
+
         case 181:
         case 182:
         case 183:
@@ -1293,6 +1297,22 @@ function getMaxGameParam(custId, transId3rd, betType, endTime, siteId) {
             EndTime: endTime,
             SiteId: siteId
         },
+        width: 945,
+        height: 500
+    };
+}
+
+function getPPLiveCasinoParam(custId, gameId3rd, betType) {
+    return {
+        url: "ThirdParty/PPLiveCasinoResult",
+        title: "PP Live Casino Result",
+        jsonParam:
+            {
+                productId: 65,
+                custId: custId,
+                gameId3rd: gameId3rd,
+                betType: betType
+            },
         width: 945,
         height: 500
     };
