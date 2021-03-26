@@ -35,6 +35,8 @@ namespace Fanex.Tarus.Customer.Criteria.VirtualRate
 
         public bool LockVirtualRateOtherStatus { get; set; }
 
+        public string AdditionalActions { get; set; }
+
         public decimal MaxVirtualRate { get; set; }
 
         public decimal MinVirtualRate { get; set; }
@@ -94,6 +96,8 @@ namespace Fanex.Tarus.Customer.Criteria.VirtualRate
             {
                 storeProcedureParams.Add("virtualmultiplier", VirtualRateParam());
             }
+
+            storeProcedureParams.Add("additionalactions", AdditionalActions);
 
             storeProcedureParams.Add("userid", UserId);
             storeProcedureParams.Add("ip", IP);

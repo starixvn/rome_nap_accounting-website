@@ -15,7 +15,19 @@
     var leftColumn = 4;
     var rightColumn = 4;
     int isManageVirtualRateAccess = Permissions.GetHostPermission(Enumerations.Functions.ExRates.VirtualRate) ? 1 : 0;
-    var roleId = AppSession.CustRoleId;
+    var roleId = 0;
+    if (Model.RoleName == "Super")
+    {
+        roleId = 4;
+    }
+    else if (Model.RoleName == "Master")
+    {
+        roleId = 3;
+    }
+    else if (Model.RoleName == "Agent")
+    {
+        roleId = 2;
+    }
 }
 <style>
     .additionalaction {
@@ -104,15 +116,10 @@
                             &nbsp;
                         </td>
                     </tr>
-                    <tr>
-                        <td colspan="@tableColumnCount">
-                            <input id="btnSubmit1" type="button" value="@Customer_Labels.Update" name="btnSubmit" class="btn" />
-                        </td>
-                    </tr>
                     @if (roleId > 1)
                     {
                         <tr>
-                            <td class="l" colspan="@tableColumnCount"><a href="#" class="additionalaction">Additional action</a></td>
+                            <td class="l" colspan="@tableColumnCount"><a href="javascript:void(0);" class="additionalaction">Additional action</a></td>
                         </tr>
                         <tr id="additionalaction">
                             <td class="l" colspan="@tableColumnCount">
@@ -127,7 +134,7 @@
                                         <li><input id="chk-lockVRAgent" type="checkbox" value="false" /><lable>All Agents</lable></li>
                                     }
                                     <li><input id="chk-lockVRMember" type="checkbox" value="false" /><lable>All Members</lable></li>
-                                   
+
                                 </ul>
                                 <ul class="l vroptions">
                                     <li>Enable VR for:</li>
@@ -139,12 +146,18 @@
                                     {
                                         <li><input id="chk-enableVRAgent" type="checkbox" value="false" /><lable>All Agents</lable></li>
                                     }
-                                     <li><input id="chk-enableVRMember" type="checkbox" value="false" /><lable>All Members</lable></li>
-                                    </ul>
+                                    <li><input id="chk-enableVRMember" type="checkbox" value="false" /><lable>All Members</lable></li>
+                                </ul>
                             </td>
                         </tr>
                     }
-                    </thead>
+                    <tr>
+                        <td colspan="@tableColumnCount">
+                            <input id="btnSubmit1" type="button" value="@Customer_Labels.Update" name="btnSubmit" class="btn" />
+                        </td>
+                    </tr>
+
+                </thead>
                 <tbody></tbody>
             </table>
             <div class="update-warning">@Customer_Labels.VirtualRate_UpdateWarning</div>
@@ -187,6 +200,7 @@
             $(this).toggleClass('additionalexpanded');
             $('#additionalaction').toggle();
         });
+
 
     </script>
 </div>
