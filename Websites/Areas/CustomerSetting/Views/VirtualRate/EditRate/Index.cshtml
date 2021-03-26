@@ -111,11 +111,6 @@
                             <label style="vertical-align:top;">@Customer_Labels.VirtualRate_LockVRNotes</label>
                         </td>
                     </tr>
-                    <tr class="padding-row">
-                        <td colspan="@tableColumnCount">
-                            &nbsp;
-                        </td>
-                    </tr>
                     @if (roleId > 1)
                     {
                         <tr>
@@ -151,6 +146,11 @@
                             </td>
                         </tr>
                     }
+                    <tr class="padding-row">
+                        <td colspan="@tableColumnCount">
+                            &nbsp;
+                        </td>
+                    </tr>
                     <tr>
                         <td colspan="@tableColumnCount">
                             <input id="btnSubmit1" type="button" value="@Customer_Labels.Update" name="btnSubmit" class="btn" />
