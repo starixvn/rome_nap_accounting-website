@@ -15,7 +15,43 @@
     var leftColumn = 4;
     var rightColumn = 4;
     int isManageVirtualRateAccess = Permissions.GetHostPermission(Enumerations.Functions.ExRates.VirtualRate) ? 1 : 0;
+    var roleId = AppSession.CustRoleId;
 }
+<style>
+    .additionalaction {
+        width: 180px;
+        margin-left: 12px;
+        font-size: 14px;
+        line-height: 32px;
+    }
+    .additionalaction:after {
+        margin-left:12px;
+        content: "\276F";
+    }
+    .additionalexpanded:after {
+        transform: rotate(90deg);
+        content: "\276F";
+        display: inline-block;
+    }
+
+    #additionalaction {
+        display: none;
+    }
+    .vroptions {
+        padding: 2px;
+        margin: 2px;
+    }
+    ul.vroptions > li {
+        list-style-type: none;
+        display: inline-block;
+        /* You can also add some margins here to make it look prettier */
+        padding: 2px;
+        width: 100px;
+        *display: inline;
+        /* this fix is needed for IE7- */
+    }
+    
+</style>
 <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/common.css" />
 <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/table.css" />
 <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/input.css" />
@@ -73,7 +109,42 @@
                             <input id="btnSubmit1" type="button" value="@Customer_Labels.Update" name="btnSubmit" class="btn" />
                         </td>
                     </tr>
-                </thead>
+                    @if (roleId > 1)
+                    {
+                        <tr>
+                            <td class="l" colspan="@tableColumnCount"><a href="#" class="additionalaction">Additional action</a></td>
+                        </tr>
+                        <tr id="additionalaction">
+                            <td class="l" colspan="@tableColumnCount">
+                                <ul class="l vroptions">
+                                    <li>Unlock VR for:</li>
+                                    @if (roleId > 3)
+                                    {
+                                        <li><input id="chk-lockVRMaster" type="checkbox" value="false" /><lable>All Masters</lable></li>
+                                    }
+                                    @if (roleId > 2)
+                                    {
+                                        <li><input id="chk-lockVRAgent" type="checkbox" value="false" /><lable>All Agents</lable></li>
+                                    }
+                                    <li><input id="chk-lockVRMember" type="checkbox" value="false" /><lable>All Members</lable></li>
+                                   
+                                </ul>
+                                <ul class="l vroptions">
+                                    <li>Enable VR for:</li>
+                                    @if (roleId > 3)
+                                    {
+                                        <li><input id="chk-enableVRMaster" type="checkbox" value="false" /><lable>All Masters</lable></li>
+                                    }
+                                    @if (roleId > 2)
+                                    {
+                                        <li><input id="chk-enableVRAgent" type="checkbox" value="false" /><lable>All Agents</lable></li>
+                                    }
+                                     <li><input id="chk-enableVRMember" type="checkbox" value="false" /><lable>All Members</lable></li>
+                                    </ul>
+                            </td>
+                        </tr>
+                    }
+                    </thead>
                 <tbody></tbody>
             </table>
             <div class="update-warning">@Customer_Labels.VirtualRate_UpdateWarning</div>
@@ -111,5 +182,11 @@
             NoPermission_OnFunction: '@Customer_Labels.NoPermission_OnFunction',
             VirtualRate_CopyBasketballToAllSportTypeBettypeFromHDP: '@Customer_Labels.VirtualRate_CopyBasketballToAllSportTypeBettypeFromHDP'
         };
+
+        $('.additionalaction').click(function () {   
+            $(this).toggleClass('additionalexpanded');
+            $('#additionalaction').toggle();
+        });
+
     </script>
 </div>
