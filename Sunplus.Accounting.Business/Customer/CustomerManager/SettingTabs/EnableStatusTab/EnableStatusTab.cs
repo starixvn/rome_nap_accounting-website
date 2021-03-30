@@ -1,5 +1,7 @@
 ﻿namespace Sunplus.Accounting.Business.Customer
 {
+    using System;
+    using System.Data;
     using ConfigureDirectAccount;
     using Core.Common;
     using Core.Configurations;
@@ -10,8 +12,6 @@
     using DNAide.Web;
     using Entities;
     using Security;
-    using System;
-    using System.Data;
 
     public partial class CustomerManager
     {
@@ -54,6 +54,7 @@
             };
 
             htmlcontent = RenderClosedStatus(htmlcontent, customerInfoViewModel);
+            htmlcontent = RenderLockedAccess(htmlcontent, customerInfoViewModel);
             htmlcontent = RenderLimitedPerIP(htmlcontent, customerInfoViewModel);
 
             htmlcontent = RenderGoldDeluxeForDepositControl(htmlcontent, customerInfoViewModel);
@@ -166,6 +167,21 @@
         private string RenderClosedLabel(bool lockUnsuspend)
         {
             return lockUnsuspend ? "<span style=\"color:red;\">Closed (locked)</span>" : "Closed";
+        }
+
+        private string RenderLockedAccess(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
+        {
+            if (customerInfoViewModel.LockedAccess.IsLocked)
+            {
+                TemplateHandler.Assign(ref htmlcontent, "{UnlockConfirmMessage}", customerInfoViewModel.LockedAccess.UnlockConfirmMessage);
+                TemplateHandler.RemoveBlock(ref htmlcontent, "LockedAccessDisabled");
+            }
+            else
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "LockedAccessEnabled");
+            }
+
+            return htmlcontent;
         }
 
         private string AssignTemplateValue(string htmlcontent)

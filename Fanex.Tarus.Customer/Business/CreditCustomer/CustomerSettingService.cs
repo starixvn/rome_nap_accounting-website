@@ -7,6 +7,11 @@
 
 namespace Fanex.Tarus.Customer.CreditCustomer.Business
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Linq;
     using CasinoLibrary.Model.UserException;
     using Criteria.CN88;
     using Criteria.CreditCustomer;
@@ -29,12 +34,6 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
     using Sunplus.Accounting.DataAccess;
     using Sunplus.Accounting.Entities.Casino;
     using Sunplus.Accounting.Entities.Customer;
-    using System;
-    using System.Linq;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Data;
-    using System.Linq;
     using static Infrastructure.Common.Enumerations;
 
     /// <summary>
@@ -404,7 +403,6 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
             return _customerSettingDataAccess.ExecuteNonQuery(criteria);
         }
 
-
         public CustomerSetting.Module.Core.Models.Result AddNewHeadline(AddNewHeadlineCriteria criteria)
         {
             criteria.Creator = AppSession.AccId;
@@ -420,5 +418,8 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
                 GroupName = groupName,
                 Prefixes = string.Join(", ", prefixes)
             });
+
+        public CustomerSetting.Module.Core.Models.Result UnlockAccess(int custId, int userId, string ip)
+            => _customerSettingDataAccess.ExecuteNonQuery(new UnlockAccessCriteria(custId, userId, ip));
     }
 }

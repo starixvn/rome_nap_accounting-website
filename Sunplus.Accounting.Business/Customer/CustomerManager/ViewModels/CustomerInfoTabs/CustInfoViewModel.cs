@@ -1,11 +1,12 @@
 ﻿namespace Sunplus.Accounting.Business.Customer
 {
+    using System;
+    using System.Collections.Generic;
     using Core.Configurations;
     using Fanex.Common;
     using Fanex.CustomerSetting.Module.Core;
     using Fanex.Tarus.Infrastructure.Constants;
-    using System;
-    using System.Collections.Generic;
+    using Sunplus.Accounting.Core.Common;
     using static Fanex.Tarus.Infrastructure.Common.Enumerations;
 
     public partial class CustomerInfoViewModel
@@ -117,6 +118,8 @@
         public bool IsInternalUser => Utils.ToBoolean(customerInfoRow["IsInternal"]);
 
         public bool Closed => Utils.ToBoolean(customerInfoRow["closed"]);
+
+        public CustomerLockedAccess LockedAccess => new CustomerLockedAccess(Utils.ToByte(customerInfoRow["Locked"]));
 
         public int CN88CustStatus => Utils.ToInt32(customerInfoRow["CN88CustStatus"]);
 

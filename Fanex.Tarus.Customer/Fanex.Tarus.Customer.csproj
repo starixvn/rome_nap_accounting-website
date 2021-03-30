@@ -229,8 +229,8 @@
       <HintPath>..\packages\RestSharp.105.2.3\lib\net4\RestSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Sunplus.Accounting.Core, Version=2.0.4.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.Core.2.0.4.5\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
+    <Reference Include="Sunplus.Accounting.Core, Version=2.0.4.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Accounting.Core.2.0.4.2-lockedaccess03\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.3.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.3.1\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
@@ -420,6 +420,7 @@
     <Compile Include="Criteria\AutoTransferAll\SelectTransferAgentCriteria.cs" />
     <Compile Include="Criteria\CopyVRSetting\CopyVRSettingCriteria.cs" />
     <Compile Include="Criteria\CreditCustomer\SuperPrefixCriteria.cs" />
+    <Compile Include="Criteria\CreditCustomer\UnlockAccessCriteria.cs" />
     <Compile Include="Criteria\CreditCustomer\UpdateAllDayBalTransferOnMasterCriteria.cs" />
     <Compile Include="Criteria\CreditCustomer\UpdateAllDayBalTransferCriteria.cs" />
     <Compile Include="Criteria\CustomerLogin\RemoveOTPCriteria.cs" />

@@ -123,7 +123,7 @@ function changeStatus(type, hasDownLine) {
                 if (!confirm("Are you sure you want to change Special status for this customer?"))
                     return;
                 yes = ($('#special').attr('class').indexOf("chkuncheck") > -1);
-                break;          
+                break;
             case "autompt":
                 if (!confirm("Are you sure you want to change Auto MPT status for this customer?"))
                     return;
@@ -183,6 +183,24 @@ function changeStatus(type, hasDownLine) {
     }
     catch (ex) {
         alert(ex);
+    }
+}
+
+function unlockAccess(confirmMessage) {
+    if (confirm(confirmMessage)) {
+        $.ajax({
+            type: "POST",
+            url: "CustomerSetting/UnlockAccess",
+            data: JSON.stringify({ custId: GetCustId() }),
+            contentType: "application/json; charset=utf-8",
+            success: function (result) {
+                !result.IsSuccess && alert(result.ErrorMessage);
+                changeDisplayStatus();
+            },
+            complete: function () {
+                if (PTUnBlockUI) PTUnBlockUI();
+            }
+        });
     }
 }
 
@@ -755,7 +773,7 @@ function ChangeAllDayBalTransfer(roleId) {
 function ChangeAllDayBalTransferOnMaster() {
     var checked = $("#AllDayBalTransferOnMaster").hasClass("chkchecked");
     if (confirm("Are you sure you want to change \"Auto Enable ADB on Master\" mode for " + GetCustName() + " ?")) {
-        UpdateAllDayBalTransferOnMaster({ custid: GetCustId(), status: !checked});
+        UpdateAllDayBalTransferOnMaster({ custid: GetCustId(), status: !checked });
     }
 }
 

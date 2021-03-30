@@ -357,6 +357,16 @@
                     <div class="col">
                         {ClosedLabel} {closedCustomer}
                     </div>
+                    <div class="col">
+                        <!--LockedAccessEnabled-->
+                        Locked Access
+                        <span class="chkchecked" name="lockedAccess" onclick="return unlockAccess('{UnlockConfirmMessage}');"></span>
+                        <!--/LockedAccessEnabled-->
+                        <!--LockedAccessDisabled-->
+                        <span style="color:#aaa">Locked Access</span>
+                        <span class="chkuncheck" onclick="return false;"></span>
+                        <!--/LockedAccessDisabled-->
+                    </div>
                     <!--allDayBalTransferControl-->
                     {allDayBalTransferControl}
                     <!--/allDayBalTransferControl-->
@@ -479,10 +489,10 @@
                     <!--/EnableRNGLottery-->
                     <!--EnableSabaVirtualSports-->
                     <!--<div class="col">
-                        <span class="canchange" onclick="{SabaVirtualSportsOnClickFunction}">
-                            Saba Virtual Sports
-                        </span>
-                    </div>-->
+        <span class="canchange" onclick="{SabaVirtualSportsOnClickFunction}">
+            Saba Virtual Sports
+        </span>
+    </div>-->
                     <!--/EnableSabaVirtualSports-->
                     <!--EnableCashOut-->
                     <div class="col">

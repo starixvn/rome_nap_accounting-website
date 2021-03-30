@@ -71,13 +71,11 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
         /// <returns></returns>
         bool UpdateSyncCasinoAfterEditCustomer(ICustomer customer, IRequestContext currentContext);
 
-
         Fanex.Tarus.Customer.Entities.Result UpdateDoubleComm(int userId, int custId, bool isDoubleComm);
 
         string GetRNGSiteNameByCustId(int custId);
 
         Fanex.Tarus.Customer.Entities.Result UpdateAllDayBalTransfer(int custId, bool isAllDayBalTransfer, bool isIncludedDownline, int userId, string ip);
-
 
         Fanex.Tarus.Customer.Entities.Result UpdateAllDayBalTransferOnMaster(int custId, bool isAllDayBalTransfer, int userId, string ip);
 
@@ -92,5 +90,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
         CustomerSetting.Module.Core.Models.Result AddNewHeadline(AddNewHeadlineCriteria criteria);
 
         dynamic GetSuperPrefixes(SuperPrefixCriteria criteria);
+
+        CustomerSetting.Module.Core.Models.Result UnlockAccess(int custId, int userId, string ip);
     }
 }
