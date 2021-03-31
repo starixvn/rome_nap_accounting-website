@@ -6,11 +6,16 @@
     <div id="updWarningMsg2"></div>
     <table style="line-height: 28px; margin-top: 10px; border-collapse: collapse;">
         <tr>
-            <td colspan="2">Are you sure you want to save the change?</td>
+            <td><label for="updLicenseeName">Licensee Name:</label></td>
+            <td><span id="updLicenseeName" /></td>
         </tr>
         <tr>
-            <td><label for="NewStatus">Status:</label></td>
-            <td><span id="NewStatus" /></td>
+            <td><label for="updLicenseeCode">Licensee Code:</label></td>
+            <td><input style="width: 180px;" id="updLicenseeCode" maxlength="50"></td>
+        </tr>
+        <tr>
+            <td><label for="updateCBC">Current billing cycle:</label></td>
+            <td><span id="updateCBC"></span></td>
         </tr>
         <tr>
             <td><label for="UpdateFromDate">From date:</label></td>
@@ -25,6 +30,10 @@
                 <input class="setting-calendar" id="UpdateToDate" />
                 <input class="hidden" id="valueUpdateToDate" />
             </td>
+        </tr>
+        <tr>
+            <td><label for="UpdateStatus">Status:</label></td>
+            <td><span id="UpdateStatus" /></td>
         </tr>
     </table>
 </form>

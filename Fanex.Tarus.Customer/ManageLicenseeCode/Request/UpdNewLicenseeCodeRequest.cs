@@ -6,7 +6,7 @@
 
         public string LicenseeCode { get; set; }
 
-        public bool CodeStatus { get; set; }
+        public string LicenseeCodeOld { get; set; }
 
         public string FromDate { get; set; }
 

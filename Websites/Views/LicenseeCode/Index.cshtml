@@ -47,9 +47,12 @@
                         <td class="b" style="float: left; display:flex; margin-left:10px; padding-top: 9px;">
                             <input class="btn" style="margin: auto;" type="submit" onclick="Search()" value="Submit" />
                         </td>
-                        <td class="b">
-                            <p id="billingMonth"></p>
-                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="5">Note: Billing date is 5th of month (17:00 GMT+8)</td>
+                    </tr>
+                    <tr>
+                        <td colspan="5">Current billing cycle: <span id="billingCircle"></span><span style="margin: auto 4px; float: none;" id="noteMessageIcon" class="note-info-message" title="" onclick="OpenNoteMessage();"></span></td>
                     </tr>
                 </table>
             </div>
@@ -58,6 +61,10 @@
                     <div id="errMsg"></div>
                     <div id="gridLicenseeCode" class="freegrid"></div>
                 </div>
+                <form id="noteMessage" style="display:none;">
+                    <p>Billing cycle = current month if current time > 17:00 (GMT+8) 5th of the month</p>
+                    <p>Billing cycle = last month if current time < 17:00 (GMT+8) 5th of the month</p>
+                </form>
             </div>
         </div>
     </div>

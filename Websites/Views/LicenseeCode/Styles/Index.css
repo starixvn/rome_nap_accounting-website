@@ -1,6 +1,22 @@
-﻿.confirmMsg {
+﻿.background-code-off {
+    background-color: lightgrey !important;
+}
+
+.confirmMsg {
     padding: 10px;
     text-align: center;
+}
+
+.code-status {
+    font-weight: bold;
+}
+
+.code-status-on {
+    color: green;
+}
+
+.code-status-off {
+    color: red;
 }
 
 .filterbox {

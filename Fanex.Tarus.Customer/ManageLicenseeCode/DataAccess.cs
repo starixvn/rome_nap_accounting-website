@@ -93,9 +93,6 @@
                     }
 
                     var output = db.GetOuputParams();
-                    response.CurrentBillingMonth = Convert.IsDBNull(output["currentbillingmonth"])
-                        ? string.Empty
-                        : DateTime.Parse(output["currentbillingmonth"].ToString()).ToString("MMM, yyyy", DateTimeFormatInfo.InvariantInfo);
                     response.Totals = int.Parse(output["totalrows"].ToString());
 
                     return response;
