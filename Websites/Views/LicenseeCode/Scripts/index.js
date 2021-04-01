@@ -89,8 +89,7 @@ function RenderLicenseeCode(data, pageSize, pageIndex) {
         if (licenseeCode.Status === 'OFF') {
             row.Columns.push({ Name: 'AddNew', TdClass: tdclass, Value: '<label></label>' });
             var fromDate = new Date(licenseeCode.FromDate);
-            var today = new Date();
-            if (fromDate > today) {
+            if (+fromDate > +checkTime) {
                 row.Columns.push({
                     Name: 'Edit',
                     TdClass: tdclass,
@@ -239,6 +238,18 @@ function validateLicenseeCodeBeforeUpdate(request, updateFunction = DefaultFunct
     hideAlertMessage("updErrorMsg2");
     hideAlertMessage("updWarningMsg1");
     hideAlertMessage("updWarningMsg2");
+
+    if (request.LicenseeCode === '') {
+        showAlertMessage('updErrorMsg1', 'Licensee Code cannot be empty.', 1);
+        return;
+    }
+
+    var fd = new Date(request.FromDate);
+    var td = new Date(request.ToDate);
+    if (+fd > +td) {
+        showAlertMessage('updErrorMsg1', 'From Date could not be later than To Date', 1);
+        return;
+    }
     parent.BlockUI();
     $.ajax({
         type: "POST",
@@ -347,7 +358,7 @@ function addLicenseeCode(licenseeSite) {
     $('#LicenseeName').text(licenseeSite); 
     $('#LicenseeCode').val('');
     $('#newCBC').text(GetBillingCircle());
-    var currentMonth = GetDisplayMonthOnly(new Date(checkTime.getFullYear(), checkTime.getMonth() - 1, 1));
+    var currentMonth = GetDisplayMonthOnly(new Date(checkTime.getFullYear(), checkTime.getMonth(), 1));
     SetupCalendar('NewFromDate', currentMonth, GetStatusValueNew);
     SetupCalendar('NewToDate', 'Jan 2050', GetStatusValueNew);
     GetStatusValueNew();
@@ -394,6 +405,18 @@ function ValidateLicenseeCode(licensee, licenseeCode, diablog) {
         FromDate: GetFromDate($("#valueNewFromDate").val()),
         ToDate: GetToDate($("#valueNewToDate").val())
     };
+
+    if (request.LicenseeCode === '') {
+        showAlertMessage('addLicenseeCodeErrMsg', 'Licensee Code cannot be empty.', 1);
+        return;
+    }
+
+    var fd = new Date(request.FromDate);
+    var td = new Date(request.ToDate);
+    if (+fd > +td) {
+        showAlertMessage('addLicenseeCodeErrMsg', 'From Date could not be later than To Date', 1);
+        return;
+    }
 
     if (CheckFromToDate(request.FromDate, request.ToDate)) {
         parent.BlockUI();
@@ -536,10 +559,11 @@ function GetBillingCircle() {
     var year = today.getFullYear();
     var checkTimeWithoutTZ = new Date(year, today.getMonth(), 5, 17, 0, 0, 0);
     checkTime = new Date(checkTimeWithoutTZ.getTime() - (480 + today.getTimezoneOffset()) * 60 * 1000);
-    var monthCircle = checkTime.getMonth();
     if (+checkTime > +today) {
-        monthCircle = monthCircle - 1;
+        checkTime = new Date(checkTime.getFullYear(), checkTime.getMonth() - 1, checkTime.getDate(), checkTime.getHours(), 0, 0); 
     }
+
+    var monthCircle = checkTime.getMonth();
 
     var startDate = new Date(year, monthCircle, 1);
     var endDate = new Date(year, monthCircle + 1, 0);
