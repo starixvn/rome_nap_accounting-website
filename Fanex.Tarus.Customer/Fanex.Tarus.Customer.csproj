@@ -334,7 +334,6 @@
     <Compile Include="Business\NG2\SyncCurrencyService.cs" />
     <Compile Include="Business\NG2\SyncCustomerService.cs" />
     <Compile Include="Business\ViewPeriodsCN88\ViewPeriodsCN88Service.cs" />
-    <Compile Include="Business\VirtualRate\UploadRate\ImportRateTemplateData.cs" />
     <Compile Include="Business\CreditCustomer\CustomerSettingService.cs" />
     <Compile Include="Business\CreditCustomer\ICustomerSettingService.cs" />
     <Compile Include="Business\CustomerCoreService.cs" />
@@ -353,11 +352,8 @@
     <Compile Include="Business\SettingCustomer\IAbnormalBetService.cs" />
     <Compile Include="Business\ViewPT\IViewPTService.cs" />
     <Compile Include="Business\ViewPT\ViewPTService.cs" />
-    <Compile Include="Business\VirtualRate\UploadRate\IUploadVirtualRateService.cs" />
     <Compile Include="Business\VirtualRate\IVirtualRateService.cs" />
     <Compile Include="Business\VirtualRate\UpdateTypeConstants.cs" />
-    <Compile Include="Business\VirtualRate\UploadRate\UploadVirtualRateExcelService.cs" />
-    <Compile Include="Business\VirtualRate\UploadRate\UploadVirtualRateService.cs" />
     <Compile Include="Business\VirtualRate\VirtualRateSectionService.cs" />
     <Compile Include="Business\VirtualRate\VirtualRateService.cs" />
     <Compile Include="Constants\SelfDestructionPeriodConstants.cs" />
@@ -474,10 +470,6 @@
     <Compile Include="Criteria\VirtualRate\GetSportBetTypeReferencesCriteria.cs" />
     <Compile Include="Criteria\VirtualRate\GetVRAutoAdjustSporttypeCriteria.cs" />
     <Compile Include="Criteria\VirtualRate\UpdateSettingsCriteria.cs" />
-    <Compile Include="Criteria\VirtualRate\UploadRate\CheckImportCriteria.cs" />
-    <Compile Include="Criteria\VirtualRate\UploadRate\DeleteTempRateCriteria.cs" />
-    <Compile Include="Criteria\VirtualRate\UploadRate\InsertTempRateCriteria.cs" />
-    <Compile Include="Criteria\VirtualRate\UploadRate\UpdateImportRateCriteria.cs" />
     <Compile Include="Criteria\VirtualRate\ViewHistoryLogCriteria.cs" />
     <Compile Include="Criteria\VirtualRate\ViewVirtualRateCriteria.cs" />
     <Compile Include="DangerousGrouping\Criterias\GetCustomerDangerCriteria.cs" />
@@ -566,8 +558,6 @@
     <Compile Include="DataAccess\ViewPT\IViewPTRepository.cs" />
     <Compile Include="DataAccess\ViewPT\ViewPTRepository.cs" />
     <Compile Include="DataAccess\VirtualRate\IVirtualRateRepository.cs" />
-    <Compile Include="DataAccess\VirtualRate\UploadRate\IUploadRateRepository.cs" />
-    <Compile Include="DataAccess\VirtualRate\UploadRate\UploadRateRepository.cs" />
     <Compile Include="DataAccess\VirtualRate\VirtualRateRepository.cs" />
     <Compile Include="Entities\AGCasino\AGCasinoCustomerInfo.cs" />
     <Compile Include="Entities\AGCasino\GameType.cs" />
@@ -704,11 +694,6 @@
     <Compile Include="Entities\VirtualRate\SportBetTypeReferences\TargetReferencesModel.cs" />
     <Compile Include="Entities\VirtualRate\SportPositionModel.cs" />
     <Compile Include="Entities\VirtualRate\SportVirtualRateModel.cs" />
-    <Compile Include="Entities\VirtualRate\UploadRate\ImportVirtualRateInfo.cs" />
-    <Compile Include="Entities\VirtualRate\UploadRate\ImportVirtualRateResult.cs" />
-    <Compile Include="Entities\VirtualRate\UploadRate\ImportVirtualRateResultGroup.cs" />
-    <Compile Include="Entities\VirtualRate\UploadRate\CheckImportResult.cs" />
-    <Compile Include="Entities\VirtualRate\UploadRate\UploadResult.cs" />
     <Compile Include="Entities\VirtualRate\VirtualRateEntity.cs" />
     <Compile Include="Entities\VirtualRate\VirtualRateModel.cs" />
     <Compile Include="Enums\SettingType.cs" />
