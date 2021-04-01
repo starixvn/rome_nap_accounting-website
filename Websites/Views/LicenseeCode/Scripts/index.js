@@ -536,8 +536,8 @@ function GetBillingCircle() {
     var year = today.getFullYear();
     var checkTimeWithoutTZ = new Date(year, today.getMonth(), 5, 17, 0, 0, 0);
     checkTime = new Date(checkTimeWithoutTZ.getTime() - (480 + today.getTimezoneOffset()) * 60 * 1000);
-    var monthCircle = today.getMonth() + 1;
-    if (+today > +checkTime) {
+    var monthCircle = checkTime.getMonth();
+    if (+checkTime > +today) {
         monthCircle = monthCircle - 1;
     }
 
