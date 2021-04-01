@@ -347,7 +347,7 @@ function addLicenseeCode(licenseeSite) {
     $('#LicenseeName').text(licenseeSite); 
     $('#LicenseeCode').val('');
     $('#newCBC').text(GetBillingCircle());
-    var currentMonth = GetDisplayMonthOnly(new Date());
+    var currentMonth = GetDisplayMonthOnly(new Date(checkTime.getFullYear(), checkTime.getMonth() - 1, 1));
     SetupCalendar('NewFromDate', currentMonth, GetStatusValueNew);
     SetupCalendar('NewToDate', 'Jan 2050', GetStatusValueNew);
     GetStatusValueNew();
