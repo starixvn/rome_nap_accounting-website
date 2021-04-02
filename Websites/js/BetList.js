@@ -574,6 +574,18 @@ function showTodayRunningBetsDetails(refno, winlossDate, custId, transType) {
     openResultsPopUp(params);
 }
 
+function showCGBetDetails(transId, winlossDate, custId, transType) {
+    var param = {
+        url: "RNGCasinoBetList/BetDetails",
+        title: "CG - Detailed Bet list - " + winlossDate.split(" ")[0],
+        jsonParam: { TransId: transId, TransType: transType, CustId: custId, SportType: 167, PageSize: 500 },
+        width: 1030,
+        height: 600
+    };
+
+    openResultsPopUp(param);
+}
+
 function showMaxGameBetDetails(transId, winlossDate, custId, transType) {
     var jokerParam = {
         url: "RNGCasinoBetList/BetDetails",
@@ -941,6 +953,9 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
         case 164: // Happy5
             return getHappy5Param(matchid);
 
+        case 167: // CG
+            return getCGParam(transdesc, betcheck, matchcode, betid);
+
         case 168: // Happy5 Linked Games
             return getLinkedGamesParam(betid, refno);
 
@@ -1228,6 +1243,15 @@ function getHabaneroParam(transId3rd, custId, gameId3rd, siteId) {
     };
 }
 
+function getCGParam(transId3rd, custId, gameId3rd, siteId) {
+    return {
+        url: "ThirdParty/CGResult",
+        title: "CG Result",
+        jsonParam: { custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, productId: 62, siteId: siteId },
+        width: 850,
+        height: 800
+    };
+}
 function getCardClubParam(custId, gameTypeId, sportType, transId3rd) {
     return {
         url: "../Report/ViewCardClubResult.aspx",
