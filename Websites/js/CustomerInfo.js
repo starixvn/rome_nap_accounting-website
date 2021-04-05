@@ -148,9 +148,9 @@ function changeStatus(type, hasDownLine) {
                     }
 
                     if (!yes && hasDownLine) {
-                        return showOpenCustomerPopup(GetCustId(), GetCustName());
+                        showOpenCustomerPopup(GetCustId(), GetCustName());
+                        return;
                     }
-
                     if (!yes && !hasDownLine && !confirm("Are you sure you want to change Closed status for this customer?")) {
                         return;
                     }
@@ -217,7 +217,11 @@ function updateUnsuspend(custId, userName) {
 }
 
 function showOpenCustomerPopup(custId, userName) {
-    parent.OpenNextPopup('open-customer', 'OpenCustomer/SingleOpenCustomerView?custId=' + custId + '&userName=' + userName, 'Open ' + obj('custName').value, 650, 450, true, false, window, 0, null, null);
+    var popupId = 'open-customer',
+        url = 'OpenCustomer/SingleOpenCustomerView?custId=' + custId + '&userName=' + userName,
+        title = 'Open ' + obj('custName').value;
+
+    parent.OpenNextPopup(popupId, url, title, 650, 450, true, false, window, 0, null, null);
 }
 
 function updateLimitPerIP(limitperid, isUpdateDownline) {

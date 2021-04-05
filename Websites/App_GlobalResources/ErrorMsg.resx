@@ -276,4 +276,7 @@
   <data name="UpdateSuspendSuccess" xml:space="preserve">
     <value>The selected customer and his affected donwlines have been successfully updated.</value>
   </data>
+  <data name="UpdateCloseSuccess" xml:space="preserve">
+    <value>The selected customer and his affected donwlines have been successfully updated.</value>
+  </data>
 </root>
