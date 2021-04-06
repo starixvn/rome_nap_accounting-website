@@ -34,6 +34,7 @@ public partial class Statement_CompanyStatement : PageBase
         reportHeader.Text = "Company Statement";       
 
         searchContent.Text = RenderHeader(reportNo, fdt, tdt);
+        ReportCache.REPORT_STATEMENT_COMPANY = "test";
 
         ReportCache.REPORT_STATEMENT_COMPANY = string.Empty;
         if (CastAide.AsInt32(Request["IsExport"], 0) == 1)
