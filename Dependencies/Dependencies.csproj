@@ -520,8 +520,8 @@
     <Reference Include="Fanex.Tarus.Business.Implement, Version=1.0.1.6, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Business.Implement.1.0.1.7\lib\net40\Fanex.Tarus.Business.Implement.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Tarus.DataAccess.Implement, Version=1.0.1.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.DataAccess.Implement.1.0.1.1-lockedaccess01\lib\net40\Fanex.Tarus.DataAccess.Implement.dll</HintPath>
+    <Reference Include="Fanex.Tarus.DataAccess.Implement, Version=1.0.0.9, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.DataAccess.Implement.1.0.0.9\lib\net40\Fanex.Tarus.DataAccess.Implement.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Entities, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Entities.1.0.0.6\lib\net40\Fanex.Tarus.Entities.dll</HintPath>
@@ -552,8 +552,8 @@
     <Reference Include="Fanex.Tarus.Web.Controllers, Version=1.0.1.3, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Web.Controller.1.0.1.4\lib\net40\Fanex.Tarus.Web.Controllers.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Tarus.Web.Models, Version=1.0.0.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Web.Models.1.0.0.9-lockedaccess01\lib\net40\Fanex.Tarus.Web.Models.dll</HintPath>
+    <Reference Include="Fanex.Tarus.Web.Models, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Web.Models.1.0.0.7\lib\net40\Fanex.Tarus.Web.Models.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Voidbridge.BetDetail, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Voidbridge.BetDetail.2.0.1\lib\net461\Fanex.Voidbridge.BetDetail.dll</HintPath>

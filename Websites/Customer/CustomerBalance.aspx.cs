@@ -140,15 +140,7 @@ public partial class CustomerBalance : PageBase
                 }
                 else
                 {
-                    var lockedAccess = new CustomerLockedAccess(Convert.ToByte(dr["closedreason"]));
-                    if (lockedAccess.IsLocked)
-                    {
-                        strcontent.Append("'").Append(lockedAccess.ClassName).Append("',");
-                    }
-                    else
-                    {
-                        strcontent.Append("'',");
-                    }
+                    strcontent.Append("'',");
                 }
 
                 if (CastAide.AsBoolean(dr["SyncCasino"]))
