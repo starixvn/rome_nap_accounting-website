@@ -90,7 +90,6 @@
             {
                 LicenseeName = licenseeCode.LicenseeName,
                 LicenseeCode = licenseeCode.LicenseeCode,
-                CodeStatus = licenseeCode.CodeStatus,
                 FromDate = licenseeCode.FromDate,
                 ToDate = licenseeCode.ToDate,
                 UserId = userId,
@@ -109,7 +108,7 @@
             {
                 LicenseeName = licenseeCode.LicenseeName,
                 LicenseeCode = licenseeCode.LicenseeCode,
-                CodeStatus = licenseeCode.CodeStatus,
+                LicenseeCodeOld = licenseeCode.LicenseeCodeOld,
                 FromDate = licenseeCode.FromDate,
                 ToDate = licenseeCode.ToDate,
                 FromDateOld = licenseeCode.FromDateOld,

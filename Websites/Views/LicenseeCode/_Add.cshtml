@@ -12,8 +12,8 @@
             <td><input style="width: 180px;" id="LicenseeCode" maxlength="50"></td>
         </tr>
         <tr>
-            <td><label for="LicenseeCodeStatus">Status:</label></td>
-            <td><input type="checkbox" id="LicenseeCodeStatus" checked></td>
+            <td><label for="newCBC">Current billing cycle:</label></td>
+            <td><span id="newCBC"></span></td>
         </tr>
         <tr>
             <td><label for="NewFromDate">From date:</label></td>
@@ -28,6 +28,10 @@
                 <input class="setting-calendar" id="NewToDate" />
                 <input class="hidden" id="valueNewToDate" />
             </td>
+        </tr>
+        <tr>
+            <td><label for="LicenseeCodeStatus">Status:</label></td>
+            <td><span class="code-status" id="LicenseeCodeStatus"></span></td>
         </tr>
     </table>
 </form>

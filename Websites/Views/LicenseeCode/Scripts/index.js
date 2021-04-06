@@ -5,7 +5,10 @@
     PageSize: 50
 };
 
+var checkTime = new Date();
+
 $(document).ready(function () {
+    $("#billingCircle").html(GetBillingCircle());
     RenderMultiSelect("selectLicensee");
     RenderMultiSelect("selectStatus");
     SearchLicenseeCode(0, 50);
@@ -73,20 +76,42 @@ function RenderLicenseeCode(data, pageSize, pageIndex) {
     for (i = 0; i < licenseeCodes.length; i++) {
         var licenseeCode = licenseeCodes[i];
         var row = { Columns: [] };
-        row.Columns.push({ Name: 'No', Value: licenseeCode.RowNumber });
-        row.Columns.push({ Name: 'Licensee', Value: licenseeCode.Name });
-        row.Columns.push({ Name: 'LicenseeCode', Value: licenseeCode.Code });
-        row.Columns.push({ Name: 'FromDate', Value: licenseeCode.FromDate });
-        row.Columns.push({ Name: 'ToDate', Value: licenseeCode.ToDate });
-        row.Columns.push({
-            Name: 'AddNew',
-            Value: '<img class="add-entity" alt="Add" title="Add" src="../App_Themes/Images/icn_add.png" style="cursor: pointer" onclick="addLicenseeCode(\''
-                + licenseeCode.Name
-                + '\')">'
-        });
-        if (licenseeCode.Status === 'OFF' || licenseeCode.Status === 'ON') {
+        var tdclass = '';
+        if (licenseeCode.Status === 'OFF') {
+            tdclass = 'background-code-off';
+        }
+
+        row.Columns.push({ Name: 'No', TdClass: tdclass, Value: licenseeCode.RowNumber });
+        row.Columns.push({ Name: 'Licensee', TdClass: tdclass, Value: licenseeCode.Name });
+        row.Columns.push({ Name: 'LicenseeCode', TdClass: tdclass, Value: licenseeCode.Code });
+        row.Columns.push({ Name: 'FromDate', TdClass: tdclass, Value: licenseeCode.FromDate });
+        row.Columns.push({ Name: 'ToDate', TdClass: tdclass, Value: licenseeCode.ToDate });
+        if (licenseeCode.Status === 'OFF') {
+            row.Columns.push({ Name: 'AddNew', TdClass: tdclass, Value: '<label></label>' });
+            var fromDate = new Date(licenseeCode.FromDate);
+            if (+fromDate > +checkTime) {
+                row.Columns.push({
+                    Name: 'Edit',
+                    TdClass: tdclass,
+                    Value: '<img class="edit-entity" alt="Edit" title="Edit" src="../App_Themes/Images/icn_edit.png" style="cursor: pointer" onclick="showLicenseeCodeStatusDialog(\''
+                        + licenseeCode.Name
+                        + "\',\'"
+                        + licenseeCode.Code
+                        + "\',\'"
+                        + licenseeCode.FromDate
+                        + "\',\'"
+                        + licenseeCode.ToDate
+                        + '\')">'
+                });
+            } else {
+                row.Columns.push({ Name: 'Edit', TdClass: tdclass, Value: '<label></label>' });
+            }
+            row.Columns.push({ Name: 'Status', Value: '<label>' + licenseeCode.Status + '</label>', TdClass: tdclass, CssClass: 'code-status-off code-status' });
+        } else if (licenseeCode.Status === 'ON') {
+            row.Columns.push({ Name: 'AddNew', TdClass: tdclass, Value: '<label></label>' });
             row.Columns.push({
                 Name: 'Edit',
+                TdClass: tdclass,
                 Value: '<img class="edit-entity" alt="Edit" title="Edit" src="../App_Themes/Images/icn_edit.png" style="cursor: pointer" onclick="showLicenseeCodeStatusDialog(\''
                     + licenseeCode.Name
                     + "\',\'"
@@ -95,17 +120,29 @@ function RenderLicenseeCode(data, pageSize, pageIndex) {
                     + licenseeCode.FromDate
                     + "\',\'"
                     + licenseeCode.ToDate
-                    + "\',\'"
-                    + licenseeCode.Status
                     + '\')">'
             });
-            row.Columns.push({ Name: 'Status', Value: '<label>' + licenseeCode.Status + '</label>', CssClass: 'status' + licenseeCode.Status });
+            row.Columns.push({ Name: 'Status', Value: '<label>' + licenseeCode.Status + '</label>', TdClass: tdclass, CssClass: 'code-status-on code-status'});
         } else if (licenseeCode.Status === 'N/A') {
+            row.Columns.push({
+                Name: 'AddNew',
+                TdClass: tdclass,
+                Value: '<img class="add-entity" alt="Add" title="Add" src="../App_Themes/Images/icn_add.png" style="cursor: pointer" onclick="addLicenseeCode(\''
+                    + licenseeCode.Name
+                    + '\')">'
+            });
             row.Columns.push({ Name: 'Edit', Value: '<label></label>' });
-            row.Columns.push({ Name: 'Status', Value: '<label>N/A</label>', CssClass: 'statusNA' });
+            row.Columns.push({ Name: 'Status', Value: '<label>N/A</label>', CssClass: 'statusNA code-status' });
         } else if (licenseeCode.Status === 'Code Needed') {
+            row.Columns.push({
+                Name: 'AddNew',
+                TdClass: tdclass,
+                Value: '<img class="add-entity" alt="Add" title="Add" src="../App_Themes/Images/icn_add.png" style="cursor: pointer" onclick="addLicenseeCode(\''
+                    + licenseeCode.Name
+                    + '\')">'
+            });
             row.Columns.push({ Name: 'Edit', Value: '<label></label>' });
-            row.Columns.push({ Name: 'Status', Value: '<label>Code Needed</label>', CssClass: 'statusCN' });
+            row.Columns.push({ Name: 'Status', Value: '<label>Code Needed</label>', CssClass: 'statusCN code-status' });
         }
         bodyRows.push(row);
     }
@@ -137,20 +174,18 @@ function RenderLicenseeCode(data, pageSize, pageIndex) {
     };
 
     $('#gridLicenseeCode').fanexGrid(gridOptions);
-
-    $("#billingMonth").html('Billing Month: ' + data.CurrentBillingMonth);
 }
 
-function showLicenseeCodeStatusDialog(licensee, licenseeCode, fromDate, toDate, status) {
+function showLicenseeCodeStatusDialog(licensee, licenseeCode, fromDate, toDate) {
     var updRequest =
     {
         LicenseeName: licensee,
         LicenseeCode: licenseeCode,
+        LicenseeCodeOld: licenseeCode,
         FromDate: fromDate,
         ToDate: toDate,
         FromDateOld: fromDate,
-        ToDateOld: toDate,
-        CodeStatus: status === 'ON'
+        ToDateOld: toDate
     };
 
     validateLicenseeCodeBeforeUpdate(updRequest);
@@ -160,17 +195,20 @@ function showLicenseeCodeStatusDialog(licensee, licenseeCode, fromDate, toDate, 
     hideAlertMessage("updWarningMsg1");
     hideAlertMessage("updWarningMsg2");
 
-    $('#NewStatus').text(status);
+    $('#updLicenseeName').text(licensee);
+    $('#updLicenseeCode').val(licenseeCode);
+    $('#updateCBC').text(GetBillingCircle());
 
     var displayFromDate = GetDisplayMonthOnly(updRequest.FromDate);
     var displayToDate = GetDisplayMonthOnly(updRequest.ToDate);
-    SetupCalendar('UpdateFromDate', displayFromDate);
-    SetupCalendar('UpdateToDate', displayToDate);
+    SetupCalendar('UpdateFromDate', displayFromDate, GetStatusValueUpdate);
+    SetupCalendar('UpdateToDate', displayToDate, GetStatusValueUpdate);
     $('#valueUpdateFromDate').val(updRequest.FromDate);
     $('#valueUpdateToDate').val(updRequest.ToDate);
+    GetStatusValueUpdate();
 
     $('#updateLicenseeCode').dialog({
-        title: 'Confirmation',
+        title: 'Edit Licensee Code',
         modal: true,
         resizable: false,
         width: 'auto',
@@ -187,6 +225,7 @@ function showLicenseeCodeStatusDialog(licensee, licenseeCode, fromDate, toDate, 
                 click: function () {
                     updRequest.FromDate = GetFromDate($("#valueUpdateFromDate").val());
                     updRequest.ToDate = GetToDate($("#valueUpdateToDate").val());
+                    updRequest.LicenseeCode = $('#updLicenseeCode').val();
                     validateLicenseeCodeBeforeUpdate(updRequest, updateLicenseeCodeStatus);
                 }
             }
@@ -195,6 +234,22 @@ function showLicenseeCodeStatusDialog(licensee, licenseeCode, fromDate, toDate, 
 }
 
 function validateLicenseeCodeBeforeUpdate(request, updateFunction = DefaultFunction) {
+    hideAlertMessage("updErrorMsg1");
+    hideAlertMessage("updErrorMsg2");
+    hideAlertMessage("updWarningMsg1");
+    hideAlertMessage("updWarningMsg2");
+
+    if (request.LicenseeCode === '') {
+        showAlertMessage('updErrorMsg1', 'Licensee Code cannot be empty.', 1);
+        return;
+    }
+
+    var fd = new Date(request.FromDate);
+    var td = new Date(request.ToDate);
+    if (+fd > +td) {
+        showAlertMessage('updErrorMsg1', 'From Date could not be later than To Date', 1);
+        return;
+    }
     parent.BlockUI();
     $.ajax({
         type: "POST",
@@ -302,9 +357,11 @@ function addLicenseeCode(licenseeSite) {
     hideAlertMessage('addLicenseeCodeErrMsg');
     $('#LicenseeName').text(licenseeSite); 
     $('#LicenseeCode').val('');
-    var currentMonth = GetDisplayMonthOnly(new Date());
-    SetupCalendar('NewFromDate', currentMonth);
-    SetupCalendar('NewToDate', 'Jan 2050');
+    $('#newCBC').text(GetBillingCircle());
+    var currentMonth = GetDisplayMonthOnly(new Date(checkTime.getFullYear(), checkTime.getMonth(), 1));
+    SetupCalendar('NewFromDate', currentMonth, GetStatusValueNew);
+    SetupCalendar('NewToDate', 'Jan 2050', GetStatusValueNew);
+    GetStatusValueNew();
     $('#addLicenseeCode').dialog({
         title: 'Add New Code',
         modal: true,
@@ -325,8 +382,7 @@ function addLicenseeCode(licenseeSite) {
                 text: "Save",
                 click: function () {
                     var licenseeCode = $('#LicenseeCode').val();
-                    var status = $('#LicenseeCodeStatus').prop('checked');
-                    ValidateLicenseeCode(licenseeSite, licenseeCode, status, $(this));
+                    ValidateLicenseeCode(licenseeSite, licenseeCode, $(this));
                 }
             }
             ]
@@ -341,15 +397,26 @@ function IsWarning(result) {
     return result.ErrorCode === 101 || result.ErrorCode === 102;
 }
 
-function ValidateLicenseeCode(licensee, licenseeCode, status, diablog) {
+function ValidateLicenseeCode(licensee, licenseeCode, diablog) {
     var request =
     {
         LicenseeName: licensee,
         LicenseeCode: licenseeCode,
-        CodeStatus: status,
         FromDate: GetFromDate($("#valueNewFromDate").val()),
         ToDate: GetToDate($("#valueNewToDate").val())
     };
+
+    if (request.LicenseeCode === '') {
+        showAlertMessage('addLicenseeCodeErrMsg', 'Licensee Code cannot be empty.', 1);
+        return;
+    }
+
+    var fd = new Date(request.FromDate);
+    var td = new Date(request.ToDate);
+    if (+fd > +td) {
+        showAlertMessage('addLicenseeCodeErrMsg', 'From Date could not be later than To Date', 1);
+        return;
+    }
 
     if (CheckFromToDate(request.FromDate, request.ToDate)) {
         parent.BlockUI();
@@ -419,14 +486,45 @@ function showAddConfirmBox(message, warnings, fncCallback, params) {
     }
 }
 
-function SetupCalendar(id, selectedMonth) {
+function SetupCalendar(id, selectedMonth, onAfterSelectdMonth) {
     $("#" + id).MonthPicker({
         MonthFormat: 'M yy',
         AltFormat: 'mm/01/yy',
         AltField: '#value' + id,
         SelectedMonth: selectedMonth,
+        OnAfterChooseMonth: function () {
+            onAfterSelectdMonth();
+        },
         Button: '<img class="img-date-selector" alt="" id="' + id + '_Trigger" title="Month selector" width="18" height="17" src="../App_Themes/Images/calendar.gif" type="image" /> '
     });
+}
+
+function GetStatusValueUpdate() {
+    var fromDate = new Date(GetFromDate($("#valueUpdateFromDate").val()));
+    var toDate = new Date(GetToDate($("#valueUpdateToDate").val()));
+    if (fromDate < checkTime && checkTime < toDate) {
+        $("#UpdateStatus").html('ON');
+        $("#UpdateStatus").addClass('code-status-on');
+        $("#UpdateStatus").removeClass('code-status-off');
+    } else {
+        $("#UpdateStatus").html('OFF');
+        $("#UpdateStatus").addClass('code-status-off');
+        $("#UpdateStatus").removeClass('code-status-on');
+    }
+}
+
+function GetStatusValueNew() {
+    var fromDate = new Date(GetFromDate($("#valueNewFromDate").val()));
+    var toDate = new Date(GetToDate($("#valueNewToDate").val()));
+    if (fromDate < checkTime && checkTime < toDate) {
+        $("#LicenseeCodeStatus").html('ON');
+        $("#LicenseeCodeStatus").addClass('code-status-on');
+        $("#LicenseeCodeStatus").removeClass('code-status-off');
+    } else {
+        $("#LicenseeCodeStatus").html('OFF');
+        $("#LicenseeCodeStatus").addClass('code-status-off');
+        $("#LicenseeCodeStatus").removeClass('code-status-on');
+    }
 }
 
 function CheckFromToDate(fromDate, toDate) {
@@ -454,6 +552,32 @@ function GetToDate(dateString) {
     const endDate = new Date(date.getFullYear(), date.getMonth() + 1, 0);
 
     return endDate.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' });
+}
+
+function GetBillingCircle() {
+    var today = new Date();
+    var year = today.getFullYear();
+    var checkTimeWithoutTZ = new Date(year, today.getMonth(), 5, 17, 0, 0, 0);
+    checkTime = new Date(checkTimeWithoutTZ.getTime() - (480 + today.getTimezoneOffset()) * 60 * 1000);
+    if (+checkTime > +today) {
+        checkTime = new Date(checkTime.getFullYear(), checkTime.getMonth() - 1, checkTime.getDate(), checkTime.getHours(), 0, 0); 
+    }
+
+    var monthCircle = checkTime.getMonth();
+
+    var startDate = new Date(year, monthCircle, 1);
+    var endDate = new Date(year, monthCircle + 1, 0);
+
+    return startDate.toLocaleDateString('en-US', { dateStyle: 'medium' }) + ' - ' + endDate.toLocaleDateString('en-US', { dateStyle: 'medium' });
+}
+
+function OpenNoteMessage() {
+    $('#noteMessage').dialog({
+        title: 'Info',
+        modal: true,
+        width: 500,
+        height: 110
+    });
 }
 
 function Search() {

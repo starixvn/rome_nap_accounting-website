@@ -6,6 +6,8 @@
 
         public string ToDateOld { get; set; }
 
+        public string LicenseeCodeOld { get; set; }
+
         public override string GetSettingKey()
             => "Acc_LicenseeTransferCode_Upd";
     }
