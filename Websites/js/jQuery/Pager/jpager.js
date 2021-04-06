@@ -16,7 +16,7 @@ jQuery.fn.pagination = function (maxentries, opts) {
         num_display_entries: 5,
         current_page: 0,
         num_edge_entries: 2,
-        link_to: "#",
+        link_to: "javascript:void(0);",
         prev_text: "&nbsp;",
         next_text: "&nbsp;",
         ellipse_text: "...",
