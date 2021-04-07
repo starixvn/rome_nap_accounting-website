@@ -1,41 +1,35 @@
 ﻿namespace Fanex.Tarus.Customer.Business.VirtualRate
 {
+    using Fanex.Common;
+    using Fanex.Tarus.Customer.Criteria.VirtualRate;
+    using Fanex.Tarus.Customer.DataAccess.VirtualRate;
+    using Fanex.Tarus.Customer.Entities;
+    using Fanex.Tarus.Customer.Entities.VirtualRate;
+    using Fanex.Tarus.Customer.Entities.VirtualRate.SportBetTypeReferences;
+    using Fanex.Tarus.Customer.Resources;
+    using Fanex.Tarus.Infrastructure.Caching;
+    using Fanex.Tarus.Infrastructure.Constants;
+    using Fanex.Tarus.Infrastructure.Extensions;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Xml.Linq;
-    using Fanex.Common;
-    using Fanex.Tarus.Customer.Business.VirtualRate.UploadRate;
-    using Fanex.Tarus.Customer.Criteria.VirtualRate;
-    using Fanex.Tarus.Customer.Criteria.VirtualRate.UploadRate;
-    using Fanex.Tarus.Customer.DataAccess.VirtualRate;
-    using Fanex.Tarus.Customer.Entities;
-    using Fanex.Tarus.Customer.Entities.VirtualRate;
-    using Fanex.Tarus.Customer.Entities.VirtualRate.SportBetTypeReferences;
-    using Fanex.Tarus.Customer.Entities.VirtualRate.UploadRate;
-    using Fanex.Tarus.Customer.Resources;
-    using Fanex.Tarus.Infrastructure.Caching;
-    using Fanex.Tarus.Infrastructure.Constants;
-    using Fanex.Tarus.Infrastructure.Extensions;
 
     public class VirtualRateService : IVirtualRateService
     {
         private readonly IVirtualRateRepository _virtualRateRepository;
 
-        private readonly IUploadVirtualRateService _uploadVirtualRateService;
-
         public VirtualRateService()
-            : this(null, null)
+            : this(null)
         {
         }
 
         public VirtualRateService(
-            IVirtualRateRepository virtualRateRepository,
-            IUploadVirtualRateService uploadVirtualRateService)
+            IVirtualRateRepository virtualRateRepository)
         {
             _virtualRateRepository = virtualRateRepository ?? new VirtualRateRepository();
-            _uploadVirtualRateService = uploadVirtualRateService ?? new UploadVirtualRateService();
+          
         }
 
         [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules",
@@ -119,21 +113,6 @@
             }
 
             return null;
-        }
-
-        public void DownloadImportRateTemplate()
-        {
-            _uploadVirtualRateService.DownloadImportRateTemplate();
-        }
-
-        public UploadResult UpdateImportRate(UpdateImportRateCriteria criteria)
-        {
-            return _uploadVirtualRateService.UpdateImportRate(criteria);
-        }
-
-        public Result DeleteTempRate()
-        {
-            return _uploadVirtualRateService.DeleteTempRate();
         }
 
         public List<SportBetTypeReferencesModel> GetSportBetTypeReferences(GetSportBetTypeReferencesCriteria criteria)

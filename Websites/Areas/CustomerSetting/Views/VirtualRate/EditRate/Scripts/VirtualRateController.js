@@ -3,6 +3,14 @@ $(document).ready(function () {
     virtualRateController.initPage();
 });
 
+String.prototype.format = function () {
+    a = this;
+    for (k in arguments) {
+        a = a.replace("{" + k + "}", arguments[k]);
+    }
+    return a;
+};
+
 var VirtualRateController = function () {
     var self = this;
     self.Constants = {
@@ -495,6 +503,21 @@ var VirtualRateController = function () {
                         criteria.EnableVirtualRate = $("#chk-enable").attr("checked") ? true : false;
                         criteria.LockVirtualRateStatus = $("#chk-lockVR").attr("checked") ? true : false;
                         criteria.LockVirtualRateOtherStatus = $("#chk-lockVROther").attr("checked") ? true : false;
+
+                        var chkLockMaster, chkLockAgent, chkLockMember = 0;
+                        var chkEnableMaster, chkEnableAgent, chkEnableMember = 0;
+
+                        chkLockMaster = ($("#chk-lockVRMaster") !== undefined && $("#chk-lockVRMaster").attr("checked")) ? 1 : 0;
+                        chkLockAgent = ($("#chk-lockVRAgent") !== undefined && $("#chk-lockVRAgent").attr("checked")) ? 1 : 0;
+                        chkLockMember = ($("#chk-lockVRMember") !== undefined && $("#chk-lockVRMember").attr("checked")) ? 1 : 0;
+
+                        chkEnableMaster = ($("#chk-enableVRMaster") !== undefined && $("#chk-enableVRMaster").attr("checked")) ? 1 : 0;
+                        chkEnableAgent = ($("#chk-enableVRAgent") !== undefined && $("#chk-enableVRAgent").attr("checked")) ? 1 : 0;
+                        chkEnableMember = ($("#chk-enableVRMember") !== undefined && $("#chk-enableVRMember").attr("checked")) ? 1 : 0;
+
+                        var additionalAction = '<ROOT><VR Unlock3="{0}"  Unlock2="{1}" Unlock1="{2}" Enable3="{3}"  Enable2="{4}" Enable1="{5}" /></ROOT>';
+                        criteria.AdditionalActions = additionalAction.format(chkLockMaster, chkLockAgent, chkLockMember, chkEnableMaster, chkEnableAgent, chkEnableMember);
+
                         var sportLength = customerVirtualRateModel.SportVirtualRateList.length;
 
                         var isCopyFromSport = $("#button-copy-sport-settings-" + self.Constants.SportType.Soccer).hasClass("icon-copy-setting-checked");

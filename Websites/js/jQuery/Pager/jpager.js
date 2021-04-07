@@ -16,7 +16,7 @@ jQuery.fn.pagination = function (maxentries, opts) {
         num_display_entries: 5,
         current_page: 0,
         num_edge_entries: 2,
-        link_to: "#",
+        link_to: "javascript:void(0);",
         prev_text: "&nbsp;",
         next_text: "&nbsp;",
         ellipse_text: "...",
@@ -205,7 +205,7 @@ jQuery.fn.pagination = function (maxentries, opts) {
         }
 
         function drawGoToPage() {
-            var goto_page = '<table class="c gotopage_box" id="page_menu" cellpadding="0px" cellspacing="0px"><tr><td>Go to Page:</td><td><input type="text" name="txtpage" id="txtpage" class="txt" onkeypress="return PagerKeyPress(event);" size="4"></td><td><a id="pagenav_ibtn" href="#" class="btn pagenav_ibtn" >Go</a></td></tr></table>';
+            var goto_page = '<table class="c gotopage_box" id="page_menu" cellpadding="0px" cellspacing="0px"><tr><td>Go to Page:</td><td><input type="text" name="txtpage" id="txtpage" class="txt" onkeypress="return PagerKeyPress(event);" size="4"></td><td><a id="pagenav_ibtn" href="javascript:void(0);" class="btn pagenav_ibtn" >Go</a></td></tr></table>';
             return goto_page;
         }
 
