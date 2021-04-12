@@ -135,6 +135,9 @@
     <Reference Include="Fanex.BetList.PP, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.PP.1.4.0\lib\net40\Fanex.BetList.PP.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.BetList.PragmaticLiveCasino, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.PragmaticLiveCasino.1.0.0.1\lib\net40\Fanex.BetList.PragmaticLiveCasino.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.BetList.RnGCasino, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.RnGCasino.1.1.0\lib\net40\Fanex.BetList.RnGCasino.dll</HintPath>
     </Reference>
@@ -252,6 +255,9 @@
     <Reference Include="Fanex.Result.Core.PP, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.PP.1.0.0.0\lib\Fanex.Result.Core.PP.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="Fanex.Result.Core.PPLiveCasino, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Result.Core.PPLiveCasino.1.0.0\lib\net461\Fanex.Result.Core.PPLiveCasino.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Result.Core.Racing, Version=1.1.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core-Racing.1.1.0.1\lib\net40\Fanex.Result.Core.Racing.dll</HintPath>

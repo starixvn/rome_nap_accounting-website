@@ -4,6 +4,7 @@
     using CustomerSetting.Module.Core.Web.Controllers;
     using Fanex.Result.Core.LinkedGames;
     using Fanex.Result.Core.MaxGame;
+    using Fanex.Result.Core.PPLiveCasino;
     using Fanex.Result.Core.SportsLottery;
     using Fanex.Result.Core.VirtualGames;
     using Fanex.Result.ThirdParty.Models;
@@ -65,6 +66,15 @@
             var productName = CacheRef.GetProductName(productId) + " Result";
             var service = new MaxGameResult();
             var result = service.GetResult(custId, transId3rd, betType, endTime, siteId);
+
+            return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(productName, new SuccessResult(result)));
+        }
+
+        public ActionResult PPLiveCasinoResult(int productId, string custId, string gameId3rd, int betType)
+        {
+            var productName = CacheRef.GetProductName(productId) + " Result";
+            var service = new PPLiveCasinoResult();
+            var result = service.GetResult(custId, gameId3rd, betType);
 
             return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(productName, new SuccessResult(result)));
         }
