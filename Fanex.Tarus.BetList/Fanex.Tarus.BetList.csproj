@@ -136,7 +136,7 @@
       <HintPath>..\packages\Fanex.BetList.PP.1.4.0\lib\net40\Fanex.BetList.PP.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.PragmaticLiveCasino, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.PragmaticLiveCasino.1.0.0.1-alpha02\lib\net40\Fanex.BetList.PragmaticLiveCasino.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.PragmaticLiveCasino.1.0.0.1\lib\net40\Fanex.BetList.PragmaticLiveCasino.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.RnGCasino, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.RnGCasino.1.1.0\lib\net40\Fanex.BetList.RnGCasino.dll</HintPath>
