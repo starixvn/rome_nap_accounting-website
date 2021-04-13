@@ -103,10 +103,6 @@ BetList.BetListByRefNo = (function ($) {
         } else if (selProductValue === "38" || selProductValue === "63") {
             $betId.attr("disabled", "disabled");
         }
-
-        if (selProductValue === "65") {
-            $gameId.removeAttr("disabled");
-        }
     };
 
     function selectSearchByRef() {
