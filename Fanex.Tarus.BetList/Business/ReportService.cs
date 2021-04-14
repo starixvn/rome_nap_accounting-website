@@ -174,7 +174,7 @@
 
         public static bool IsSexyGaming(int betTypeId)
         {
-            return (3101 <= betTypeId && betTypeId <= 3199);
+            return (3101 <= betTypeId && betTypeId <= 3149);
         }
 
         public static bool IsGTCasino(int betTypeId)
