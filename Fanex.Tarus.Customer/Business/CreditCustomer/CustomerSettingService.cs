@@ -420,6 +420,6 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
             });
 
         public CustomerSetting.Module.Core.Models.Result UnlockAccess(int custId, int userId, string ip)
-            => _customerSettingDataAccess.ExecuteNonQuery(new UnlockAccessCriteria(custId, userId, ip));
+            => _customerSettingDataAccess.ExecuteNonQuery(new UnlockAccessCriteria(custId, userId, 0, "E", ip, AccCommon.SystemId));
     }
 }
