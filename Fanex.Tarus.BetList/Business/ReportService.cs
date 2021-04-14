@@ -269,7 +269,7 @@
                 return SportContants.IonCasino;
             if (1021 <= betTypeId && betTypeId <= 1099)
                 return SportContants.KenoLottery;
-            if(6001 <= betTypeId && betTypeId <=6300)
+            if (6001 <= betTypeId && betTypeId <= 6300)
                 return SportContants.PGSoft;
             if (3401 <= betTypeId && betTypeId <= 3499)
                 return SportContants.WM;
@@ -283,10 +283,12 @@
                 return SportContants.GDG;
             if (5401 <= betTypeId && betTypeId <= 5499)
                 return SportContants.MaxGame;
+            if (3701 <= betTypeId && betTypeId <= 3799)
+                return SportContants.PPLiveCasino;
 
             return 0;
         }
-            
+
 
         #endregion StaticMethods
     }
