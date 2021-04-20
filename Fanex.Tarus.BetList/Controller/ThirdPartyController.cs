@@ -83,7 +83,7 @@
         public ActionResult HabaneroResult(int productId, string custId, string transId3rd, string gameId3rd, string siteId)
         {
             var productName = CacheRef.GetProductName(productId) + " Result";
-            var service = new HabaneroResult();
+            var service = new HabaneroResult("HabaneroResultConfigs");
             var result = service.GetResult(custId, transId3rd, gameId3rd, siteId);
 
             return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(productName, new SuccessResult(result)));
