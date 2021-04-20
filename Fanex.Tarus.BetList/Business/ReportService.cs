@@ -174,7 +174,7 @@
 
         public static bool IsSexyGaming(int betTypeId)
         {
-            return (3101 <= betTypeId && betTypeId <= 3199);
+            return (3101 <= betTypeId && betTypeId <= 3149);
         }
 
         public static bool IsGTCasino(int betTypeId)
@@ -285,7 +285,8 @@
                 return SportContants.MaxGame;
             if (3701 <= betTypeId && betTypeId <= 3799)
                 return SportContants.PPLiveCasino;
-
+            if (7001 <= betTypeId && betTypeId <= 7300)
+                return SportContants.Habanero;
             return 0;
         }
 

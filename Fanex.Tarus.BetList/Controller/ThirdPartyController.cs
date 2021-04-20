@@ -2,6 +2,7 @@
 {
     using System.Web.Mvc;
     using CustomerSetting.Module.Core.Web.Controllers;
+    using Fanex.Result.Core.Habanero;
     using Fanex.Result.Core.LinkedGames;
     using Fanex.Result.Core.MaxGame;
     using Fanex.Result.Core.PPLiveCasino;
@@ -75,6 +76,15 @@
             var productName = CacheRef.GetProductName(productId) + " Result";
             var service = new PPLiveCasinoResult();
             var result = service.GetResult(custId, gameId3rd, betType);
+
+            return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(productName, new SuccessResult(result)));
+        }
+        
+        public ActionResult HabaneroResult(int productId, string custId, string transId3rd, string gameId3rd, string siteId)
+        {
+            var productName = CacheRef.GetProductName(productId) + " Result";
+            var service = new HabaneroResult();
+            var result = service.GetResult(custId, transId3rd, gameId3rd, siteId);
 
             return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(productName, new SuccessResult(result)));
         }

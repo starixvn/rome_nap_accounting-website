@@ -598,6 +598,18 @@ function showJokerBetDetails(transId, winlossDate, custId, transType) {
     openResultsPopUp(jokerParam);
 }
 
+function showHabaneroBetDetails(transId, winlossDate, custId, transType) {
+    var jokerParam = {
+        url: "RNGCasinoBetList/BetDetails",
+        title: "Habanero - Detailed Bet list - " + winlossDate.split(" ")[0],
+        jsonParam: { TransId: transId, TransType: transType, CustId: custId, SportType: 238, PageSize: 500 },
+        width: 1030,
+        height: 600
+    };
+
+    openResultsPopUp(jokerParam);
+}
+
 function showSexyGamingBetDetails(refno, winlossDate, custId, transType) {
     var params = {
         url: "AGCasinoBetList/BetDetails",
@@ -971,6 +983,7 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
 
         case 236: // GDG
             return getGDGParam(transdesc, betcheck, matchcode, league);
+
         case 239: // BG
             return getBGParam(transdesc, betcheck, league, matchcode);
 
@@ -1011,6 +1024,9 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
 
         case 237: //MaxGame
             return getMaxGameParam(betcheck, transdesc, bettype, matchcode, betid);
+
+        case 238:
+            return getHabaneroParam(transdesc, betcheck, matchcode, betid);
 
         default:
             return undefined;
@@ -1202,6 +1218,15 @@ function getGDGParam(transId3rd, custId, gameId3rd, siteId) {
     };
 }
 
+function getHabaneroParam(transId3rd, custId, gameId3rd, siteId) {
+    return {
+        url: "ThirdParty/HabaneroResult",
+        title: "Habanero Result",
+        jsonParam: { custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, productId: 61, siteId: siteId },
+        width: 850,
+        height: 800
+    };
+}
 
 function getCardClubParam(custId, gameTypeId, sportType, transId3rd) {
     var sportName = "Arcadia Gaming";

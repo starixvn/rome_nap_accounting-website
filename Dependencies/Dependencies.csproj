@@ -128,7 +128,7 @@
       <HintPath>..\packages\Fanex.BetList.BBIN.1.0.0.0\lib\net40\Fanex.BetList.BBIN.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.BetTrade, Version=1.3.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Core.2.111.0.5\lib\net40\Fanex.BetList.BetTrade.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.Core.2.111.0.6\lib\net40\Fanex.BetList.BetTrade.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.BG, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.BG.1.0.0\lib\net40\Fanex.BetList.BG.dll</HintPath>
@@ -143,8 +143,8 @@
       <HintPath>..\packages\Fanex.BetList.ColossusBets.1.0.1.8\lib\net40\Fanex.BetList.ColossusBets.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.BetList.Core, Version=2.111.0.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Core.2.111.0.5\lib\net40\Fanex.BetList.Core.dll</HintPath>
+    <Reference Include="Fanex.BetList.Core, Version=2.111.0.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.Core.2.111.0.6\lib\net40\Fanex.BetList.Core.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.Core.RemotingRef, Version=1.1.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Core.RemotingRef.1.1.0.1\lib\net461\Fanex.BetList.Core.RemotingRef.dll</HintPath>
@@ -164,6 +164,9 @@
     </Reference>
     <Reference Include="Fanex.BetList.GTCasino, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.GTCasino.1.0.0\lib\net40\Fanex.BetList.GTCasino.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.BetList.Habanero, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.Habanero.1.0.0\lib\net40\Fanex.BetList.Habanero.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.Indo4D, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Indo4D.1.0.0.5\lib\net40\Fanex.BetList.Indo4D.dll</HintPath>
@@ -217,8 +220,8 @@
     <Reference Include="Fanex.BetList.SAGaming, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.SAGaming.1.0.0.4\lib\net40\Fanex.BetList.SAGaming.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.SexyGaming, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.SexyGaming.1.0.0.2\lib\net40\Fanex.BetList.SexyGaming.dll</HintPath>
+    <Reference Include="Fanex.BetList.SexyGaming, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.SexyGaming.1.0.0.3\lib\net40\Fanex.BetList.SexyGaming.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.Spadegaming, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Spadegaming.1.0.0\lib\net40\Fanex.BetList.Spadegaming.dll</HintPath>
@@ -341,8 +344,8 @@
     <Reference Include="Fanex.Module.NG2, Version=1.0.1.7, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Module.NG2.NAP.1.0.1.7\lib\net40\Fanex.Module.NG2.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Module.RNGCasino, Version=2.0.1.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Module.RNGCasino.2.0.1.1\lib\net461\Fanex.Module.RNGCasino.dll</HintPath>
+    <Reference Include="Fanex.Module.RNGCasino, Version=2.0.1.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Module.RNGCasino.2.0.1.2\lib\net461\Fanex.Module.RNGCasino.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Module.Statement, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Module.Statement.1.0.0.7\lib\net40\Fanex.Module.Statement.dll</HintPath>
@@ -377,7 +380,7 @@
       <HintPath>..\packages\Fanex.RemotingRef.1.5.0\lib\net461\Fanex.RemotingRef.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Result.Core, Version=2.2.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core-NPOI.2.0.6.2.3.8.4\lib\net40\Fanex.Result.Core.dll</HintPath>
+      <HintPath>..\packages\Fanex.Result.Core-NPOI.2.0.6.2.3.8.5\lib\net40\Fanex.Result.Core.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Result.Core.AGCasino, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.AGCasino.1.0.1\lib\net40\Fanex.Result.Core.AGCasino.dll</HintPath>
@@ -386,8 +389,8 @@
     <Reference Include="Fanex.Result.Core.AllBetCasino, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.AllBetCasino.1.0.2\lib\net40\Fanex.Result.Core.AllBetCasino.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Result.Core.Base, Version=2.3.8.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core-NPOI.2.0.6.2.3.8.4\lib\net40\Fanex.Result.Core.Base.dll</HintPath>
+    <Reference Include="Fanex.Result.Core.Base, Version=2.3.8.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Result.Core-NPOI.2.0.6.2.3.8.5\lib\net40\Fanex.Result.Core.Base.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Result.Core.BBin, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.BBin.1.0.0.3\lib\net40\Fanex.Result.Core.BBin.dll</HintPath>
@@ -413,6 +416,9 @@
     </Reference>
     <Reference Include="Fanex.Result.Core.GTCasino, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.GTCasino.1.0.0\lib\net40\Fanex.Result.Core.GTCasino.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Result.Core.Habanero, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Result.Core.Habanero.1.0.0\lib\net461\Fanex.Result.Core.Habanero.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Result.Core.Happy5, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.Happy5.1.0.0.0\lib\net40\Fanex.Result.Core.Happy5.dll</HintPath>
