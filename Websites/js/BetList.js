@@ -1229,30 +1229,13 @@ function getHabaneroParam(transId3rd, custId, gameId3rd, siteId) {
 }
 
 function getCardClubParam(custId, gameTypeId, sportType, transId3rd) {
-    var sportName = "Arcadia Gaming";
-    var bettypeNames = {};
-    bettypeNames["1401"] = "8 Cards";
-    bettypeNames["1402"] = "Hold'em";
-    bettypeNames["1403"] = "Omaha";
-    bettypeNames["1404"] = "3 Pic Switch";
-    bettypeNames["1405"] = "Shortdeck 6+";
-    bettypeNames["1499"] = "Gems bought";
-    bettypeNames["1901"] = "Video Poker";
-    bettypeNames["1902"] = "BigSmall";
-    bettypeNames["1903"] = "OddEven";
-    bettypeNames["1904"] = "Lotto3";
-    bettypeNames["1905"] = "11HiLo";
-    bettypeNames["1906"] = "Bonus";
-    var betTypeName = bettypeNames[gameTypeId];
-    var title = sportName + " - " + betTypeName;
-
     return {
         url: "../Report/ViewCardClubResult.aspx",
-        title: title,
+        title: resultTitle,
         jsonParam: { custId: custId, gameTypeId: gameTypeId, transId3rd: transId3rd },
         width: 945,
         height: 500,
-        iframe: "innerFrame" + title.replace(/\s/g, "").replace(/\//g, "")
+        iframe: "innerFrame" + resultTitle.replace(/\s/g, "").replace(/\//g, "")
     };
 }
 
