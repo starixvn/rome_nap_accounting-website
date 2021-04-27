@@ -40,7 +40,7 @@
             {
                 {SportContants.AllBet, "Allbet_Details"},
                 {SportContants.SaGaming, "SAGaming_Details"},
-                {SportContants.SexyGaming, "AECasino_Details"},
+                {SportContants.SexyGaming, "AESexy_Details"},
                 {SportContants.GTCasino, "IBCBetLiveCasino_Details"},
                 {SportContants.Voidbridge, "MacauGames_Details"},
                 {SportContants.FishingWorld, "FishingWorld_Details"},

@@ -613,7 +613,7 @@ function showHabaneroBetDetails(transId, winlossDate, custId, transType) {
 function showSexyGamingBetDetails(refno, winlossDate, custId, transType) {
     var params = {
         url: "AGCasinoBetList/BetDetails",
-        title: "AE Casino - Detailed Bet list - " + winlossDate.split(" ")[0],
+        title: "AE Sexy - Detailed Bet list - " + winlossDate.split(" ")[0],
         jsonParam: { Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 243, PageSize: 500 },
         width: 1040,
         height: 600
@@ -1145,7 +1145,7 @@ function getLiveCasinoParam(transdesc, betcheck, bettype, sporttype) {
     var sporttypes = {};
     sporttypes["211"] = "Allbet Result";
     sporttypes["242"] = "IBCBet Live Casino Result";
-    sporttypes["243"] = "AE Casino Result";
+    sporttypes["243"] = "AE Sexy Result";
     sporttypes["244"] = "SA Gaming Result";
     sporttypes["233"] = "WM Result";
 
@@ -1332,12 +1332,12 @@ function getPPLiveCasinoParam(custId, gameId3rd, betType) {
         url: "ThirdParty/PPLiveCasinoResult",
         title: "PP Live Casino Result",
         jsonParam:
-            {
-                productId: 65,
-                custId: custId,
-                gameId3rd: gameId3rd,
-                betType: betType
-            },
+        {
+            productId: 65,
+            custId: custId,
+            gameId3rd: gameId3rd,
+            betType: betType
+        },
         width: 945,
         height: 500
     };
