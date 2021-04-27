@@ -88,11 +88,7 @@
 
         public string Fax => Converter.ToString2(customerInfoRow["fax"]);
 
-        public string Nickname => Converter.ToString2(customerInfoRow["username2"]);
-
-        public string SabaclubPlayer3rdID => customerInfoRow["SabaClubPlayerID3rd"] != null &&
-            customerInfoRow["SabaClubPlayerID3rd"] != DBNull.Value ? 
-            Converter.ToString2(customerInfoRow["SabaClubPlayerID3rd"]) : string.Empty;
+        public string Nickname => Converter.ToString2(customerInfoRow["username2"]);        
 
         public bool Enabled => Utils.ToBoolean(customerInfoRow["Enabled"]);
 

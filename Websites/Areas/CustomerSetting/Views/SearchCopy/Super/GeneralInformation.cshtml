@@ -57,7 +57,7 @@
                 Site
             </td>
             <td class="l" style="width: 38%">
-                <select id="listSite" ng-model="existedUser.selectedSite" ng-options="s.SiteName for s in existedUser.sites">                
+                <select id="listSite" ng-model="existedUser.selectedSite" ng-options="s.SiteName for s in existedUser.sites" ng-change="HideProductList()">                
                 </select>                
             </td>            
             <td class="l" style="width: 12%">

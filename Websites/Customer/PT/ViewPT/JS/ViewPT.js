@@ -767,6 +767,11 @@ var ViewPT = {
             case 200://Saba.club
                 ViewPT.viewPTBasedOnKindOfCustomer(userName, 0, 0, isLive, 42);
                 break;
+
+            case 171: //VGaming
+            case 173: //VGaming
+                ViewPT.viewPTBasedOnKindOfCustomer(userName, 0, 0, isLive, 66);
+                break;
             default:
                 ViewPT.getViewPTOldFormat(userName, sportId, betTypeId, isLive);
         }

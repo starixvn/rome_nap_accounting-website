@@ -715,6 +715,18 @@ function showSabaClubDetails(refno, winlossDate, custId, transType) {
     openResultsPopUp(rngCasinoParam);
 }
 
+function showVGamingDetails(refno, winlossDate, custId, transType) {
+    var rngCasinoParam = {
+        url: "RNGCasinoBetList/BetDetails",
+        title: "VGaming Details",
+        jsonParam: { TransId: refno, Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 171, PageSize: 500 },
+        width: 1030,
+        height: 600
+    };
+
+    openResultsPopUp(rngCasinoParam);
+}
+
 function showBBINBetDetails(refno, winlossDate, custId, transType) {
     var rngCasinoParam = {
         url: "BBinBetList/BetDetails",
@@ -747,6 +759,19 @@ function showProgressiveJackpotWonDetails(transId, custId, betType) {
 
 function showPPJackpotWonDetails(transId, custId, betType) {
     var title = "PP Jackpot Won Details";
+    var param = {
+        url: "RNGCasinoBetList/JackpotDetails",
+        title: title,
+        jsonParam: { TransId: transId, CustId: custId, BetType: betType, Title: title },
+        width: 1030,
+        height: 600
+    };
+
+    openResultsPopUp(param);
+}
+
+function showVGamingJackpotWonDetails(transId, custId, betType) {
+    var title = "VGaming Jackpot Won Details";
     var param = {
         url: "RNGCasinoBetList/JackpotDetails",
         title: title,
@@ -964,6 +989,11 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
 
         case 170: // PP Live Casino
             return getPPLiveCasinoParam(betcheck, transdesc, bettype);
+
+        case 171: // VGaming
+        case 173: // VGaming
+            // custId, gameroundid, gameid, siteId
+            return getVGamingParam(betcheck, transdesc, bettype, matchcode, sporttype);
 
         case 181:
         case 182:
@@ -1276,6 +1306,17 @@ function getSabaClubParam(custId, gameRoundId, gameId, siteId, sportType) {
     };
 }
 
+function getVGamingParam(custId, gameRoundId, gameId, siteId, sportType) {
+
+    return {
+        url: "../Report/ViewVGamingResult.aspx",
+        title: "VGaming Result",
+        jsonParam: { custId: custId, GameRoundId: gameRoundId, GameId: gameId, SiteId: siteId, SportType: sportType },
+        width: 945,
+        height: 500,
+        iframe: "innerFrameVGamingResult"
+    };
+}
 function getMacauGamesParam(matchcode, betcheck) {
     return {
         url: "../Report/ViewVoidbridgeResult.aspx",

@@ -2484,4 +2484,7 @@
   <data name="CopyVirtualRate" xml:space="preserve">
     <value>Copy Virtual Rate</value>
   </data>
+  <data name="enableVGaming" xml:space="preserve">
+    <value>VGaming</value>
+  </data>
 </root>

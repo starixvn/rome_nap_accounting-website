@@ -49,6 +49,7 @@
                 IsShowRNGLottery = !customerInfoViewModel.HideRNGLottery,
                 IsShowVirtualGames = !customerInfoViewModel.HideVirtualGames,
                 IsShowSabaclub = !customerInfoViewModel.HideSabaclub,
+                IsShowVGaming = !customerInfoViewModel.HideVGaming,
                 IsShowSabaVirtualSports = !customerInfoViewModel.HideSabaVirtualSports
             };
 
@@ -255,6 +256,21 @@
                     customerInfoViewModel.SearchAccountRoleId,
                     42,
                     "Update Saba.club Status"));
+            }
+
+            if (customerInfoViewModel.HideVGaming)
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "EnableVGaming");
+            }
+            else
+            {
+                TemplateHandler.Assign(ref htmlcontent, "{VGamingOnClickFunction}", _renderLeftPanelService.GetProductStatusJsFunction(
+                    customerInfoViewModel.IsDeposit,
+                    customerInfoViewModel.CustId,
+                    customerInfoViewModel.UserName,
+                    customerInfoViewModel.SearchAccountRoleId,
+                    66,
+                    "Update VGaming Status"));
             }
 
             if (customerInfoViewModel.HideRNGLottery)

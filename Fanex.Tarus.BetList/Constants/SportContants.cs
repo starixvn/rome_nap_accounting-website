@@ -87,5 +87,6 @@
         public const int PPLiveCasino = 170;
         public const int Habanero = 238;
         public const int CG = 167;
+        public const int VGaming = 171;
     }
 }
