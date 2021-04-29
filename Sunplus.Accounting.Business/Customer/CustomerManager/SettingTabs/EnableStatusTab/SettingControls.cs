@@ -42,6 +42,7 @@
             bool currStatus,
             bool hasDownLine,
             bool uplineclosed,
+            bool isDirectClosed,
             bool hasClearCreditPermission)
         {
             string template = WebUtils.LoadTemplate("SettingClosed.htm");
@@ -74,7 +75,11 @@
                     TemplateHandler.Assign(ref template, "{classname}", (currStatus) ? "chkchecked" : "chkuncheck");
                     TemplateHandler.Assign(ref template, "{onclick}", string.Empty);
                     TemplateHandler.Assign(ref template, "{onmouseout}", "UnTip()");
-                    TemplateHandler.Assign(ref template, "{onmouseover}", "Tip('" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblUplineClosed") + "', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)");
+
+                    var tooltipText = !isDirectClosed
+                        ? "This account was indirectly closed by upline."
+                        : ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblUplineClosed");
+                    TemplateHandler.Assign(ref template, "{onmouseover}", "Tip('" + tooltipText + "', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)");
                 }
             }
             else

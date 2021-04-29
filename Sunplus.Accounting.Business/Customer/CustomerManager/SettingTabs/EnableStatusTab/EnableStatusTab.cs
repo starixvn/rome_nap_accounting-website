@@ -156,6 +156,7 @@
                                         customerInfoViewModel.Closed,
                                         customerInfoViewModel.SearchAccountRoleId > 1,
                                         customerInfoViewModel.CustParent.IsClosed,
+                                        customerInfoViewModel.IsDirectClosed,
                                         customerInfoViewModel.AllowUpdateGivenCredit);
 
             TemplateHandler.Assign(ref htmlcontent, "{closedCustomer}", closedStatusBlock);

@@ -119,6 +119,8 @@
 
         public bool Closed => Utils.ToBoolean(customerInfoRow["closed"]);
 
+        public bool IsDirectClosed => false;
+
         public CustomerLockedAccess LockedAccess => new CustomerLockedAccess(Utils.ToByte(customerInfoRow["Locked"]));
 
         public int CN88CustStatus => Utils.ToInt32(customerInfoRow["CN88CustStatus"]);
