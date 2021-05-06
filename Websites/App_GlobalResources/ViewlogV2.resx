@@ -2125,4 +2125,7 @@ Max Keno (20+1) 2</value>
   <data name="Disable238_7001" xml:space="preserve">
     <value>Disabled Habanero</value>
   </data>
+  <data name="Disable167_7301" xml:space="preserve">
+    <value>Disabled CG</value>
+  </data>
 </root>

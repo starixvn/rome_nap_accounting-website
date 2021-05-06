@@ -287,6 +287,8 @@
                 return SportContants.PPLiveCasino;
             if (7001 <= betTypeId && betTypeId <= 7300)
                 return SportContants.Habanero;
+            if (7301 <= betTypeId && betTypeId <= 7600)
+                return SportContants.CG;
             return 0;
         }
 
