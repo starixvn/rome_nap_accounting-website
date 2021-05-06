@@ -586,6 +586,18 @@ function showCGBetDetails(transId, winlossDate, custId, transType) {
     openResultsPopUp(param);
 }
 
+function showAdvantPlayBetDetails(transId, winlossDate, custId, transType) {
+    var param = {
+        url: "RNGCasinoBetList/BetDetails",
+        title: "AdvantPlay - Detailed Bet list - " + winlossDate.split(" ")[0],
+        jsonParam: { TransId: transId, TransType: transType, CustId: custId, SportType: 172, PageSize: 500 },
+        width: 1030,
+        height: 600
+    };
+
+    openResultsPopUp(param);
+}
+
 function showMaxGameBetDetails(transId, winlossDate, custId, transType) {
     var jokerParam = {
         url: "RNGCasinoBetList/BetDetails",
@@ -994,6 +1006,8 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
         case 173: // VGaming
             // custId, gameroundid, gameid, siteId, sporttype, currencyname
             return getVGamingParam(betcheck, transdesc, bettype, matchcode, sporttype, username);
+	case 167: // AdvantPlay
+            return getAdvantPlayParam(transdesc, betcheck, matchcode, betid);
 
         case 181:
         case 182:
@@ -1282,6 +1296,17 @@ function getCGParam(transId3rd, custId, gameId3rd, siteId) {
         height: 800
     };
 }
+
+function getAdvantPlayParam(transId3rd, custId, gameId3rd, siteId) {
+    return {
+        url: "ThirdParty/AdvantPlayResult",
+        title: "AdvantPlay Result",
+        jsonParam: { custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, productId: 67, siteId: siteId },
+        width: 850,
+        height: 800
+    };
+}
+
 function getCardClubParam(custId, gameTypeId, sportType, transId3rd) {
     var title = resultTitle === undefined ? "Result page" : resultTitle;
     return {

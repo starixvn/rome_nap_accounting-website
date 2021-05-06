@@ -79,7 +79,7 @@
 
             return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(productName, new SuccessResult(result)));
         }
-        
+
         public ActionResult HabaneroResult(int productId, string custId, string transId3rd, string gameId3rd, string siteId)
         {
             var productName = CacheRef.GetProductName(productId) + " Result";
@@ -89,10 +89,19 @@
             return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(productName, new SuccessResult(result)));
         }
 
-	public ActionResult CGResult(int productId, string custId, string transId3rd, string gameId3rd, string siteId)
+        public ActionResult CGResult(int productId, string custId, string transId3rd, string gameId3rd, string siteId)
         {
             var productName = CacheRef.GetProductName(productId) + " Result";
             var service = new HabaneroResult("CGResultConfigs");
+            var result = service.GetResult(custId, transId3rd, gameId3rd, siteId);
+
+            return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(productName, new SuccessResult(result)));
+        }
+
+        public ActionResult AdvantPlayResult(int productId, string custId, string transId3rd, string gameId3rd, string siteId)
+        {
+            var productName = CacheRef.GetProductName(productId) + " Result";
+            var service = new HabaneroResult("AdvantPlayResultConfigs");
             var result = service.GetResult(custId, transId3rd, gameId3rd, siteId);
 
             return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(productName, new SuccessResult(result)));
