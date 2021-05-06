@@ -71,7 +71,7 @@
   </Function>
   <Function Name="Sportbook">
     <Setting Key="Acc_CustomerUpdAgent_All" SpName="Acc_CustomerUpdAgent_All" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdClosed" SpName="Acc_CustomerUpdClosed" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerUpdClosed" SpName="Acc_CustomerUpdClosed_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdCredit" SpName="Acc_CustomerUpdCredit" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdDisableNumber" SpName="Acc_CustomerUpdDisableNumber" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdDisableOutright" SpName="Acc_CustomerUpdDisableOutright" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -82,7 +82,7 @@
     <Setting Key="Acc_CustomerUpdMember_Super" SpName="Acc_CustomerUpdMember_Super" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdNGEnableBetSetting" SpName="Acc_CustomerUpdNGEnableBetSetting" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdSuper_All" SpName="Acc_CustomerUpdSuper_All" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdSuspended" SpName="Acc_CustomerUpdSuspended" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerUpdSuspended" SpName="Acc_CustomerUpdSuspended_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdUserInfo" SpName="Acc_CustomerUpdUserInfo" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustDirectUpd" SpName="Acc_CustDirectUpd" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
@@ -120,6 +120,7 @@
     <Setting Key="Acc_Customer_SuspendInfoSel" SpName="Acc_Customer_SuspendInfoSel" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_Customer_SuspendInfoDetailSel" SpName="Acc_Customer_SuspendInfoDetailSel" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_Customer_SuspendInfoMatrixSel" SpName="Acc_Customer_SuspendInfoMatrixSel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_Customer_CloseInfoDetailSel" SpName="Acc_Customer_CloseInfoDetailSel_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Move Customer">
     <Setting Key="Acc_CustomerUpdMoveAgent" SpName="Acc_CustomerUpdMoveAgent" DbName="DBCust.CustDB.bodbAdminNet" />
