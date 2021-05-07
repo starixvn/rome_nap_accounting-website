@@ -49,3 +49,5 @@ CasinoLibrary.txt
 *.snk
 /Fanex.NAP.Site.v3.ncrunchsolution.user
 *.orig
+/Dependencies/Content/*
+/Fanex.Tarus.BetList/Content/*
