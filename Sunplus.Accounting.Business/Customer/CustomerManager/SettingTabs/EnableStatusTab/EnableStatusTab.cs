@@ -270,7 +270,7 @@
                     customerInfoViewModel.UserName,
                     customerInfoViewModel.SearchAccountRoleId,
                     66,
-                    "Update VGaming Status"));
+                    "Update Vgaming Status"));
             }
 
             if (customerInfoViewModel.HideRNGLottery)

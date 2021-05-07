@@ -52,7 +52,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         }
         else {
             if (!existed) {
-                parent.sports.push({ sportname: "VGaming", sportvalue: 'tabVGaming' });
+                parent.sports.push({ sportname: "Vgaming", sportvalue: 'tabVGaming' });
             }            
         }
     }
