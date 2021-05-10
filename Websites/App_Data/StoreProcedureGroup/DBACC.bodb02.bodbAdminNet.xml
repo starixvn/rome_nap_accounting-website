@@ -29,9 +29,6 @@
     <Setting Key="Acc_BetList_Mem" SpName="Acc_BetList_Mem" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Transaction - Automate Finance Transfer">
-    <Setting Key="Acc_FinanceCrossTransferMulInsTmpExcel" SpName="Acc_FinanceCrossTransferMulInsTmpExcel" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_FinanceTransferMulDelTmpExcel" SpName="Acc_FinanceTransferMulDelTmpExcel" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_FinanceTransferMulInsTmpExcel" SpName="Acc_FinanceTransferMulInsTmpExcel" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="GetCustIdByUsername" SpName="Acc_GetCustIdByUsername" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Admin - SMA Management">
