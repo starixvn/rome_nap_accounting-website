@@ -76,9 +76,9 @@
                     TemplateHandler.Assign(ref template, "{onclick}", string.Empty);
                     TemplateHandler.Assign(ref template, "{onmouseout}", "UnTip()");
 
-                    var tooltipText = !isDirectClosed
-                        ? "This account was indirectly closed by upline."
-                        : ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblUplineClosed");
+                    var tooltipText = ResourceExtension.GetResourceValue(
+                        ResourceExtension.Resources.Language, 
+                        !isDirectClosed ? "IndirectlyClosedByUpline" : "lblUplineClosed");
                     TemplateHandler.Assign(ref template, "{onmouseover}", "Tip('" + tooltipText + "', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)");
                 }
             }

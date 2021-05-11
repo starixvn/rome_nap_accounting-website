@@ -119,7 +119,7 @@
 
         public bool Closed => Utils.ToBoolean(customerInfoRow["closed"]);
 
-        public bool IsDirectClosed => false;
+        public bool IsDirectClosed => Utils.ToBoolean(customerInfoRow["isDirectClosed"]);
 
         public CustomerLockedAccess LockedAccess => new CustomerLockedAccess(Utils.ToByte(customerInfoRow["Locked"]));
 

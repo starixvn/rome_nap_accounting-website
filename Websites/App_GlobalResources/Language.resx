@@ -2502,4 +2502,7 @@
   <data name="OpenedRemainUnchangedDownlinesTitle" xml:space="preserve">
     <value>List of downlines whose status are unchanged after {0} is opened.</value>
   </data>
+  <data name="IndirectlyClosedByUpline" xml:space="preserve">
+    <value>This account was indirectly closed by upline.</value>
+  </data>
 </root>
