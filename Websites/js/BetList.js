@@ -992,8 +992,8 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
 
         case 171: // VGaming
         case 173: // VGaming
-            // custId, gameroundid, gameid, siteId
-            return getVGamingParam(betcheck, transdesc, bettype, matchcode, sporttype);
+            // custId, gameroundid, gameid, siteId, sporttype, currencyname
+            return getVGamingParam(betcheck, transdesc, bettype, matchcode, sporttype, username);
 
         case 181:
         case 182:
@@ -1294,6 +1294,18 @@ function getCardClubParam(custId, gameTypeId, sportType, transId3rd) {
     };
 }
 
+function getVGamingParam(custId, gameRoundId, gameId, siteId, sportType, currencyName) {
+
+    return {
+        url: "../Report/ViewVGamingResult.aspx",
+        title: "Vgaming Result",
+        jsonParam: { custId: custId, GameRoundId: gameRoundId, GameId: gameId, SiteId: siteId, SportType: sportType, CurrencyName: currencyName },
+        width: 945,
+        height: 500,
+        iframe: "innerFrameVgamingResult"
+    };
+}
+
 function getSabaClubParam(custId, gameRoundId, gameId, siteId, sportType) {
 
     return {
@@ -1306,17 +1318,6 @@ function getSabaClubParam(custId, gameRoundId, gameId, siteId, sportType) {
     };
 }
 
-function getVGamingParam(custId, gameRoundId, gameId, siteId, sportType) {
-
-    return {
-        url: "../Report/ViewVGamingResult.aspx",
-        title: "VGaming Result",
-        jsonParam: { custId: custId, GameRoundId: gameRoundId, GameId: gameId, SiteId: siteId, SportType: sportType },
-        width: 945,
-        height: 500,
-        iframe: "innerFrameVGamingResult"
-    };
-}
 function getMacauGamesParam(matchcode, betcheck) {
     return {
         url: "../Report/ViewVoidbridgeResult.aspx",
