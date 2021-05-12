@@ -126,8 +126,9 @@ BetList.BetListByRefNo = (function ($) {
             return false;
         }
 
-        var productRequirePlayerIdOrUserName = ["42", "66"]
-        if (productRequirePlayerIdOrUserName.indexOf(selProductValue) !==1 && $playerId3rd.val().trim() === "" &&
+        var sabaProductList = ["42", "66"]
+        var isSabaclub = sabaProductList.indexOf(selProductValue) !== -1;
+        if (isSabaclub && $playerId3rd.val().trim() === "" &&
             $playerId.val().trim() === "" && $username.val().trim() === "") {
             showError("PlayerID or PlayerID (3rd) or Username is required");
             return false;
