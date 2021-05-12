@@ -451,6 +451,8 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                 });
             }
         });
+
+        $scope.HideProductList();
     };
 
     $scope.getCustomerInfoByUserId = function (custid) {
