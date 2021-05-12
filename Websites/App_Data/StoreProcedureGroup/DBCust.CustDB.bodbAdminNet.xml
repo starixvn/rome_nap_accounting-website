@@ -42,10 +42,10 @@
   </Function>
   <Function Name="Customer - Setting">
     <Setting Key="Acc_CustOverrideUpd" SpName="Acc_custoverrideUpd" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerInsMember_Ag" SpName="Acc_CustomerInsMember_Ag" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerInsMember_Ag" SpName="Acc_CustomerInsMember_Ag_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CustomerSetting_InsertSuper" SpName="Acc_CustomerInsMember_Com" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerInsMember_MAg" SpName="Acc_CustomerInsMember_MAg" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerInsMember_SAg" SpName="Acc_CustomerInsMember_SAg" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerInsMember_MAg" SpName="Acc_CustomerInsMember_MAg_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerInsMember_SAg" SpName="Acc_CustomerInsMember_SAg_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdDoubleCommLosing" SpName="Acc_CustomerUpdDoubleCommLosing" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerSettingsCloneFromRealAccount" SpName="Acc_CustomerSettingsCloneFromRealAccount" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustSetting_DCSSettingCopyInsertMember" SpName="Acc_CustSetting_DCSSettingCopyInsertMember" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -119,7 +119,7 @@
     <Setting Key="Acc_CustomerList_SuspendInfoSel" SpName="Acc_CustomerList_SuspendInfoSel" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_Customer_SuspendInfoSel" SpName="Acc_Customer_SuspendInfoSel" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_Customer_SuspendInfoDetailSel" SpName="Acc_Customer_SuspendInfoDetailSel" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_Customer_SuspendInfoMatrixSel" SpName="Acc_Customer_SuspendInfoMatrixSel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_Customer_SuspendInfoMatrixSel" SpName="Acc_Customer_SuspendInfoMatrixSel_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_Customer_CloseInfoSel" SpName="Acc_Customer_CloseInfoSel_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_Customer_CloseInfoDetailSel" SpName="Acc_Customer_CloseInfoDetailSel_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
@@ -185,7 +185,7 @@
   </Function>
   <Function Name="SearchCopy">
     <Setting Key="Acc_CustomerSelExistingUsernames" SpName="Acc_CustomerSelExistingUsernames" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerInsMember_CloneSetting_Com" SpName="Acc_CustomerInsMember_CloneSetting_Com" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerInsMember_CloneSetting_Com" SpName="Acc_CustomerInsMember_CloneSetting_Com_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUplineUserNameSel" SpName="Acc_CustomerUplineUserNameSel" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Esports">
@@ -194,7 +194,7 @@
   <Function Name="ConfigureDirectAccount">
     <Setting Key="Customer_ConfigureDirectAccount_UpdateStatus" SpName="Acc_CustomerUpdDirectStatus" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Customer_ConfigureDirectAccount_UpdateImportDirectAccount" SpName="Acc_CustDirectMulUpd" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Customer_ConfigureDirectAccount_UpdateStatusEffect" SpName="Acc_CustDirectListAffected" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Customer_ConfigureDirectAccount_UpdateStatusEffect" SpName="Acc_CustDirectListAffected_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Agent's yesterday balance">
     <Setting Key="Acc_CustomerSelAutoTransferAgent" SpName="Acc_CustomerSelAutoTransferAgent" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
@@ -366,8 +366,8 @@
     <Setting Key="CS_ReportPermission_Upd" SpName="CS_ReportPermission_Upd" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Lock un-suspend/reopen">
-    <Setting Key="Acc_CustomerLockSuspendSel" SpName="Acc_CustomerLockSuspendSel" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="Acc_CustomerLockSuspendUpd" SpName="Acc_CustomerLockSuspendUpd" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
+    <Setting Key="Acc_CustomerLockSuspendSel" SpName="Acc_CustomerLockSuspendSel_UAT4" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
+    <Setting Key="Acc_CustomerLockSuspendUpd" SpName="Acc_CustomerLockSuspendUpd_UAT4" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
   </Function>
   <Function Name="Betlist by product">
     <Setting Key="Acc_CustomerSelByPlayerId" SpName="Acc_CustomerSelByPlayerId" DbName="DBCust.CustDB.bodbAdminNet" />
