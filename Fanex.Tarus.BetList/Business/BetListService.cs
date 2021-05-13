@@ -42,7 +42,7 @@ namespace Fanex.Tarus.BetList.Business
         private readonly IBetListRepository _betListRepository;
         private readonly ITicketHelper ticketHelper = new TicketHelper();
         private const int DefaultBetdaqId = -1;
-        private const int SabaclubProductId = 42;
+        private readonly List<int> SabaclubProductIdList = new List<int> { 42, 66 };
 
         public BetListService()
         {
@@ -259,7 +259,7 @@ namespace Fanex.Tarus.BetList.Business
 
         public IList<TicketDetail> GetBetListByProduct(BetListByProductParam betListByProductCriteria)
         {
-            var isSabaclub = betListByProductCriteria.ProductId == SabaclubProductId;
+            var isSabaclub = SabaclubProductIdList.Any(i => i == betListByProductCriteria.ProductId);
             var needToMapPlayerId3rdToCustId = isSabaclub && !string.IsNullOrWhiteSpace(betListByProductCriteria.PlayerId3rd);
 
             var mappedCustId = needToMapPlayerId3rdToCustId
@@ -1437,13 +1437,13 @@ namespace Fanex.Tarus.BetList.Business
             {
                 sportName = ticketHelper.GetSportNameById(SportContants.BBin);
             }
-            
-	    else
+
+            else
             {
                 var sport = ReportService.GetSportFromBetTypeId(betTypeId);
                 sportName = sport == 0 ? string.Empty : ticketHelper.GetSportNameById(sport);
             }
-            
+
             return string.IsNullOrEmpty(sportName) ? string.Empty : " (" + sportName + ")";
         }
 
