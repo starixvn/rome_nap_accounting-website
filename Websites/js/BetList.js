@@ -1253,9 +1253,10 @@ function getCGParam(transId3rd, custId, gameId3rd, siteId) {
     };
 }
 function getCardClubParam(custId, gameTypeId, sportType, transId3rd) {
+    var title = resultTitle === undefined ? "Result page" : resultTitle;
     return {
         url: "../Report/ViewCardClubResult.aspx",
-        title: resultTitle,
+        title: title,
         jsonParam: { custId: custId, gameTypeId: gameTypeId, transId3rd: transId3rd },
         width: 945,
         height: 500,

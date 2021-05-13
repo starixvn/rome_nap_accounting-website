@@ -6,6 +6,7 @@ namespace Fanex.Tarus.BetList.Controllers
 {
     using Business;
     using Core;
+    using Fanex.BetList.Core.TicketHelper;
     using Fanex.Common;
     using Fanex.Tarus.BetList.Constants;
     using Fanex.Tarus.BetList.Criteria;
@@ -84,6 +85,7 @@ namespace Fanex.Tarus.BetList.Controllers
             }
 
             ViewBag.Languages = new LanguageViewModel(language);
+            ViewBag.ResultTitle = CreateResultTitle(result);
             Hashtable paramHastable = new Hashtable();
             int custId = result.Count == 0 ? 0 : Converter.To<int>(result[0].Ticket.CustId);
             paramHastable.Add("custId", custId);
@@ -92,7 +94,7 @@ namespace Fanex.Tarus.BetList.Controllers
 
             return PartialView("~/Views/BetList/BetListByRefNo/_BetListByRefNo.cshtml", result);
         }
-
+        
         /// <summary>
         /// Gets the bet list by reference no.
         /// </summary>
@@ -117,6 +119,8 @@ namespace Fanex.Tarus.BetList.Controllers
                 result = _betListService.GetBetListByProduct(betListByProductCriteria);
             }
             ViewBag.Languages = new LanguageViewModel(betListByProductCriteria.Language);
+            ViewBag.ResultTitle = CreateResultTitle(result);
+
             Hashtable paramHastable = new Hashtable();
             int custId = result.Count == 0 ? 0 : Converter.To<int>(result[0].Ticket.CustId);
             paramHastable.Add("custId", custId);
@@ -161,6 +165,7 @@ namespace Fanex.Tarus.BetList.Controllers
 
             ViewBag.Quantity = 1;
             ViewBag.NumberBegining = 1;
+            ViewBag.ResultTitle = CreateResultTitle(result);
             return PartialView("~/Views/BetList/BetlistByCustInfo/Betlist/_BetList.cshtml", result);
         }
 
@@ -388,6 +393,20 @@ namespace Fanex.Tarus.BetList.Controllers
             var defaultCulture = CultureInfo.CreateSpecificCulture("en-US");
             Thread.CurrentThread.CurrentCulture.DateTimeFormat = defaultCulture.DateTimeFormat;
             Thread.CurrentThread.CurrentCulture.NumberFormat = defaultCulture.NumberFormat;
+        }
+
+        private string CreateResultTitle(IList<TicketDetail> tickets)
+        {
+            if (tickets.Any())
+            {
+                var sportType = tickets.First().Ticket.SportTypeId;
+                var bettype = tickets.First().Ticket.BetTypeId;
+                var ticketHelper = new TicketHelper();
+
+                return $"{ticketHelper.GetSportNameById(sportType)} - {ticketHelper.GetBetTypeNameById(bettype)}";
+            }
+
+            return string.Empty;
         }
     }
 }
