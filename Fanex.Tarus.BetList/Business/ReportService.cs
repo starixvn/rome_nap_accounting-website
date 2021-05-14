@@ -293,6 +293,8 @@
                 return SportContants.CG;
             if (7701 <= betTypeId && betTypeId <= 7799)
                 return SportContants.AdvantPlay;
+            if (7801 <= betTypeId && betTypeId <= 7899)
+                return SportContants.AdvantPlayMini;
             return 0;
         }
 

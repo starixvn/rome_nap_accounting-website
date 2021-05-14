@@ -736,6 +736,7 @@ var ViewPT = {
             case 239: // BigGame
             case 238: // Habanero
             case 172: // Advantplay
+            case 174: // Advantplay Mini
                 ViewPT.viewPTBasedOnKindOfCustomer(userName, sportId, betTypeId, isLive);
                 break;
             case 180: // Virtual Soccer

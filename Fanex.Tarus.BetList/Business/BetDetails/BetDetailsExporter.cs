@@ -105,7 +105,8 @@
                 sportType == SportContants.Habanero ||
                 sportType == SportContants.CG ||
                 sportType == SportContants.VGaming ||
-                sportType == SportContants.AdvantPlay)
+                sportType == SportContants.AdvantPlay ||
+                sportType == SportContants.AdvantPlayMini)
             {
                 return GetRNGCasinoOrFishingWorldTickets(refNo, custId, transType);
             }
