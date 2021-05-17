@@ -8,18 +8,4 @@
   <Function Name="ConfigureDirectAccount">
     <Setting Key="Customer_ConfigureDirectAccount_CheckImportDirectAccount" SpName="Acc_CustDirectMulInsTmpExcel" DbName="DBACC.bodb_ACC.bodbAdminNet" />
   </Function>
-  <Function Name="Manage Extra PT for External Groups">
-    <Setting Key="Acc_GroupExtraPT_Group_Sel" SpName="Acc_GroupExtraPT_Group_Sel" DbName="DBACC.bodb_ACC.bodbAdminNet" />
-    <Setting Key="Acc_GroupExtraPT_Product_Sel" SpName="Acc_GroupExtraPT_Product_Sel" DbName="DBACC.bodb_ACC.bodbAdminNet" />
-  </Function>
-<Function Name="Reset Winning">
-  <Setting Key="Acc_DWLList_Sel" SpName="Acc_DWLList_Sel" DbName="DBACC.bodb_ACC.bodbAdminNet" />
-  <Setting Key="Acc_DWLList_Ins" SpName="Acc_DWLList_Ins" DbName="DBACC.bodb_ACC.bodbAdminNet" />
-  <Setting Key="Acc_DWLList_Upd" SpName="Acc_DWLList_Upd" DbName="DBACC.bodb_ACC.bodbAdminNet" />
-  <Setting Key="Acc_DWLList_Del" SpName="Acc_DWLList_Del" DbName="DBACC.bodb_ACC.bodbAdminNet" />
-  <Setting Key="Acc_DWLList_ExtraPT_Sel" SpName="Acc_DWLList_ExtraPT_Sel" DbName="DBACC.bodb_ACC.bodbAdminNet" />
-  <Setting Key="Acc_DWLList_ExtraPT_Ins" SpName="Acc_DWLList_ExtraPT_Ins" DbName="DBACC.bodb_ACC.bodbAdminNet" />
-  <Setting Key="Acc_DWLList_ExtraPT_Upd" SpName="Acc_DWLList_ExtraPT_Upd" DbName="DBACC.bodb_ACC.bodbAdminNet" />
-  <Setting Key="Acc_DWLList_ExtraPT_Del" SpName="Acc_DWLList_ExtraPT_Del" DbName="DBACC.bodb_ACC.bodbAdminNet" />
-  </Function>
 </Functions>

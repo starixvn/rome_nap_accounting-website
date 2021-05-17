@@ -40,7 +40,6 @@
   <Function Name="Helper">
     <Setting Key="Age_LoginAdminVerifyTicket" SpName="Age_LoginAdminVerifyTicket" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
-
   <Function Name="Customer - Setting">
     <Setting Key="Acc_CustOverrideUpd" SpName="Acc_CustOverrideUpd" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerInsMember_Ag" SpName="Acc_CustomerInsMember_Ag" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -51,7 +50,6 @@
     <Setting Key="Acc_CustomerSettingsCloneFromRealAccount" SpName="Acc_CustomerSettingsCloneFromRealAccount" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustSetting_DCSSettingCopyInsertMember" SpName="Acc_CustSetting_DCSSettingCopyInsertMember" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
-
   <Function Name="Gold Deluxe">
     <Setting Key="Acc_CustomerUpdAgentGoldDeluxe_All" SpName="Acc_CustomerUpdAgentGoldDeluxe_All" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdMasterGoldDeluxe_All" SpName="Acc_CustomerUpdMasterGoldDeluxe_All" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -259,7 +257,7 @@
     <Setting Key="Acc_Dep_CustSetting_StatusSettingSelect" SpName="Acc_Dep_CustSetting_StatusSettingSelect" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_Dep_CustSetting_DisableStatUpd" SpName="Acc_Dep_CustSetting_DisableStatUpd" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
-  <Function Name="Admin - Site manabement">
+  <Function Name="Admin - Site management">
     <Setting Key="NAP_Admin_VerifySiteName" SpName="NAP_Admin_VerifySiteName" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="NAP_Admin_AddNewSite" SpName="NAP_Admin_AddNewSite" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
@@ -396,5 +394,24 @@
   <Function Name="UM On product">
     <Setting Key="Acc_CheckUM" SpName="Acc_CheckUM" DbName="DBCUST.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CheckUM_MultipleCustProductStatus" SpName="Acc_CheckUM_MultipleCustProductStatus" DbName="DBCUST.CustDB.bodbAdminNet" />
+  </Function>
+  <Function Name="Reset Winning">
+    <Setting Key="Acc_DWLList_Sel" SpName="Acc_DWLList_Sel" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_DWLList_Ins" SpName="Acc_DWLList_Ins" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_DWLList_Upd" SpName="Acc_DWLList_Upd" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_DWLList_Del" SpName="Acc_DWLList_Del" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_DWLList_ExtraPT_Sel" SpName="Acc_DWLList_ExtraPT_Sel" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_DWLList_ExtraPT_Ins" SpName="Acc_DWLList_ExtraPT_Ins" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_DWLList_ExtraPT_Upd" SpName="Acc_DWLList_ExtraPT_Upd" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_DWLList_ExtraPT_Del" SpName="Acc_DWLList_ExtraPT_Del" DbName="DBCUST.CustDB.bodbAdminNet" />
+  </Function>
+  <Function Name="Manage Extra PT for External Groups">
+    <Setting Key="Acc_GroupExtraPT_Group_Sel" SpName="Acc_GroupExtraPT_Group_Sel" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_GroupExtraPT_Product_Sel" SpName="Acc_GroupExtraPT_Product_Sel" DbName="DBCUST.CustDB.bodbAdminNet" />
+  </Function>
+  <Function Name="Transaction - Automate Finance Transfer">
+    <Setting Key="Acc_FinanceCrossTransferMulInsTmpExcel" SpName="Acc_FinanceCrossTransferMulInsTmpExcel" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_FinanceTransferMulDelTmpExcel" SpName="Acc_FinanceTransferMulDelTmpExcel" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_FinanceTransferMulInsTmpExcel" SpName="Acc_FinanceTransferMulInsTmpExcel" DbName="DBCUST.CustDB.bodbAdminNet" />
   </Function>
 </Functions>

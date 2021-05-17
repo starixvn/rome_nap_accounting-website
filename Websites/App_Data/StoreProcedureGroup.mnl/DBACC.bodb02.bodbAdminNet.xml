@@ -23,18 +23,12 @@
     <Setting Key="Acc_Statement" SpName="Acc_Statement" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="Acc_AllStatement4Agent" SpName="Acc_AllStatement4Agent" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="Acc_AllStatementCompany" SpName="Acc_AllStatementCompany" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_BetList_LicenseeBonus_Detail" SpName="Acc_BetList_LicenseeBonus_Detail" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="Age_BetList_SelMatchResultParlay" SpName="Age_BetList_SelMatchResultParlay" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="Acc_BetsSelBetList_ByTransID" SpName="Acc_BetsSelBetList_ByTransID" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="Acc_BetList_Mem" SpName="Acc_BetList_Mem" DbName="DBACC.bodb02.bodbAdminNet" />
-  </Function>
-
+  </Function>  
   <Function Name="Transaction - Automate Finance Transfer">
-    <Setting Key="Acc_FinanceCrossTransferMulInsTmpExcel" SpName="Acc_FinanceCrossTransferMulInsTmpExcel" DbName="DBACC.bodb02.bodbAdminNet">
-    </Setting>
-    <Setting Key="Acc_FinanceTransferMulDelTmpExcel" SpName="Acc_FinanceTransferMulDelTmpExcel" DbName="DBACC.bodb02.bodbAdminNet">
-    </Setting>
-    <Setting Key="Acc_FinanceTransferMulInsTmpExcel" SpName="Acc_FinanceTransferMulInsTmpExcel" DbName="DBACC.bodb02.bodbAdminNet">
-    </Setting>
     <Setting Key="GetCustIdByUsername" SpName="Acc_GetCustIdByUsername" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Admin - SMA Management">
@@ -92,4 +86,5 @@
     <Setting Key="Acc_SporttypeSel" SpName="Acc_SporttypeSel" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="Acc_ExchangeCurrencySel" SpName="Acc_ExchangeCurrencySel" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
+
 </Functions>
