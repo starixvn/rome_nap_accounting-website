@@ -46,7 +46,7 @@ namespace Sunplus.Accounting.Business
         {
             try
             {
-                return CastAide.AsString(SCCACHE.Get(key));
+                return CastAide.AsString(SCCACHE.Get<string>(key));
             }
             catch
             {
