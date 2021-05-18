@@ -61,12 +61,6 @@
                     Value: $("#listCurrency").val()
                 });
             }
-            if ($("#listType").val() != "") {
-                params.push({
-                    Name: "closed",
-                    Value: $("#listType").val() == 0 ? false : true
-                });
-            }
         }
         else {
             var paramName = "";
