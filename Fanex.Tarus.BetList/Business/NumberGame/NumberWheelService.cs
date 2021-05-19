@@ -21,7 +21,7 @@ namespace Fanex.Tarus.BetList.Business.NumberGame
         {
             _listChoice = new List<NumberWheelChoice>();
 
-            var objListChoice = CacheHelper.Get(NumberWheelChoiceKey);
+            var objListChoice = CacheHelper.Get<List<NumberWheelChoice>>(NumberWheelChoiceKey);
 
             if(objListChoice == null)
             {
