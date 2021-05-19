@@ -718,7 +718,7 @@ function showSabaClubDetails(refno, winlossDate, custId, transType) {
 function showVGamingDetails(refno, winlossDate, custId, transType) {
     var rngCasinoParam = {
         url: "RNGCasinoBetList/BetDetails",
-        title: "VGaming Details",
+        title: "Vgaming Details",
         jsonParam: { TransId: refno, Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 171, PageSize: 500 },
         width: 1030,
         height: 600
@@ -771,7 +771,7 @@ function showPPJackpotWonDetails(transId, custId, betType) {
 }
 
 function showVGamingJackpotWonDetails(transId, custId, betType) {
-    var title = "VGaming Jackpot Won Details";
+    var title = "Vgaming Jackpot Won Details";
     var param = {
         url: "RNGCasinoBetList/JackpotDetails",
         title: title,
