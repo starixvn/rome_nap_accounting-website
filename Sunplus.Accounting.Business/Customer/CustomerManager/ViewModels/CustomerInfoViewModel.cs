@@ -94,6 +94,8 @@
 
         public bool HideSabaclub { get; private set; } = true;
 
+        public bool HideVGaming { get; private set; } = true;
+
         public bool HideSabaVirtualSports { get; private set; } = true;
 
         public bool ShowSettingLinkAGCasinoDeposit => WebSettings.EnableAGCasino && IsDeposit;
@@ -205,6 +207,12 @@
                                 break;
                             case "54":
                                 HideSabaVirtualSports = Utils.ToBoolean(row["IsHidden"]) || !WebSettings.IsShowSabaVirtualSports;
+                                break;
+                            case "66":
+                                HideVGaming = Utils.ToBoolean(row["IsHidden"]) || !WebSettings.IsShowVGaming;
+                                SyncVGaming = Utils.ToBoolean(row["IsSync"]);
+                                HideVGamingUpline = Utils.ToBoolean(row["IsHiddenUpline"]) && SearchAccountRoleId < 4;
+                                SyncVGamingUpline = Utils.ToBoolean(row["IsSyncedUpline"]);
                                 break;
                         }
                     }

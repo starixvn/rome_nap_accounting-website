@@ -111,14 +111,7 @@
             TemplateHandler.Assign(ref htmlcontent, "{CustomerName}", customerInfoViewModel.Fullname);
             TemplateHandler.Assign(ref htmlcontent, "{FullCustomerName}", customerInfoViewModel.Fullname);
             TemplateHandler.Assign(ref htmlcontent, "{NickName}", customerInfoViewModel.Nickname);
-            if (customerInfoViewModel.SearchAccountRoleId != (int)Role.Member)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "SabaclubPlayer3rd");
-            }
-            else
-            {
-                TemplateHandler.Assign(ref htmlcontent, "{SabaclubPlayer3rdID}", customerInfoViewModel.SabaclubPlayer3rdID);
-            }
+           
             TemplateHandler.Assign(ref htmlcontent, "{CustomerFax}", customerInfoViewModel.Fax);
             TemplateHandler.Assign(ref htmlcontent, "{CustomerPhone}", customerInfoViewModel.Phone);
             TemplateHandler.Assign(ref htmlcontent, "{CustomerMobile}", customerInfoViewModel.Mobile);

@@ -103,7 +103,8 @@
                 sportType == SportContants.Sabaclub ||
                 sportType == SportContants.MaxGame ||
                 sportType == SportContants.Habanero ||
-                sportType == SportContants.CG)
+                sportType == SportContants.CG ||
+                sportType == SportContants.VGaming)
             {
                 return GetRNGCasinoOrFishingWorldTickets(refNo, custId, transType);
             }
