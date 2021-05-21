@@ -222,7 +222,6 @@ namespace Sunplus.Accounting.Business.ExportStatement
             DataView dv = dtb.DefaultView;
             dv.RowFilter = "Isvalid=1";
             ValidUsers = dv.ToTable();
-            CacheData(key, ValidUsers, DateTime.Today.AddHours(5));
             return tpl;
         }
 
