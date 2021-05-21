@@ -25,12 +25,24 @@
         return '#' + elId;
     };
 
-    var renderCheckBox = function (classes, key, name, value, checked = false, disabled = false, label = null, labelPosition = 'end') {
+    var renderCheckBox = function (
+        classes,
+        key,
+        name,
+        value,
+        checked = false,
+        disabled = false,
+        label = null,
+        labelPosition = 'end',
+        weekDayIndex = -1,
+        optionIndex = -1) {
         return `${label && labelPosition === 'start' ? `<label>${label}</label>` : ''}
                 <input
                     type="checkbox"
                     class="${classes}"
                     data-key="${key}"
+                    ${weekDayIndex > -1 ? `data-weekday="${weekDayIndex}"` : ''}
+                    ${optionIndex > -1 ? `data-option="${optionIndex}"` : ''}
                     data-name="${name}"
                     value="${value}"
                     ${checked ? 'checked' : ''}
@@ -41,25 +53,31 @@
 
     var renderMonAndYearElement = function (date) {
         $monthAndYearEl.html(`${months[date.getMonth()]} ${date.getFullYear()}`);
+        $monthAndYearEl.hide();
     };
 
     var renderIconElements = function () {
         var currentGroup = parseInt(this.data('currentgroup')),
             lastGroup = parseInt(this.data('lastgroup'));
         if (currentGroup < lastGroup) {
-            $nextIconEl.removeClass('invisible');
+            $nextIconEl.removeClass('disabled');
         } else {
-            $nextIconEl.addClass('invisible');
+            $nextIconEl.addClass('disabled');
         }
 
         if (currentGroup > 0) {
-            $previousIconEl.removeClass('invisible');
+            $previousIconEl.removeClass('disabled');
         } else {
-            $previousIconEl.addClass('invisible');
+            $previousIconEl.addClass('disabled');
         }
     };
 
     var move = function (step) {
+        if (step === backwardStep && $previousIconEl.hasClass('disabled')
+            || step === forwardStep && $nextIconEl.hasClass('disabled')) {
+            return;
+        }
+
         var currentGroup = parseInt(this.data('currentgroup'));
         this.find(`tr[data-group="${currentGroup}"]`).addClass('hidden');
         this.find(`tr[data-group="${currentGroup + step}"]`).removeClass('hidden');
@@ -73,6 +91,25 @@
         var el = event.currentTarget,
             key = $(el).data('key');
         this.find(`.secondary-checkbox[data-key="${key}"]`).prop('disabled', !el.checked);
+    };
+
+    var highlightNewChange = function (event) {
+        var el = event.currentTarget,
+            key = $(el).data('key'),
+            weekDay = $(el).data('weekday');
+
+        var isChanged = false,
+            secondaryCheckBoxList = this.find(`.secondary-checkbox[data-key="${key}"]`);
+        secondaryCheckBoxList.each(function () {
+            var option = $(this).data('option');
+            if (this.checked !== defaultMoveBetSchedule[weekDay].Options[option]) {
+                isChanged = true;
+                return false;
+            }
+        });
+        secondaryCheckBoxList.each(function () {
+            $(this).parent().css('background-color', isChanged ? 'yellow' : 'unset');
+        });
     };
 
     var onSave = function () {
@@ -98,15 +135,21 @@
         $previousIconEl.off('click').on('click', move.bind(this, backwardStep));
         $btnSave.off('click').on('click', onSave.bind(this));
         this.find('.primary-checkbox').off('change').on('change', onChange.bind(this));
+        this.find('.secondary-checkbox').off('change').on('change', highlightNewChange.bind(this));
     };
 
     var renderMoveBetSchedule = function (data) {
         var tbody = this.find('tbody');
         tbody.empty();
 
+        var daysPerWeek = 7,
+            daysPerMonth = 31,
+            rowNeededForADay = 8,
+            weeksPerMonth = 4;
+
         var length = data.length,
-            weeks = Math.ceil(length / 7),
-            lastGroupIndex = Math.ceil(weeks / 4) - 1;
+            weeks = Math.ceil(length / daysPerWeek),
+            lastGroupIndex = Math.ceil(weeks / weeksPerMonth) - 1;
 
         this.data({ 'currentgroup': 0, 'lastgroup': lastGroupIndex });
         this.attr({ 'data-currentgroup': 0, 'data-lastgroup': lastGroupIndex });
@@ -117,9 +160,10 @@
         renderMonAndYearElement(fromDate);
         renderIconElements.call(this);
 
-        var dataIndex = 0;
+        var dataIndex = 0,
+            cacheChangedIndexList = [];
         for (var week = 0; week < weeks; week++) {
-            var group = parseInt(week / 4),
+            var group = parseInt(week / weeksPerMonth),
                 hidden = week > 3,
                 tr = $(`<tr class="tr-date ${hidden ? 'hidden' : ''}" data-group="${group}"></tr>`),
                 rows = [
@@ -131,40 +175,49 @@
                     $(`<tr class="${hidden ? 'hidden' : ''}" data-group="${group}"></tr>`),
                     $(`<tr class="${hidden ? 'hidden' : ''}" data-group="${group}"></tr>`)];
 
-            if (week % 4 === 0) {
-                var rowSpan = weeks - week < 4 ? (weeks - week) * 8 - 1 : 31;
-                tr.append('<td>Move Bet Day <br /> (GMT -4)</td>');
+            if (week % weeksPerMonth === 0) {
+                var rowSpan = weeks - week < weeksPerMonth ? (weeks - week) * rowNeededForADay - 1 : daysPerMonth;
+                tr.append('<td class="td-date">Move Bet Day <br /> (GMT -4)</td>');
                 rows[0].append(`<td align="center" rowspan="${rowSpan}">For Days</td>`);
             }
 
-            for (var day = 0; day < 7; day++) {
+            for (var day = 0; day < daysPerWeek; day++) {
                 var stillInRange = dataIndex < length,
                     date = stillInRange ? new Date(data[dataIndex].Date) : new Date(toDate.setDate(toDate.getDate() + 1)),
                     weekDay = stillInRange ? data[dataIndex].WeekDay : date.getDay(),
                     options = stillInRange ? data[dataIndex].Options : defaultMoveBetSchedule[weekDay].Options;
 
                 var disabled = dataIndex >= length,
-                    checked = weekDay !== 0 && weekDay !== 6,
+                    checked = false,
                     weekDayName = days[weekDay],
                     value = date.toLocaleDateString();
 
                 tr.append(`<td class="td-date">
                              ${renderCheckBox('primary-checkbox', dataIndex, 'MBDate', value, checked && !disabled, disabled, weekDayName, 'start')}
                              <div class="date-box ${isToday(date) ? 'current-day' : ''}">
-                                <span>${date.getDate()}</span>
+                                <span>${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}</span >
                              </div>
                            </td >`);
 
-                for (var row = 0; row < 7; row++) {
-                    var backDay = weekDay - row - 1 < 0 ? 7 + weekDay - row - 1 : weekDay - row - 1,
+                var isChanged = false;
+                for (var row = 0; row < daysPerWeek; row++) {
+                    if (options[row] !== defaultMoveBetSchedule[weekDay].Options[row]) {
+                        isChanged = true;
+                    }
+
+                    var backDay = weekDay - row - 1 < 0 ? daysPerWeek + weekDay - row - 1 : weekDay - row - 1,
                         option = {
-                            disabled: weekDay === 0 || weekDay === 6,
+                            disabled: true,
                             checked: options[row],
                             label: `Current date - ${row + 1} (${days[backDay]})`
                         },
                         name = `Isbackday${row + 1}`;
 
-                    rows[row].append(`<td>${renderCheckBox('secondary-checkbox', dataIndex, name, '', option.checked, option.disabled || disabled, option.label)}</td>`);
+                    rows[row].append(`<td>${renderCheckBox('secondary-checkbox', dataIndex, name, '', option.checked, option.disabled || disabled, option.label, 'end', weekDay, row)}</td>`);
+                }
+
+                if (isChanged) {
+                    cacheChangedIndexList.push(dataIndex);
                 }
 
                 dataIndex++;
@@ -172,6 +225,12 @@
 
             tbody.append(tr, rows);
         }
+
+        $.each(cacheChangedIndexList, function (index, keyValue) {
+            this.find(`.secondary-checkbox[data-key="${keyValue}"]`).each(function () {
+                $(this).parent().css('background-color', 'yellow');
+            });
+        });
 
         registerEvents.call(this);
     };

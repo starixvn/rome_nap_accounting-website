@@ -114,6 +114,7 @@
             data: JSON.stringify(param),
             success: function (data) {
                 self.$tblMoveBetSchedule.renderMoveBetSchedule({ data, onSave: self.onSave.bind(self) });
+                self.$resultMessage.text('');
             }
         });
     };
@@ -129,13 +130,12 @@
             url: this.updateMoveBetScheduleUrl,
             data: JSON.stringify(param),
             success: function (result) {
-                if (!result) {
-                    self.showMessage.call(self, 'Invalid request.', 'error');
-                }
-                else if (result.ErrorCode === 0) {
+                if (result && result.ErrorCode === 0) {
                     self.showMessage.call(self, 'Successful.', 'success');
+                    setTimeout(self.renderMoveBetSchedule.bind(self), 1000);
                 } else {
-                    self.showMessage.call(self, result.ErrorMessage, 'error');
+                    var message = result ? result.ErrorMessage : 'Error.';
+                    self.showMessage.call(self, message, 'error');
                 }
             }
         });
