@@ -15,6 +15,7 @@
     this.sevenDaysFromToday = sevenDaysFromToday;
 
     this.days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    this.daysPerWeek = 7;
     this.defaultMoveBetSchedule = defaultMoveBetSchedule;
     this.getMoveBetScheduleUrl = getMoveBetScheduleUrl;
     this.updateMoveBetScheduleUrl = updateMoveBetScheduleUrl;
@@ -27,7 +28,7 @@
             beforeSend: function (xhr, settings) {
                 window.parent.BlockUI();
             },
-            error: function (xhr, textStatus, thrownError) { },
+            error: function (xhr, textStatus, thrownError) { return; },
             complete: function (xhr, textStatus) {
                 window.parent.$.unblockUI();
             }
@@ -75,15 +76,15 @@
             tbody = this.$tblDefaultMoveBetSchedule.find('tbody');
 
         this.$tblDefaultMoveBetSchedule.find(`th[data-weekday="${currentWeekDay}"]`).addClass('current-day');
-        for (var row = 0; row < 7; row++) {
+        for (var row = 0; row < this.daysPerWeek; row++) {
             var tr = $('<tr></tr>');
             if (row === 0) {
                 tr.append('<td rowspan="7" align="center">For Days</td>');
             }
 
-            for (var column = 0; column < 7; column++) {
-                var day = column + 1 === 7 ? 0 : column + 1;
-                var backDay = day - row - 1 < 0 ? 7 + day - row - 1 : day - row - 1;
+            for (var column = 0; column < this.daysPerWeek; column++) {
+                var day = column + 1 === this.daysPerWeek ? 0 : column + 1;
+                var backDay = day - row - 1 < 0 ? this.daysPerWeek + day - row - 1 : day - row - 1;
                 var option = {
                     checked: this.defaultMoveBetSchedule[day].Options[row],
                     label: `Current date - ${row + 1} (${this.days[backDay]})`
