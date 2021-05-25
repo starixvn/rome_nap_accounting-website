@@ -171,7 +171,7 @@ public class ProcessLogin : IHttpHandler, IRequiresSessionState
                     }
                 }
             }
-            end:
+        end:
             context.Response.Write("\n</script></head><body></body>");
         }
         catch (Exception ex)
