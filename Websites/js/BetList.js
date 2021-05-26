@@ -1290,7 +1290,7 @@ function getCardClubParam(custId, gameTypeId, sportType, transId3rd) {
         jsonParam: { custId: custId, gameTypeId: gameTypeId, transId3rd: transId3rd },
         width: 945,
         height: 500,
-        iframe: "innerFrame" + resultTitle.replace(/\s/g, "").replace(/\//g, "")
+        iframe: "innerFrame" + resultTitle.replace(/[^a-z0-9\s]/gi, "").replace(/\s/g, "").replace(/\//g, "")
     };
 }
 
@@ -1499,7 +1499,7 @@ function openResultsPopUp(resultParam) {
     var url = resultParam.url + "?" + $.param(resultParam.jsonParam);
     var width = resultParam.width || 600;
     var height = resultParam.height || 500;
-    var popupName = resultParam.title.replace(/\s/g, "").replace(/\//g, "").replace(".", "");
+    var popupName = resultParam.title.replace(/[^a-z0-9\s]/gi, "").replace(/\s/g, "").replace(/\//g, "").replace(".", "");
     var resizable = resultParam.resizable == undefined ? true : resultParam.resizable;
 
     if (resultParam.iframe) {
