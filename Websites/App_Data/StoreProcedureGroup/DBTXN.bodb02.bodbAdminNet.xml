@@ -41,7 +41,7 @@
     <Setting Key="Acc_BalanceMemberSel" SpName="Acc_BalanceMemberSel" DbName="DBTXN.BODB02.bodbAdminNet" Plain="0" />
   </Function>
   <Function Name="Mangage Move Bet Schedule">
-    <Setting Key="Acc_Manual_MoveBet_Sel" SpName="Acc_Manual_MoveBet_Sel" DbName="DBTXN.bodb02.bodbAdminNet" Plain="0" />
-    <Setting Key="Acc_Manual_MoveBet_Adjust" SpName="Acc_Manual_MoveBet_Adjust" DbName="DBTXN.bodb02.bodbAdminNet" Plain="0" />
+    <Setting Key="Acc_Manual_MoveBet_Sel" SpName="Acc_Manual_MoveBet_Sel_UAT1" DbName="DBTXN.bodb02.bodbAdminNet" Plain="0" />
+    <Setting Key="Acc_Manual_MoveBet_Adjust" SpName="Acc_Manual_MoveBet_Adjust_UAT1" DbName="DBTXN.bodb02.bodbAdminNet" Plain="0" />
   </Function>
 </Functions>
