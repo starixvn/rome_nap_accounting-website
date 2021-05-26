@@ -15,17 +15,17 @@ using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.DataAccess.IBCDLL;
 
-public class ProcessLogin2 : IHttpHandler,IRequiresSessionState {    
+public class ProcessLogin2 : IHttpHandler,IRequiresSessionState {
     public void ProcessRequest (HttpContext context) {
-        context.Response.ContentType = "text/html";        
+        context.Response.ContentType = "text/html";
         context.Response.Cache.SetCacheability(HttpCacheability.NoCache);
         context.Response.Write("<html><head><script type='text/javascript'>\n");
-        try 
+        try
         {
             var custId = Converter.ToInt(context.Request["uid"]);
             var logId = Converter.To<long>(context.Request["lid"]);
             //Set CustID=0 to select by username
-           
+
             var sessionId = Converter.ToInt(context.Request["sid"]);
             Hashtable param = new Hashtable();
             param.Add("custid", custId);
@@ -35,7 +35,7 @@ public class ProcessLogin2 : IHttpHandler,IRequiresSessionState {
             bool succ = false;
 
             AppSession.SYSTEM = "accounting";
-          
+
             DbResult ds = DbHelper.ExecuteDbResult("UserLoginClaimed_out", param);
             if (Convert.ToBoolean(ds.Outputs["result"]))
             {
@@ -51,7 +51,9 @@ public class ProcessLogin2 : IHttpHandler,IRequiresSessionState {
 
                     int roleId = Convert.ToInt32(ds.ResultSet.Tables[0].Rows[0]["roleid"]);
                     string pwd = ds.ResultSet.Tables[0].Rows[0]["userpwd"] + "";
-                    int onUserId = UserController.AccLoginAdminOnuser(custIdInt, WebSettings.ServerId, context.Request.UserHostAddress);
+                    int onUserId = AccCommon.IsEnabledRecheckin ?
+                            UserController.AccLoginAdminOnuser(custIdInt, WebSettings.ServerId, context.Request.UserHostAddress) :
+                            0;
                     FormsAuthentication.SetAuthCookie(username, false);
                     AppSession.Username = username;//context.Session["Username"] = username;
                     AppSession.AccUserName = username;
@@ -66,8 +68,8 @@ public class ProcessLogin2 : IHttpHandler,IRequiresSessionState {
 
                     IMenuManager menuService = CommonBootStrapper.Locator.GetInstance<IMenuManager>();
                     menuService.GetUserMenu();
-                    
-					bool isShowNap = (new LoginRepository()).CheckUserSiteAccess(new CheckUserSiteAccessCriteria());
+
+                    bool isShowNap = (new LoginRepository()).CheckUserSiteAccess(new CheckUserSiteAccessCriteria());
                     if (isShowNap)
                     {
                         AppSession.UserMenu.Add(new Sunplus.Accounting.Entities.MenuBO
@@ -88,7 +90,7 @@ public class ProcessLogin2 : IHttpHandler,IRequiresSessionState {
                     Fanex.CustomerSetting.Module.Core.Web.AppSession.AdminUsername = username;
                 }
             }
-            
+
             if (succ)
             {
                 context.Response.Write("top.location.href='" + FormsAuthentication.DefaultUrl + (!String.IsNullOrEmpty(context.Request.QueryString["uname"]) ? "?uname=" + Converter.ToString2(context.Request.QueryString["uname"]) : string.Empty) + "';\n");
@@ -96,16 +98,16 @@ public class ProcessLogin2 : IHttpHandler,IRequiresSessionState {
             else
             {
                 context.Response.Write("top.location.href='" + FormsAuthentication.LoginUrl + "';\n");
-            }           
+            }
         }
         catch (Exception ex)
         {
-             Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+            Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
         }
-                
-        context.Response.Write("\n</script></head><body></body>");        
+
+        context.Response.Write("\n</script></head><body></body>");
     }
- 
+
     public bool IsReusable {
         get {
             return false;

@@ -12,6 +12,7 @@ using System.Text;
 using System.Web.Security;
 using AppSettings = Fanex.Tarus.Infrastructure.Configurations.AppSettings;
 using DNAide.Web;
+using Sunplus.Accounting.Core.Common;
 
 /// <summary>
 /// CITS
@@ -175,7 +176,7 @@ public partial class ChangePassword_ChangePassword : RequiredAuthorizationPage
                 }
                 else
                 {
-                    if (!isCN88)
+                    if (!isCN88 && AccCommon.IsEnabledRecheckin)
                     {
                         Sunplus.Accounting.DataAccess.IBCDLL.Customer.UpdateCustomer.KickoutCustomer(custid);
                     }

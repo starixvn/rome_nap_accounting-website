@@ -4,6 +4,7 @@ using System.Collections;
 using System.ServiceModel.Activation;
 
 using Sunplus.Accounting.Business.Customer;
+using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Helper;
 
 // NOTE: If you change the class name "ServiceCustomerInfo" here, you must also update the reference to "ServiceCustomerInfo" in Web.config.
@@ -39,7 +40,10 @@ namespace Sunplus.Accounting.Business
         {
             try
             {
-                result = customer.GenOnlineList(custId);
+                if (AccCommon.IsEnabledRecheckin)
+                {
+                    result = customer.GenOnlineList(custId);
+                }
             }
             catch (Exception ex)
             {
