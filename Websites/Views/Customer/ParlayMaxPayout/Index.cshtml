@@ -1,0 +1,105 @@
+﻿@using Fanex.Tarus.Customer.Resources
+@using Fanex.Tarus.Customer.ViewModels.LicenseeDcsSetting
+@using Fanex.Tarus.Customer.ViewModels.ParlayMaxPayout
+@model ParlayMaxPayoutViewModel
+@{
+    var version = Sunplus.Accounting.Core.Configurations.WebSettings.Version;
+}
+
+@section Styles{
+    <style type="text/css">
+        .light-blue {
+            background-color: #B0C4DE;
+        }
+
+        .align-center {
+            text-align: center;
+        }
+
+        tr {
+            line-height: 22px;
+        }
+
+        .align-right {
+            text-align: right;
+        }
+
+        .parlay-max-payout-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+    </style>
+}
+
+@section Scripts{
+    <script src="@Url.Content("~/Js/dialogbox.js?v=" + version)" type="text/javascript"></script>
+    <script src="@Url.Content("~/Areas/CustomerSetting/Views/SearchCopy/Scripts/Libs/formatNumberExtension.js?v=" + version)" type="text/javascript"></script>
+    <script src="@Url.Content("~/Views/Customer/ParlayMaxPayout/Scripts/Index.js?v=" + version)" type="text/javascript"></script>
+}
+
+@helper RenderPayoutBlock(string entityName, int sporttype, int bettype, decimal payoutValue, decimal defaultPayoutValue, bool isUplineUnlimited)
+{
+    var id = sporttype + "_" + bettype + "_" + entityName;
+    var unlimitedId = "chkUnlimited_" + id;
+    <table>
+        <tr>
+            <td>
+                <input id="@id" value="@payoutValue.ToString("#,0")"
+                       onkeyup="formatExt(event, this, true)" sporttype="@sporttype" bettype="@bettype" fieldname="@entityName"
+                       class="r @(payoutValue >0 ? "" : "display-none")" />
+
+                <input id="@(id + "_Unlimited")" value="Unlimited" class="r @(payoutValue > 0? "display-none" : "")" disabled />
+            </td>
+            <td><= @defaultPayoutValue.ToString("#,0")</td>
+        </tr>
+        <tr>
+            <td class="align-right">
+                @if (isUplineUnlimited)
+                {
+                    <input id="@unlimitedId" type="checkbox" @(payoutValue == 0 ? "checked" : "") />
+                }
+            </td>
+            <td>
+                @if (isUplineUnlimited)
+                {
+                    <label for="@unlimitedId"> Unlimited</label>
+                }
+            </td>
+        </tr>
+
+    </table>
+}
+
+<div id="result-message" class="hidden"></div>
+<table border="1" class="parlay-max-payout-table" style="border-collapse:collapse">
+    <thead>
+        <tr>
+            <td class="light-blue align-center b" colspan="5">
+                Parlay Max Payout: @Model.CustName
+            </td>
+        </tr>
+        <tr>
+            <td class="light-blue align-center"></td>
+            <td class="light-blue align-center b">Single Match Parlay</td>
+            <td class="light-blue align-center b">Combo 2</td>
+            <td class="light-blue align-center b">Combo 3 - 5</td>
+            <td class="light-blue align-center b">Combo 6+</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var entity in Model.ListEntityModel)
+        {
+            <tr>
+                <td class="light-blue align-center">@entity.SportName</td>
+                <td>@RenderPayoutBlock("SingleMatchParlay", entity.SportType, entity.Bettype, entity.SingleMatchParlay, entity.UplineSingleMatchParlay, entity.IsAllowUnlimitedSingleMatchParlay)</td>
+                <td>@RenderPayoutBlock("Combo2", entity.SportType, entity.Bettype, entity.Combo2, entity.UplineCombo2, entity.IsAllowUnlimitedCombo2)</td>
+                <td>@RenderPayoutBlock("Combo35", entity.SportType, entity.Bettype, entity.Combo35, entity.UplineCombo35, entity.IsAllowUnlimitedCombo35)</td>
+                <td>@RenderPayoutBlock("ComboOver6", entity.SportType, entity.Bettype, entity.ComboOver6, entity.UplineComboOver6, entity.IsAllowUnlimitedComboOver6)</td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+<input id="btnUpdate" type="button" class="btn" style="margin-top:10px;" value="Update" />
+<input id="txtCustId" type="hidden" value="@Model.CustId" />
+<input id="txtCustName" type="hidden" value="@Model.CustName" />
