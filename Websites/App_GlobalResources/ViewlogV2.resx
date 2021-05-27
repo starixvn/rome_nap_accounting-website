@@ -2131,4 +2131,10 @@ Max Keno (20+1) 2</value>
    <data name="Disable171_3801" xml:space="preserve">
     <value>Disabled VGaming</value>
   </data>
+  <data name="Disable172_7701" xml:space="preserve">
+    <value>Disable AdvantPlay</value>
+  </data>
+  <data name="Disable174_7801" xml:space="preserve">
+    <value>Disable AdvantPlay Mini</value>
+  </data>
 </root>

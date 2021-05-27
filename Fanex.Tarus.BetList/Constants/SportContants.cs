@@ -88,5 +88,7 @@
         public const int Habanero = 238;
         public const int CG = 167;
         public const int VGaming = 171;
+        public const int AdvantPlay = 172;
+        public const int AdvantPlayMini = 174;
     }
 }
