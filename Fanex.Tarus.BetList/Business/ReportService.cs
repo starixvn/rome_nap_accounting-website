@@ -9,6 +9,7 @@
     using Resources;
     using System;
     using System.Collections.Generic;
+    using System.Configuration;
 
     public static class ReportService
     {
@@ -17,6 +18,10 @@
         public const string WarehouseSPSuffix = "_WH";
 
         #region StaticProperties
+
+        public static int BetlistMaxTotalRow =>
+            string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["Betlist:MaxTotalRow"]) ?
+                    10000 : int.Parse(ConfigurationManager.AppSettings["Betlist:MaxTotalRow"]);
 
         public static BalanceUp BalanceUp
         {

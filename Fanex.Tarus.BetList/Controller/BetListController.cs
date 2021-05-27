@@ -152,7 +152,7 @@ namespace Fanex.Tarus.BetList.Controllers
         [SmartPunterFilter(SmartPunterFilter.AuthenticationType.Read)]
         public ActionResult GetBetListByCustInfo_Refno(string transactionId, int customerId)
         {
-            IList<TicketDetail> result = new List<TicketDetail>();
+            KeyValuePair<string, IList<TicketDetail>> result = new KeyValuePair<string, IList<TicketDetail>>(string.Empty, new List<TicketDetail>());
             if (BetListHelper.IsNumeric(transactionId.Trim()))
             {
                 result = _betListService.GetBetListByCustInfo_Refno(transactionId, customerId);
@@ -165,7 +165,7 @@ namespace Fanex.Tarus.BetList.Controllers
 
             ViewBag.Quantity = 1;
             ViewBag.NumberBegining = 1;
-            ViewBag.ResultTitle = CreateResultTitle(result);
+            ViewBag.ResultTitle = CreateResultTitle(result.Value);
             return PartialView("~/Views/BetList/BetlistByCustInfo/Betlist/_BetList.cshtml", result);
         }
 

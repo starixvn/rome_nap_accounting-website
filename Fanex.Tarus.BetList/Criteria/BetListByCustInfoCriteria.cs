@@ -23,6 +23,12 @@
         [SpParam(SqlParamName = "Bettype")]
         public int BetType { get; set; }
 
+        public int ErrCode { get; set; }
+
+        public int MaxTotalRow { get; set; }
+
+        public string ErrMsg { get; set; }
+
         public override string GetSettingKey()
             => "Acc_BetList_Mem";
 

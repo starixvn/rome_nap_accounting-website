@@ -18,7 +18,7 @@
 
         IList<BetType> GetBetTypeByDate(BetTypeByDateCriteria betTypebyDateCriteria);
 
-        IList<TicketDetail> GetBetListByCustInfo_DateRange(
+        KeyValuePair<string, IList<TicketDetail>> GetBetListByCustInfo_DateRange(
             int custId,
             DateTime fromDate,
             DateTime toDate,
@@ -28,7 +28,7 @@
             int pageIndex,
             ref int quantity);
 
-        IList<TicketDetail> GetBetListByCustInfo_Refno(string transactionId, int customerId);
+        KeyValuePair<string, IList<TicketDetail>> GetBetListByCustInfo_Refno(string transactionId, int customerId);
 
         SystemParlayModel GetBetListByCustInfo_SystemParLayTab(string transId, int custId);
 
