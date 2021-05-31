@@ -1323,7 +1323,7 @@ function getAdvantPlayParam(transId3rd, custId, gameId3rd, siteId) {
 
 function getAdvantPlayMiniParam(transId3rd, custId, gameId3rd, siteId) {
     return {
-        url: "ThirdParty/AdvantPlayResult",
+        url: "ThirdParty/AdvantPlayMiniResult",
         title: "AdvantPlay Mini Result",
         jsonParam: { custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, productId: 68, siteId: siteId },
         width: 850,
