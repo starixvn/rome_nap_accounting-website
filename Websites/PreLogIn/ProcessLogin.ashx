@@ -113,7 +113,9 @@ public class ProcessLogin : IHttpHandler, IRequiresSessionState
                 }
 
                 AppSession.CurrentSystemNAME = Enumerations.ToAccountingSystem(system);
-                AppSession.OnAccId = Sunplus.Accounting.DataAccess.IBCDLL.UserController.AccLoginAdminOnuser(custId, WebSettings.ServerId, context.Request.UserHostAddress);
+                AppSession.OnAccId = AccCommon.IsEnabledRecheckin ? 
+                        Sunplus.Accounting.DataAccess.IBCDLL.UserController.AccLoginAdminOnuser(custId, WebSettings.ServerId, context.Request.UserHostAddress)
+                        : 0;
                 AppSession.RoleID = roleId;
                 AppSession.AccPwd = IBCUtils.Encryption.CfsEnCode(password);
 

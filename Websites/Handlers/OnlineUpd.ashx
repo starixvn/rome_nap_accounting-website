@@ -1,7 +1,6 @@
 <%@ WebHandler Language="C#" Class="OnlineUpd" %>
 
 using System;
-using System.Configuration;
 using System.Web;
 using System.Web.SessionState;
 using Sunplus.Accounting.Core.Common;
@@ -19,11 +18,11 @@ public class OnlineUpd : IHttpHandler , IRequiresSessionState
             context.Response.ContentType = "text/html";
             context.Response.Cache.SetCacheability(HttpCacheability.NoCache);
             int onlineId = AppSession.OnAccId;
-            bool isOnline = false;
+            bool isOnline = true;
             context.Response.Write("<html><head></head><body>");
             string appPath = context.Request.ApplicationPath;
             if (appPath != "/") appPath += "/";
-            if (onlineId != 0)
+            if (onlineId != 0 && AccCommon.IsEnabledRecheckin)
                 isOnline = UserController.OnlineUserUpdate(onlineId);
             
             if (!isOnline && !AccCommon.IsLocalTest)
