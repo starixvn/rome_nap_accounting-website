@@ -121,6 +121,11 @@
     };
 
     this.onSave = function (data) {
+        if (data.indexOf('File') === -1) {
+            this.showMessage('There is no change!', 'error');
+            return;
+        }
+
         var param = {
             File: data,
             FromDate: this.$fromDate.val(),
