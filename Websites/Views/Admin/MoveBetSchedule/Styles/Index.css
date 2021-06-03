@@ -1,0 +1,170 @@
+﻿.filterBox {
+    padding: 1.25rem;
+    width: 1200px;
+}
+
+.enabled {
+    opacity: 1 !important;
+}
+
+.disabled {
+    opacity: .5 !important;
+}
+
+.icon {
+    width: 20px;
+    height: 20px;
+    background-size: 20px 20px;
+}
+
+.next-icon {
+    background-image: url('../svg/right-arrow.svg');
+}
+
+.previous-icon {
+    background-image: url('../svg/left-arrow.svg');
+}
+
+span.error {
+    color: #dc3545 !important;
+}
+
+span.success {
+    color: #28a745 !important;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+    table th {
+        font-weight: normal;
+        padding: 8px;
+        text-align: center;
+    }
+
+.date-box {
+    width: 100px;
+    height: 25px;
+    margin: 3px auto;
+}
+
+    .date-box span {
+        color: #4f81bd;
+        font-weight: bold;
+        line-height: 25px;
+    }
+
+    .date-box.current-day {
+        background-color: #4f81bd;
+        border-radius: 5px;
+    }
+
+        .date-box.current-day span {
+            color: white;
+        }
+
+.form-inline .form-title {
+    display: inline-block;
+}
+
+.form-inline .form-control {
+    display: inline-block;
+    margin-left: 16px;
+    margin-right: 16px;
+}
+
+    .form-inline .form-control label {
+        margin-right: 5px;
+    }
+
+.form-update-movebet {
+    margin-top: 16px;
+    text-align: right;
+}
+
+    .form-update-movebet button {
+        background-color: #dce6f2;
+        border: 1px solid #7C98A4;
+        width: 100px;
+        height: 25px;
+    }
+
+.month-year-wrapper {
+    text-align: left;
+}
+
+    .month-year-wrapper .month-year-label {
+        display: inline-block;
+        font-size: 1.5em;
+        line-height: 1.5;
+        text-align: center;
+        vertical-align: middle;
+        width: 120px;
+    }
+
+    .month-year-wrapper span {
+        display: inline-block;
+        line-height: 1.5;
+        vertical-align: middle;
+    }
+
+        .month-year-wrapper span.previous-icon {
+            margin-left: 36px;
+            margin-right: 8px;
+        }
+
+.tbl-default-movebet {
+    border: 1px solid #7C98A4;
+}
+
+    .tbl-default-movebet th, .tbl-default-movebet td {
+        border: 1px solid #7C98A4;
+    }
+
+    .tbl-default-movebet th {
+        background-color: #8db4e2;
+    }
+
+    .tbl-default-movebet td {
+        border-bottom: none;
+        border-top: none;
+    }
+
+        .tbl-default-movebet th.current-day, .tbl-default-movebet td.current-day {
+            background-color: #e6b8b7;
+        }
+
+.update-movebet {
+    padding-top: 16px;
+}
+
+tr.tr-date td {
+    font-weight: normal;
+    padding: 8px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+    tr.tr-date td.td-date {
+        border-bottom: 1px solid silver;
+        border-top: 1px solid #7C98A4;
+    }
+
+        tr.tr-date td.td-date label {
+            color: #538ddb;
+            font-weight: bold;
+        }
+
+.tbl-movebet-schedule tbody {
+    border: 1px solid #7C98A4;
+}
+
+    .tbl-movebet-schedule tbody tr td {
+        border-right: 1px solid #7C98A4;
+    }
+
+    .tbl-movebet-schedule tbody tr:nth-child(8n) td {
+        padding-bottom: 8px;
+    }

@@ -278,6 +278,49 @@
             return listData;
         }
 
+        public KeyValuePair<dynamic, IList<S>> FetchWithOutputs<S>(dynamic criteria, Func<DataRow, S> mapObjectFunction, ref List<ITicketData> outputList) where S : class
+        {
+            IList<S> listData = new List<S>();
+            int errCode = 0, maxTotalRow = 0;
+
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                DataSet dataSet = db.ExecuteDataSet(criteria.GetSpParams());
+                if (dataSet != null
+                    && dataSet.Tables.Count > 0)
+                {
+                    DataTable currentTable = dataSet.Tables[0];
+                    foreach (DataRow row in currentTable.Rows)
+                    {
+                        listData.Add(mapObjectFunction(row));
+                    }
+
+                    if (dataSet.Tables.Count > 1)
+                    {
+                        DataTable secondTable = dataSet.Tables[1];
+                        foreach (DataRow row in secondTable.Rows)
+                        {
+                            outputList.Add(new TicketData
+                            {
+                                RefNo = Converter.ToString2(row["refno"]),
+                                BetTypeId = Converter.To<int>(row["bettype"]),
+                                Status = Converter.ToString2(row["status"]),
+                                Odds = Converter.To<decimal>(row["odds"]),
+                                Stake = Converter.To<decimal>(row["stake"]),
+                                BetTeam = Converter.ToString2(row["betteam"]),
+                                TransDesc = Converter.ToString2(row["TransDesc"])
+                            });
+                        }
+                    }
+                }
+
+                errCode = (int)db.GetOuputParams()["errcode"];
+                maxTotalRow = (int)db.GetOuputParams()["maxtotalrow"];
+            }
+
+            return new KeyValuePair<dynamic, IList<S>>(new { errCode, maxTotalRow }, listData);
+        }
+
         /// <summary>
         /// Fetches the system parlay.
         /// </summary>

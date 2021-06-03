@@ -22,6 +22,8 @@
 
         IList<S> Fetch<S>(dynamic criteria, Func<DataRow, S> mapObjectFunction, ref List<ITicketData> outputList) where S : class;
 
+        KeyValuePair<dynamic, IList<S>> FetchWithOutputs<S>(dynamic criteria, Func<DataRow, S> mapObjectFunction, ref List<ITicketData> outputList) where S : class;
+
         SystemParlayModel FetchSystemParlay(BetListSystemParlayByRefnoCriteria criteria);
 
         CombinationParlay BetList_SelDetailCombinationMP(ICriteria criteria);

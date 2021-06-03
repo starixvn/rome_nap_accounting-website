@@ -106,6 +106,15 @@ namespace Fanex.Tarus.BetList.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Your report contains {0} tickets but the page can only show up to {1}. Please select a shorter date range..
+        /// </summary>
+        public static string BetlistMaxTotalRowMessageError {
+            get {
+                return ResourceManager.GetString("BetlistMaxTotalRowMessageError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bought.
         /// </summary>
         public static string Bought {

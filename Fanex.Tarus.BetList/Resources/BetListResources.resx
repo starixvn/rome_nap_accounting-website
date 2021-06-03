@@ -336,4 +336,7 @@
   <data name="DelayedPayout" xml:space="preserve">
     <value>Delayed Payout</value>
   </data>
+  <data name="BetlistMaxTotalRowMessageError" xml:space="preserve">
+    <value>Your report contains {0} tickets but the page can only show up to {1}. Please select a shorter date range.</value>
+  </data>
 </root>

@@ -351,7 +351,7 @@ namespace Fanex.Tarus.BetList.Business
             return new List<BetType>();
         }
 
-        public IList<TicketDetail> GetBetListByCustInfo_DateRange(
+        public KeyValuePair<string, IList<TicketDetail>> GetBetListByCustInfo_DateRange(
             int custId,
             DateTime fromDate,
             DateTime toDate,
@@ -444,18 +444,20 @@ namespace Fanex.Tarus.BetList.Business
                 BetType = betType,
                 MoveBetsDay = ReportService.BalanceUp.MoveBetsDay,
                 BalanceUpDay = ReportService.BalanceUp.BalanceUpDay,
-                StatusIdList = statusIds
+                StatusIdList = statusIds,
+                ErrCode = 0,
+                ErrMsg = string.Empty,
+                MaxTotalRow = ReportService.BetlistMaxTotalRow
             };
 
             var ticketData = new List<ITicketData>();
-            var betDetails = _betListRepository
-                .Fetch<TicketDetail>(criteria, mapTicketObjectFunction, ref ticketData)
-                .OrderBy(x => x.Ticket.TransDate).ToList();
+            var betData = _betListRepository.FetchWithOutputs<TicketDetail>(criteria, mapTicketObjectFunction, ref ticketData);
+            var betDetails = betData.Value.OrderBy(x => x.Ticket.TransDate).ToList();
 
             quantity = betDetails.Count;
             var betlistHelper = new BetListHelper();
 
-            if (pageIndex > 0)
+            if (pageIndex > 0 && betData.Key.errCode == 0)
             {
                 var factory = new BetListHTMLFactory();
                 var builder = factory.CreateBuilder();
@@ -476,10 +478,12 @@ namespace Fanex.Tarus.BetList.Business
                     newTicket.Add(betDetail);
                 }
 
-                return newTicket;
+                return new KeyValuePair<string, IList<TicketDetail>>(string.Empty, newTicket);
             }
 
-            return new List<TicketDetail>();
+            return new KeyValuePair<string, IList<TicketDetail>>(betData.Key.errCode != 0 ?
+                string.Format(BetListResources.BetlistMaxTotalRowMessageError, betData.Key.maxTotalRow, ReportService.BetlistMaxTotalRow) : 
+                string.Empty, new List<TicketDetail>());
         }
 
         /// <summary>
@@ -493,7 +497,7 @@ namespace Fanex.Tarus.BetList.Business
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
             "SP2101:MethodMustNotContainMoreLinesThan",
             Justification = "Reviewed. Suppression is OK here.")]
-        public IList<TicketDetail> GetBetListByCustInfo_Refno(string transactionId, int customerId)
+        public KeyValuePair<string, IList<TicketDetail>> GetBetListByCustInfo_Refno(string transactionId, int customerId)
         {
             var criteria = new BetListByCustInfoByRefnoCriteria()
             {
@@ -619,7 +623,7 @@ namespace Fanex.Tarus.BetList.Business
                         betDetail.StatusHtml = betListHelper.BuildStatus(betDetail.Ticket, ticketHelper, outputLiveCasino, factory, builder);
                     }
 
-                    return betDetails;
+                    return new KeyValuePair<string, IList<TicketDetail>>(string.Empty, betDetails);
                 }
             }
             catch (Exception ex)
@@ -627,7 +631,7 @@ namespace Fanex.Tarus.BetList.Business
                 LoggingHandler.Log(ex);
             }
 
-            return new List<TicketDetail>();
+            return new KeyValuePair<string, IList<TicketDetail>>(string.Empty, new List<TicketDetail>());
         }
 
         /// <summary>
