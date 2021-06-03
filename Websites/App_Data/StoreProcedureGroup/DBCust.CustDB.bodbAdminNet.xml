@@ -429,6 +429,7 @@
   <Function Name="ParlayMaxPayout">
     <Setting Key="Acc_CustSetting_MaxPayoutSelect" SpName="Acc_CustSetting_MaxPayoutSelect_xtest" DbName="DBCUST.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustSetting_MaxPayoutUpd" SpName="Acc_CustSetting_MaxPayoutUpd_xtest" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustSetting_MaxPayoutCheckDownline" SpName="Acc_CustSetting_MaxPayoutCheckDownline_xtest" DbName="DBCUST.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Admin - Headline/External Group Mapping">
     <Setting Key="Acc_GroupHeadline_Sel" SpName="Acc_GroupHeadline_Sel" DbName="DBCUST.CustDB.bodbAdminNet" />

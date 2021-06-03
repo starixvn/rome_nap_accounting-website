@@ -13,6 +13,8 @@ namespace Fanex.Tarus.Customer.ViewModels.ParlayMaxPayout
 
         public string CustName { get; set; }
 
+        public int RoleId { get; set; }
+
         public List<ParlayMaxPayoutEntityModel> ListEntityModel { get; set; }
     }
 

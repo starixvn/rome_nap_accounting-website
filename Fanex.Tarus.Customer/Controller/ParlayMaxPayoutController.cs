@@ -18,15 +18,10 @@
             _parlayMaxPayoutService = parlayMaxPayoutService ?? new ParlayMaxPayoutService();
         }
 
-        public ActionResult Index(ParlayMaxPayoutSelectRequest request)
-        {
-            var model = _parlayMaxPayoutService.Select(request);
-            return View("~/Views/Customer/ParlayMaxPayout/Index.cshtml", _parlayMaxPayoutService.Select(request));
-        }
+        public ActionResult Index(ParlayMaxPayoutSelectRequest request) => View("~/Views/Customer/ParlayMaxPayout/Index.cshtml", _parlayMaxPayoutService.Select(request));
 
-        public JsonResult Update(ParlayMaxPayoutUpdateRequest request)
-        {
-            return Json(_parlayMaxPayoutService.Update(request));
-        }
+        public JsonResult Check(ParlayMaxPayoutUpdateRequest request) => Json(_parlayMaxPayoutService.Check(request));
+
+        public JsonResult Update(ParlayMaxPayoutUpdateRequest request) => Json(_parlayMaxPayoutService.Update(request));
     }
 }
