@@ -67,6 +67,8 @@
                             <li id="tab_7"><a href="javascript:SwitchTab('tab_7', 'tab_content_7');"><span>Can See</span></a></li>
                             <li id="tab_8"><a href="javascript:SwitchTab('tab_8', 'tab_content_8');"><span>Reset Winning</span></a></li>
                             <li id="tab_9"><a href="javascript:SwitchTab('tab_9', 'tab_content_9');"><span>UMConfig</span></a></li>
+                            <li id="tab_10"><a href="javascript:SwitchTab('tab_10', 'tab_content_10');"><span>VendorGlobalSetting</span></a></li>
+                            <li id="tab_11"><a href="javascript:SwitchTab('tab_11', 'tab_content_11');"><span>Product3rd</span></a></li>
                         </ul>
                     </div>
                 </div>
@@ -98,6 +100,12 @@
             <div id="tab_content_9" style="display: none;margin-top:38px">
                 @Html.Partial("~/Views/Admin/ManageProductSetting/UMConfig/_UMConfig.cshtml")
             </div>
+            <div id="tab_content_10" style="display: none;margin-top:38px">
+                @Html.Partial("~/Views/Admin/ManageProductSetting/VendorGlobalSetting/_VendorGlobalSetting.cshtml")
+            </div>
+            <div id="tab_content_11" style="display: none;margin-top:38px">
+                @Html.Partial("~/Views/Admin/ManageProductSetting/Product3rd/_Product3rd.cshtml")
+            </div>
         </div>
     </div>
     @Html.Partial("~/Views/Admin/ManageProductSetting/_UploadSetting.cshtml")
@@ -111,6 +119,9 @@
     @Html.Partial("~/Views/Admin/ManageProductSetting/ResetWinning/_UpdateDWLListExtraPT.cshtml")
     @Html.Partial("~/Views/Admin/ManageProductSetting/UMConfig/_UpdateUMConfig.cshtml")
     @Html.Partial("~/Views/Admin/ManageProductSetting/UMConfig/_NewUMConfig.cshtml")
+    @Html.Partial("~/Views/Admin/ManageProductSetting/VendorGlobalSetting/_UpdateVendor.cshtml")
+    @Html.Partial("~/Views/Admin/ManageProductSetting/Product3rd/_UpdateProduct3rd.cshtml")
+
     <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-1.8.2.min.js?v=" + WebSettings.Version)"></script>
     <script type="text/javascript" src="@Url.Content("~/js/select2/select2.min.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-ui-1.9.1.min.js?v=" + WebSettings.Version)"></script>
@@ -136,6 +147,11 @@
     <script type="text/javascript" src="@Url.Content("~/Views/Admin/ManageProductSetting/RefResource/Scripts/RefResource.js?v=" + @WebSettings.Version)"></script>
     <script type="text/javascript" src="@Url.Content("~/Views/Admin/ManageProductSetting/CSSportBettypeMatrix/Scripts/CSSportBettypeMatrix.js?v=" + @WebSettings.Version)"></script>
     <script type="text/javascript" src="@Url.Content("~/Views/Admin/ManageProductSetting/UMConfig/Scripts/UMConfig.js?v=" + @WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Views/Admin/ManageProductSetting/VendorGlobalSetting/index.js?v=" + @WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Views/Admin/ManageProductSetting/Product3rd/index.js?v=" + @WebSettings.Version)"></script>
+
+
+    <script type="text/javascript" src="@Url.Content("~/Views/Admin/ManageProductSetting/Scripts/TabHandler.js?v=" + @WebSettings.Version)"></script>
     <script type="text/javascript">
         var hasHostPermission = @Json.Encode(hasHostPermission);
         var rootUrl = "@Url.Content("~")";

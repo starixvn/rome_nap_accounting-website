@@ -29,6 +29,12 @@ $(document).ready(function () {
             case "tab_8":
                 action = GetInsertResetWinningAction();
                 break;
+            case "tab_10":
+                action = window.rootUrl + 'ManageVendorGlobalSetting/Insert';
+                break;
+            case "tab_11":
+                action = window.rootUrl + 'ManageProduct3RD/Insert';
+                break;
         }
         var formData = new FormData(form[0]);
         $.ajax({

@@ -1,0 +1,44 @@
+﻿<div class="filterBox" style="border: solid 1px #7C98A4; height:80px;">
+    <div class="filterContent">
+        <div id="err3rdMsg"></div>
+        <div class="floatLeft w70"><label for="txtProduct3rdID">ProductId</label></div>
+        <div class="floatLeft"><input id="txtProduct3rdID" type="text" class="numeric-input-int" /></div>
+        <div class="floatLeft w70"><label for="txtProduct3rdName">ProductName</label></div>
+        <div class="floatLeft"><input id="txtProduct3rdName" type="text" /></div>
+        <div class="floatLeft w70"><label for="txt3rdDescription">Description</label></div>
+        <div class="floatLeft"><input id="txt3rdDescription" type="text" /></div>
+        <div class="floatLeft w70"><label for="txtProduct3rdPrefix">ProductPrefix</label></div>
+        <div class="floatLeft"><input id="txtProduct3rdPrefix" type="text" /></div>
+        <div class="clear"></div>
+        <div class="floatLeft w70"><label for="txt3rdOfferSingle">OfferSingle</label></div>
+        <div class="floatLeft">
+            <select id="txt3rdOfferSingle" class="w150">
+                <option value="">All</option>
+                <option value="false">0</option>
+                <option value="true">1</option>
+            </select>
+        </div>
+        <div class="floatLeft w70"><label for="txt3rdApplyDCS">ApplyDCS</label></div>
+        <div class="floatLeft">
+            <select id="txt3rdApplyDCS" class="w150">
+                <option value="">All</option>
+                <option value="false">0</option>
+                <option value="true">1</option>
+            </select>
+        </div>
+        <div class="floatLeft w70"><label for="txt3rdSite">OfferSite</label></div>
+        <div class="floatLeft">
+            <select id="txt3rdSite" class="w150">
+                <option value="0">[0] All</option>
+                <option value="1">[1] Credit</option>
+                <option value="2">[2] Deposit</option>
+            </select>
+        </div>
+        <div class="floatLeft"><input type="button" value="Search" class="btn" onclick="SearchProduct3rd(1, 50)" /></div>
+        <div class="floatLeft"><input type="button" value="Import From Excel" class="btn" onclick="OpenInsertSetting()" /></div>
+    </div>
+</div>
+<div style="clear: both"></div>
+<div id="grid3rdContainer" class="grid-container">
+    <div id="grid3rdId" class="freegrid"></div>
+</div>
