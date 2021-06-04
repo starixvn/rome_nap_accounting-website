@@ -55,5 +55,8 @@
 
             return new Result(0, string.Empty);
         }
+
+        public ClosedMatrixViewModel GetClosedMatrixInfo(string username)
+            => openCustomerDataAccess.GetClosedMatrixInfo(new GetCloseInfoMatrixCriteria(username));
     }
 }

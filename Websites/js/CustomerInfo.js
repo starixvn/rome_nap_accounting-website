@@ -572,6 +572,12 @@ function OpenViewSuspend(username) {
     parent.resetMenu();
 }
 
+function OpenViewClosed(username) {
+    var url = 'OpenCustomer/ClosedMatrixView?username=' + username;
+    parent.gotoURL('centerFr', url);
+    parent.resetMenu();
+}
+
 function collapseInfo() {
     var curr = $("#btnupdownCustInfo");
     var obj = $("#custInfoDetal");

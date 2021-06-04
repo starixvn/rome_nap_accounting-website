@@ -10,6 +10,7 @@
         private readonly OpenCustomerService openCustomerService;
 
         private const string singleOpenCustomerViewPath = "~/Views/Customer/CustomerSetting/OpenCustomer/SingleOpenCustomer.cshtml";
+        private const string closedMatrixViewPath = "~/Views/Customer/CustomerSetting/OpenCustomer/ClosedMatrix.cshtml";
 
         public OpenCustomerController() : this(null)
         {
@@ -20,10 +21,8 @@
             this.openCustomerService = openCustomerService ?? new OpenCustomerServiceImpl();
         }
 
-        public ActionResult SingleOpenCustomerView(GetSingleOpenCustomerInfoQuery query)
-        {
-            return View(singleOpenCustomerViewPath, openCustomerService.GetSingleOpenCustomerInfo(query));
-        }
+        public ActionResult SingleOpenCustomerView(GetSingleOpenCustomerInfoQuery query) 
+            => View(singleOpenCustomerViewPath, openCustomerService.GetSingleOpenCustomerInfo(query));
 
         [HttpPost]
         public JsonResult GetSingleOpenDownlinesInfo(GetSingleOpenDownlinesInfoQuery query)
@@ -32,5 +31,12 @@
         [HttpPost]
         public JsonResult SingleOpenCustomer(UpdateClosedStatusQuery query)
             => Json(openCustomerService.UpdateSingleCustomerClosedStatus(query));
+
+        public ActionResult ClosedMatrixView(string username) 
+            => View(closedMatrixViewPath, model: username);
+
+        [HttpPost]
+        public JsonResult GetClosedMatrix(string username)
+            => Json(openCustomerService.GetClosedMatrixInfo(username));
     }
 }

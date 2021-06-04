@@ -11,5 +11,7 @@
         SingleOpenDownlinesViewModel GetSingleOpenDownlinesInfo(GetSingleOpenDownlinesInfoQuery query);
 
         Result UpdateSingleCustomerClosedStatus(UpdateClosedStatusQuery query);
+
+        ClosedMatrixViewModel GetClosedMatrixInfo(string username);
     }
 }

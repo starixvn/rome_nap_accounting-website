@@ -462,6 +462,7 @@
     <Compile Include="Criteria\ManageRobots2\CheckIsRobotCriteria.cs" />
     <Compile Include="Criteria\LicenseeSubsidiary\GetCopiedAccountsCriteria.cs" />
     <Compile Include="Criteria\NewLicensee\GetCurrenciesBySystemCriteria.cs" />
+    <Compile Include="Criteria\OpenCustomer\GetCloseInfoMatrixCriteria.cs" />
     <Compile Include="Criteria\OpenCustomer\GetSingleOpenDownlinesInfoCriteria.cs" />
     <Compile Include="Criteria\OpenCustomer\GetSingleOpenCustomerInfoCriteria.cs" />
     <Compile Include="Criteria\Player3rd\SearchPlayer3rdCriteria.cs" />
@@ -670,6 +671,7 @@
     <Compile Include="ViewModels\CN88\CreditRangeViewModel.cs" />
     <Compile Include="ViewModels\CN88\HeadlinePossessViewModel.cs" />
     <Compile Include="ViewModels\CN88\MoveSuper\MoveSuperViewModel.cs" />
+    <Compile Include="ViewModels\CustomerSetting\OpenCustomer\ClosedMatrixViewModel.cs" />
     <Compile Include="ViewModels\CustomerSetting\OpenCustomer\SingleOpenDownlinesViewModel.cs" />
     <Compile Include="ViewModels\CustomerSetting\OpenCustomer\SingleOpenCustomerViewModel.cs" />
     <Compile Include="ViewModels\CustomerSetting\Suspend\SingleUpdateViewModel.cs" />
