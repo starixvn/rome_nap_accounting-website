@@ -389,6 +389,10 @@
     <Setting Key="Acc_UMTool_Configuration_Del" SpName="Acc_UMTool_Configuration_Del" DbName="DBCUST.CustDB.bodbAdminNet" />
     <Setting Key="Acc_UMTool_InUMWarning_Check" SpName="Acc_UMTool_InUMWarning_Check" DbName="DBCUST.CustDB.bodbAdminNet" />
     <Setting Key="Acc_UMTool_Configuration_Del_OldData" SpName="Acc_UMTool_Configuration_Del_OldData" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_VendorGlobalSetting_Sel" SpName="Acc_VendorGlobalSetting_Sel" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
+    <Setting Key="Acc_VendorGlobalSetting_Ins" SpName="Acc_VendorGlobalSetting_Ins" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
+    <Setting Key="Acc_VendorGlobalSetting_Upd" SpName="Acc_VendorGlobalSetting_Upd" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
+    <Setting Key="Acc_VendorGlobalSetting_Del" SpName="Acc_VendorGlobalSetting_Del" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
   </Function>
   <Function Name="UM On product">
     <Setting Key="Acc_CheckUM" SpName="Acc_CheckUM" DbName="DBCUST.CustDB.bodbAdminNet" />

@@ -1,0 +1,38 @@
+﻿@using Fanex.Tarus.Admin.ManageProductSetting.ViewModel;
+@model ManageProductSettingViewModel
+<form id="edit-vendor-form" style="display: none;">
+    <div id="updateVendorErrMsg">
+    </div>
+    <table style="line-height: 28px; margin-top: 10px; border-collapse: collapse;">
+        <tr>
+            <td><label>VendorId</label></td>
+            <td><span id="UpdVendorId" /></td>
+            <td style="width: 40px;"></td>
+            <td><label>VendorName</label></td>
+            <td><span id="UpdVendorName" /></td>
+        </tr>
+        <tr>
+            <td><label for="UpdVendorNumberValue">NumberValue</label></td>
+            <td><input class="numeric-input-tinyint setting-input" id="UpdVendorNumberValue" type="text" /></td>
+            <td style="width: 40px;"></td>
+            <td><label for="UpdVendorSportType">SportType</label></td>
+            <td>
+                @Html.DropDownList("UpdVendorSportType", Model.SportTypes, new { id = "UpdVendorSportType", @class = "setting-edit" })
+            </td>
+        </tr>
+        <tr>
+            <td><label for="UpdVendorBetType">BetType</label></td>
+            <td>
+                <select id="UpdVendorBetType"></select>
+            </td>
+            <td style="width: 40px;"></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td colspan="5" style="text-align: center">
+                <input class="btn" type="button" value="Submit" id="btnUpdVendor" />
+            </td>
+        </tr>
+    </table>
+</form>

@@ -5,4 +5,10 @@
     <Setting Key="Acc_LicenseeTransferCode_Ins" SpName="Acc_LicenseeTransferCode_Ins" DbName="DBCust.bodb_Licensee.bodbAdminNet" />
     <Setting Key="Acc_LicenseeTransferCode_Verify" SpName="Acc_LicenseeTransferCode_Verify" DbName="DBCust.bodb_Licensee.bodbAdminNet" />
   </Function>
+  <Function Name="Admin - Manage Product Setting - Product3rd">
+    <Setting Key="Acc_Product3rd_Sel" SpName="Acc_Product3rd_Sel" DbName="DBCUST.bodb_Licensee.bodbAdminNet" Plain="0" />
+    <Setting Key="Acc_Product3rd_Ins" SpName="Acc_Product3rd_Ins" DbName="DBCUST.bodb_Licensee.bodbAdminNet" Plain="0" />
+    <Setting Key="Acc_Product3rd_Upd" SpName="Acc_Product3rd_Upd" DbName="DBCUST.bodb_Licensee.bodbAdminNet" Plain="0" />
+    <Setting Key="Acc_Product3rd_Del" SpName="Acc_Product3rd_Del" DbName="DBCUST.bodb_Licensee.bodbAdminNet" Plain="0" />
+  </Function>
 </Functions>

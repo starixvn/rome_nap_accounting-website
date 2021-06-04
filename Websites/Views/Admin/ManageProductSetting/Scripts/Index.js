@@ -1,7 +1,4 @@
-﻿var cachedTabId;
-$(document).ready(function () {
-    cachedTabId = "tab_1";
-
+﻿$(document).ready(function () {
     $('.numeric-input-int').NAPNumericInput({
         numOfDecimal: 0,
         minValue: 0,
@@ -18,82 +15,6 @@ $(document).ready(function () {
         maxValue: 255
     });
 });
-function SwitchTab(id, contentId) {
-    cachedTabId = id;
-    $('#tabs').find('li').removeClass('current');
-    $('div[id^="tab_content_"]').hide();
-    $('#' + id).addClass('current');
-    $('#' + contentId).show();
-    UpdateSampleUrl();
-    Search();
-}
-
-function Search() {
-    switch (cachedTabId) {
-        case "tab_1":
-            SearchProduct(50, 1);
-            break;
-        case "tab_2":
-            SearchSport(50, 1);
-            break;
-        case "tab_3":
-            SearchBettype(50, 1);
-            break;
-        case "tab_4":
-            SearchSBM(50, 1);
-            break;
-        case "tab_5":
-            GetGroupsAndSearchCSSBM(50, 1);
-            break;
-        case "tab_6":
-            SearchRefResource(50, 1);
-            break;
-        case "tab_7":
-            SearchCanSee();
-            break;
-        case "tab_8":
-            SearchResetWinning();
-            break;
-        case "tab_9":
-            GetInitDataAndSearchAllUMConfig();
-            break;
-        default:
-            break;
-    }
-}
-function UpdateSampleUrl() {
-    switch (cachedTabId) {
-        case "tab_1":
-            $('#sampleSettingLink').prop("href", rootUrl + "Views/Admin/ManageProductSetting/Product/Product.xls");
-            break;
-        case "tab_2":
-            $('#sampleSettingLink').prop("href", rootUrl + "Views/Admin/ManageProductSetting/Sport/SportType.xls");
-            break;
-        case "tab_3":
-            $('#sampleSettingLink').prop("href", rootUrl + "Views/Admin/ManageProductSetting/Bettype/Bettype.xls");
-            break;
-        case "tab_4":
-            $('#sampleSettingLink').prop("href", rootUrl + "Views/Admin/ManageProductSetting/SportBettypeMatrix/SportBettypeMatrix.xls");
-            break;
-        case "tab_5":
-            $('#sampleSettingLink').prop("href", rootUrl + "Views/Admin/ManageProductSetting/CSSportBettypeMatrix/CS_SportBettypeMatrix.xls");
-            break;
-        case "tab_6":
-            $('#sampleSettingLink').prop("href", rootUrl + "Views/Admin/ManageProductSetting/RefResource/RefResource.xls");
-            break;
-        case "tab_7":
-            $('#sampleSettingLink').prop("href", rootUrl + "Views/Admin/ManageProductSetting/CanSee/CanSee.xls");
-            break;
-        case "tab_8":
-            UpdateResetWinningSampleUrl();
-            break;
-        case "tab_9":
-            $('#sampleSettingLink').prop("href", rootUrl + "Views/Admin/ManageProductSetting/UMConfig/UMConfig.xls");
-            break;
-        default:
-            break;
-    }
-}
 
 function OpenInsertSetting() {
     $('#errMsg').html('');
@@ -107,11 +28,10 @@ function OpenInsertSetting() {
     });
 }
 
-
 function RenderMultiSelect(id) {
     var multiselectData = [];
     var options = $('#' + id + ' > option');
-    $('#' + id + ' > option').each(function () {
+    options.each(function () {
         var $this = $(this);
         multiselectData.push({
             Id: id + $this.attr('value'),
