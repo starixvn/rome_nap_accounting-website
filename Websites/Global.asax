@@ -34,7 +34,12 @@
 <%@ Import Namespace="System.Globalization" %>
 <%@ Import Namespace="System.Threading" %>
 <%@ Import Namespace="Fanex.Tarus.BetList.Constants" %>
-
+<%@ Import Namespace="Fanex.Caching" %>
+<%@ Import Namespace="ONEbook.UM" %>
+<%@ Import Namespace="ONEbook.UM.Configurations" %>
+<%@ Import Namespace="ONEbook.UM.Helpers" %>
+<%@ Import Namespace="ONEbook.UM.NETFramework" %>
+<%@ Import Namespace="ONEbook.UM.Transport" %>
 
 <script RunAt="server">
 
@@ -53,6 +58,15 @@
             string pattern = "AutoInsert*|Update*|Insert*|Move*|UpdatePJExchange|Rollback*";
             manager.Register(typeof(CasinoLibrary.SBAgent.Customer), pattern);
             manager.Register(typeof(CasinoLibrary.SBAgent.BasicInfo), pattern);
+
+            var umConfig = new UMClientConfiguration().Initialize();
+
+           UMClientManager
+              .UseConfig(umConfig)
+              .UseCacheService(new UMCacheService(new CacheService()))
+              .UseRestClient(new UMRestClient(umConfig))
+              .UseHttpContext(new HttpContextHelper());
+
 
             RegisterRouteMiscController(RouteTable.Routes);
 
