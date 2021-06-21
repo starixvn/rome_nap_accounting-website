@@ -174,7 +174,9 @@
         {
             if (customerInfoViewModel.LockedAccess.IsLocked)
             {
-                TemplateHandler.Assign(ref htmlcontent, "{UnlockConfirmMessage}", customerInfoViewModel.LockedAccess.UnlockConfirmMessage);
+                TemplateHandler.Assign(ref htmlcontent, "{LockedAccessEnabledOnClick}", customerInfoViewModel.ManageCustomerAccess
+                    ? $"onclick=\"return unlockAccess('{customerInfoViewModel.LockedAccess.UnlockConfirmMessage}');\""
+                    : string.Empty);
                 TemplateHandler.RemoveBlock(ref htmlcontent, "LockedAccessDisabled");
             }
             else
