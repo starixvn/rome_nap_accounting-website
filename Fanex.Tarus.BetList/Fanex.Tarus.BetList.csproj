@@ -291,10 +291,10 @@
       <HintPath>..\packages\Fanex.Result.ThirdParty.1.1.0.7\lib\net461\Fanex.Result.ThirdParty.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Entities, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Entities.1.0.0.6-NotifyHeadline06\lib\net40\Fanex.Tarus.Entities.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.Entities.1.0.0.6\lib\net40\Fanex.Tarus.Entities.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.3-headlineNotify02\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.3\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Security, Version=1.0.1.8, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Security.1.0.1.8\lib\net40\Fanex.Tarus.Security.dll</HintPath>

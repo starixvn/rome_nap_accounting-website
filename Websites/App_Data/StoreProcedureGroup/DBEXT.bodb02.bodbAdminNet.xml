@@ -25,7 +25,7 @@
     <Setting Key="Acc_BetList_Exchange_Detail" SpName="Acc_BetList_Exchange_Detail" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Ticket To Headline">
-    <Setting Key="Acc_Amendment_CheckAndNotifyNotification" SpName="Acc_Amendment_CheckAndNotifyNotification_xtest" DbName="DBEXT.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_Amendment_CheckAndNotifyNotification" SpName="Acc_Amendment_CheckAndNotifyNotification" DbName="DBEXT.bodb02.bodbAdminNet" />
     <Setting Key="Acc_Amendment_CheckAndNotifyNotification_DB053" SpName="Acc_Amendment_CheckAndNotifyNotification" DbName="DBEXT.bodb02.bodbAdminNet.DB053" />
   </Function>
   

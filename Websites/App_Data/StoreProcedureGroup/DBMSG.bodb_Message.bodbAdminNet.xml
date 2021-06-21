@@ -6,6 +6,6 @@
     <Setting Key="Dot_Msg_SetUsrMessage" SpName="Dot_Msg_SetUsrMessage" DbName="DBMSG.bodb_Message.bodbAdminNet" />
   </Function>
   <Function Name="Ticket To Group Headline">
-    <Setting Key="Acc_Msg_Check" SpName="Acc_Msg_Check_xtest" DbName="DBMSG.bodb_Message.bodbAdminNet" />
+    <Setting Key="Acc_Msg_Check" SpName="Acc_Msg_Check" DbName="DBMSG.bodb_Message.bodbAdminNet" />
   </Function>
 </Functions>

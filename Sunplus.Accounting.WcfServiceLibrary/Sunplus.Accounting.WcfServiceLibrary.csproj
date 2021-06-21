@@ -92,7 +92,7 @@
       <HintPath>..\packages\Fanex.Tarus.Security.1.0.1.8\lib\net40\Fanex.Tarus.Security.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Web.Controllers, Version=1.0.1.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Web.Controller.1.0.1.1-NotifyHeadline02\lib\net40\Fanex.Tarus.Web.Controllers.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.Web.Controller.1.0.1.1\lib\net40\Fanex.Tarus.Web.Controllers.dll</HintPath>
     </Reference>
     <Reference Include="IBCFile, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.File.1.0.0\lib\net40\IBCFile.dll</HintPath>
