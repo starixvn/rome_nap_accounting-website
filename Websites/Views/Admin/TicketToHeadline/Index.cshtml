@@ -65,24 +65,13 @@
                             <label class="b" for="productId">Product</label>
                         </div>
                         <div class="floatLeft">
-                            @*<select id="productId" name="productId">
-                                <option value="1">Sportsbook</option>
-                                <option value="2">Racing</option>
-                                <option value="3">Number Game</option>
-                                <option value="5">Virtual Sports</option>
-                                <option value="27">Virtual Sports 2</option>
-                                <option value="6">Casino</option>
-                                <option value="8">Keno</option>
-                                <option value="12">Gold Deluxe</option>
-                                <option value="15">Colossus Bets</option>
-                                <option value="21">Allbet</option>
-                                <option value="39">SA Gaming</option>
-                                <option value="22">Macau Games</option>
-                            </select>*@
                             @Html.DropDownList("productId", (List<SelectListItem>)ViewBag.SupportedProducts, new { id = "productId" })
                         </div>
                         <div class="floatLeft">
                             <input type="button" value="Submit" class="btn" onclick="GetData()" />
+                        </div>
+                        <div class="floatLeft">
+                            <input id="notifyHeadlines" type="button" value="Notify Headline" class="btn" onclick="NotifyHeadline()" disabled />
                         </div>
                         <div class="floatLeft">
                             <input type="image" src="~/App_Themes/Images/excel.gif" onclick="GetExcelFile()" />
@@ -113,6 +102,7 @@
     <script type="text/javascript" src="@Url.Content("~/js/IBCWnd/IBCWnd.js?v=" + Sunplus.Accounting.Core.Configurations.WebSettings.Version)"></script>
     <script type="text/javascript" src="@Url.Content("~/js/jQuery/jquery.blockUI.1.33.js?v=" + Sunplus.Accounting.Core.Configurations.WebSettings.Version)"></script>
     <script type="text/javascript" src="@Url.Content("~/js/common.js?v=" + Sunplus.Accounting.Core.Configurations.WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/js/Message/message.js?v=" + Sunplus.Accounting.Core.Configurations.WebSettings.Version)"></script>
     <script type="text/javascript" src="@Url.Content("~/Views/Admin/TicketToHeadline/Scripts/Index.js?v=" + Sunplus.Accounting.Core.Configurations.WebSettings.Version)"></script>
     <script type="text/javascript">
         window.rootUrl = '@Url.Content("~")';

@@ -116,18 +116,17 @@
       <HintPath>..\packages\Fanex.PTVirtualSports.1.0.0.3\lib\net40\Fanex.PTVirtualSports.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Tarus.Business.Implement, Version=1.0.1.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Business.Implement.1.0.1.2\lib\net40\Fanex.Tarus.Business.Implement.dll</HintPath>
+    <Reference Include="Fanex.Tarus.Business.Implement, Version=1.0.1.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Business.Implement.1.0.1.3\lib\net40\Fanex.Tarus.Business.Implement.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.2.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.2.8\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
+    <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.3\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Security, Version=1.0.1.8, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Security.1.0.1.8\lib\net40\Fanex.Tarus.Security.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Tarus.Web.Controllers, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Web.Controller.1.0.1\lib\net40\Fanex.Tarus.Web.Controllers.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Fanex.Tarus.Web.Controllers, Version=1.0.1.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Web.Controller.1.0.1.1\lib\net40\Fanex.Tarus.Web.Controllers.dll</HintPath>
     </Reference>
     <Reference Include="HandHistoryLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\CasinoLibrary.2.0.16.26931\lib\net40\HandHistoryLibrary.dll</HintPath>
