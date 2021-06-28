@@ -159,7 +159,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Web.Controllers, Version=1.0.1.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Web.Controller.1.0.1.2-HFNotifyHeadline01\lib\net40\Fanex.Tarus.Web.Controllers.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.Web.Controller.1.0.1.2\lib\net40\Fanex.Tarus.Web.Controllers.dll</HintPath>
     </Reference>
     <Reference Include="HandHistoryLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\CasinoLibrary.2.0.16.26931\lib\net40\HandHistoryLibrary.dll</HintPath>
