@@ -1,11 +1,10 @@
 ﻿var form;
 var showNotifyHeadlinesButtonForProducts = [1, 3, 5, 27];
 $(document).ready(function () {
-
     ajax_form($('#mainForm'), function (result) {
         clearMessage('errMsg');
         RenderData(result);
-        parent.jQuery.unblockUI();
+        try { parent.jQuery.unblockUI(); } catch (e) { }
     });
 
     form = $('#mainForm');
@@ -14,37 +13,35 @@ $(document).ready(function () {
 
 function GetData() {
     if (!ValidateUploadFile()) {
-        return false;
+        return;
     }
 
     $('#PageSize').val(50);
     $('#PageIndex').val(1);
-    parent.BlockUI();
+    try { parent.BlockUI(); } catch (e) { }
     form.attr('action', 'GetData');
     form.submit();
-    $('#uploadFile').val('');
-    $('#imgExportExcel').show();
 }
 
 function NotifyHeadline() {
     if (confirm("The CRM service will send Notifications and create Feedbacks. Are you sure you want to do it?")) {
-        parent.BlockUI();
+        try { parent.BlockUI(); } catch (e) { }
         form.attr('action', 'NotifyHeadline');
         form.submit();
-        $('#uploadFile').val('');
-        $('#imgExportExcel').show();
     }
 }
 
 function GetExcelFile() {
+    if (!ValidateUploadFile()) {
+        return;
+    }
+
     $('#PageSize').val(50);
     $('#PageIndex').val(1);
-    parent.BlockUI();
+    try { parent.BlockUI(); } catch (e) { }
     form.attr('action', 'ExportExcel');
     form.submit();
-    $('#uploadFile').val('');
-    $('#imgExportExcel').show();
-    parent.jQuery.unblockUI();
+    try { parent.jQuery.unblockUI(); } catch (e) { }
 }
 
 function RenderData(data) {
