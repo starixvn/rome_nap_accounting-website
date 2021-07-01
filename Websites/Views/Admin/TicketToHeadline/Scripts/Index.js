@@ -126,41 +126,40 @@ function RenderData(data) {
             row.CssClass = currentBGColor;
             bodyRows.push(row);
         }
-
-
-        var gridOptions =
-            {
-                columns: [
-                    { HeaderText: "#", Width: 40, Name: "RowNum", HeaderAlign: "center", CellAlign: "center" },
-                    { HeaderText: "Group Headline", Width: 150, Name: "GroupHeadline", HeaderAlign: "center", CellAlign: "center" },
-                    { HeaderText: "Headline Type", Width: 100, Name: "HeadlineType", HeaderAlign: "center", CellAlign: "center" },
-                    { HeaderText: "Currency", Width: 80, Name: "Currency", HeaderAlign: "center", CellAlign: "center" },
-                    { HeaderText: "Super", Width: 200, Name: "Super", HeaderAlign: "center", CellAlign: "left", AllowTruncate: true },
-                    { HeaderText: "Master", Width: 200, Name: "Master", HeaderAlign: "center", CellAlign: "left", AllowTruncate: true },
-                    { HeaderText: "Agent", Width: 200, Name: "Agent", HeaderAlign: "center", CellAlign: "left", AllowTruncate: true },
-                    { HeaderText: "Member", Width: 200, Name: "Member", HeaderAlign: "center", CellAlign: "left", AllowTruncate: true },
-                    { HeaderText: "Ref No", Width: 150, Name: "RefNo", HeaderAlign: "center", CellAlign: "left", AllowTruncate: true }
-                ],
-                bodyRows: bodyRows,
-                gridExpandHeight: 200,
-                showTitle: true,
-                titleInfo: {
-                    text: 'List of tickets with their headlines retrieved'
-                },
-                showPager: true,
-                customPager: true,
-                showDistinctRow: false,
-                pagerOption: {
-                    itemsPerPage: parseInt($('#PageSize').val()),
-                    currentPage: parseInt($('#PageIndex').val()) - 1,
-                    itemsPerPageArray: [50, 100, 150, 200],
-                    pagerSelectCallBack: reRenderAfterPaged,
-                    totalItem: data.TotalRows
-                }
-            };
-
-        $('#gridId').fanexGrid(gridOptions);
     }
+
+    var gridOptions =
+    {
+        columns: [
+            { HeaderText: "#", Width: 40, Name: "RowNum", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Group Headline", Width: 150, Name: "GroupHeadline", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Headline Type", Width: 100, Name: "HeadlineType", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Currency", Width: 80, Name: "Currency", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Super", Width: 200, Name: "Super", HeaderAlign: "center", CellAlign: "left", AllowTruncate: true },
+            { HeaderText: "Master", Width: 200, Name: "Master", HeaderAlign: "center", CellAlign: "left", AllowTruncate: true },
+            { HeaderText: "Agent", Width: 200, Name: "Agent", HeaderAlign: "center", CellAlign: "left", AllowTruncate: true },
+            { HeaderText: "Member", Width: 200, Name: "Member", HeaderAlign: "center", CellAlign: "left", AllowTruncate: true },
+            { HeaderText: "Ref No", Width: 150, Name: "RefNo", HeaderAlign: "center", CellAlign: "left", AllowTruncate: true }
+        ],
+        bodyRows: bodyRows,
+        gridExpandHeight: 200,
+        showTitle: true,
+        titleInfo: {
+            text: 'List of tickets with their headlines retrieved'
+        },
+        showPager: true,
+        customPager: true,
+        showDistinctRow: false,
+        pagerOption: {
+            itemsPerPage: parseInt($('#PageSize').val()),
+            currentPage: parseInt($('#PageIndex').val()) - 1,
+            itemsPerPageArray: [50, 100, 150, 200],
+            pagerSelectCallBack: reRenderAfterPaged,
+            totalItem: data.TotalRows
+        }
+    };
+
+    $('#gridId').fanexGrid(gridOptions);
 }
 
 function InitNotifyHeadlinesButton() {
@@ -187,8 +186,8 @@ function toggleColor(colorCss) {
 function reRenderAfterPaged(currentPageIndex, itemsPerPage) {
     $('#PageSize').val(itemsPerPage);
     $('#PageIndex').val(currentPageIndex + 1);
-    try { parent.BlockUI(); } catch (e) { }
-    form.attr('action', 'GetData');
+    parent.BlockUI();
+    form.attr('action', 'GetDataForPaging');
     form.submit();
 }
 
