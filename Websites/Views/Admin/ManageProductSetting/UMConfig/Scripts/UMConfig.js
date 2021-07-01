@@ -110,7 +110,7 @@ function OpenNewUMConfig() {
     $('#new-umconfig-popup').dialog({
         title: 'Add UMConfig',
         modal: true,
-        width: 1340,
+        width: 'auto',
         height: 800
     });
     RenderAllNewUMConfigs();
