@@ -247,7 +247,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
                     // Sync data to Casino
                     CasinoLibrary.SBAgent.Customer csCustomer = new CasinoLibrary.SBAgent.Customer();
                     csCustomer.SiteName = customer.SiteName;
-                    success = csCustomer.UpdateCustInfo(currentContext.TargetCustId, customer.FirstName, customer.LastName, customer.Phone, customer.MobilePhone, customer.Fax, customer.StatusSetting.Closed, customer.StatusSetting.Suspended, currentContext.IP, AppSession.CustID, AppSession.Username, 3);
+                    success = csCustomer.UpdateCustInfo(currentContext.TargetCustId, customer.FirstName, customer.LastName, customer.Phone, customer.MobilePhone, customer.Fax, currentContext.IP, AppSession.CustID, AppSession.Username, 3);
                 }
                 catch (ErrorException casinoEx)
                 {
