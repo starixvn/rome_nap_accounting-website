@@ -427,4 +427,9 @@
     <Setting Key="Acc_FinanceTransferMulDelTmpExcel" SpName="Acc_FinanceTransferMulDelTmpExcel" DbName="DBCUST.CustDB.bodbAdminNet" />
     <Setting Key="Acc_FinanceTransferMulInsTmpExcel" SpName="Acc_FinanceTransferMulInsTmpExcel" DbName="DBCUST.CustDB.bodbAdminNet" />
   </Function>
+
+  <Function Name="Admin - Dormant Account List">
+    <Setting Key="Acc_DormantAccountListByHeadline_Sel" SpName="Acc_DormantAccountListByHeadline_Sel" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_DormantDownlineListByHeadline_Sel" SpName="Acc_DormantDownlineListByHeadline_Sel" DbName="DBCUST.CustDB.bodbAdminNet" />
+  </Function>
 </Functions>
