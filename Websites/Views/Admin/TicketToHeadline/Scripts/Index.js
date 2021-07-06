@@ -1,10 +1,11 @@
 ﻿var form;
 var showNotifyHeadlinesButtonForProducts = [1, 3, 5, 27];
 $(document).ready(function () {
+
     ajax_form($('#mainForm'), function (result) {
         clearMessage('errMsg');
         RenderData(result);
-        try { parent.jQuery.unblockUI(); } catch (e) { }
+        parent.jQuery.unblockUI();
     });
 
     form = $('#mainForm');
@@ -13,35 +14,37 @@ $(document).ready(function () {
 
 function GetData() {
     if (!ValidateUploadFile()) {
-        return;
+        return false;
     }
 
     $('#PageSize').val(50);
     $('#PageIndex').val(1);
-    try { parent.BlockUI(); } catch (e) { }
+    parent.BlockUI();
     form.attr('action', 'GetData');
     form.submit();
+    $('#uploadFile').val('');
+    $('#imgExportExcel').show();
 }
 
 function NotifyHeadline() {
     if (confirm("The CRM service will send Notifications and create Feedbacks. Are you sure you want to do it?")) {
-        try { parent.BlockUI(); } catch (e) { }
+        parent.BlockUI();
         form.attr('action', 'NotifyHeadline');
         form.submit();
+        $('#uploadFile').val('');
+        $('#imgExportExcel').show();
     }
 }
 
 function GetExcelFile() {
-    if (!ValidateUploadFile()) {
-        return;
-    }
-
     $('#PageSize').val(50);
     $('#PageIndex').val(1);
-    try { parent.BlockUI(); } catch (e) { }
+    parent.BlockUI();
     form.attr('action', 'ExportExcel');
     form.submit();
-    try { parent.jQuery.unblockUI(); } catch (e) { }
+    $('#uploadFile').val('');
+    $('#imgExportExcel').show();
+    parent.jQuery.unblockUI();
 }
 
 function RenderData(data) {
@@ -123,41 +126,40 @@ function RenderData(data) {
             row.CssClass = currentBGColor;
             bodyRows.push(row);
         }
-
-
-        var gridOptions =
-            {
-                columns: [
-                    { HeaderText: "#", Width: 40, Name: "RowNum", HeaderAlign: "center", CellAlign: "center" },
-                    { HeaderText: "Group Headline", Width: 150, Name: "GroupHeadline", HeaderAlign: "center", CellAlign: "center" },
-                    { HeaderText: "Headline Type", Width: 100, Name: "HeadlineType", HeaderAlign: "center", CellAlign: "center" },
-                    { HeaderText: "Currency", Width: 80, Name: "Currency", HeaderAlign: "center", CellAlign: "center" },
-                    { HeaderText: "Super", Width: 200, Name: "Super", HeaderAlign: "center", CellAlign: "left", AllowTruncate: true },
-                    { HeaderText: "Master", Width: 200, Name: "Master", HeaderAlign: "center", CellAlign: "left", AllowTruncate: true },
-                    { HeaderText: "Agent", Width: 200, Name: "Agent", HeaderAlign: "center", CellAlign: "left", AllowTruncate: true },
-                    { HeaderText: "Member", Width: 200, Name: "Member", HeaderAlign: "center", CellAlign: "left", AllowTruncate: true },
-                    { HeaderText: "Ref No", Width: 150, Name: "RefNo", HeaderAlign: "center", CellAlign: "left", AllowTruncate: true }
-                ],
-                bodyRows: bodyRows,
-                gridExpandHeight: 200,
-                showTitle: true,
-                titleInfo: {
-                    text: 'List of tickets with their headlines retrieved'
-                },
-                showPager: true,
-                customPager: true,
-                showDistinctRow: false,
-                pagerOption: {
-                    itemsPerPage: parseInt($('#PageSize').val()),
-                    currentPage: parseInt($('#PageIndex').val()) - 1,
-                    itemsPerPageArray: [50, 100, 150, 200],
-                    pagerSelectCallBack: reRenderAfterPaged,
-                    totalItem: data.TotalRows
-                }
-            };
-
-        $('#gridId').fanexGrid(gridOptions);
     }
+
+    var gridOptions =
+    {
+        columns: [
+            { HeaderText: "#", Width: 40, Name: "RowNum", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Group Headline", Width: 150, Name: "GroupHeadline", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Headline Type", Width: 100, Name: "HeadlineType", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Currency", Width: 80, Name: "Currency", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Super", Width: 200, Name: "Super", HeaderAlign: "center", CellAlign: "left", AllowTruncate: true },
+            { HeaderText: "Master", Width: 200, Name: "Master", HeaderAlign: "center", CellAlign: "left", AllowTruncate: true },
+            { HeaderText: "Agent", Width: 200, Name: "Agent", HeaderAlign: "center", CellAlign: "left", AllowTruncate: true },
+            { HeaderText: "Member", Width: 200, Name: "Member", HeaderAlign: "center", CellAlign: "left", AllowTruncate: true },
+            { HeaderText: "Ref No", Width: 150, Name: "RefNo", HeaderAlign: "center", CellAlign: "left", AllowTruncate: true }
+        ],
+        bodyRows: bodyRows,
+        gridExpandHeight: 200,
+        showTitle: true,
+        titleInfo: {
+            text: 'List of tickets with their headlines retrieved'
+        },
+        showPager: true,
+        customPager: true,
+        showDistinctRow: false,
+        pagerOption: {
+            itemsPerPage: parseInt($('#PageSize').val()),
+            currentPage: parseInt($('#PageIndex').val()) - 1,
+            itemsPerPageArray: [50, 100, 150, 200],
+            pagerSelectCallBack: reRenderAfterPaged,
+            totalItem: data.TotalRows
+        }
+    };
+
+    $('#gridId').fanexGrid(gridOptions);
 }
 
 function InitNotifyHeadlinesButton() {
@@ -184,8 +186,8 @@ function toggleColor(colorCss) {
 function reRenderAfterPaged(currentPageIndex, itemsPerPage) {
     $('#PageSize').val(itemsPerPage);
     $('#PageIndex').val(currentPageIndex + 1);
-    try { parent.BlockUI(); } catch (e) { }
-    form.attr('action', 'GetData');
+    parent.BlockUI();
+    form.attr('action', 'GetDataForPaging');
     form.submit();
 }
 
