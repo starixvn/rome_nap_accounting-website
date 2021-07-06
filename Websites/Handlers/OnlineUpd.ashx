@@ -27,7 +27,7 @@ public class OnlineUpd : IHttpHandler, IRequiresSessionState
             var downTimeInfo = new Fanex.Tarus.Business.Implement.CommonService().GetDowntimeInfo();
             if (downTimeInfo.IsDowntime)
             {
-                context.Response.Write("<script type='text/javascript'>top.location.href='" + appPath + "UnderMainternance.aspx';</script>");
+                context.Response.Write("<script type='text/javascript'>top.location.href='" + appPath + "PreLogIn/Logout.ashx';</script>");
             }
             else
             {
@@ -41,6 +41,9 @@ public class OnlineUpd : IHttpHandler, IRequiresSessionState
                     //    DNAide.Core.CastAide.AsString(AppSession.AccId), AppSession.Username, DNAide.Core.CastAide.AsString(AppSession.RoleID));
                     //#endregion
                     context.Response.Write("<script type='text/javascript'>alert('Another session has been logged in or your session is expired. Forced to logout!');top.location.href='" + appPath + "PreLogIn/Logout.ashx';</script>");
+                } else if (onlineId == 0)
+                {
+                    context.Response.Write("<script type='text/javascript'>top.location.href='" + appPath + "PreLogIn/Logout.ashx';</script>");
                 }
                 //else
                 //{
