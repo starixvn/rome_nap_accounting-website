@@ -2487,8 +2487,8 @@
   <data name="enableVGaming" xml:space="preserve">
     <value>VGaming</value>
   </data>
-  <data name="OpenedMainTitle" xml:space="preserve">
-    <value>List of downlines' statuses after opening {0}.</value>
+  <data name="HeadlineExternalGroupMapping" xml:space="preserve">
+    <value>Headline/External Group Mapping</value>
   </data>
   <data name="OpenInfoMessage" xml:space="preserve">
     <value>&lt;p&gt;- When an account is closed, all his/her downlines will be closed as well.&lt;/p&gt;&lt;p&gt;- When an account is opened:&lt;/p&gt;&lt;p&gt;+ Only the downlines who are &lt;b&gt;indirectly &lt;/b&gt; closed by the upline will be opened. You can click on the number of affected downlines to view the list.&lt;/p&gt;&lt;p&gt;+ For the rest, their current statuses will not change. You can click on the number of unaffected downlines to view the list.&lt;/p&gt;&lt;p&gt;- Affected Downlines: list of users whose statuses are changed after their upline is opened.&lt;/p&gt;&lt;p&gt;- Unaffected Downlines: list of users whose statuses remain unchanged after their upline is opened.&lt;/p&gt;</value>

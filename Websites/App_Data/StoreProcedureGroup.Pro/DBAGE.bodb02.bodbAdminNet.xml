@@ -55,6 +55,9 @@
   <Function Name="Admin - SMA Management">
     <Setting Key="Acc_SiteSel_Credit" SpName="Acc_SiteSel_Credit" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
+  <Function Name="Admin - Headline/External Group Mapping">
+    <Setting Key="Acc_CurrencyList_Sel" SpName="Acc_CurrencyList_Sel" DbName="DBAGE.bodb02.bodbAdminNet" />
+  </Function>
   <Function Name="Finance - Cross Transfer">
     <Setting Key="Acc_customerSelExRate" SpName="Acc_customerSelExRate" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="Acc_ExchangeSelCodeforCrossTransfer" SpName="Acc_ExchangeSelCodeforCrossTransfer" DbName="DBAGE.bodb02.bodbAdminNet" />

@@ -159,7 +159,7 @@
     <Setting Key="Acc_CreditTermUpdAddToGroup" SpName="Acc_CreditTermUpdAddToGroup" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CreditTermUpdCustomer" SpName="Acc_CreditTermUpdCustomer" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CreditTermUpdIsViewReport" SpName="Acc_CreditTermUpdIsRptConsol" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CreditTermUpdRemoveFromGroup" SpName="Acc_CreditTermUpdRemoveFromGroup" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CreditTermUpdRemoveFromGroup" SpName="Acc_CreditTermUpdRemoveFromGroup_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CreditTermUpdSetGroupHeadline" SpName="Acc_CreditTermUpdSetGroupHeadline" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="User control">
@@ -425,5 +425,8 @@
     <Setting Key="Acc_FinanceCrossTransferMulInsTmpExcel" SpName="Acc_FinanceCrossTransferMulInsTmpExcel" DbName="DBCUST.CustDB.bodbAdminNet" />
     <Setting Key="Acc_FinanceTransferMulDelTmpExcel" SpName="Acc_FinanceTransferMulDelTmpExcel" DbName="DBCUST.CustDB.bodbAdminNet" />
     <Setting Key="Acc_FinanceTransferMulInsTmpExcel" SpName="Acc_FinanceTransferMulInsTmpExcel" DbName="DBCUST.CustDB.bodbAdminNet" />
+  </Function>
+  <Function Name="Admin - Headline/External Group Mapping">
+    <Setting Key="Acc_GroupHeadline_Sel" SpName="Acc_GroupHeadline_Sel_xtest" DbName="DBCUST.CustDB.bodbAdminNet" />
   </Function>
 </Functions>
