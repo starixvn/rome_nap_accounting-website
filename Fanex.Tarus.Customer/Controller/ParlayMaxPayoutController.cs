@@ -1,15 +1,17 @@
 ﻿namespace Fanex.Tarus.Customer.Controller
 {
+    using Fanex.CustomerSetting.Module.Core.Constants;
+    using Fanex.CustomerSetting.Module.Core.Services.Impl;
+    using Fanex.CustomerSetting.Module.Core.Services.Interface;
     using Fanex.Tarus.Customer.Business.ParlayMaxPayout;
     using Fanex.Tarus.Customer.Requests.ParlayMaxPayout;
-    using Fanex.Tarus.Infrastructure.Helper;
     using Fanex.Tarus.Web.Controllers;
-    using Sunplus.Accounting.Core.Common;
     using System.Web.Mvc;
 
     public class ParlayMaxPayoutController : BaseController
     {
         private readonly IParlayMaxPayoutService _parlayMaxPayoutService;
+        private readonly IServiceBase _serviceBase = new ServiceBase();
 
         public ParlayMaxPayoutController() : this(null) { }
 
@@ -22,6 +24,15 @@
 
         public JsonResult Check(ParlayMaxPayoutUpdateRequest request) => Json(_parlayMaxPayoutService.Check(request));
 
-        public JsonResult Update(ParlayMaxPayoutUpdateRequest request) => Json(_parlayMaxPayoutService.Update(request));
+        public JsonResult Update(ParlayMaxPayoutUpdateRequest request)
+        {
+            var checkUmResult = _serviceBase.CheckUM(request.CustId, NonDcsProduct.Sportsbook, "en-US");
+            if (!checkUmResult.IsSuccess)
+            {
+                return Json(checkUmResult);
+            }
+
+            return Json(_parlayMaxPayoutService.Update(request));
+        }
     }
 }
