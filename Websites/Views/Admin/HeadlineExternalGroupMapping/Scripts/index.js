@@ -237,7 +237,7 @@ function EditMapping(index) {
         $('#btnSubmitEdit').off();
         $('#btnSubmitEdit').click(function (event) {
             event.preventDefault();
-            UpdateMapping(selectedExternalGroups.split(',').sort().toString());
+            UpdateMapping(selectedExternalGroups.split(',').filter(group => group !== "").sort().toString());
         });
 
         try { parent.jQuery.unblockUI(); } catch (e) { }
