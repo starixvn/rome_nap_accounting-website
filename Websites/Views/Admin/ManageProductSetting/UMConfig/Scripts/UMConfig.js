@@ -5,12 +5,42 @@ var cachedSelectProductSetting;
 var cachedSelectSportSetting;
 var cachedSelectSettingType;
 var cachedNewUMConfigs;
+var cachedCreditSites = [];
+var cachedAllSites = [];
 
 function GetInitDataAndSearchAllUMConfig() {
     GetInitData();
 }
 
 function GetInitData() {
+    $.ajax({
+        url: 'GetCreditSites',
+        type: 'GET',
+        dataType: 'json',
+        success: function (result) {
+            if (result !== null && result.length > 0) {
+                cachedCreditSites = result;
+            }
+        },
+        error: function (xhr) {
+            alert('Internal Server Error.');
+        }
+    });
+
+    $.ajax({
+        url: 'GetAllSites',
+        type: 'GET',
+        dataType: 'json',
+        success: function (result) {
+            if (result !== null && result.length > 0) {
+                cachedAllSites = result;
+            }
+        },
+        error: function (xhr) {
+            alert('Internal Server Error.');
+        }
+    });
+
     $.ajax({
         url: 'GetProductSettingByFunction',
         type: 'GET',
@@ -110,7 +140,7 @@ function OpenNewUMConfig() {
     $('#new-umconfig-popup').dialog({
         title: 'Add UMConfig',
         modal: true,
-        width: 1340,
+        width: 'auto',
         height: 800
     });
     RenderAllNewUMConfigs();
@@ -132,6 +162,8 @@ function InitAddNewUMConfig() {
             functionTypeSelection.append(new Option('[' + item.FunctionType + '] ' + item.FunctionTypeName, item.FunctionType));
         });
     }
+
+    RenderSiteSelect();
 
     var UMProductName = $("#UMProductName");
     UMProductName.empty();
@@ -408,6 +440,27 @@ function RenderSettingTypeSelect() {
     }
 }
 
+function RenderSiteSelect() {
+    var siteSelection = $("#UMSite");
+    siteSelection.empty();
+    var functionType = $('#UMFunctionType').val();
+
+    if (functionType === "101") {
+        cachedAllSites.forEach(function (item, index) {
+            siteSelection.append(new Option(item.Text, item.Value));
+        });
+    } else {
+        cachedCreditSites.forEach(function (item, index) {
+            siteSelection.append(new Option(item.Text, item.Value));
+        });
+    }
+
+    siteSelection.select2({
+        minimumInputLength: 0,
+        width: '200px'
+    });
+}
+
 function EditUMConfig(index) {
     $('#UpdUMShowTime').datetimepicker('destroy');
     $('#UpdUMEndTime').datetimepicker('destroy');
@@ -560,6 +613,7 @@ $(document).ready(function () {
         var functionType = $('#UMFunctionType').val();
         cachedSelectFunctionSetting = cachedUMConfigSetting.find(element => element.FunctionType === functionType);
         RenderProductSelect();
+        RenderSiteSelect();
     });
 
     $("#UMProductName").change(function () {

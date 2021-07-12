@@ -4,15 +4,18 @@
     .icon-add-um {
         cursor: pointer;
         vertical-align: bottom;
-        margin-left: 10px;
+        margin-left: 5px;
         position: absolute;
         left: 0;
         bottom: 0;
     }
+    .setting-edit {
+        height: 27px;
+    }
 </style>
 <div id="new-umconfig-popup" style="display: none; min-height: 500px;">
     <div style="display: flex;">
-        <div class="filterBox" style="border: solid 1px #7C98A4;">
+        <div class="filterBox" style="border: solid 1px #7C98A4; float: left;">
             <div class="filterContent">
                 <div class="floatLeft w200">
                     <select id="UMFunctionType" class="setting-edit" title="FunctionType"></select>
@@ -32,11 +35,11 @@
                         <option value="" disabled selected>SettingType</option>
                     </select>
                 </div>
-                <div class="floatLeft w100">
-                    @Html.DropDownList("UMSite",  Model.UMSites, new { id = "UMSite", title = "Site" })
+                <div class="floatLeft w200">
+                    <select id="UMSite" class="setting-edit" title="Site"></select>
                 </div>
-                <div class="floatLeft w100">
-                    @Html.DropDownList("UMCurrency", Model.UMCurrencies, new { id = "UMCurrency", title = "Currency" })
+                <div class="floatLeft w200">
+                    @Html.DropDownList("UMCurrency", Model.UMCurrencies, new { id = "UMCurrency", title = "Currency", @class = "setting-edit" })
                 </div>
                 <div class="clear"></div>
                 <div class="floatLeft w200">
@@ -63,11 +66,11 @@
                 <div class="floatLeft" style="box-sizing: border-box; width: 100%;"><textarea id="UMUsername" rows="2" placeholder="Username" style="width:100%;"></textarea></div>
             </div>
         </div>
-        <div style="position: relative;">
+        <div style="position: relative; display:flex; width: 45px">
             <img alt="Add" title="Add" class="icon-add-um" src="../App_Themes/Images/icn_add.png" onclick="AddNewUMConfig()" />
         </div>
     </div>
-
+   
     <div style="clear: both"></div>
     <div id="newUMConfigErrMsg" style="margin-top: 20px; word-break: break-all;"></div>
     <div id="gridUMNewContainer" class="grid-container">
