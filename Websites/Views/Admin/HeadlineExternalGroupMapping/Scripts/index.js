@@ -85,12 +85,10 @@ function InsertMapping() {
             CurrentEffectiveDate: isNoExtraPtGroup? "" : $('#NewEffectiveFromId').val()
         },
         success: function (result) {
+
             if (result.ErrorCode === 0) {
                 result.ErrorMessage = 'The mapping has been successfully created.';
-            }
-
-            showAlertMessage('addNewErrMsg', result.ErrorMessage, result.ErrorCode == 0 ? 0 : 1);
-            if (result.ErrorCode == 0) {
+                showAlertMessage('addNewErrMsg', result.ErrorMessage, result.ErrorCode == 0 ? 0 : 1);
                 setTimeout(function () {
                     $('#add-new-group_mapping').dialog('close');
                     SearchMapping();
@@ -296,18 +294,17 @@ function UpdateMapping(externalGroups) {
         success: function (result) {
             if (result.ErrorCode === 0 && result.AffectedSupers === '') {
                 result.ErrorMessage = 'The mapping has been successfully updated.';
-            }
-
-            if (result.ErrorCode === 0 && result.AffectedSupers !== '') {
-                result.ErrorMessage = "The mapping has been successfully updated. The following supers are enqueued to be removed from their old External Group on 0:00 tomorrow: " + result.AffectedSupers;
-            }
-
-            showAlertMessage('editErrMsg', result.ErrorMessage, result.ErrorCode == 0 ? 0 : 1);
-            if (result.ErrorCode == 0) {
+                showAlertMessage('editErrMsg', result.ErrorMessage, 0);
                 setTimeout(function () {
                     $('#edit-group_mapping').dialog('close');
                     SearchMapping();
                 }, 3000);
+            } else if (result.ErrorCode === 0 && result.AffectedSupers !== '') {
+                result.ErrorMessage = "The mapping has been successfully updated. The following supers are enqueued to be removed from their old External Group on 0:00 tomorrow: " + result.AffectedSupers;
+                showAlertMessage('editErrMsg', result.ErrorMessage, 0);
+                SearchMapping();
+            } else {
+                showAlertMessage('editErrMsg', result.ErrorMessage, 1);
             }
         },
         error: function (xhr) {
