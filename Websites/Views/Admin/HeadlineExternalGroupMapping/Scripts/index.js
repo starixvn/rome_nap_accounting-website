@@ -415,7 +415,7 @@ function RenderGroups(type, headlines, externalGroups, primaryGroups) {
         }
         $('#GroupHeadlineId').html(html.join("")).select2({
             placeholder: "Please Select",
-            allowClear: true,
+            allowClear: false,
             width: "150px"
         });
         html = [];
@@ -435,7 +435,7 @@ function RenderGroups(type, headlines, externalGroups, primaryGroups) {
 
         $(divId).html(htmlString).select2({
             placeholder: "Please Select",
-            allowClear: true
+            allowClear: false
         });
         $(divId).on("change", function (e) { RenderPrimaryGroups(type, primaryGroups); });
     }
@@ -478,7 +478,7 @@ function RenderPrimaryGroups(type, primaryGroups) {
 
     $(primaryGroupDivId).select2({
         placeholder: "Please Select",
-        allowClear: true
+        allowClear: false
     });
 
     if (isNoExtraPtGroup) {
