@@ -1,0 +1,20 @@
+﻿.info-link {
+    color: blue;
+    cursor: pointer;
+}
+
+.status_planned {
+    color: green;
+}
+
+.status_running {
+    color: orange;
+}
+
+.status_completed {
+    color: black;
+}
+
+.status_aborted {
+    color: red;
+}
