@@ -139,19 +139,18 @@ function changeStatus(type, hasDownLine) {
                 if (yes && isallowupdatecredit == "1") {
                     ShowClosedPop(document.getElementById("ClosedStatus"));
                     return false;
-                }
-                else {
-                    if (yes && !confirm("Are you sure you want to change Closed status for this customer?")) return;
-                    if (typeof hasDownLine != 'undefined' && hasDownLine && yes) {
-                        if (!confirm('Check again!!!! Are you sure you want to close this customer and all downline?'))
-                            return;
+                } else {
+                    if (yes && hasDownLine && !confirm('Are you sure you want to change Closed status for this customer? Warning, all downlines will be closed as well!')) {
+                        return;
                     }
-
+                    if (yes && !hasDownLine && !confirm('Are you sure you want to change Closed status for this customer?')) {
+                        return;
+                    }
                     if (!yes && hasDownLine) {
                         showOpenCustomerPopup(GetCustId(), GetCustName());
                         return;
                     }
-                    if (!yes && !hasDownLine && !confirm("Are you sure you want to change Closed status for this customer?")) {
+                    if (!yes && !hasDownLine && !confirm("Are you sure you want to open this account?")) {
                         return;
                     }
                 }
@@ -233,14 +232,13 @@ function updateLimitPerIP(limitperid, isUpdateDownline) {
 }
 
 function updateCloseStatus(type, hasDownLine) {
-    if (hasDownLine) {
-        if (!confirm("Are you sure you want to change Close status for this customer? Warning, all downlines will be closed as well!"))
-            return;
+    if (hasDownLine && !confirm('Are you sure you want to change Closed status for this customer? Warning, all downlines will be closed as well!')) {
+        return;
     }
-    else {
-        if (!confirm("Are you sure you want to change Close status for this customer?"))
-            return;
+    if (!hasDownLine && !confirm("Are you sure you want to change Closed status for this customer?")) {
+        return;
     }
+
     var yes = false;
     var isUpdateDownline = false;
     var isClearCredit = false;
