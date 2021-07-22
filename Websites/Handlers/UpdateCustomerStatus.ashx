@@ -42,47 +42,14 @@ public class UpdateCustomerStatus : BaseHandler
 
             var customerRngSite = new Sunplus.Accounting.DataAccess.AdoNet.CustomerDAO().GetRNGSiteNameByCustId(_custid);
             string lockUpdate = "";
+            CSCustomerDetail custcs = Sunplus.Accounting.DataAccess.APIClient.IBCLibProvider.Instance.GetBasicCustInfoIBC(_custid, WebSettings.SettingStatus);
             switch (type)
             {
-                case "suspended":
-                    lockUpdate = string.Format(Resources.ErrorMsg.error_LockUpdateStatus, "SUSPENDED");
-                    CSCustomerDetail custcs = Sunplus.Accounting.DataAccess.APIClient.IBCLibProvider.Instance.GetBasicCustInfoIBC(_custid, WebSettings.SettingStatus);
-                    try
-                    {
-
-                        if (WebSettings.disableCS && custcs.CasinoSync)
-                        {
-                            context.Response.Write("<script type='text/javascript'>" +
-                                                   StringUtils.JS_Alert(StringUtils.ParseToJSMsg(lockUpdate)) + "</script>");
-                            return;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-                    }
+                case "suspended":                       
                     Sunplus.Accounting.DataAccess.IBCDLL.Accounting.CustomerUpdateStatus.CustomerUpdateSuspend(_accid, _custid, status, context.Request.UserHostAddress);
                     s = "parent.changeDisplayStatus('suspended','" + status + "');";
                     s += "var chksuspended = parent.parent.frames['centerFr'].document.getElementById('chkSuspended');";
-                    s += "if (chksuspended!=null) chksuspended.checked=" + ((status) ? "true;" : "false;");
-
-
-                    // Notes: please put this into a transaction with updating of IBC
-                    try // Casino cheat
-                    {
-                        if (custcs.CasinoSync)
-                        {
-                            CasinoManager.UpdateCustSuspend(_custid, status, context.Request.UserHostAddress, customerRngSite);
-                        }
-                    }
-                    catch (ErrorException casinoEx)
-                    {
-                        Sunplus.Accounting.Core.Extensions.LogExtensions.CasinoExceptionHandler(new Exception(casinoEx.Message, casinoEx));
-                    }
-                    catch (Exception ex)
-                    {
-                        Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-                    }
+                    s += "if (chksuspended!=null) chksuspended.checked=" + ((status) ? "true;" : "false;");                    
                     break;
                 case "Outright":
                     Sunplus.Accounting.DataAccess.IBCDLL.Accounting.CustomerUpdateStatus.CustomerUpdateDisableOutright(_accid, _custid, status, context.Request.UserHostAddress);
@@ -93,9 +60,7 @@ public class UpdateCustomerStatus : BaseHandler
                     s = "parent.changeDisplayStatus('special','" + status + "');";
                     break;
                 case "autompt":
-                    Sunplus.Accounting.DataAccess.IBCDLL.Accounting.CustomerUpdateStatus.CustomerUpdateAutoMPT(_accid, _custid, status, context.Request.UserHostAddress);
-
-                    custcs = Sunplus.Accounting.DataAccess.APIClient.IBCLibProvider.Instance.GetBasicCustInfoIBC(_custid, WebSettings.SettingStatus);
+                    Sunplus.Accounting.DataAccess.IBCDLL.Accounting.CustomerUpdateStatus.CustomerUpdateAutoMPT(_accid, _custid, status, context.Request.UserHostAddress);                  
                     if (custcs.CasinoSync)
                     {
                         var casinoSync = new Customer();
@@ -115,24 +80,7 @@ public class UpdateCustomerStatus : BaseHandler
                     s = "parent.document.getElementById('AllowAutoPT').innerHTML ='" + ((status) ? "Yes" : "No") + "';";
                     s += "parent.changeDisplayStatus();";
                     break;
-                case "closed":
-                    lockUpdate = string.Format(Resources.ErrorMsg.error_LockUpdateStatus, "CLOSED");
-                    custcs = Sunplus.Accounting.DataAccess.APIClient.IBCLibProvider.Instance.GetBasicCustInfoIBC(_custid, WebSettings.SettingStatus);
-                    try
-                    {
-
-                        if (WebSettings.disableCS && custcs.CasinoSync)
-                        {
-                            context.Response.Write("<script type='text/javascript'>" +
-                                                   StringUtils.JS_Alert(StringUtils.ParseToJSMsg(lockUpdate)) + "</script>");
-                            return;
-
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-                    }
+                case "closed":                           
                     Sunplus.Accounting.DataAccess.IBCDLL.Accounting.CustomerUpdateStatus.CustomerUpdateClosed(_accid, _custid, status, context.Request.UserHostAddress, custcs.RoleId);
                     if (context.Request["isClearCredit"] != null)
                     {

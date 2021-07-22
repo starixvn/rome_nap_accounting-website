@@ -274,6 +274,9 @@
     <value>There is no change to update.</value>
   </data>
   <data name="UpdateSuspendSuccess" xml:space="preserve">
-    <value>The selected customer and his affected donwlines have been successfully updated.</value>
+    <value>The statuses of the selected account and his/her downlines have been successfully updated.</value>
+  </data>
+  <data name="UpdateCloseSuccess" xml:space="preserve">
+    <value>The statuses of the selected account and his/her downlines have been successfully updated.</value>
   </data>
 </root>

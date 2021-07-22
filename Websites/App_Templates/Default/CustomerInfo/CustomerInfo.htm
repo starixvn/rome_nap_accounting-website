@@ -37,6 +37,7 @@
                     <div onmouseout="mclosetime()" onmouseover="mcancelclosetime()" id="InfoID">
                         <a onclick="OpenViewPT('{FullUserName}')">• PT</a><br />
                         <a onclick="OpenViewSuspend('{FullUserName}')">• Suspend</a><br />
+                        <a onclick="OpenViewClosed('{FullUserName}')">• Closed</a><br />
                     </div>
                 </div>
             </div>
@@ -357,6 +358,18 @@
                     <div class="col">
                         {ClosedLabel} {closedCustomer}
                     </div>
+                    <!--LockedAccessBlock-->
+                    <div class="col">
+                        <!--LockedAccessEnabled-->
+                        Locked Access
+                        <span class="chkchecked" {LockedAccessEnabledOnClick}></span>
+                        <!--/LockedAccessEnabled-->
+                        <!--LockedAccessDisabled-->
+                        <span style="color:#aaa">Locked Access</span>
+                        <span class="chkuncheck"></span>
+                        <!--/LockedAccessDisabled-->
+                    </div>
+                    <!--/LockedAccessBlock-->
                     <!--allDayBalTransferControl-->
                     {allDayBalTransferControl}
                     <!--/allDayBalTransferControl-->
@@ -479,10 +492,10 @@
                     <!--/EnableRNGLottery-->
                     <!--EnableSabaVirtualSports-->
                     <!--<div class="col">
-                        <span class="canchange" onclick="{SabaVirtualSportsOnClickFunction}">
-                            Saba Virtual Sports
-                        </span>
-                    </div>-->
+        <span class="canchange" onclick="{SabaVirtualSportsOnClickFunction}">
+            Saba Virtual Sports
+        </span>
+    </div>-->
                     <!--/EnableSabaVirtualSports-->
                     <!--EnableCashOut-->
                     <div class="col">

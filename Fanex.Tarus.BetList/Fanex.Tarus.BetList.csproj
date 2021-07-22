@@ -46,14 +46,14 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CasinoLibrary, Version=2.0.16.26931, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CasinoLibrary.2.0.16.26931\lib\net40\CasinoLibrary.dll</HintPath>
+    <Reference Include="CasinoLibrary, Version=2.1.0.18354, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CasinoLibrary.2.1.0.18354\lib\net40\CasinoLibrary.dll</HintPath>
     </Reference>
     <Reference Include="CasinoSetting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CasinoLibrary.2.0.16.26931\lib\net40\CasinoSetting.dll</HintPath>
+      <HintPath>..\packages\CasinoLibrary.2.1.0.18354\lib\net40\CasinoSetting.dll</HintPath>
     </Reference>
     <Reference Include="CasinoUtility, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CasinoLibrary.2.0.16.26931\lib\net40\CasinoUtility.dll</HintPath>
+      <HintPath>..\packages\CasinoLibrary.2.1.0.18354\lib\net40\CasinoUtility.dll</HintPath>
     </Reference>
     <Reference Include="CN88.BetList.Core, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\CN88.BetList.Core.1.0.1\lib\net461\CN88.BetList.Core.dll</HintPath>
@@ -101,7 +101,7 @@
       <HintPath>..\packages\Fanex.BetList.BBIN.1.0.0.0\lib\net40\Fanex.BetList.BBIN.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.BetTrade, Version=1.3.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Core.2.111.0.7\lib\net40\Fanex.BetList.BetTrade.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.Core.2.111.0.9\lib\net40\Fanex.BetList.BetTrade.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.BG, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.BG.1.0.0\lib\net40\Fanex.BetList.BG.dll</HintPath>
@@ -110,8 +110,8 @@
       <HintPath>..\packages\Fanex.BetList.ColossusBets.1.0.1.8\lib\net40\Fanex.BetList.ColossusBets.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.BetList.Core, Version=2.111.0.7, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Core.2.111.0.7\lib\net40\Fanex.BetList.Core.dll</HintPath>
+    <Reference Include="Fanex.BetList.Core, Version=2.111.0.9, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.Core.2.111.0.9\lib\net40\Fanex.BetList.Core.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.Core.RemotingRef, Version=1.1.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Core.RemotingRef.1.1.0.1\lib\net461\Fanex.BetList.Core.RemotingRef.dll</HintPath>
@@ -192,7 +192,7 @@
       <HintPath>..\packages\Fanex.RemotingRef.1.5.0\lib\net461\Fanex.RemotingRef.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Result.Core, Version=2.2.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core-NPOI.2.0.6.2.3.8.5\lib\net40\Fanex.Result.Core.dll</HintPath>
+      <HintPath>..\packages\Fanex.Result.Core-NPOI.2.0.6.2.3.8.6\lib\net40\Fanex.Result.Core.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Result.Core.AGCasino, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.AGCasino.1.0.1\lib\net40\Fanex.Result.Core.AGCasino.dll</HintPath>
@@ -201,8 +201,8 @@
     <Reference Include="Fanex.Result.Core.AllBetCasino, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.AllBetCasino.1.0.2\lib\net40\Fanex.Result.Core.AllBetCasino.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Result.Core.Base, Version=2.3.8.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core-NPOI.2.0.6.2.3.8.5\lib\net40\Fanex.Result.Core.Base.dll</HintPath>
+    <Reference Include="Fanex.Result.Core.Base, Version=2.3.8.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Result.Core-NPOI.2.0.6.2.3.8.6\lib\net40\Fanex.Result.Core.Base.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Result.Core.BBin, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.BBin.1.0.0.4\lib\net40\Fanex.Result.Core.BBin.dll</HintPath>
@@ -274,8 +274,8 @@
     <Reference Include="Fanex.Result.Core.SexyGaming, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.SexyGaming.1.0.0.1\lib\net40\Fanex.Result.Core.SexyGaming.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Result.Core.Sportsbook, Version=1.2.7.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core-Sportsbook.1.2.7.4\lib\net40\Fanex.Result.Core.Sportsbook.dll</HintPath>
+    <Reference Include="Fanex.Result.Core.Sportsbook, Version=1.2.7.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Result.Core-Sportsbook.1.2.7.5\lib\net40\Fanex.Result.Core.Sportsbook.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Result.Core.SportsLottery, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.SportsLottery.1.0.0\lib\net461\Fanex.Result.Core.SportsLottery.dll</HintPath>
@@ -303,7 +303,7 @@
       <HintPath>..\packages\Fanex.Voidbridge.BetDetail.2.0.1\lib\net461\Fanex.Voidbridge.BetDetail.dll</HintPath>
     </Reference>
     <Reference Include="HandHistoryLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CasinoLibrary.2.0.16.26931\lib\net40\HandHistoryLibrary.dll</HintPath>
+      <HintPath>..\packages\CasinoLibrary.2.1.0.18354\lib\net40\HandHistoryLibrary.dll</HintPath>
     </Reference>
     <Reference Include="IBCCrypt, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Crypt.1.1.0.0\lib\net40\IBCCrypt.dll</HintPath>
@@ -411,13 +411,13 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Accounting.Core, Version=2.0.4.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.Core.2.0.4.5\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
+      <HintPath>..\packages\Sunplus.Accounting.Core.2.0.4.6\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.3.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.3.1\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
+      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.3.4\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.Services, Version=1.0.1.8, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.Services.1.0.1.8\lib\net40\Sunplus.Accounting.Services.dll</HintPath>
+      <HintPath>..\packages\Sunplus.Accounting.Services.1.0.2\lib\net40\Sunplus.Accounting.Services.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Libraries.AOP, Version=1.0.4218.28561, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Libraries.AOP.1.0.4218.28561\lib\net40\Sunplus.Libraries.AOP.dll</HintPath>

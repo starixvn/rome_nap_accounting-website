@@ -1,0 +1,78 @@
+﻿@using Sunplus.Accounting.Core.Configurations;
+@model string
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Styles
+{
+    <link href="@Url.Content("~/App_Themes/PT.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/App_Themes/Public/table.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <style>
+        .disabled {
+            background-color: #dddddd;
+        }
+    </style>
+}
+@section Scripts
+{
+    <script src="@Url.Content("~/Views/Customer/CustomerSetting/OpenCustomer/Scripts/ClosedMatrix.js?v=" + WebSettings.Version)"></script>
+}
+<div class="main">
+    <div class="maincontent">
+        <table border="0" cellpadding="0px" cellspacing="0px">
+            <tbody>
+                <tr>
+                    <td class="maincontent_headerL"></td>
+                    <td class="maincontent_headerC">View Closed Status Info</td>
+                    <td class="maincontent_headerR"></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="maincontent_box">
+            <div>
+                <table cellpadding="2">
+                    <tbody>
+                        <tr>
+                            <td class="l b">Username: </td>
+                            <td class="l">
+                                <input type="text" id="txtUsername" value="@Model" />
+                            </td>
+                            <td>
+                                <input type="button" id="btnSubmit" value="Submit" class="btn">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="divHeader"></div>
+        </div>
+        <div class="bg_table" id="divcontainer">
+            <div id="err"></div>
+            <div id="sContent" style="overflow: auto; height: auto; max-height: 700px">
+                <div style="padding-left: 20px">
+                    <table id="tblCustInfo">
+                        <tbody></tbody>
+                    </table>
+                    <div style="padding-left: 20px;">
+                        <table id="tblClosedMatrix" class="layout_table ViewPTTable c">
+                            <thead>
+                                <tr class="ViewPTHeader b">
+                                    <th width="70">
+                                        <font color="#FF0000"></font>
+                                    </th>
+                                    <th width="40">Closed</th>
+                                    <th width="40">s</th>
+                                    <th width="40">m</th>
+                                    <th width="40">a</th>
+                                    <th width="40">p</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

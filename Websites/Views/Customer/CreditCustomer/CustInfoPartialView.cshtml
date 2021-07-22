@@ -66,8 +66,12 @@ else if ((Model.IsSuperSetting && Model.IsMemberSetting) || (Model.IsMasterSetti
             <td class="l" style="width:16%"><span data-bind="text: customer.fax"></span></td>
         </tr>
         <tr>
-            <td class="r" style="width:16%">@Resources.Language.lblStatusClosed</td>
-            <td class="l" style="width:16%"><input type="checkbox" onclick="" class="" name="chkClosed" id="chkClosed" data-bind="checked: customer.statusSetting.closed"></td>
+            <td class="r" style="width:16%; border-right: none;">
+                @*@Resources.Language.lblStatusClosed*@
+            </td>
+            <td class="l" style="width:16%; border-left: none;">
+                <input style="display: none;" type="checkbox" onclick="" class="" name="chkClosed" id="chkClosed" data-bind="checked: customer.statusSetting.closed">
+            </td>
             <td class="r" style="width:16%">Given Credit</td>
             <td class="l" style="width:16%"><span data-bind="text: customer.credit"></span></td>
             <td class="r" style="width:16%">@Resources.Language.lblGroup</td>
@@ -327,7 +331,7 @@ else
                 </tr>
                 if (Model.IsInsertPage == false)
                 {
-                    <tr>
+                    <tr style="display: none;">
                         <td class="l">
                             @Resources.Language.lblStatusClosed
                         </td>
@@ -361,11 +365,11 @@ else
                             <span name="lblGroup" id="lblGroup"></span>
                         }
                     </td>
-                    <td class="l">
-                        @Resources.Language.lblStatusClosed
+                    <td class="l" style="border-right: none;">
+                        @*@Resources.Language.lblStatusClosed*@
                     </td>
-                    <td class="l">
-                        <input type="checkbox" onclick="" class="" name="chkClosed" id="chkClosed"
+                    <td class="l" style="border-left: none;">
+                        <input style="display: none;" type="checkbox" onclick="" class="" name="chkClosed" id="chkClosed"
                                @if (Model.IsInsertPage) { @: data-bind="checked: customer.statusSetting.closed, disable: customer.statusSetting.closed"
                                } else { @: data-bind="checked: customer.statusSetting.closed"
                                }>
@@ -374,7 +378,7 @@ else
             }
             else if (Model.IsInsertPage == false)
             {
-                <tr>
+                <tr style="display: none;" >
                     <td class="l">
                         @Resources.Language.lblStatusClosed
                     </td>

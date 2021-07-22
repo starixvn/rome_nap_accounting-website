@@ -123,7 +123,7 @@ function changeStatus(type, hasDownLine) {
                 if (!confirm("Are you sure you want to change Special status for this customer?"))
                     return;
                 yes = ($('#special').attr('class').indexOf("chkuncheck") > -1);
-                break;          
+                break;
             case "autompt":
                 if (!confirm("Are you sure you want to change Auto MPT status for this customer?"))
                     return;
@@ -139,12 +139,19 @@ function changeStatus(type, hasDownLine) {
                 if (yes && isallowupdatecredit == "1") {
                     ShowClosedPop(document.getElementById("ClosedStatus"));
                     return false;
-                }
-                else {
-                    if (!confirm("Are you sure you want to change Closed status for this customer?")) return;
-                    if (typeof hasDownLine != 'undefined' && hasDownLine && yes) {
-                        if (!confirm('Check again!!!! Are you sure you want to close this customer and all downline?'))
-                            return;
+                } else {
+                    if (yes && hasDownLine && !confirm('Are you sure you want to change Closed status for this customer? Warning, all downlines will be closed as well!')) {
+                        return;
+                    }
+                    if (yes && !hasDownLine && !confirm('Are you sure you want to change Closed status for this customer?')) {
+                        return;
+                    }
+                    if (!yes && hasDownLine) {
+                        showOpenCustomerPopup(GetCustId(), GetCustName());
+                        return;
+                    }
+                    if (!yes && !hasDownLine && !confirm("Are you sure you want to open this account?")) {
+                        return;
                     }
                 }
                 break;
@@ -186,8 +193,34 @@ function changeStatus(type, hasDownLine) {
     }
 }
 
+function unlockAccess(confirmMessage) {
+    if (confirm(confirmMessage)) {
+        $.ajax({
+            type: "POST",
+            url: "CustomerSetting/UnlockAccess",
+            data: JSON.stringify({ custId: GetCustId() }),
+            contentType: "application/json; charset=utf-8",
+            success: function (result) {
+                !result.IsSuccess && alert(result.ErrorMessage);
+                changeDisplayStatus();
+            },
+            complete: function () {
+                if (PTUnBlockUI) PTUnBlockUI();
+            }
+        });
+    }
+}
+
 function updateUnsuspend(custId, userName) {
     parent.OpenNextPopup('update-unsuspend', 'UnsuspendCustomer/SingleSuspendView?custId=' + custId + '&userName=' + userName, 'Update Unsuspend Status for ' + obj('custName').value, 650, 450, true, false, window, 0, null, null);
+}
+
+function showOpenCustomerPopup(custId, userName) {
+    var popupId = 'open-customer',
+        url = 'OpenCustomer/SingleOpenCustomerView?custId=' + custId + '&userName=' + userName,
+        title = 'Open ' + obj('custName').value;
+
+    parent.OpenNextPopup(popupId, url, title, 650, 450, true, false, window, 0, null, null);
 }
 
 function updateLimitPerIP(limitperid, isUpdateDownline) {
@@ -199,14 +232,13 @@ function updateLimitPerIP(limitperid, isUpdateDownline) {
 }
 
 function updateCloseStatus(type, hasDownLine) {
-    if (hasDownLine) {
-        if (!confirm("Are you sure you want to change Close status for this customer? Warning, all downlines will be closed as well!"))
-            return;
+    if (hasDownLine && !confirm('Are you sure you want to change Closed status for this customer? Warning, all downlines will be closed as well!')) {
+        return;
     }
-    else {
-        if (!confirm("Are you sure you want to change Close status for this customer?"))
-            return;
+    if (!hasDownLine && !confirm("Are you sure you want to change Closed status for this customer?")) {
+        return;
     }
+
     var yes = false;
     var isUpdateDownline = false;
     var isClearCredit = false;
@@ -538,6 +570,12 @@ function OpenViewSuspend(username) {
     parent.resetMenu();
 }
 
+function OpenViewClosed(username) {
+    var url = 'OpenCustomer/ClosedMatrixView?username=' + username;
+    parent.gotoURL('centerFr', url);
+    parent.resetMenu();
+}
+
 function collapseInfo() {
     var curr = $("#btnupdownCustInfo");
     var obj = $("#custInfoDetal");
@@ -755,7 +793,7 @@ function ChangeAllDayBalTransfer(roleId) {
 function ChangeAllDayBalTransferOnMaster() {
     var checked = $("#AllDayBalTransferOnMaster").hasClass("chkchecked");
     if (confirm("Are you sure you want to change \"Auto Enable ADB on Master\" mode for " + GetCustName() + " ?")) {
-        UpdateAllDayBalTransferOnMaster({ custid: GetCustId(), status: !checked});
+        UpdateAllDayBalTransferOnMaster({ custid: GetCustId(), status: !checked });
     }
 }
 

@@ -222,9 +222,7 @@ public class UpdateCSSetting : BaseHandler
                      custInfo.Phone,
                      custInfo.MobilePhone,
                      custInfo.Currency,
-                     custInfo.Fax,
-                     custInfo.Closed,// closed
-                     custInfo.Suspend,// suspended
+                     custInfo.Fax,                    
                      false,// enablePT
                      maxWin,
                      maxLose,

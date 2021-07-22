@@ -302,7 +302,7 @@ span.cannotchangeinternal {
     height: 430px !important;
 }
 
-.closed-wrongPwdOthers, .closed-wrongPwdOthers td {
+.locked-falsePassword, .locked-falsePassword td {
     background-color: #ccc7ba !important;
 }
 
@@ -318,7 +318,7 @@ span.cannotchangeinternal {
     background-color: #f79646 !important;
 }
 
-.closed-wrongOTPSC, .closed-wrongOTPSC td {
+.locked-falseOTPSC, .locked-falseOTPSC td {
     background-color: #86c5e4 !important;
 }
 

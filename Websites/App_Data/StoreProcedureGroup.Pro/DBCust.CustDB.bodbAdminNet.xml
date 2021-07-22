@@ -63,6 +63,7 @@
   </Function>
   <Function Name="Customer Status">
     <Setting Key="Acc_CustomerUpdDisableKeno" SpName="Acc_Dep_CustomerUpdDisableKeno" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
+    <Setting Key="Acc_CustomerUpdLocked" SpName="Acc_CustomerUpdLocked" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
   </Function>
   <Function Name="RNG Casino">
     <Setting Key="Acc_UpdCSStatus" SpName="Acc_UpdCSStatus_Cust" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -119,6 +120,9 @@
     <Setting Key="Acc_Customer_SuspendInfoSel" SpName="Acc_Customer_SuspendInfoSel" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_Customer_SuspendInfoDetailSel" SpName="Acc_Customer_SuspendInfoDetailSel" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_Customer_SuspendInfoMatrixSel" SpName="Acc_Customer_SuspendInfoMatrixSel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_Customer_CloseInfoSel" SpName="Acc_Customer_CloseInfoSel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_Customer_CloseInfoDetailSel" SpName="Acc_Customer_CloseInfoDetailSel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_Customer_CloseInfoMatrixSel" SpName="Acc_Customer_CloseInfoMatrixSel" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Move Customer">
     <Setting Key="Acc_CustomerUpdMoveAgent" SpName="Acc_CustomerUpdMoveAgent" DbName="DBCust.CustDB.bodbAdminNet" />

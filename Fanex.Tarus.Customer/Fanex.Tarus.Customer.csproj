@@ -46,14 +46,14 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CasinoLibrary, Version=2.0.16.26931, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CasinoLibrary.2.0.16.26931\lib\net40\CasinoLibrary.dll</HintPath>
+    <Reference Include="CasinoLibrary, Version=2.1.0.18354, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CasinoLibrary.2.1.0.18354\lib\net40\CasinoLibrary.dll</HintPath>
     </Reference>
     <Reference Include="CasinoSetting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CasinoLibrary.2.0.16.26931\lib\net40\CasinoSetting.dll</HintPath>
+      <HintPath>..\packages\CasinoLibrary.2.1.0.18354\lib\net40\CasinoSetting.dll</HintPath>
     </Reference>
     <Reference Include="CasinoUtility, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CasinoLibrary.2.0.16.26931\lib\net40\CasinoUtility.dll</HintPath>
+      <HintPath>..\packages\CasinoLibrary.2.1.0.18354\lib\net40\CasinoUtility.dll</HintPath>
     </Reference>
     <Reference Include="Chatbot.Client, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Chatbot.Client.1.0.5\lib\net461\Chatbot.Client.dll</HintPath>
@@ -81,7 +81,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Casino, Version=2.0.4.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.Casino.2.0.4.9\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.Casino.2.0.5.2\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.2.0.5\lib\net461\Fanex.CustomerSetting.Module.Core.dll</HintPath>
@@ -110,7 +110,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.PTEngine, Version=1.0.6.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.PTEngine.1.0.6.2\lib\net40\Fanex.PTEngine.dll</HintPath>
+      <HintPath>..\packages\Fanex.PTEngine.1.0.6.3\lib\net40\Fanex.PTEngine.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.PTVirtualSports, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.PTVirtualSports.1.0.0.3\lib\net40\Fanex.PTVirtualSports.dll</HintPath>
@@ -129,7 +129,7 @@
       <HintPath>..\packages\Fanex.Tarus.Web.Controller.1.0.1.4\lib\net40\Fanex.Tarus.Web.Controllers.dll</HintPath>
     </Reference>
     <Reference Include="HandHistoryLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CasinoLibrary.2.0.16.26931\lib\net40\HandHistoryLibrary.dll</HintPath>
+      <HintPath>..\packages\CasinoLibrary.2.1.0.18354\lib\net40\HandHistoryLibrary.dll</HintPath>
     </Reference>
     <Reference Include="IBCCrypt, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Crypt.1.1.0.0\lib\net40\IBCCrypt.dll</HintPath>
@@ -230,16 +230,16 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Accounting.Core, Version=2.0.4.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.Core.2.0.4.5\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
+      <HintPath>..\packages\Sunplus.Accounting.Core.2.0.4.6\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.3.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.3.1\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
+      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.3.4\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.Entities, Version=2.0.1.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Accounting.Entities.2.0.1.4\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.Services, Version=1.0.1.8, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.Services.1.0.1.8\lib\net40\Sunplus.Accounting.Services.dll</HintPath>
+      <HintPath>..\packages\Sunplus.Accounting.Services.1.0.2\lib\net40\Sunplus.Accounting.Services.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Agent.Utilities, Version=3.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Agent.Utilities.3.0.2\lib\net461\Sunplus.Agent.Utilities.dll</HintPath>
@@ -332,6 +332,8 @@
     <Compile Include="Business\NG2\ISyncCustomerService.cs" />
     <Compile Include="Business\NG2\SyncCurrencyService.cs" />
     <Compile Include="Business\NG2\SyncCustomerService.cs" />
+    <Compile Include="Business\SettingCustomer\OpenCustomer\OpenCustomerService.cs" />
+    <Compile Include="Business\SettingCustomer\OpenCustomer\OpenCustomerServiceImpl.cs" />
     <Compile Include="Business\ViewPeriodsCN88\ViewPeriodsCN88Service.cs" />
     <Compile Include="Business\CreditCustomer\CustomerSettingService.cs" />
     <Compile Include="Business\CreditCustomer\ICustomerSettingService.cs" />
@@ -355,6 +357,7 @@
     <Compile Include="Business\VirtualRate\UpdateTypeConstants.cs" />
     <Compile Include="Business\VirtualRate\VirtualRateSectionService.cs" />
     <Compile Include="Business\VirtualRate\VirtualRateService.cs" />
+    <Compile Include="Constants\PagingConstants.cs" />
     <Compile Include="Constants\SelfDestructionPeriodConstants.cs" />
     <Compile Include="Constants\LiveTypeConstants.cs" />
     <Compile Include="Constants\LiveTypeNameConstants.cs" />
@@ -367,6 +370,7 @@
     <Compile Include="Controller\CN88Customer\MoveCN88SuperController.cs" />
     <Compile Include="Controller\CopyVRSettingController.cs" />
     <Compile Include="Controller\Player3rdController.cs" />
+    <Compile Include="Controller\Setting\OpenCustomerController.cs" />
     <Compile Include="Controller\ViewPeriodsCN88Controller.cs" />
     <Compile Include="Controller\ConfigureDirectAccountController.cs" />
     <Compile Include="Controller\CustomerLogin\CustomerOTPController.cs" />
@@ -420,6 +424,7 @@
     <Compile Include="Criteria\AutoTransferAll\SelectTransferAgentCriteria.cs" />
     <Compile Include="Criteria\CopyVRSetting\CopyVRSettingCriteria.cs" />
     <Compile Include="Criteria\CreditCustomer\SuperPrefixCriteria.cs" />
+    <Compile Include="Criteria\CreditCustomer\UnlockAccessCriteria.cs" />
     <Compile Include="Criteria\CreditCustomer\UpdateAllDayBalTransferOnMasterCriteria.cs" />
     <Compile Include="Criteria\CreditCustomer\UpdateAllDayBalTransferCriteria.cs" />
     <Compile Include="Criteria\CustomerLogin\RemoveOTPCriteria.cs" />
@@ -457,6 +462,9 @@
     <Compile Include="Criteria\ManageRobots2\CheckIsRobotCriteria.cs" />
     <Compile Include="Criteria\LicenseeSubsidiary\GetCopiedAccountsCriteria.cs" />
     <Compile Include="Criteria\NewLicensee\GetCurrenciesBySystemCriteria.cs" />
+    <Compile Include="Criteria\OpenCustomer\GetCloseInfoMatrixCriteria.cs" />
+    <Compile Include="Criteria\OpenCustomer\GetSingleOpenDownlinesInfoCriteria.cs" />
+    <Compile Include="Criteria\OpenCustomer\GetSingleOpenCustomerInfoCriteria.cs" />
     <Compile Include="Criteria\Player3rd\SearchPlayer3rdCriteria.cs" />
     <Compile Include="Criteria\ReplicateLicenseeSettings\DoReplicateLicenseeSettingsCriteria.cs" />
     <Compile Include="Criteria\Suspend\GetSuspendCustomerDetailInfoCriteria.cs" />
@@ -552,6 +560,8 @@
     <Compile Include="DataAccess\CustomerLogin\ICustomerSecurityCodeDataAccess.cs" />
     <Compile Include="DataAccess\SettingCustomer\AbnormalBetAccess.cs" />
     <Compile Include="DataAccess\SettingCustomer\IAbnormalBetAccess.cs" />
+    <Compile Include="DataAccess\SettingCustomer\OpenCustomer\OpenCustomerDataAccess.cs" />
+    <Compile Include="DataAccess\SettingCustomer\OpenCustomer\OpenCustomerDataAccessImpl.cs" />
     <Compile Include="DataAccess\SettingCustomer\Suspend\SuspendStatusService.cs" />
     <Compile Include="DataAccess\ViewPeriodsCN88\ViewPeriodsCN88DataAccess.cs" />
     <Compile Include="DataAccess\ViewPT\IViewPTRepository.cs" />
@@ -606,6 +616,8 @@
     <Compile Include="Entities\LockUnsuspend\LockUnsuspendResultEntity.cs" />
     <Compile Include="Entities\ManageRobots2\RobotStatus.cs" />
     <Compile Include="Entities\Player3rd\Player3rd.cs" />
+    <Compile Include="Entities\SettingCustomer\OpenCustomer\SingleOpenDownline.cs" />
+    <Compile Include="Entities\SettingCustomer\OpenCustomer\SingleOpenAffectedDownline.cs" />
     <Compile Include="Entities\SettingCustomer\Suspend\Multiple\MultipleUpdateViewModel.cs" />
     <Compile Include="Entities\SettingCustomer\Suspend\UnsuspendDownlineDetail.cs" />
     <Compile Include="Entities\SettingCustomer\Suspend\Single\SingleUpdateAffectedDownline.cs" />
@@ -632,6 +644,9 @@
     <Compile Include="Requests\CN88\MoveSuper\MoveSuperRequest.cs" />
     <Compile Include="Requests\CN88\UpdateCreditParam.cs" />
     <Compile Include="Requests\CreditCustomer\SuperPrefixQuery.cs" />
+    <Compile Include="Requests\CustomerSetting\OpenCustomer\GetSingleOpenDownlinesInfoQuery.cs" />
+    <Compile Include="Requests\CustomerSetting\OpenCustomer\GetSingleOpenCustomerInfoQuery.cs" />
+    <Compile Include="Requests\CustomerSetting\OpenCustomer\UpdateClosedStatusQuery.cs" />
     <Compile Include="Requests\CustomerSetting\Suspend\GetDownlineDetailInfoQuery.cs" />
     <Compile Include="Requests\CustomerSetting\Suspend\GetMultipleSuspendCustomerInfoQuery.cs" />
     <Compile Include="Requests\CustomerSetting\Suspend\GetSingleSuspendCustomerInfoQuery.cs" />
@@ -656,6 +671,9 @@
     <Compile Include="ViewModels\CN88\CreditRangeViewModel.cs" />
     <Compile Include="ViewModels\CN88\HeadlinePossessViewModel.cs" />
     <Compile Include="ViewModels\CN88\MoveSuper\MoveSuperViewModel.cs" />
+    <Compile Include="ViewModels\CustomerSetting\OpenCustomer\ClosedMatrixViewModel.cs" />
+    <Compile Include="ViewModels\CustomerSetting\OpenCustomer\SingleOpenDownlinesViewModel.cs" />
+    <Compile Include="ViewModels\CustomerSetting\OpenCustomer\SingleOpenCustomerViewModel.cs" />
     <Compile Include="ViewModels\CustomerSetting\Suspend\SingleUpdateViewModel.cs" />
     <Compile Include="ViewModels\CustomerSetting\Suspend\SuspendedCustomerDetailViewModel.cs" />
     <Compile Include="ViewModels\CustomerSetting\Suspend\SuspendMatrixViewModel.cs" />
@@ -742,7 +760,9 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Requests\ViewPeriodsCN88\" />

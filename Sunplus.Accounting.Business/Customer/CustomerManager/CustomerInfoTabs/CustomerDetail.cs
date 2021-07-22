@@ -46,6 +46,12 @@
                     statusTip = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblSuspendedAccount");
                     isOpenStatus = false;
                 }
+                else if (customerInfoViewModel.LockedAccess.IsLocked)
+                {
+                    statusClass = customerInfoViewModel.LockedAccess.ClassName + " ";
+                    statusTip = customerInfoViewModel.LockedAccess.Reason;
+                    isOpenStatus = false;
+                }
                 else
                 {
                     statusClass = " ";

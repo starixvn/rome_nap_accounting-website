@@ -7,6 +7,7 @@
 
 namespace Fanex.Tarus.Customer.Controller.Setting
 {
+    using System.Web.Mvc;
     using Criteria.CN88;
     using DataAccess;
     using Fanex.Tarus.Customer.CreditCustomer.Business;
@@ -18,7 +19,6 @@ namespace Fanex.Tarus.Customer.Controller.Setting
     using Security.Permission;
     using Sunplus.Accounting.Core.Common;
     using Sunplus.Accounting.Core.Helper;
-    using System.Web.Mvc;
     using ViewModels.CN88;
     using static Infrastructure.Common.Enumerations;
 
@@ -146,6 +146,14 @@ namespace Fanex.Tarus.Customer.Controller.Setting
             };
 
             return Json(_customerSetting.AddNewHeadline(criteria));
+        }
+
+        [HttpPost, CheckPermission(Permission = CheckPermissionAttribute.Auth.Host)]
+        public JsonResult UnlockAccess(int custId)
+        {
+            var result = _customerSetting.UnlockAccess(custId, AppSession.AccId, Utils.GetClientIP());
+
+            return Json(result, JsonRequestBehavior.DenyGet);
         }
     }
 }
