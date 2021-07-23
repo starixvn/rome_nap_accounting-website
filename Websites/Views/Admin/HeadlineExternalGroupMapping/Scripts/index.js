@@ -326,7 +326,7 @@ function DeleteMapping(index) {
     var newLine = "\r\n";
     var confirmMessage = 'Do you want to remove this mapping ?';
     confirmMessage += newLine;
-    confirmMessage += '- The current supers belonging to this headline/site/currency will be removed from their External Groups and related Sub External Groups.';
+    confirmMessage += '- The current supers belonging to this headline/site/currency will be removed from their External Groups existing in the mapping.';
     confirmMessage += newLine;
     confirmMessage += '- The upcoming supers added into this headline group will not be automatically added into external groups anymore.';
     if (confirm(confirmMessage)) {
