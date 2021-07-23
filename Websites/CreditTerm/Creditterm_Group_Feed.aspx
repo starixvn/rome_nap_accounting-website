@@ -54,7 +54,7 @@
     <div id="confirmAddUsername" class="hidden">
         <p>Beside adding super(s) into the selected Headline Group, the following super(s) will be added into External Group with Primary Extra PT Group indicated.</p>
         <p style="font-weight: bold;" id="headlineName"></p>
-        <div id="supermapping" class="freegrid"></div>
+        <div id="supermapping" class="freegrid grid_mapping"></div>
     </div>
 
     <script src="../js/jQuery/jquery-1.7.2.min.js" type="text/javascript"></script>

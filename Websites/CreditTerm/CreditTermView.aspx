@@ -12,6 +12,7 @@
     <link href="../js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css" rel="stylesheet" type="text/css" />
     <link href="../js/jQuery/GridScroller/gridscroller.css" rel="stylesheet" type="text/css" />
     <link href="../js/Controls/StyledCheckbox/form[1].css" rel="stylesheet" type="text/css" />
+    <link href="../App_Themes/CreditTerm/creditterm.css" rel="stylesheet" type="text/css" />
 </head>
 <body onload="Custom.init();">
     <div class="main">
@@ -42,7 +43,7 @@
             <div id="confirmUpdate" class="hidden">
                 <p>Beside adding super(s) into the selected Headline Group, the following super(s) will be added into External Group with Primary Extra PT Group indicated.</p>
                 <p id="headlineName"></p>
-                <div id="supermapping" class="freegrid"></div>
+                <div id="supermapping" class="freegrid grid_mapping"></div>
             </div>
         </div>
         <div>

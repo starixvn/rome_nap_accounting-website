@@ -181,7 +181,7 @@ function RenderMapping(data) {
     var gridOptions =
     {
         columns: [
-            { HeaderText: "Headline", Width: 100, Name: "Headline", HeaderAlign: "center", CellAlign: "left" },
+            { HeaderText: "Headline", Width: 150, Name: "Headline", HeaderAlign: "center", CellAlign: "left" },
             { HeaderText: "Site", Width: 100, Name: "Site", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "Currency", Width: 100, Name: "Currency", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "Normal Group", Width: 150, Name: "NormalGroup", HeaderAlign: "center", CellAlign: "left" },
