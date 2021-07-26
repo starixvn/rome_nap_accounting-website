@@ -365,16 +365,14 @@
         process: function () {
             if (this.qDiff.length > 0) {
                 var row = this.qDiff.shift(), ID = row.ID;
-                var idx = 0;
                 for (e in row.Diffs) {
                     var elms = row.Diffs[e];
-                    ++idx;
                     for (var i = 0; i < elms.length; i++) {
                         var item = elms[i];
 
                         for (var j = 0; j < row.Groups; j++) {
                             var tmpIdx = row.Groups > 1 ? j + 1 : j;
-                            var relClass = 'div.'.concat(ID).concat('-').concat(idx + tmpIdx).concat('-').concat(item.P);
+                            var relClass = 'div.'.concat(ID).concat('-').concat(item.DiffRowIndex + tmpIdx).concat('-').concat(item.P);
 
                             if ($(relClass).text().indexOf('<br />') == -1) {
                                 $(relClass).parent().css({ 'background-color': '#ffa' });

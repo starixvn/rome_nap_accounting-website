@@ -35,11 +35,11 @@ namespace Sunplus.Accounting.Business.LogDisplay
 
         private readonly NewCurrencyForLicenseeLogFormatter _newCurrencyForLicenseeLogFormatter;
 
-        private int[] listBetsettingActionIDLicensee = new int[] { 2012, 2013, 2019, 2036};
+        private int[] listBetsettingActionIDLicensee = new int[] { 2012, 2013, 2019, 2036 };
 
         public SettingManager(
-            ILogDisplayDAO logDAO, 
-            CN88LogFormatter cn88LogFormatter, 
+            ILogDisplayDAO logDAO,
+            CN88LogFormatter cn88LogFormatter,
             NewLicenseeLogFormatter newLicenseeLogFormatter,
             NewCurrencyForLicenseeLogFormatter newCurrencyForLicenseeLogFormatter)
         {
@@ -854,6 +854,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
                                 if (!elm.Value.Val.Equals(elm2.Val, StringComparison.CurrentCultureIgnoreCase))
                                 {
                                     isDiff = true;
+                                    elm2.DiffRowIndex = index;
                                     diffs.Add(elm2);
                                 }
                             }
