@@ -834,13 +834,11 @@ namespace Sunplus.Accounting.Business.LogDisplay
             {
                 trackingValue = trackingValue.Replace("\a", "");
                 trackingValue2 = trackingValue2.Replace("\a", "");
+                var (listVal, hasAttr) = _GetTrackingParams(trackingValue);
+                var (listVal2, hasAttr2) = _GetTrackingParams(trackingValue2);
 
-                var listVal = _GetTrackingParams(trackingValue);
-                var listVal2 = _GetTrackingParams(trackingValue2);
-
-                if (listVal.Count == listVal2.Count)
+                if (listVal.Count == listVal2.Count && hasAttr == hasAttr2)
                 {
-
                     var index = 0;
                     foreach (var elms in listVal)
                     {
@@ -854,7 +852,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
                                 if (!elm.Value.Val.Equals(elm2.Val, StringComparison.CurrentCultureIgnoreCase))
                                 {
                                     isDiff = true;
-                                    elm2.DiffRowIndex = index;
+                                    elm2.DiffRowIndex = index + (hasAttr ? 1 : 0);
                                     diffs.Add(elm2);
                                 }
                             }
@@ -877,10 +875,11 @@ namespace Sunplus.Accounting.Business.LogDisplay
             return result;
         }
 
-        private List<Dictionary<string, TrackingValue>> _GetTrackingParams(string trackingValue)
+        private (List<Dictionary<string, TrackingValue>> trackingParams, bool hasAttr) _GetTrackingParams(string trackingValue)
         {
             var result = new List<Dictionary<string, TrackingValue>>();
             var listVal = new Dictionary<string, TrackingValue>();
+            var hasAttr = false;
             try
             {
                 // parse XML
@@ -894,6 +893,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
                     }
 
                     listVal.Add(attr.Name.ToString(), LogFormater.FormatValue(attr));
+                    hasAttr = true;
                 }
 
                 result.Add(listVal);
@@ -931,7 +931,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
                 LogExtensions.ExceptionHandler(ex);
             }
 
-            return result;
+            return (result, hasAttr);
         }
 
         private int GetCustIDByUsername(string custName)
