@@ -5,35 +5,35 @@
     </div>
     <table style="line-height: 28px; margin-top: 10px; border-collapse: collapse;">
         <tr>
-            <td><label for="GroupHeadlineId">Group Headline</label></td>
+            <td class="w80"><label for="GroupHeadlineId">Group Headline</label></td>
             <td>
                 @Html.DropDownList("GroupHeadlineId", Model.Headlines, "Please select", new { id = "GroupHeadlineId", @class = "setting-edit" })
             </td>
         </tr>
         <tr>
-            <td><label for="SiteId">Site</label></td>
+            <td class="w80"><label for="SiteId">Site</label></td>
             <td>
                 @Html.DropDownList("SiteId", Model.Sites, "Please select", new { id = "SiteId", @class = "setting-edit" })
             </td>
         </tr>
         <tr>
-            <td><label for="CurrencyId">Currency</label></td>
+            <td class="w80"><label for="CurrencyId">Currency</label></td>
             <td>
                 @Html.DropDownList("CurrencyId", Model.Currencies, "Please select", new { id = "CurrencyId", @class = "setting-edit" })
             </td>
         </tr>
         <tr>
-            <td><label for="NewExternalGroupIds">External Group</label></td>
+            <td class="w80"><label for="NewExternalGroupIds">External Group</label></td>
             <td colspan="3">
                 <select id="NewExternalGroupIds" multiple="multiple" class="setting-edit" style="width: 360px;""></select>
             </td>
         </tr>
         <tr>
-            <td><label for="NewPrimaryGroupId">Primary Group</label></td>
+            <td class="w80"><label for="NewPrimaryGroupId">Primary Group    </label></td>
             <td>
                 <select id="NewPrimaryGroupId" class="setting-edit"></select>
             </td>
-            <td><label>Effective From</label></td>
+            <td class="w80"><label>Effective From</label></td>
             <td>
                 <input class="setting-calendar" id="NewEffectiveFromId" type="text" autocomplete="off" />
                 <input class="img-date-selector" onclick="return false;" alt="" id="NewEffectiveFromId_Trigger" title="Date selector"
