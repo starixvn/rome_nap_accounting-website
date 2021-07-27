@@ -218,9 +218,9 @@ function EditMapping(index) {
         var externalGroups = responses[1][0];
         var primaryGroups = responses[2][0];
         RenderGroups("Edit", headlines, externalGroups, primaryGroups);
-        var selectedExternalGroups = selectedMapping.ExtraPTGroup.split(',').map(group => group.trim()).join();
+        var selectedExternalGroups = selectedMapping.ExtraPTGroup.toUpperCase().split(',').map(group => group.trim()).join();
         if (selectedMapping.NormalGroup !== "") {
-            selectedExternalGroups = selectedMapping.NormalGroup.split(',').map(group => group.trim()).join() + ',' + selectedExternalGroups;
+            selectedExternalGroups = selectedMapping.NormalGroup.toUpperCase().split(',').map(group => group.trim()).join() + ',' + selectedExternalGroups;
         }
 
         $('#EditExternalGroupIds').val(selectedExternalGroups.split(',')).trigger('change');
@@ -228,7 +228,7 @@ function EditMapping(index) {
             selectedMapping.CurrentPrimaryExtraPTGroup = "No Extra PT";
         }
 
-        $('#EditPrimaryGroupId').val(selectedMapping.CurrentPrimaryExtraPTGroup.trim()).trigger('change');
+        $('#EditPrimaryGroupId').val(selectedMapping.CurrentPrimaryExtraPTGroup.toUpperCase().trim()).trigger('change');
 
         $('#EditEffectiveFromId').val(selectedMapping.CurrentEffectiveDate).trigger('change');
 
@@ -408,9 +408,9 @@ function RenderGroups(type, headlines, externalGroups, primaryGroups) {
     if (type === "New") {
         for (var i = 0; i < headLineLength; i++) {
             html.push('<option value="');
-            html.push(headlines[i].Value);
+            html.push(headlines[i].Value.trim());
             html.push('">');
-            html.push(headlines[i].Text);
+            html.push(headlines[i].Text.trim());
             html.push("</option>");
         }
         $('#GroupHeadlineId').html(html.join("")).select2({
@@ -422,7 +422,7 @@ function RenderGroups(type, headlines, externalGroups, primaryGroups) {
     }
 
     if (externalGroups.length > 0) {
-        var externalGroupsName = externalGroups.map(group => group.Value.toUpperCase());
+        var externalGroupsName = externalGroups.map(group => group.Value.trim().toUpperCase());
         for (var i = 0; i < groupLength; i++) {
             html.push('<option value="');
             html.push(externalGroupsName[i]);
@@ -452,8 +452,8 @@ function RenderPrimaryGroups(type, primaryGroups) {
     if (selectedExternalGroups === null) {
         selectedExternalGroups = [];
     }
-    selectedExternalGroups = selectedExternalGroups.map(name => name.toUpperCase());
-    var primaryGroupsName = primaryGroups.map(group => group.Value.toUpperCase());
+    selectedExternalGroups = selectedExternalGroups.map(name => name.trim().toUpperCase());
+    var primaryGroupsName = primaryGroups.map(group => group.Value.trim().toUpperCase());
 
     const filteredGroups = primaryGroupsName.filter(value => selectedExternalGroups.includes(value));
     var groupLength = filteredGroups ? filteredGroups.length : 0;
