@@ -17,7 +17,7 @@
     <link href="../js/jQuery/GridScroller/gridscroller.css" rel="stylesheet" type="text/css" />
 
 </head>
-<body>
+<body style="overflow: scroll !important;">
     <div class="main" style="width: 908px">
         <div class="maincontent">
             <table border="0" cellpadding="0px" cellspacing="0px" class="maincontent_header">
