@@ -11,7 +11,7 @@
 
         private readonly IRemotingRefService _remotingRefService;
 
-        private readonly List<string> listBetSettingKey= new List<string>() { "BS", "BS1", "BS2" };
+        private readonly List<string> listBetSettingKey = new List<string>() { "BS", "BS1", "BS2" };
 
         public NewLicenseeLogFormatter() : this(null)
         { }
@@ -55,6 +55,10 @@
                         {
                             detail.Vals.Add(node);
                         }
+                    }
+                    else if (ele.Name.LocalName.Equals("StakeLevelGroup"))
+                    {
+                        detail.Vals.Add(ParseStakeLevelGroup(ele));
                     }
                 }
             }
@@ -145,6 +149,29 @@
             }
 
             return trackingNodes;
+        }
+
+        private TrackingNode ParseStakeLevelGroup(XElement element)
+        {
+            var trackingNode = new TrackingNode();
+            trackingNode.N = "Stake Level Group";
+            trackingNode.Vals = new List<TrackingElement>();
+            trackingNode.Groups = new List<TrackingGroup>();
+            foreach (var product in element.Elements())
+            {
+                var productNode = new TrackingGroup();
+                productNode.N = _remotingRefService.GetResourceDataByRefIdAndResourceId("Product", product.Attribute("ID").Value, "en-US", null);
+                productNode.Vals = new List<TrackingElement>() {
+                    new TrackingElement(){
+                        N = "StakeLevelList",
+                        Val = product.Attribute("StakeLevelID").Value
+                    }
+                };
+
+                trackingNode.Groups.Add(productNode);
+            }
+
+            return trackingNode;
         }
 
         private string GetGroupName(string elementName, string Id)
