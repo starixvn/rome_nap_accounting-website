@@ -3,7 +3,6 @@ var selectedPrimaryGroup = "";
 var selectedMapping = null;
 var isNoExtraPtGroup = true;
 var requests = [];
-
 function InitForm() {
 
     $("#add-new-group_mapping").validate({
@@ -70,7 +69,8 @@ function InsertMapping() {
         return;
     }
 
-    try { parent.BlockUI(); } catch (e) { }
+    try { parent.BlockUI(); } catch (e) { BlockUI(); }
+    
 
     $.ajax({
         url: 'Insert',
@@ -99,7 +99,7 @@ function InsertMapping() {
             showAlertMessage('addNewErrMsg', 'Internal Server Error.', 1);
         },
         complete: function () {
-            parent.jQuery.unblockUI();
+            try { parent.jQuery.unblockUI(); } catch (e) { UnBlockUI(); }
         }
     });
 }
@@ -110,7 +110,7 @@ function AddNewMapping() {
     $('#SiteId').val("").trigger('change');
     $('#CurrencyId').val("").trigger('change');
     $('#NewEffectiveFromId').val(tomorrow);
-    try { parent.BlockUI(); } catch (e) { }
+    try { parent.BlockUI(); } catch (e) { BlockUI(); }
     $.when.apply(undefined, GetGroupsRequest()).then(function () {
         var responses = arguments;
         var headlines = responses[0][0];
@@ -120,7 +120,7 @@ function AddNewMapping() {
         $('#NewExternalGroupIds').val(null).trigger('change');
         $('#NewPrimaryGroupId').val("").trigger('change');
 
-        try { parent.jQuery.unblockUI(); } catch (e) { }
+        try { parent.jQuery.unblockUI(); } catch (e) { UnBlockUI(); }
     });
     
     $('#add-new-group_mapping').dialog({
@@ -132,8 +132,7 @@ function AddNewMapping() {
 }
 
 function SearchMapping() {
-    try { parent.BlockUI(); } catch (e) { }
-
+    try { parent.BlockUI(); } catch (e) { BlockUI(); }
     var isCheckAllPrimaryGroup = $('#ddlPrimaryGroups').multiSelect("getUncheckItems").length === 0;
     var primaryGroupsExtra = 'all';
     if (!isCheckAllPrimaryGroup) {
@@ -155,7 +154,7 @@ function SearchMapping() {
             RenderMapping(data);
         },
         complete: function () {
-            try { parent.jQuery.unblockUI(); } catch (e) { }
+            try { parent.jQuery.unblockUI(); } catch (e) { UnBlockUI(); }
         }
     });
 }
@@ -210,8 +209,7 @@ function EditMapping(index) {
     $('#EditSite').html(selectedMapping.Site);
     $('#EditCurrency').html(selectedMapping.Currency);
 
-
-    try { parent.BlockUI(); } catch (e) { }
+    try { parent.BlockUI(); } catch (e) { BlockUI(); }
     $.when.apply(undefined, GetGroupsRequest()).then(function () {
         var responses = arguments;
         var headlines = responses[0][0];
@@ -238,7 +236,7 @@ function EditMapping(index) {
             UpdateMapping(selectedExternalGroups.split(',').filter(group => group !== "").sort().toString());
         });
 
-        try { parent.jQuery.unblockUI(); } catch (e) { }
+        try { parent.jQuery.unblockUI(); } catch (e) { UnBlockUI(); }
     });
 
     $('#edit-group_mapping').dialog({
@@ -277,7 +275,7 @@ function UpdateMapping(externalGroups) {
         return;
     }
 
-    try { parent.BlockUI(); } catch (e) { }
+    try { parent.BlockUI(); } catch (e) { BlockUI(); }
 
     $.ajax({
         url: 'Update',
@@ -307,7 +305,7 @@ function UpdateMapping(externalGroups) {
             showAlertMessage('editErrMsg', 'Internal Server Error.', 1);
         },
         complete: function () {
-            try { parent.jQuery.unblockUI(); } catch (e) { }
+            try { parent.jQuery.unblockUI(); } catch (e) { UnBlockUI(); }
         }
     });
 }
@@ -330,7 +328,7 @@ function DeleteMapping(index) {
     confirmMessage += newLine;
     confirmMessage += '- The upcoming supers added into this headline group will not be automatically added into external groups anymore.';
     if (confirm(confirmMessage)) {
-        try { parent.BlockUI(); } catch (e) { }
+        try { parent.BlockUI(); } catch (e) { BlockUI(); }
         $.ajax({
             url: 'Delete',
             type: 'POST',
@@ -361,7 +359,7 @@ function DeleteMapping(index) {
                 alert('Internal Server Error.');
             },
             complete: function () {
-                try { parent.jQuery.unblockUI(); } catch (e) { }
+                try { parent.jQuery.unblockUI(); } catch (e) { UnBlockUI(); }
             }
         });
     }
@@ -541,6 +539,20 @@ function SetupCalendar(id, idMsg) {
     $('#' + id + '_Trigger').click(function () {
         jQuery('#' + id).datetimepicker('show');
     });
+}
+
+function BlockUI() {
+    $.blockUI({
+        message: '<img src="/Areas/Common/Views/Shared/Images/Loading.gif" />',
+        css: {
+            border: 'none',
+            backgroundColor: 'transparent'
+        }
+    });
+}
+
+function UnBlockUI() {
+    $.unblockUI(document);
 }
 
 $(function () {
