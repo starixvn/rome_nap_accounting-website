@@ -427,6 +427,11 @@
     <Setting Key="Acc_FinanceTransferMulInsTmpExcel" SpName="Acc_FinanceTransferMulInsTmpExcel" DbName="DBCUST.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Admin - Headline/External Group Mapping">
-    <Setting Key="Acc_GroupHeadline_Sel" SpName="Acc_GroupHeadline_Sel_xtest" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_GroupHeadline_Sel" SpName="Acc_GroupHeadline_Sel" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_ExternalGroupHeadline_Sel" SpName="Acc_ExternalGroupHeadline_Sel" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_ExternalGroupHeadline_Ins" SpName="Acc_ExternalGroupHeadline_Ins" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_ExternalGroupHeadline_Upd" SpName="Acc_ExternalGroupHeadline_Upd" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_ExternalGroupHeadline_Del" SpName="Acc_ExternalGroupHeadline_Del" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_ExternalGroupHeadline_MappingSuper" SpName="Acc_ExternalGroupHeadline_MappingSuper" DbName="DBCUST.CustDB.bodbAdminNet" />
   </Function>
 </Functions>

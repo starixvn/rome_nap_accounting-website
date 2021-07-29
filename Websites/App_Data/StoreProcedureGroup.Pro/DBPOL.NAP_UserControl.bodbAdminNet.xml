@@ -46,10 +46,4 @@
   <Function Name="External - Admin">
     <Setting Key="SelectGroupName" SpName="Acc_ExternalGroupSel" DbName="DBPOL.Nap_UserControl.bodbAdminNet" />
   </Function>
-  <Function Name="Admin - Headline/External Group Mapping">
-    <Setting Key="Acc_ExternalGroupHeadline_Sel" SpName="Acc_ExternalGroupHeadline_Sel" DbName="DBPOL.Nap_UserControl.bodbAdminNet" />
-    <Setting Key="Acc_ExternalGroupHeadline_Ins" SpName="Acc_ExternalGroupHeadline_Ins" DbName="DBPOL.Nap_UserControl.bodbAdminNet" />
-    <Setting Key="Acc_ExternalGroupHeadline_Upd" SpName="Acc_ExternalGroupHeadline_Upd" DbName="DBPOL.Nap_UserControl.bodbAdminNet" />
-    <Setting Key="Acc_ExternalGroupHeadline_Del" SpName="Acc_ExternalGroupHeadline_Del" DbName="DBPOL.Nap_UserControl.bodbAdminNet" />
-  </Function>
 </Functions>
