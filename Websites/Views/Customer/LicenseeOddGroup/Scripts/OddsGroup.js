@@ -12,11 +12,14 @@
         selectAllCheckbox,
         selectCheckboxes,
         copyIcon,
-        dropdownOddsGroups;
+        dropdownOddsGroups,
+        isActiveCheckboxes,
+        isCopyFrom1stRow;
 
 
     function initialize(reloadFunction) {
         dropdownOddsGroups = $(".dropdownOddsGroup");
+        isActiveCheckboxes = $(".isactive-checkbox");
         updateSection = $("#update_section");
         reviewSection = $("#review_section");
         reviewOddsGroupTable = reviewSection.find('#reviewoddsgroup_table tbody');
@@ -27,7 +30,8 @@
         dropdownOddsGroups.off("change")
             .on("change", dropdownOddsGroups_change);
         dropdownOddsGroups.select2();
-
+        isActiveCheckboxes.off("change")
+            .on("change", isActiveCheckboxes_change);
         nextButton = updateSection.find("#btnNext")
             .off("click")
             .on("click", nextButton_click);
@@ -56,32 +60,51 @@
     function dropdownOddsGroups_change() {
         var $this = $(this);
         $this.closest('tr').find('.isactive-checkbox').attr('disabled', $this.is(':disabled') || $this.val() === '');
+        if ($this.hasClass('first-row') && isCopyFrom1stRow)
+            copyAllValueFrom1stRow();
+    }
+
+    function isActiveCheckboxes_change() {
+        var $this = $(this);
+        if ($this.hasClass('first-row') && isCopyFrom1stRow)
+            copyAllValueFrom1stRow();
     }
 
     function copyIcon_click() {
         if (copyIcon.hasClass("icon-copy-setting-checked")) {
             copyIcon.removeClass("icon-copy-setting-checked");
-            updateSection.find('.select-checkbox, #select-all-checkbox').attr('disabled', false).attr('checked', false);
+            selectCheckboxes.attr('checked', false).attr('disabled', false);
+            selectAllCheckbox.attr('checked', false).attr('disabled', false);
+            isCopyFrom1stRow = false;
             revertFrom();
         } else {
             copyIcon.addClass("icon-copy-setting-checked");
-            selectCheckboxes.attr('checked', true);
-            selectAllCheckbox.attr('checked', true);
-            updateSection.find('input, select').attr('disabled', true);
-            var $firstRow = oddsGroupTableRows.eq(0);
-            oddsGroupTableRows.slice(1).each(function () {
-                var $this = $(this);
-                $('.dropdownOddsGroup', $this).val($('.dropdownOddsGroup', $firstRow).val());
-                $('.dropdownOddsGroup', $this).trigger('change');
-                $('.isactive-checkbox', $this).attr('checked', $('.isactive-checkbox', $firstRow).is(':checked'));
-                $('.select-checkbox', $this).attr('checked', true);
-            });
+            selectCheckboxes.attr('checked', true).attr('disabled', true);
+            selectAllCheckbox.attr('checked', true).attr('disabled', true);
+            dropdownOddsGroups.not('.first-row').attr('disabled', true);
+            isActiveCheckboxes.not('.first-row').attr('disabled', true);
+            dropdownOddsGroups.filter('.first-row').attr('disabled', false);
+            isActiveCheckboxes.filter('.first-row').attr('disabled', false);
+            isCopyFrom1stRow = true;
+            copyAllValueFrom1stRow();
         }
+    }
+
+    function copyAllValueFrom1stRow() {
+        var $firstRow = oddsGroupTableRows.eq(0);
+        oddsGroupTableRows.slice(1).each(function () {
+            var $this = $(this);
+            $('.dropdownOddsGroup', $this).val($('.dropdownOddsGroup', $firstRow).val());
+            $('.dropdownOddsGroup', $this).trigger('change');
+            $('.isactive-checkbox', $this).attr('checked', $('.isactive-checkbox', $firstRow).is(':checked'));
+            $('.select-checkbox', $this).attr('checked', true);
+        });
     }
 
     function revertFrom() {
         oddsGroupTableRows.each(function () {
             var $this = $(this);
+            $this.find('.select-checkbox').attr('checked', false).change();
             $this.find('.dropdownOddsGroup').val($this.attr('data-oddsgroup')).change();
             $this.find('.isactive-checkbox').attr('checked', $this.attr('data-isactive') === 'True');
         });
@@ -111,7 +134,7 @@
         for (var i = 0, max = oddsGroupTableRows.length; i < max; i++) {
             var $currentRow = $(oddsGroupTableRows[i]);
             var isSelected = $currentRow.find('.select-checkbox:checked').length === 1;
-            if (isSelected) {
+            //if (isSelected) {
                 var origOddsGroup = $currentRow.attr('data-oddsgroup');
                 var origIsActive = $currentRow.attr('data-isactive') === 'True' ? true : false;
                 var newOddsGroup = $currentRow.find('.dropdownOddsGroup').val();
@@ -124,7 +147,7 @@
                     IsActive: newIsActive,
                     Updated: origOddsGroup !== newOddsGroup || origIsActive !== newIsActive
                 });
-            }
+            //}
         }
 
         return changedOddsGroups;
@@ -134,7 +157,7 @@
         var hasChanged = false;
         for (var i = 0, max = changedOddsGroups.length; i < max; i++) {
             var oddsGroup = changedOddsGroups[i];
-            if (oddsGroup.OddsGroup === '') {
+            if (oddsGroup.Updated && oddsGroup.OddsGroup === '') {
                 common.showMessage(1, 'Invalid odds group, please check again');
                 return false;
             }
@@ -155,7 +178,7 @@
         common.blockUI();
         common.hideMessage();
         var changedOddsGroups = getChangedOddsGroup();
-        if(validateChangedOddsGroup(changedOddsGroups))
+        if (validateChangedOddsGroup(changedOddsGroups))
             showReviewForm(changedOddsGroups);
 
         common.unblockUI();
@@ -173,7 +196,7 @@
             html.push(oddsGroup.OperatorId);
             html.push('</td>');
             html.push('<td class="r">');
-            html.push(oddsGroup.OddsGroup);
+            html.push(oddsGroup.OddsGroup === '' ? 'N/A' : oddsGroup.OddsGroup);
             html.push('</td>');
             html.push('<td class="r">');
             html.push(oddsGroup.IsActive ? 'Yes' : 'No');
@@ -230,7 +253,7 @@
                 dataType: "json",
                 data: JSON.stringify({ CustId: item.CustId, OddsGroup: item.OddsGroup, IsActive: item.IsActive, ApplyExistingMember: applyExistedMem }),
                 success: function (data) {
-                    messageDiv.removeClass().html(data.ErrorCode === 0 ? 'Updated Successfully.' : data.ErrorMessage);
+                    messageDiv.removeClass().html(data.ErrorCode === 0 ? 'Update Odds Group Setting successfully.' : data.ErrorMessage);
                     messageDiv.addClass(data.ErrorCode === 0 ? "msgcorrect" : "msgerror");
                 },
                 error: function (jqxhr) {

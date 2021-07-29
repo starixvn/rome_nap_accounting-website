@@ -38,7 +38,7 @@
     function getAgentList(superId) {
         common.blockUI();
         $.post(
-            rootUrl + "LicenseeDcsSetting/Agents",
+            rootUrl + "LicenseeOddsGroup/Agents",
             { superId: superId },
             renderSelectAgentList)
             .always(common.unblockUI);

@@ -13,9 +13,8 @@ new SelectListItem(){ Text = "e", Value = "e"},
 new SelectListItem(){ Text = "f", Value = "f"},
 new SelectListItem(){ Text = "N/A", Value = null}
 };
+    bool isFirst = true;
 }
-
-
 
 <div id="update_section">
     <label>
@@ -49,12 +48,12 @@ new SelectListItem(){ Text = "N/A", Value = null}
             {
                 <tr data-custid="@item.CustId" data-username="@item.UserName" data-operatorid="@item.OperatorId" data-oddsgroup="@item.OddsGroup" data-isactive="@item.IsActive">
                     <td>
-                        <input type="checkbox" class="select-checkbox" />
+                        <input type="checkbox" class="select-checkbox @(isFirst ? "first-row" : string.Empty)" />
                     </td>
                     <td class="l">@item.UserName</td>
                     <td class="l">@item.OperatorId</td>
                     <td class="l w300">
-                        <select id="dropdownOddsGroup_@item.CustId" class="dropdownOddsGroup" disabled>
+                        <select id="dropdownOddsGroup_@item.CustId" class="dropdownOddsGroup @(isFirst ? "first-row" : string.Empty)" disabled>
                             <option value="a" @(item.OddsGroup.Equals("a") ? "selected" : string.Empty)>a</option>
                             <option value="b" @(item.OddsGroup.Equals("b") ? "selected" : string.Empty)>b</option>
                             <option value="c" @(item.OddsGroup.Equals("c") ? "selected" : string.Empty)>c</option>
@@ -65,9 +64,11 @@ new SelectListItem(){ Text = "N/A", Value = null}
                         </select>
                     </td>
                     <td>
-                        <input type="checkbox" class="isactive-checkbox" id="chkIsActive_@item.CustId" @(item.IsActive ? "checked" : string.Empty) disabled />
+                        <input type="checkbox" class="isactive-checkbox @(isFirst ? "first-row" : string.Empty)" id="chkIsActive_@item.CustId" @(item.IsActive ? "checked" : string.Empty) disabled />
                     </td>
                 </tr>
+
+                isFirst = false;
             }
         </tbody>
     </table>

@@ -70,5 +70,9 @@ namespace Fanex.Tarus.Customer.Controller
 
             return Json(_settingOddsGroupService.UpdateOddsGroup(criteria));
         }
+
+        [HttpPost]
+        public ActionResult Agents(int superId)
+            => Json(_settingOddsGroupService.GetAgents(superId));
     }
 }
