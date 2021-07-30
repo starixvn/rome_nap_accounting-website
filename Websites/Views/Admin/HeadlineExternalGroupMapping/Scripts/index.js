@@ -106,7 +106,6 @@ function InsertMapping() {
 
 function AddNewMapping() {
     $('#addNewErrMsg').html('');
-    $('#GroupHeadlineId').val("").trigger('change');
     $('#SiteId').val("").trigger('change');
     $('#CurrencyId').val("").trigger('change');
     $('#NewEffectiveFromId').val(tomorrow);
@@ -117,6 +116,7 @@ function AddNewMapping() {
         var externalGroups = responses[1][0];
         var primaryGroups = responses[2][0];
         RenderGroups("New", headlines, externalGroups, primaryGroups);
+        $('#GroupHeadlineId').val("").trigger('change');
         $('#NewExternalGroupIds').val(null).trigger('change');
         $('#NewPrimaryGroupId').val("").trigger('change');
 
@@ -143,7 +143,7 @@ function SearchMapping() {
         url: 'Select',
         type: 'POST',
         data: {
-            HeadlineName: $('#txtHeadline').val(),
+            HeadlineName: $('#txtHeadline').val().trim(),
             SiteIds: $('#ddlSites').multiSelect("getCheckedItems").join(),
             ExchangeIds: $('#ddlCurrency').multiSelect("getCheckedItems").join(),
             ExternalGroups: $('#ddlExternalGroups').multiSelect("getCheckedItems").join(),
@@ -404,6 +404,7 @@ function RenderGroups(type, headlines, externalGroups, primaryGroups) {
 
     var html = [];
     if (type === "New") {
+        html.push('<option value>Please select</option>');
         for (var i = 0; i < headLineLength; i++) {
             html.push('<option value="');
             html.push(headlines[i].Value.trim());
