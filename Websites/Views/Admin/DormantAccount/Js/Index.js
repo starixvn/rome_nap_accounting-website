@@ -43,6 +43,7 @@
 
     var gridOptions = {};
     var firstRequest = {};
+    var lastRequest = {};
     var index = 0;
 
     function changeModeFilter(value) {
@@ -265,6 +266,7 @@
                     assignNoInfo();
                     return;
                 }
+                lastRequest = rs.Request;
                 searchUsernameFromFilter = rs.SearchUsernameFromFilter;
                 var accountGroupBy = [];
                 if (SearchByDateType(formData)) {
@@ -764,9 +766,11 @@
         pageIndex = page_index + 1;
         pageSize = _items_per_page;
 
-        firstRequest.pageIndex = pageIndex;
-        firstRequest.pageSize = pageSize;
-        getDormantAccountList(firstRequest);
+        lastRequest.PageIndex = pageIndex;
+        lastRequest.PageSize = pageSize;
+        lastRequest.FromDate = lastRequest.FromDateText;
+        lastRequest.ToDate = lastRequest.ToDateText;
+        getDormantAccountList(lastRequest);
 
         return false;
     }
@@ -820,8 +824,9 @@
         });
 
         $exportExcel.click(function () {
-            var formData = getParams();
-            var url = window.rootUrl + linkExportExcel + "?" + $.param(formData);
+            lastRequest.FromDate = lastRequest.FromDateText;
+            lastRequest.ToDate = lastRequest.ToDateText;
+            var url = window.rootUrl + linkExportExcel + "?" + $.param(lastRequest);
 
             $("#frameExportExcel").attr("src", url);
         });
