@@ -145,7 +145,7 @@
                     OperatorId: $currentRow.attr('data-operatorid'),
                     OddsGroup: newOddsGroup,
                     IsActive: newIsActive,
-                    Updated: origOddsGroup !== newOddsGroup || origIsActive !== newIsActive
+                    Updated: isSelected && (origOddsGroup !== newOddsGroup || origIsActive !== newIsActive)
                 });
             //}
         }

@@ -296,9 +296,9 @@
     <Setting Key="Acc_Dep_CustSetting_StakeLevelUpd" SpName="Acc_Dep_CustSetting_StakeLevelUpd" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Licensee Odds Group">
-    <Setting Key="Acc_Dep_LicenseeSelAgentList" SpName="Acc_Dep_LicenseeSelAgentList_xpre" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_Dep_LicenseeOddsGroupSelByAgent" SpName="Acc_Dep_LicenseeOddsGroupSelByAgent_xpre" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_Dep_LicenseeOddsGroupUpd" SpName="Acc_Dep_LicenseeOddsGroupUpd_xpre" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_Dep_LicenseeSelAgentList" SpName="Acc_Dep_LicenseeSelAgentList" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_Dep_LicenseeOddsGroupSelByAgent" SpName="Acc_Dep_LicenseeOddsGroupSelByAgent" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_Dep_LicenseeOddsGroupUpd" SpName="Acc_Dep_LicenseeOddsGroupUpd" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Product Status Setting">
     <Setting Key="Acc_AdminSelStatusByProductId" SpName="Acc_AdminSelStatusByProductID" DbName="DBCust.CustDB.bodbAdminNet" />
