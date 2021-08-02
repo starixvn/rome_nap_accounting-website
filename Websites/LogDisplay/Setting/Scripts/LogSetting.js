@@ -171,8 +171,8 @@
                     trShow = '';
                     //if (tracking.Level != 3) {
                     tpl_tracking += '<tr class="headerDetailNormal">'
-			                        + '<td colspan="6" onclick="LogPT.showHide(\'' + rel + '\')"  style="cursor: pointer"><span style="float: left;">' + node_name + '</span>'
-		                        + '</td></tr>';
+                        + '<td colspan="6" onclick="LogPT.showHide(\'' + rel + '\')"  style="cursor: pointer"><span style="float: left;">' + node_name + '</span>'
+                        + '</td></tr>';
                     //}
                     // fetch vals
                     if (node.Vals != null && node.Vals.length > 0) {
@@ -365,28 +365,18 @@
         process: function () {
             if (this.qDiff.length > 0) {
                 var row = this.qDiff.shift(), ID = row.ID;
-                var idx = 0;
                 for (e in row.Diffs) {
                     var elms = row.Diffs[e];
-                    ++idx;
                     for (var i = 0; i < elms.length; i++) {
                         var item = elms[i];
+                        var relClass = 'div.'.concat(ID).concat('-').concat(item.DiffRowIndex).concat('-').concat(item.P);
 
-                        for (var j = 0; j < row.Groups; j++) {
-                            var tmpIdx = row.Groups > 1 ? j + 1 : j;
-                            var relClass = 'div.'.concat(ID).concat('-').concat(idx + tmpIdx).concat('-').concat(item.P);
+                        if ($(relClass).text().indexOf('<br />') == -1) {
+                            $(relClass).parent().css({ 'background-color': '#ffa' });
+                            $(relClass).css({ color: 'red' });
+                            var val_diff = $.trim(item.Val).length == 0 ? '_' : $.trim(item.Val);
 
-                            if ($(relClass).text().indexOf('<br />') == -1) {
-                                $(relClass).parent().css({ 'background-color': '#ffa' });
-                                $(relClass).css({ color: 'red' });
-                                var val_diff = $.trim(item.Val).length == 0 ? '_' : $.trim(item.Val);
-
-                                $(relClass).append('<br /><font color="blue">' + val_diff + '</font>');
-
-                                if ($(relClass).parent()[0]) {
-                                    break;
-                                }
-                            }
+                            $(relClass).append('<br /><font color="blue">' + val_diff + '</font>');
                         }
                     }
                 }
