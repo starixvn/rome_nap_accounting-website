@@ -544,7 +544,7 @@ function SetupCalendar(id, idMsg) {
 
 function BlockUI() {
     $.blockUI({
-        message: '<img src="/Areas/Common/Views/Shared/Images/Loading.gif" />',
+        message: '<img src="' + window.rootUrl +'/Areas/Common/Views/Shared/Images/Loading.gif" />',
         css: {
             border: 'none',
             backgroundColor: 'transparent'
