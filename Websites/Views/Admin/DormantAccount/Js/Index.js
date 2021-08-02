@@ -1,8 +1,11 @@
 ﻿(function ($) {
     "use strict";
+    var drilldownByDateType = "DormantAccount/DrillDownByDateType";
     var getDormantByUsernameUrl = "DormantAccount/GetByUsername";
     var getDormantByDateTypeUrl = "DormantAccount/GetByDateType";
-    var linkExportExcel = 'DormantAccount/ExportExcel';
+    var exportDrilldownByDateType = "DormantAccount/ExportExcelByDrilldown";
+    var exportGetDormantByUsernameUrl = "DormantAccount/ExportExcelByUsername";
+    var exportGetDormantByDateTypeUrl = "DormantAccount/ExportExcelByDateType";
 
     var $fromDate = $('#txtFromDate'),
         $toDate = $('#txtToDate'),
@@ -31,7 +34,7 @@
         colDateWidth = 80;
 
     var pageIndex = 1,
-        pageSize = 5,
+        pageSize = 100,
         totalItems = 0,
         accountList = [];
 
@@ -44,6 +47,8 @@
     var gridOptions = {};
     var firstRequest = {};
     var lastRequest = {};
+    var lastUrl = "";
+
     var index = 0;
 
     function changeModeFilter(value) {
@@ -150,13 +155,13 @@
     function getParams() {
         var notAssign = $notAssign.is(":checked");
         var headlineType = $headlineType.val();
-        var headlineGroup = $headlineGroup.val();
+        var headlineGroup = $headlineGroup.val().toLowerCase().trim();
         if (notAssign == true) {
             headlineType = 0;
             headlineGroup = "";
         }
 
-        var username = $username.val().toLowerCase();
+        var username = $username.val().toLowerCase().trim();
         var level = $("#ddlLevel").multiSelect("getCheckedItems").join(",");
         var archiveStage = $archiveStage.val();
         var archiveDateType = $archiveDateType.val();
@@ -190,8 +195,8 @@
             FromDate: from,
             ToDate: to,
             Username: username,
-            pageIndex: pageIndex,
-            pageSize: pageSize
+            PageIndex: pageIndex,
+            PageSize: pageSize
         };
     }
 
@@ -249,10 +254,9 @@
         });
     }
 
-    function getDormantAccountList(formData) {
+    function getDormantAccountList(formData, url) {
         resetSorting();
         $error.empty();
-        var url = SearchByDateType(formData) ? getDormantByDateTypeUrl : getDormantByUsernameUrl;
 
         $.ajax({
             type: "POST",
@@ -267,6 +271,8 @@
                     return;
                 }
                 lastRequest = rs.Request;
+                lastUrl = url;
+
                 searchUsernameFromFilter = rs.SearchUsernameFromFilter;
                 var accountGroupBy = [];
                 if (SearchByDateType(formData)) {
@@ -582,20 +588,33 @@
 
     function drillDownByUsername(username) {
         pageIndex = 1;
-        var from = firstRequest.FromDate;
-        var to = firstRequest.ToDate;
-        var archiveDateType = firstRequest.DateType;
         var formData = {
             SearchUsernameFromFilter: searchUsernameFromFilter,
             Username: username,
-            DateType: archiveDateType,
-            FromDate: from,
-            ToDate: to,
+            HeadlineGroup: firstRequest.HeadlineGroup,
+            HeadlineType: firstRequest.HeadlineType,
+            NotAssignGroupOnly: firstRequest.NotAssignGroupOnly,
             pageIndex: pageIndex,
             pageSize: pageSize
         };
+        var url = getDormantByUsernameUrl;
+        if (SearchByDateType(firstRequest)) {
+            formData = {
+                SearchUsernameFromFilter: searchUsernameFromFilter,
+                Username: username,
+                HeadlineGroup: firstRequest.HeadlineGroup,
+                HeadlineType: firstRequest.HeadlineType,
+                NotAssignGroupOnly: firstRequest.NotAssignGroupOnly,
+                DateType: firstRequest.DateType,
+                FromDate: firstRequest.FromDate,
+                ToDate: firstRequest.ToDate,
+                pageIndex: pageIndex,
+                pageSize: pageSize
+            };
+            url = drilldownByDateType;
+        }
 
-        getDormantAccountList(formData);
+        getDormantAccountList(formData, url);
     }
 
     function drillDownByStage(username, roleId, stageId) {
@@ -606,6 +625,9 @@
 
         var formData = {
             SearchFromArchiveRoleColumn: true,
+            HeadlineGroup: firstRequest.HeadlineGroup,
+            HeadlineType: firstRequest.HeadlineType,
+            NotAssignGroupOnly: firstRequest.NotAssignGroupOnly,
             Username: username,
             RoleId: roleId,
             ArchiveStage: stageId,
@@ -616,7 +638,7 @@
             pageSize: pageSize
         };
 
-        getDormantAccountList(formData);
+        getDormantAccountList(formData, drilldownByDateType);
     }
 
     function initGridByDateTypeOptions() {
@@ -628,7 +650,7 @@
             isShowPager: true,
             fullWidth: true,
             fullHeight: true,
-            gridHeight: 110,
+            gridHeight: 170,
             freezeWidth: frozenWidth,
             numberFreezeCol: 4,
             pagerOpts: {
@@ -651,7 +673,7 @@
             isShowPager: true,
             fullWidth: true,
             fullHeight: true,
-            gridHeight: 110,
+            gridHeight: 170,
             freezeWidth: frozenWidth,
             numberFreezeCol: 2,
             pagerOpts: {
@@ -737,8 +759,9 @@
             .unbind("click")
             .bind("click", function () {
                 pageIndex = 1;
-
-                getDormantAccountList(firstRequest);
+                firstRequest.PageSize = pageSize;
+                var url = SearchByDateType(firstRequest) ? getDormantByDateTypeUrl : getDormantByUsernameUrl;
+                getDormantAccountList(firstRequest, url);
             });
         $(".jsdrilldownStage")
             .unbind("click")
@@ -770,7 +793,7 @@
         lastRequest.PageSize = pageSize;
         lastRequest.FromDate = lastRequest.FromDateText;
         lastRequest.ToDate = lastRequest.ToDateText;
-        getDormantAccountList(lastRequest);
+        getDormantAccountList(lastRequest, lastUrl);
 
         return false;
     }
@@ -805,7 +828,8 @@
             if (isValidData) {
                 var formData = getParams();
                 firstRequest = formData;
-                getDormantAccountList(formData);
+                var url = SearchByDateType(formData) ? getDormantByDateTypeUrl : getDormantByUsernameUrl;
+                getDormantAccountList(formData, url);
             }
         });
         gridOptions = initGridByDateTypeOptions();
@@ -824,9 +848,22 @@
         });
 
         $exportExcel.click(function () {
-            lastRequest.FromDate = lastRequest.FromDateText;
-            lastRequest.ToDate = lastRequest.ToDateText;
-            var url = window.rootUrl + linkExportExcel + "?" + $.param(lastRequest);
+            var request = lastRequest;
+            request.FromDate = lastRequest.FromDateText;
+            request.ToDate = lastRequest.ToDateText;
+            request.PageSize = totalItems;
+            request.PageIndex = 1;
+
+            var url = "";
+            if (lastUrl == getDormantByDateTypeUrl) {
+                url = exportGetDormantByDateTypeUrl;
+            } else if (lastUrl == getDormantByUsernameUrl) {
+                url = exportGetDormantByUsernameUrl;
+            } else {
+                url = exportDrilldownByDateType;
+            }
+
+            url = window.rootUrl + url + "?" + $.param(lastRequest);
 
             $("#frameExportExcel").attr("src", url);
         });

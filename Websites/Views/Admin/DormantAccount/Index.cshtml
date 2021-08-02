@@ -74,7 +74,7 @@
                                 <input type="text" class="txtdate" id="txtFromDate" readonly="readonly" />
                             </td>
                             <td>
-                                <b>From</b>
+                                <b>To</b>
                             </td>
                             <td style="width: 100px">
                                 <input type="text" class="txtdate" id="txtToDate" readonly="readonly" />
@@ -236,13 +236,13 @@
                                     <th rowspan="2" class="date-type-mode">
                                         <div class="table-cell" style="width: 150px; height: 35px">
                                             @Language.ArchivedMaster
-                                            <span class="note-info-message" style="float: none;" data-level="Master"></span>
+                                            <span class="note-info-message" style="float: none;" data-level="Master downlines"></span>
                                         </div>
                                     </th>
                                     <th rowspan="2" class="date-type-mode">
                                         <div class="table-cell" style="width: 150px; height: 35px">
                                             @Language.ArchivedAgent
-                                            <span class="note-info-message" style="float: none;" data-level="Agent"></span>
+                                            <span class="note-info-message" style="float: none;" data-level="Agent downlines"></span>
                                         </div>
                                     </th>
                                     <th rowspan="2" class="date-type-mode">
@@ -396,7 +396,7 @@
 
         <div id="NoteLevelDrillDown" class="hidden">
             <div class="grid-content">
-                <p>Total count of archived {level} downlines grouped by Archive Stages.</p>
+                <p>Total count of archived {level} grouped by Archive Stages.</p>
                 <table class="tbl-body-scroll" style="border-left: 1px solid #7c98a4; line-height: 18px">
                     <thead>
                         <tr class="group-header-bg">
