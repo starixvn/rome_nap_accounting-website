@@ -28,10 +28,12 @@
         $error = $("#err");
 
     var colNoWidth = 30,
-        colNameWidth = 200,
+        colNameWidth = 150,
+        colUsernameWidth = 120,
         colMediumWidth = 80,
         colGroupHeadlineWidth = 150,
-        colDateWidth = 80;
+        colDateWidth = 80,
+        colMoneyWidth = 100;
 
     var pageIndex = 1,
         pageSize = 100,
@@ -377,7 +379,7 @@
                             </td>';
                 }
 
-                rowHtml += '<td><div style="width: ' + colNameWidth + 'px; height: 20px; line-height: 20px" des="' + tooltip + '">';
+                rowHtml += '<td><div style="width: ' + colUsernameWidth + 'px; height: 20px; line-height: 20px" des="' + tooltip + '">';
                 if (row.RowNumber === 0 || row.RoleId == 1) {
                     rowHtml += row.Username;
                 } else {
@@ -412,7 +414,7 @@
                 }
 
                 rowHtml += '<td>\
-                                    <div style="width: ' + colNameWidth + 'px; height: 20px; line-height: 20px" des="' + tooltip + '">' + row.Username + '</div>\
+                                    <div style="width: ' + colUsernameWidth + 'px; height: 20px; line-height: 20px" des="' + tooltip + '">' + row.Username + '</div>\
                                 </td>\
                                 <td>\
                                     <div class="c" style="width: ' + colMediumWidth + 'px; height: 20px; line-height: 20px" des="' + tooltip + '">' + row.RoleText + '</div>\
@@ -429,13 +431,13 @@
                                     <div class="c" style="width: 120px; height: 20px; line-height: 20px" des="' + tooltip + '">' + row.StageText + '</div>\
                                 </td>\
                                 <td>\
-                                    <div class="r" style="width: ' + colGroupHeadlineWidth + 'px; height: 20px; line-height: 20px" des="' + tooltip + '">' + row.ToBeClearedGivenCreditText + '</div>\
+                                    <div class="r" style="width: ' + colMoneyWidth + 'px; height: 20px; line-height: 20px" des="' + tooltip + '">' + row.ToBeClearedGivenCreditText + '</div>\
                                 </td>\
                                 <td>\
-                                    <div class="r" style="width: ' + colGroupHeadlineWidth + 'px; height: 20px; line-height: 20px" des="' + tooltip + '">' + row.ClearedGivenCreditText + '</div>\
+                                    <div class="r" style="width: ' + colMoneyWidth + 'px; height: 20px; line-height: 20px" des="' + tooltip + '">' + row.ClearedGivenCreditText + '</div>\
                                 </td>\
                                 <td>\
-                                    <div class="r" style="width: ' + colGroupHeadlineWidth + 'px; height: 20px; line-height: 20px" des="' + tooltip + '">' + row.YesterdayBalanceText + '</div>\
+                                    <div class="r" style="width: ' + colMoneyWidth + 'px; height: 20px; line-height: 20px" des="' + tooltip + '">' + row.YesterdayBalanceText + '</div>\
                                 </td>\
                                 <td>\
                                     <div class="c" style="width: ' + colDateWidth + 'px; height: 20px; line-height: 20px" des="' + tooltip + '">' + row.LastLoggedText + '</div>\
@@ -455,7 +457,7 @@
 
                 if (row.HeadlineGroup) {
                     rowHtml += '<td>\
-                                    <div class="c" style="width: ' + colGroupHeadlineWidth + 'px; height: 20px; line-height: 20px" des="' + tooltip + '">'
+                                    <div class="c" style="width: ' + colUsernameWidth + 'px; height: 20px; line-height: 20px" des="' + tooltip + '">'
                     if (row.ArchivedMaster.Close == 0) {
                         rowHtml += '<span class="drilldownStage">' + row.ArchivedMaster.Close + '</span>'
                     } else {
@@ -482,7 +484,7 @@
                     rowHtml += '</div>\
                                 </td>\
                                 <td>\
-                                    <div class="c" style="width: ' + colGroupHeadlineWidth + 'px; height: 20px; line-height: 20px" des="' + tooltip + '">'
+                                    <div class="c" style="width: ' + colUsernameWidth + 'px; height: 20px; line-height: 20px" des="' + tooltip + '">'
                     if (row.ArchivedAgent.Close == 0) {
                         rowHtml += '<span class="drilldownStage">' + row.ArchivedAgent.Close + '</span>'
                     } else {
@@ -509,7 +511,7 @@
                     rowHtml += '</div>\
                                 </td>\
                                 <td>\
-                                     <div class="c" style="width: ' + colGroupHeadlineWidth + 'px; height: 20px; line-height: 20px" des="' + tooltip + '">'
+                                     <div class="c" style="width: ' + colUsernameWidth + 'px; height: 20px; line-height: 20px" des="' + tooltip + '">'
                     if (row.ArchivedMember.Close == 0) {
                         rowHtml += '<span class="drilldownStage">' + row.ArchivedMember.Close + '</span>'
                     } else {
@@ -642,7 +644,7 @@
     }
 
     function initGridByDateTypeOptions() {
-        var frozenWidth = (colNoWidth + colNameWidth + colMediumWidth + colNameWidth) + (4 * 4);
+        var frozenWidth = (colNoWidth + colNameWidth + colMediumWidth + colUsernameWidth) + (4 * 4);
 
         return {
             tblContentId: "tblContent",
@@ -665,7 +667,7 @@
     }
 
     function initGridByUsernameOptions() {
-        var frozenWidth = (colNoWidth + colNameWidth) + (3 * 2);
+        var frozenWidth = (colNoWidth + colUsernameWidth) + (3 * 2);
 
         return {
             tblContentId: "tblContent",

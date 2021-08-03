@@ -4,9 +4,21 @@
 }
 
 .drilldownStage {
-    margin-right: 10px;
+    float: left;
+    width: 29px;
+    border-right: 1px solid #7C98A4;
 }
 
+.drilldownStage:last-child {
+    border-right: 0px;
+}
+
+.note-info-message{
+    margin-left: 50%;
+    left: -8px;
+    position:relative;
+    display: block;
+}
 .breadscrumb {
     margin-bottom: 5px;
     font-weight: 700;
