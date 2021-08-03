@@ -296,6 +296,8 @@ namespace Sunplus.Accounting.Presentation
         {
             StringBuilder errorMsg = new StringBuilder();
             StringBuilder successMsg = new StringBuilder();
+            var affectectSuper = new List<string>();
+
             if (ValidateUserNameInput(ref from, usernames))
             {
                 List<string> listUsername = usernames.Split(',').Select(m => m.Trim()).ToList();
@@ -310,10 +312,26 @@ namespace Sunplus.Accounting.Presentation
                     {
                         successMsg.Append(username + ", ");
                     }
+                    affectectSuper.AddRange(result.AffectedSupers.Split(',').Select(m => m.Trim()));
                 }
-
+                affectectSuper.RemoveAll(sp => sp == string.Empty || sp == null);
+                var affectecSuperString = string.Join("," , affectectSuper.Distinct());
                 successMsg.Length -= successMsg.Length > 2 ? 2 : 0;
-                if (errorMsg.Length == 0)
+                if(affectecSuperString.Length > 0)
+                {
+                    if (errorMsg.Length == 0)
+                    {
+                        TemplateHandler.Assign(ref from, "{msg}",
+                                              "<script>showAlertMessage('errMsg','" + string.Format("The selected supers have been successfully added. The following supers are enqueued to be removed from their old External Groups on 0:00 tomorrow: {0}.", affectecSuperString) + "',0);</script>");
+                    }
+                    else
+                    {
+                        TemplateHandler.Assign(ref from, "{msg}",
+                                               "<script>showAlertMessage('errMsg','" + string.Format("The selected supers have been successfully added. The following supers are enqueued to be removed from their old External Groups on 0:00 tomorrow: {0}.", affectecSuperString) + "',0);"
+                                               + "showAlertMessage('errMsg1', '" + errorMsg.ToString() + "', 1);</script>");
+                    }
+                }
+                else if (errorMsg.Length == 0)
                 {
                     TemplateHandler.Assign(ref from, "{msg}",
                                                   "<script>showAlertMessage('errMsg','All accounts have been successfully added.',0);</script>");
