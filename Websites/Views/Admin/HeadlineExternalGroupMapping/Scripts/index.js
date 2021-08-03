@@ -18,19 +18,19 @@ function InitForm() {
 function GetGroupsRequest() {
     var rq = [];
     rq.push($.ajax({
-        url: 'GetHeadlines',
+        url: window.rootUrl + 'HeadLineExternalGroupMapping/GetHeadlines',
         type: 'GET',
         dataType: 'json'
     }));
 
     rq.push($.ajax({
-        url: 'GetExternalGroups',
+        url: window.rootUrl + 'HeadLineExternalGroupMapping/GetExternalGroups',
         type: 'GET',
         dataType: 'json'
     }));
 
     rq.push($.ajax({
-        url: 'GetPrimaryGroups',
+        url: window.rootUrl + 'HeadLineExternalGroupMapping/GetPrimaryGroups',
         type: 'GET',
         dataType: 'json'
     }));
@@ -73,7 +73,7 @@ function InsertMapping() {
     
 
     $.ajax({
-        url: 'Insert',
+        url: window.rootUrl + 'HeadLineExternalGroupMapping/Insert',
         type: 'POST',
         dataType: 'json',
         data: {
@@ -140,7 +140,7 @@ function SearchMapping() {
     }
 
     $.ajax({
-        url: 'Select',
+        url: window.rootUrl + 'HeadLineExternalGroupMapping/Select',
         type: 'POST',
         data: {
             HeadlineName: $('#txtHeadline').val().trim(),
@@ -171,8 +171,8 @@ function RenderMapping(data) {
         row.Columns.push({ Name: 'PrimaryExtraPTGroup', Value: data[i].PrimaryExtraPTGroup });
         row.Columns.push({
             Name: 'Action',
-            Value: '<img class="edit-entity" alt="Edit" title="Edit" src="../App_Themes/Images/icn_edit.png" style="cursor: pointer; padding: 0 2px;" onclick="EditMapping(' + i + ')" >'
-                + '<img class="edit-entity" alt="Delete" title="Delete" src="../App_Themes/Images/icn_del.png" style="cursor: pointer; padding: 0 2px;" onclick="DeleteMapping(' + i + ')" >'
+            Value: '<img class="edit-entity" alt="Edit" title="Edit" src="' + window.rootUrl +'App_Themes/Images/icn_edit.png" style="cursor: pointer; padding: 0 2px;" onclick="EditMapping(' + i + ')" >'
+                + '<img class="edit-entity" alt="Delete" title="Delete" src="' + window.rootUrl +'App_Themes/Images/icn_del.png" style="cursor: pointer; padding: 0 2px;" onclick="DeleteMapping(' + i + ')" >'
         });
         bodyRows.push(row);
     }
@@ -278,7 +278,7 @@ function UpdateMapping(externalGroups) {
     try { parent.BlockUI(); } catch (e) { BlockUI(); }
 
     $.ajax({
-        url: 'Update',
+        url: window.rootUrl + 'HeadLineExternalGroupMapping/Update',
         type: 'POST',
         dataType: 'json',
         data: {
@@ -330,7 +330,7 @@ function DeleteMapping(index) {
     if (confirm(confirmMessage)) {
         try { parent.BlockUI(); } catch (e) { BlockUI(); }
         $.ajax({
-            url: 'Delete',
+            url: window.rootUrl + 'HeadLineExternalGroupMapping/Delete',
             type: 'POST',
             dataType: 'json',
             data: {
@@ -544,7 +544,7 @@ function SetupCalendar(id, idMsg) {
 
 function BlockUI() {
     $.blockUI({
-        message: '<img src="' + window.rootUrl +'/Areas/Common/Views/Shared/Images/Loading.gif" />',
+        message: '<img src="' + window.rootUrl +'Areas/Common/Views/Shared/Images/Loading.gif" />',
         css: {
             border: 'none',
             backgroundColor: 'transparent'
