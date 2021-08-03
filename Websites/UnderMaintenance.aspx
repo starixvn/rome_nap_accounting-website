@@ -9,7 +9,7 @@
         {
             margin-top: 10px;
             font-family: Arial;
-            font-size: 15px;
+            font-size: 14px;
             text-align: center;
             letter-spacing: 1px;
             line-height: 17px;
@@ -42,11 +42,11 @@
         <div class="text_time" style="margin-top: 100px; padding-left: 9px; top: 0px;">
             <%=UMTime_From%>
             <font color="#555">until</font>
-            <%=UMTime_To%></div>
+            <%=UMTime_To%> (GMT+8)</div>
         <div class="text_time" style="margin-top: 77px; padding-left: 85px; top: 118px;">
             <%=UMTime_From%>
             <font color="#555">至</font>
-            <%=UMTime_To%></div>
+            <%=UMTime_To%> (GMT+8)</div>
     </div>
 </body>
 </html>
