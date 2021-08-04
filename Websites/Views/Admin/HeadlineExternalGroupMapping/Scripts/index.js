@@ -70,7 +70,11 @@ function InsertMapping() {
     }
 
     try { parent.BlockUI(); } catch (e) { BlockUI(); }
-    
+
+    var primaryExtraPTGroup = $('#NewPrimaryGroupId').val();
+    if (primaryExtraPTGroup === "NO EXTRA PT") {
+        primaryExtraPTGroup = "No Extra PT";
+    }
 
     $.ajax({
         url: window.rootUrl + 'HeadLineExternalGroupMapping/Insert',
@@ -81,7 +85,7 @@ function InsertMapping() {
             SiteId: $('#SiteId').val(),
             ExchangeId: $('#CurrencyId').val(),
             ExtraPTGroup: $('#NewExternalGroupIds').val().toString(),
-            CurrentPrimaryExtraPTGroup: isNoExtraPtGroup ? "" : $('#NewPrimaryGroupId').val(),
+            CurrentPrimaryExtraPTGroup: isNoExtraPtGroup ? "" : primaryExtraPTGroup,
             CurrentEffectiveDate: isNoExtraPtGroup? "" : $('#NewEffectiveFromId').val()
         },
         success: function (result) {
@@ -277,6 +281,11 @@ function UpdateMapping(externalGroups) {
 
     try { parent.BlockUI(); } catch (e) { BlockUI(); }
 
+    var primaryExtraPTGroup = $('#EditPrimaryGroupId').val();
+    if (primaryExtraPTGroup === "NO EXTRA PT") {
+        primaryExtraPTGroup = "No Extra PT";
+    }
+
     $.ajax({
         url: window.rootUrl + 'HeadLineExternalGroupMapping/Update',
         type: 'POST',
@@ -286,7 +295,7 @@ function UpdateMapping(externalGroups) {
             SiteId: selectedMapping.SiteId,
             ExchangeId: selectedMapping.ExchangeId,
             ExtraPTGroup: $('#EditExternalGroupIds').val().toString(),
-            CurrentPrimaryExtraPTGroup: $('#EditPrimaryGroupId').val(),
+            CurrentPrimaryExtraPTGroup: primaryExtraPTGroup,
             CurrentEffectiveDate: $('#EditEffectiveFromId').val()
         },
         success: function (result) {
@@ -436,6 +445,7 @@ function RenderGroups(type, headlines, externalGroups, primaryGroups) {
             placeholder: "Please Select",
             allowClear: false
         });
+        
         $(divId).on("change", function (e) { RenderPrimaryGroups(type, primaryGroups); });
     }
 }
@@ -459,7 +469,7 @@ function RenderPrimaryGroups(type, primaryGroups) {
 
     var html = [];
     html.push('<option value>Please select</option>');
-    html.push('<option value="No Extra PT">No Extra PT</option>');
+    html.push('<option value="NO EXTRA PT">No Extra PT</option>');
     if (groupLength > 0) {
         isNoExtraPtGroup = false;
         for (var i = 0; i < groupLength; i++) {
@@ -482,7 +492,7 @@ function RenderPrimaryGroups(type, primaryGroups) {
 
     if (isNoExtraPtGroup) {
         selectedPrimaryGroup = "";
-        $(primaryGroupDivId).val("").trigger("change");
+        $(primaryGroupDivId).val(selectedPrimaryGroup).trigger("change");
         $(primaryGroupDivId).prop('disabled', true);
         $(effectedDate).prop('disabled', true);
         $(effectedDate + '_Trigger').hide();
