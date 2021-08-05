@@ -318,6 +318,7 @@
     <Compile Include="Business\GoldDeluxe\IGoldDeluxeService.cs" />
     <Compile Include="Business\LicenseeDcsSetting\ILicenseeDcsSettingService.cs" />
     <Compile Include="Business\LicenseeDcsSetting\LicenseeDcsSettingService.cs" />
+    <Compile Include="Business\LicenseeOddsGroup\LicenseeOddsGroupService.cs" />
     <Compile Include="Business\LicenseeSubsidiary\ILicenseeSubsidiaryService.cs" />
     <Compile Include="Business\LicenseeSubsidiary\LicenseeSubsidiaryService.cs" />
     <Compile Include="Business\ManageRobots2\IManageRobots2Service.cs" />
@@ -363,6 +364,7 @@
     <Compile Include="Controller\Chatbot\ChatbotController.cs" />
     <Compile Include="Controller\CN88Customer\MoveCN88SuperController.cs" />
     <Compile Include="Controller\CopyVRSettingController.cs" />
+    <Compile Include="Controller\LicenseeOddGroupController.cs" />
     <Compile Include="Controller\Player3rdController.cs" />
     <Compile Include="Controller\Setting\OpenCustomerController.cs" />
     <Compile Include="Controller\ViewPeriodsCN88Controller.cs" />
@@ -450,6 +452,9 @@
     <Compile Include="Criteria\LicenseeDcsSetting\UpdatePositionTakingCriteria.cs" />
     <Compile Include="Criteria\LicenseeDcsSetting\UpdateStakeLevelCriteria.cs" />
     <Compile Include="Criteria\LicenseeDcsSetting\UpdateStatusCriteria.cs" />
+    <Compile Include="Criteria\LicenseeOddsGroup\GetAgentListCriteria.cs" />
+    <Compile Include="Criteria\LicenseeOddsGroup\GetAgentOddsGroupCriteria.cs" />
+    <Compile Include="Criteria\LicenseeOddsGroup\UpdateOddsGroupCriteria.cs" />
     <Compile Include="Criteria\LicenseeSubsidiary\CreateLicenseeSubsidiaryCriteria.cs" />
     <Compile Include="Criteria\LockUnsuspend\SearchCustomerCriteria.cs" />
     <Compile Include="Criteria\LockUnsuspend\UpdateCustomerCriteria.cs" />
@@ -512,6 +517,8 @@
     <Compile Include="DataAccess\GoldDeluxe\IGoldDeluxeRepository.cs" />
     <Compile Include="DataAccess\LicenseeDcsSetting\ILicenseeDcsSettingDataAccess.cs" />
     <Compile Include="DataAccess\LicenseeDcsSetting\LicenseeDcsSettingDataAccess.cs" />
+    <Compile Include="DataAccess\LicenseeOddsGroup\ILicenseeOddsGroupDataAccess.cs" />
+    <Compile Include="DataAccess\LicenseeOddsGroup\LicenseeOddsGroupDataAccess.cs" />
     <Compile Include="DataAccess\LicenseeSubsidiary\ILicenseeSubsidiaryDataAccess.cs" />
     <Compile Include="DataAccess\LicenseeSubsidiary\LicenseeSubsidiaryDataAccess.cs" />
     <Compile Include="DataAccess\LockUnsuspend\LockUnsuspendService.cs" />
@@ -645,6 +652,7 @@
     <Compile Include="Requests\CustomerSetting\Suspend\GetMultipleSuspendCustomerInfoQuery.cs" />
     <Compile Include="Requests\CustomerSetting\Suspend\GetSingleSuspendCustomerInfoQuery.cs" />
     <Compile Include="Requests\GetMessageLogsQuery.cs" />
+    <Compile Include="Requests\LicenseeOddsGroup\UpdateOddsGroupRequest.cs" />
     <Compile Include="Resources\BetCreditHistoryLabels.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -654,6 +662,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Customer_Labels.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\LicenseeOddsGroup.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LicenseeOddsGroup.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\LicenseeSubsidiaryLabels.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -719,6 +732,8 @@
     <Compile Include="ViewModels\LicenseeDcsSetting\PTViewModel.cs" />
     <Compile Include="ViewModels\LicenseeDcsSetting\StatusViewModel.cs" />
     <Compile Include="ViewModels\LicenseeDcsSetting\BaseSettingViewModel.cs" />
+    <Compile Include="ViewModels\LicenseeOddsGroup\AgentOddsGroupViewModel.cs" />
+    <Compile Include="ViewModels\LicenseeOddsGroup\FilterViewModel.cs" />
     <Compile Include="ViewModels\LockUnsuspend\LockUnsuspendResultViewModel.cs" />
     <Compile Include="ViewModels\ViewPeriodsCN88\ViewPeriodsCN88ViewModel.cs" />
   </ItemGroup>
@@ -741,6 +756,10 @@
     <EmbeddedResource Include="Resources\LicenseeDcsSettingLabels.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>LicenseeDcsSettingLabels1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\LicenseeOddsGroup.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>LicenseeOddsGroup.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\LicenseeSubsidiaryLabels.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

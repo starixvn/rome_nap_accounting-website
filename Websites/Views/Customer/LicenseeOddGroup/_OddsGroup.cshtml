@@ -1,0 +1,98 @@
+﻿@using Fanex.Tarus.Customer.Resources
+@using Fanex.Tarus.Customer.ViewModels.LicenseeOddsGroup;
+@model IEnumerable<AgentOddsGroupEntity>
+@{
+    Layout = null;
+    List<SelectListItem> OddsGroupListItems = new List<SelectListItem>
+{
+new SelectListItem(){ Text = "a", Value = "a"},
+new SelectListItem(){ Text = "b", Value = "b"},
+new SelectListItem(){ Text = "c", Value = "c"},
+new SelectListItem(){ Text = "d", Value = "d"},
+new SelectListItem(){ Text = "e", Value = "e"},
+new SelectListItem(){ Text = "f", Value = "f"},
+new SelectListItem(){ Text = "N/A", Value = null}
+};
+    bool isFirst = true;
+}
+
+<div id="update_section">
+    <label>
+        <input type="checkbox" id="apply_members_checkbox" /><span class="b">@LicenseeDcsSettingLabels.ApplyExistingMembers</span>
+    </label>
+    <table class="tblcollapse betsetting_table mT5" id="oddsgroup_table">
+        <thead>
+            <tr class="title_1">
+                <th>
+                    @if (Model.Count() > 1)
+                    {
+                        <input type="checkbox" id="select-all-checkbox" />
+                    }
+                </th>
+                <th>
+                    @LicenseeOddsGroup.AgentList
+                    @if (Model.Count() > 1)
+                    {
+                        <span title="@LicenseeOddsGroup.CopyFrom1stRow" class="icon-copy-setting" id="copy_setting_icon"></span>
+                    }
+                </th>
+                <th>
+                    @LicenseeOddsGroup.OperatorID
+                </th>
+                <th>@LicenseeOddsGroup.OddsGroup</th>
+                <th>@LicenseeOddsGroup.Active</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr data-custid="@item.CustId" data-username="@item.UserName" data-operatorid="@item.OperatorId" data-oddsgroup="@item.OddsGroup" data-isactive="@item.IsActive">
+                    <td>
+                        <input type="checkbox" class="select-checkbox @(isFirst ? "first-row" : string.Empty)" />
+                    </td>
+                    <td class="l">@item.UserName</td>
+                    <td class="l">@item.OperatorId</td>
+                    <td class="l w300">
+                        <select id="dropdownOddsGroup_@item.CustId" class="dropdownOddsGroup @(isFirst ? "first-row" : string.Empty)" disabled>
+                            <option value="a" @(item.OddsGroup.Equals("a") ? "selected" : string.Empty)>a</option>
+                            <option value="b" @(item.OddsGroup.Equals("b") ? "selected" : string.Empty)>b</option>
+                            <option value="c" @(item.OddsGroup.Equals("c") ? "selected" : string.Empty)>c</option>
+                            <option value="d" @(item.OddsGroup.Equals("d") ? "selected" : string.Empty)>d</option>
+                            <option value="e" @(item.OddsGroup.Equals("e") ? "selected" : string.Empty)>e</option>
+                            <option value="f" @(item.OddsGroup.Equals("f") ? "selected" : string.Empty)>f</option>
+                            <option value="" @(string.IsNullOrWhiteSpace(item.OddsGroup) ? "selected" : string.Empty)>N/A</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="checkbox" class="isactive-checkbox @(isFirst ? "first-row" : string.Empty)" id="chkIsActive_@item.CustId" @(item.IsActive ? "checked" : string.Empty) disabled />
+                    </td>
+                </tr>
+
+                isFirst = false;
+            }
+        </tbody>
+    </table>
+    <div class="btnNextR mT5" id="btnNext">
+        <div class="btnNextL">@LicenseeDcsSettingLabels.Next</div>
+    </div>
+</div>
+<div class="hide" id="review_section">
+    <div class="review-apply-members">@LicenseeDcsSettingLabels.ApplyExistingMembers: <span id="apply_members_span"></span></div>
+    <table class="tblcollapse reviewoddsgroup_table mT5" id="reviewoddsgroup_table">
+        <thead>
+            <tr class="title_1">
+                <th>@LicenseeOddsGroup.AgentList</th>
+                <th>@LicenseeOddsGroup.OperatorID</th>
+                <th>@LicenseeOddsGroup.OddsGroup</th>
+                <th>@LicenseeOddsGroup.Active</th>
+                <th>@LicenseeDcsSettingLabels.Updated</th>
+                <th>@LicenseeDcsSettingLabels.Message</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <button type="button" class="update-setting-button mT5" id="btnBetSettingUpdate">@LicenseeDcsSettingLabels.Update</button>
+    <div class="btnNextR mT5" id="btnBack">
+        <div class="btnNextL">@LicenseeDcsSettingLabels.Back</div>
+    </div>
+</div>
