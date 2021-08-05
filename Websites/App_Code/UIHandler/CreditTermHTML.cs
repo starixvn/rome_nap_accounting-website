@@ -6,7 +6,6 @@ namespace Sunplus.Accounting.Presentation
     using Sunplus.Accounting.Core.Extensions;
     using Sunplus.Accounting.Core.Web;
     using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
-    using Sunplus.Accounting.Entities;
     using Sunplus.Accounting.WcfServiceLibrary.CreditTerm;
     using System;
     using System.Collections.Generic;
@@ -227,6 +226,8 @@ namespace Sunplus.Accounting.Presentation
         private static void RemoveSelectedUsersFromGroup(ref string from, int groupid, int userid, string listname, ref string username_selected, ref string custid_selected, ref string msg, ref int count_normal_user_selected)
         {
             var stringseparator = new[] { "," };
+            var affectedSupers = new List<string>();
+            var username = "";
 
             foreach (string item in listname.Split(stringseparator, StringSplitOptions.RemoveEmptyEntries))
             {
@@ -238,6 +239,7 @@ namespace Sunplus.Accounting.Presentation
 
                     if (rs != null)
                     {
+                        affectedSupers.Add(rs.AffectedSupers);
                         if (rs.ErrorCode != 0)
                         {
                             msg = "<script>showAlertMessage('errMsg','" + rs.ErrorMessage +
@@ -245,18 +247,25 @@ namespace Sunplus.Accounting.Presentation
                         }
                         else
                         {
-                            msg += username_selected + ", ";
+                            username += username_selected + ", ";
                             count_normal_user_selected++;
                         }
                     }
                 }
             }
 
-            msg = msg.Trim().Trim(',');
+            username = username.Trim().Trim(',');
+            affectedSupers.RemoveAll(super => super == null || super == string.Empty);
 
             if (count_normal_user_selected > 0)
             {
-                msg += " has been removed.";
+                if(affectedSupers.Count > 0)
+                {
+                    msg += "The selected supers have been successfully removed from the Headline Group. The following supers are enqueued to be removed from their old External Groups at 0:00 on tomorrow: " + String.Join(",", affectedSupers);
+                } else
+                {
+                    msg += username + " has been removed.";
+                }
                 msg = "<script>showAlertMessage('errMsg','" + msg + "',0);</script>";
             }
 
@@ -287,6 +296,8 @@ namespace Sunplus.Accounting.Presentation
         {
             StringBuilder errorMsg = new StringBuilder();
             StringBuilder successMsg = new StringBuilder();
+            var affectectSuper = new List<string>();
+
             if (ValidateUserNameInput(ref from, usernames))
             {
                 List<string> listUsername = usernames.Split(',').Select(m => m.Trim()).ToList();
@@ -301,10 +312,26 @@ namespace Sunplus.Accounting.Presentation
                     {
                         successMsg.Append(username + ", ");
                     }
+                    affectectSuper.AddRange(result.AffectedSupers.Split(',').Select(m => m.Trim()));
                 }
-
+                affectectSuper.RemoveAll(sp => sp == string.Empty || sp == null);
+                var affectecSuperString = string.Join("," , affectectSuper.Distinct());
                 successMsg.Length -= successMsg.Length > 2 ? 2 : 0;
-                if (errorMsg.Length == 0)
+                if(affectecSuperString.Length > 0)
+                {
+                    if (errorMsg.Length == 0)
+                    {
+                        TemplateHandler.Assign(ref from, "{msg}",
+                                              "<script>showAlertMessage('errMsg','" + string.Format("The selected supers have been successfully added. The following supers are enqueued to be removed from their old External Groups on 0:00 tomorrow: {0}.", affectecSuperString) + "',0);</script>");
+                    }
+                    else
+                    {
+                        TemplateHandler.Assign(ref from, "{msg}",
+                                               "<script>showAlertMessage('errMsg','" + string.Format("The selected supers have been successfully added. The following supers are enqueued to be removed from their old External Groups on 0:00 tomorrow: {0}.", affectecSuperString) + "',0);"
+                                               + "showAlertMessage('errMsg1', '" + errorMsg.ToString() + "', 1);</script>");
+                    }
+                }
+                else if (errorMsg.Length == 0)
                 {
                     TemplateHandler.Assign(ref from, "{msg}",
                                                   "<script>showAlertMessage('errMsg','All accounts have been successfully added.',0);</script>");

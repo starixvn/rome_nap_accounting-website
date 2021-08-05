@@ -95,7 +95,7 @@
                     else
                     {
                         TemplateHandler.RemoveBlock(ref htmlcontent, "noHeadline");
-                        TemplateHandler.Assign(ref htmlcontent, "{linkHeadline}", string.Format("CreditTerm/Creditterm_Group_Feed.aspx?groupid={0}", customerInfoViewModel.Groupheadlineid));
+                        TemplateHandler.Assign(ref htmlcontent, "{linkHeadline}", string.Format("CreditTerm/Creditterm_Group_Feed.aspx?groupid={0}&headline={1}", customerInfoViewModel.Groupheadlineid, customerInfoViewModel.Headline));
                         TemplateHandler.Assign(ref htmlcontent, "{Headline}", customerInfoViewModel.Headline);
                     }
                 }

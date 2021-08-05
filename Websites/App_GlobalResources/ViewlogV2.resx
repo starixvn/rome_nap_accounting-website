@@ -2041,7 +2041,7 @@
     <value>Is All Affected Downlines</value>
   </data>
   <data name="FA" xml:space="preserve">
-    <value>8RM Account</value>
+    <value>PrimaryGroups</value>
   </data>
   <data name="FUL" xml:space="preserve">
     <value>Follow upper level</value>
@@ -2128,7 +2128,7 @@ Max Keno (20+1) 2</value>
   <data name="Disable167_7301" xml:space="preserve">
     <value>Disabled CG</value>
   </data>
-   <data name="Disable171_3801" xml:space="preserve">
+  <data name="Disable171_3801" xml:space="preserve">
     <value>Disabled VGaming</value>
   </data>
   <data name="Disable172_7701" xml:space="preserve">
@@ -2136,5 +2136,8 @@ Max Keno (20+1) 2</value>
   </data>
   <data name="Disable174_7801" xml:space="preserve">
     <value>Disable AdvantPlay Mini</value>
+  </data>
+  <data name="ExternalGroups" xml:space="preserve">
+    <value>External Groups</value>
   </data>
 </root>
