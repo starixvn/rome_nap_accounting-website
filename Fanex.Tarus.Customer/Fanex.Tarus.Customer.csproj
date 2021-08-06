@@ -382,6 +382,7 @@
     <Compile Include="Controller\ParlayMaxPayoutController.cs" />
     <Compile Include="Controller\Player3rdController.cs" />
     <Compile Include="Controller\Setting\OpenCustomerController.cs" />
+    <Compile Include="Controller\ViewMaxPayoutSettingInformationController.cs" />
     <Compile Include="Controller\ViewPeriodsCN88Controller.cs" />
     <Compile Include="Controller\ConfigureDirectAccountController.cs" />
     <Compile Include="Controller\CustomerLogin\CustomerOTPController.cs" />
