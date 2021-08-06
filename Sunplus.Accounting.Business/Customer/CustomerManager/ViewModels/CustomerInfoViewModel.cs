@@ -88,6 +88,8 @@
 
         public bool HideVirtualGames { get; private set; } = true;
 
+        public bool HideBitcoin { get; private set; } = true;
+
         public bool HideRNGLottery { get; private set; } = true;
 
         public bool HideVirtualSports2 { get; private set; } = true;
@@ -213,6 +215,10 @@
                                 SyncVGaming = Utils.ToBoolean(row["IsSync"]);
                                 HideVGamingUpline = Utils.ToBoolean(row["IsHiddenUpline"]) && SearchAccountRoleId < 4;
                                 SyncVGamingUpline = Utils.ToBoolean(row["IsSyncedUpline"]);
+                                break;
+                            case "69":
+                                bool isHideBitcoin = Utils.ToBoolean(row["IsHidden"]);
+                                HideBitcoin = !WebSettings.IsShowBitcoinBetting || isHideBitcoin;
                                 break;
                         }
                     }

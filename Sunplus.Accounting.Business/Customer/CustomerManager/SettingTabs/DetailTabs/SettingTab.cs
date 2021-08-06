@@ -135,6 +135,7 @@
             TemplateHandler.Assign(ref htmlcontent, "{Edit-NG2}", _remotingRefService.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2"));
             TemplateHandler.Assign(ref htmlcontent, "{rngLotteryLinkSetting}", string.Format(creditDCSLink, Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdRNGLottery));
             TemplateHandler.Assign(ref htmlcontent, "{virtualGamesLinkSetting}", string.Format(creditDCSLink, Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdVirtualGames));
+            TemplateHandler.Assign(ref htmlcontent, "{BitcoinLinkSetting}", string.Format(creditDCSLink, 69));
             TemplateHandler.Assign(ref htmlcontent, "{sabaclubLinkSetting}", string.Format(creditDCSLink, 42));
             TemplateHandler.Assign(ref htmlcontent, "{agcasinoLinkSetting}", agCasinoLinkSetting);
             TemplateHandler.Assign(ref htmlcontent, "{vgamingLinkSetting}", string.Format(creditDCSLink, 66));
@@ -216,6 +217,11 @@
             if (customerInfoViewModel.HideVirtualGames)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-VirtualGames");
+            }
+
+            if (customerInfoViewModel.HideBitcoin)
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Bitcoin");
             }
 
             if (customerInfoViewModel.HideSabaclub)

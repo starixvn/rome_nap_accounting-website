@@ -774,6 +774,9 @@ var ViewPT = {
             case 173: //VGaming
                 ViewPT.viewPTBasedOnKindOfCustomer(userName, 0, 0, isLive, 66);
                 break;
+            case 175: //Bitcoin Betting
+                ViewPT.viewPTBasedOnKindOfCustomer(userName, 0, 0, isLive, 69);
+                break;
             default:
                 ViewPT.getViewPTOldFormat(userName, sportId, betTypeId, isLive);
         }

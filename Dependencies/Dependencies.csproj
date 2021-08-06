@@ -367,8 +367,8 @@
     <Reference Include="Fanex.Nap.SSO, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Nap.SSO.1.0.0.7\lib\net40\Fanex.Nap.SSO.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.ProductStatus.Setting, Version=1.0.3.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.ProductStatus.Setting.1.0.3.4\lib\net461\Fanex.ProductStatus.Setting.dll</HintPath>
+    <Reference Include="Fanex.ProductStatus.Setting, Version=1.0.3.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.ProductStatus.Setting.1.0.3.5-bitcoinbetting-01\lib\net461\Fanex.ProductStatus.Setting.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.PTEngine, Version=1.0.6.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.PTEngine.1.0.6.3\lib\net40\Fanex.PTEngine.dll</HintPath>
@@ -499,7 +499,7 @@
       <HintPath>..\packages\Fanex.Tarus.ActivityTracking.1.0.0.5\lib\net40\Fanex.Tarus.ActivityTracking.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Admin, Version=1.0.3.8, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Admin.1.0.3.8\lib\net461\Fanex.Tarus.Admin.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.Admin.1.0.3.8-dormantaccount-15\lib\net461\Fanex.Tarus.Admin.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.API, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.API.1.0.0\lib\net40\Fanex.Tarus.API.dll</HintPath>
@@ -777,8 +777,8 @@
     <Reference Include="StackExchange.Redis, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c219ff1ca8c2ce46, processorArchitecture=MSIL">
       <HintPath>..\packages\StackExchange.Redis.2.0.519\lib\net461\StackExchange.Redis.dll</HintPath>
     </Reference>
-    <Reference Include="Sunplus.Accounting.Core, Version=2.0.4.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.Core.2.0.4.6\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
+    <Reference Include="Sunplus.Accounting.Core, Version=2.0.4.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Accounting.Core.2.0.4.7-BitcoinBetting-01\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.3.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.3.5\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>

@@ -2508,4 +2508,10 @@
   <data name="OpenedMainTitle" xml:space="preserve">
     <value>List of downlines' statuses after opening {0}</value>
   </data>
+  <data name="lblDisabledBitcoinUpline" xml:space="preserve">
+    <value>Bitcoin has been disabled at upline</value>
+  </data>
+  <data name="enableBitcoin" xml:space="preserve">
+    <value>Bitcoin</value>
+  </data>
 </root>
