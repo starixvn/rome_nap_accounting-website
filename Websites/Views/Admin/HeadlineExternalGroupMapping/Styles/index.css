@@ -34,3 +34,8 @@
     color: #aaa;
     cursor: no-drop;
 }
+
+.filterBox b {
+    position: relative;
+    float: right;
+}

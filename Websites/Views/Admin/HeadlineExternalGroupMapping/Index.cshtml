@@ -32,36 +32,36 @@
     </div>
 
     <div class="maincontent">
-        <div class="filterBox" style="width: 1122px;">
+        <div class="filterBox" style="width: 1142px;">
             <div class="filterContent">
                 <div>
                     <table>
                         <tr>
-                            <td>
+                            <td style="min-width: 50px;">
                                 <b>Headline</b>
                             </td>
                             <td>
                                 <input type="text" id="txtHeadline" style="width: 110px" />
                             </td>
-                            <td>
+                            <td style="min-width: 50px;">
                                 <b>Site</b>
                             </td>
                             <td style="width: 100px">
                                 @Html.DropDownList("ddlSites", Model.Sites, new { style = "width:100px" })
                             </td>
-                            <td>
+                            <td style="min-width: 60px">
                                 <b>Currency</b>
                             </td>
                             <td style="width: 100px">
                                 @Html.DropDownList("ddlCurrency", Model.Currencies, new { style = "width:100px" })
                             </td>
-                            <td>
+                            <td style="min-width: 100px">
                                 <b>External Group</b>
                             </td>
                             <td style="width: 190px">
                                 @Html.DropDownList("ddlExternalGroups", Model.ExternalGroups, new { style = "width:180px" })
                             </td>
-                            <td>
+                            <td style="min-width: 100px">
                                 <b>Primary Group</b>
                             </td>
                             <td style="width: 190px">
@@ -70,7 +70,7 @@
                         </tr>
                         <tr>
                             <td></td>
-                            <td>
+                            <td colspan="5">
                                 <input type="button" class="btn" id="btnSubmit" value="Submit" onclick="SearchMapping();" />
                                 <input type="button" class="btn" id="btnAddNew" value="Add New Mapping" onclick="AddNewMapping();" />
                             </td>
