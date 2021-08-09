@@ -33,7 +33,7 @@ $.extend(CreditTerm, { Group: {
                         + '<div class="consolidationreport">'
                         + '{{if $value.RoleId != 1}}<span onmouseover="" onmouseout="" onclick="CreditTerm.Group.updateConsolidationReportAllowStatus(${$value.CustId}, \'#allow_${$value.GroupId}\')" class="{{if $value.ConsolidationReport}}allow-button{{else}}disallow-button{{/if}} c" id="allow_${$value.GroupId}"></span>{{/if}}'
                         + '</div>'
-                        + '<div class="edit"><img rel="${$value.GroupId}" class="edit_group" style="cursor: pointer;" src="../App_Themes/Images/icn_edit.png" alt="Edit" title="Edit Group"></div>'
+                + '<div class="edit"><img rel="${$value.GroupId}" headline="${$value.HeadUsername}" class="edit_group" style="cursor: pointer;" src="../App_Themes/Images/icn_edit.png" alt="Edit" title="Edit Group"></div>'
                     + '</div>{{/each}}';
             $.tmpl(_templateRow, { Rows: resp }).appendTo("#group_content");
             $('div.item').bind('mouseover', function (evt) {
@@ -44,7 +44,7 @@ $.extend(CreditTerm, { Group: {
                 $('div.item').removeClass('active');
             });
             $('img.edit_group').bind('click', function (evt) {
-                CreditTerm.Group.editGroup($(this).attr('rel'));
+                CreditTerm.Group.editGroup($(this).attr('rel'), $(this).attr('headline'));
             });
             window.setTimeout(function () {
                 CreditTerm.Group.formatGrid();
@@ -63,9 +63,9 @@ $.extend(CreditTerm, { Group: {
             });
         }
     },
-    editGroup: function (groupId) {
+    editGroup: function (groupId, headline) {
         if (typeof (groupId) != 'undefined') {
-            var url = 'Creditterm_Group_Feed.aspx?groupid='.concat(groupId);
+            var url = 'Creditterm_Group_Feed.aspx?groupid='.concat(groupId, '&headline=', headline);
             window.location = url;
         }
         return false;

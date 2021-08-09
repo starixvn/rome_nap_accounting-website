@@ -1,0 +1,63 @@
+﻿.asterisk {
+    color: #ff0000;
+    font-weight: bold;
+}
+
+.drilldownStage {
+    float: left;
+    width: 29px;
+    border-right: 1px solid #7C98A4;
+}
+
+.drilldownStage:last-child {
+    border-right: 0px;
+}
+
+.note-info-message{
+    margin-left: 50%;
+    left: -8px;
+    position:relative;
+    display: block;
+}
+.breadscrumb {
+    margin-bottom: 5px;
+    font-weight: 700;
+}
+
+.warning {
+    color: #ff0000;
+}
+
+.tipsy {
+    font-size: 9pt !important;
+}
+
+div.sorter {
+    background-image: url(../../../../App_Themes/images/sorting_bg.gif);
+    background-repeat: no-repeat !important;
+    background-position: center right !important;
+    cursor: pointer;
+}
+
+    div.sorter.asc {
+        background-image: url(../../../../App_Themes/images/sorting_asc.gif) !important;
+    }
+
+    div.sorter.desc {
+        background-image: url(../../../../App_Themes/images/sorting_desc.gif) !important;
+    }
+
+.grid-content {
+    margin-top: 5px;
+}
+
+    .grid-content table {
+        border-collapse: collapse;
+    }
+    .grid-content td {
+        border: 1px solid #7c98a4;
+    }
+
+.grid-content table thead tr {
+    background-color: white;
+}

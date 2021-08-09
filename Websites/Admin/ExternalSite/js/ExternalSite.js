@@ -477,7 +477,7 @@ var changeGroupService = (function ($, ajaxService) {
             custId,
             '" data-username="',
             username,
-            '"><img title="Change Primary Group" src="../../App_Themes/Images/icn_edit.png" /></div>'
+            '"></div>'
         ];
 
         return '<div class="extra-pt-group-text">' + html.join(", ") + "</div>" + imgHtml.join("");
@@ -560,13 +560,6 @@ var changeGroupService = (function ($, ajaxService) {
                 $tblExternalSite.html(html.join(""));
 
                 initPager(formData.pageSize, formData.pageIndex - 1);
-
-                $(".extra-pt-group-img")
-                    .unbind("click")
-                    .bind("click", function () {
-                        var $this = $(this);
-                        changeGroupService.showDialog($this.attr("data-custid"), $this.attr("data-username"));
-                    });
 
                 $(".removeSuper")
                     .unbind("click")

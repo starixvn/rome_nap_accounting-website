@@ -1,0 +1,433 @@
+﻿@model Fanex.Tarus.Admin.DormantAccount.ViewModel.DormantAccountFilter
+@using Sunplus.Accounting.Core.Common;
+@using Fanex.Tarus.Admin.Resource;
+
+<link href="~/App_Themes/Public/table.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="~/App_Themes/Public/input.css" />
+<link rel="stylesheet" type="text/css" href="~/App_Themes/Public/commonIOM.css" />
+<link href="@Url.Content("~/Scripts/_Libs/jQuery/Styles/jquery-ui-1.9.1.custom.css")" rel="stylesheet" type="text/css" />
+<link href="~/js/jQuery/Pager/pagination.css" rel="stylesheet" type="text/css" />
+<link href="~/js/jQuery/GridScroller/gridscroller.css" rel="stylesheet" type="text/css" />
+<link href="~/js/MultipleSelect/jquery.multiselect.css" rel="stylesheet" type="text/css" />
+<link href="~/js/ToolTip/Tipsy-Tooltip/tipsy.css" rel="stylesheet" type="text/css" />
+<link href="~/Views/Admin/DormantAccount/Style/StyleSheet.css?v=@AccCommon.Version()" rel="stylesheet" type="text/css" />
+
+<div class="main">
+    <div id="divMainHeader">
+        <div id="left_tab1">
+            <ul>
+                <li class="lefticon"></li>
+                <li class="current"><span>Dormant SMA Account List</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="maincontent">
+        <div class="filterBox" style="width: 1122px;">
+            <div class="filterContent">
+                <div>
+                    <table>
+                        <tr>
+                            <td>
+                                <b>@Language.GroupHeadline</b>
+                            </td>
+                            <td>
+                                <input type="text" id="txtHeadlineGroup" style="width: 120px" placeholder="All Group Names" />
+                            </td>
+                            <td>
+                                <b>@Language.HeadlineType</b>
+                            </td>
+                            <td style="width: 100px">
+                                @Html.DropDownList("ddlHeadlineType", Model.HeadlineType, new { style = "width:110px" })
+                            </td>
+                            <td colspan="2">
+                                <input type="checkbox" id="chkNotAssigned" />
+                                <label for="chkNotAssigned">Not Assigned to Group only</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input id="rdo-type" type="radio" class="styled rdo-type" name="chkType" value="date" checked />
+                                <b style="margin-left: 15px">@Language.Level</b>
+                                <span class="asterisk">*</span>
+                            </td>
+                            <td>
+                                <div id="ddlLevel" class="multiselect" multiple="multiple" style="padding-top: 2px;">
+                                </div>
+                            </td>
+                            <td>
+                                <b>@Language.ArchiveStage</b>
+                            </td>
+                            <td>
+                                @Html.DropDownList("ddlArchiveStage", Model.ArchiveStage, new { style = "width:110px" })
+                            </td>
+                            <td>
+                                <b>Archive Date Type</b>
+                            </td>
+                            <td>
+                                @Html.DropDownList("ddlArchiveDateType", Model.ArchiveDate, new { style = "width:125px" })
+                            </td>
+                            <td>
+                                <b>From</b>
+                            </td>
+                            <td style="width: 100px">
+                                <input type="text" class="txtdate" id="txtFromDate" readonly="readonly" />
+                            </td>
+                            <td>
+                                <b>To</b>
+                            </td>
+                            <td style="width: 100px">
+                                <input type="text" class="txtdate" id="txtToDate" readonly="readonly" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input id="rdo-type" type="radio" class="styled rdo-type" name="chkType" value="username" />
+                                <b style="margin-left: 15px">@Language.Username <span class="asterisk">*</span></b>
+                            </td>
+                            <td>
+                                <input type="text" id="txtUsername" style="width: 120px" placeholder="Please enter Username" disabled />
+                            </td>
+                            <td>
+                                <input type="button" class="btn" id="btnSubmit" value="Search" />
+                                <input type="button" class="btnExcel hidden" id="btnExportExcel" value="" />
+                            </td>
+                        </tr>
+                    </table>
+
+                    <div id="err"></div>
+                </div>
+            </div>
+        </div>
+        <div class="contentBox">
+            <div id="breadscrumb" class="breadscrumb hidden">
+
+            </div>
+            <div id="GridByDateType" class="freegrid hidden">
+                <div class="free-cell free-top-left">
+                    <table class="grid-fixed-table free-cell-top-left">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <div class="table-cell" style="width: 30px; height: 75px">
+                                        #
+                                    </div>
+                                </th>
+                                <th class="date-type-mode">
+                                    <div class="table-cell sorter" style="width: 150px; height: 75px" id="divSortingByGroupHeadline">
+                                        @Language.GroupHeadline
+                                    </div>
+                                </th>
+                                <th class="date-type-mode">
+                                    <div class="table-cell" style="width: 80px; height: 75px">
+                                        @Language.HeadlineType
+                                    </div>
+                                </th>
+
+                                <th>
+                                    <div class="table-cell" style="width: 120px; height: 75px" id="divSortingByUsername">
+                                        @Language.DirectAccount
+                                    </div>
+                                </th>
+
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="row_header_wrapper">
+                    <div class="row_header row-headers-background">
+                        <table class="grid-fixed-table row_header_content" id="tblContentHeader">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <div class="table-cell" style="width: 30px; height: 75px">
+                                            &nbsp;
+                                        </div>
+                                    </th>
+                                    <th class="date-type-mode">
+                                        <div class="table-cell" style="width: 150px; height: 75px">
+                                            &nbsp;
+                                        </div>
+                                    </th>
+                                    <th class="date-type-mode">
+                                        <div class="table-cell" style="width: 80px; height: 75px">
+                                            &nbsp;
+                                        </div>
+                                    </th>
+
+                                    <th>
+                                        <div class="table-cell" style="width: 120px; height: 75px">
+                                            &nbsp;
+                                        </div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col_header row-headers-background scroll-y">
+                    <div class="header-container">
+                        <table class="grid-fixed-table col_header_content">
+                            <thead>
+                                <tr>
+                                    <th rowspan="2">
+                                        <div class="table-cell" style="width: 30px; height: 35px">
+                                            #
+                                        </div>
+                                    </th>
+                                    <th rowspan="2" class="date-type-mode">
+                                        <div class="table-cell sorter" style="width: 150px; height: 35px" id="divSortingByGroupHeadline">
+                                            @Language.GroupHeadline
+                                        </div>
+                                    </th>
+                                    <th rowspan="2" class="date-type-mode">
+                                        <div class="table-cell" style="width: 80px; height: 35px">
+                                            @Language.HeadlineType
+                                        </div>
+                                    </th>
+
+                                    <th rowspan="2">
+                                        <div class="table-cell" style="width: 120px; height: 35px" id="divSortingByUsername">
+                                            @Language.DirectAccount
+                                        </div>
+                                    </th>
+                                    <th rowspan="2">
+                                        <div class="table-cell" style="width: 80px; height: 35px">
+                                            @Language.Level
+                                        </div>
+                                    </th>
+                                    <th rowspan="2">
+                                        <div class="table-cell" style="width: 80px; height: 35px">
+                                            @Language.Status
+                                        </div>
+                                    </th>
+                                    <th rowspan="2">
+                                        <div class="table-cell sorter" style="width: 120px; height: 35px" id="divSortingByStage">
+                                            @Language.ArchiveStage
+                                        </div>
+                                    </th>
+                                    <th rowspan="2">
+                                        <div class="table-cell" style="width: 100px; height: 35px">
+                                            @Language.TobeClearedGivenCredit
+                                        </div>
+                                    </th>
+                                    <th rowspan="2">
+                                        <div class="table-cell" style="width: 100px; height: 35px">
+                                            @Language.ClearedGivenCredit
+                                        </div>
+                                    </th>
+                                    <th rowspan="2">
+                                        <div class="table-cell" style="width: 100px; height: 35px">
+                                            @Language.YesterdayBalance
+                                        </div>
+                                    </th>
+                                    <th rowspan="2">
+                                        <div class="table-cell" style="width: 80px; height: 35px">
+                                            @Language.LastLogin
+                                        </div>
+                                    </th>
+                                    <th colspan="4">
+                                        <div class="table-cell" style="width: 320px; height: 35px">
+                                            Archive Date
+                                        </div>
+                                    </th>
+
+                                    <th rowspan="2" class="date-type-mode">
+                                        <div class="table-cell" style="width: 120px; height: 35px">
+                                            @Language.ArchivedMaster
+                                            <span class="note-info-message" style="float: none;" data-level="Master downlines"></span>
+                                        </div>
+                                    </th>
+                                    <th rowspan="2" class="date-type-mode">
+                                        <div class="table-cell" style="width: 120px; height: 35px">
+                                            @Language.ArchivedAgent
+                                            <span class="note-info-message" style="float: none;" data-level="Agent downlines"></span>
+                                        </div>
+                                    </th>
+                                    <th rowspan="2" class="date-type-mode">
+                                        <div class="table-cell" style="width: 120px; height: 35px">
+                                            @Language.ArchivedMember
+                                            <span class="note-info-message" style="float: none;" data-level="Member"></span>
+                                        </div>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <div class="table-cell" style="width: 80px; height: 35px">
+                                            Close
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="table-cell" style="width: 80px; height: 35px">
+                                            Disable
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="table-cell" style="width: 80px; height: 35px">
+                                            Del. Setting
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="table-cell" style="width: 80px; height: 35px">
+                                            Del. Account
+                                        </div>
+                                    </th>
+                                </tr>
+                            </thead>
+
+                        </table>
+                    </div>
+                </div>
+                <div class="grid-container container">
+                    <div class="content-container">
+                        <table id="tblContent" class="grid-fixed-table col_header_content">
+                            <thead>
+                                <tr>
+                                    <th rowspan="2">
+                                        <div class="table-cell" style="width: 30px; height: 35px">
+                                            &nbsp;
+                                        </div>
+                                    </th>
+                                    <th rowspan="2" class="date-type-mode">
+                                        <div class="table-cell sorter" style="width: 150px; height: 35px">
+                                            &nbsp;
+                                        </div>
+                                    </th>
+                                    <th rowspan="2" class="date-type-mode">
+                                        <div class="table-cell" style="width: 80px; height: 35px">
+                                            &nbsp;
+                                        </div>
+                                    </th>
+
+                                    <th rowspan="2">
+                                        <div class="table-cell" style="width: 120px; height: 35px">
+                                            &nbsp;
+                                        </div>
+                                    </th>
+                                    <th rowspan="2">
+                                        <div class="table-cell" style="width: 80px; height: 35px">
+                                            &nbsp;
+                                        </div>
+                                    </th>
+                                    <th rowspan="2">
+                                        <div class="table-cell  sorter" style="width: 80px; height: 35px">
+                                            &nbsp;
+                                        </div>
+                                    </th>
+                                    <th rowspan="2">
+                                        <div class="table-cell" style="width: 120px; height: 35px">
+                                            &nbsp;
+                                        </div>
+                                    </th>
+                                    <th rowspan="2">
+                                        <div class="table-cell" style="width: 100px; height: 35px">
+                                            &nbsp;
+                                        </div>
+                                    </th>
+                                    <th rowspan="2">
+                                        <div class="table-cell" style="width: 100px; height: 35px">
+                                            &nbsp;
+                                        </div>
+                                    </th>
+                                    <th rowspan="2">
+                                        <div class="table-cell" style="width: 100px; height: 35px">
+                                            &nbsp;
+                                        </div>
+                                    </th>
+                                    <th rowspan="2">
+                                        <div class="table-cell" style="width: 80px; height: 35px">
+                                            &nbsp;
+                                        </div>
+                                    </th>
+                                    <th colspan="4">
+                                        <div class="table-cell" style="width: 320px; height: 35px">
+                                            &nbsp;
+                                        </div>
+                                    </th>
+
+                                    <th rowspan="2" class="date-type-mode">
+                                        <div class="table-cell" style="width: 120px; height: 35px">
+                                            &nbsp;
+                                        </div>
+                                    </th>
+                                    <th rowspan="2" class="date-type-mode">
+                                        <div class="table-cell" style="width: 120px; height: 35px">
+                                            &nbsp;
+                                        </div>
+                                    </th>
+                                    <th rowspan="2" class="date-type-mode">
+                                        <div class="table-cell" style="width: 120px; height: 35px">
+                                            &nbsp;
+                                        </div>
+                                    </th>
+
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <div class="table-cell" style="width: 80px; height: 35px">
+                                            &nbsp;
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="table-cell" style="width: 80px; height: 35px">
+                                            &nbsp;
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="table-cell" style="width: 80px; height: 35px">
+                                            &nbsp;
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="table-cell" style="width: 80px; height: 35px">
+                                            &nbsp;
+                                        </div>
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="NoteLevelDrillDown" class="hidden">
+            <div class="grid-content">
+                <p>Total count of archived {level} grouped by Archive Stages.</p>
+                <table class="tbl-body-scroll" style="border-left: 1px solid #7c98a4; line-height: 18px">
+                    <thead>
+                        <tr class="group-header-bg">
+                            <td class="c" style="width: 100px">Close</td>
+                            <td class="c" style="width: 100px">Disable</td>
+                            <td class="c" style="width: 100px">Del. Setting</td>
+                            <td class="c" style="width: 100px">Del. Account</td>
+                        </tr>
+                    </thead>
+                </table>
+                <p>Click to drill down for details list</p>
+            </div>            
+        </div>
+    </div>
+</div>
+<iframe id="frameExportExcel" style="display: none"></iframe>
+<script type="text/javascript">
+    window.rootUrl = '@Url.Content("~")';
+    var minDate = '@Model.MinDate.ToString("MM/dd/yyyy")';
+    var maxDate = '@Model.MaxDate.ToString("MM/dd/yyyy")';
+    var fromDate = '@Model.FromDate.ToString("MM/dd/yyyy")';
+    var toDate = '@Model.ToDate.ToString("MM/dd/yyyy")';    
+    var jsonLevel = @Html.Raw(Json.Encode(Model.Level));
+</script>
+
+<script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-ui-1.9.1.min.js?")"></script>
+<script src="~/js/jQuery/json2.js" type="text/javascript"></script>
+<script src="~/js/jQuery/Jlinq/jlinq.js" type="text/javascript"></script>
+<script src="~/js/MultipleSelect/jquery.multiselect.js" type="text/javascript"></script>
+<script src="~/js/jQuery/GridScroller/jquery.gridscroller.1.0.js" type="text/javascript"></script>
+<script src="~/js/jQuery/Pager/jpager.js" type="text/javascript"></script>
+<script src="~/js/common.js" type="text/javascript"></script>
+<script src="~/js/ToolTip/Tipsy-Tooltip/jquery.tipsy.js?ver=21" type="text/javascript"></script>
+<script src="~/Views/Admin/DormantAccount/Js/index.js?v=@AccCommon.Version()" type="text/javascript"></script>

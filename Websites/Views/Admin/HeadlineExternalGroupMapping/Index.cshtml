@@ -1,0 +1,114 @@
+﻿@using Sunplus.Accounting.Core.Configurations;
+
+@model Fanex.Tarus.Admin.Entities.HeadlineExternalGroupMapping.FilterModel
+
+<link href="~/App_Themes/Public/table.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="~/App_Themes/Public/input.css" />
+<link rel="stylesheet" type="text/css" href="~/App_Themes/Public/commonIOM.css" />
+<link href="~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css" rel="stylesheet" type="text/css" />
+<link href="~/js/jQuery/Pager/pagination.css" rel="stylesheet" type="text/css" />
+<link href="~/js/jQuery/GridScroller/gridscroller.css" rel="stylesheet" type="text/css" />
+<link href="~/js/MultipleSelect/jquery.multiselect.css" rel="stylesheet" type="text/css" />
+<link href="~/js/ToolTip/Tipsy-Tooltip/tipsy.css" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/js/select2/select2.min.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Grid.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+<link href=@Url.Content("~/Views/Admin/HeadlineExternalGroupMapping/Styles/index.css?v=" + @WebSettings.Version) rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/js/DateTimePicker/css/jquery.datetimepicker.min.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+
+<style>
+    .setting-edit {
+        width: 100px;
+    }
+</style>
+
+<div class="main">
+    <div id="divMainHeader">
+        <div id="left_tab1">
+            <ul>
+                <li class="lefticon"></li>
+                <li class="current"><span>@Resources.Language.HeadlineExternalGroupMapping</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="maincontent">
+        <div class="filterBox" style="width: 1142px;">
+            <div class="filterContent">
+                <div>
+                    <table>
+                        <tr>
+                            <td style="min-width: 50px;">
+                                <b>Headline</b>
+                            </td>
+                            <td>
+                                <input type="text" id="txtHeadline" style="width: 110px" />
+                            </td>
+                            <td style="min-width: 50px;">
+                                <b>Site</b>
+                            </td>
+                            <td style="width: 100px">
+                                @Html.DropDownList("ddlSites", Model.Sites, new { style = "width:100px" })
+                            </td>
+                            <td style="min-width: 60px">
+                                <b>Currency</b>
+                            </td>
+                            <td style="width: 100px">
+                                @Html.DropDownList("ddlCurrency", Model.Currencies, new { style = "width:100px" })
+                            </td>
+                            <td style="min-width: 100px">
+                                <b>External Group</b>
+                            </td>
+                            <td style="width: 190px">
+                                @Html.DropDownList("ddlExternalGroups", Model.ExternalGroups, new { style = "width:180px" })
+                            </td>
+                            <td style="min-width: 100px">
+                                <b>Primary Group</b>
+                            </td>
+                            <td style="width: 190px">
+                                @Html.DropDownList("ddlPrimaryGroups", Model.PrimaryGroups, new { style = "width:180px" })
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td colspan="5">
+                                <input type="button" class="btn" id="btnSubmit" value="Submit" onclick="SearchMapping();" />
+                                <input type="button" class="btn" id="btnAddNew" value="Add New Mapping" onclick="AddNewMapping();" />
+                            </td>
+                        </tr>
+                    </table>
+                    <div id="err"></div>
+                </div>
+            </div>
+        </div>
+        <div class="contentBox">
+            <div id="MappingGrid" class="freegrid">
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("~/Views/Admin/HeadlineExternalGroupMapping/_NewGroupMapping.cshtml")
+@Html.Partial("~/Views/Admin/HeadlineExternalGroupMapping/_EditGroupMapping.cshtml")
+
+<iframe id="frameExportExcel" style="display: none"></iframe>
+<script type="text/javascript">
+    window.rootUrl = '@Url.Content("~")';
+    var today = "@DateTime.Today.ToString("MM/dd/yyyy")";
+    var tomorrow = "@DateTime.Today.AddDays(1).ToString("MM/dd/yyyy")";
+</script>
+
+<script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-1.8.2.min.js?v=" + WebSettings.Version)"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-ui-1.9.1.min.js?v=" + WebSettings.Version)"></script>
+<script src="~/js/jQuery/json2.js" type="text/javascript"></script>
+<script src="~/js/jQuery/Jlinq/jlinq.js" type="text/javascript"></script>
+<script src="~/js/jQuery/GridScroller/jquery.gridscroller.1.0.js" type="text/javascript"></script>
+<script src="~/js/jQuery/Pager/jpager.js" type="text/javascript"></script>
+<script src="~/js/jQuery/jquery.blockUI.1.33.js" type="text/javascript"></script>
+<script src="~/js/common.js" type="text/javascript"></script>
+<script src="~/js/ToolTip/Tipsy-Tooltip/jquery.tipsy.js?ver=2" type="text/javascript"></script>
+<script type="text/javascript" src="@Url.Content("~/js/select2/select2.min.js?v=" + WebSettings.Version)"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.validate.js?v=" + WebSettings.Version)"></script>
+<script type="text/javascript" src="@Url.Content("~/js/DateTimePicker/js/jquery.datetimepicker.full.min.js?v=" + WebSettings.Version)"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Grid.js?v=" + WebSettings.Version)"></script>
+<script type="text/javascript" src="@Url.Content("~/js/MultipleSelect/jquery.multiselect.min.js?v=" + WebSettings.Version)"></script>
+<script type="text/javascript" src="@Url.Content("~/Views/Admin/HeadlineExternalGroupMapping/Scripts/index.js?v=" + @WebSettings.Version)"></script>

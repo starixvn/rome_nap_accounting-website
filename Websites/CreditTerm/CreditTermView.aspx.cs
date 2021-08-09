@@ -3,9 +3,11 @@ using DNAide.Core;
 using DNAide.Data;
 using DNAide.Web;
 using Fanex.Tarus.Security.Criteria;
+using Fanex.Tarus.Security.Services;
 using IBCUtils;
 using Sunplus.Accounting.Business.CacheManager;
 using Sunplus.Accounting.Business.Security;
+using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
@@ -13,6 +15,8 @@ using System;
 using System.Data;
 using System.Text;
 using System.Web;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
 
 /// <summary>
 /// CITS
@@ -25,17 +29,31 @@ public partial class CreditTerm_CreditTermView : PageBase
     protected void Page_Load(object sender, EventArgs e)
     {
         Response.Cache.SetCacheability(HttpCacheability.NoCache);
+
+        HtmlLink hl = new HtmlLink();
+
+        hl.Href = "../Scripts/_Libs/FanexGrid/Fanex.Grid.css?v=" + AccCommon.Version();
+        hl.Attributes.Add("type", "text/css");
+        hl.Attributes.Add("rel", "stylesheet");
+
+        Page.Header.Controls.Add(hl);
         content.Text = getcontent();
     }
 
     private string getcontent()
     {
+        var permissionService = new PermissionService();
+        var pageAccess = permissionService.GetPageAccess(AppSession.AccId);
+        var pathActionName = "HeadlineExternalGroupMapping/Index";
+        bool hasPermission = pageAccess.ContainsKey(pathActionName.ToLowerInvariant());
+
         StringBuilder html = new StringBuilder();
         try
         {
             string form = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("CreditTeam/CreditTermViewForm.htm");
             int custid = Convert.ToInt32(Session["CustId"]);
             int userid = Convert.ToInt32(Session["AccId"]);
+            bool isOpenTab = false;
             if (!string.IsNullOrEmpty(Request["btnsubmit"]))
             {
                 if (custid != 0 && userid != 0)
@@ -56,13 +74,16 @@ public partial class CreditTerm_CreditTermView : PageBase
                         int IsGroupHeadline = 0; if (!string.IsNullOrEmpty(Request["groupheadline"])) IsGroupHeadline = 1;
                         int checkerid = CastAide.AsInt32(Request["ddlCheckerList"], 0);
                         var rs = AccountCredit.Acc_CreditTermUpdCustomer(custid, creditgrade, preagreeamount, installmentamount, installmentdate, accountremark, groupid, IsGroupHeadline, userid, checkerid);
-                        msg = AlertMessage.GetMsg(rs.ErrorMessage, rs.ErrorCode == 0 ?  AlertMessage.MsgType.Success:AlertMessage.MsgType.Error);
+                        msg = AlertMessage.GetMsg(rs.ErrorMessage, rs.ErrorCode == 0 ? AlertMessage.MsgType.Success : AlertMessage.MsgType.Error);
+                        isOpenTab = rs.ErrorCode == 0 && IsGroupHeadline == 1;
                         System.Threading.Thread.Sleep(2000);
                     }
                 }
                 else msg = "";
             }
             else msg = "";
+
+            TemplateHandler.Assign(ref form, "{isOpenTab}", (isOpenTab && hasPermission) ? "checked" : string.Empty);
 
             DataTable dt = AccountCredit.Acc_CreditTermSelByCustID(custid).ResultSet.Tables[0];
             foreach (DataRow dr in dt.Rows)
