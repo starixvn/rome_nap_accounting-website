@@ -3267,4 +3267,16 @@
   <data name="Disable170_3701" xml:space="preserve">
     <value>Disabled PP Live Casino</value>
   </data>
+  <data name="Danger4" xml:space="preserve">
+    <value>Basketball</value>
+  </data>
+  <data name="Danger4Old" xml:space="preserve">
+    <value>Basketball (Old)</value>
+  </data>
+  <data name="Danger5" xml:space="preserve">
+    <value>E-Sports</value>
+  </data>
+  <data name="Danger5Old" xml:space="preserve">
+    <value>E-Sports (Old)</value>
+  </data>
 </root>

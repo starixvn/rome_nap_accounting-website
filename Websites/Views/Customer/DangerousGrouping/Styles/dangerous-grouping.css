@@ -33,12 +33,36 @@
     cursor: pointer;
 }
 
-    .hoverable-cell:hover {
-        -ms-transform: scale(1.25); /* IE 9 */
-        -webkit-transform: scale(1.25); /* Safari 3-8 */
-        transform: scale(1.25);
-    }
+.hoverable-cell:hover {
+    -ms-transform: scale(1.25); /* IE 9 */
+    -webkit-transform: scale(1.25); /* Safari 3-8 */
+    transform: scale(1.25);
+}
 
 .updateContent {
     margin-top: 10px;
+}
+
+.dangerdiv {
+    float: left;
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.dangerSingleUsername > div {
+    float: left;
+    display: flex;
+    margin-left: 10px;
+}
+
+.dangerdiv > label {
+    width: 70px;
+    text-align: right;
+}
+
+.customer-danger-cell {
+    margin-left: 5px;
+    display: grid;
+    color: rgb(0, 0, 0);
 }

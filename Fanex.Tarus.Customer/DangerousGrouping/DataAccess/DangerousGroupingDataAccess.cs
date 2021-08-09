@@ -39,7 +39,7 @@ namespace Fanex.Tarus.Customer.DangerousGrouping.DataAccess
                     {
                         Result = new Result(Converter.ToInt(outputParams["errcode"]), Converter.ToString2(outputParams["errmsg"]))
                     };
-                    while (reader.Read())
+                    if(reader.Read())
                     {
                         var isBA = bool.Parse(reader["IsBA"].ToString());
                         var originDangerLevel = int.Parse(reader["danger"].ToString());
@@ -49,10 +49,11 @@ namespace Fanex.Tarus.Customer.DangerousGrouping.DataAccess
                             OriginDanger = (originDangerLevel == 0 && isBA || originDangerLevel == 100) ? BADanger : helper.GetDangerDetailFromValue(originDangerLevel),
                             ABIDanger = helper.GetDangerDetailFromValue(int.Parse(reader["danger2"].ToString())),
                             OtherSportDanger = helper.GetDangerDetailFromValue(int.Parse(reader["danger3"].ToString())),
+                            BasketballDanger = helper.GetDangerDetailFromValue(int.Parse(reader["danger4"].ToString())),
+                            ESportsDanger = helper.GetDangerDetailFromValue(int.Parse(reader["danger5"].ToString())),
                             IsMember = int.Parse(reader["roleid"].ToString()) == (int)Role.Member,
                             IsBA = isBA
                         };
-                        break;
                     }
 
                     return customerDangerResult;

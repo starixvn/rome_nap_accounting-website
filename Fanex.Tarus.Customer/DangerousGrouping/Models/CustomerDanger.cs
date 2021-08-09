@@ -14,6 +14,10 @@
 
         public DangerDetail ABIDanger { get; set; }
 
+        public DangerDetail BasketballDanger { get; set; }
+
+        public DangerDetail ESportsDanger { get; set; }
+
         public DangerDetail OtherSportDanger { get; set; }
     }
 }

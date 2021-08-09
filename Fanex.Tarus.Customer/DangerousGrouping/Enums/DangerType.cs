@@ -4,6 +4,8 @@
     {
         OriginDanger = 1,
         ABIDanger = 2,
-        OtherSportDanger = 3
+        OtherSportDanger = 3,
+        Basketball = 4,
+        ESports = 5
     }
 }
