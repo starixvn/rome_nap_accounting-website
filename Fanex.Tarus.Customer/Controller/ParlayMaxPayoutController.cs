@@ -6,6 +6,7 @@
     using Fanex.Tarus.Customer.Business.ParlayMaxPayout;
     using Fanex.Tarus.Customer.Requests.ParlayMaxPayout;
     using Fanex.Tarus.Web.Controllers;
+    using Fanex.Tarus.Web.Controllers.Filters;
     using System.Web.Mvc;
 
     public class ParlayMaxPayoutController : BaseController
@@ -20,10 +21,13 @@
             _parlayMaxPayoutService = parlayMaxPayoutService ?? new ParlayMaxPayoutService();
         }
 
+        [AuthenticateRead]
         public ActionResult Index(ParlayMaxPayoutSelectRequest request) => View("~/Views/Customer/ParlayMaxPayout/Index.cshtml", _parlayMaxPayoutService.Select(request));
 
+        [AuthenticateRead]
         public JsonResult Check(ParlayMaxPayoutUpdateRequest request) => Json(_parlayMaxPayoutService.Check(request));
 
+        [AuthenticateHost]
         public JsonResult Update(ParlayMaxPayoutUpdateRequest request)
         {
             var checkUmResult = _serviceBase.CheckUM(request.CustId, NonDcsProduct.Sportsbook, "en-US");
