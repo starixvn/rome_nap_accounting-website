@@ -327,6 +327,7 @@
     <Compile Include="Business\NG2\ISyncCustomerService.cs" />
     <Compile Include="Business\NG2\SyncCurrencyService.cs" />
     <Compile Include="Business\NG2\SyncCustomerService.cs" />
+    <Compile Include="Business\ParlayMaxPayout\ParlayMaxPayoutService.cs" />
     <Compile Include="Business\SettingCustomer\OpenCustomer\OpenCustomerService.cs" />
     <Compile Include="Business\SettingCustomer\OpenCustomer\OpenCustomerServiceImpl.cs" />
     <Compile Include="Business\ViewPeriodsCN88\ViewPeriodsCN88Service.cs" />
@@ -365,6 +366,7 @@
     <Compile Include="Controller\CN88Customer\MoveCN88SuperController.cs" />
     <Compile Include="Controller\CopyVRSettingController.cs" />
     <Compile Include="Controller\LicenseeOddGroupController.cs" />
+    <Compile Include="Controller\ParlayMaxPayoutController.cs" />
     <Compile Include="Controller\Player3rdController.cs" />
     <Compile Include="Controller\Setting\OpenCustomerController.cs" />
     <Compile Include="Controller\ViewPeriodsCN88Controller.cs" />
@@ -461,6 +463,9 @@
     <Compile Include="Criteria\ManageRobots2\CheckIsRobotCriteria.cs" />
     <Compile Include="Criteria\LicenseeSubsidiary\GetCopiedAccountsCriteria.cs" />
     <Compile Include="Criteria\NewLicensee\GetCurrenciesBySystemCriteria.cs" />
+    <Compile Include="Criteria\ParlayMaxPayout\MaxPayoutSelectCriteria.cs" />
+    <Compile Include="Criteria\ParlayMaxPayout\MaxPayoutCheckCriteria.cs" />
+    <Compile Include="Criteria\ParlayMaxPayout\MaxPayoutUpdateCriteria.cs" />
     <Compile Include="Criteria\OpenCustomer\GetCloseInfoMatrixCriteria.cs" />
     <Compile Include="Criteria\OpenCustomer\GetSingleOpenDownlinesInfoCriteria.cs" />
     <Compile Include="Criteria\OpenCustomer\GetSingleOpenCustomerInfoCriteria.cs" />
@@ -530,6 +535,7 @@
     <Compile Include="DataAccess\NG2\ISyncCurrencyRepository.cs" />
     <Compile Include="DataAccess\NG2\SyncCustomerRepository.cs" />
     <Compile Include="DataAccess\NG2\SyncCurrencyRepository.cs" />
+    <Compile Include="DataAccess\ParlayMaxPayout\ParlayMaxPayoutDataAccess.cs" />
     <Compile Include="DataAccess\Player3rd\Player3rdDataAccess.cs" />
     <Compile Include="DataAccess\ReplicateLicenseeSettings\IReplicateLicenseeSettingsRepository.cs" />
     <Compile Include="DataAccess\ReplicateLicenseeSettings\ReplicateLicenseeSettingsRepository.cs" />
@@ -653,6 +659,8 @@
     <Compile Include="Requests\CustomerSetting\Suspend\GetSingleSuspendCustomerInfoQuery.cs" />
     <Compile Include="Requests\GetMessageLogsQuery.cs" />
     <Compile Include="Requests\LicenseeOddsGroup\UpdateOddsGroupRequest.cs" />
+    <Compile Include="Requests\ParlayMaxPayout\ParlayMaxPayoutSelectRequest.cs" />
+    <Compile Include="Requests\ParlayMaxPayout\ParlayMaxPayoutUpdateRequest.cs" />
     <Compile Include="Resources\BetCreditHistoryLabels.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -735,6 +743,7 @@
     <Compile Include="ViewModels\LicenseeOddsGroup\AgentOddsGroupViewModel.cs" />
     <Compile Include="ViewModels\LicenseeOddsGroup\FilterViewModel.cs" />
     <Compile Include="ViewModels\LockUnsuspend\LockUnsuspendResultViewModel.cs" />
+    <Compile Include="ViewModels\ParlayMaxPayout\ParlayMaxPayoutViewModel.cs" />
     <Compile Include="ViewModels\ViewPeriodsCN88\ViewPeriodsCN88ViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

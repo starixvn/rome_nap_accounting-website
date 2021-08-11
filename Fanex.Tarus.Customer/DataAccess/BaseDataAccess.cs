@@ -1,9 +1,9 @@
 namespace Fanex.Tarus.Customer.DataAccess
 {
-    using System.Data;
+    using CustomerSetting.Module.Core.Models;
     using Fanex.Data;
     using NAP.Framework.Data;
-    using CustomerSetting.Module.Core.Models;
+    using System.Data;
 
     public class BaseDataAccess
     {

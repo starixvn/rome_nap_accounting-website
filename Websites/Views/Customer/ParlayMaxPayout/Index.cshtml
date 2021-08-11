@@ -1,0 +1,145 @@
+﻿@using Fanex.Tarus.Customer.Resources
+@using Fanex.Tarus.Customer.ViewModels.LicenseeDcsSetting
+@using Fanex.Tarus.Customer.ViewModels.ParlayMaxPayout
+@model ParlayMaxPayoutViewModel
+@{
+    var version = Sunplus.Accounting.Core.Configurations.WebSettings.Version;
+    List<string> rowHeader = new List<string> { Resources.Language.SoccerParlay, Resources.Language.lblMixedSports };
+    int rowIndex = 0;
+}
+
+@section Styles{
+    <link href="@Url.Content("~/App_Themes/jquery-ui.css?v=" + version)" rel="stylesheet" />
+    <style type="text/css">
+        .light-blue {
+            background-color: #b5c4d0;
+        }
+
+        .align-center {
+            text-align: center;
+        }
+
+        tr {
+            line-height: 22px;
+        }
+
+        .parlay-max-payout-table {
+            min-width: 900px;
+            border-collapse: collapse;
+        }
+
+        .input-field, .input-field-unlimited {
+            width: 120px;
+        }
+
+        .no-data {
+            text-align: center;
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+}
+
+@section Scripts{
+    <script src="@Url.Content("~/Js/dialogbox.js?v=" + version)" type="text/javascript"></script>
+    <script src="@Url.Content("~/Areas/CustomerSetting/Views/SearchCopy/Scripts/Libs/formatNumberExtension.js?v=" + version)" type="text/javascript"></script>
+    <script src="@Url.Content("~/Views/Customer/ParlayMaxPayout/Scripts/Index.js?v=" + version)" type="text/javascript"></script>
+    <script type="text/javascript">
+        var originalModel = @Html.Raw(Json.Encode(Model));
+
+    </script>
+}
+
+@helper RenderPayoutBlock(string entityName, string columnName, int sporttype, int bettype, string rowHeader, decimal payoutValue, decimal defaultPayoutValue, bool isUplineUnlimited)
+{
+    var id = sporttype + "_" + bettype + "_" + entityName;
+    var unlimitedId = "chkUnlimited_" + id;
+    <table>
+        <tr>
+            <td>
+                <input id="@id" value="@payoutValue.ToString("#,0")"
+                       onkeyup="formatExt(event, this, false)"
+                       data-original-value="@payoutValue.ToString("#,0")"
+                       data-sporttype="@sporttype"
+                       data-bettype="@bettype"
+                       data-fieldname="@entityName"
+                       data-row-header="@rowHeader"
+                       data-column-name="@columnName"
+                       data-default-payout-value="@defaultPayoutValue.ToString("#,0")"
+                       data-checkbox-unlimited-id="@unlimitedId"
+                       class="r @(payoutValue >0 ? "" : "display-none") input-field" />
+
+                <input id="@(id + "_Unlimited")" value="Unlimited" class="r @(payoutValue > 0? "display-none" : "") input-field-unlimited" disabled />
+            </td>
+            <td>@(defaultPayoutValue == 0 ? "" : "<= " + defaultPayoutValue.ToString("#,0"))  </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                @if (isUplineUnlimited)
+                {
+                    <input id="@unlimitedId" type="checkbox" @(payoutValue == 0 ? "checked" : "") />
+                    <label for="@unlimitedId"> Unlimited</label>
+                }
+            </td>
+        </tr>
+
+    </table>
+}
+<table border="0" cellpadding="0px" cellspacing="0px" class="maincontent_header">
+    <tbody>
+        <tr>
+            <td class="maincontent_headerL"></td>
+            <td class="maincontent_headerC fixfont">
+                Parlay Max Payout
+            </td>
+            <td class="maincontent_headerR"></td>
+        </tr>
+    </tbody>
+</table>
+
+<div id="result-message" class="hidden"></div>
+<table border="1" class="parlay-max-payout-table" style="border-collapse:collapse">
+    <thead>
+        <tr>
+            <td class="light-blue align-center b" colspan="5">
+                Parlay Max Payout: @Model.CustName
+            </td>
+        </tr>
+        <tr>
+            <td class="light-blue align-center"></td>
+            <td class="light-blue align-center b">Single Match Parlay</td>
+            <td class="light-blue align-center b">Combo 2</td>
+            <td class="light-blue align-center b">Combo 3 - 5</td>
+            <td class="light-blue align-center b">Combo 6+ & System Parlay</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var entity in Model.ListEntityModel)
+        {
+            <tr>
+                <td class="light-blue">@rowHeader[rowIndex]</td>
+                <td>@RenderPayoutBlock("SingleMatchParlay", "Single Match Parlay", entity.SportType, entity.Bettype, rowHeader[rowIndex], entity.SingleMatchParlay, entity.UplineSingleMatchParlay, entity.IsAllowUnlimitedSingleMatchParlay)</td>
+                <td>@RenderPayoutBlock("Combo2", "Combo 2", entity.SportType, entity.Bettype, rowHeader[rowIndex], entity.Combo2, entity.UplineCombo2, entity.IsAllowUnlimitedCombo2)</td>
+                <td>@RenderPayoutBlock("Combo35", "Combo 3 - 5", entity.SportType, entity.Bettype, rowHeader[rowIndex], entity.Combo35, entity.UplineCombo35, entity.IsAllowUnlimitedCombo35)</td>
+                <td>@RenderPayoutBlock("ComboOver6", "Combo 6+ & System Parlay", entity.SportType, entity.Bettype, rowHeader[rowIndex], entity.ComboOver6, entity.UplineComboOver6, entity.IsAllowUnlimitedComboOver6)</td>
+            </tr>
+            rowIndex++;
+        }
+        @if (!Model.ListEntityModel.Any())
+        {
+
+            <tr>
+                <td colspan="5" class="no-data">
+                    There is no data.
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@if (Model.ListEntityModel.Any())
+{
+    <input id="btnUpdate" type="button" class="btn" style="margin-top:10px;" value="Update" />
+}
+<input id="txtCustId" type="hidden" value="@Model.CustId" />
+<input id="txtCustName" type="hidden" value="@Model.CustName" />
+<input id="txtRoleId" type="hidden" value="@Model.RoleId" />

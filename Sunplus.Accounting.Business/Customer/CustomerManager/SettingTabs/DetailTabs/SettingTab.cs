@@ -242,6 +242,8 @@
             TemplateHandler.RemoveBlock(ref htmlcontent, "editTransferTime");
             TemplateHandler.RemoveBlock(ref htmlcontent, "maxexposure");
             TemplateHandler.RemoveBlock(ref htmlcontent, "detail_edit_menu");
+            TemplateHandler.RemoveBlock(ref htmlcontent, "parlayMaxPayout");
+            
             return htmlcontent;
         }
     }
