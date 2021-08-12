@@ -35,7 +35,8 @@
         statusResetWinningEnums: {
             resetSuccessful: 0,
             notReset: 2,
-            notPermission: 1008
+            notPermission: 1008,
+            moveBetsDayChanged: 1
         }
     };
 
@@ -208,7 +209,13 @@
             dataType: "json",
             data: JSON.stringify(params),
             success: function (rs) {
-                self.renderResetWinningForSpecificDayAfterMovebetDay(rs);
+                if (rs.IsError) {
+                    alert(rs.ErrorMessage);
+                    location.href = location.href;
+                } else {
+                    self.renderResetWinningForSpecificDayAfterMovebetDay(rs);
+                }
+
                 parent.jQuery.unblockUI();
             },
             error: function () {
@@ -331,6 +338,10 @@
                     showAlertMessage("errMsg", rs.ErrorMessage, 2);
                     //setTimeout(self.getResetWinningForSpecificDayAfterMovebetDay(), 10000);
                 }
+                else if (rs.ErrorCode == enums.statusResetWinningEnums.moveBetsDayChanged) {
+                    alert(rs.ErrorMessage);
+                    location.href = location.href;
+                }
                 else {
                     showAlertMessage("errMsg", rs.ErrorMessage, 1);
                 }
@@ -352,7 +363,13 @@
             dataType: "json",
             data: JSON.stringify(params),
             success: function (rs) {
-                self.renderResetWinningSinceLastMovebetDay(rs);
+                if (rs.IsError) {
+                    alert(rs.ErrorMessage);
+                    location.href = location.href;
+                } else {
+                    self.renderResetWinningSinceLastMovebetDay(rs);
+                }
+
                 parent.jQuery.unblockUI();
             },
             error: function () {
@@ -443,7 +460,7 @@
         }
 
         var headerHtml =
-        '<thead>\
+            '<thead>\
             <tr>\
                 <th style="border-bottom: none 0px;">\
                     <div class="col140 c">\
@@ -459,8 +476,8 @@
                 </th>\
                 <th style="border-bottom: none 0px;">\
                     <div class="col120 c">' +
-                            resetHtml +
-                '</th>\
+            resetHtml +
+            '</th>\
                 <th style="border-bottom: none 0px;">\
                     <div class="col120 c">\
                         Variance</div>\
@@ -534,6 +551,10 @@
                 else if (rs.ErrorCode == enums.statusResetWinningEnums.notReset) {
                     showAlertMessage("errMsg", "No products need to reset winning!", 2);
                 }
+                else if (rs.ErrorCode == enums.statusResetWinningEnums.moveBetsDayChanged) {
+                    alert(rs.ErrorMessage);
+                    location.href = location.href;
+                }
                 else {
                     showAlertMessage("errMsg", rs.ErrorMessage, 1);
                 }
@@ -557,7 +578,13 @@
             dataType: "json",
             data: JSON.stringify(params),
             success: function (rs) {
-                self.renderResetWinningByDayAfterReset(rs);
+                if (rs.IsError) {
+                    alert(rs.ErrorMessage);
+                    location.href = location.href;
+                } else {
+                    self.renderResetWinningByDayAfterReset(rs);
+                }
+
                 parent.jQuery.unblockUI();
             },
             error: function () {
@@ -621,8 +648,8 @@
 
     self.compareDateTime = function (dateCompare, dateToCompare) {
         if (dateCompare.getDate() == dateToCompare.getDate() &&
-        dateCompare.getMonth() == dateToCompare.getMonth() &&
-        dateCompare.getYear() == dateToCompare.getYear()) {
+            dateCompare.getMonth() == dateToCompare.getMonth() &&
+            dateCompare.getYear() == dateToCompare.getYear()) {
             return true;
         }
         else {
