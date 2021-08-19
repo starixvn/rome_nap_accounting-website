@@ -1018,6 +1018,9 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
         case 173: // VGaming
             // custId, gameroundid, gameid, siteId, sporttype, currencyname
             return getVGamingParam(betcheck, transdesc, bettype, matchcode, sporttype, username);
+
+        case 175: //Bitcoin
+            return getBitcoinParam(matchid, sporttype);
 	case 172: // AdvantPlay
             return getAdvantPlayParam(transdesc, betcheck, matchcode, betid);
 
@@ -1145,6 +1148,14 @@ function getNumberGameParam(matchid) {
         url: "Betlist/BetListNumberGameResult.aspx",
         title: "Number Game",
         jsonParam: { matchid: matchid }
+    };
+}
+
+function getBitcoinParam(matchid, sporttype) {
+    return {
+        url: "Report/ViewBitcoinResult.aspx",
+        title: "Bitcoin",
+        jsonParam: { matchid: matchid, sporttype: sporttype }
     };
 }
 

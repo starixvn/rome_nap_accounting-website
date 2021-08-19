@@ -39,6 +39,7 @@
     <Setting Key="BetList_SelByRefNo" SpName="Acc_BetList_SelByRefNo" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="BetList_SelByProduct" SpName="Acc_BetList_SelByProduct" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="All_BetList_MatchResultGDSel" SpName="All_BetList_MatchResultGDSel" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_BetList_Match3rdResultSel" SpName="Acc_BetList_Match3rdResultSel" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Customer - New Customer (NEW)">
     <Setting Key="Acc_CustomerSelSAgList" SpName="Acc_CustomerSelSAgList" DbName="DBAGE.bodb02.bodbAdminNet" />
