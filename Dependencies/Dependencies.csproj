@@ -132,7 +132,7 @@
       <HintPath>..\packages\Fanex.BetList.BG.1.0.0\lib\net40\Fanex.BetList.BG.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.Bitcoin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Bitcoin.1.0.0-beta-02\lib\net40\Fanex.BetList.Bitcoin.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.Bitcoin.1.0.0-beta-03\lib\net40\Fanex.BetList.Bitcoin.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.CardClub, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.CardClub.1.0.4\lib\net40\Fanex.BetList.CardClub.dll</HintPath>
