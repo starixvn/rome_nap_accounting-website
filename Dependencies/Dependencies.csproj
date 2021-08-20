@@ -407,7 +407,7 @@
       <HintPath>..\packages\Fanex.Result.Core.BG.1.0.0\lib\Fanex.Result.Core.BG.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Result.Core.Bitcoin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core-Bitcoin.1.0.0-beta-03\lib\net40\Fanex.Result.Core.Bitcoin.dll</HintPath>
+      <HintPath>..\packages\Fanex.Result.Core-Bitcoin.1.0.0-beta-04\lib\net40\Fanex.Result.Core.Bitcoin.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Result.Core.CardClub, Version=1.0.1.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.CardClub.1.0.1.1\lib\net40\Fanex.Result.Core.CardClub.dll</HintPath>

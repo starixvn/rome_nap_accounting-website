@@ -8,7 +8,7 @@
     <link href="../App_Themes/Public/common.css" rel="stylesheet" type="text/css" />
     <link rel="Stylesheet" type ="text/css" href ="../App_Themes/BetList/Betlist.css" />
     <link rel="stylesheet" type="text/css" href="../App_Themes/Public/table.css"/>
-    <link rel="stylesheet" type="text/css" href="../Content/Fanex.Result/fanex.result.css"/>
+    <link rel="stylesheet" type="text/css" href="../Content/Fanex.Result/fanex.result.css?v=1.1"/>
     <link rel="stylesheet" type="text/css" href="../Content/Fanex.Result/fanex.result-customized.css"/>
 </head>
 <body>

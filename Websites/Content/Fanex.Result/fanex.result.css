@@ -191,6 +191,11 @@ table {
             color: #fd537d;
         }
 
+        table.fn-rs .cl-price {
+            width: 112px;
+            font-weight: bold;
+        }
+
         table.fn-rs .cl-m-code {
             width: 112px;
         }

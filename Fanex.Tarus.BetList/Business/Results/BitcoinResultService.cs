@@ -47,7 +47,7 @@ namespace Fanex.Tarus.BetList.Business.Results
                 IsPopupOpenFromBetList = true,
                 LanguageCode = "en-US",
                 VisibleMatchCodeIDColumn = false,
-                VisiblePopUpTitle = true
+                VisiblePopUpTitle = false
             };
         }
     }
