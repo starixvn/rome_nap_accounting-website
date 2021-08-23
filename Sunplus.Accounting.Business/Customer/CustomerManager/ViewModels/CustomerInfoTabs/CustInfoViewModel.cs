@@ -123,6 +123,8 @@
 
         public CustomerLockedAccess LockedAccess => new CustomerLockedAccess(Utils.ToByte(customerInfoRow["Locked"]));
 
+        public bool IsProtectedMode => Utils.ToBoolean(customerInfoRow["IsProtectedMode"]);
+
         public int CN88CustStatus => Utils.ToInt32(customerInfoRow["CN88CustStatus"]);
 
         public string CN88CustStatusName => CN88CustomerStatusConstants.StatusName(this.CN88CustStatus);

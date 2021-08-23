@@ -155,5 +155,13 @@ namespace Fanex.Tarus.Customer.Controller.Setting
 
             return Json(result, JsonRequestBehavior.DenyGet);
         }
+
+        [HttpPost, CheckPermission(Permission = CheckPermissionAttribute.Auth.Host)]
+        public JsonResult UpdateProtectedStatus(int custId, bool isProtected)
+        {
+            var result = _customerSetting.UpdateProtectedStatus(custId, isProtected, AppSession.AccId, Utils.GetClientIP());
+
+            return Json(result, JsonRequestBehavior.DenyGet);
+        }
     }
 }

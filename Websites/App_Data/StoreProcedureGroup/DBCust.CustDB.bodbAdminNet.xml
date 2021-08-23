@@ -448,4 +448,7 @@
     <Setting Key="Acc_CustSetting_WinLossLimitSelect" SpName="Acc_CustSetting_WinLossLimitSelect" DbName="DBCUST.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustSetting_WinLossLimitUpd" SpName="Acc_CustSetting_WinLossLimitUpd" DbName="DBCUST.CustDB.bodbAdminNet" />
   </Function>
+  <Function Name="Protected Status">
+    <Setting Key="Age_CustomerUpdProtectedMode" SpName="Age_CustomerUpdProtectedMode" DbName="DBCUST.CustDB.bodbAdminNet" />
+  </Function>
 </Functions>

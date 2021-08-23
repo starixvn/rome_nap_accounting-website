@@ -92,5 +92,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
         dynamic GetSuperPrefixes(SuperPrefixCriteria criteria);
 
         CustomerSetting.Module.Core.Models.Result UnlockAccess(int custId, int userId, string ip);
+
+        CustomerSetting.Module.Core.Models.Result UpdateProtectedStatus(int custId, bool isProtected, int userId, string ip);
     }
 }

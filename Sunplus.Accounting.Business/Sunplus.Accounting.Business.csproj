@@ -274,8 +274,8 @@
     <Reference Include="Sunplus.Accounting.Core, Version=2.0.4.7, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Accounting.Core.2.0.4.7\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.3.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.3.5\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
+    <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.3.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.3.6-pc01\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.Entities, Version=2.0.1.7, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Accounting.Entities.2.0.1.7\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
@@ -379,6 +379,7 @@
     <Compile Include="CreditTerm\ICreditTermManager.cs" />
     <Compile Include="Criteria\AddMarkDirectAccountSettingControlCriteria.cs" />
     <Compile Include="Customer\AbnormalSetting.cs" />
+    <Compile Include="Customer\CustomerManager\CustomerAppSettings.cs" />
     <Compile Include="Customer\CustomerManager\SettingTabs\EnableStatusTab\ConfigureDirectAccount\ConfigureDirectAccountService.cs" />
     <Compile Include="Customer\CustomerManager\SettingTabs\EnableStatusTab\ConfigureDirectAccount\DirectAccountStatusInfo.cs" />
     <Compile Include="Customer\CustomerManager\ExtraCustomerInfoTabs\DownLineList.cs" />
