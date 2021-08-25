@@ -444,4 +444,7 @@
     <Setting Key="Acc_CustSetting_MaxPayoutUpd" SpName="Acc_CustSetting_MaxPayoutUpd" DbName="DBCUST.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustSetting_MaxPayoutCheckDownline" SpName="Acc_CustSetting_MaxPayoutCheckDownline" DbName="DBCUST.CustDB.bodbAdminNet" />
   </Function>
+  <Function Name="Customer - Copy Super Setting">
+    <Setting Key="Acc_CopySetting_CustomerCheckSuperList" SpName="Acc_CopySetting_CustomerCheckSuperList" DbName="DBCUST.CustDB.bodbAdminNet" />
+  </Function>
 </Functions>

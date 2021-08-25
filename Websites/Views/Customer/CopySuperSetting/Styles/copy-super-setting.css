@@ -1,0 +1,14 @@
+﻿.inputSuper {
+    margin-top: 10px;
+}
+.selectHeader {
+    display: inline-flex;
+}
+
+.selectHeader > input {
+    margin: 5px 5px;
+}
+
+.setting-actions {
+    margin-top: 10px;
+}
