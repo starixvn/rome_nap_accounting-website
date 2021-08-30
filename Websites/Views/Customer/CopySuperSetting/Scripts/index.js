@@ -50,7 +50,7 @@ function RenderSports(sports) {
         row.Columns.push({ Name: 'Name', Value: sports[i].Name });
         row.Columns.push({
             Name: 'Select',
-            Value: '<input type="checkbox" onChange="UpdateSports(' + i + ')" >'
+            Value: '<input type="checkbox" class="ckbSport" id="sportType' + sports[i].Id +'" onChange="UpdateSports(' + i + ')" >'
         });
         bodyRows.push(row);
     }
@@ -66,4 +66,21 @@ function RenderSports(sports) {
     };
 
     $('#settings').fanexGrid(gridOptions);
+}
+
+function SelectAllSports(value) {
+    settings.SportTypes.forEach(type => type.Selected = value);
+    $('.ckbSport').prop('checked', value === 1);
+}
+
+function UpdateSports(index) {
+    if ($('#sportType' + settings.SportTypes[index].Id).prop('checked')) {
+        settings.SportTypes[index].Selected = 1;
+    } else {
+        settings.SportTypes[index].Selected = 0;
+    }
+}
+
+function ApplySetting() {
+    console.log(settings.SportTypes);
 }
