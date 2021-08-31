@@ -28,6 +28,7 @@ function CheckSuper() {
         success: function (data) {
             settings = data;
             if (data.Result.ErrorCode === 0) {
+                EnableDisableInput(true);
                 $("#superSetting").removeClass("hidden");
                 RenderSports(data.SportTypes);
             } else {
@@ -88,7 +89,8 @@ function ApplySetting() {
     var request = {
         SportTypes: settings.SportTypes.filter(sport => sport.Selected === 1),
         CustId: settings.CustId,
-        SuperIds: settings.SuperListIds
+        SuperIds: settings.SuperListIds,
+        SuperList: settings.SuperList,
     };
 
     $.ajax({
@@ -124,3 +126,44 @@ function ShowUpdateResultMessage(result) {
         }
     }
 }
+
+function ResetSelect() {
+    settings = null;
+    EnableDisableInput(false);
+    $("#superlist").val('');
+    $("#sourcesuper").val('');
+    $("#superSetting").addClass("hidden");
+    $('#settings').html('');
+    $('#errMsg').html('');
+    $('#errSupers').html('');
+}
+
+function EnableDisableInput(flag) {
+    $("#sourcesuper").prop('disabled', flag);
+    $("#superlist").prop('disabled', flag);
+    $("#btnCheckSupers").prop('disabled', flag);
+}
+
+$(document).ready(function () {
+    $("#superlist").off("change").on("change", function () {
+        var superlist = $("#superlist");
+        var superlistValue = $.trim(superlist.val());
+        if (superlistValue.length > 0) {
+            if (superlistValue.indexOf("\n") >= 0) {
+                superlistValue = superlistValue.replace(/\n/g, " ");
+            }
+
+            if (superlistValue.indexOf("\r") >= 0) {
+                superlistValue = superlistValue.replace(/\r/g, " ");
+            }
+
+            if (superlistValue.indexOf("\t") >= 0) {
+                superlistValue = superlistValue.replace(/\t/g, " ");
+            }
+
+            superlistValue = superlistValue.replace(/\s/g, ",");
+            var superlistArray = superlistValue.split(",").filter(item => item.length > 0);
+            superlist.val(superlistArray.join(","));
+        }
+    });
+});

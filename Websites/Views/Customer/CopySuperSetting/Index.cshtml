@@ -33,7 +33,7 @@
                                 Source Super<span style="color: red;">*</span>
                             </label>
                             <br />
-                            <input type="text" style="margin-top: 5px;" id="sourcesuper" />
+                            <input type="text" style="margin-top: 5px;" id="sourcesuper" maxlength="30"/>
                         </div>
                         <div class="inputSuper">
                             <label for="superlist">
@@ -42,7 +42,7 @@
                             <br />
                             <textarea type="text" style="margin-top: 5px;" id="superlist" rows="15" cols="100"></textarea>
                         </div>
-                        <input type="button" value="Select" class="btn inputSuper" onclick="CheckSuper()" />
+                        <input type="button" id="btnCheckSupers" value="Select" class="btn inputSuper" onclick="CheckSuper()" />
                     </div>
                 </div>
                 <div id="superSetting" class="setting-actions hidden">
