@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Fanex.Data;
     using Fanex.Tarus.Customer.Criteria.CopySuperSetting;
     using Fanex.Tarus.Customer.Entities;
@@ -29,16 +30,18 @@
                     var response = new CheckSuperListResult();
                     using (var reader = db.ExecuteReader(criteria.GetSpParams()))
                     {
-                        var sportList = new List<BaseModel>();
+                        var sportList = new List<SportType>();
                         var superList = new List<BaseModel>();
 
                         while (reader.Read())
                         {
+                            var productId = int.Parse(reader["productid"].ToString());
                             var sportTypeId = int.Parse(reader["SportType"].ToString());
-                            var sport = new BaseModel
+                            var sport = new SportType
                             {
-                                Id = sportTypeId,
-                                Name = CacheRef.GetSportName(sportTypeId)
+                                ProductId = productId,
+                                SportTypeId = sportTypeId,
+                                SportTypeName = CacheRef.GetSportName(sportTypeId)
                             };
 
                             sportList.Add(sport);
@@ -59,6 +62,7 @@
                             }
 
                             response.SuperList = superList;
+                            response.SuperListIds = string.Join(",", superList.Select(sp => sp.Id.ToString()));
                         }
                     }
 

@@ -75,7 +75,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Casino, Version=2.0.4.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.Casino.2.0.5.2\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.Casino.2.0.5.3-Beta1\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.2.0.5\lib\net461\Fanex.CustomerSetting.Module.Core.dll</HintPath>
@@ -112,6 +112,9 @@
     </Reference>
     <Reference Include="Fanex.Tarus.Business.Implement, Version=1.0.1.8, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Business.Implement.1.0.1.8\lib\net40\Fanex.Tarus.Business.Implement.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Tarus.CopySuperWinlossSetting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.CopySuperWinlossSetting.1.0.0-beta001\lib\net461\Fanex.Tarus.CopySuperWinlossSetting.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.3\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
@@ -616,6 +619,8 @@
     <Compile Include="Entities\ConfigureDirectAccount\ImportDirectAccountResult.cs" />
     <Compile Include="Entities\ConfigureDirectAccount\UpdateDirectAccountStatusEffectInfo.cs" />
     <Compile Include="Entities\CopySuperSetting\CheckSuperListResult.cs" />
+    <Compile Include="Entities\CopySuperSetting\CopyWinLostLimitResult.cs" />
+    <Compile Include="Entities\CopySuperSetting\SportType.cs" />
     <Compile Include="Entities\CopyVRSetting\CopyResultEntity.cs" />
     <Compile Include="Entities\CreditCustomer\Currency.cs" />
     <Compile Include="Entities\CreditCustomer\CustomerSettingView.cs" />
@@ -670,6 +675,7 @@
     <Compile Include="Requests\CN88\MoveSuper\MoveSuperRequest.cs" />
     <Compile Include="Requests\CN88\UpdateCreditParam.cs" />
     <Compile Include="Requests\CopySuperSetting\CheckSuperListRequest.cs" />
+    <Compile Include="Requests\CopySuperSetting\UpdateWinLossLimitRequest.cs" />
     <Compile Include="Requests\CreditCustomer\SuperPrefixQuery.cs" />
     <Compile Include="Requests\CustomerSetting\OpenCustomer\GetSingleOpenDownlinesInfoQuery.cs" />
     <Compile Include="Requests\CustomerSetting\OpenCustomer\GetSingleOpenCustomerInfoQuery.cs" />

@@ -1,6 +1,7 @@
 ﻿var settings = null;
 function CheckSuper() {
     $('#errMsg').html('');
+    $('#errSupers').html('');
     var sourceSuper = $("#sourcesuper").val();
     if (sourceSuper === "") {
         showAlertMessage('errMsg', "Please input source super.", 1);
@@ -47,10 +48,10 @@ function RenderSports(sports) {
     var rowCount = sports.length;
     for (var i = 0; i < rowCount; i++) {
         var row = { Columns: [] };
-        row.Columns.push({ Name: 'Name', Value: sports[i].Name });
+        row.Columns.push({ Name: 'Name', Value: sports[i].SportTypeName });
         row.Columns.push({
             Name: 'Select',
-            Value: '<input type="checkbox" class="ckbSport" id="sportType' + sports[i].Id +'" onChange="UpdateSports(' + i + ')" >'
+            Value: '<input type="checkbox" class="ckbSport" id="sportType' + sports[i].SportTypeId +'" onChange="UpdateSports(' + i + ')" >'
         });
         bodyRows.push(row);
     }
@@ -74,7 +75,7 @@ function SelectAllSports(value) {
 }
 
 function UpdateSports(index) {
-    if ($('#sportType' + settings.SportTypes[index].Id).prop('checked')) {
+    if ($('#sportType' + settings.SportTypes[index].SportTypeId).prop('checked')) {
         settings.SportTypes[index].Selected = 1;
     } else {
         settings.SportTypes[index].Selected = 0;
@@ -82,5 +83,44 @@ function UpdateSports(index) {
 }
 
 function ApplySetting() {
-    console.log(settings.SportTypes);
+    $('#errMsg').html('');
+    $('#errSupers').html('');
+    var request = {
+        SportTypes: settings.SportTypes.filter(sport => sport.Selected === 1),
+        CustId: settings.CustId,
+        SuperIds: settings.SuperListIds
+    };
+
+    $.ajax({
+        type: "POST",
+        url: "CopyWinLossLimit",
+        contentType: "application/json",
+        data: JSON.stringify(request),
+        beforeSend: function () { try { parent.BlockUI(); } catch (e) { } },
+        success: function (data) {
+            ShowUpdateResultMessage(data);
+        },
+        error: function (err) {
+            showAlertMessage('errMsg', 'Internal server error.', 1);
+        },
+        complete: function () {
+            parent.jQuery.unblockUI();
+        }
+    });
+}
+
+function ShowUpdateResultMessage(result) {
+    if (result.CopyErrors !== undefined && result.CopyErrors !== null && result.CopyErrors.length) {
+        if (result.ErrorCode === 0) {
+            showAlertMessage('errMsg', 'All accounts have been successfully copied except the following accounts:', 0);
+        }
+        var errorSupers = result.CopyErrors.map(rs => rs.ErrorMessage).join('<br />');
+        showAlertMessage('errSupers', errorSupers, 1);
+    } else {
+        if (result.ErrorCode === 0) {
+            showAlertMessage('errMsg', 'All accounts have been successfully copied.', 0);
+        } else {
+            showAlertMessage('errMsg', result.ErrorMessage, 1);
+        }
+    }
 }
