@@ -90,25 +90,17 @@ function ApplySetting() {
         SportTypes: settings.SportTypes.filter(sport => sport.Selected === 1),
         CustId: settings.CustId,
         SuperIds: settings.SuperListIds,
-        SuperList: settings.SuperList,
+        SuperList: settings.SuperList
     };
 
-    $.ajax({
-        type: "POST",
-        url: "CopyWinLossLimit",
-        contentType: "application/json",
-        data: JSON.stringify(request),
-        beforeSend: function () { try { parent.BlockUI(); } catch (e) { } },
-        success: function (data) {
-            ShowUpdateResultMessage(data);
-        },
-        error: function (err) {
-            showAlertMessage('errMsg', 'Internal server error.', 1);
-        },
-        complete: function () {
-            parent.jQuery.unblockUI();
-        }
-    });
+    if (request.SportTypes === null || request.SportTypes.length === 0) {
+        return;
+    }
+
+    if (confirm("Are you sure you want to copy the Maximum Win Loss Limit from the source super to the destination ones?")) {
+        ValidateBeforUpdate(request);
+    }
+    
 }
 
 function ShowUpdateResultMessage(result) {
@@ -142,6 +134,53 @@ function EnableDisableInput(flag) {
     $("#sourcesuper").prop('disabled', flag);
     $("#superlist").prop('disabled', flag);
     $("#btnCheckSupers").prop('disabled', flag);
+}
+
+function ValidateBeforUpdate(request) {
+    var sourceSuper = $("#sourcesuper").val();
+    var superList = $("#superlist").val();
+    var validateRequest = {
+        SourceSuper: sourceSuper,
+        SuperList: superList
+    };
+    $.ajax({
+        type: "POST",
+        url: "CheckSuper",
+        contentType: "application/json",
+        data: JSON.stringify(validateRequest),
+        beforeSend: function () { try { parent.BlockUI(); } catch (e) { } },
+        success: function (data) {
+            if (data.Result.ErrorCode === 0) {
+                CallAPIUpdate(request);
+            } else {
+                showAlertMessage('errMsg', data.Result.ErrorMessage, 1);
+                parent.jQuery.unblockUI();
+            }
+        },
+        error: function (err) {
+            showAlertMessage('errMsg', 'Internal server error.', 1);
+            parent.jQuery.unblockUI();
+        }
+    });
+}
+
+function CallAPIUpdate(request) {
+    $.ajax({
+        type: "POST",
+        url: "CopyWinLossLimit",
+        contentType: "application/json",
+        data: JSON.stringify(request),
+        beforeSend: function () { try { parent.BlockUI(); } catch (e) { } },
+        success: function (data) {
+            ShowUpdateResultMessage(data);
+        },
+        error: function (err) {
+            showAlertMessage('errMsg', 'Internal server error.', 1);
+        },
+        complete: function () {
+            parent.jQuery.unblockUI();
+        }
+    });
 }
 
 $(document).ready(function () {
