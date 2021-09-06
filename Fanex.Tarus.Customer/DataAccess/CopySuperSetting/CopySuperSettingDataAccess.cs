@@ -16,6 +16,7 @@
     }
     public class CopySuperSettingDataAccess : BaseDataAccess, ICopySuperSettingDataAccess
     {
+        private readonly int[] RepresentProductIds = new int[] {5};
         public CheckSuperListResult CheckSuperList(CheckSuperListCriteria criteria)
         {
             try
@@ -37,11 +38,12 @@
                         {
                             var productId = int.Parse(reader["productid"].ToString());
                             var sportTypeId = int.Parse(reader["SportType"].ToString());
+                            var sportTypeName = RepresentProductIds.Contains(productId) ? CacheRef.GetProductName(productId) : CacheRef.GetSportName(sportTypeId);
                             var sport = new SportType
                             {
                                 ProductId = productId,
                                 SportTypeId = sportTypeId,
-                                SportTypeName = CacheRef.GetSportName(sportTypeId)
+                                SportTypeName = sportTypeName
                             };
 
                             sportList.Add(sport);
