@@ -56,7 +56,7 @@
             if (casinoSportType != null)
             {
                 processedCount += superIds.Count;
-                var casinoResult = memberWinLimitPartialService.MultipleCopySuperMemberWinLimit(request.CustId, superIds, userId);
+                var casinoResult = memberWinLimitPartialService.MultipleCopySuperMemberWinLimit(request.CustId, superIds, userId, request.SourceUsername);
 
                 errorResults.AddRange(casinoResult.Where(result => !result.ResultError.IsSuccess).Select(result => MappingCustErrorMessage(result.ResultError.ErrorCode, result.ResultError.ErrorMessage, result.CustId, request.SuperList.ToList())));
             }
@@ -76,7 +76,8 @@
                     SourceCustId = request.CustId,
                     TargetCustIds = request.SuperIds,
                     UserId = userId,
-                    Products = products
+                    Products = products,
+                    SourceCustName = request.SourceUsername
                 };
 
                 var otherResults = copySuperWinlossSettingService.Copy(copySuperWinlossSettingRequest);

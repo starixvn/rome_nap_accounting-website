@@ -12,6 +12,8 @@ namespace Fanex.Tarus.Customer.Requests.CopySuperSetting
 
         public int CustId { get; set; }
 
+        public string SourceUsername { get; set; }
+
         public string SuperIds { get; set; }
     }
 }

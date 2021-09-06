@@ -91,7 +91,8 @@ function ApplySetting() {
         SportTypes: settings.SportTypes.filter(sport => sport.Selected === 1),
         CustId: settings.CustId,
         SuperIds: settings.SuperListIds,
-        SuperList: settings.SuperList
+        SuperList: settings.SuperList,
+        SourceUsername: $("#sourcesuper").val()
     };
 
     if (request.SportTypes === null || request.SportTypes.length === 0) {
