@@ -64,7 +64,8 @@ function RenderSports(sports) {
             { HeaderText: "Copy<br /><div class=\"selectHeader\"><input type=\"button\" value=\"Select All\" class=\"btn\" onclick=\"SelectAllSports(1)\" /><input type=\"button\" value=\"Deselect All\" class=\"btn\" onclick=\"SelectAllSports(0)\" /> </div>", Width: 150, Name: "Select", HeaderAlign: "center", CellAlign: "center" }
         ],
         bodyRows: bodyRows,
-        showDistinctRow: true
+        showDistinctRow: true,
+        gridExpandHeight: 0
     };
 
     $('#settings').fanexGrid(gridOptions);
