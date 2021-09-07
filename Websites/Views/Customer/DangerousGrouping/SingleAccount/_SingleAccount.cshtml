@@ -2,34 +2,48 @@
 <div style="display:inline-block; width: 420px">
     <div class="bg_table">
         <form id="getUserDanger" class="formUsername" autocomplete="off">
-            <div>
-                <div style="float: left; display:flex;">
+            <div class="dangerSingleUsername">
+                <div>
                     <label for="username" style="margin:auto;">Username (<span style="color: red;">*</span>):</label>
                     <input id="username" type="text" maxlength="255" required style="height: 20px; width: 200px;">
                 </div>
-                <div style="float: left; display:flex; margin-left:10px;">
+                <div>
                     <input class="btn" style="margin: auto;" type="submit" onclick="" value="Submit" />
                     <span style="margin: auto 5px;" id="singleNoteMessageInfo" class="note-info-message" title=""></span>
                 </div>
             </div>
-
-            <div style="margin-top:20px;float: left;">
-                <div style="margin-left: 10px; align-items:center; float: left; display: flex;">
-                    <label>Original: </label>
-                    <div id="customerOriginDanger" class="dangerous-cell" style="margin-left: 5px; display: grid; color: rgb(0, 0, 0);">
-                    </div>
-                </div>
-                <div style="margin-left: 30px; align-items:center; float: left; display: flex;">
-                    <label>ABI: </label>
-                    <div id="customerABIDanger" class="dangerous-cell" style="margin-left: 5px; display: grid; color: rgb(0, 0, 0);">
-                    </div>
-                </div>
-                <div style="margin-left: 30px; align-items:center; float: left; display: flex;">
-                    <label>Other Sports: </label>
-                    <div id="customerOtherDanger" class="dangerous-cell" style="margin-left: 5px; display: grid; color: rgb(0, 0, 0);">
-                    </div>
-                </div>
-            </div>
+            <table>
+                <tr>
+                    <td class="dangerdiv">
+                        <label>Original: </label>
+                        <div id="customerOriginDanger" class="customer-danger-cell dangerous-cell">
+                        </div>
+                    </td>
+                    <td class="dangerdiv">
+                        <label>ABI: </label>
+                        <div id="customerABIDanger" class="customer-danger-cell dangerous-cell">
+                        </div>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="dangerdiv">
+                        <label>Basketball: </label>
+                        <div id="customerBasketballDanger" class="customer-danger-cell dangerous-cell">
+                        </div>
+                    </td>
+                    <td class="dangerdiv">
+                        <label>E-Sports: </label>
+                        <div id="customerESportsDanger" class="customer-danger-cell dangerous-cell">
+                        </div>
+                    </td>
+                    <td class="dangerdiv">
+                        <label>Other Sports: </label>
+                        <div id="customerOtherDanger" class="customer-danger-cell dangerous-cell">
+                        </div>
+                    </td>
+                </tr>
+            </table>
         </form>
     </div>
     <div class="updateContent bg_table">
@@ -40,6 +54,8 @@
                     <option selected disabled hidden>Choose type to update dangerous</option>
                     <option value="Origin">Original</option>
                     <option value="ABI">ABI</option>
+                    <option value="Basketball">Basketball</option>
+                    <option value="ESports">E-Sports</option>
                     <option value="OtherSports">Other Sports</option>
                 </select>
                 <div id="selectedSingleLevelContent" style="margin-left: 30px; display:none; align-items:center;">

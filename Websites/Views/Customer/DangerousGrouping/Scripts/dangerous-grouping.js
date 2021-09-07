@@ -88,15 +88,17 @@ function InitCustomerDanger() {
     } else {
         $("#div-hasdownline").removeClass('hide');
     }
-    DrawDangerCell($("#customerOriginDanger"), customerDanger.OriginDanger.Color, customerDanger.OriginDanger.BackgroundColor, customerDanger.OriginDanger.Name)
-    DrawDangerCell($("#customerABIDanger"), customerDanger.ABIDanger.Color, customerDanger.ABIDanger.BackgroundColor, customerDanger.ABIDanger.Name)
-    DrawDangerCell($("#customerOtherDanger"), customerDanger.OtherSportDanger.Color, customerDanger.OtherSportDanger.BackgroundColor, customerDanger.OtherSportDanger.Name)
+    DrawDangerCell($("#customerOriginDanger"), customerDanger.OriginDanger.Color, customerDanger.OriginDanger.BackgroundColor, customerDanger.OriginDanger.Name);
+    DrawDangerCell($("#customerABIDanger"), customerDanger.ABIDanger.Color, customerDanger.ABIDanger.BackgroundColor, customerDanger.ABIDanger.Name);
+    DrawDangerCell($("#customerBasketballDanger"), customerDanger.BasketballDanger.Color, customerDanger.BasketballDanger.BackgroundColor, customerDanger.BasketballDanger.Name);
+    DrawDangerCell($("#customerESportsDanger"), customerDanger.ESportsDanger.Color, customerDanger.ESportsDanger.BackgroundColor, customerDanger.ESportsDanger.Name);
+    DrawDangerCell($("#customerOtherDanger"), customerDanger.OtherSportDanger.Color, customerDanger.OtherSportDanger.BackgroundColor, customerDanger.OtherSportDanger.Name);
 }
 
 function DrawDangerCell(cell, levelColor, levelBackgroundColor, level) {
     cell.css('color', levelColor);
     cell.css('background-color', levelBackgroundColor);
-    cell.html('<p style="margin: auto;">' + level + '</p>')
+    cell.html('<p style="margin: auto;">' + level + '</p>');
     cell.css('display', 'flex');
 }
 
@@ -127,7 +129,7 @@ function selectMultipleDangerLevel(level, levelValue, levelColor, levelBackgroun
     multipleLevelSellected = levelValue;
     $("#selectedMultipleDangerLevel").css('color', levelColor);
     $("#selectedMultipleDangerLevel").css('background-color', levelBackgroundColor);
-    $("#selectedMultipleDangerLevel").html('<p style="margin: auto;">' + level + '</p>')
+    $("#selectedMultipleDangerLevel").html('<p style="margin: auto;">' + level + '</p>');
     $("#selectedMultipleLevelContent").css('display', 'flex');
 }
 
@@ -135,7 +137,7 @@ function selectSingleDangerLevel(level, levelValue, levelColor, levelBackgroundC
     singleLevelSellected = levelValue;
     $("#selectedSingleDangerLevel").css('color', levelColor);
     $("#selectedSingleDangerLevel").css('background-color', levelBackgroundColor);
-    $("#selectedSingleDangerLevel").html('<p style="margin: auto;">' + level + '</p>')
+    $("#selectedSingleDangerLevel").html('<p style="margin: auto;">' + level + '</p>');
     $("#selectedSingleLevelContent").css('display', 'flex');
 }
 
@@ -289,8 +291,8 @@ function UpdateMultipleAccountDanger() {
                 CustomerNames: usernames,
                 UpdateDownline: $('#isMultipleApplyAllDownlines').is(":checked"),
                 DangerType: dangerType,
-                DangerLevel: multipleLevelSellected,
-            }
+                DangerLevel: multipleLevelSellected
+            };
 
             $.ajax({
                 type: "POST",
@@ -327,6 +329,10 @@ function GetDangerType(dangerTypeName) {
             return 2;
         case "OtherSports":
             return 3;
+        case "Basketball":
+            return 4;
+        case "ESports":
+            return 5;
     }
 }
 
