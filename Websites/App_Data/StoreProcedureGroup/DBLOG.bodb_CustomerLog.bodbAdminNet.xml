@@ -8,8 +8,8 @@
     <Setting Key="Customer_VirtualRate_GetLog" SpName="Acc_CustomerSelVirtualRateHistory" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
   </Function>
   <Function Name="Customer - Log">
-    <Setting Key="GetLogSetting" SpName="NAP_UserLog_RunSPSel" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
-    <Setting Key="GetLogSettingTotal" SpName="NAP_UserLog_RunSPSelTotalRecords" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
+    <Setting Key="GetLogSetting" SpName="NAP_UserLog_RunSPSel_UAT3" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
+    <Setting Key="GetLogSettingTotal" SpName="NAP_UserLog_RunSPSelTotalRecords_UAT3" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
     <Setting Key="GetLogLogin" SpName="NAP_UserLog_LoginSel" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
     <Setting Key="GetLogLoginTotal" SpName="NAP_UserLog_LoginSelTotalRecords" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
     <Setting Key="GetLogCredit" SpName="NAP_UserLog_CreditSel" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
