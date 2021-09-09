@@ -673,14 +673,33 @@ namespace Sunplus.Accounting.Business.LogDisplay
                                      !hidden.Contains<string>(attr.Name.ToString())
                                  select LogFormater.FormatElement(attr)).ToList();
                 }
+                else if (sport.Id == 9901)
+                {
+                    rex = new Regex("v1saba", RegexOptions.IgnoreCase);
+                    sportVals = (from attr in attrs
+                                 where rex.IsMatch(attr.Name.ToString()) &&
+                                 !hidden.Contains<string>(attr.Name.ToString().ToLower())
+                                 select LogFormater.FormatElement(attr)).ToList();
+                }
+                else if (sport.Id == 9902)
+                {
+                    rex = new Regex("v2saba", RegexOptions.IgnoreCase);
+                    sportVals = (from attr in attrs
+                                 where rex.IsMatch(attr.Name.ToString()) &&
+                                 !hidden.Contains<string>(attr.Name.ToString().ToLower())
+                                 select LogFormater.FormatElement(attr)).ToList();
+                }
                 else
                 {
                     var strId = "v" + sport.Id;
+                    var sabaSportRegex = new Regex("v(1|2)saba", RegexOptions.IgnoreCase);
+
                     rex = new Regex(strId, RegexOptions.IgnoreCase);
                     sportVals = (from attr in attrs
                                  where !GetMixedSportTag(attr.Name.ToString()) &&
-                                    IsBelongToSport(attr, strId) &&
-                                    !hidden.Contains<string>(attr.Name.ToString())
+                                 !sabaSportRegex.IsMatch(attr.Name.ToString()) &&
+                                 IsBelongToSport(attr, strId) &&
+                                 !hidden.Contains<string>(attr.Name.ToString())
                                  select LogFormater.FormatElement(attr)).ToList();
                 }
 

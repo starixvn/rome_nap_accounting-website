@@ -2176,4 +2176,37 @@ Max Keno (20+1) 2</value>
   <data name="MPPMv99" xml:space="preserve">
     <value>Max Payout Per Match</value>
   </data>
+  <data name="MPPMv99MP" xml:space="preserve">
+    <value>Max Payout Per Match</value>
+  </data>
+  <data name="sabasoccer" xml:space="preserve">
+    <value>Saba Soccer</value>
+  </data>
+  <data name="sababasketball" xml:space="preserve">
+    <value>Saba Basketball</value>
+  </data>
+  <data name="MaxBv1Saba" xml:space="preserve">
+    <value>Max Bet</value>
+  </data>
+  <data name="MinBv1Saba" xml:space="preserve">
+    <value>Min Bet</value>
+  </data>
+  <data name="MPMv1Saba" xml:space="preserve">
+    <value>Max Per Match</value>
+  </data>
+  <data name="MPPMv1Saba" xml:space="preserve">
+    <value>Max Payout Per Match</value>
+  </data>
+  <data name="MaxBv2Saba" xml:space="preserve">
+    <value>Max Bet</value>
+  </data>
+  <data name="MinBv2Saba" xml:space="preserve">
+    <value>Min Bet</value>
+  </data>
+  <data name="MPMv2Saba" xml:space="preserve">
+    <value>Max Per Match</value>
+  </data>
+  <data name="MPPMv2Saba" xml:space="preserve">
+    <value>Max Payout Per Match</value>
+  </data>
 </root>
