@@ -50,7 +50,8 @@
                 IsShowVirtualGames = !customerInfoViewModel.HideVirtualGames,
                 IsShowSabaclub = !customerInfoViewModel.HideSabaclub,
                 IsShowVGaming = !customerInfoViewModel.HideVGaming,
-                IsShowSabaVirtualSports = !customerInfoViewModel.HideSabaVirtualSports
+                IsShowSabaVirtualSports = !customerInfoViewModel.HideSabaVirtualSports,
+                IsShowBitcoin = !customerInfoViewModel.HideBitcoin
             };
 
             htmlcontent = RenderClosedStatus(htmlcontent, customerInfoViewModel);
@@ -136,12 +137,10 @@
             htmlcontent = RenderDCSControl(
                 htmlcontent,
                 row1,
-                customerInfoViewModel.CustParent,
                 customerInfoViewModel.ManageCustomerAccess,
                 renderLeftPanelParameter,
                 dcsTable,
-                sg,
-                customerInfoViewModel.HasDownline);
+                sg);
 
             TemplateHandler.Assign(ref htmlcontent, "{settingcontrol}", sg.GetHTMLSettingControl());
 
@@ -316,7 +315,7 @@
                     Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdRNGLottery,
                     "Update RNG Lottery Status"));
             }
-
+            
             return htmlcontent;
         }
 
@@ -461,12 +460,10 @@
         private string RenderDCSControl(
             string htmlcontent,
             DataRow row1,
-            CustomerDetail CustParent,
             bool isManageCustomerAccess,
             RenderLeftPanelParameter renderLeftPanelParameter,
             DataTable dcsTable,
-            SettingGroup sg,
-            bool hasDownline)
+            SettingGroup sg)
         {
             foreach (DataRow productRow in dcsTable.Rows)
             {
@@ -571,6 +568,19 @@
                                                renderLeftPanelParameter,
                                                "Update Saba Virtual Sports Status",
                                                Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdSabaVirtualSports);
+                            break;
+                        case "69":
+                            _renderLeftPanelService.RenderEnableProductBoxDCS2(
+                                               row1,
+                                               productRow,
+                                               sg,
+                                               ref htmlcontent,
+                                               isManageCustomerAccess,
+                                               "Bitcoin",
+                                               renderLeftPanelParameter.IsShowBitcoin,
+                                               renderLeftPanelParameter,
+                                               "Update Bitcoin Status",
+                                               69);
                             break;
                     }
                 }

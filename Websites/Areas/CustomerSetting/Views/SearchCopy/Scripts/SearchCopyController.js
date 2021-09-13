@@ -219,6 +219,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         $("#frmNG2").attr('src', "");
         $("#frmFishingWorld").attr('src', "");
         $("#frmRNGLottery").attr('src', "");
+        $("#frmBitcoin").attr('src', "");
     };
 
     $scope.showSetting = function (tabId) {
@@ -302,7 +303,10 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                 $scope.loadData("#frmVGaming", url);
                 $scope.resize("#frmVGaming");
                 break;
-
+            case 'tabBitcoin': url += "DCS/ViewCustomerSetting?productId=69&customerLevel=4&IsReadOnly=true&customerId=" + $scope.existedUser.userid;
+                $scope.loadData("#frmBitcoin", url);
+                $scope.resize("#frmBitcoin");
+                break;
             case 'tabGenealInformation': $("#divGeneralInformation").show();
         }
 

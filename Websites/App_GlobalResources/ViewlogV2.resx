@@ -2140,4 +2140,7 @@ Max Keno (20+1) 2</value>
   <data name="ExternalGroups" xml:space="preserve">
     <value>External Groups</value>
   </data>
+  <data name="Disable175_7901" xml:space="preserve">
+    <value>Disabled Bitcoin</value>
+  </data>
 </root>
