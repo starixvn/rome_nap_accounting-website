@@ -486,7 +486,8 @@ namespace Sunplus.Accounting.Business.LogDisplay
                             var regxSporttypeId = new Regex("[0-9]+");
                             var matchSporttypeId = regxSporttypeId.Match(sporttypeMatch.Value);
                             var sporttypeText = string.Format("sporttype=\"{0}\"", matchSporttypeId.Value);
-                            var replaceText = string.Format("sporttype=\"{0}\"", CacheRef.GetSportName(matchSporttypeId.Value));
+                            var sportTypeId = Converter.To<int>(matchSporttypeId.Value);
+                            var replaceText = string.Format("sporttype=\"{0}\"", GetSportTypeName(sportTypeId));
 
                             // trackingVal = trackingVal.Replace(sporttypeText, replaceText);
                             trackingVal = ReplaceIgnoreCase(trackingVal, sporttypeText, replaceText);
@@ -568,6 +569,16 @@ namespace Sunplus.Accounting.Business.LogDisplay
 
             return bettypeShowProductName.ContainsKey(bettype) ? bettypeShowProductName[bettype] : CacheRef.GetBettype(bettype);
 
+        }
+
+        private string GetSportTypeName(int sportTypeId)
+        {
+            var sportTypeName = new Dictionary<int, string> {
+                { 9901, LogFormater.GetResourceName("sabasoccer") },
+                { 9902, LogFormater.GetResourceName("sababasketball") }
+            };
+
+            return sportTypeName.ContainsKey(sportTypeId) ? sportTypeName[sportTypeId] : CacheRef.GetSportName(sportTypeId);
         }
 
         private List<TrackingGroup> _GetSportGroup(
