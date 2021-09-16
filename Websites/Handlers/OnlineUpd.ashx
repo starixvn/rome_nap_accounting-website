@@ -9,10 +9,11 @@ using Sunplus.Accounting.DataAccess.IBCDLL;
 
 
 
-public class OnlineUpd : IHttpHandler , IRequiresSessionState
+public class OnlineUpd : IHttpHandler, IRequiresSessionState
 {
-    
-    public void ProcessRequest (HttpContext context) {
+
+    public void ProcessRequest(HttpContext context)
+    {
         try
         {
             context.Response.ContentType = "text/html";
@@ -22,40 +23,56 @@ public class OnlineUpd : IHttpHandler , IRequiresSessionState
             context.Response.Write("<html><head></head><body>");
             string appPath = context.Request.ApplicationPath;
             if (appPath != "/") appPath += "/";
-            if (onlineId != 0 && AccCommon.IsEnabledRecheckin)
-                isOnline = UserController.OnlineUserUpdate(onlineId);
-            
-            if (!isOnline && !AccCommon.IsLocalTest)
-            {
-                //#region Remove Cache Item from Cache
-                //((ASP.global_asax)context.ApplicationInstance).RemoveSessionCacheItem(
-                //    DNAide.Core.CastAide.AsString(AppSession.AccId), AppSession.Username, DNAide.Core.CastAide.AsString(AppSession.RoleID));
-                //#endregion
-                context.Response.Write("<script type='text/javascript'>alert('Another session has been logged in or your session is expired. Forced to logout!');top.location.href='" + appPath + "PreLogIn/Logout.ashx';</script>");
-            }
-            //else
-            //{
-            //    #region Access Cache Item
-            //    string msSessionCacheValue =
-            //        ((ASP.global_asax)context.ApplicationInstance).GetSessionCacheItem(
-            //        DNAide.Core.CastAide.AsString(AppSession.OnAccId), AppSession.Username, DNAide.Core.CastAide.AsString(AppSession.RoleID));
-            //    #endregion
-            //}
 
-            
-            
+            var downTimeInfo = new Fanex.Tarus.Business.Implement.CommonService().GetDowntimeInfo();
+            if (downTimeInfo.IsDowntime)
+            {
+                context.Response.Write("<script type='text/javascript'>top.location.href='" + appPath + "PreLogIn/Logout.ashx';</script>");
+            }
+            else
+            {
+                if (onlineId != 0 && AccCommon.IsEnabledRecheckin)
+                    isOnline = UserController.OnlineUserUpdate(onlineId);
+
+                if (!isOnline && !AccCommon.IsLocalTest)
+                {
+                    //#region Remove Cache Item from Cache
+                    //((ASP.global_asax)context.ApplicationInstance).RemoveSessionCacheItem(
+                    //    DNAide.Core.CastAide.AsString(AppSession.AccId), AppSession.Username, DNAide.Core.CastAide.AsString(AppSession.RoleID));
+                    //#endregion
+                    context.Response.Write("<script type='text/javascript'>alert('Another session has been logged in or your session is expired. Forced to logout!');top.location.href='" + appPath + "PreLogIn/Logout.ashx';</script>");
+                } else if (onlineId == 0)
+                {
+                    context.Response.Write("<script type='text/javascript'>top.location.href='" + appPath + "PreLogIn/Logout.ashx';</script>");
+                }
+                //else
+                //{
+                //    #region Access Cache Item
+                //    string msSessionCacheValue =
+                //        ((ASP.global_asax)context.ApplicationInstance).GetSessionCacheItem(
+                //        DNAide.Core.CastAide.AsString(AppSession.OnAccId), AppSession.Username, DNAide.Core.CastAide.AsString(AppSession.RoleID));
+                //    #endregion
+                //}
+            }
+
+
+
+
+
             context.Response.Write("</body></html>");
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             LogExtensions.ExceptionHandler(ex);
 
             context.Response.Write("<html><head></head><body><script type='text/javascript'>top.location.href='../PreLogIn/LogOut.ashx';</script></body></html>");
         }
     }
- 
-    public bool IsReusable {
-        get {
+
+    public bool IsReusable
+    {
+        get
+        {
             return false;
         }
     }
