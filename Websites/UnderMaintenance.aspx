@@ -38,7 +38,6 @@
     </style>
 </head>
 <body>
-    <iframe id="UpdateOnlineStatus" name="UpdateOnlineStatus" width="0" height="0" style="display: none"></iframe>
     <div class="contain">
         <div class="text_time" style="margin-top: 100px; padding-left: 9px; top: 0px;">
             <%=UMTime_From%>
@@ -49,12 +48,5 @@
             <font color="#555">至</font>
             <%=UMTime_To%> (GMT+8)</div>
     </div>
-    <script type="text/javascript">
-        function update_online_status() {
-        UpdateOnlineStatus.location.href = "Handlers/OnlineUpd.ashx";
-        }
-
-        setInterval('update_online_status()', 45000);
-    </script>
 </body>
 </html>
