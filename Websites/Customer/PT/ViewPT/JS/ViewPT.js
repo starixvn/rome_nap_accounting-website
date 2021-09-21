@@ -728,7 +728,7 @@ var ViewPT = {
             case 220:
             case 207:
             case 222: // Table Game
-            case 224: // RNG War
+            case 224: // Funky Games
             case 225: // ION
             case 233: // WM
             case 236: // GDG
