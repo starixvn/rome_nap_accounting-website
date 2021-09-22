@@ -2,6 +2,7 @@
 @using Sunplus.Accounting.Core.Configurations;
 <html>
 <head>
+    <link href="@Url.Content("~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/App_Themes/Public/input.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/App_Themes/Public/Message.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/App_Themes/Public/commonIOM.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
@@ -33,10 +34,18 @@
             height: 16px;
             cursor: pointer;
         }
+
+        .indent-1 {
+            text-indent: 10px;
+        }
+
+        .indent-2 {
+            text-indent: 20px;
+        }
     </style>
 </head>
 <body>
-    <div class="main">
+    <div class="main" style="width:99%;">
         <div id="divMainHeader" class="">
             <div id="left_tab1">
                 <ul>
@@ -83,7 +92,7 @@
                             <input id="notifyHeadlines" type="button" value="Notify Headline" class="btn" onclick="NotifyHeadline()" disabled />
                         </div>
                         <div class="floatLeft">
-                            <div id="imgExportExcel" class="excel-img display-none" onclick="GetExcelFile()" ></div>
+                            <div id="imgExportExcel" class="excel-img display-none" onclick="GetExcelFile()"></div>
                         </div>
 
                     </form>
@@ -93,6 +102,7 @@
                             @Customer_Labels.Message_ExcelFileSizeLimit
                         </span>
                         <a class="link-download-excel-template b" href="@Url.Content("~/Views/Admin/TicketToHeadline/TicketToGroupHeadlineTemplate.xls")">@Customer_Labels.Message_DownloadTemplate</a>
+                        <span style="margin: auto 4px; float: none;" id="noteMessageIcon" class="note-info-message" title="" onclick="OpenNoteMessage();"></span>
                     </div>
                 </div>
             </div>
@@ -103,7 +113,26 @@
         </div>
 
     </div>
+    <div id="noteMessage" style="display:none;">
+        <h3>Template guideline</h3>
+        <p>Please follow these rules for uploading files:</p>
+        <h3 class="indent-1">For Sportsbook (exclude Outright) and Virtual Sports 2 tickets</h3>
+        <p class="indent-2">Must enter and existing MatchID and the entered Ticket Ref No must belong to this match</p>
+        <p class="indent-2">When MessageID is provided, Actual Result and Wrong Result can be empty. System will directly use provided MessageID to notify Headlines</p>
+        <p class="indent-2">When MessageID is not provided, must enter Actual Result and Wrong Result.</p>
+        <h3 class="indent-1">For Sportsbook Outright tickets</h3>
+        <p class="indent-2">MatchID is not required and can be empty</p>
+        <p class="indent-2">Must enter an existing MessageID</p>
+        <h3 class="indent-1">For Virtual Sports, Number Game (Number Game/Turbo Number Game, Happy 5) tickets</h3>
+        <p class="indent-2">Must enter and existing MatchID and the entered Ticket Ref No must belong to this match</p>
+        <p class="indent-2">Actual Result, Wrong Result and MessageID should be empty</p>
+        <h3 class="indent-1">For Number Game (Happy 5 Linked Game)</h3>
+        <p class="indent-2">MatchID is not required and can be empty</p>
+        <p class="indent-2">Actual Result, Wrong Result and MessageID should be empty</p>
+        <p>MatchID, Actual Result, Wrong Result and MessageID, when it's provided, should be provided in 1 row ONLY. The rest of tickets in the file will use the same information as that row.</p>
+    </div>
     <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-1.8.2.min.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-ui-1.9.1.min.js?v=" + WebSettings.Version)"></script>
     <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Grid.js?v=" + WebSettings.Version)"></script>
     <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Pagination.js?v=" + WebSettings.Version)"></script>
     <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/moment.js?v=" + WebSettings.Version)"></script>
