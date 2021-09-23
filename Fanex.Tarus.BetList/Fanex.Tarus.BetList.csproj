@@ -498,6 +498,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Authentication\ApiAuthorizationAttribute.cs" />
     <Compile Include="Builders\ExcelBuilders\BetListExcelBuilderExtension.cs" />
     <Compile Include="Builders\PTComm\PTComm.cs" />
     <Compile Include="Builders\PTComm\PTComm2198.cs" />
@@ -557,6 +558,7 @@
     <Compile Include="Constants\SportContants.cs" />
     <Compile Include="Constants\SystemParlayConstants.cs" />
     <Compile Include="Controller\BBinBetListController.cs" />
+    <Compile Include="Controller\BetListAPIController.cs" />
     <Compile Include="Controller\BetListController.cs" />
     <Compile Include="Controller\ExchangeBetListController.cs" />
     <Compile Include="Controller\BetBuilderController.cs" />
