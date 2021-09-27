@@ -938,7 +938,7 @@ function ViewFishingWorldResult(custId, betCheck) {
     ViewGlobalGamingResult(custId, betCheck);
 }
 
-function ViewCashOutDetails(transId, refNo, betType, originalTransId, title) {
+function ViewCashOutHistory(transId, refNo, betType, originalTransId, title) {
     var cashoutParam = {
         url: "BetList/GetCashOutDetails",
         title: title + " Details",

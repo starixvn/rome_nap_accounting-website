@@ -11,6 +11,7 @@
     using Fanex.BetList.Core.Factories;
     using Fanex.BetList.Core.Templates;
     using Fanex.BetList.Core.Utils.StringExt;
+    using Fanex.BetList.Core.Utils.TicketExt;
     using Models;
     using Resources;
 
@@ -65,7 +66,7 @@
                 betType == BetTypeContants.ColossusBetsConsolationPrize ||
                 betType == BetTypeContants.ColossusBetsJackpotPrize ||
                 betType == BetTypeContants.ColossusBetsBonusPrize;
-        }       
+        }
 
         public string IsNegative(decimal input)
         {
@@ -125,7 +126,7 @@
             builder = builder ?? htmlFactory.CreateBuilder();
 
             IStatus statusBuilder = builder.CreateStatusBuilder(ticket.BetTypeId);
-            Status_Template statusBlock = statusBuilder.Render(ticket, ticketHelper, ticketData, true);           
+            Status_Template statusBlock = statusBuilder.Render(ticket, ticketHelper, ticketData, true);
 
             string cashOutDetailsLink = CheckCashOutAndBuildDetails(ticket);
 
@@ -139,10 +140,6 @@
 
             return statusBlock.ToString();
         }
-
-       
-
-        #region For Cash Out
 
         private string CheckCashOutAndBuildDetails(ITicket ticket)
         {
@@ -158,12 +155,7 @@
             }
             else if (IsCashOutOriginalTicket(ticket))
             {
-                string upperStatus = ticket.Status.ToUpperInvariant();
-
-                if (upperStatus != "VOID" && upperStatus != "REFUND")
-                {
-                    title = BetListResources.CashOut;
-                }
+                title = BetListResources.CashOut;
             }
             else if (IsCashOutTicket(ticket))
             {
@@ -180,7 +172,7 @@
 
         private bool IsCashOutOriginalTicket(ITicket ticket)
         {
-            return ticket.BetdaqId == 0 && ticket.Stake == 0 && HasCashOutExtraInfo(ticket.ExtraInfo);
+            return ticket.BetdaqId == 0 && HasCashOutExtraInfo(ticket.ExtraInfo);
         }
 
         private bool IsCashOutTicket(ITicket ticket)
@@ -196,7 +188,7 @@
         private string BuildCashOutResult(ITicket ticket, string title)
         {
             return string.Format(
-                "<div class=\"result\" onclick=\"ViewCashOutDetails({0},{1},{2},{3},'{4}');\">{5}</div>",
+                "<div class=\"result\" onclick=\"ViewCashOutHistory({0},{1},{2},{3},'{4}');\">{5}</div>",
                 ticket.TransId,
                 ticket.RefNo,
                 ticket.BetTypeId,
@@ -204,7 +196,5 @@
                 title,
                 BetListResources.Details);
         }
-
-        #endregion For Cash Out
     }
 }
