@@ -3279,4 +3279,40 @@
   <data name="Danger5Old" xml:space="preserve">
     <value>E-Sports (Old)</value>
   </data>
+  <data name="MaxPerNumber" xml:space="preserve">
+    <value>Max Per Ball</value>
+  </data>
+  <data name="MaxPayoutPerMatch" xml:space="preserve">
+    <value>Max Payout Per Match</value>
+  </data>
+  <data name="MPPM" xml:space="preserve">
+    <value>Max Payout Per Match</value>
+  </data>
+  <data name="MPPMv1MP" xml:space="preserve">
+    <value>Max Payout Per Match</value>
+  </data>
+  <data name="MPPMv2" xml:space="preserve">
+    <value>Max Payout Per Match</value>
+  </data>
+  <data name="MPPMv3" xml:space="preserve">
+    <value>Max Payout Per Match</value>
+  </data>
+  <data name="MPPMv5" xml:space="preserve">
+    <value>Max Payout Per Match</value>
+  </data>
+  <data name="MPPMv8" xml:space="preserve">
+    <value>Max Payout Per Match</value>
+  </data>
+  <data name="MPPMv10" xml:space="preserve">
+    <value>Max Payout Per Match</value>
+  </data>
+  <data name="MPPMv11" xml:space="preserve">
+    <value>Max Payout Per Match</value>
+  </data>
+  <data name="MPPMv99" xml:space="preserve">
+    <value>Max Payout Per Match</value>
+  </data>
+  <data name="MPPMv99MP" xml:space="preserve">
+    <value>Max Payout Per Match</value>
+  </data>
 </root>
