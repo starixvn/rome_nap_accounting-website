@@ -301,8 +301,8 @@
       <HintPath>..\packages\Fanex.CustomerSetting.Module.ProgressiveBonus.1.0.0.1\lib\net40\Fanex.CustomerSetting.Module.ProgressiveBonus.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.SearchCopy, Version=2.0.7.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.SearchCopy.NAP.2.0.7.5-MaxPayoutPerMatch\lib\net461\Fanex.CustomerSetting.Module.SearchCopy.dll</HintPath>
+    <Reference Include="Fanex.CustomerSetting.Module.SearchCopy, Version=2.0.7.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.SearchCopy.NAP.2.0.7.5\lib\net461\Fanex.CustomerSetting.Module.SearchCopy.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Security, Version=2.0.0.6, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.CustomerSetting.Security.2.0.0.6\lib\net40\Fanex.CustomerSetting.Security.dll</HintPath>
