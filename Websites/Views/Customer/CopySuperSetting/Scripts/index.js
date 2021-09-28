@@ -16,7 +16,8 @@ function CheckSuper() {
 
     var request = {
         SourceSuper: sourceSuper,
-        SuperList: superList
+        SuperList: superList,
+        ProductList: ""
     };
     $("#superSetting").addClass("hidden");
     $.ajax({
@@ -100,7 +101,7 @@ function ApplySetting() {
     }
 
     if (confirm("Are you sure you want to copy the Maximum Win Loss Limit from the source super to the destination ones?")) {
-        //ValidateBeforUpdate(request);
+        ValidateBeforUpdate(request);
         CallAPIUpdate(request);
     }
     
@@ -142,9 +143,11 @@ function EnableDisableInput(flag) {
 function ValidateBeforUpdate(request) {
     var sourceSuper = $("#sourcesuper").val();
     var superList = $("#superlist").val();
+    var productList = request.SportTypes.map(sport => sport.ProductId).join();
     var validateRequest = {
         SourceSuper: sourceSuper,
-        SuperList: superList
+        SuperList: superList,
+        ProductList: productList
     };
     $.ajax({
         type: "POST",

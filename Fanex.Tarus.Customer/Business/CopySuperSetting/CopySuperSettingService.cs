@@ -34,10 +34,12 @@
 
         public CheckSuperListResult CheckSuperList(CheckSuperListRequest request)
         {
+            var productList = request.ProductList != null ? string.Join(",", request.ProductList.Split(',').Distinct()) : string.Empty;
             var criteria = new CheckSuperListCriteria
             {
                 SuperList = request.SuperList,
-                Username = request.SourceSuper
+                Username = request.SourceSuper,
+                ProductList = productList
             };
 
             return dataAccess.CheckSuperList(criteria);

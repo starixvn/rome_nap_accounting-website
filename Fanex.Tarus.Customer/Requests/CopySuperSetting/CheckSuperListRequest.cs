@@ -5,5 +5,7 @@
         public string SourceSuper { get; set; }
 
         public string SuperList { get; set; }
+
+        public string ProductList { get; set; }
     }
 }
