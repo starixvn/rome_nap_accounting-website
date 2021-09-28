@@ -102,7 +102,6 @@ function ApplySetting() {
 
     if (confirm("Are you sure you want to copy the Maximum Win Loss Limit from the source super to the destination ones?")) {
         ValidateBeforUpdate(request);
-        CallAPIUpdate(request);
     }
     
 }
