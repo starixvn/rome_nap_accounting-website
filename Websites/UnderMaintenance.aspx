@@ -48,5 +48,10 @@
             <font color="#555">至</font>
             <%=UMTime_To%> (GMT+8)</div>
     </div>
+    <script type="text/javascript">
+        if (self != top) {
+            top.location = self.location;
+        }
+    </script>
 </body>
 </html>
