@@ -19,70 +19,53 @@
         private readonly int[] RepresentProductIds = new int[] {5};
         public CheckSuperListResult CheckSuperList(CheckSuperListCriteria criteria)
         {
-            try
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                if (criteria == null)
+                var response = new CheckSuperListResult();
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
                 {
-                    throw new ArgumentNullException(nameof(criteria), "Criteria cannot be null");
-                }
+                    var sportList = new List<SportType>();
+                    var superList = new List<BaseModel>();
 
-                using (var db = new ObjectDb(criteria.GetSettingKey()))
-                {
-                    var response = new CheckSuperListResult();
-                    using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                    while (reader.Read())
                     {
-                        var sportList = new List<SportType>();
-                        var superList = new List<BaseModel>();
+                        var productId = int.Parse(reader["productid"].ToString());
+                        var sportTypeId = int.Parse(reader["SportType"].ToString());
+                        var sportTypeName = RepresentProductIds.Contains(productId) ? CacheRef.GetProductName(productId) : CacheRef.GetSportName(sportTypeId);
+                        var sport = new SportType
+                        {
+                            ProductId = productId,
+                            SportTypeId = sportTypeId,
+                            SportTypeName = sportTypeName
+                        };
 
+                        sportList.Add(sport);
+                    }
+                    response.SportTypes = sportList;
+
+                    if (reader.NextResult())
+                    {
                         while (reader.Read())
                         {
-                            var productId = int.Parse(reader["productid"].ToString());
-                            var sportTypeId = int.Parse(reader["SportType"].ToString());
-                            var sportTypeName = RepresentProductIds.Contains(productId) ? CacheRef.GetProductName(productId) : CacheRef.GetSportName(sportTypeId);
-                            var sport = new SportType
+                            var super = new BaseModel
                             {
-                                ProductId = productId,
-                                SportTypeId = sportTypeId,
-                                SportTypeName = sportTypeName
+                                Id = int.Parse(reader["custid"].ToString()),
+                                Name = reader["username"].ToString()
                             };
 
-                            sportList.Add(sport);
+                            superList.Add(super);
                         }
-                        response.SportTypes = sportList;
 
-                        if (reader.NextResult())
-                        {
-                            while (reader.Read())
-                            {
-                                var super = new BaseModel
-                                {
-                                    Id = int.Parse(reader["custid"].ToString()),
-                                    Name = reader["username"].ToString()
-                                };
-
-                                superList.Add(super);
-                            }
-
-                            response.SuperList = superList;
-                            response.SuperListIds = string.Join(",", superList.Select(sp => sp.Id.ToString()));
-                        }
+                        response.SuperList = superList;
+                        response.SuperListIds = string.Join(",", superList.Select(sp => sp.Id.ToString()));
                     }
-
-                    var output = db.GetOuputParams();
-                    response.CustId = int.Parse(output["custid"].ToString());
-                    response.Result = new Result(int.Parse(output["errcode"].ToString()), output["errmsg"].ToString());
-
-                    return response;
                 }
-            }
-            catch (Exception ex)
-            {
-                LogExtensions.ExceptionHandler(ex);
 
-                return new CheckSuperListResult
-                {
-                    Result = new Result(-1, "Internal Server Error.")
-                };
+                var output = db.GetOuputParams();
+                response.CustId = int.Parse(output["custid"].ToString());
+                response.Result = new Result(int.Parse(output["errcode"].ToString()), output["errmsg"].ToString());
+
+                return response;
             }
         }
     }
