@@ -1,0 +1,67 @@
+﻿@using Sunplus.Accounting.Core.Configurations;
+@model IList<Fanex.Tarus.Customer.DangerousGrouping.Models.DangerDetail>
+<html>
+<head>
+    <link href="@Url.Content("~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/App_Themes/Public/common.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/App_Themes/Public/table.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Grid.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Pagination.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Views/Customer/CopySuperSetting/Styles/copy-super-setting.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div class="main" style="display:inline-flex;">
+        <div class="maincontent">
+            <table border="0" cellpadding="0" cellspacing="0" class="maincontent_header">
+                <tbody>
+                    <tr>
+                        <td class="maincontent_headerL"></td>
+                        <td class="maincontent_headerC">
+                            Copy Super Setting
+                        </td>
+                        <td class="maincontent_headerR"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="mainContent">
+                <div id="errMsg"></div>
+                <div id="errSupers"></div>
+                <div class="bg_table">
+                    <div>
+                        <div class="inputSuper">
+                            <label for="sourcesuper">
+                                Source Super<span style="color: red;">*</span>
+                            </label>
+                            <br />
+                            <input type="text" style="margin-top: 5px;" id="sourcesuper" maxlength="30"/>
+                        </div>
+                        <div class="inputSuper">
+                            <label for="superlist">
+                                Copy setting to Supers<span style="color: red;">*</span> (Maximum 500 supers, separated by comma ',')
+                            </label>
+                            <br />
+                            <textarea type="text" style="margin-top: 5px;" id="superlist" rows="15" cols="100"></textarea>
+                        </div>
+                        <input type="button" id="btnCheckSupers" value="Select" class="btn inputSuper" onclick="CheckSuper()" />
+                    </div>
+                </div>
+                <div id="superSetting" class="setting-actions hidden">
+                    <div id="gridBettypeContainer" class="grid-container">
+                        <div id="settings" class="freegrid"></div>
+                    </div>
+                    <div class="setting-actions">
+                        <input type="button" value="Submit" class="btn" onclick="ApplySetting()" />
+                        <input type="button" value="Reset" class="btn" onclick="ResetSelect()" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-1.8.2.min.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-ui-1.9.1.min.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/js/common.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Grid.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Pagination.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Views/Customer/CopySuperSetting/Scripts/index.js?v=" + WebSettings.Version)"></script>
+</body>
+</html>
