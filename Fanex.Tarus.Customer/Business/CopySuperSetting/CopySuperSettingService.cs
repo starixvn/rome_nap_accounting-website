@@ -79,7 +79,7 @@
                     TargetCustIds = request.SuperIds,
                     UserId = userId,
                     Products = products,
-                    SourceCustName = request.SourceUsername
+                    SourceUsername = request.SourceUsername
                 };
 
                 var otherResults = copySuperWinlossSettingService.Copy(copySuperWinlossSettingRequest);
