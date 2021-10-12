@@ -187,8 +187,8 @@
     <Reference Include="Fanex.BetList.KenoLottery, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.KenoLottery.1.3.0\lib\net40\Fanex.BetList.KenoLottery.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.LeapGaming, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.LeapGaming.1.0.0\lib\net40\Fanex.BetList.LeapGaming.dll</HintPath>
+    <Reference Include="Fanex.BetList.LeapGaming, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.LeapGaming.1.0.1\lib\net40\Fanex.BetList.LeapGaming.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.MaxGame, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.MaxGame.1.0.0\lib\net40\Fanex.BetList.MaxGame.dll</HintPath>
@@ -437,8 +437,8 @@
     <Reference Include="Fanex.Result.Core.Joker, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.Joker.1.0.0.0\lib\Fanex.Result.Core.Joker.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Result.Core.LeapGaming, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core-LeapGaming.1.0.0\lib\net40\Fanex.Result.Core.LeapGaming.dll</HintPath>
+    <Reference Include="Fanex.Result.Core.LeapGaming, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Result.Core-LeapGaming.1.0.0.1\lib\net40\Fanex.Result.Core.LeapGaming.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Result.Core.LinkedGames, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.LinkedGames.1.0.1\lib\net40\Fanex.Result.Core.LinkedGames.dll</HintPath>
