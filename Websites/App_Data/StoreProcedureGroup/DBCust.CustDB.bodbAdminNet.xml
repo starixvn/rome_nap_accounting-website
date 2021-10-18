@@ -452,4 +452,7 @@
   <Function Name="Protected Status">
     <Setting Key="Age_CustomerUpdProtectedMode" SpName="Age_CustomerUpdProtectedMode" DbName="DBCUST.CustDB.bodbAdminNet" />
   </Function>
+  <Function Name="Init Customer Setting - Init Cust Setting">
+    <Setting Key="Acc_Initial_DCS_SettingConfig_Sel" SpName="Acc_Initial_DCS_SettingConfig_Sel" DbName="DBCUST.CustDB.bodbAdminNet" />
+  </Function>
 </Functions>

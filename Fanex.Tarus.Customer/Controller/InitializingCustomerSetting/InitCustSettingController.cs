@@ -38,5 +38,11 @@ namespace Fanex.Tarus.Customer.Controller.InitializingCustomerSetting
         {
             return Json(service.AbortConfigSetting(configId, AppSession.AccId, HttpContext.Request.UserHostAddress));
         }
+
+        [HttpGet, AuthenticateRead]
+        public ActionResult GetProductSportBettype()
+        {
+            return Json(service.GetProductSportBettype(), JsonRequestBehavior.AllowGet);
+        }
     }
 }

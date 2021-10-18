@@ -4,6 +4,8 @@
     using Fanex.Tarus.Customer.DataAccess.InitializingCustomerSetting;
     using Fanex.Tarus.Customer.ViewModels.InitializingCustomerSetting;
     using Fanex.Tarus.Customer.Entities;
+    using System.Collections.Generic;
+    using Fanex.Tarus.Customer.Entities.InitializingCustomerSetting;
 
     public interface IInitializingCustomerSettingService
     {
@@ -12,6 +14,7 @@
         Result DeleteConfigSetting(int configId, int userId, string ip);
 
         Result AbortConfigSetting(int configId, int userId, string ip);
+        IEnumerable<ProductModel> GetProductSportBettype();
     }
     public class InitializingCustomerSettingService : IInitializingCustomerSettingService
     {
@@ -45,6 +48,13 @@
             };
 
             return dataAccess.ExecuteNonQuery(criteria);
+        }
+
+        public IEnumerable<ProductModel> GetProductSportBettype()
+        {
+            var criteria = new DcsProductMatrixCriteria();
+
+            return dataAccess.GetProductSportBettype(criteria);
         }
 
         public InitializingCustomerSettingViewModel GetSetting()

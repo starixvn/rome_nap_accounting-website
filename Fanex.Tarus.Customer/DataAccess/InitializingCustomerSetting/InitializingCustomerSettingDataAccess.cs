@@ -21,21 +21,13 @@
         IEnumerable<BaseModel> GetExchangeCurrency();
 
         Result ExecuteNonQuery(ICriteria criteria);
+
+        IEnumerable<ProductModel> GetProductSportBettype(DcsProductMatrixCriteria criteria);
     }
     public class InitializingCustomerSettingDataAccess : IInitializingCustomerSettingDataAccess
     {
         private const string FormatDisplay = "[{0}] {1}";
-
-        public Result AbortConfigSetting(UpdateConfigStatusCriteria criteria)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Result DeleteConfigSetting(DeleteConfigCriteria criteria)
-        {
-            throw new NotImplementedException();
-        }
-
+        
         public IEnumerable<BaseModel> GetExchangeCurrency()
         {
             var currencies = new List<BaseModel>
@@ -210,6 +202,62 @@
                     ErrorCode = (int)outputs["errcode"],
                     ErrorMessage = outputs["errmsg"]?.ToString()
                 };
+            }
+        }
+
+        public IEnumerable<ProductModel> GetProductSportBettype(DcsProductMatrixCriteria criteria)
+        {
+            var result = new List<ProductModel>();
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    while (reader.Read())
+                    {
+                        var productId = Convert.ToInt32(reader["productid"]);
+                        var product = new ProductModel(productId, CacheRef.GetProductName(productId));
+                        var sportId = Convert.ToInt32(reader["sporttype"]);
+                        var sport = new SportModel(sportId, CacheRef.GetSportName(sportId));
+                        var bettypeId = Convert.ToInt32(reader["bettype"]);
+                        var bettype = new BettypeModel(bettypeId, CacheRef.GetBettype(bettypeId));
+                        var setting = new SettingTypeModel(Convert.ToInt32(reader["settingtype"]), reader["settingname"].ToString());
+                        var existProduct = result.FirstOrDefault(pd => pd.ProductId == productId);
+                        if(existProduct == null)
+                        {
+                            bettype.SettingTypes.Add(setting);
+                            sport.Bettypes.Add(bettype);
+                            product.Sports.Add(sport);
+                            result.Add(product);
+                        } else
+                        {
+                            BuildExistSettingType(existProduct, sport, bettype, setting);
+                        }
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        private void BuildExistSettingType(ProductModel product, SportModel sport, BettypeModel bettype, SettingTypeModel setting)
+        {
+            var existSport = product.Sports.FirstOrDefault(sp => sp.SportId == sport.SportId);
+            if(existSport == null)
+            {
+                bettype.SettingTypes.Add(setting);
+                sport.Bettypes.Add(bettype);
+                product.Sports.Add(sport);
+            } else
+            {
+                var existBettype = existSport.Bettypes.FirstOrDefault(bt => bt.BettypeId == bettype.BettypeId);
+                if(existBettype == null)
+                {
+                    bettype.SettingTypes.Add(setting);
+                    existSport.Bettypes.Add(bettype);
+                } else
+                {
+                    existBettype.SettingTypes.Add(setting);
+                }
             }
         }
     }

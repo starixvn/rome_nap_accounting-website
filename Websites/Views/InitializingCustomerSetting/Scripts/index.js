@@ -1,4 +1,5 @@
 ﻿var configSettings = [];
+var dcsproducts = [];
 function GetSetting() {
     $.ajax({
         type: "GET",
@@ -8,6 +9,24 @@ function GetSetting() {
         success: function (rs) {
             configSettings = rs;
             RenderSettings();
+        },
+        error: function (event, jqXHR, ajaxSettings) {
+            showAlertMessage('errMsg', "Internal server error.", 1);
+        },
+        complete: function () {
+            try { parent.jQuery.unblockUI(); } catch (e) { }
+        }
+    });
+}
+
+function GetDcsMatrix() {
+    $.ajax({
+        type: "GET",
+        url: "GetProductSportBettype",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (rs) {
+            dcsproducts = rs;
         },
         error: function (event, jqXHR, ajaxSettings) {
             showAlertMessage('errMsg', "Internal server error.", 1);
@@ -172,4 +191,5 @@ function RenderSettings() {
 
 $(document).ready(function () {
     GetSetting();
+    GetDcsMatrix();
 });
