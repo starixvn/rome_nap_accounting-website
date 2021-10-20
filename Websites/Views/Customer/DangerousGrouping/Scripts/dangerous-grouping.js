@@ -28,10 +28,20 @@ $(document).ready(function () {
 
     $('#multipleDangerousType').change(function () {
         $("#multipleLevelSelectContent").removeClass("hide");
+        if ($('#multipleDangerousType').val() === "ABI") {
+            $("#multiple-api-note").removeClass("hidden");
+        } else {
+            $("#multiple-api-note").addClass("hidden");
+        }
     });
 
     $('#singleDangerousType').change(function () {
         $("#singleLevelSelectContent").removeClass("hide");
+        if ($('#singleDangerousType').val() === "ABI") {
+            $("#single-api-note").removeClass("hidden");
+        } else {
+            $("#single-api-note").addClass("hidden");
+        }
     });
 
     if (customerDanger !== null) {
