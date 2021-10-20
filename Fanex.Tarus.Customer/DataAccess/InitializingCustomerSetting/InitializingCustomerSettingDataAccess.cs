@@ -23,6 +23,8 @@
         Result ExecuteNonQuery(ICriteria criteria);
 
         IEnumerable<ProductModel> GetProductSportBettype(DcsProductMatrixCriteria criteria);
+
+        ConfigModel GetConfigDetail(GetConfigDetailCriteria criteria);
     }
     public class InitializingCustomerSettingDataAccess : IInitializingCustomerSettingDataAccess
     {
@@ -147,7 +149,6 @@
                 CurrencyList = new List<string>(),
                 SiteIdList = new List<int>(),
                 SiteList = new List<string>()
-
             };
 
             model.ProductName = string.Format(FormatDisplay, model.ProductId, CacheRef.GetProductName(model.ProductId));
@@ -259,6 +260,64 @@
                     existBettype.SettingTypes.Add(setting);
                 }
             }
+        }
+
+        public ConfigModel GetConfigDetail(GetConfigDetailCriteria criteria)
+        {
+            var result = new ConfigModel();
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    while (reader.Read())
+                    {
+                        result.Config = new SettingConfigModel
+                        {
+                            ConfigId = Convert.ToInt32(reader["configid"].ToString()),
+                            ProductId = Convert.ToInt32(reader["configid"].ToString()),
+                            IsTest = Convert.ToBoolean(reader["istest"].ToString()),
+                            Remark = reader["remark"].ToString(),
+                            StartTime = reader["starttime"].ToString(),
+                            EndTime = reader["endtime"].ToString(),
+                            CurrentStep = reader["currentstep"].ToString(),
+                            ProcessedSteps = reader["processedstep"].ToString(),
+                            SportTypeIdList = reader["sporttypelist"].ToString().Split(',').Select(id => Convert.ToInt32(id)),
+                            BetTypeIdList = reader["bettypelist"].ToString().Split(',').Select(id => Convert.ToInt32(id)),
+                            CurrencyIdList = reader["currency"].ToString().Split(',').Select(id => Convert.ToInt32(id)),
+                            SiteIdList = reader["site"].ToString().Split(',').Select(id => Convert.ToInt32(id))
+                        };
+                    }
+
+                    if (reader.NextResult())
+                    {
+                        var configDetails = new List<SettingInforModel>();
+                        while (reader.Read())
+                        {
+                            configDetails.Add(new SettingInforModel
+                            {
+                                ConfigId = Convert.ToInt32(reader["configid"].ToString()),
+                                BetType = Convert.ToInt32(reader["BetType"].ToString()),
+                                CopyFromBetType = Convert.ToInt32(reader["CopyFromBetType"].ToString()),
+                                CopyFromSportType = Convert.ToInt32(reader["CopyFromSportType"].ToString()),
+                                DefaultValueAgent = reader["DefaultValueAgent"].ToString(),
+                                DefaultValueMaster = reader["DefaultValueMaster"].ToString(),
+                                DefaultValueMember = reader["DefaultValueMember"].ToString(),
+                                DefaultValueSuper = reader["DefaultValueSuper"].ToString(),
+                                IsDefault = Convert.ToBoolean(reader["IsDefault"].ToString()),
+                                IsLive = Convert.ToBoolean(reader["IsLive"].ToString()),
+                                SettingName = reader["SettingName"].ToString(),
+                                SettingType = Convert.ToInt32(reader["SettingType"].ToString()),
+                                SpecialRequirement = reader["SpecialRequirement"].ToString(),
+                                SportType = Convert.ToInt32(reader["SportType"].ToString())
+                            });
+                        }
+
+                        result.Settings = configDetails;
+                    }
+                }
+            }
+
+            return result;
         }
     }
 }

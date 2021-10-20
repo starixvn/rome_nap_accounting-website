@@ -1,4 +1,27 @@
-﻿.info-link {
+﻿.floatLeft {
+    float: left;
+    padding: 10px;
+}
+
+.filterBox {
+    min-height: 100%;
+    margin-top: 4px;
+    padding-top: 4px;
+    padding-bottom: 5px;
+    background: url('../../../App_Themes/Images/Banner/bg_head_tb.jpg') repeat-x scroll left bottom #FFFFFF;
+    border: 1px solid #7C98A4;
+    text-align: left;
+}
+
+.w180 {
+    width: 180px;
+}
+
+.word-break {
+    word-break: break-all;
+}
+
+.info-link {
     color: blue;
     cursor: pointer;
 }

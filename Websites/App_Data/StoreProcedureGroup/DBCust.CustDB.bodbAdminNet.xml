@@ -454,5 +454,6 @@
   </Function>
   <Function Name="Init Customer Setting - Init Cust Setting">
     <Setting Key="Acc_Initial_DCS_SettingConfig_Sel" SpName="Acc_Initial_DCS_SettingConfig_Sel" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_Initial_DCS_ProductProfile_Sel" SpName="Acc_Initial_DCS_ProductProfile_Sel" DbName="DBCUST.CustDB.bodbAdminNet" />
   </Function>
 </Functions>

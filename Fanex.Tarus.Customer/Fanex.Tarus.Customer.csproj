@@ -465,6 +465,7 @@
     <Compile Include="Criteria\GoldDeluxe\UpdateGoldDeluxeStatusCriteria.cs" />
     <Compile Include="Criteria\InitializingCustomerSetting\DCSProductMatrixCriteria.cs" />
     <Compile Include="Criteria\InitializingCustomerSetting\DeleteConfigCriteria.cs" />
+    <Compile Include="Criteria\InitializingCustomerSetting\GetConfigDetailCriteria.cs" />
     <Compile Include="Criteria\InitializingCustomerSetting\GetSettingCriteria.cs" />
     <Compile Include="Criteria\InitializingCustomerSetting\UpdateConfigStatusCriteria.cs" />
     <Compile Include="Criteria\LicenseeDcsSetting\GetAgentCriteria.cs" />
@@ -653,8 +654,10 @@
     <Compile Include="Entities\ExtraPtGroup\Product.cs" />
     <Compile Include="Entities\GoldDeluxe\GoldDeluxeStatus.cs" />
     <Compile Include="Entities\InitializingCustomerSetting\BettypeModel.cs" />
+    <Compile Include="Entities\InitializingCustomerSetting\ConfigModel.cs" />
     <Compile Include="Entities\InitializingCustomerSetting\ProductModel.cs" />
     <Compile Include="Entities\InitializingCustomerSetting\SettingConfigModel.cs" />
+    <Compile Include="Entities\InitializingCustomerSetting\SettingInforModel.cs" />
     <Compile Include="Entities\InitializingCustomerSetting\SettingTypeModel.cs" />
     <Compile Include="Entities\InitializingCustomerSetting\SportModel.cs" />
     <Compile Include="Entities\JsonWithoutNullField.cs" />

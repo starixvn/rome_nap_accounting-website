@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-
-namespace Fanex.Tarus.Customer.Entities.InitializingCustomerSetting
+﻿namespace Fanex.Tarus.Customer.Entities.InitializingCustomerSetting
 {
+    using System.Collections.Generic;
+
     public class SettingConfigModel
     {
         public int ConfigId { get; set; }

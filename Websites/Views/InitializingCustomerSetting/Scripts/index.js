@@ -1,6 +1,9 @@
 ﻿var configSettings = [];
 var dcsproducts = [];
+var selectedProduct = null;
+var selectedSports = [];
 function GetSetting() {
+    parent.BlockUI();
     $.ajax({
         type: "GET",
         url: "GetSetting",
@@ -9,24 +12,6 @@ function GetSetting() {
         success: function (rs) {
             configSettings = rs;
             RenderSettings();
-        },
-        error: function (event, jqXHR, ajaxSettings) {
-            showAlertMessage('errMsg', "Internal server error.", 1);
-        },
-        complete: function () {
-            try { parent.jQuery.unblockUI(); } catch (e) { }
-        }
-    });
-}
-
-function GetDcsMatrix() {
-    $.ajax({
-        type: "GET",
-        url: "GetProductSportBettype",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (rs) {
-            dcsproducts = rs;
         },
         error: function (event, jqXHR, ajaxSettings) {
             showAlertMessage('errMsg', "Internal server error.", 1);
@@ -189,7 +174,158 @@ function RenderSettings() {
     $('#gridCustomerSetting').fanexGrid(gridOptions);
 }
 
+function RenderDcsMatrix(type, callbackfunc, params) {
+    dcsproducts = [];
+    parent.BlockUI();
+    $.ajax({
+        type: "GET",
+        url: "GetProductSportBettype",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (rs) {
+            dcsproducts = rs;
+            InitFilter(type);
+        },
+        error: function (event, jqXHR, ajaxSettings) {
+            showAlertMessage('errMsg', "Internal server error.", 1);
+        },
+        complete: function () {
+            try { parent.jQuery.unblockUI(); } catch (e) { }
+            if (callbackfunc) {
+                callbackfunc(params);
+            }
+        }
+    });
+}
+
+function InitFilter(type) {
+    var productFilter = $("#" + type + "ProductSelect");
+    if (dcsproducts) {
+        productFilter.empty();
+        productFilter.append(new Option("Please select", ""));
+        dcsproducts.forEach(function (item, index) {
+            productFilter.append(new Option('[' + item.ProductId + '] ' + item.ProductName, item.ProductId));
+        });
+    }
+
+    var sportFilter = $("#" + type + "SportSelect");
+    sportFilter.empty();
+    sportFilter.append(new Option("Please select", ""));
+    sportFilter.attr('disabled', 'disabled');
+    var bettypeFilter = $("#" + type + "BettypeSelect");
+    bettypeFilter.empty();
+    bettypeFilter.append(new Option("Please select", ""));
+    bettypeFilter.attr('disabled', 'disabled');
+}
+
+function InitFilterBehavior(type) {
+    var productFilter = $("#" + type + "ProductSelect");
+    productFilter.change(function () {
+        var selectedProductId = $("#" + type + "ProductSelect").val();
+        selectedProduct = dcsproducts.find(element => element.ProductId.toString() === selectedProductId);
+        RenderSportType(type);
+    });
+}
+
+function EditConfig(configId) {
+    RenderDcsMatrix("Edit", GetConfigInfo, configId);
+    $('#detail-information-popup').dialog({
+        title: 'Config ' + configId,
+        modal: true,
+        width: '800',
+        height: '700'
+    });
+}
+
+function GetConfigInfo(configId) {
+
+}
+
+function RenderSportType(type) {
+    var sportFilter = $("#" + type + "SportSelect");
+    sportFilter.empty();
+    sportFilter.removeAttr('disabled');
+    var multiselectData = [];
+    if (selectedProduct) {
+        selectedProduct.Sports.forEach(function (item, index) {
+            multiselectData.push({
+                Id: 'sport' + item.SportId,
+                Value: item.SportId,
+                Text: '[' + item.SportId + '] ' + item.SportName,
+                Checked: false,
+                Enable: true,
+                CssClass: "",
+                Items: []
+            });
+        });
+    }
+
+    sportFilter.multiSelect({
+        minWidth: 160,
+        maxHeight: 450,
+        shadow: true,
+        showHeader: true,
+        isCheckAll: false,
+        showFooter: false,
+        showFilter: true,
+        checkAllText: "All",
+        listData: multiselectData,
+        noItemText: "Select Sport",
+        onCheck: function () { UpdateSelectSport(type);}
+    });
+}
+
+function UpdateSelectSport(type) {
+    selectedSports = [];
+    var selectedSportIds = $("#" + type + "SportSelect").multiSelect("getCheckedItems");
+    if (selectedSportIds) {
+        selectedSportIds.forEach(function (item, index) {
+            selectedSports.push(selectedProduct.Sports.find(element => element.SportId.toString() === item));
+        });
+    }
+    RenderBetType(type);
+}
+
+function RenderBetType(type) {
+    var bettypeFilter = $("#" + type + "BettypeSelect");
+    bettypeFilter.empty();
+    bettypeFilter.removeAttr('disabled');
+    var multiselectData = [];
+    if (selectedSports) {
+        selectedSports.forEach(function (item, index) {
+            item.Bettypes.forEach(function (bt) {
+                var existbt = multiselectData.find(element => element.Id === 'bettype' + bt.BettypeName);
+                if (!existbt) {
+                    multiselectData.push({
+                        Id: 'bettype' + bt.BettypeName,
+                        Value: bt.BettypeId,
+                        Text: '[' + bt.BettypeId + '] ' + bt.BettypeName,
+                        Checked: false,
+                        Enable: true,
+                        CssClass: "",
+                        Items: []
+                    });
+                }
+            });
+        });
+    }
+
+    bettypeFilter.multiSelect({
+        minWidth: 140,
+        maxHeight: 450,
+        shadow: true,
+        showHeader: true,
+        isCheckAll: false,
+        showFooter: false,
+        showFilter: true,
+        checkAllText: "All",
+        listData: multiselectData,
+        noItemText: "Select Bettype"
+    });
+}
+
 $(document).ready(function () {
+    InitFilterBehavior("Add");
+    InitFilterBehavior("Edit");
     GetSetting();
-    GetDcsMatrix();
 });

@@ -6,6 +6,8 @@
     using Fanex.Tarus.Customer.Entities;
     using System.Collections.Generic;
     using Fanex.Tarus.Customer.Entities.InitializingCustomerSetting;
+    using DNAide.Web;
+    using System.Text;
 
     public interface IInitializingCustomerSettingService
     {
@@ -14,7 +16,10 @@
         Result DeleteConfigSetting(int configId, int userId, string ip);
 
         Result AbortConfigSetting(int configId, int userId, string ip);
+
         IEnumerable<ProductModel> GetProductSportBettype();
+
+        string GetConfigDetail(int configId);
     }
     public class InitializingCustomerSettingService : IInitializingCustomerSettingService
     {
@@ -50,6 +55,22 @@
             return dataAccess.ExecuteNonQuery(criteria);
         }
 
+        public string GetConfigDetail(int configId)
+        {
+            var criteria = new GetConfigDetailCriteria(configId);
+            var config = dataAccess.GetConfigDetail(criteria);
+            var configSettingHtml = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("Templates/InitializingCustomerSetting/ConfigDetail.htm");
+            var settingsHtml = new StringBuilder();
+            foreach (var setting in config.Settings)
+            {
+                settingsHtml.Append(BuildSettingTempalte(setting));
+            }
+
+            TemplateHandler.Assign(ref configSettingHtml, "{settings}", settingsHtml.ToString());
+
+            return configSettingHtml;
+        }
+
         public IEnumerable<ProductModel> GetProductSportBettype()
         {
             var criteria = new DcsProductMatrixCriteria();
@@ -62,6 +83,11 @@
             var currencies = dataAccess.GetExchangeCurrency();
             var sites = dataAccess.GetSites();
             return dataAccess.GetSetting(new GetSettingCriteria(), currencies, sites);
+        }
+
+        private string BuildSettingTempalte(SettingInforModel setting)
+        {
+            return "";
         }
     }
 }
