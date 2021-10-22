@@ -110,7 +110,7 @@
                                             @if (ip != "-" && !item.Ticket.BetTypeId.Equals(500))
                                             {
                                                 <br />
-                                                <a href="javascript:;" onclick="viewBetListByIP('@item.Ticket.WinlostDate.ToString("MM/dd/yyyy")','@item.Ticket.IP');">@ip</a>
+                                                <a class="status-col" href="javascript:;" onclick="viewBetListByIP('@item.Ticket.WinlostDate.ToString("MM/dd/yyyy")','@item.Ticket.IP');">@ip</a>
                                             }
                                         </div>
                                     </td>
