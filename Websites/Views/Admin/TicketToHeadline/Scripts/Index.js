@@ -246,3 +246,11 @@ function ajax_form($form, on_complete) {
         });
     }
 }
+
+function OpenNoteMessage() {
+    $('#noteMessage').dialog({
+        title: 'Info',
+        width: 'auto',
+        height: 'auto'
+    });
+}
