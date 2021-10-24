@@ -25,6 +25,8 @@
         IEnumerable<ProductModel> GetProductSportBettype(DcsProductMatrixCriteria criteria);
 
         ConfigModel GetConfigDetail(GetConfigDetailCriteria criteria);
+
+        IEnumerable<SportBetTypeBySettingModel> GetSportAndBettypeWithSetting(DcsProductMatrixCriteria criteria, int productId);
     }
     public class InitializingCustomerSettingDataAccess : IInitializingCustomerSettingDataAccess
     {
@@ -136,7 +138,7 @@
             var model = new SettingConfigModel
             {
                 ConfigId = Convert.ToInt32(reader["configid"].ToString()),
-                ProductId = Convert.ToInt32(reader["configid"].ToString()),
+                ProductId = Convert.ToInt32(reader["productid"].ToString()),
                 IsTest = Convert.ToBoolean(reader["istest"].ToString()),
                 Remark = reader["remark"].ToString(),
                 StartTime = reader["starttime"].ToString(),
@@ -274,7 +276,7 @@
                         result.Config = new SettingConfigModel
                         {
                             ConfigId = Convert.ToInt32(reader["configid"].ToString()),
-                            ProductId = Convert.ToInt32(reader["configid"].ToString()),
+                            ProductId = Convert.ToInt32(reader["productid"].ToString()),
                             IsTest = Convert.ToBoolean(reader["istest"].ToString()),
                             Remark = reader["remark"].ToString(),
                             StartTime = reader["starttime"].ToString(),
@@ -297,8 +299,8 @@
                             {
                                 ConfigId = Convert.ToInt32(reader["configid"].ToString()),
                                 BetType = Convert.ToInt32(reader["BetType"].ToString()),
-                                CopyFromBetType = Convert.ToInt32(reader["CopyFromBetType"].ToString()),
-                                CopyFromSportType = Convert.ToInt32(reader["CopyFromSportType"].ToString()),
+                                CopyFromBetType = Convert.IsDBNull(reader["CopyFromBetType"]) ? 0 : Convert.ToInt32(reader["CopyFromBetType"].ToString()),
+                                CopyFromSportType = Convert.IsDBNull(reader["CopyFromSportType"]) ? 0 : Convert.ToInt32(reader["CopyFromSportType"].ToString()),
                                 DefaultValueAgent = reader["DefaultValueAgent"].ToString(),
                                 DefaultValueMaster = reader["DefaultValueMaster"].ToString(),
                                 DefaultValueMember = reader["DefaultValueMember"].ToString(),
@@ -313,6 +315,59 @@
                         }
 
                         result.Settings = configDetails;
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        public IEnumerable<SportBetTypeBySettingModel> GetSportAndBettypeWithSetting(DcsProductMatrixCriteria criteria, int productId)
+        {
+            var result = new List<SportBetTypeBySettingModel>();
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    while (reader.Read())
+                    {
+                        if(productId != Convert.ToInt32(reader["productid"]))
+                        {
+                            continue;
+                        }
+
+                        var settingId = Convert.ToInt32(reader["settingtype"]);
+                        var sportId = Convert.ToInt32(reader["sporttype"]);
+                        var sport = new SportModel(sportId,  string.Format(FormatDisplay, sportId, CacheRef.GetSportName(sportId)));
+                        var bettypeId = Convert.ToInt32(reader["bettype"]);
+                        var bettype = new BettypeModel(bettypeId, string.Format(FormatDisplay, bettypeId, CacheRef.GetBettype(bettypeId)));
+
+                        var setting = result.FirstOrDefault(x => x.SettingId == settingId);
+                        if (setting != null)
+                        {
+                            var existSport = setting.Sports.FirstOrDefault(sp => sp.SportId == sportId);
+                            if (existSport != null)
+                            {
+                                if (!existSport.Bettypes.Exists(bt => bt.BettypeId == bettypeId))
+                                {
+                                    existSport.Bettypes.Add(bettype);
+                                }
+                            } else
+                            {
+                                sport.Bettypes.Add(bettype);
+                                setting.Sports.Add(sport);
+                            }
+
+                            
+                        } else
+                        {
+                            sport.Bettypes.Add(bettype);
+                            result.Add(new SportBetTypeBySettingModel
+                            {
+                                SettingId = settingId,
+                                Sports = new List<SportModel> { sport }
+                            });
+                        }
                     }
                 }
             }

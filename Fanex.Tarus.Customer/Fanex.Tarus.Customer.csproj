@@ -659,6 +659,7 @@
     <Compile Include="Entities\InitializingCustomerSetting\SettingConfigModel.cs" />
     <Compile Include="Entities\InitializingCustomerSetting\SettingInforModel.cs" />
     <Compile Include="Entities\InitializingCustomerSetting\SettingTypeModel.cs" />
+    <Compile Include="Entities\InitializingCustomerSetting\SportBetTypeBySettingModel.cs" />
     <Compile Include="Entities\InitializingCustomerSetting\SportModel.cs" />
     <Compile Include="Entities\JsonWithoutNullField.cs" />
     <Compile Include="Entities\LicenseeDcsSetting\StakeLevelEntity.cs" />
@@ -744,6 +745,7 @@
     <Compile Include="ViewModels\CustomerSetting\Suspend\SingleUpdateViewModel.cs" />
     <Compile Include="ViewModels\CustomerSetting\Suspend\SuspendedCustomerDetailViewModel.cs" />
     <Compile Include="ViewModels\CustomerSetting\Suspend\SuspendMatrixViewModel.cs" />
+    <Compile Include="ViewModels\InitializingCustomerSetting\ConfigSettingViewModel.cs" />
     <Compile Include="ViewModels\InitializingCustomerSetting\InitializingCustomerSettingViewModel.cs" />
     <Compile Include="ViewModels\LicenseeDcsSetting\StakeLevelViewModel.cs" />
     <Compile Include="Entities\LicenseeDcsSetting\BetSettingEntity.cs" />

@@ -2,6 +2,7 @@
 var dcsproducts = [];
 var selectedProduct = null;
 var selectedSports = [];
+var selectedConfig = null;
 function GetSetting() {
     parent.BlockUI();
     $.ajax({
@@ -184,7 +185,7 @@ function RenderDcsMatrix(type, callbackfunc, params) {
         dataType: "json",
         success: function (rs) {
             dcsproducts = rs;
-            InitFilter(type);
+    InitFilter("Edit");
         },
         error: function (event, jqXHR, ajaxSettings) {
             showAlertMessage('errMsg', "Internal server error.", 1);
@@ -228,7 +229,7 @@ function InitFilterBehavior(type) {
 }
 
 function EditConfig(configId) {
-    RenderDcsMatrix("Edit", GetConfigInfo, configId);
+    RenderDcsMatrix("Edit", GetConfigDetail, configId);
     $('#detail-information-popup').dialog({
         title: 'Config ' + configId,
         modal: true,
@@ -237,8 +238,36 @@ function EditConfig(configId) {
     });
 }
 
-function GetConfigInfo(configId) {
+function GetConfigDetail(configId) {
+    selectedConfig = null;
+    parent.BlockUI();
+    $.ajax({
+        type: "GET",
+        url: "GetConfigDetail?configId=" + configId,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (rs) {
+            selectedConfig = rs;
+            $("#grid-information").html(rs.ConfigSettingHtml);
+            RenderEditConfigDetail();
+        },
+        error: function (event, jqXHR, ajaxSettings) {
+            showAlertMessage('errMsg', "Internal server error.", 1);
+        },
+        complete: function () {
+            try { parent.jQuery.unblockUI(); } catch (e) { }
+        }
+    });
+}
 
+function RenderEditConfigDetail() {
+    $("#EditProductSelect").val(selectedConfig.ConfigDetail.Config.ProductId).trigger("change");
+    //selectedConfig.ConfigDetail.Config.BetTypeIdList.forEach(function (item, _) {
+    //    $("#bettype" + item).prop('checked', true);
+    //});
+    //$("#EditBettypeSelect").trigger("change");
+    RenderSportType("Edit");
+    UpdateSelectSport("Edit");
 }
 
 function RenderSportType(type) {
@@ -252,7 +281,7 @@ function RenderSportType(type) {
                 Id: 'sport' + item.SportId,
                 Value: item.SportId,
                 Text: '[' + item.SportId + '] ' + item.SportName,
-                Checked: false,
+                Checked: selectedConfig && selectedConfig.ConfigDetail.Config.SportTypeIdList.indexOf(item.SportId) >= 0,
                 Enable: true,
                 CssClass: "",
                 Items: []
@@ -297,10 +326,10 @@ function RenderBetType(type) {
                 var existbt = multiselectData.find(element => element.Id === 'bettype' + bt.BettypeName);
                 if (!existbt) {
                     multiselectData.push({
-                        Id: 'bettype' + bt.BettypeName,
+                        Id: 'bettype' + bt.BettypeId,
                         Value: bt.BettypeId,
                         Text: '[' + bt.BettypeId + '] ' + bt.BettypeName,
-                        Checked: false,
+                        Checked: selectedConfig && selectedConfig.ConfigDetail.Config.BetTypeIdList.indexOf(bt.BettypeId) >= 0,
                         Enable: true,
                         CssClass: "",
                         Items: []

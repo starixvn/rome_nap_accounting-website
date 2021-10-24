@@ -1,0 +1,44 @@
+﻿<!-- Product Status -->
+<tr class="setting-row row-item">
+    <td class="setting-col col-item text-center" rowspan="6">{sport-type}</td>
+    <td class="setting-col col-item text-center" rowspan="6">{bet-type}</td>
+    <td class="setting-col col-item text-center" rowspan="2"><input type="checkbox" {ckbDefault} />Default</td>
+    <td class="setting-col col-item text-center">Super</td>
+    <td class="setting-col col-item text-center">Master</td>
+    <td class="setting-col col-item text-center">Agent</td>
+    <td class="setting-col col-item text-center">Member</td>
+</tr>
+<tr class="setting-row row-item">
+    <td class="setting-col col-item text-center">{status-super}</td>
+    <td class="setting-col col-item text-center">{status-master}</td>
+    <td class="setting-col col-item text-center">{status-agent}</td>
+    <td class="setting-col col-item text-center">{status-member}</td>
+</tr>
+<tr class="setting-row row-item">
+    <td class="setting-col col-item text-center" rowspan="2"><input type="checkbox" {ckbCopy} />Copy From</td>
+    <td class="setting-col col-item text-center">Sport Type</td>
+    <td class="setting-col col-item text-center">Bet Type</td>
+    <td class="setting-col col-item"></td>
+    <td class="setting-col col-item"></td>
+</tr>
+<tr class="setting-row row-item">
+    <td class="setting-col col-item text-center">
+        <select>
+            {sporttypeopts}
+        </select>
+    </td>
+    <td class="setting-col col-item text-center">
+        <select>
+            {bettypeopts}
+        </select>
+    </td>
+    <td class="setting-col col-item"></td>
+    <td class="setting-col col-item"></td>
+</tr>
+<tr class="setting-row row-item">
+    <td class="setting-col col-item text-center" rowspan="2">Disable by default</td>
+    <td class="setting-col col-item" colspan="4">Headline (seperate bt commas ',')</td>
+</tr>
+<tr class="setting-row row-item">
+    <td class="setting-col col-item" colspan="4"><textarea cols="75">{txtHeadline}</textarea></td>
+</tr>

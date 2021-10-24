@@ -41,3 +41,50 @@
 .status_aborted {
     color: red;
 }
+
+.status-enable {
+    display: table;
+    padding: 2px 5px;
+    background-color: #2655f0;
+    color: white;
+    border-radius: 4px;
+    margin: auto;
+}
+
+.status-disable {
+    display: table;
+    padding: 2px 5px;
+    background-color: #f23838;
+    color: white;
+    border-radius: 4px;
+    margin: auto;
+}
+
+.setting-table {
+    border-spacing: 0;
+}
+
+.setting-row {
+}
+
+.setting-col {
+    padding: 5px !important;
+}
+.row-header {
+}
+
+.col-header {
+    font-weight: bold;
+    background-color: #6aa0f7 !important;
+    border-color: #6aa0f7 !important;
+}
+
+.row-item {
+}
+
+.col-item {
+}
+
+.text-center {
+    text-align: center;
+}
