@@ -1,34 +1,34 @@
 ﻿<!-- Product Status -->
-<tr class="setting-row row-item">
-    <td class="setting-col col-item text-center" rowspan="6">{sport-type}</td>
-    <td class="setting-col col-item text-center" rowspan="6">{bet-type}</td>
-    <td class="setting-col col-item text-center" rowspan="2"><input type="checkbox" {ckbDefault} />Default</td>
-    <td class="setting-col col-item text-center">Super</td>
-    <td class="setting-col col-item text-center">Master</td>
-    <td class="setting-col col-item text-center">Agent</td>
-    <td class="setting-col col-item text-center">Member</td>
+<tr class="setting-row row-item text-center">
+    <td class="setting-col col-item" rowspan="6">{sport-type}</td>
+    <td class="setting-col col-item" rowspan="6">{bet-type}</td>
+    <td class="setting-col col-item" rowspan="2"><input type="checkbox" {ckbDefault} />Default</td>
+    <td class="setting-col col-item">Super</td>
+    <td class="setting-col col-item">Master</td>
+    <td class="setting-col col-item">Agent</td>
+    <td class="setting-col col-item">Member</td>
 </tr>
-<tr class="setting-row row-item">
-    <td class="setting-col col-item text-center">{status-super}</td>
-    <td class="setting-col col-item text-center">{status-master}</td>
-    <td class="setting-col col-item text-center">{status-agent}</td>
-    <td class="setting-col col-item text-center">{status-member}</td>
+<tr class="setting-row row-item text-center">
+    <td class="setting-col col-item">{status-super}</td>
+    <td class="setting-col col-item">{status-master}</td>
+    <td class="setting-col col-item">{status-agent}</td>
+    <td class="setting-col col-item">{status-member}</td>
 </tr>
-<tr class="setting-row row-item">
-    <td class="setting-col col-item text-center" rowspan="2"><input type="checkbox" {ckbCopy} />Copy From</td>
-    <td class="setting-col col-item text-center">Sport Type</td>
-    <td class="setting-col col-item text-center">Bet Type</td>
+<tr class="setting-row row-item text-center">
+    <td class="setting-col col-item" rowspan="2"><input type="checkbox" {ckbCopy} />Copy From</td>
+    <td class="setting-col col-item">Sport Type</td>
+    <td class="setting-col col-item">Bet Type</td>
     <td class="setting-col col-item"></td>
     <td class="setting-col col-item"></td>
 </tr>
-<tr class="setting-row row-item">
-    <td class="setting-col col-item text-center">
-        <select>
+<tr class="setting-row row-item text-center">
+    <td class="setting-col col-item">
+        <select id="{target-sporttype}" class="sel-sport-copy" data-target-settingtype="{setting-type}" data-target-bettype="{target-bettype}">
             {sporttypeopts}
         </select>
     </td>
-    <td class="setting-col col-item text-center">
-        <select>
+    <td class="setting-col col-item">
+        <select id="{target-bettype}" class="sel-bettype-copy">
             {bettypeopts}
         </select>
     </td>

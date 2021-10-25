@@ -1,21 +1,21 @@
 ﻿<!-- Position Taking -->
-<tr class="setting-row row-item">
-    <td class="setting-col col-item text-center" rowspan="2">{sport-type}</td>
-    <td class="setting-col col-item text-center" rowspan="2">{bet-type}</td>
-    <td class="setting-col col-item text-center" rowspan="2"><input type="checkbox" {ckbCopy} />Copy from</td>
-    <td class="setting-col col-item text-center">Sport Type</td>
-    <td class="setting-col col-item text-center">Bet Type</td>
-    <td class="setting-col col-item text-center"></td>
-    <td class="setting-col col-item text-center"></td>
+<tr class="setting-row row-item text-center">
+    <td class="setting-col col-item" rowspan="2">{sport-type}</td>
+    <td class="setting-col col-item" rowspan="2">{bet-type}</td>
+    <td class="setting-col col-item" rowspan="2"><input type="checkbox" {ckbCopy} />Copy from</td>
+    <td class="setting-col col-item">Sport Type</td>
+    <td class="setting-col col-item">Bet Type</td>
+    <td class="setting-col col-item"></td>
+    <td class="setting-col col-item"></td>
 </tr>
-<tr class="setting-row row-item">
-    <td class="setting-col col-item text-center">
-        <select>
+<tr class="setting-row row-item text-center">
+    <td class="setting-col col-item">
+        <select id="{target-sporttype}" class="sel-sport-copy" data-target-settingtype="{setting-type}" data-target-bettype="{target-bettype}">
             {sporttypeopts}
         </select>
     </td>
-    <td class="setting-col col-item text-center">
-        <select>
+    <td class="setting-col col-item">
+        <select id="{target-bettype}" class="sel-bettype-copy">
             {bettypeopts}
         </select>
     </td>

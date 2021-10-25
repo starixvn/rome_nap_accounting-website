@@ -1,0 +1,29 @@
+﻿<tr class="setting-row row-header">
+    <td class="setting-col col-header text-center" colspan="7"> General Information</td>
+</tr>
+<tr class="setting-row row-item">
+    <td class="setting-col col-item" colspan="7">
+        <div class="edit-general-info floatLeft w130">
+            <label class="edit-label" for="EditSiteSelect">Site:</label>
+            <select id="EditSiteSelect" class="setting-edit"></select>
+        </div>
+        <div class="edit-general-info floatLeft w160">
+            <label class="edit-label" for="EditCurrencySelect">Currency:</label>
+            <select id="EditCurrencySelect" class="setting-edit"></select>
+        </div>
+        <div class="edit-general-info floatLeft w300">
+            <label class="edit-label" for="EditStartTime">Start Time(GMT-4):</label>
+            <input class="setting-calendar" id="EditStartTime" readonly type="text" title="Start Time(GMT-4)" />
+            <input class="img-date-selector" onclick="return false;" alt="" id="EditStartTime_Trigger" title="Date selector"
+                   width="18" height="17" src="../App_Themes/Images/calendar.gif" type="image" />
+        </div>
+        <div class="edit-general-info floatLeft w80">
+            <input id="ckbEditIsTest" type="checkbox" /><span>Is Test</span>
+        </div>
+        <div class="clear"></div>
+        <div class="edit-general-info floatLeft w400">
+            <label class="edit-label" for="EditRemark">Remark:</label>
+            <textarea id="EditRemark" cols="80"></textarea>
+        </div>
+    </td>
+</tr>

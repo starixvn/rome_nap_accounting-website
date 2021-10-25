@@ -26,7 +26,7 @@
 
         ConfigModel GetConfigDetail(GetConfigDetailCriteria criteria);
 
-        IEnumerable<SportBetTypeBySettingModel> GetSportAndBettypeWithSetting(DcsProductMatrixCriteria criteria, int productId);
+        IEnumerable<SportBetTypeBySettingModel> GetSportAndBettypeWithSetting(DcsProductMatrixCriteria criteria);
     }
     public class InitializingCustomerSettingDataAccess : IInitializingCustomerSettingDataAccess
     {
@@ -145,6 +145,7 @@
                 EndTime = reader["endtime"].ToString(),
                 CurrentStep = reader["currentstep"].ToString(),
                 ProcessedSteps = reader["processedstep"].ToString(),
+                Status = Convert.ToInt32(reader["status"].ToString()),
                 BetTypeIdList = new List<int>(),
                 BetTypeList = new List<string>(),
                 CurrencyIdList = new List<int>(),
@@ -322,7 +323,7 @@
             return result;
         }
 
-        public IEnumerable<SportBetTypeBySettingModel> GetSportAndBettypeWithSetting(DcsProductMatrixCriteria criteria, int productId)
+        public IEnumerable<SportBetTypeBySettingModel> GetSportAndBettypeWithSetting(DcsProductMatrixCriteria criteria)
         {
             var result = new List<SportBetTypeBySettingModel>();
             using (var db = new ObjectDb(criteria.GetSettingKey()))
@@ -331,11 +332,6 @@
                 {
                     while (reader.Read())
                     {
-                        if(productId != Convert.ToInt32(reader["productid"]))
-                        {
-                            continue;
-                        }
-
                         var settingId = Convert.ToInt32(reader["settingtype"]);
                         var sportId = Convert.ToInt32(reader["sporttype"]);
                         var sport = new SportModel(sportId,  string.Format(FormatDisplay, sportId, CacheRef.GetSportName(sportId)));
@@ -370,9 +366,41 @@
                         }
                     }
                 }
+
+                foreach (var st in result)
+                {
+                    if(st.SettingId == 6)
+                    {
+                        var winlossSetting = result.FirstOrDefault(rs => rs.SettingId == 12);
+                        if(winlossSetting != null)
+                        {
+                            GetSameSportBettypeFromSetting(st, winlossSetting);
+                        }
+                    }
+
+                    if (st.SettingId == 12)
+                    {
+                        var lossSetting = result.FirstOrDefault(rs => rs.SettingId == 6);
+                        if (lossSetting != null)
+                        {
+                            GetSameSportBettypeFromSetting(st, lossSetting);
+                        }
+                    }
+                }
             }
 
             return result;
+        }
+
+        private void GetSameSportBettypeFromSetting(SportBetTypeBySettingModel targetSetting, SportBetTypeBySettingModel sourceSetting)
+        {
+            foreach (var sp in sourceSetting.Sports)
+            {
+                if(!targetSetting.Sports.Exists(item => item.SportId == sp.SportId))
+                {
+                    targetSetting.Sports.Add(sp);
+                }
+            }
         }
     }
 }

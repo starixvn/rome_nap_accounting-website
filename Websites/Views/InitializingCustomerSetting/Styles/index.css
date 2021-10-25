@@ -42,21 +42,23 @@
     color: red;
 }
 
+.setting-status {
+    border-radius: 3px;
+    display: inline-block;
+    font-weight: normal;
+    padding: 3px 4px;
+    min-width: 55px;
+}
+
 .status-enable {
-    display: table;
-    padding: 2px 5px;
-    background-color: #2655f0;
-    color: white;
-    border-radius: 4px;
+    background-color: #1e84c4;
+    color: #fff;
     margin: auto;
 }
 
 .status-disable {
-    display: table;
-    padding: 2px 5px;
-    background-color: #f23838;
-    color: white;
-    border-radius: 4px;
+    background-color: #d9534f;
+    color: #fff;
     margin: auto;
 }
 
@@ -87,4 +89,23 @@
 
 .text-center {
     text-align: center;
+}
+
+.sel-sport-copy {
+    width: 120px;
+}
+
+.sel-bettype-copy {
+    width: 120px;
+}
+
+.w300 {
+    width: 300px;
+}
+.edit-general-info {
+    display: flex;
+    align-items: center;
+}
+.edit-label {
+    padding-right: 5px;
 }

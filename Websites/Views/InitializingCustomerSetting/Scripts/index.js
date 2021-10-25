@@ -63,7 +63,7 @@ function RenderSite(pos) {
     }
 }
 
-function OpenSiteDialogInformation(pos){
+function OpenSiteDialogInformation(pos) {
     var extraSites = configSettings.ConfigSettings[pos].SiteList.join('</br>');
     OpenDialogInformation("Sites", extraSites);
 }
@@ -72,7 +72,7 @@ function RenderCurrency(pos) {
     var currencies = configSettings.ConfigSettings[pos].CurrencyList;
     if (currencies.length > 3) {
         return currencies[0] + ' </br>' + currencies[1] + ' </br>' + currencies[2]
-            + ' </br> <a class="info-link" href="#" onclick="OpenCurrencyDialogInformation(' + pos + ')">View all ' + currencies.length +' currencies</a>';
+            + ' </br> <a class="info-link" href="#" onclick="OpenCurrencyDialogInformation(' + pos + ')">View all ' + currencies.length + ' currencies</a>';
     } else {
         return currencies.join('</br>');
     }
@@ -144,9 +144,9 @@ function RenderSettings() {
         row.Columns.push({ Name: 'Steps', TdClass: null, Value: RenderStep(setting, steps) });
         row.Columns.push({ Name: 'StartTime', TdClass: null, Value: setting.StartTime });
         row.Columns.push({ Name: 'EndTime', TdClass: null, Value: setting.EndTime });
-        row.Columns.push({ Name: 'IsTest', TdClass: null, Value: setting.IsTest? 1 : 0 });
+        row.Columns.push({ Name: 'IsTest', TdClass: null, Value: setting.IsTest ? 1 : 0 });
         row.Columns.push({ Name: 'Remark', TdClass: null, Value: setting.Remark });
-        row.Columns.push({ Name: 'Action', TdClass: null, Value: RenderAction(setting.Status, setting.ConfigId)});
+        row.Columns.push({ Name: 'Action', TdClass: null, Value: RenderAction(setting.Status, setting.ConfigId) });
         bodyRows.push(row);
     }
 
@@ -185,7 +185,7 @@ function RenderDcsMatrix(type, callbackfunc, params) {
         dataType: "json",
         success: function (rs) {
             dcsproducts = rs;
-    InitFilter("Edit");
+            InitFilter("Edit");
         },
         error: function (event, jqXHR, ajaxSettings) {
             showAlertMessage('errMsg', "Internal server error.", 1);
@@ -233,8 +233,8 @@ function EditConfig(configId) {
     $('#detail-information-popup').dialog({
         title: 'Config ' + configId,
         modal: true,
-        width: '800',
-        height: '700'
+        width: '850',
+        height: '600'
     });
 }
 
@@ -261,13 +261,118 @@ function GetConfigDetail(configId) {
 }
 
 function RenderEditConfigDetail() {
+    $("#EditProductSelect").select2();
     $("#EditProductSelect").val(selectedConfig.ConfigDetail.Config.ProductId).trigger("change");
-    //selectedConfig.ConfigDetail.Config.BetTypeIdList.forEach(function (item, _) {
-    //    $("#bettype" + item).prop('checked', true);
-    //});
-    //$("#EditBettypeSelect").trigger("change");
     RenderSportType("Edit");
     UpdateSelectSport("Edit");
+    RenderSiteSelection("Edit");
+    RenderCurrencySelection("Edit");
+    RenderEventEdit();
+}
+
+function RenderSiteSelection(type) {
+    var siteSelect = $("#" + type + "SiteSelect");
+    siteSelect.empty();
+    var multiselectData = [];
+    if (selectedConfig) {
+        selectedConfig.Sites.forEach(function (item, index) {
+            multiselectData.push({
+                Id: 'optsite' + type + item.Id,
+                Value: item.Id,
+                Text: item.Name,
+                Checked: selectedConfig && selectedConfig.ConfigDetail.Config.SiteIdList.indexOf(item.Id) >= 0,
+                Enable: true,
+                CssClass: "",
+                Items: []
+            });
+        });
+    }
+
+    siteSelect.multiSelect({
+        minWidth: 120,
+        maxHeight: 450,
+        shadow: true,
+        showHeader: true,
+        isCheckAll: false,
+        showFooter: false,
+        showFilter: true,
+        checkAllText: "All",
+        listData: multiselectData,
+        noItemText: "Select Sites"
+    });
+}
+
+function RenderCurrencySelection(type) {
+    var currencySelect = $("#" + type + "CurrencySelect");
+    currencySelect.empty();
+    var multiselectData = [];
+    if (selectedConfig) {
+        selectedConfig.Currencies.forEach(function (item, index) {
+            multiselectData.push({
+                Id: 'optcurrency' + type + item.Id,
+                Value: item.Id,
+                Text: item.Name,
+                Checked: selectedConfig && selectedConfig.ConfigDetail.Config.CurrencyIdList.indexOf(item.Id) >= 0,
+                Enable: true,
+                CssClass: "",
+                Items: []
+            });
+        });
+    }
+
+    currencySelect.multiSelect({
+        minWidth: 120,
+        maxHeight: 450,
+        shadow: true,
+        showHeader: true,
+        isCheckAll: false,
+        showFooter: false,
+        showFilter: true,
+        checkAllText: "All",
+        listData: multiselectData,
+        noItemText: "Select Currencies"
+    });
+}
+
+function RenderEventEdit() {
+    $(".sel-sport-copy").each(function () {
+        var settingtype = $(this).data("target-settingtype");
+        var targetBettype = $(this).data("target-bettype");
+        var editsetting = selectedConfig && selectedConfig.SportBettypeBySettings.find(element => element.SettingId.toString() === settingtype.toString());
+        $(this).change(function () {
+            var bettypeSel = $("#" + targetBettype);
+            bettypeSel.empty();
+            var selectSportId = $(this).val();
+            var editSport = editsetting && editsetting.Sports.find(element => element.SportId.toString() === selectSportId.toString());
+            if (editSport) {
+                editSport.Bettypes.forEach(function (bt) {
+                    bettypeSel.append(new Option(bt.BettypeName, bt.BettypeId));
+                });
+            }
+            bettypeSel.select2();
+        });
+        $(this).select2();
+    });
+
+    $(".sel-bettype-copy").each(function () {
+        $(this).select2();
+    });
+
+    $("#EditStartTime").val(selectedConfig.ConfigDetail.Config.StartTime);
+    SetupCalendar("EditStartTime");
+    $('#EditRemark').val(selectedConfig.ConfigDetail.Config.Remark);
+    $('#ckbEditIsTest').prop('checked', selectedConfig.ConfigDetail.Config.IsTest);
+}
+
+function SetupCalendar(divId) {
+    $('#' + divId).datetimepicker({
+        format: 'm/d/Y H:i:00 A',
+        step: 5
+    });
+
+    $('#' + divId + '_Trigger').click(function () {
+        jQuery('#' + divId).datetimepicker('show');
+    });
 }
 
 function RenderSportType(type) {
@@ -300,7 +405,7 @@ function RenderSportType(type) {
         checkAllText: "All",
         listData: multiselectData,
         noItemText: "Select Sport",
-        onCheck: function () { UpdateSelectSport(type);}
+        onCheck: function () { UpdateSelectSport(type); }
     });
 }
 
