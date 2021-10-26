@@ -56,6 +56,7 @@
 
             htmlcontent = RenderClosedStatus(htmlcontent, customerInfoViewModel);
             htmlcontent = RenderLockedAccess(htmlcontent, customerInfoViewModel);
+            htmlcontent = RenderProtectedStatus(htmlcontent, customerInfoViewModel);
             htmlcontent = RenderLimitedPerIP(htmlcontent, customerInfoViewModel);
 
             htmlcontent = RenderGoldDeluxeForDepositControl(htmlcontent, customerInfoViewModel);
@@ -188,6 +189,28 @@
                 {
                     TemplateHandler.RemoveBlock(ref htmlcontent, "LockedAccessEnabled");
                 }
+            }
+
+            return htmlcontent;
+        }
+
+        private string RenderProtectedStatus(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
+        {
+            if (customerInfoViewModel.IsDeposit
+                || customerInfoViewModel.SearchAccountRoleId < 2
+                || CustomerAppSettings.IsNotOfferProtectedMode(customerInfoViewModel.CustomerSite))
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "ProtectedStatusBlock");
+            }
+            else
+            {
+                TemplateHandler.Assign(
+                    ref htmlcontent,
+                    "{ProtectedStatusClassName}",
+                    customerInfoViewModel.IsProtectedMode ? "chkchecked" : "chkuncheck");
+                TemplateHandler.RemoveBlock(
+                    ref htmlcontent,
+                    customerInfoViewModel.ManageCustomerAccess ? "ProtectedStatusDisabled" : "ProtectedStatusEnabled");
             }
 
             return htmlcontent;

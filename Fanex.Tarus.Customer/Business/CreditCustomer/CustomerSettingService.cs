@@ -421,5 +421,19 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
 
         public CustomerSetting.Module.Core.Models.Result UnlockAccess(int custId, int userId, string ip)
             => _customerSettingDataAccess.ExecuteNonQuery(new UnlockAccessCriteria(custId, userId, 0, "E", ip, AccCommon.SystemId));
+
+        public CustomerSetting.Module.Core.Models.Result UpdateProtectedStatus(int custId, bool isProtected, int userId, string ip)
+        {
+            var result =_customerSettingDataAccess.ExecuteNonQuery(
+                new UpdateProtectedStatusCriteria(custId, isProtected, userId, ip));
+
+            if (AccCommon.IsEnabledRecheckin && result.IsSuccess && isProtected)
+            {
+                Sunplus.Accounting.DataAccess.IBCDLL.Customer.UpdateCustomer.KickoutCustomer(
+                    custId, ip: ip, mode: "ChangeProtectionMode");
+            }
+
+            return result;
+        }
     }
 }

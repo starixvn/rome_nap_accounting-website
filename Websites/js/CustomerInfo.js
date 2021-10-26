@@ -211,6 +211,25 @@ function unlockAccess(confirmMessage) {
     }
 }
 
+function updateProtectedStatus() {
+    if (confirm("Are you sure you want to change the Protection Status for selected account(s)?\nProtection Status should just be turned on in emergency situations.")) {
+        var isProtected = $("#chkProtectedStatus").hasClass("chkchecked");
+        $.ajax({
+            type: "POST",
+            url: "CustomerSetting/UpdateProtectedStatus",
+            data: JSON.stringify({ custId: GetCustId(), isProtected: !isProtected }),
+            contentType: "application/json; charset=utf-8",
+            success: function (result) {
+                !result.IsSuccess && alert(result.ErrorMessage);
+                changeDisplayStatus();
+            },
+            complete: function () {
+                if (PTUnBlockUI) PTUnBlockUI();
+            }
+        });
+    }
+}
+
 function updateUnsuspend(custId, userName) {
     parent.OpenNextPopup('update-unsuspend', 'UnsuspendCustomer/SingleSuspendView?custId=' + custId + '&userName=' + userName, 'Update Unsuspend Status for ' + obj('custName').value, 650, 450, true, false, window, 0, null, null);
 }
