@@ -95,7 +95,22 @@ function OpenDialogInformation(title, divhtml) {
 }
 
 function RenderStep(setting, steps) {
-    return "";
+    var result = "";
+    if (setting.ProcessedSteps !== "") {
+        var processedSteps = setting.ProcessedSteps.split(',');
+        processedSteps.forEach(function (item, _) {
+            var step = steps.find(st => st.Id.toString() === item);
+            var stepString = "<p class=\"step-complete\">+ " + step.Name + ": <span class=\"complete-string\">Completed<span> <p>";
+            result += stepString;
+        });
+    }
+
+    if (setting.CurrentStep !== "") {
+        var rnstep = steps.find(st => st.Id.toString() === setting.CurrentStep);
+        var rnstepString = "<p class=\"step-running\">+ " + rnstep.Name + ": <span class=\"running-string\">Running<span> <p>";
+        result += rnstepString;
+    }
+    return result;
 }
 
 function RenderStatus(status) {

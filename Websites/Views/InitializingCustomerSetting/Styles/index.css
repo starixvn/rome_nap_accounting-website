@@ -109,3 +109,19 @@
 .edit-label {
     padding-right: 5px;
 }
+
+.step-complete {
+    color: black;
+}
+
+.complete-string {
+    font-weight: bold;
+}
+
+.step-running {
+    color: orange;
+}
+
+.running-string {
+    font-weight: bold;
+}
