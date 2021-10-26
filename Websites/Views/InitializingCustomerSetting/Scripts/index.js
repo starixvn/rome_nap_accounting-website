@@ -84,8 +84,8 @@ function OpenCurrencyDialogInformation(pos) {
 }
 
 function OpenDialogInformation(title, divhtml) {
-    $('#information').html(divhtml);
-    $('#detail-information').dialog({
+    $('#extra-information').html(divhtml);
+    $('#extra-information-popup').dialog({
         title: title,
         modal: true,
         resizable: false,
@@ -175,7 +175,7 @@ function RenderSettings() {
     $('#gridCustomerSetting').fanexGrid(gridOptions);
 }
 
-function RenderDcsMatrix(type, callbackfunc, params) {
+function RenderDcsMatrix(type, callbackfunc, params, enableInput = true) {
     dcsproducts = [];
     parent.BlockUI();
     $.ajax({
@@ -193,7 +193,7 @@ function RenderDcsMatrix(type, callbackfunc, params) {
         complete: function () {
             try { parent.jQuery.unblockUI(); } catch (e) { }
             if (callbackfunc) {
-                callbackfunc(params);
+                callbackfunc(params, enableInput);
             }
         }
     });
@@ -229,7 +229,8 @@ function InitFilterBehavior(type) {
 }
 
 function EditConfig(configId) {
-    RenderDcsMatrix("Edit", GetConfigDetail, configId);
+    $("#grid-information").html("");
+    RenderDcsMatrix("Edit", GetConfigDetail, configId, true);
     $('#detail-information-popup').dialog({
         title: 'Config ' + configId,
         modal: true,
@@ -238,7 +239,18 @@ function EditConfig(configId) {
     });
 }
 
-function GetConfigDetail(configId) {
+function ViewConfig(configId) {
+    $("#grid-information").html("");
+    RenderDcsMatrix("Edit", GetConfigDetail, configId, false);
+    $('#detail-information-popup').dialog({
+        title: 'Config ' + configId,
+        modal: true,
+        width: '850',
+        height: '600'
+    });
+}
+
+function GetConfigDetail(configId, enableInput = true) {
     selectedConfig = null;
     parent.BlockUI();
     $.ajax({
@@ -249,7 +261,7 @@ function GetConfigDetail(configId) {
         success: function (rs) {
             selectedConfig = rs;
             $("#grid-information").html(rs.ConfigSettingHtml);
-            RenderEditConfigDetail();
+            RenderEditConfigDetail(enableInput);
         },
         error: function (event, jqXHR, ajaxSettings) {
             showAlertMessage('errMsg', "Internal server error.", 1);
@@ -260,17 +272,33 @@ function GetConfigDetail(configId) {
     });
 }
 
-function RenderEditConfigDetail() {
+function RenderEditConfigDetail(enableInput) {
     $("#EditProductSelect").select2();
     $("#EditProductSelect").val(selectedConfig.ConfigDetail.Config.ProductId).trigger("change");
-    RenderSportType("Edit");
-    UpdateSelectSport("Edit");
-    RenderSiteSelection("Edit");
-    RenderCurrencySelection("Edit");
+    RenderSportType("Edit", enableInput);
+    UpdateSelectSport("Edit", enableInput);
+    RenderSiteSelection("Edit", enableInput);
+    RenderCurrencySelection("Edit", enableInput);
     RenderEventEdit();
+    DisableEditInput(!enableInput);
 }
 
-function RenderSiteSelection(type) {
+function DisableEditInput(isDisabled) {
+    $("#EditProductSelect").prop('disabled', isDisabled);
+
+    $(".edit-input").each(function () {
+        $(this).prop('disabled', isDisabled);
+    }); 
+    $(".btn-edit").each(function () {
+        if (isDisabled) {
+            $(this).addClass("hidden");
+        } else {
+            $(this).removeClass("hidden");
+        }
+    });
+}
+
+function RenderSiteSelection(type, enableInput) {
     var siteSelect = $("#" + type + "SiteSelect");
     siteSelect.empty();
     var multiselectData = [];
@@ -296,13 +324,14 @@ function RenderSiteSelection(type) {
         isCheckAll: false,
         showFooter: false,
         showFilter: true,
+        disabled: !enableInput,
         checkAllText: "All",
         listData: multiselectData,
         noItemText: "Select Sites"
     });
 }
 
-function RenderCurrencySelection(type) {
+function RenderCurrencySelection(type, enableInput) {
     var currencySelect = $("#" + type + "CurrencySelect");
     currencySelect.empty();
     var multiselectData = [];
@@ -328,6 +357,7 @@ function RenderCurrencySelection(type) {
         isCheckAll: false,
         showFooter: false,
         showFilter: true,
+        disabled: !enableInput,
         checkAllText: "All",
         listData: multiselectData,
         noItemText: "Select Currencies"
@@ -375,7 +405,7 @@ function SetupCalendar(divId) {
     });
 }
 
-function RenderSportType(type) {
+function RenderSportType(type, enableInput = true) {
     var sportFilter = $("#" + type + "SportSelect");
     sportFilter.empty();
     sportFilter.removeAttr('disabled');
@@ -402,6 +432,7 @@ function RenderSportType(type) {
         isCheckAll: false,
         showFooter: false,
         showFilter: true,
+        disabled: !enableInput,
         checkAllText: "All",
         listData: multiselectData,
         noItemText: "Select Sport",
@@ -409,7 +440,7 @@ function RenderSportType(type) {
     });
 }
 
-function UpdateSelectSport(type) {
+function UpdateSelectSport(type, enableInput = true) {
     selectedSports = [];
     var selectedSportIds = $("#" + type + "SportSelect").multiSelect("getCheckedItems");
     if (selectedSportIds) {
@@ -417,10 +448,10 @@ function UpdateSelectSport(type) {
             selectedSports.push(selectedProduct.Sports.find(element => element.SportId.toString() === item));
         });
     }
-    RenderBetType(type);
+    RenderBetType(type, enableInput);
 }
 
-function RenderBetType(type) {
+function RenderBetType(type, enableInput = true) {
     var bettypeFilter = $("#" + type + "BettypeSelect");
     bettypeFilter.empty();
     bettypeFilter.removeAttr('disabled');
@@ -452,6 +483,7 @@ function RenderBetType(type) {
         isCheckAll: false,
         showFooter: false,
         showFilter: true,
+        disabled: !enableInput,
         checkAllText: "All",
         listData: multiselectData,
         noItemText: "Select Bettype"

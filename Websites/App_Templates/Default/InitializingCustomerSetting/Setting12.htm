@@ -2,9 +2,9 @@
 <tr class="setting-row row-item text-center">
     <td class="setting-col col-item" rowspan="4">{sport-type}</td>
     <td class="setting-col col-item" rowspan="4">{bet-type}</td>
-    <td class="setting-col col-item" rowspan="2"><input type="checkbox" {ckbDefault} />Default</td>
+    <td class="setting-col col-item" rowspan="2"><input class="edit-input" type="checkbox" {ckbDefault} />Default</td>
     <td class="setting-col col-item">Maximum Win</td>
-    <td class="setting-col col-item" rowspan="2"><input type="checkbox" {ckbAutoResetDaily} />Daily auto reset limit (at 12 noon GMT+8)</td>
+    <td class="setting-col col-item" rowspan="2"><input class="edit-input" type="checkbox" {ckbAutoResetDaily} />Daily auto reset limit (at 12 noon GMT+8)</td>
     <td class="setting-col col-item"></td>
     <td class="setting-col col-item"></td>
 </tr>
@@ -14,7 +14,7 @@
     <td class="setting-col col-item"></td>
 </tr>
 <tr class="setting-row row-item text-center">
-    <td class="setting-col col-item" rowspan="2"><input type="checkbox" {ckbCopy} />Copy From</td>
+    <td class="setting-col col-item" rowspan="2"><input class="edit-input" type="checkbox" {ckbCopy} />Copy From</td>
     <td class="setting-col col-item">Sport Type</td>
     <td class="setting-col col-item">Bet Type</td>
     <td class="setting-col col-item"></td>
@@ -22,12 +22,12 @@
 </tr>
 <tr class="setting-row row-item text-center">
     <td class="setting-col col-item">
-        <select id="{target-sporttype}" class="sel-sport-copy" data-target-settingtype="{setting-type}" data-target-bettype="{target-bettype}">
+        <select id="{target-sporttype}" class="edit-input sel-sport-copy" data-target-settingtype="{setting-type}" data-target-bettype="{target-bettype}">
             {sporttypeopts}
         </select>
     </td>
     <td class="setting-col col-item">
-        <select id="{target-bettype}" class="sel-bettype-copy">
+        <select id="{target-bettype}" class="edit-input sel-bettype-copy">
             {bettypeopts}
         </select>
     </td>
