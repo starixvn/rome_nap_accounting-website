@@ -54,9 +54,15 @@
                     $("#err").show();
                 }
             },
-            error: function () {
+            error: function (xhr) {
                 $("#mainreport").hide();
-                showAlertMessage("err", "There is no data.", 1);
+                if (xhr.status == 403) {
+                    showAlertMessage("err", JSON.parse(xhr.responseText).ErrorMessage, 1);
+                }
+                else {
+                    showAlertMessage("err", "There is no data.", 1);
+                }
+
                 $("#err").show();
             },
             complete: function () {
@@ -103,7 +109,7 @@
         $('#tbstatement tbody').empty().append(arr.join(''));
         var isChrome = window.chrome;
         if (isChrome) {
-             $('#tbstatement tbody tr:first').attr('style', 'height: 47px !important');
+            $('#tbstatement tbody tr:first').attr('style', 'height: 47px !important');
         }
         this.recalcuGrid(false);
         mainreport.removeClass("hidden");
@@ -200,12 +206,12 @@
         }
         html += ReverseHTML;
 
-        for (var i = 1; i < rowspanCreator && i < rowspanWinLoss ; i++) {
-           
+        for (var i = 1; i < rowspanCreator && i < rowspanWinLoss; i++) {
+
             html += '<tr id="' + row.RefNo + '"  name="' + row.RefNo + '_Main" class="' + cssClass + '"><td colspan="2"><div class="l b table-cell" style="width:350px;' + (Helper.isExistLongWord(row.ListTrans[i].Remark) ? 'min-height:42px;display:block' : 'height:42px;') + '">' + row.ListTrans[i].Remark + '</div></td><td><div class="r" style="width:110px; ">' + Helper.formatCSS(row.ListTrans[i].Total) + '</div></td><td><div class="r" style="width:110px;">' + Helper.formatCSS(row.ListTrans[i].AccumTotal) + '</div></td><td><div class="c" style="width:70px;">' + row.ListTrans[i].TransDate + '</div></td></tr>';
         }
 
-        if (rowspanWinLoss > rowspanCreator ) {
+        if (rowspanWinLoss > rowspanCreator) {
             for (var i = rowspanCreator; i < rowspanWinLoss; i++) {
                 html += '<tr id="' + row.RefNo + '"  name="' + row.RefNo + '_Main" class="' + cssClass + '"><td colspan="2"><div class="l b table-cell" style="width:350px;' + (Helper.isExistLongWord(row.ListTrans[i].Remark) ? 'min-height:42px;display:block' : 'height:42px;') + '">' + row.ListTrans[i].Remark + '</div></td><td><div class="r" style="width:110px;">' + Helper.formatCSS(row.ListTrans[i].Total) + '</div></td><td><div class="r" style="width:110px;">' + row.ListTrans[i].AccumTotal + '</div></td><td><div class="c" style="width:70px;">' + row.ListTrans[i].TransDate + '</div></td>';
                 if (i == rowspanCreator) {
@@ -665,8 +671,8 @@
     exportExcel: function () {
         this.getParams();
         var url = 'Index?isExport=true&title=' + financeStatement.Params.custName + '_Statement' + '&refno=' + financeStatement.Params.refNo +
-        '&custName=' + financeStatement.Params.custName + '&filterby=' + financeStatement.Params.filterBy + '&fdate="' + financeStatement.Params.fromdate +
-        '"&tdate="' + financeStatement.Params.toDay + '"&balupday=' + financeStatement.Params.balanceUpDay + '&includeaccbal=' + financeStatement.Params.includeAccBall;
+            '&custName=' + financeStatement.Params.custName + '&filterby=' + financeStatement.Params.filterBy + '&fdate="' + financeStatement.Params.fromdate +
+            '"&tdate="' + financeStatement.Params.toDay + '"&balupday=' + financeStatement.Params.balanceUpDay + '&includeaccbal=' + financeStatement.Params.includeAccBall;
 
         $('#frm').attr('src', url);
     }
@@ -709,20 +715,20 @@ var Helper = {
 };
 
 head.ready(function (event) {
-      Calendar.setup({
-         animation: false,
-         showTime :false,
-         bottomBar:true,
-         trigger: "fdateTrigger",
-         inputField: "txtfromdate",
-         dateFormat: "%m/%d/%Y",
-         min: "01012008",
-         max: _maxDate,
-         selection: [_selectFromDate],
-         onSelect: function() {
+    Calendar.setup({
+        animation: false,
+        showTime: false,
+        bottomBar: true,
+        trigger: "fdateTrigger",
+        inputField: "txtfromdate",
+        dateFormat: "%m/%d/%Y",
+        min: "01012008",
+        max: _maxDate,
+        selection: [_selectFromDate],
+        onSelect: function () {
             ""
             this.hide();
-            }
+        }
     });
 
     Calendar.setup({
