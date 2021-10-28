@@ -401,16 +401,169 @@ function RenderEventEdit() {
             bettypeSel.select2();
         });
         $(this).select2();
+        $(this).change(function () {
+            var pos = $(this).data("pos");
+            var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
+            selectedConfig.ConfigDetail.Settings[position].CopyFromSportType = $(this).val();
+        });
     });
 
     $(".sel-bettype-copy").each(function () {
         $(this).select2();
+        $(this).change(function () {
+            var pos = $(this).data("pos");
+            var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
+            selectedConfig.ConfigDetail.Settings[position].CopyFromBetType = $(this).val();
+        });
     });
 
     $("#EditStartTime").val(selectedConfig.ConfigDetail.Config.StartTime);
     SetupCalendar("EditStartTime");
     $('#EditRemark').val(selectedConfig.ConfigDetail.Config.Remark);
     $('#ckbEditIsTest').prop('checked', selectedConfig.ConfigDetail.Config.IsTest);
+
+    $(".ckb-default").each(function () {
+        $(this).change(function () {
+            var pos = $(this).data("pos");
+            var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
+            selectedConfig.ConfigDetail.Settings[position].IsDefault = $(this).prop('checked');
+            $("#ckbCopy" + pos).prop("checked", !selectedConfig.ConfigDetail.Settings[position].IsDefault);
+        });
+    });
+
+    $(".ckb-copy").each(function () {
+        $(this).change(function () {
+            var pos = $(this).data("pos");
+            var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
+            selectedConfig.ConfigDetail.Settings[position].IsDefault = !$(this).prop('checked');
+            $("#ckbDefault" + pos).prop("checked", selectedConfig.ConfigDetail.Settings[position].IsDefault);
+        });
+    }); 
+    $(".ckb-auto-reset").each(function () {
+        $(this).change(function () {
+            var pos = $(this).data("pos");
+            var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
+            if ($(this).prop('checked')) {
+                selectedConfig.ConfigDetail.Settings[position].SpecialRequirement = "1";
+            } else {
+                selectedConfig.ConfigDetail.Settings[position].SpecialRequirement = "0";
+            }
+            
+            $("#ckbAutoReset" + pos).prop("checked", selectedConfig.ConfigDetail.Settings[position].SpecialRequirement === "1");
+        });
+    }); 
+    $(".input-headline").each(function () {
+        $(this).change(function () {
+            var pos = $(this).data("pos");
+            var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
+            selectedConfig.ConfigDetail.Settings[position].SpecialRequirement = $(this).val();
+        });
+    });
+    $(".input-com-super").each(function () {
+        $(this).change(function () {
+            var pos = $(this).data("pos");
+            var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
+            selectedConfig.ConfigDetail.Settings[position].DefaultValueSuper = $(this).val();
+        });
+    });
+    $(".input-com-master").each(function () {
+        $(this).change(function () {
+            var pos = $(this).data("pos");
+            var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
+            selectedConfig.ConfigDetail.Settings[position].DefaultValueMaster = $(this).val();
+        });
+    });
+    $(".input-com-agent").each(function () {
+        $(this).change(function () {
+            var pos = $(this).data("pos");
+            var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
+            selectedConfig.ConfigDetail.Settings[position].DefaultValueAgent = $(this).val();
+        });
+    });
+    $(".input-com-member").each(function () {
+        $(this).change(function () {
+            var pos = $(this).data("pos");
+            var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
+            selectedConfig.ConfigDetail.Settings[position].DefaultValueMember = $(this).val();
+        });
+    });
+
+    $(".input-status-super").each(function () {
+        $(this).click(function () {
+            var statusDiv = $(this);
+            var pos = statusDiv.data("pos");
+            var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
+            var nextEnable = statusDiv.html() !== "Enable";
+            if (nextEnable) {
+                selectedConfig.ConfigDetail.Settings[position].DefaultValueSuper = "1";
+                statusDiv.html("Enable");
+                statusDiv.removeClass("status-disable");
+                statusDiv.addClass("status-enable");
+            } else {
+                selectedConfig.ConfigDetail.Settings[position].DefaultValueSuper = "0";
+                statusDiv.html("Disable");
+                statusDiv.addClass("status-disable");
+                statusDiv.removeClass("status-enable");
+            }
+        });
+    });
+    $(".input-status-master").each(function () {
+        $(this).click(function () {
+            var statusDiv = $(this);
+            var pos = statusDiv.data("pos");
+            var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
+            var nextEnable = statusDiv.html() !== "Enable";
+            if (nextEnable) {
+                selectedConfig.ConfigDetail.Settings[position].DefaultValueMaster = "1";
+                statusDiv.html("Enable");
+                statusDiv.removeClass("status-disable");
+                statusDiv.addClass("status-enable");
+            } else {
+                selectedConfig.ConfigDetail.Settings[position].DefaultValueMaster = "0";
+                statusDiv.html("Disable");
+                statusDiv.addClass("status-disable");
+                statusDiv.removeClass("status-enable");
+            }
+        });
+    });
+    $(".input-status-agent").each(function () {
+        $(this).click(function () {
+            var statusDiv = $(this);
+            var pos = statusDiv.data("pos");
+            var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
+            var nextEnable = statusDiv.html() !== "Enable";
+            if (nextEnable) {
+                selectedConfig.ConfigDetail.Settings[position].DefaultValueAgent = "1";
+                statusDiv.html("Enable");
+                statusDiv.removeClass("status-disable");
+                statusDiv.addClass("status-enable");
+            } else {
+                selectedConfig.ConfigDetail.Settings[position].DefaultValueAgent = "0";
+                statusDiv.html("Disable");
+                statusDiv.addClass("status-disable");
+                statusDiv.removeClass("status-enable");
+            }
+        });
+    });
+    $(".input-status-member").each(function () {
+        $(this).click(function () {
+            var statusDiv = $(this);
+            var pos = statusDiv.data("pos");
+            var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
+            var nextEnable = statusDiv.html() !== "Enable";
+            if (nextEnable) {
+                selectedConfig.ConfigDetail.Settings[position].DefaultValueMember = "1";
+                statusDiv.html("Enable");
+                statusDiv.removeClass("status-disable");
+                statusDiv.addClass("status-enable");
+            } else {
+                selectedConfig.ConfigDetail.Settings[position].DefaultValueMember = "0";
+                statusDiv.html("Disable");
+                statusDiv.addClass("status-disable");
+                statusDiv.removeClass("status-enable");
+            }
+        });
+    });
 }
 
 function SetupCalendar(divId) {

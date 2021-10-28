@@ -6,6 +6,6 @@
     {
         public SettingConfigModel Config { get; set; }
 
-        public IEnumerable<SettingInforModel> Settings { get; set; }
+        public List<SettingInforModel> Settings { get; set; }
     }
 }

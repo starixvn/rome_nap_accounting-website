@@ -2,9 +2,9 @@
 <tr class="setting-row row-item text-center">
     <td class="setting-col col-item" rowspan="4">{sport-type}</td>
     <td class="setting-col col-item" rowspan="4">{bet-type}</td>
-    <td class="setting-col col-item" rowspan="2"><input class="edit-input" type="checkbox" {ckbDefault} data-pos="{data-pos}" />Default</td>
+    <td class="setting-col col-item" rowspan="2"><input id="ckbDefault{data-pos}" class="edit-input ckb-default" type="checkbox" {ckbDefault} data-pos="{data-pos}" />Default</td>
     <td class="setting-col col-item">Maximum Win</td>
-    <td class="setting-col col-item" rowspan="2"><input class="edit-input" type="checkbox" {ckbAutoResetDaily} data-pos="{data-pos}" />Daily auto reset limit (at 12 noon GMT+8)</td>
+    <td class="setting-col col-item" rowspan="2"><input id="ckbAutoReset{data-pos}" class="edit-input ckb-auto-reset" type="checkbox" {ckbAutoResetDaily} data-pos="{data-pos}" />Daily auto reset limit (at 12 noon GMT+8)</td>
     <td class="setting-col col-item"></td>
     <td class="setting-col col-item"></td>
 </tr>
@@ -14,7 +14,7 @@
     <td class="setting-col col-item"></td>
 </tr>
 <tr class="setting-row row-item text-center">
-    <td class="setting-col col-item" rowspan="2"><input class="edit-input" type="checkbox" {ckbCopy} data-pos="{data-pos}"/>Copy From</td>
+    <td class="setting-col col-item" rowspan="2"><input id="ckbCopy{data-pos}" class="edit-input ckb-copy" type="checkbox" {ckbCopy} data-pos="{data-pos}"/>Copy From</td>
     <td class="setting-col col-item">Sport Type</td>
     <td class="setting-col col-item">Bet Type</td>
     <td class="setting-col col-item"></td>

@@ -38,6 +38,8 @@
         private const string SettingGeneralInfoTemplate = "../../App_Templates/Default/InitializingCustomerSetting/GeneralInfo.htm";
         private const string SettingTempalte = "../../App_Templates/Default/InitializingCustomerSetting/Setting{0}.htm";
         private const string IdKey = "{0}{1}{2}{3}{4}{5}";
+        private const string StatusEnable = "<p class=\"setting-status status-enable input-status-{0}\" data-pos=\"{1}\">Enable</p>";
+        private const string StatusDisable = "<p class=\"setting-status status-disable input-status-{0}\" data-pos=\"{1}\">Disable</p>";
 
         public InitializingCustomerSettingService()
         {
@@ -146,7 +148,7 @@
             var configSettingHtml = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate(ConfigTempalte);
             var generalInfoHtml = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate(SettingGeneralInfoTemplate);
             TemplateHandler.Assign(ref configSettingHtml, "{general-info}", generalInfoHtml);
-            var settingInfos = GenerateSettingInfoModel(settings);
+            var settingInfos = GenerateSettingInfoModel(settings).ToList();
             var groupSettings = settingInfos.GroupBy(setting => setting.SettingType);
             var settingsHtml = new StringBuilder();
             foreach (var settingGroup in groupSettings)
@@ -165,7 +167,6 @@
                     {
                         bettypeOptions = BuildBettypeOptions(sportBettype.Sports[0].Bettypes, 0);
                     }
-
                     settingsHtml.Append(BuildSettingTempalte(setting, sportOptions, bettypeOptions));
                 }
             }
@@ -235,6 +236,7 @@
             var settingtemplate = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate(string.Format(SettingTempalte, setting.SettingType));
             var sportName = CacheRef.GetSportName(setting.SportType);
             var bettypename = CacheRef.GetBettype(setting.BetType);
+            TemplateHandler.Assign(ref settingtemplate, "{data-pos}", setting.SettingId);
             TemplateHandler.Assign(ref settingtemplate, "{sport-type}", string.Format(FormatDisplay, setting.SportType, sportName));
             TemplateHandler.Assign(ref settingtemplate, "{bet-type}", string.Format(FormatDisplay, setting.BetType, bettypename));
             TemplateHandler.Assign(ref settingtemplate, "{ckbCopy}", setting.IsDefault ? string.Empty : "checked");
@@ -249,10 +251,10 @@
             TemplateHandler.Assign(ref settingtemplate, "{target-bettype}", string.Format(IdKey,"bettype-", setting.SettingName.Replace(" ", string.Empty), setting.SportType, sportName.Replace(" ", string.Empty), setting.BetType, bettypename.Replace(" ", string.Empty)));
 
 
-            TemplateHandler.Assign(ref settingtemplate, "{status-super}", setting.DefaultValueSuper == "1"? "<p class=\"setting-status status-enable\">Enable</p>" : "<p class=\"setting-status status-disable\">Disable</p>");
-            TemplateHandler.Assign(ref settingtemplate, "{status-master}", setting.DefaultValueMaster == "1" ? "<p class=\"setting-status status-enable\">Enable</p>" : "<p class=\"setting-status status-disable\">Disable</p>");
-            TemplateHandler.Assign(ref settingtemplate, "{status-agent}", setting.DefaultValueAgent == "1" ? "<p class=\"setting-status status-enable\">Enable</p>" : "<p class=\"setting-status status-disable\">Disable</p>");
-            TemplateHandler.Assign(ref settingtemplate, "{status-member}", setting.DefaultValueMember == "1" ? "<p class=\"setting-status status-enable\">Enable</p>" : "<p class=\"setting-status status-disable\">Disable</p>");
+            TemplateHandler.Assign(ref settingtemplate, "{status-super}", setting.DefaultValueSuper == "1"? string.Format(StatusEnable, "super", setting.SettingId) : string.Format(StatusDisable, "super", setting.SettingId));
+            TemplateHandler.Assign(ref settingtemplate, "{status-master}", setting.DefaultValueMaster == "1" ? string.Format(StatusEnable, "master", setting.SettingId) : string.Format(StatusDisable, "master", setting.SettingId));
+            TemplateHandler.Assign(ref settingtemplate, "{status-agent}", setting.DefaultValueAgent == "1" ? string.Format(StatusEnable, "agent", setting.SettingId) : string.Format(StatusDisable, "agent", setting.SettingId));
+            TemplateHandler.Assign(ref settingtemplate, "{status-member}", setting.DefaultValueMember == "1" ? string.Format(StatusEnable, "member", setting.SettingId) : string.Format(StatusDisable, "member", setting.SettingId));
             TemplateHandler.Assign(ref settingtemplate, "{txtHeadline}", setting.SpecialRequirement);
 
             TemplateHandler.Assign(ref settingtemplate, "{comSuper}", setting.DefaultValueSuper);

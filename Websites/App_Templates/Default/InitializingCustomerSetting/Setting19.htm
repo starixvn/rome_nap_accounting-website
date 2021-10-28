@@ -2,20 +2,20 @@
 <tr class="setting-row row-item text-center">
     <td class="setting-col col-item" rowspan="4">{sport-type}</td>
     <td class="setting-col col-item" rowspan="4">{bet-type}</td>
-    <td class="setting-col col-item" rowspan="2"><input class="edit-input" type="checkbox" {ckbDefault} data-pos="{data-pos}" />Default</td>
+    <td class="setting-col col-item" rowspan="2"><input id="ckbDefault{data-pos}" class="edit-input ckb-default" type="checkbox" {ckbDefault} data-pos="{data-pos}" />Default</td>
     <td class="setting-col col-item">Super</td>
     <td class="setting-col col-item">Master</td>
     <td class="setting-col col-item">Agent</td>
     <td class="setting-col col-item">Member</td>
 </tr>
 <tr class="setting-row row-item">
-    <td class="setting-col col-item"><input class="edit-input" type="text" value="{comSuper}" data-pos="{data-pos}" /></td>
-    <td class="setting-col col-item"><input class="edit-input" type="text" value="{comMaster}" data-pos="{data-pos}" /></td>
-    <td class="setting-col col-item"><input class="edit-input" type="text" value="{comAgent}" data-pos="{data-pos}" /></td>
-    <td class="setting-col col-item"><input class="edit-input" type="text" value="{comMember}" data-pos="{data-pos}" /></td>
+    <td class="setting-col col-item"><input class="edit-input input-com-super" type="text" value="{comSuper}" data-pos="{data-pos}" /></td>
+    <td class="setting-col col-item"><input class="edit-input input-com-master" type="text" value="{comMaster}" data-pos="{data-pos}" /></td>
+    <td class="setting-col col-item"><input class="edit-input input-com-agent" type="text" value="{comAgent}" data-pos="{data-pos}" /></td>
+    <td class="setting-col col-item"><input class="edit-input input-com-member" type="text" value="{comMember}" data-pos="{data-pos}" /></td>
 </tr>
 <tr class="setting-row row-item text-center">
-    <td class="setting-col col-item" rowspan="2"><input class="edit-input" type="checkbox" {ckbCopy} data-pos="{data-pos}" />Copy From</td>
+    <td class="setting-col col-item" rowspan="2"><input id="ckbCopy{data-pos}" class="edit-input ckb-copy" type="checkbox" {ckbCopy} data-pos="{data-pos}" />Copy From</td>
     <td class="setting-col col-item">Sport Type</td>
     <td class="setting-col col-item">Bet Type</td>
     <td class="setting-col col-item"></td>
