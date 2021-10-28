@@ -39,5 +39,13 @@
         public string CurrentStep { get; set; }
 
         public string Remark { get; set; }
+
+        public SettingConfigModel()
+        {
+            SportTypeIdList = new List<int>();
+            BetTypeIdList = new List<int>();
+            SiteIdList = new List<int>();
+            CurrencyIdList = new List<int>();
+        }
     }
 }

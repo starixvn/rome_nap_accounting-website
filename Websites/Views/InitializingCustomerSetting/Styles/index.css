@@ -125,3 +125,11 @@
 .running-string {
     font-weight: bold;
 }
+
+.step-abort {
+    color: red;
+}
+
+.abort-string {
+    font-weight: bold;
+}

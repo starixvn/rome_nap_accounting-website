@@ -108,6 +108,10 @@ function RenderStep(setting, steps) {
     if (setting.CurrentStep !== "") {
         var rnstep = steps.find(st => st.Id.toString() === setting.CurrentStep);
         var rnstepString = "<p class=\"step-running\">+ " + rnstep.Name + ": <span class=\"running-string\">Running<span> <p>";
+        if (setting.Status === 3) {
+            rnstepString = "<p class=\"step-abort\">+ " + rnstep.Name + ": <span class=\"abort-string\">Aborted<span> <p>";
+        }
+        
         result += rnstepString;
     }
     return result;
@@ -502,6 +506,34 @@ function RenderBetType(type, enableInput = true) {
         checkAllText: "All",
         listData: multiselectData,
         noItemText: "Select Bettype"
+    });
+}
+
+function RenderNewConfig(type) {
+    selectedConfig = null;
+    parent.BlockUI();
+    var request = {
+        ProductId: $("#EditProductSelect").val(),
+        SportIdList: $("#EditSportSelect").multiSelect("getCheckedItems").map(Number),
+        BettypeIdList: $("#EditBettypeSelect").multiSelect("getCheckedItems").map(Number)
+    };
+
+    $.ajax({
+        type: "POST",
+        url: "GenerateConfigSetting",
+        dataType: 'json',
+        data: request,
+        success: function (rs) {
+            selectedConfig = rs;
+            $("#grid-information").html(rs.ConfigSettingHtml);
+            RenderEditConfigDetail(true);
+        },
+        error: function (event, jqXHR, ajaxSettings) {
+            showAlertMessage('errMsg', "Internal server error.", 1);
+        },
+        complete: function () {
+            try { parent.jQuery.unblockUI(); } catch (e) { }
+        }
     });
 }
 

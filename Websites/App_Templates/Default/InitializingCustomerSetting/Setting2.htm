@@ -2,7 +2,7 @@
 <tr class="setting-row row-item text-center">
     <td class="setting-col col-item" rowspan="2">{sport-type}</td>
     <td class="setting-col col-item" rowspan="2">{bet-type}</td>
-    <td class="setting-col col-item" rowspan="2"><input class="edit-input" type="checkbox" {ckbCopy} /></td>
+    <td class="setting-col col-item" rowspan="2"><input class="edit-input" type="checkbox" {ckbCopy} data-pos="{data-pos}" /></td>
     <td class="setting-col col-item">Sport Type</td>
     <td class="setting-col col-item">Bet Type</td>
     <td class="setting-col col-item"></td>
@@ -10,12 +10,12 @@
 </tr>
 <tr class="setting-row row-item text-center">
     <td class="setting-col col-item">
-        <select id="{target-sporttype}" class="edit-input sel-sport-copy" data-target-settingtype="{setting-type}" data-target-bettype="{target-bettype}">
+        <select id="{target-sporttype}" class="edit-input sel-sport-copy" data-target-settingtype="{setting-type}" data-target-bettype="{target-bettype}" data-pos="{data-pos}">
             {sporttypeopts}
         </select>
     </td>
     <td class="setting-col col-item">
-        <select id="{target-bettype}" class="edit-input sel-bettype-copy">
+        <select id="{target-bettype}" class="edit-input sel-bettype-copy" data-pos="{data-pos}">
             {bettypeopts}
         </select>
     </td>

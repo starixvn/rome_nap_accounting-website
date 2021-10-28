@@ -2,15 +2,15 @@
 <tr class="setting-row row-item text-center">
     <td class="setting-col col-item" rowspan="4">{sport-type}</td>
     <td class="setting-col col-item" rowspan="4">{bet-type}</td>
-    <td class="setting-col col-item" rowspan="2"><input class="edit-input" type="checkbox" {ckbDefault} />Default</td>
+    <td class="setting-col col-item" rowspan="2"><input class="edit-input" type="checkbox" {ckbDefault} data-pos="{data-pos}" />Default</td>
     <td class="setting-col col-item">Maximum Win</td>
     <td class="setting-col col-item">Maximum Loss</td>
-    <td class="setting-col col-item" rowspan="2"><input class="edit-input" type="checkbox" {ckbAutoResetDaily} />Daily auto reset limit (at 12 noon GMT+8)</td>
+    <td class="setting-col col-item" rowspan="2"><input class="edit-input" type="checkbox" {ckbAutoResetDaily} data-pos="{data-pos}"/>Daily auto reset limit (at 12 noon GMT+8)</td>
     <td class="setting-col col-item"></td>
 </tr>
 <tr class="setting-row row-item text-center">
     <td class="setting-col col-item">
-        <select class="edit-input">
+        <select class="edit-input max-winloss" data-pos="{data-pos}">
             <option value="3">3X</option>
             <option value="5">5X</option>
             <option value="10">10X</option>
@@ -22,7 +22,7 @@
     <td class="setting-col col-item"></td>
 </tr>
 <tr class="setting-row row-item text-center">
-    <td class="setting-col col-item" rowspan="2"><input class="edit-input" type="checkbox" {ckbCopy} />Copy From</td>
+    <td class="setting-col col-item" rowspan="2"><input class="edit-input" type="checkbox" {ckbCopy} data-pos="{data-pos}" />Copy From</td>
     <td class="setting-col col-item">Sport Type</td>
     <td class="setting-col col-item">Bet Type</td>
     <td class="setting-col col-item"></td>
@@ -30,12 +30,12 @@
 </tr>
 <tr class="setting-row row-item text-center">
     <td class="setting-col col-item">
-        <select id="{target-sporttype}" class="edit-input sel-sport-copy" data-target-settingtype="{setting-type}" data-target-bettype="{target-bettype}">
+        <select id="{target-sporttype}" class="edit-input sel-sport-copy" data-target-settingtype="{setting-type}" data-target-bettype="{target-bettype}" data-pos="{data-pos}">
             {sporttypeopts}
         </select>
     </td>
     <td class="setting-col col-item">
-        <select id="{target-bettype}" class="edit-input sel-bettype-copy">
+        <select id="{target-bettype}" class="edit-input sel-bettype-copy" data-pos="{data-pos}">
             {bettypeopts}
         </select>
     </td>

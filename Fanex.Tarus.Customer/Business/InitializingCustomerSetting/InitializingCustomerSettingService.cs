@@ -10,6 +10,7 @@
     using System.Text;
     using Fanex.Tarus.Infrastructure.Caching;
     using System.Linq;
+    using Fanex.Tarus.Customer.Requests.InitializingCustomerSetting;
 
     public interface IInitializingCustomerSettingService
     {
@@ -22,6 +23,8 @@
         IEnumerable<ProductModel> GetProductSportBettype();
 
         ConfigSettingViewModel GetConfigDetail(int configId);
+
+        ConfigSettingViewModel GenerateConfigSetting(GenerateConfigSettingRequest request);
     }
     public class InitializingCustomerSettingService : IInitializingCustomerSettingService
     {
@@ -70,7 +73,8 @@
         {
             var criteria = new GetConfigDetailCriteria(configId);
             var config = dataAccess.GetConfigDetail(criteria);
-            var sportbettypesetting = dataAccess.GetSportAndBettypeWithSetting(new DcsProductMatrixCriteria());
+            var productDcs = dataAccess.GetProductDcsModel(new DcsProductMatrixCriteria());
+            var sportbettypesetting = GetSportAndBettypeWithSetting(productDcs);
             var configSettingHtml = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate(ConfigTempalte);
             var generalInfoHtml = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate(SettingGeneralInfoTemplate);
             TemplateHandler.Assign(ref configSettingHtml, "{general-info}", generalInfoHtml);
@@ -84,11 +88,13 @@
                 {
                     var sportOptions = BuildSportOptions(sportBettype.Sports, setting.CopyFromSportType);
                     var settingSport = sportBettype.Sports.FirstOrDefault(sp => sp.SportId == setting.CopyFromSportType);
-                    if(settingSport != null)
+                    var bettypeOptions = "";
+                    if (settingSport != null)
                     {
-                        var bettypeOptions = BuildBettypeOptions(settingSport.Bettypes, setting.CopyFromBetType);
-                        settingsHtml.Append(BuildSettingTempalte(setting, sportOptions, bettypeOptions));
+                        bettypeOptions = BuildBettypeOptions(settingSport.Bettypes, setting.CopyFromBetType);
                     }
+
+                    settingsHtml.Append(BuildSettingTempalte(setting, sportOptions, bettypeOptions));
                 }
             }
             TemplateHandler.Assign(ref configSettingHtml, "{settings}", settingsHtml.ToString());
@@ -119,6 +125,70 @@
             var currencies = dataAccess.GetExchangeCurrency();
             var sites = dataAccess.GetSites();
             return dataAccess.GetSetting(new GetSettingCriteria(), currencies, sites);
+        }
+
+        public ConfigSettingViewModel GenerateConfigSetting(GenerateConfigSettingRequest request)
+        {
+            var config = new SettingConfigModel()
+            {
+                BetTypeIdList = request.BettypeIdList,
+                ProductId = request.ProductId,
+                SportTypeIdList = request.SportIdList,
+            };
+            var productmatrix = dataAccess.GetProductDcsModel(new DcsProductMatrixCriteria());
+            var sportbettypesetting = GetSportAndBettypeWithSetting(productmatrix);
+
+            var settings = productmatrix.Where(item => item.ProductId == request.ProductId
+                                                    && request.SportIdList.Contains(item.SportId)
+                                                    && request.BettypeIdList.Contains(item.BettypeId))
+                                         .OrderBy(item => item.SettingTypeId);
+
+            var configSettingHtml = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate(ConfigTempalte);
+            var generalInfoHtml = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate(SettingGeneralInfoTemplate);
+            TemplateHandler.Assign(ref configSettingHtml, "{general-info}", generalInfoHtml);
+            var settingInfos = GenerateSettingInfoModel(settings);
+            var groupSettings = settingInfos.GroupBy(setting => setting.SettingType);
+            var settingsHtml = new StringBuilder();
+            foreach (var settingGroup in groupSettings)
+            {
+                var sportBettype = sportbettypesetting.FirstOrDefault(st => st.SettingId == settingGroup.Key);
+                settingsHtml.Append(BuildSettingHeader(settingGroup.Key, settingGroup.FirstOrDefault().SettingName));
+                foreach (var setting in settingGroup)
+                {
+                    var sportOptions = BuildSportOptions(sportBettype.Sports, setting.CopyFromSportType);
+                    var settingSport = sportBettype.Sports.FirstOrDefault(sp => sp.SportId == setting.CopyFromSportType);
+                    var bettypeOptions = "";
+                    if (settingSport != null)
+                    {
+                        bettypeOptions = BuildBettypeOptions(settingSport.Bettypes, setting.CopyFromBetType);
+                    } else
+                    {
+                        bettypeOptions = BuildBettypeOptions(sportBettype.Sports[0].Bettypes, 0);
+                    }
+
+                    settingsHtml.Append(BuildSettingTempalte(setting, sportOptions, bettypeOptions));
+                }
+            }
+            TemplateHandler.Assign(ref configSettingHtml, "{settings}", settingsHtml.ToString());
+
+            var configDetail = new ConfigModel
+            {
+                Config = config,
+                Settings = settingInfos
+            };
+
+            var sites = dataAccess.GetSites();
+
+            var exchangeCurrencies = dataAccess.GetExchangeCurrency();
+
+            return new ConfigSettingViewModel
+            {
+                ConfigSettingHtml = configSettingHtml,
+                ConfigDetail = configDetail,
+                Currencies = exchangeCurrencies,
+                Sites = sites,
+                SportBettypeBySettings = sportbettypesetting
+            };
         }
 
         private string BuildSportOptions(IEnumerable<SportModel> sports, int selectedSport)
@@ -192,6 +262,88 @@
 
             return settingtemplate;
         }
-        
+
+        private IEnumerable<SportBetTypeBySettingModel> GetSportAndBettypeWithSetting(IEnumerable<ProductDcsModel> productDcsModels)
+        {
+            var result = new List<SportBetTypeBySettingModel>();
+
+            foreach (var item in productDcsModels)
+            {
+                var sport = new SportModel(item.SportId, string.Format(FormatDisplay, item.SportId, item.SportName));
+                var bettype = new BettypeModel(item.BettypeId, string.Format(FormatDisplay, item.BettypeId, item.BettypeName));
+                var setting = result.FirstOrDefault(x => x.SettingId == item.SettingTypeId);
+                if (setting != null)
+                {
+                    var existSport = setting.Sports.FirstOrDefault(sp => sp.SportId == item.SportId);
+                    if (existSport != null)
+                    {
+                        if (!existSport.Bettypes.Exists(bt => bt.BettypeId == item.BettypeId))
+                        {
+                            existSport.Bettypes.Add(bettype);
+                        }
+                    }
+                    else
+                    {
+                        sport.Bettypes.Add(bettype);
+                        setting.Sports.Add(sport);
+                    }
+                }
+                else
+                {
+                    sport.Bettypes.Add(bettype);
+                    result.Add(new SportBetTypeBySettingModel
+                    {
+                        SettingId = item.SettingTypeId,
+                        Sports = new List<SportModel> { sport }
+                    });
+                }
+            }
+
+            foreach (var st in result)
+            {
+                if (st.SettingId == 6)
+                {
+                    var winlossSetting = result.FirstOrDefault(rs => rs.SettingId == 12);
+                    if (winlossSetting != null)
+                    {
+                        GetSameSportBettypeFromSetting(st, winlossSetting);
+                    }
+                }
+
+                if (st.SettingId == 12)
+                {
+                    var lossSetting = result.FirstOrDefault(rs => rs.SettingId == 6);
+                    if (lossSetting != null)
+                    {
+                        GetSameSportBettypeFromSetting(st, lossSetting);
+                    }
+                }
+            }
+
+            return result;
+        }
+
+
+        private void GetSameSportBettypeFromSetting(SportBetTypeBySettingModel targetSetting, SportBetTypeBySettingModel sourceSetting)
+        {
+            foreach (var sp in sourceSetting.Sports)
+            {
+                if (!targetSetting.Sports.Exists(item => item.SportId == sp.SportId))
+                {
+                    targetSetting.Sports.Add(sp);
+                }
+            }
+        }
+
+        private IEnumerable<SettingInforModel> GenerateSettingInfoModel(IEnumerable<ProductDcsModel> settings)
+        {
+            return settings.Select(setting => new SettingInforModel
+            {
+                BetType = setting.BettypeId,
+                SportType = setting.SettingTypeId,
+                SettingType = setting.SettingTypeId,
+                SettingName = setting.SettingTypeName
+            });
+        }
     }
 }

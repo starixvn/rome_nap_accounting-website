@@ -2,20 +2,20 @@
 <tr class="setting-row row-item text-center">
     <td class="setting-col col-item" rowspan="4">{sport-type}</td>
     <td class="setting-col col-item" rowspan="4">{bet-type}</td>
-    <td class="setting-col col-item" rowspan="2"><input class="edit-input" type="checkbox" {ckbDefault} />Default</td>
+    <td class="setting-col col-item" rowspan="2"><input class="edit-input" type="checkbox" {ckbDefault} data-pos="{data-pos}" />Default</td>
     <td class="setting-col col-item">Super</td>
     <td class="setting-col col-item">Master</td>
     <td class="setting-col col-item">Agent</td>
     <td class="setting-col col-item">Member</td>
 </tr>
 <tr class="setting-row row-item">
-    <td class="setting-col col-item"><input class="edit-input" type="text" value="{comSuper}" /></td>
-    <td class="setting-col col-item"><input class="edit-input" type="text" value="{comMaster}" /></td>
-    <td class="setting-col col-item"><input class="edit-input" type="text" value="{comAgent}" /></td>
-    <td class="setting-col col-item"><input class="edit-input" type="text" value="{comMember}" /></td>
+    <td class="setting-col col-item"><input class="edit-input" type="text" value="{comSuper}" data-pos="{data-pos}" /></td>
+    <td class="setting-col col-item"><input class="edit-input" type="text" value="{comMaster}" data-pos="{data-pos}" /></td>
+    <td class="setting-col col-item"><input class="edit-input" type="text" value="{comAgent}" data-pos="{data-pos}" /></td>
+    <td class="setting-col col-item"><input class="edit-input" type="text" value="{comMember}" data-pos="{data-pos}" /></td>
 </tr>
 <tr class="setting-row row-item text-center">
-    <td class="setting-col col-item" rowspan="2"><input class="edit-input" type="checkbox" {ckbCopy} />Copy From</td>
+    <td class="setting-col col-item" rowspan="2"><input class="edit-input" type="checkbox" {ckbCopy} data-pos="{data-pos}" />Copy From</td>
     <td class="setting-col col-item">Sport Type</td>
     <td class="setting-col col-item">Bet Type</td>
     <td class="setting-col col-item"></td>
@@ -23,12 +23,12 @@
 </tr>
 <tr class="setting-row row-item text-center">
     <td class="setting-col col-item">
-        <select id="{target-sporttype}" class="edit-input sel-sport-copy" data-target-settingtype="{setting-type}" data-target-bettype="{target-bettype}">
+        <select id="{target-sporttype}" class="edit-input sel-sport-copy" data-target-settingtype="{setting-type}" data-target-bettype="{target-bettype}" data-pos="{data-pos}">
             {sporttypeopts}
         </select>
     </td>
     <td class="setting-col col-item">
-        <select id="{target-bettype}" class="edit-input sel-bettype-copy">
+        <select id="{target-bettype}" class="edit-input sel-bettype-copy" data-pos="{data-pos}">
             {bettypeopts}
         </select>
     </td>

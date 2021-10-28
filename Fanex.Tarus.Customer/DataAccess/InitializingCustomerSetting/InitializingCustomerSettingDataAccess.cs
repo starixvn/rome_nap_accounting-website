@@ -22,11 +22,11 @@
 
         Result ExecuteNonQuery(ICriteria criteria);
 
+        IEnumerable<ProductDcsModel> GetProductDcsModel(DcsProductMatrixCriteria criteria);
+
         IEnumerable<ProductModel> GetProductSportBettype(DcsProductMatrixCriteria criteria);
 
         ConfigModel GetConfigDetail(GetConfigDetailCriteria criteria);
-
-        IEnumerable<SportBetTypeBySettingModel> GetSportAndBettypeWithSetting(DcsProductMatrixCriteria criteria);
     }
     public class InitializingCustomerSettingDataAccess : IInitializingCustomerSettingDataAccess
     {
@@ -323,68 +323,29 @@
             return result;
         }
 
-        public IEnumerable<SportBetTypeBySettingModel> GetSportAndBettypeWithSetting(DcsProductMatrixCriteria criteria)
+        public IEnumerable<ProductDcsModel> GetProductDcsModel(DcsProductMatrixCriteria criteria)
         {
-            var result = new List<SportBetTypeBySettingModel>();
+            var result = new List<ProductDcsModel>();
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
                 using (var reader = db.ExecuteReader(criteria.GetSpParams()))
                 {
                     while (reader.Read())
                     {
-                        var settingId = Convert.ToInt32(reader["settingtype"]);
+                        var productId = Convert.ToInt32(reader["productid"]);
                         var sportId = Convert.ToInt32(reader["sporttype"]);
-                        var sport = new SportModel(sportId,  string.Format(FormatDisplay, sportId, CacheRef.GetSportName(sportId)));
                         var bettypeId = Convert.ToInt32(reader["bettype"]);
-                        var bettype = new BettypeModel(bettypeId, string.Format(FormatDisplay, bettypeId, CacheRef.GetBettype(bettypeId)));
-
-                        var setting = result.FirstOrDefault(x => x.SettingId == settingId);
-                        if (setting != null)
+                        result.Add(new ProductDcsModel
                         {
-                            var existSport = setting.Sports.FirstOrDefault(sp => sp.SportId == sportId);
-                            if (existSport != null)
-                            {
-                                if (!existSport.Bettypes.Exists(bt => bt.BettypeId == bettypeId))
-                                {
-                                    existSport.Bettypes.Add(bettype);
-                                }
-                            } else
-                            {
-                                sport.Bettypes.Add(bettype);
-                                setting.Sports.Add(sport);
-                            }
-
-                            
-                        } else
-                        {
-                            sport.Bettypes.Add(bettype);
-                            result.Add(new SportBetTypeBySettingModel
-                            {
-                                SettingId = settingId,
-                                Sports = new List<SportModel> { sport }
-                            });
-                        }
-                    }
-                }
-
-                foreach (var st in result)
-                {
-                    if(st.SettingId == 6)
-                    {
-                        var winlossSetting = result.FirstOrDefault(rs => rs.SettingId == 12);
-                        if(winlossSetting != null)
-                        {
-                            GetSameSportBettypeFromSetting(st, winlossSetting);
-                        }
-                    }
-
-                    if (st.SettingId == 12)
-                    {
-                        var lossSetting = result.FirstOrDefault(rs => rs.SettingId == 6);
-                        if (lossSetting != null)
-                        {
-                            GetSameSportBettypeFromSetting(st, lossSetting);
-                        }
+                            ProductId = productId,
+                            ProductName = CacheRef.GetProductName(productId),
+                            SportId = sportId,
+                            SportName = CacheRef.GetSportName(sportId),
+                            BettypeId = bettypeId,
+                            BettypeName = CacheRef.GetBettype(bettypeId),
+                            SettingTypeId = Convert.ToInt32(reader["settingtype"]),
+                            SettingTypeName = reader["settingname"].ToString()
+                        });
                     }
                 }
             }
@@ -392,15 +353,5 @@
             return result;
         }
 
-        private void GetSameSportBettypeFromSetting(SportBetTypeBySettingModel targetSetting, SportBetTypeBySettingModel sourceSetting)
-        {
-            foreach (var sp in sourceSetting.Sports)
-            {
-                if(!targetSetting.Sports.Exists(item => item.SportId == sp.SportId))
-                {
-                    targetSetting.Sports.Add(sp);
-                }
-            }
-        }
     }
 }

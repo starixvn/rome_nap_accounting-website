@@ -655,6 +655,7 @@
     <Compile Include="Entities\GoldDeluxe\GoldDeluxeStatus.cs" />
     <Compile Include="Entities\InitializingCustomerSetting\BettypeModel.cs" />
     <Compile Include="Entities\InitializingCustomerSetting\ConfigModel.cs" />
+    <Compile Include="Entities\InitializingCustomerSetting\ProductDCSModel.cs" />
     <Compile Include="Entities\InitializingCustomerSetting\ProductModel.cs" />
     <Compile Include="Entities\InitializingCustomerSetting\SettingConfigModel.cs" />
     <Compile Include="Entities\InitializingCustomerSetting\SettingInforModel.cs" />
@@ -706,6 +707,7 @@
     <Compile Include="Requests\CustomerSetting\Suspend\GetMultipleSuspendCustomerInfoQuery.cs" />
     <Compile Include="Requests\CustomerSetting\Suspend\GetSingleSuspendCustomerInfoQuery.cs" />
     <Compile Include="Requests\GetMessageLogsQuery.cs" />
+    <Compile Include="Requests\InitializingCustomerSetting\GenerateConfigSettingRequest.cs" />
     <Compile Include="Requests\LicenseeOddsGroup\UpdateOddsGroupRequest.cs" />
     <Compile Include="Requests\MultipleUpdateSuperStatus\UpdatedCustomerIinfo.cs" />
     <Compile Include="Requests\MultipleUpdateSuperStatus\UpdateSupersProtectedStatusRequest.cs" />

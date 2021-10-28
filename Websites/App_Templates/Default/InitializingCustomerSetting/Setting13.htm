@@ -2,7 +2,7 @@
 <tr class="setting-row row-item text-center">
     <td class="setting-col col-item" rowspan="6">{sport-type}</td>
     <td class="setting-col col-item" rowspan="6">{bet-type}</td>
-    <td class="setting-col col-item" rowspan="2"><input class="edit-input" type="checkbox" {ckbDefault} />Default</td>
+    <td class="setting-col col-item" rowspan="2"><input class="edit-input" type="checkbox" {ckbDefault} data-pos="{data-pos}" />Default</td>
     <td class="setting-col col-item">Super</td>
     <td class="setting-col col-item">Master</td>
     <td class="setting-col col-item">Agent</td>
@@ -15,7 +15,7 @@
     <td class="setting-col col-item">{status-member}</td>
 </tr>
 <tr class="setting-row row-item text-center">
-    <td class="setting-col col-item" rowspan="2"><input class="edit-input" type="checkbox" {ckbCopy} />Copy From</td>
+    <td class="setting-col col-item" rowspan="2"><input class="edit-input" type="checkbox" {ckbCopy} data-pos="{data-pos}" />Copy From</td>
     <td class="setting-col col-item">Sport Type</td>
     <td class="setting-col col-item">Bet Type</td>
     <td class="setting-col col-item"></td>
@@ -23,12 +23,12 @@
 </tr>
 <tr class="setting-row row-item text-center">
     <td class="setting-col col-item">
-        <select id="{target-sporttype}" class="edit-input sel-sport-copy" data-target-settingtype="{setting-type}" data-target-bettype="{target-bettype}">
+        <select id="{target-sporttype}" class="edit-input sel-sport-copy" data-target-settingtype="{setting-type}" data-target-bettype="{target-bettype}" data-pos="{data-pos}">
             {sporttypeopts}
         </select>
     </td>
     <td class="setting-col col-item">
-        <select id="{target-bettype}" class="edit-input sel-bettype-copy">
+        <select id="{target-bettype}" class="edit-input sel-bettype-copy" data-pos="{data-pos}">
             {bettypeopts}
         </select>
     </td>
@@ -40,5 +40,5 @@
     <td class="setting-col col-item" colspan="4">Headline (seperate bt commas ',')</td>
 </tr>
 <tr class="setting-row row-item">
-    <td class="setting-col col-item" colspan="4"><textarea class="edit-input" cols="75">{txtHeadline}</textarea></td>
+    <td class="setting-col col-item" colspan="4"><textarea class="edit-input" cols="75" data-pos="{data-pos}">{txtHeadline}</textarea></td>
 </tr>
