@@ -154,7 +154,7 @@ public class BaseHandler : IHttpHandler, IRequiresSessionState
     {
         var accId = Convert.ToInt32(_context.Session["AccId"]);
 
-        ICustomerAuthorization customerAuthorization = CustomerAuthorizationFactory.GetInstance(type);
+        ICustomerAuthorization customerAuthorization = CustomerAuthorizationFactory.GetInstance(type, userNameOrCustIdList);
         return customerAuthorization.CanHost(userNameOrCustIdList, accId).IsOk;
     }
 }
