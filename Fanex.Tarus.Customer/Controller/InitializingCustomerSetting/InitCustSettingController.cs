@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using Fanex.Tarus.Customer.Business.InitializingCustomerSetting;
+using Fanex.Tarus.Customer.Entities.InitializingCustomerSetting;
 using Fanex.Tarus.Customer.Requests.InitializingCustomerSetting;
 using Fanex.Tarus.Infrastructure.Common;
 using Fanex.Tarus.Web.Controllers;
@@ -57,6 +58,24 @@ namespace Fanex.Tarus.Customer.Controller.InitializingCustomerSetting
         public ActionResult GenerateConfigSetting(GenerateConfigSettingRequest request)
         {
             return Json(service.GenerateConfigSetting(request));
+        }
+
+        [HttpPost, AuthenticateHost]
+        public ActionResult ValidateAddConfigSetting(ConfigModel request)
+        {
+            return Json(service.ValidateAddConfigSetting(request));
+        }
+
+        [HttpPost, AuthenticateHost]
+        public ActionResult AddConfigSetting(ConfigModel request)
+        {
+            return Json(service.AddConfigSetting(request));
+        }
+        
+        [HttpPost, AuthenticateHost]
+        public ActionResult UpdateConfigSetting(ConfigModel request)
+        {
+            return Json(service.UpdateConfigSetting(request));
         }
     }
 }

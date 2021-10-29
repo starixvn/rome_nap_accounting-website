@@ -27,6 +27,10 @@
         IEnumerable<ProductModel> GetProductSportBettype(DcsProductMatrixCriteria criteria);
 
         ConfigModel GetConfigDetail(GetConfigDetailCriteria criteria);
+
+        bool ValidateConfigSetting(ICriteria criteria);
+
+        IEnumerable<InsertErrorModel> AddUpdateConfigSetting(ICriteria criteria);
     }
     public class InitializingCustomerSettingDataAccess : IInitializingCustomerSettingDataAccess
     {
@@ -294,10 +298,12 @@
                     if (reader.NextResult())
                     {
                         var configDetails = new List<SettingInforModel>();
+                        var pos = 1;
                         while (reader.Read())
                         {
                             configDetails.Add(new SettingInforModel
                             {
+                                Id = pos,
                                 ConfigId = Convert.ToInt32(reader["configid"].ToString()),
                                 BetType = Convert.ToInt32(reader["BetType"].ToString()),
                                 CopyFromBetType = Convert.IsDBNull(reader["CopyFromBetType"]) ? 0 : Convert.ToInt32(reader["CopyFromBetType"].ToString()),
@@ -313,6 +319,8 @@
                                 SpecialRequirement = reader["SpecialRequirement"].ToString(),
                                 SportType = Convert.ToInt32(reader["SportType"].ToString())
                             });
+
+                            pos++;
                         }
 
                         result.Settings = configDetails;
@@ -344,7 +352,8 @@
                             BettypeId = bettypeId,
                             BettypeName = CacheRef.GetBettype(bettypeId),
                             SettingTypeId = Convert.ToInt32(reader["settingtype"]),
-                            SettingTypeName = reader["settingname"].ToString()
+                            SettingTypeName = reader["settingname"].ToString(),
+                            IsLive = Convert.ToBoolean(reader["islive"])
                         });
                     }
                 }
@@ -353,5 +362,39 @@
             return result;
         }
 
+        public bool ValidateConfigSetting(ICriteria criteria)
+        {
+            using (ObjectDb objDB = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = objDB.ExecuteReader(criteria.GetSpParams()))
+                {
+                    var outputParams = objDB.GetOuputParams();
+
+                    return Convert.ToBoolean(outputParams["iswarning"]);
+                }
+            }
+        }
+
+        public IEnumerable<InsertErrorModel> AddUpdateConfigSetting(ICriteria criteria)
+        {
+            var result = new List<InsertErrorModel>();
+            using (ObjectDb objDB = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = objDB.ExecuteReader(criteria.GetSpParams()))
+                {
+                    while (reader.Read())
+                    {
+                        result.Add(new InsertErrorModel
+                        {
+                            Id = Convert.IsDBNull(reader["id"])? -1 : Convert.ToInt32(reader["id"]),
+                            ErrorCode = Convert.ToInt32(reader["errorcode"]),
+                            ErrorMsg = reader["errormsg"].ToString(),
+                        });
+                    }
+                }
+            }
+
+            return result;
+        }
     }
 }

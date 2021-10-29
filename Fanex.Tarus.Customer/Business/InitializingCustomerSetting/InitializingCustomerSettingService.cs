@@ -25,6 +25,12 @@
         ConfigSettingViewModel GetConfigDetail(int configId);
 
         ConfigSettingViewModel GenerateConfigSetting(GenerateConfigSettingRequest request);
+
+        bool ValidateAddConfigSetting(ConfigModel request);
+
+        IEnumerable<InsertErrorModel> AddConfigSetting(ConfigModel request);
+
+        IEnumerable<InsertErrorModel> UpdateConfigSetting(ConfigModel request);
     }
     public class InitializingCustomerSettingService : IInitializingCustomerSettingService
     {
@@ -36,10 +42,11 @@
         private const string ConfigTempalte = "../../App_Templates//Default/InitializingCustomerSetting/ConfigDetail.htm";
         private const string SettingHeaderTemplate = "../../App_Templates/Default/InitializingCustomerSetting/SettingHeader.htm";
         private const string SettingGeneralInfoTemplate = "../../App_Templates/Default/InitializingCustomerSetting/GeneralInfo.htm";
-        private const string SettingTempalte = "../../App_Templates/Default/InitializingCustomerSetting/Setting{0}.htm";
+        private const string SettingTempalte = "../../App_Templates/Default/InitializingCustomerSetting/{0}.htm";
         private const string IdKey = "{0}{1}{2}{3}{4}{5}";
         private const string StatusEnable = "<p class=\"setting-status status-enable input-status-{0}\" data-pos=\"{1}\">Enable</p>";
         private const string StatusDisable = "<p class=\"setting-status status-disable input-status-{0}\" data-pos=\"{1}\">Disable</p>";
+        private const string ErrorMessage = "{0}-{1}-{2}: {3}";
 
         public InitializingCustomerSettingService()
         {
@@ -84,7 +91,7 @@
             var groupSettings = config.Settings.GroupBy(setting => setting.SettingType);
             foreach (var settingGroup in groupSettings)
             {
-                var sportBettype = sportbettypesetting.FirstOrDefault(st => st.SettingId == settingGroup.Key);
+                var sportBettype = sportbettypesetting.FirstOrDefault(st => st.SettingName == settingGroup.FirstOrDefault().SettingName);
                 settingsHtml.Append(BuildSettingHeader(settingGroup.Key, settingGroup.FirstOrDefault().SettingName));
                 foreach (var setting in settingGroup)
                 {
@@ -94,6 +101,10 @@
                     if (settingSport != null)
                     {
                         bettypeOptions = BuildBettypeOptions(settingSport.Bettypes, setting.CopyFromBetType);
+                    }
+                    else
+                    {
+                        bettypeOptions = BuildBettypeOptions(sportBettype.Sports[0].Bettypes, 0);
                     }
 
                     settingsHtml.Append(BuildSettingTempalte(setting, sportOptions, bettypeOptions));
@@ -133,6 +144,7 @@
         {
             var config = new SettingConfigModel()
             {
+                ConfigId = request.ConfigId,
                 BetTypeIdList = request.BettypeIdList,
                 ProductId = request.ProductId,
                 SportTypeIdList = request.SportIdList,
@@ -148,26 +160,20 @@
             var configSettingHtml = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate(ConfigTempalte);
             var generalInfoHtml = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate(SettingGeneralInfoTemplate);
             TemplateHandler.Assign(ref configSettingHtml, "{general-info}", generalInfoHtml);
-            var settingInfos = GenerateSettingInfoModel(settings).ToList();
+            var settingInfos = GenerateSettingInfoModel(settings.ToList()).ToList();
             var groupSettings = settingInfos.GroupBy(setting => setting.SettingType);
             var settingsHtml = new StringBuilder();
             foreach (var settingGroup in groupSettings)
             {
-                var sportBettype = sportbettypesetting.FirstOrDefault(st => st.SettingId == settingGroup.Key);
+                var sportBettype = sportbettypesetting.FirstOrDefault(st => st.SettingName == settingGroup.FirstOrDefault().SettingName);
                 settingsHtml.Append(BuildSettingHeader(settingGroup.Key, settingGroup.FirstOrDefault().SettingName));
                 foreach (var setting in settingGroup)
                 {
                     var sportOptions = BuildSportOptions(sportBettype.Sports, setting.CopyFromSportType);
-                    var settingSport = sportBettype.Sports.FirstOrDefault(sp => sp.SportId == setting.CopyFromSportType);
-                    var bettypeOptions = "";
-                    if (settingSport != null)
-                    {
-                        bettypeOptions = BuildBettypeOptions(settingSport.Bettypes, setting.CopyFromBetType);
-                    } else
-                    {
-                        bettypeOptions = BuildBettypeOptions(sportBettype.Sports[0].Bettypes, 0);
-                    }
+                    var bettypeOptions = BuildBettypeOptions(sportBettype.Sports[0].Bettypes, 0);
                     settingsHtml.Append(BuildSettingTempalte(setting, sportOptions, bettypeOptions));
+                    setting.CopyFromSportType = sportBettype.Sports[0].SportId;
+                    setting.CopyFromBetType = sportBettype.Sports[0].Bettypes[0].BettypeId;
                 }
             }
             TemplateHandler.Assign(ref configSettingHtml, "{settings}", settingsHtml.ToString());
@@ -233,7 +239,7 @@
 
         private string BuildSettingTempalte(SettingInforModel setting, string sporttypeOptions = "", string bettypeOptions = "")
         {
-            var settingtemplate = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate(string.Format(SettingTempalte, setting.SettingType));
+            var settingtemplate = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate(string.Format(SettingTempalte, setting.SettingName.Replace(" ", string.Empty).ToLowerInvariant()));
             var sportName = CacheRef.GetSportName(setting.SportType);
             var bettypename = CacheRef.GetBettype(setting.BetType);
             TemplateHandler.Assign(ref settingtemplate, "{data-pos}", setting.SettingId);
@@ -247,7 +253,7 @@
 
 
             TemplateHandler.Assign(ref settingtemplate, "{target-sporttype}", string.Format(IdKey, "sport-", setting.SettingName.Replace(" ", string.Empty), setting.SportType,  sportName.Replace(" ", string.Empty), string.Empty, string.Empty));
-            TemplateHandler.Assign(ref settingtemplate, "{setting-type}", setting.SettingType);
+            TemplateHandler.Assign(ref settingtemplate, "{setting-type}", setting.SettingName.Replace(" ", string.Empty).ToLowerInvariant());
             TemplateHandler.Assign(ref settingtemplate, "{target-bettype}", string.Format(IdKey,"bettype-", setting.SettingName.Replace(" ", string.Empty), setting.SportType, sportName.Replace(" ", string.Empty), setting.BetType, bettypename.Replace(" ", string.Empty)));
 
 
@@ -273,7 +279,7 @@
             {
                 var sport = new SportModel(item.SportId, string.Format(FormatDisplay, item.SportId, item.SportName));
                 var bettype = new BettypeModel(item.BettypeId, string.Format(FormatDisplay, item.BettypeId, item.BettypeName));
-                var setting = result.FirstOrDefault(x => x.SettingId == item.SettingTypeId);
+                var setting = result.FirstOrDefault(x => x.SettingName == item.SettingTypeName);
                 if (setting != null)
                 {
                     var existSport = setting.Sports.FirstOrDefault(sp => sp.SportId == item.SportId);
@@ -295,7 +301,7 @@
                     sport.Bettypes.Add(bettype);
                     result.Add(new SportBetTypeBySettingModel
                     {
-                        SettingId = item.SettingTypeId,
+                        SettingName = item.SettingTypeName,
                         Sports = new List<SportModel> { sport }
                     });
                 }
@@ -303,18 +309,18 @@
 
             foreach (var st in result)
             {
-                if (st.SettingId == 6)
+                if (st.SettingName == "Loss Limit")
                 {
-                    var winlossSetting = result.FirstOrDefault(rs => rs.SettingId == 12);
+                    var winlossSetting = result.FirstOrDefault(rs => rs.SettingName == "Win Loss Limit");
                     if (winlossSetting != null)
                     {
                         GetSameSportBettypeFromSetting(st, winlossSetting);
                     }
                 }
 
-                if (st.SettingId == 12)
+                if (st.SettingName == "Win Loss Limit")
                 {
-                    var lossSetting = result.FirstOrDefault(rs => rs.SettingId == 6);
+                    var lossSetting = result.FirstOrDefault(rs => rs.SettingName == "Loss Limit");
                     if (lossSetting != null)
                     {
                         GetSameSportBettypeFromSetting(st, lossSetting);
@@ -337,15 +343,72 @@
             }
         }
 
-        private IEnumerable<SettingInforModel> GenerateSettingInfoModel(IEnumerable<ProductDcsModel> settings)
+        private IEnumerable<SettingInforModel> GenerateSettingInfoModel(List<ProductDcsModel> settings)
         {
-            return settings.Select(setting => new SettingInforModel
+            var result = new List<SettingInforModel>();
+            for (int i = 0; i < settings.Count; i++)
             {
-                BetType = setting.BettypeId,
-                SportType = setting.SettingTypeId,
-                SettingType = setting.SettingTypeId,
-                SettingName = setting.SettingTypeName
-            });
+                var setting = settings[i];
+                result.Add(new SettingInforModel
+                {
+                    BetType = setting.BettypeId,
+                    SportType = setting.SportId,
+                    SettingType = setting.SettingTypeId,
+                    SettingName = setting.SettingTypeName,
+                    IsLive = setting.IsLive,
+                    Id = i + 1
+                });
+            }
+            return result;
+        }
+
+        private string MappingMessageResult(InsertErrorModel message, List<SettingInforModel> settings)
+        {
+            var setting = settings.FirstOrDefault(item => item.Id == message.Id);
+            if(setting != null)
+            {
+                return string.Format(ErrorMessage, setting.SettingName, CacheRef.GetSportName(setting.SportType), CacheRef.GetBettype(setting.BetType), message.ErrorMsg);
+            }
+
+            return message.ErrorMsg;
+        }
+
+        public IEnumerable<InsertErrorModel> AddConfigSetting(ConfigModel request)
+        {
+            var criteria = new AddSettingConfigCriteria(request)
+            {
+                IsConfirmed = true
+            };
+
+            var resultMessages = dataAccess.AddUpdateConfigSetting(criteria);
+            foreach (var msg in resultMessages)
+            {
+                msg.ErrorMsg = MappingMessageResult(msg, request.Settings);
+            }
+
+            return resultMessages;
+        }
+
+        public IEnumerable<InsertErrorModel> UpdateConfigSetting(ConfigModel request)
+        {
+            var criteria = new EditSettingConfigCriteria(request)
+            {
+                IsConfirmed = true
+            };
+            var resultMessages = dataAccess.AddUpdateConfigSetting(criteria);
+            foreach (var msg in resultMessages)
+            {
+                msg.ErrorMsg = MappingMessageResult(msg, request.Settings);
+            }
+
+            return resultMessages;
+        }
+
+        public bool ValidateAddConfigSetting(ConfigModel request)
+        {
+            var criteria = new AddSettingConfigCriteria(request);
+
+            return dataAccess.ValidateConfigSetting(criteria);
         }
     }
 }

@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div class="floatLeft w100">
-                <input type="button" value="Search" class="btn btn-edit" onclick="RenderNewConfig('Edit')">
+                <input type="button" value="Search" class="btn btn-edit" onclick="RenderNewConfig()">
             </div>
         </div>
     </div>
@@ -31,7 +31,8 @@
     <div id="editContainer" class="grid-container">
         <div id="grid-information" class="freegrid"></div>
         <div style="text-align: center">
-            <input class="btn btn-edit" type="button" value="Update" onclick="SubmitAddNewUMConfig();" />
+            <input id="btn-edit" class="btn btn-edit" type="button" value="Update" onclick="UpdateConfigModel();" />
+            <input id="btn-add" class="btn btn-edit" type="button" value="Add" onclick="ValidateNewConfigModel();" />
         </div>
     </div>
 </div>

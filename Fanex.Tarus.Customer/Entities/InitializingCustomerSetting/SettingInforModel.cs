@@ -3,6 +3,9 @@
     public class SettingInforModel
     {
         public string SettingId { get => string.Concat(SettingType, "-", SportType, "-", BetType ); } 
+
+        public int Id { get; set; }
+
         public int ConfigId { get; set; }
 
         public int SportType { get; set; }

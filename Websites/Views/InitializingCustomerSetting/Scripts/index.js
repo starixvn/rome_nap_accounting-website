@@ -3,6 +3,7 @@ var dcsproducts = [];
 var selectedProduct = null;
 var selectedSports = [];
 var selectedConfig = null;
+var isAddConfig = false;
 function GetSetting() {
     parent.BlockUI();
     $.ajax({
@@ -207,7 +208,7 @@ function RenderDcsMatrix(type, callbackfunc, params, enableInput = true) {
             InitFilter("Edit");
         },
         error: function (event, jqXHR, ajaxSettings) {
-            showAlertMessage('errMsg', "Internal server error.", 1);
+            showAlertMessage('editErrMsg', "Internal server error.", 1);
         },
         complete: function () {
             try { parent.jQuery.unblockUI(); } catch (e) { }
@@ -248,7 +249,10 @@ function InitFilterBehavior(type) {
 }
 
 function EditConfig(configId) {
+    isAddConfig = false;
     $("#grid-information").html("");
+    $("#btn-add").addClass("hidden");
+    $("#btn-edit").removeClass("hidden");
     RenderDcsMatrix("Edit", GetConfigDetail, configId, true);
     $('#detail-information-popup').dialog({
         title: 'Config ' + configId,
@@ -259,10 +263,27 @@ function EditConfig(configId) {
 }
 
 function ViewConfig(configId) {
+    isAddConfig = false;
     $("#grid-information").html("");
+    $("#btn-add").addClass("hidden");
+    $("#btn-edit").addClass("hidden");
     RenderDcsMatrix("Edit", GetConfigDetail, configId, false);
     $('#detail-information-popup').dialog({
         title: 'Config ' + configId,
+        modal: true,
+        width: '850',
+        height: '600'
+    });
+}
+
+function OpenAddConfig() {
+    isAddConfig = true;
+    $("#grid-information").html("");
+    $("#btn-add").removeClass("hidden");
+    $("#btn-edit").addClass("hidden");
+    RenderDcsMatrix("Edit");
+    $('#detail-information-popup').dialog({
+        title: 'Add Config',
         modal: true,
         width: '850',
         height: '600'
@@ -283,7 +304,7 @@ function GetConfigDetail(configId, enableInput = true) {
             RenderEditConfigDetail(enableInput);
         },
         error: function (event, jqXHR, ajaxSettings) {
-            showAlertMessage('errMsg', "Internal server error.", 1);
+            showAlertMessage('editErrMsg', "Internal server error.", 1);
         },
         complete: function () {
             try { parent.jQuery.unblockUI(); } catch (e) { }
@@ -307,13 +328,6 @@ function DisableEditInput(isDisabled) {
 
     $(".edit-input").each(function () {
         $(this).prop('disabled', isDisabled);
-    }); 
-    $(".btn-edit").each(function () {
-        if (isDisabled) {
-            $(this).addClass("hidden");
-        } else {
-            $(this).removeClass("hidden");
-        }
     });
 }
 
@@ -387,8 +401,13 @@ function RenderEventEdit() {
     $(".sel-sport-copy").each(function () {
         var settingtype = $(this).data("target-settingtype");
         var targetBettype = $(this).data("target-bettype");
-        var editsetting = selectedConfig && selectedConfig.SportBettypeBySettings.find(element => element.SettingId.toString() === settingtype.toString());
+        var editsetting = selectedConfig && selectedConfig.SportBettypeBySettings.find(element => element.SettingName.replace(/ /g, '').toLowerCase() === settingtype);
         $(this).change(function () {
+            var pos = $(this).data("pos");
+            var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
+            selectedConfig.ConfigDetail.Settings[position].CopyFromSportType = $(this).val();
+
+
             var bettypeSel = $("#" + targetBettype);
             bettypeSel.empty();
             var selectSportId = $(this).val();
@@ -397,15 +416,11 @@ function RenderEventEdit() {
                 editSport.Bettypes.forEach(function (bt) {
                     bettypeSel.append(new Option(bt.BettypeName, bt.BettypeId));
                 });
+                selectedConfig.ConfigDetail.Settings[position].CopyFromBetType = editSport.Bettypes[0].BettypeId;
             }
             bettypeSel.select2();
         });
         $(this).select2();
-        $(this).change(function () {
-            var pos = $(this).data("pos");
-            var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
-            selectedConfig.ConfigDetail.Settings[position].CopyFromSportType = $(this).val();
-        });
     });
 
     $(".sel-bettype-copy").each(function () {
@@ -588,7 +603,7 @@ function RenderSportType(type, enableInput = true) {
                 Id: 'sport' + item.SportId,
                 Value: item.SportId,
                 Text: '[' + item.SportId + '] ' + item.SportName,
-                Checked: selectedConfig && selectedConfig.ConfigDetail.Config.SportTypeIdList.indexOf(item.SportId) >= 0,
+                Checked: selectedConfig && selectedConfig.ConfigDetail.Config.SportTypeIdList && selectedConfig.ConfigDetail.Config.SportTypeIdList.indexOf(item.SportId) >= 0,
                 Enable: true,
                 CssClass: "",
                 Items: []
@@ -637,7 +652,7 @@ function RenderBetType(type, enableInput = true) {
                         Id: 'bettype' + bt.BettypeId,
                         Value: bt.BettypeId,
                         Text: '[' + bt.BettypeId + '] ' + bt.BettypeName,
-                        Checked: selectedConfig && selectedConfig.ConfigDetail.Config.BetTypeIdList.indexOf(bt.BettypeId) >= 0,
+                        Checked: selectedConfig && selectedConfig.ConfigDetail.Config.BetTypeIdList &&selectedConfig.ConfigDetail.Config.BetTypeIdList.indexOf(bt.BettypeId) >= 0,
                         Enable: true,
                         CssClass: "",
                         Items: []
@@ -662,15 +677,20 @@ function RenderBetType(type, enableInput = true) {
     });
 }
 
-function RenderNewConfig(type) {
-    selectedConfig = null;
+function RenderNewConfig() {
     parent.BlockUI();
     var request = {
         ProductId: $("#EditProductSelect").val(),
         SportIdList: $("#EditSportSelect").multiSelect("getCheckedItems").map(Number),
-        BettypeIdList: $("#EditBettypeSelect").multiSelect("getCheckedItems").map(Number)
+        BettypeIdList: $("#EditBettypeSelect").multiSelect("getCheckedItems").map(Number),
+        ConfigId: 0
     };
 
+    if (!isAddConfig) {
+        request.ConfigId = selectedConfig.ConfigDetail.Config.ConfigId;
+    }
+
+    selectedConfig = null;
     $.ajax({
         type: "POST",
         url: "GenerateConfigSetting",
@@ -682,7 +702,97 @@ function RenderNewConfig(type) {
             RenderEditConfigDetail(true);
         },
         error: function (event, jqXHR, ajaxSettings) {
-            showAlertMessage('errMsg', "Internal server error.", 1);
+            showAlertMessage('editErrMsg', "Internal server error.", 1);
+        },
+        complete: function () {
+            try { parent.jQuery.unblockUI(); } catch (e) { }
+        }
+    });
+}
+
+function UpdateConfigModel() {
+    $("#editErrMsg").html("");
+    parent.BlockUI();
+    selectedConfig.ConfigDetail.Config.SiteIdList = $("#EditSiteSelect").multiSelect("getCheckedItems").map(Number);
+    selectedConfig.ConfigDetail.Config.CurrencyIdList = $("#EditCurrencySelect").multiSelect("getCheckedItems").map(Number);
+    selectedConfig.ConfigDetail.Config.StartTime = $("#EditStartTime").val();
+    selectedConfig.ConfigDetail.Config.IsTest = $("#ckbEditIsTest").prop('checked');
+    selectedConfig.ConfigDetail.Config.Remark = $("#EditRemark").val();
+    $.ajax({
+        type: "POST",
+        url: "UpdateConfigSetting",
+        dataType: 'json',
+        data: selectedConfig.ConfigDetail,
+        success: function (rs) {
+            if (rs && rs.length > 0) {
+                var message = "";
+                rs.forEach(function (err) {
+                    message = message + err.ErrorMsg +"</br>";
+                });
+
+                showAlertMessage('editErrMsg', message, 1);
+            }
+        },
+        error: function (event, jqXHR, ajaxSettings) {
+            showAlertMessage('editErrMsg', "Internal server error.", 1);
+        },
+        complete: function () {
+            try { parent.jQuery.unblockUI(); } catch (e) { }
+        }
+    });
+}
+
+function ValidateNewConfigModel() {
+    $("#editErrMsg").html("");
+    parent.BlockUI();
+    selectedConfig.ConfigDetail.Config.SiteIdList = $("#EditSiteSelect").multiSelect("getCheckedItems").map(Number);
+    selectedConfig.ConfigDetail.Config.CurrencyIdList = $("#EditCurrencySelect").multiSelect("getCheckedItems").map(Number);
+    selectedConfig.ConfigDetail.Config.StartTime = $("#EditStartTime").val();
+    selectedConfig.ConfigDetail.Config.IsTest = $("#ckbEditIsTest").prop('checked');
+    selectedConfig.ConfigDetail.Config.Remark = $("#EditRemark").val();
+    $.ajax({
+        type: "POST",
+        url: "ValidateAddConfigSetting",
+        dataType: 'json',
+        data: selectedConfig.ConfigDetail,
+        success: function (rs) {
+            if (rs) {
+                if (confirm("There already exists a configuration that has the same product/sport type/bet type, currency, setting type in the system with status \"Completed\".Are you sure you want to add this config ?")) {
+                    AddConfigModel();
+                }
+            } else {
+                AddConfigModel();
+            }
+        },
+        error: function (event, jqXHR, ajaxSettings) {
+            showAlertMessage('editErrMsg', "Internal server error.", 1);
+        },
+        complete: function () {
+            try { parent.jQuery.unblockUI(); } catch (e) { }
+        }
+    });
+}
+
+function AddConfigModel() {
+    $("#editErrMsg").html("");
+    parent.BlockUI();
+    $.ajax({
+        type: "POST",
+        url: "AddConfigSetting",
+        dataType: 'json',
+        data: selectedConfig.ConfigDetail,
+        success: function (rs) {
+            if (rs && rs.length > 0) {
+                var message = "";
+                rs.forEach(function (err) {
+                    message = message + err.ErrorMsg + "</br>";
+                });
+
+                showAlertMessage('editErrMsg', message, 1);
+            }
+        },
+        error: function (event, jqXHR, ajaxSettings) {
+            showAlertMessage('editErrMsg', "Internal server error.", 1);
         },
         complete: function () {
             try { parent.jQuery.unblockUI(); } catch (e) { }

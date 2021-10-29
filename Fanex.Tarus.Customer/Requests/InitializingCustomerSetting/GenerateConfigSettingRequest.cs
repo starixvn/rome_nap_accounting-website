@@ -9,5 +9,7 @@ namespace Fanex.Tarus.Customer.Requests.InitializingCustomerSetting
         public IEnumerable<int> SportIdList { get; set; }
 
         public IEnumerable<int> BettypeIdList { get; set; }
+
+        public int ConfigId { get; set; }
     }
 }

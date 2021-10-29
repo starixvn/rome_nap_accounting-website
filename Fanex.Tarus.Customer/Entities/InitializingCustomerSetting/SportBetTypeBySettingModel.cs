@@ -4,7 +4,7 @@
 
     public class SportBetTypeBySettingModel
     {
-        public int SettingId { get; set; }
+        public string SettingName { get; set; }
         public List<SportModel> Sports { get; set; }
     }
 }

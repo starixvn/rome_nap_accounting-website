@@ -17,5 +17,7 @@
         public int SettingTypeId { get; set; }
 
         public string SettingTypeName { get; set; }
+
+        public bool IsLive { get; set; }
     }
 }
