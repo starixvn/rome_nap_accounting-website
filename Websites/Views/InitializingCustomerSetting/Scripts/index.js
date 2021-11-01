@@ -441,8 +441,30 @@ function RenderEventEdit() {
         $(this).change(function () {
             var pos = $(this).data("pos");
             var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
-            selectedConfig.ConfigDetail.Settings[position].IsDefault = $(this).prop('checked');
-            $("#ckbCopy" + pos).prop("checked", !selectedConfig.ConfigDetail.Settings[position].IsDefault);
+            var isDefault = $(this).prop('checked');
+            selectedConfig.ConfigDetail.Settings[position].IsDefault = isDefault;
+            $("#ckbCopy" + pos).prop("checked", !isDefault);
+            $(".input-default-" + pos).each(function () {
+                $(this).prop("disabled", !isDefault);
+            });
+            $(".input-copy-" + pos).each(function () {
+                $(this).prop("disabled", isDefault);
+            });
+            if (isDefault) {
+                $("#status-super-" + pos).on('click', ChangeSuperStatus);
+                $("#status-master-" + pos).on('click', ChangeSuperStatus);
+                $("#status-agent-" + pos).on('click', ChangeSuperStatus);
+                $("#status-member-" + pos).on('click', ChangeSuperStatus);
+            } else {
+                $("#status-super-" + pos).click(function () { return false; });
+                $("#status-super-" + pos).off('click');
+                $("#status-master-" + pos).click(function () { return false; });
+                $("#status-master-" + pos).off('click');
+                $("#status-agent-" + pos).click(function () { return false; });
+                $("#status-agent-" + pos).off('click');
+                $("#status-member-" + pos).click(function () { return false; });
+                $("#status-member-" + pos).off('click');
+            }
         });
     });
 
@@ -450,8 +472,30 @@ function RenderEventEdit() {
         $(this).change(function () {
             var pos = $(this).data("pos");
             var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
-            selectedConfig.ConfigDetail.Settings[position].IsDefault = !$(this).prop('checked');
-            $("#ckbDefault" + pos).prop("checked", selectedConfig.ConfigDetail.Settings[position].IsDefault);
+            var isCopy = $(this).prop('checked');
+            selectedConfig.ConfigDetail.Settings[position].IsDefault = !isCopy;
+            $("#ckbDefault" + pos).prop("checked", !isCopy);
+            $(".input-default-" + pos).each(function () {
+                $(this).prop("disabled", isCopy);
+            });
+            $(".input-copy-" + pos).each(function () {
+                $(this).prop("disabled", !isCopy);
+            });
+            if (!isCopy) {
+                $("#status-super-" + pos).on('click', ChangeSuperStatus);
+                $("#status-master-" + pos).on('click', ChangeSuperStatus);
+                $("#status-agent-" + pos).on('click', ChangeSuperStatus);
+                $("#status-member-" + pos).on('click', ChangeSuperStatus);
+            } else {
+                $("#status-super-" + pos).click(function () { return false; });
+                $("#status-super-" + pos).off('click');
+                $("#status-master-" + pos).click(function () { return false; });
+                $("#status-master-" + pos).off('click');
+                $("#status-agent-" + pos).click(function () { return false; });
+                $("#status-agent-" + pos).off('click');
+                $("#status-member-" + pos).click(function () { return false; });
+                $("#status-member-" + pos).off('click');
+            }
         });
     }); 
     $(".ckb-auto-reset").each(function () {
@@ -504,81 +548,89 @@ function RenderEventEdit() {
     });
 
     $(".input-status-super").each(function () {
-        $(this).click(function () {
-            var statusDiv = $(this);
-            var pos = statusDiv.data("pos");
-            var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
-            var nextEnable = statusDiv.html() !== "Enable";
-            if (nextEnable) {
-                selectedConfig.ConfigDetail.Settings[position].DefaultValueSuper = "1";
-                statusDiv.html("Enable");
-                statusDiv.removeClass("status-disable");
-                statusDiv.addClass("status-enable");
-            } else {
-                selectedConfig.ConfigDetail.Settings[position].DefaultValueSuper = "0";
-                statusDiv.html("Disable");
-                statusDiv.addClass("status-disable");
-                statusDiv.removeClass("status-enable");
-            }
-        });
+        $(this).on('click', ChangeSuperStatus);
     });
     $(".input-status-master").each(function () {
-        $(this).click(function () {
-            var statusDiv = $(this);
-            var pos = statusDiv.data("pos");
-            var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
-            var nextEnable = statusDiv.html() !== "Enable";
-            if (nextEnable) {
-                selectedConfig.ConfigDetail.Settings[position].DefaultValueMaster = "1";
-                statusDiv.html("Enable");
-                statusDiv.removeClass("status-disable");
-                statusDiv.addClass("status-enable");
-            } else {
-                selectedConfig.ConfigDetail.Settings[position].DefaultValueMaster = "0";
-                statusDiv.html("Disable");
-                statusDiv.addClass("status-disable");
-                statusDiv.removeClass("status-enable");
-            }
-        });
+        $(this).on('click', ChangeMasterStatus);
     });
     $(".input-status-agent").each(function () {
-        $(this).click(function () {
-            var statusDiv = $(this);
-            var pos = statusDiv.data("pos");
-            var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
-            var nextEnable = statusDiv.html() !== "Enable";
-            if (nextEnable) {
-                selectedConfig.ConfigDetail.Settings[position].DefaultValueAgent = "1";
-                statusDiv.html("Enable");
-                statusDiv.removeClass("status-disable");
-                statusDiv.addClass("status-enable");
-            } else {
-                selectedConfig.ConfigDetail.Settings[position].DefaultValueAgent = "0";
-                statusDiv.html("Disable");
-                statusDiv.addClass("status-disable");
-                statusDiv.removeClass("status-enable");
-            }
-        });
+        $(this).on('click', ChangeAgentStatus);
     });
     $(".input-status-member").each(function () {
-        $(this).click(function () {
-            var statusDiv = $(this);
-            var pos = statusDiv.data("pos");
-            var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
-            var nextEnable = statusDiv.html() !== "Enable";
-            if (nextEnable) {
-                selectedConfig.ConfigDetail.Settings[position].DefaultValueMember = "1";
-                statusDiv.html("Enable");
-                statusDiv.removeClass("status-disable");
-                statusDiv.addClass("status-enable");
-            } else {
-                selectedConfig.ConfigDetail.Settings[position].DefaultValueMember = "0";
-                statusDiv.html("Disable");
-                statusDiv.addClass("status-disable");
-                statusDiv.removeClass("status-enable");
-            }
-        });
+        $(this).on('click', ChangeMemberStatus);
     });
+}
+
+function ChangeSuperStatus() {
+    var statusDiv = $(this);
+    var pos = statusDiv.data("pos");
+    var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
+    var nextEnable = statusDiv.html() !== "Enable";
+    if (nextEnable) {
+        selectedConfig.ConfigDetail.Settings[position].DefaultValueSuper = "1";
+        statusDiv.html("Enable");
+        statusDiv.removeClass("status-disable");
+        statusDiv.addClass("status-enable");
+    } else {
+        selectedConfig.ConfigDetail.Settings[position].DefaultValueSuper = "0";
+        statusDiv.html("Disable");
+        statusDiv.addClass("status-disable");
+        statusDiv.removeClass("status-enable");
+    }
+}
+
+function ChangeMasterStatus() {
+    var statusDiv = $(this);
+    var pos = statusDiv.data("pos");
+    var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
+    var nextEnable = statusDiv.html() !== "Enable";
+    if (nextEnable) {
+        selectedConfig.ConfigDetail.Settings[position].DefaultValueMaster = "1";
+        statusDiv.html("Enable");
+        statusDiv.removeClass("status-disable");
+        statusDiv.addClass("status-enable");
+    } else {
+        selectedConfig.ConfigDetail.Settings[position].DefaultValueMaster = "0";
+        statusDiv.html("Disable");
+        statusDiv.addClass("status-disable");
+        statusDiv.removeClass("status-enable");
+    }
+}
+
+function ChangeAgentStatus() {
+    var statusDiv = $(this);
+    var pos = statusDiv.data("pos");
+    var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
+    var nextEnable = statusDiv.html() !== "Enable";
+    if (nextEnable) {
+        selectedConfig.ConfigDetail.Settings[position].DefaultValueAgent = "1";
+        statusDiv.html("Enable");
+        statusDiv.removeClass("status-disable");
+        statusDiv.addClass("status-enable");
+    } else {
+        selectedConfig.ConfigDetail.Settings[position].DefaultValueAgent = "0";
+        statusDiv.html("Disable");
+        statusDiv.addClass("status-disable");
+        statusDiv.removeClass("status-enable");
+    }
+}
+
+function ChangeMemberStatus() {
+    var statusDiv = $(this);
+    var pos = statusDiv.data("pos");
+    var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
+    var nextEnable = statusDiv.html() !== "Enable";
+    if (nextEnable) {
+        selectedConfig.ConfigDetail.Settings[position].DefaultValueMember = "1";
+        statusDiv.html("Enable");
+        statusDiv.removeClass("status-disable");
+        statusDiv.addClass("status-enable");
+    } else {
+        selectedConfig.ConfigDetail.Settings[position].DefaultValueMember = "0";
+        statusDiv.html("Disable");
+        statusDiv.addClass("status-disable");
+        statusDiv.removeClass("status-enable");
+    }
 }
 
 function SetupCalendar(divId) {

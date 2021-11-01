@@ -44,8 +44,8 @@
         private const string SettingGeneralInfoTemplate = "../../App_Templates/Default/InitializingCustomerSetting/GeneralInfo.htm";
         private const string SettingTempalte = "../../App_Templates/Default/InitializingCustomerSetting/{0}.htm";
         private const string IdKey = "{0}{1}{2}{3}{4}{5}";
-        private const string StatusEnable = "<p class=\"setting-status status-enable input-status-{0}\" data-pos=\"{1}\">Enable</p>";
-        private const string StatusDisable = "<p class=\"setting-status status-disable input-status-{0}\" data-pos=\"{1}\">Disable</p>";
+        private const string StatusEnable = "<p class=\"setting-status status-enable input-status-{0}\" id=\"status-{0}-{1}\" data-pos=\"{1}\">Enable</p>";
+        private const string StatusDisable = "<p class=\"setting-status status-disable input-status-{0}\" id=\"status-{0}-{1}\" data-pos=\"{1}\">Disable</p>";
         private const string ErrorMessage = "{0}-{1}-{2}: {3}";
 
         public InitializingCustomerSettingService()
