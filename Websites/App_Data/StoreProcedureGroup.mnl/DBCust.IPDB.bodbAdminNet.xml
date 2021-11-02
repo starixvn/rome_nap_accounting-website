@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Functions>
-  <Function Name="IPVN">
+  <Function Name="IP">
     <Setting Key="GetIPVN" SpName="GetIPVN" DbName="DBCust.IPDB.bodbAdminNet" />
+    <Setting Key="Acc_GetIPInfo_Full" SpName="Acc_GetIPInfo_Full" DbName="DBCust.IPDB.bodbAdminNet" />
   </Function>
 </Functions>
