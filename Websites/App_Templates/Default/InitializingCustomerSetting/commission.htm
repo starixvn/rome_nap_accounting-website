@@ -9,10 +9,10 @@
     <td class="setting-col col-item">Member</td>
 </tr>
 <tr class="setting-row row-item">
-    <td class="setting-col col-item"><input class="edit-input input-com-super input-default-{data-pos}" type="text" value="{comSuper}" data-pos="{data-pos}" /></td>
-    <td class="setting-col col-item"><input class="edit-input input-com-master input-default-{data-pos}" type="text" value="{comMaster}" data-pos="{data-pos}" /></td>
-    <td class="setting-col col-item"><input class="edit-input input-com-agent input-default-{data-pos}" type="text" value="{comAgent}" data-pos="{data-pos}" /></td>
-    <td class="setting-col col-item"><input class="edit-input input-com-member input-default-{data-pos}" type="text" value="{comMember}" data-pos="{data-pos}" /></td>
+    <td class="setting-col col-item"><input class="edit-input input-com-super input-default-{data-pos}" type="text" value="{comSuper}" data-pos="{data-pos}" {disable-copy}/></td>
+    <td class="setting-col col-item"><input class="edit-input input-com-master input-default-{data-pos}" type="text" value="{comMaster}" data-pos="{data-pos}" {disable-copy}/></td>
+    <td class="setting-col col-item"><input class="edit-input input-com-agent input-default-{data-pos}" type="text" value="{comAgent}" data-pos="{data-pos}" {disable-copy}/></td>
+    <td class="setting-col col-item"><input class="edit-input input-com-member input-default-{data-pos}" type="text" value="{comMember}" data-pos="{data-pos}" {disable-copy}/></td>
 </tr>
 <tr class="setting-row row-item text-center">
     <td class="setting-col col-item" rowspan="2"><input id="ckbCopy{data-pos}" class="edit-input ckb-copy" type="checkbox" {ckbCopy} data-pos="{data-pos}" />Copy From</td>
@@ -23,12 +23,12 @@
 </tr>
 <tr class="setting-row row-item text-center">
     <td class="setting-col col-item">
-        <select id="{target-sporttype}" class="edit-input sel-sport-copy input-copy-{data-pos}" data-target-settingtype="{setting-type}" data-target-bettype="{target-bettype}" data-pos="{data-pos}">
+        <select id="{target-sporttype}" class="edit-input sel-sport-copy input-copy-{data-pos}" data-target-settingtype="{setting-type}" data-target-bettype="{target-bettype}" data-pos="{data-pos}" {disable-default}>
             {sporttypeopts}
         </select>
     </td>
     <td class="setting-col col-item">
-        <select id="{target-bettype}" class="edit-input sel-bettype-copy input-copy-{data-pos}" data-pos="{data-pos}">
+        <select id="{target-bettype}" class="edit-input sel-bettype-copy input-copy-{data-pos}" data-pos="{data-pos}" {disable-default}>
             {bettypeopts}
         </select>
     </td>

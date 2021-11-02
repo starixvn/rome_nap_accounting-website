@@ -250,6 +250,9 @@
             TemplateHandler.Assign(ref settingtemplate, "{sporttypeopts}", sporttypeOptions);
             TemplateHandler.Assign(ref settingtemplate, "{bettypeopts}", bettypeOptions); 
             TemplateHandler.Assign(ref settingtemplate, "{ckbAutoResetDaily}", setting.SpecialRequirement == "1" ? "checked" : string.Empty);
+            TemplateHandler.Assign(ref settingtemplate, "{disable-copy}", setting.IsDefault ? "disabled" : "disabled");
+            TemplateHandler.Assign(ref settingtemplate, "{disable-default}", setting.IsDefault ? "disabled" : "disabled");
+
 
 
             TemplateHandler.Assign(ref settingtemplate, "{target-sporttype}", string.Format(IdKey, "sport-", setting.SettingName.Replace(" ", string.Empty), setting.SportType,  sportName.Replace(" ", string.Empty), string.Empty, string.Empty));

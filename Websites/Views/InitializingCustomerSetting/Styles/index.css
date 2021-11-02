@@ -133,3 +133,7 @@
 .abort-string {
     font-weight: bold;
 }
+
+.previous-time {
+    color: grey;
+}

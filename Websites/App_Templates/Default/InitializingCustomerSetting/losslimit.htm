@@ -3,8 +3,8 @@
     <td class="setting-col col-item" rowspan="4">{sport-type}</td>
     <td class="setting-col col-item" rowspan="4">{bet-type}</td>
     <td class="setting-col col-item" rowspan="2"><input id="ckbDefault{data-pos}" class="edit-input ckb-default" type="checkbox" {ckbDefault} data-pos="{data-pos}" />Default</td>
-    <td class="setting-col col-item">Maximum Win</td>
-    <td class="setting-col col-item" rowspan="2"><input id="ckbAutoReset{data-pos}" class="edit-input ckb-auto-reset input-default-{data-pos}" type="checkbox" {ckbAutoResetDaily} data-pos="{data-pos}" />Daily auto reset limit (at 12 noon GMT+8)</td>
+    <td class="setting-col col-item">Maximum Loss</td>
+    <td class="setting-col col-item" rowspan="2"><input id="ckbAutoReset{data-pos}" class="edit-input ckb-auto-reset input-default-{data-pos}" type="checkbox" {ckbAutoResetDaily} data-pos="{data-pos}" {disable-copy} />Daily auto reset limit (at 12 noon GMT+8)</td>
     <td class="setting-col col-item"></td>
     <td class="setting-col col-item"></td>
 </tr>
@@ -22,12 +22,12 @@
 </tr>
 <tr class="setting-row row-item text-center">
     <td class="setting-col col-item">
-        <select id="{target-sporttype}" class="edit-input sel-sport-copy input-copy-{data-pos}" data-target-settingtype="{setting-type}" data-target-bettype="{target-bettype}" data-pos="{data-pos}">
+        <select id="{target-sporttype}" class="edit-input sel-sport-copy input-copy-{data-pos}" data-target-settingtype="{setting-type}" data-target-bettype="{target-bettype}" data-pos="{data-pos}" {disable-default}>
             {sporttypeopts}
         </select>
     </td>
     <td class="setting-col col-item">
-        <select id="{target-bettype}" class="edit-input sel-bettype-copy input-copy-{data-pos}" data-pos="{data-pos}">
+        <select id="{target-bettype}" class="edit-input sel-bettype-copy input-copy-{data-pos}" data-pos="{data-pos}" {disable-default}>
             {bettypeopts}
         </select>
     </td>

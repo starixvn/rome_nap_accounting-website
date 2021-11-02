@@ -148,6 +148,22 @@ function RenderAction(status, configId) {
     return '<a href="#" alt = "View" style = "cursor: pointer" onclick = "ViewConfig(' + configId + ')" >[View]</a>';
 }
 
+function GetStartTimeClass(time) {
+    if (time && !IsFutureTime(time)) {
+        return "previous-time";
+    }
+
+    return null;
+}
+
+function IsFutureTime(time) {
+    var selectDate = new Date(time);
+    var todayDate = new Date(today);
+
+    return +selectDate > +todayDate;
+
+}
+
 function RenderSettings() {
     var bodyRows = [];
     var steps = configSettings.Steps;
@@ -162,7 +178,7 @@ function RenderSettings() {
         row.Columns.push({ Name: 'Currency', TdClass: null, Value: RenderCurrency(i) });
         row.Columns.push({ Name: 'Status', TdClass: null, Value: RenderStatus(setting.Status) });
         row.Columns.push({ Name: 'Steps', TdClass: null, Value: RenderStep(setting, steps) });
-        row.Columns.push({ Name: 'StartTime', TdClass: null, Value: setting.StartTime });
+        row.Columns.push({ Name: 'StartTime', TdClass: GetStartTimeClass(setting.StartTime), Value: setting.StartTime });
         row.Columns.push({ Name: 'EndTime', TdClass: null, Value: setting.EndTime });
         row.Columns.push({ Name: 'IsTest', TdClass: null, Value: setting.IsTest ? 1 : 0 });
         row.Columns.push({ Name: 'Remark', TdClass: null, Value: setting.Remark });
@@ -398,16 +414,26 @@ function RenderCurrencySelection(type, enableInput) {
 }
 
 function RenderEventEdit() {
+    $(".max-winloss").each(function () {
+        var pos = $(this).data("pos");
+        var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
+        if (!isNaN(selectedConfig.ConfigDetail.Settings[position].DefaultValueSuper)) {
+            $(this).val(parseInt(selectedConfig.ConfigDetail.Settings[position].DefaultValueSuper).toString());
+        }
+
+        $(this).change(function () {
+            selectedConfig.ConfigDetail.Settings[position].DefaultValueSuper = $(this).val();
+        });
+    });
+
     $(".sel-sport-copy").each(function () {
+        var pos = $(this).data("pos");
+        var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
         var settingtype = $(this).data("target-settingtype");
         var targetBettype = $(this).data("target-bettype");
         var editsetting = selectedConfig && selectedConfig.SportBettypeBySettings.find(element => element.SettingName.replace(/ /g, '').toLowerCase() === settingtype);
         $(this).change(function () {
-            var pos = $(this).data("pos");
-            var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
             selectedConfig.ConfigDetail.Settings[position].CopyFromSportType = $(this).val();
-
-
             var bettypeSel = $("#" + targetBettype);
             bettypeSel.empty();
             var selectSportId = $(this).val();
@@ -421,15 +447,17 @@ function RenderEventEdit() {
             bettypeSel.select2();
         });
         $(this).select2();
+        $(this).prop("disabled", selectedConfig.ConfigDetail.Settings[position].IsDefault);
     });
 
     $(".sel-bettype-copy").each(function () {
+        var pos = $(this).data("pos");
+        var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
         $(this).select2();
         $(this).change(function () {
-            var pos = $(this).data("pos");
-            var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
             selectedConfig.ConfigDetail.Settings[position].CopyFromBetType = $(this).val();
         });
+        $(this).prop("disabled", selectedConfig.ConfigDetail.Settings[position].IsDefault);
     });
 
     $("#EditStartTime").val(selectedConfig.ConfigDetail.Config.StartTime);
@@ -779,10 +807,12 @@ function UpdateConfigModel() {
             if (rs && rs.length > 0) {
                 var message = "";
                 rs.forEach(function (err) {
-                    message = message + err.ErrorMsg +"</br>";
+                    message = message + err.ErrorMsg + "</br>";
                 });
 
                 showAlertMessage('editErrMsg', message, 1);
+            } else {
+                showAlertMessage('editErrMsg', "Updated Successfully.", 0);
             }
         },
         error: function (event, jqXHR, ajaxSettings) {
@@ -841,6 +871,10 @@ function AddConfigModel() {
                 });
 
                 showAlertMessage('editErrMsg', message, 1);
+            } else {
+                $('#detail-information-popup').dialog('close');
+                showAlertMessage('errMsg', "Added Config Successfully.", 0);
+                GetSetting();
             }
         },
         error: function (event, jqXHR, ajaxSettings) {
@@ -850,6 +884,58 @@ function AddConfigModel() {
             try { parent.jQuery.unblockUI(); } catch (e) { }
         }
     });
+}
+
+function AbortConfig(configId) {
+    $("#errMsg").html("");
+    if (confirm("Are you sure you want to abort this config?")) {
+        parent.BlockUI();
+        $.ajax({
+            type: "POST",
+            url: "AbortSetting",
+            dataType: 'json',
+            data: configId,
+            success: function (rs) {
+                if (rs.ErrorCode === 0) {
+                    showAlertMessage('errMsg', "Aborted Successfully.", 1);
+                } else {
+                    showAlertMessage('errMsg', rs.ErrorMsg, 1);
+                }
+            },
+            error: function (error) {
+                showAlertMessage('errMsg', "Internal server error.", 1);
+            },
+            complete: function () {
+                try { parent.jQuery.unblockUI(); } catch (e) { }
+            }
+        });
+    }
+}
+
+function DeleteConfig(configId) {
+    $("#errMsg").html("");
+    if (confirm("Are you sure you want to delete this config?")) {
+        parent.BlockUI();
+        $.ajax({
+            type: "POST",
+            url: "AbortSetting",
+            dataType: 'json',
+            data: configId,
+            success: function (rs) {
+                if (rs.ErrorCode === 0) {
+                    showAlertMessage('errMsg', "Deleted Successfully.", 0);
+                } else {
+                    showAlertMessage('errMsg', rs.ErrorMsg, 1);
+                }
+            },
+            error: function (error) {
+                showAlertMessage('errMsg', "Internal server error.", 1);
+            },
+            complete: function () {
+                try { parent.jQuery.unblockUI(); } catch (e) { }
+            }
+        });
+    }
 }
 
 $(document).ready(function () {
