@@ -160,7 +160,7 @@
             var configSettingHtml = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate(ConfigTempalte);
             var generalInfoHtml = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate(SettingGeneralInfoTemplate);
             TemplateHandler.Assign(ref configSettingHtml, "{general-info}", generalInfoHtml);
-            var settingInfos = GenerateSettingInfoModel(settings.ToList()).ToList();
+            var settingInfos = GenerateSettingInfoModel(settings.ToList(), sportbettypesetting.ToList()).ToList();
             var groupSettings = settingInfos.GroupBy(setting => setting.SettingType);
             var settingsHtml = new StringBuilder();
             foreach (var settingGroup in groupSettings)
@@ -172,8 +172,6 @@
                     var sportOptions = BuildSportOptions(sportBettype.Sports, setting.CopyFromSportType);
                     var bettypeOptions = BuildBettypeOptions(sportBettype.Sports[0].Bettypes, 0);
                     settingsHtml.Append(BuildSettingTempalte(setting, sportOptions, bettypeOptions));
-                    setting.CopyFromSportType = sportBettype.Sports[0].SportId;
-                    setting.CopyFromBetType = sportBettype.Sports[0].Bettypes[0].BettypeId;
                 }
             }
             TemplateHandler.Assign(ref configSettingHtml, "{settings}", settingsHtml.ToString());
@@ -250,8 +248,8 @@
             TemplateHandler.Assign(ref settingtemplate, "{sporttypeopts}", sporttypeOptions);
             TemplateHandler.Assign(ref settingtemplate, "{bettypeopts}", bettypeOptions); 
             TemplateHandler.Assign(ref settingtemplate, "{ckbAutoResetDaily}", setting.SpecialRequirement == "1" ? "checked" : string.Empty);
-            TemplateHandler.Assign(ref settingtemplate, "{disable-copy}", setting.IsDefault ? "disabled" : "disabled");
-            TemplateHandler.Assign(ref settingtemplate, "{disable-default}", setting.IsDefault ? "disabled" : "disabled");
+            TemplateHandler.Assign(ref settingtemplate, "{disable-copy}", setting.IsDefault ? string.Empty : "disabled");
+            TemplateHandler.Assign(ref settingtemplate, "{disable-default}", setting.IsDefault ? "disabled" : string.Empty);
 
 
 
@@ -346,22 +344,17 @@
             }
         }
 
-        private IEnumerable<SettingInforModel> GenerateSettingInfoModel(List<ProductDcsModel> settings)
+        private IEnumerable<SettingInforModel> GenerateSettingInfoModel(List<ProductDcsModel> settings, List<SportBetTypeBySettingModel> sportBetTypeBySettings)
         {
             var result = new List<SettingInforModel>();
             for (int i = 0; i < settings.Count; i++)
             {
                 var setting = settings[i];
-                result.Add(new SettingInforModel
-                {
-                    BetType = setting.BettypeId,
-                    SportType = setting.SportId,
-                    SettingType = setting.SettingTypeId,
-                    SettingName = setting.SettingTypeName,
-                    IsLive = setting.IsLive,
-                    Id = i + 1
-                });
+                var sportBettype = sportBetTypeBySettings.FirstOrDefault(st => st.SettingName == setting.SettingTypeName);
+
+                result.Add(new SettingInforModel(i + 1, setting.SettingTypeId, setting.SettingTypeName, setting.SportId, setting.BettypeId, sportBettype.Sports[0].SportId, sportBettype.Sports[0].Bettypes[0].BettypeId, setting.IsLive));
             }
+
             return result;
         }
 

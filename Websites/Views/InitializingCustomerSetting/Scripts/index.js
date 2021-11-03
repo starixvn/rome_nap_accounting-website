@@ -266,6 +266,7 @@ function InitFilterBehavior(type) {
 
 function EditConfig(configId) {
     isAddConfig = false;
+    $("#editErrMsg").html("");
     $("#grid-information").html("");
     $("#btn-add").addClass("hidden");
     $("#btn-edit").removeClass("hidden");
@@ -280,6 +281,7 @@ function EditConfig(configId) {
 
 function ViewConfig(configId) {
     isAddConfig = false;
+    $("#editErrMsg").html("");
     $("#grid-information").html("");
     $("#btn-add").addClass("hidden");
     $("#btn-edit").addClass("hidden");
@@ -294,6 +296,7 @@ function ViewConfig(configId) {
 
 function OpenAddConfig() {
     isAddConfig = true;
+    $("#editErrMsg").html("");
     $("#grid-information").html("");
     $("#btn-add").removeClass("hidden");
     $("#btn-edit").addClass("hidden");
@@ -336,7 +339,9 @@ function RenderEditConfigDetail(enableInput) {
     RenderSiteSelection("Edit", enableInput);
     RenderCurrencySelection("Edit", enableInput);
     RenderEventEdit();
-    DisableEditInput(!enableInput);
+    if (!enableInput) {
+        DisableEditInput(true);
+    }
 }
 
 function DisableEditInput(isDisabled) {
@@ -478,21 +483,6 @@ function RenderEventEdit() {
             $(".input-copy-" + pos).each(function () {
                 $(this).prop("disabled", isDefault);
             });
-            if (isDefault) {
-                $("#status-super-" + pos).on('click', ChangeSuperStatus);
-                $("#status-master-" + pos).on('click', ChangeSuperStatus);
-                $("#status-agent-" + pos).on('click', ChangeSuperStatus);
-                $("#status-member-" + pos).on('click', ChangeSuperStatus);
-            } else {
-                $("#status-super-" + pos).click(function () { return false; });
-                $("#status-super-" + pos).off('click');
-                $("#status-master-" + pos).click(function () { return false; });
-                $("#status-master-" + pos).off('click');
-                $("#status-agent-" + pos).click(function () { return false; });
-                $("#status-agent-" + pos).off('click');
-                $("#status-member-" + pos).click(function () { return false; });
-                $("#status-member-" + pos).off('click');
-            }
         });
     });
 
@@ -509,21 +499,6 @@ function RenderEventEdit() {
             $(".input-copy-" + pos).each(function () {
                 $(this).prop("disabled", !isCopy);
             });
-            if (!isCopy) {
-                $("#status-super-" + pos).on('click', ChangeSuperStatus);
-                $("#status-master-" + pos).on('click', ChangeSuperStatus);
-                $("#status-agent-" + pos).on('click', ChangeSuperStatus);
-                $("#status-member-" + pos).on('click', ChangeSuperStatus);
-            } else {
-                $("#status-super-" + pos).click(function () { return false; });
-                $("#status-super-" + pos).off('click');
-                $("#status-master-" + pos).click(function () { return false; });
-                $("#status-master-" + pos).off('click');
-                $("#status-agent-" + pos).click(function () { return false; });
-                $("#status-agent-" + pos).off('click');
-                $("#status-member-" + pos).click(function () { return false; });
-                $("#status-member-" + pos).off('click');
-            }
         });
     }); 
     $(".ckb-auto-reset").each(function () {
@@ -593,6 +568,9 @@ function ChangeSuperStatus() {
     var statusDiv = $(this);
     var pos = statusDiv.data("pos");
     var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
+    if (!selectedConfig.ConfigDetail.Settings[position].IsDefault) {
+        return;
+    }
     var nextEnable = statusDiv.html() !== "Enable";
     if (nextEnable) {
         selectedConfig.ConfigDetail.Settings[position].DefaultValueSuper = "1";
@@ -605,12 +583,16 @@ function ChangeSuperStatus() {
         statusDiv.addClass("status-disable");
         statusDiv.removeClass("status-enable");
     }
+
 }
 
 function ChangeMasterStatus() {
     var statusDiv = $(this);
     var pos = statusDiv.data("pos");
     var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
+    if (!selectedConfig.ConfigDetail.Settings[position].IsDefault) {
+        return;
+    }
     var nextEnable = statusDiv.html() !== "Enable";
     if (nextEnable) {
         selectedConfig.ConfigDetail.Settings[position].DefaultValueMaster = "1";
@@ -629,6 +611,9 @@ function ChangeAgentStatus() {
     var statusDiv = $(this);
     var pos = statusDiv.data("pos");
     var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
+    if (!selectedConfig.ConfigDetail.Settings[position].IsDefault) {
+        return;
+    }
     var nextEnable = statusDiv.html() !== "Enable";
     if (nextEnable) {
         selectedConfig.ConfigDetail.Settings[position].DefaultValueAgent = "1";
@@ -647,6 +632,9 @@ function ChangeMemberStatus() {
     var statusDiv = $(this);
     var pos = statusDiv.data("pos");
     var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
+    if (!selectedConfig.ConfigDetail.Settings[position].IsDefault) {
+        return;
+    }
     var nextEnable = statusDiv.html() !== "Enable";
     if (nextEnable) {
         selectedConfig.ConfigDetail.Settings[position].DefaultValueMember = "1";
@@ -843,7 +831,9 @@ function ValidateNewConfigModel() {
                     AddConfigModel();
                 }
             } else {
-                AddConfigModel();
+                $('#detail-information-popup').dialog('close');
+                showAlertMessage('errMsg', "Added Config Successfully.", 0);
+                GetSetting();
             }
         },
         error: function (event, jqXHR, ajaxSettings) {
@@ -871,6 +861,7 @@ function AddConfigModel() {
                 });
 
                 showAlertMessage('editErrMsg', message, 1);
+                GetSetting();
             } else {
                 $('#detail-information-popup').dialog('close');
                 showAlertMessage('errMsg', "Added Config Successfully.", 0);
@@ -894,12 +885,13 @@ function AbortConfig(configId) {
             type: "POST",
             url: "AbortSetting",
             dataType: 'json',
-            data: configId,
+            data: { ConfigId: configId },
             success: function (rs) {
                 if (rs.ErrorCode === 0) {
-                    showAlertMessage('errMsg', "Aborted Successfully.", 1);
+                    showAlertMessage('errMsg', "Aborted Successfully.", 0);
+                    GetSetting();
                 } else {
-                    showAlertMessage('errMsg', rs.ErrorMsg, 1);
+                    showAlertMessage('errMsg', rs.ErrorMessage, 1);
                 }
             },
             error: function (error) {
@@ -918,14 +910,15 @@ function DeleteConfig(configId) {
         parent.BlockUI();
         $.ajax({
             type: "POST",
-            url: "AbortSetting",
+            url: "DeleteSetting",
             dataType: 'json',
-            data: configId,
+            data: { ConfigId: configId },
             success: function (rs) {
                 if (rs.ErrorCode === 0) {
                     showAlertMessage('errMsg', "Deleted Successfully.", 0);
+                    GetSetting();
                 } else {
-                    showAlertMessage('errMsg', rs.ErrorMsg, 1);
+                    showAlertMessage('errMsg', rs.ErrorMessage, 1);
                 }
             },
             error: function (error) {
