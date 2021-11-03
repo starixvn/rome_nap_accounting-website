@@ -898,7 +898,7 @@
     <value>Over/Under</value>
   </data>
   <data name="important" xml:space="preserve">
-    <value>important</value>
+    <value>Checked</value>
   </data>
   <data name="disabledownline" xml:space="preserve">
     <value>Disable Downline</value>
@@ -1101,8 +1101,8 @@
   <data name="Old" xml:space="preserve">
     <value>Old</value>
   </data>
-  <data name="state" xml:space="preserve">
-    <value>State</value>
+  <data name="review2" xml:space="preserve">
+    <value>Review 2</value>
   </data>
   <data name="spt_9" xml:space="preserve">
     <value>Mix Parlay</value>
@@ -2013,8 +2013,8 @@
   <data name="OldValue" xml:space="preserve">
     <value>Old Value</value>
   </data>
-  <data name="postal" xml:space="preserve">
-    <value>Postal</value>
+  <data name="review" xml:space="preserve">
+    <value>Review</value>
   </data>
   <data name="isa_v2mpt_20" xml:space="preserve">
     <value>Money Line</value>

@@ -44,6 +44,14 @@
         </div>
         <div id="custInfoDetal" class="box_content1">
             <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr style="display: {isHiddenReview}">
+                    <td width="26%" class="dot_left">
+                        Review:
+                    </td>
+                    <td class="dot_left">
+                        <span id="vReview">{Review}&nbsp;</span>
+                    </td>
+                </tr>
                 <tr>
                     <td width="26%" class="dot_left">
                         Name:
@@ -342,7 +350,7 @@
                     </div>
                     <!--/autosuspendstatus-->
                     <div class="col">
-                        Special {specialCustomer}
+                        Checked {specialCustomer}
                     </div>
                     <!--internalControl-->
                     {internalControl}

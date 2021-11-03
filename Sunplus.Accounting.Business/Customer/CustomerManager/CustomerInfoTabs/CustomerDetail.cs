@@ -113,6 +113,8 @@
             string shortUserName = customerInfoViewModel.UserName.Length < 20 ? customerInfoViewModel.UserName : customerInfoViewModel.UserName.Substring(0, 20) + "...";
             TemplateHandler.Assign(ref htmlcontent, "{statusClass}", statusClass);
             TemplateHandler.Assign(ref htmlcontent, "{UserName}", shortUserName);
+            TemplateHandler.Assign(ref htmlcontent, "{isHiddenReview}", string.IsNullOrWhiteSpace(customerInfoViewModel.DisplayReview) ? "none" : "");
+            TemplateHandler.Assign(ref htmlcontent, "{Review}", customerInfoViewModel.DisplayReview);
             TemplateHandler.Assign(ref htmlcontent, "{FullUserName}", customerInfoViewModel.UserName);
             TemplateHandler.Assign(ref htmlcontent, "{CustomerName}", customerInfoViewModel.Fullname);
             TemplateHandler.Assign(ref htmlcontent, "{FullCustomerName}", customerInfoViewModel.Fullname);
