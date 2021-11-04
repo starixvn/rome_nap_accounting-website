@@ -234,12 +234,12 @@
                         <span class="required" id="RequiredUserName" style="display: none;">*</span> &nbsp;&nbsp;
                         From:
                         <input type="text" style="width: 70px" readonly="readonly" id="fromDate" name="fromDate" class="date_no" />
-                        <a class="imaLink" href="#">
+                        <a class="imaLink" href="javascript:void(0);">
                             <img border="0" src="../../App_Themes/images/calendar.gif" class="img-date-selector"
                                 title="Date selector" id="imgCalFrom" alt="" />
                         </a>&nbsp;&nbsp; To:
                         <input type="text" style="width: 70px" readonly="readonly" id="toDate" name="toDate" class="date_no" />
-                        <a class="imaLink" href="#">
+                        <a class="imaLink" href="javascript:void(0);">
                             <img border="0" src="../../App_Themes/images/calendar.gif" class="img-date-selector"
                                 title="Date selector" id="imgCalTo" alt="" />
                         </a>&nbsp;&nbsp; <span style="display: none;" id="log_type">View by:
@@ -257,7 +257,7 @@
                         <img style="display: none;" alt="" src="../../App_Themes/images/waiting7.gif" id="displayBox" />
                         <div style="padding-top: 5px; display: none;" id="lnkOld">
                             <span style="color: #90979A; font-weight: bold;">* For data before 01-Jan-2009, please
-                                <a href="#" onclick="OldForm()" class="link">click here</a></span>
+                                <a href="javascript:void(0);" onclick="OldForm()" class="link">click here</a></span>
                         </div>
                         <div style="display: none; padding-top: 5px" id="loginMsg">
                             <span style="color: #90979A; font-weight: bold;">* The Login Log data is only available
