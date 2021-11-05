@@ -1,4 +1,7 @@
-﻿namespace Fanex.Tarus.Customer.Entities.InitializingCustomerSetting
+﻿using System.Collections.Generic;
+using System.Web.Mvc;
+
+namespace Fanex.Tarus.Customer.Entities.InitializingCustomerSetting
 {
     public class SettingInforModel
     {
@@ -10,6 +13,9 @@
         public const string BetSetting = "Bet Setting";
         public const string StakeLevel = "Stake Level";
 
+        private const string FormatDisplay = "[{0}] {1}";
+        private const string IdKey = "{0}{1}{2}{3}{4}{5}";
+
         public string SettingId { get => string.Concat(SettingType, "-", SportType, "-", BetType ); } 
 
         public int Id { get; set; }
@@ -18,7 +24,11 @@
 
         public int SportType { get; set; }
 
+        public string SportName { get; set; }
+
         public int BetType { get; set; }
+
+        public string BetTypeName { get; set; }
 
         public bool IsLive { get; set; }
 
@@ -41,6 +51,28 @@
         public string SpecialRequirement { get; set; }
 
         public string SettingName { get; set; }
+
+        public List<SelectListItem> SportTypeOptions { get; set; }
+
+        public List<SelectListItem> BetTypeOptions { get; set; }
+
+        public string DisplaySportName { get => string.Format(FormatDisplay, SportType, SportName); }
+
+        public string DisplayBettypeName { get => string.Format(FormatDisplay, BetType, BetTypeName); }
+
+        public string CheckBoxCopy { get => IsDefault ? string.Empty : "checked"; }
+
+        public string CheckBoxDefault { get => IsDefault ? "checked" : string.Empty; }
+
+        public string CheckBoxAutoReset { get => SpecialRequirement == "1" ? "checked" : string.Empty; }
+
+        public string DisableCopy { get => IsDefault ? string.Empty : "disabled"; }
+
+        public string DisableDefault { get => IsDefault ? "disabled" : string.Empty; }
+
+        public string TargetSportType { get => string.Format(IdKey, "sport-", SettingName.Replace(" ", string.Empty), SportType, SportName.Replace(" ", string.Empty), string.Empty, string.Empty); }
+
+        public string TargetBetType { get => string.Format(IdKey, "bettype-", SettingName.Replace(" ", string.Empty), SportType, SportName.Replace(" ", string.Empty), BetType, BetTypeName.Replace(" ", string.Empty)); }
 
         public SettingInforModel(int id, int settingType, string settingName, int sportType, int bettype, int defaultSportType, int defaultBettype, bool isLive)
         {

@@ -28,7 +28,7 @@
 
         ConfigModel GetConfigDetail(GetConfigDetailCriteria criteria);
 
-        bool ValidateConfigSetting(ICriteria criteria);
+        ValidateResultModel ValidateConfigSetting(ICriteria criteria);
 
         IEnumerable<InsertErrorModel> AddUpdateConfigSetting(ICriteria criteria);
     }
@@ -317,7 +317,11 @@
                                 SettingName = reader["SettingName"].ToString(),
                                 SettingType = Convert.ToInt32(reader["SettingType"].ToString()),
                                 SpecialRequirement = reader["SpecialRequirement"].ToString(),
-                                SportType = Convert.ToInt32(reader["SportType"].ToString())
+                                SportType = Convert.ToInt32(reader["SportType"].ToString()),
+                                SportName = CacheRef.GetSportName(reader["SportType"].ToString()),
+                                BetTypeName = CacheRef.GetBettype(reader["BetType"].ToString()),
+                                BetTypeOptions = new List<System.Web.Mvc.SelectListItem>(),
+                                SportTypeOptions = new List<System.Web.Mvc.SelectListItem>()
                             });
 
                             pos++;
@@ -362,15 +366,30 @@
             return result;
         }
 
-        public bool ValidateConfigSetting(ICriteria criteria)
+        public ValidateResultModel ValidateConfigSetting(ICriteria criteria)
         {
+            var result = new List<InsertErrorModel>();
             using (ObjectDb objDB = new ObjectDb(criteria.GetSettingKey()))
             {
                 using (var reader = objDB.ExecuteReader(criteria.GetSpParams()))
                 {
+                    while (reader.Read())
+                    {
+                        result.Add(new InsertErrorModel
+                        {
+                            Id = Convert.IsDBNull(reader["id"]) ? -1 : Convert.ToInt32(reader["id"]),
+                            ErrorCode = Convert.ToInt32(reader["errorcode"]),
+                            ErrorMsg = reader["errormsg"].ToString(),
+                        });
+                    }
+
                     var outputParams = objDB.GetOuputParams();
 
-                    return Convert.ToBoolean(outputParams["iswarning"]);
+                    return new ValidateResultModel
+                    {
+                        IsWarning = Convert.ToBoolean(outputParams["iswarning"]),
+                        Errors = result
+                    };
                 }
             }
         }

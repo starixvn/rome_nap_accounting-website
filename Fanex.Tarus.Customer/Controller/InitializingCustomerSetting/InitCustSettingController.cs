@@ -11,6 +11,7 @@ namespace Fanex.Tarus.Customer.Controller.InitializingCustomerSetting
     public class InitCustSettingController : BaseController
     {
         private readonly string _indexViewPath = "~/Views/InitializingCustomerSetting/Index.cshtml";
+        private readonly string _configDetailPath = "~/Views/InitializingCustomerSetting/_ConfigDetail.cshtml";
         private readonly IInitializingCustomerSettingService service;
 
         public InitCustSettingController()
@@ -76,6 +77,12 @@ namespace Fanex.Tarus.Customer.Controller.InitializingCustomerSetting
         public ActionResult UpdateConfigSetting(ConfigModel request)
         {
             return Json(service.UpdateConfigSetting(request));
+        }
+
+        [HttpGet, AuthenticateRead]
+        public ActionResult ViewConfigDetail(int configId)
+        {
+            return PartialView(_configDetailPath, service.GetConfigDetail(configId));
         }
     }
 }

@@ -28,7 +28,7 @@ function RenderSports(pos) {
     var sports = configSettings.ConfigSettings[pos].SportTypeList;
     if (sports.length > 3) {
         return sports[0] + ' </br>' + sports[1] + ' </br>' + sports[2]
-            + ' </br> <a class="info-link" href="#" onclick="OpenSportsDialogInformation(' + pos + ')">View all ' + sports.length + ' sports</a>';
+            + ' </br> <a class="info-link" href="javascript:void(0);" onclick="OpenSportsDialogInformation(' + pos + ')">View all ' + sports.length + ' sports</a>';
     } else {
         return sports.join('</br>');
     }
@@ -43,7 +43,7 @@ function RenderBettypes(pos) {
     var bettypes = configSettings.ConfigSettings[pos].BetTypeList;
     if (bettypes.length > 3) {
         return bettypes[0] + ' </br>' + bettypes[1] + ' </br>' + bettypes[2]
-            + ' </br> <a class="info-link" href="#" onclick="OpenBetTypeDialogInformation(' + pos + ')">View all ' + bettypes.length + ' currencies</a>';
+            + ' </br> <a class="info-link" href="javascript:void(0);" onclick="OpenBetTypeDialogInformation(' + pos + ')">View all ' + bettypes.length + ' currencies</a>';
     } else {
         return bettypes.join('</br>');
     }
@@ -58,7 +58,7 @@ function RenderSite(pos) {
     var sites = configSettings.ConfigSettings[pos].SiteList;
     if (sites.length > 3) {
         return sites[0] + ' </br>' + sites[1] + ' </br>' + sites[2]
-            + ' </br> <a class="info-link" href="#" onclick="OpenSiteDialogInformation(' + pos + ')">View all ' + sites.length + ' sites</a>';
+            + ' </br> <a class="info-link" href="javascript:void(0);" onclick="OpenSiteDialogInformation(' + pos + ')">View all ' + sites.length + ' sites</a>';
     } else {
         return sites.join('</br>');
     }
@@ -73,7 +73,7 @@ function RenderCurrency(pos) {
     var currencies = configSettings.ConfigSettings[pos].CurrencyList;
     if (currencies.length > 3) {
         return currencies[0] + ' </br>' + currencies[1] + ' </br>' + currencies[2]
-            + ' </br> <a class="info-link" href="#" onclick="OpenCurrencyDialogInformation(' + pos + ')">View all ' + currencies.length + ' currencies</a>';
+            + ' </br> <a class="info-link" href="javascript:void(0);" onclick="OpenCurrencyDialogInformation(' + pos + ')">View all ' + currencies.length + ' currencies</a>';
     } else {
         return currencies.join('</br>');
     }
@@ -97,6 +97,10 @@ function OpenDialogInformation(title, divhtml) {
 
 function RenderStep(setting, steps) {
     var result = "";
+    if (setting.Status === 2) {
+        return result;
+    }
+
     if (setting.ProcessedSteps !== "") {
         var processedSteps = setting.ProcessedSteps.split(',');
         processedSteps.forEach(function (item, _) {
@@ -138,14 +142,14 @@ function RenderStatus(status) {
 
 function RenderAction(status, configId) {
     if (status === 0) {
-        return '<a href="#" alt = "Edit" style = "cursor: pointer" onclick = "EditConfig(' + configId + ')" >[Edit]</a><a href="#" alt = "Delete" style = "cursor: pointer" onclick = "DeleteConfig(' + configId + ')" >[Delete]</a>';
+        return '<a href="javascript:void(0);" alt = "Edit" style = "cursor: pointer" onclick = "EditConfig(' + configId + ')" >[Edit]</a><a href="javascript:void(0);" alt = "Delete" style = "cursor: pointer" onclick = "DeleteConfig(' + configId + ')" >[Delete]</a>';
     }
 
     if (status === 1) {
-        return '<a href="#" alt = "Abort" style = "cursor: pointer" onclick = "AbortConfig(' + configId + ')" >[Abort]</a>';
+        return '<a href="javascript:void(0);" alt = "Abort" style = "cursor: pointer" onclick = "AbortConfig(' + configId + ')" >[Abort]</a>';
     }
 
-    return '<a href="#" alt = "View" style = "cursor: pointer" onclick = "ViewConfig(' + configId + ')" >[View]</a>';
+    return '<a href="javascript:void(0);" alt = "View" style = "cursor: pointer" onclick = "ViewConfig(' + configId + ')" >[View]</a>';
 }
 
 function GetStartTimeClass(time) {
@@ -253,6 +257,9 @@ function InitFilter(type) {
     bettypeFilter.empty();
     bettypeFilter.append(new Option("Please select", ""));
     bettypeFilter.attr('disabled', 'disabled');
+
+    $("#btnRenderNewConfig").off('click');
+    $("#btnRenderNewConfig").on('click', RenderNewConfig);
 }
 
 function InitFilterBehavior(type) {
@@ -270,6 +277,7 @@ function EditConfig(configId) {
     $("#grid-information").html("");
     $("#btn-add").addClass("hidden");
     $("#btn-edit").removeClass("hidden");
+    $("#filterDiv").removeClass("hidden");
     RenderDcsMatrix("Edit", GetConfigDetail, configId, true);
     $('#detail-information-popup').dialog({
         title: 'Config ' + configId,
@@ -280,18 +288,14 @@ function EditConfig(configId) {
 }
 
 function ViewConfig(configId) {
-    isAddConfig = false;
-    $("#editErrMsg").html("");
-    $("#grid-information").html("");
-    $("#btn-add").addClass("hidden");
-    $("#btn-edit").addClass("hidden");
-    RenderDcsMatrix("Edit", GetConfigDetail, configId, false);
-    $('#detail-information-popup').dialog({
+    $("#view-information").html("");
+    $('#viewContainer').dialog({
         title: 'Config ' + configId,
         modal: true,
         width: '850',
         height: '600'
     });
+    GetViewConfigDetail(configId);
 }
 
 function OpenAddConfig() {
@@ -300,6 +304,7 @@ function OpenAddConfig() {
     $("#grid-information").html("");
     $("#btn-add").removeClass("hidden");
     $("#btn-edit").addClass("hidden");
+    $("#filterDiv").removeClass("hidden");
     RenderDcsMatrix("Edit");
     $('#detail-information-popup').dialog({
         title: 'Add Config',
@@ -329,6 +334,36 @@ function GetConfigDetail(configId, enableInput = true) {
             try { parent.jQuery.unblockUI(); } catch (e) { }
         }
     });
+}
+
+function GetViewConfigDetail(configId) {
+    parent.BlockUI();
+    $.ajax({
+        type: "GET",
+        url: "ViewConfigDetail?configId=" + configId,
+        contentType: "application/json; charset=utf-8",
+        success: function (rs) {
+            $("#view-information").html(rs);
+            RenderViewConfigDetail();
+        },
+        error: function (event, jqXHR, ajaxSettings) {
+            showAlertMessage('editErrMsg', "Internal server error.", 1);
+        },
+        complete: function () {
+            try { parent.jQuery.unblockUI(); } catch (e) { }
+        }
+    });
+}
+
+function RenderViewConfigDetail() {
+    RenderSiteSelection("Edit", false);
+    RenderCurrencySelection("Edit", false);
+
+    $("#EditStartTime").val(selectedConfig.ConfigDetail.Config.StartTime);
+    SetupCalendar("EditStartTime");
+    $('#EditRemark').val(selectedConfig.ConfigDetail.Config.Remark);
+    $('#ckbEditIsTest').prop('checked', selectedConfig.ConfigDetail.Config.IsTest);
+    DisableEditInput(true);
 }
 
 function RenderEditConfigDetail(enableInput) {
@@ -476,13 +511,17 @@ function RenderEventEdit() {
             var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
             var isDefault = $(this).prop('checked');
             selectedConfig.ConfigDetail.Settings[position].IsDefault = isDefault;
-            $("#ckbCopy" + pos).prop("checked", !isDefault);
+            if (isDefault) {
+                $("#ckbCopy" + pos).prop("checked", false);
+                $(".input-copy-" + pos).each(function () {
+                    $(this).prop("disabled", true);
+                });
+            }
+
             $(".input-default-" + pos).each(function () {
                 $(this).prop("disabled", !isDefault);
             });
-            $(".input-copy-" + pos).each(function () {
-                $(this).prop("disabled", isDefault);
-            });
+            
         });
     });
 
@@ -492,10 +531,12 @@ function RenderEventEdit() {
             var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
             var isCopy = $(this).prop('checked');
             selectedConfig.ConfigDetail.Settings[position].IsDefault = !isCopy;
-            $("#ckbDefault" + pos).prop("checked", !isCopy);
-            $(".input-default-" + pos).each(function () {
-                $(this).prop("disabled", isCopy);
-            });
+            if (isCopy) {
+                $("#ckbDefault" + pos).prop("checked", false);
+                $(".input-default-" + pos).each(function () {
+                    $(this).prop("disabled", true);
+                });
+            }
             $(".input-copy-" + pos).each(function () {
                 $(this).prop("disabled", !isCopy);
             });
@@ -746,7 +787,6 @@ function RenderBetType(type, enableInput = true) {
 }
 
 function RenderNewConfig() {
-    parent.BlockUI();
     var request = {
         ProductId: $("#EditProductSelect").val(),
         SportIdList: $("#EditSportSelect").multiSelect("getCheckedItems").map(Number),
@@ -754,10 +794,21 @@ function RenderNewConfig() {
         ConfigId: 0
     };
 
+    if (request.SportIdList.length === 0) {
+        showAlertMessage('editErrMsg', "Sport Type cannot be null.", 1);
+        return;
+    }
+
+    if (request.BettypeIdList.length === 0) {
+        showAlertMessage('editErrMsg', "Bet Type cannot be null.", 1);
+        return;
+    }
+
     if (!isAddConfig) {
         request.ConfigId = selectedConfig.ConfigDetail.Config.ConfigId;
     }
 
+    parent.BlockUI();
     selectedConfig = null;
     $.ajax({
         type: "POST",
@@ -826,14 +877,23 @@ function ValidateNewConfigModel() {
         dataType: 'json',
         data: selectedConfig.ConfigDetail,
         success: function (rs) {
-            if (rs) {
+            if (rs.IsWarning) {
                 if (confirm("There already exists a configuration that has the same product/sport type/bet type, currency, setting type in the system with status \"Completed\".Are you sure you want to add this config ?")) {
                     AddConfigModel();
                 }
             } else {
-                $('#detail-information-popup').dialog('close');
-                showAlertMessage('errMsg', "Added Config Successfully.", 0);
-                GetSetting();
+                if (rs && rs.Errors.length > 0) {
+                    var message = "";
+                    rs.Errors.forEach(function (err) {
+                        message = message + err.ErrorMsg + "</br>";
+                    });
+
+                    showAlertMessage('editErrMsg', message, 1);
+                } else {
+                    $('#detail-information-popup').dialog('close');
+                    showAlertMessage('errMsg', "Added Config Successfully.", 0);
+                    GetSetting();
+                }
             }
         },
         error: function (event, jqXHR, ajaxSettings) {

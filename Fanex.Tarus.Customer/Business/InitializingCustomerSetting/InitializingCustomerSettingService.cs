@@ -11,6 +11,7 @@
     using Fanex.Tarus.Infrastructure.Caching;
     using System.Linq;
     using Fanex.Tarus.Customer.Requests.InitializingCustomerSetting;
+    using System.Web.Mvc;
 
     public interface IInitializingCustomerSettingService
     {
@@ -26,7 +27,7 @@
 
         ConfigSettingViewModel GenerateConfigSetting(GenerateConfigSettingRequest request);
 
-        bool ValidateAddConfigSetting(ConfigModel request);
+        ValidateResultModel ValidateAddConfigSetting(ConfigModel request);
 
         IEnumerable<InsertErrorModel> AddConfigSetting(ConfigModel request);
 
@@ -96,15 +97,21 @@
                 foreach (var setting in settingGroup)
                 {
                     var sportOptions = BuildSportOptions(sportBettype.Sports, setting.CopyFromSportType);
+                    foreach (var sp in sportBettype.Sports)
+                    {
+                        setting.SportTypeOptions.Add(new SelectListItem() { Text = sp.SportName, Value = sp.SportId.ToString(), Selected = setting.CopyFromSportType == sp.SportId });
+                    }
                     var settingSport = sportBettype.Sports.FirstOrDefault(sp => sp.SportId == setting.CopyFromSportType);
                     var bettypeOptions = "";
-                    if (settingSport != null)
+                    if (settingSport == null)
                     {
-                        bettypeOptions = BuildBettypeOptions(settingSport.Bettypes, setting.CopyFromBetType);
+                        settingSport = sportBettype.Sports[0];
                     }
-                    else
+
+                    bettypeOptions = BuildBettypeOptions(settingSport.Bettypes, setting.CopyFromBetType);
+                    foreach (var bt in settingSport.Bettypes)
                     {
-                        bettypeOptions = BuildBettypeOptions(sportBettype.Sports[0].Bettypes, 0);
+                        setting.BetTypeOptions.Add(new SelectListItem() { Text = bt.BettypeName, Value = bt.BettypeId.ToString(), Selected = setting.CopyFromBetType == bt.BettypeId });
                     }
 
                     settingsHtml.Append(BuildSettingTempalte(setting, sportOptions, bettypeOptions));
@@ -121,6 +128,7 @@
                 ConfigDetail = config,
                 ConfigSettingHtml = configSettingHtml,
                 SportBettypeBySettings = sportbettypesetting,
+                GroupSettings = groupSettings,
                 Sites = sites,
                 Currencies = exchangeCurrencies
             };
@@ -400,7 +408,7 @@
             return resultMessages;
         }
 
-        public bool ValidateAddConfigSetting(ConfigModel request)
+        public ValidateResultModel ValidateAddConfigSetting(ConfigModel request)
         {
             var criteria = new AddSettingConfigCriteria(request);
 
