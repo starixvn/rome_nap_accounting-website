@@ -318,7 +318,7 @@
                     if (item.IsLink) {
                         var link = "<a class='jsdrillDown' href='#' data-username='" + item.Username + "' data-searchusernamefromfilter='" + searchUsernameFromFilter + "'>" + item.Text + "</a>";
                         if (item.Text == "Headlines") {
-                            link = "<a class='jsSearchFilter' href='#'>" + item.Text + "</a>";
+                            link = "<a class='jsSearchFilter' href='javascript:void(0);'>" + item.Text + "</a>";
                         }
 
                         html.push(link);
@@ -383,7 +383,7 @@
                 if (row.RowNumber === 0 || row.RoleId == 1) {
                     rowHtml += row.Username;
                 } else {
-                    rowHtml += '<a class="jsdrillDown" href="#" data-username="' + row.Username + '" data-searchusernamefromfilter="' + searchUsernameFromFilter + '">' + row.Username + '</a>';
+                    rowHtml += '<a class="jsdrillDown" href="javascript:void(0);" data-username="' + row.Username + '" data-searchusernamefromfilter="' + searchUsernameFromFilter + '">' + row.Username + '</a>';
                 }
                 rowHtml += '</div></td></tr>';
 
@@ -461,24 +461,24 @@
                     if (row.ArchivedMaster.Close == 0) {
                         rowHtml += '<span class="drilldownStage">' + row.ArchivedMaster.Close + '</span>'
                     } else {
-                        rowHtml += '<a href="#" class="drilldownStage jsdrilldownStage" data-roleid="3" data-stageid="1" data-username="' + row.Username + '">' + row.ArchivedMaster.Close + '</a>'
+                        rowHtml += '<a href="javascript:void(0);" class="drilldownStage jsdrilldownStage" data-roleid="3" data-stageid="1" data-username="' + row.Username + '">' + row.ArchivedMaster.Close + '</a>'
                     }
 
                     if (row.ArchivedMaster.Disable == 0) {
                         rowHtml += '<span class="drilldownStage">' + row.ArchivedMaster.Disable + '</span>'
                     } else {
-                        rowHtml += '<a href="#" class="drilldownStage jsdrilldownStage" data-roleid="3" data-stageid="2" data-username="' + row.Username + '">' + row.ArchivedMaster.Disable + '</a>'
+                        rowHtml += '<a href="javascript:void(0);" class="drilldownStage jsdrilldownStage" data-roleid="3" data-stageid="2" data-username="' + row.Username + '">' + row.ArchivedMaster.Disable + '</a>'
                     }
                     if (row.ArchivedMaster.DelSetting == 0) {
                         rowHtml += '<span class="drilldownStage">' + row.ArchivedMaster.DelSetting + '</span>'
                     } else {
-                        rowHtml += '<a href="#" class="drilldownStage jsdrilldownStage" data-roleid="3" data-stageid="3" data-username="' + row.Username + '">' + row.ArchivedMaster.DelSetting + '</a>'
+                        rowHtml += '<a href="javascript:void(0);" class="drilldownStage jsdrilldownStage" data-roleid="3" data-stageid="3" data-username="' + row.Username + '">' + row.ArchivedMaster.DelSetting + '</a>'
                     }
 
                     if (row.ArchivedMaster.DelAccount == 0) {
                         rowHtml += '<span class="drilldownStage">' + row.ArchivedMaster.DelAccount + '</span>'
                     } else {
-                        rowHtml += '<a href="#" class="drilldownStage jsdrilldownStage" data-roleid="3" data-stageid="4" data-username="' + row.Username + '">' + row.ArchivedMaster.DelAccount + '</a>'
+                        rowHtml += '<a href="javascript:void(0);" class="drilldownStage jsdrilldownStage" data-roleid="3" data-stageid="4" data-username="' + row.Username + '">' + row.ArchivedMaster.DelAccount + '</a>'
                     }
 
                     rowHtml += '</div>\
@@ -488,24 +488,24 @@
                     if (row.ArchivedAgent.Close == 0) {
                         rowHtml += '<span class="drilldownStage">' + row.ArchivedAgent.Close + '</span>'
                     } else {
-                        rowHtml += '<a href="#" class="drilldownStage jsdrilldownStage" data-roleid="2" data-stageid="1" data-username="' + row.Username + '">' + row.ArchivedAgent.Close + '</a>'
+                        rowHtml += '<a href="javascript:void(0);" class="drilldownStage jsdrilldownStage" data-roleid="2" data-stageid="1" data-username="' + row.Username + '">' + row.ArchivedAgent.Close + '</a>'
                     }
 
                     if (row.ArchivedAgent.Disable == 0) {
                         rowHtml += '<span class="drilldownStage">' + row.ArchivedAgent.Disable + '</span>'
                     } else {
-                        rowHtml += '<a href="#" class="drilldownStage jsdrilldownStage" data-roleid="2" data-stageid="2" data-username="' + row.Username + '">' + row.ArchivedAgent.Disable + '</a>'
+                        rowHtml += '<a href="javascript:void(0);" class="drilldownStage jsdrilldownStage" data-roleid="2" data-stageid="2" data-username="' + row.Username + '">' + row.ArchivedAgent.Disable + '</a>'
                     }
                     if (row.ArchivedAgent.DelSetting == 0) {
                         rowHtml += '<span class="drilldownStage">' + row.ArchivedAgent.DelSetting + '</span>'
                     } else {
-                        rowHtml += '<a href="#" class="drilldownStage jsdrilldownStage" data-roleid="2" data-stageid="3" data-username="' + row.Username + '">' + row.ArchivedAgent.DelSetting + '</a>'
+                        rowHtml += '<a href="javascript:void(0);" class="drilldownStage jsdrilldownStage" data-roleid="2" data-stageid="3" data-username="' + row.Username + '">' + row.ArchivedAgent.DelSetting + '</a>'
                     }
 
                     if (row.ArchivedAgent.DelAccount == 0) {
                         rowHtml += '<span class="drilldownStage">' + row.ArchivedAgent.DelAccount + '</span>'
                     } else {
-                        rowHtml += '<a href="#" class="drilldownStage jsdrilldownStage" data-roleid="2" data-stageid="4" data-username="' + row.Username + '">' + row.ArchivedAgent.DelAccount + '</a>'
+                        rowHtml += '<a href="javascript:void(0);" class="drilldownStage jsdrilldownStage" data-roleid="2" data-stageid="4" data-username="' + row.Username + '">' + row.ArchivedAgent.DelAccount + '</a>'
                     }
 
                     rowHtml += '</div>\
@@ -515,24 +515,24 @@
                     if (row.ArchivedMember.Close == 0) {
                         rowHtml += '<span class="drilldownStage">' + row.ArchivedMember.Close + '</span>'
                     } else {
-                        rowHtml += '<a href="#" class="drilldownStage jsdrilldownStage" data-roleid="1" data-stageid="1" data-username="' + row.Username + '">' + row.ArchivedMember.Close + '</a>'
+                        rowHtml += '<a href="javascript:void(0);" class="drilldownStage jsdrilldownStage" data-roleid="1" data-stageid="1" data-username="' + row.Username + '">' + row.ArchivedMember.Close + '</a>'
                     }
 
                     if (row.ArchivedMember.Disable == 0) {
                         rowHtml += '<span class="drilldownStage">' + row.ArchivedMember.Disable + '</span>'
                     } else {
-                        rowHtml += '<a href="#" class="drilldownStage jsdrilldownStage" data-roleid="1" data-stageid="2" data-username="' + row.Username + '">' + row.ArchivedMember.Disable + '</a>'
+                        rowHtml += '<a href="javascript:void(0);" class="drilldownStage jsdrilldownStage" data-roleid="1" data-stageid="2" data-username="' + row.Username + '">' + row.ArchivedMember.Disable + '</a>'
                     }
                     if (row.ArchivedMember.DelSetting == 0) {
                         rowHtml += '<span class="drilldownStage">' + row.ArchivedMember.DelSetting + '</span>'
                     } else {
-                        rowHtml += '<a href="#" class="drilldownStage jsdrilldownStage" data-roleid="1" data-stageid="3" data-username="' + row.Username + '">' + row.ArchivedMember.DelSetting + '</a>'
+                        rowHtml += '<a href="javascript:void(0);" class="drilldownStage jsdrilldownStage" data-roleid="1" data-stageid="3" data-username="' + row.Username + '">' + row.ArchivedMember.DelSetting + '</a>'
                     }
 
                     if (row.ArchivedMember.DelAccount == 0) {
                         rowHtml += '<span class="drilldownStage">' + row.ArchivedMember.DelAccount + '</span>'
                     } else {
-                        rowHtml += '<a href="#" class="drilldownStage jsdrilldownStage" data-roleid="1" data-stageid="4" data-username="' + row.Username + '">' + row.ArchivedMember.DelAccount + '</a>'
+                        rowHtml += '<a href="javascript:void(0);" class="drilldownStage jsdrilldownStage" data-roleid="1" data-stageid="4" data-username="' + row.Username + '">' + row.ArchivedMember.DelAccount + '</a>'
                     }
 
                     rowHtml += '</div></td>';

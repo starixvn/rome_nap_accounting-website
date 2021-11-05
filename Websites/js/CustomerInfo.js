@@ -120,7 +120,7 @@ function changeStatus(type, hasDownLine) {
                         return;
                 break;
             case "special":
-                if (!confirm("Are you sure you want to change Special status for this customer?"))
+                if (!confirm("Are you sure you want to change Checked status for this customer?"))
                     return;
                 yes = ($('#special').attr('class').indexOf("chkuncheck") > -1);
                 break;

@@ -158,5 +158,11 @@
         public bool MasterEnabled => Utils.ToBoolean(lineInfoRow["MasterEnabled"]);
 
         public bool AgentEnabled => Utils.ToBoolean(lineInfoRow["AgentEnabled"]);
+
+        public string Review => Utils.ToString(customerInfoRow["Review"]);
+
+        public string Review2 => Utils.ToString(customerInfoRow["Review2"]);
+
+        public string DisplayReview => string.Concat(Review, Review2);
     }
 }
