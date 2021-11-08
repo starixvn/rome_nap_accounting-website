@@ -44,6 +44,10 @@ namespace Fanex.Tarus.Customer.Criteria.InitializingCustomerSetting
             for (int i = 0; i < settings.Count; i++)
             {
                 var setting = settings[i];
+                if(!setting.IsCopy && !setting.IsDefault)
+                {
+                    continue;
+                }
 
                 xmlConfig.Append("<R ");
                 xmlConfig.Append("ID = \"" + setting.Id + "\" ");

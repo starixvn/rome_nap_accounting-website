@@ -463,7 +463,7 @@ function RenderEventEdit() {
             bettypeSel.select2();
         });
         $(this).select2();
-        $(this).prop("disabled", selectedConfig.ConfigDetail.Settings[position].IsDefault);
+        $(this).prop("disabled", !selectedConfig.ConfigDetail.Settings[position].IsCopy);
     });
 
     $(".sel-bettype-copy").each(function () {
@@ -473,7 +473,7 @@ function RenderEventEdit() {
         $(this).change(function () {
             selectedConfig.ConfigDetail.Settings[position].CopyFromBetType = $(this).val();
         });
-        $(this).prop("disabled", selectedConfig.ConfigDetail.Settings[position].IsDefault);
+        $(this).prop("disabled", !selectedConfig.ConfigDetail.Settings[position].IsCopy);
     });
 
     $("#EditStartTime").val(selectedConfig.ConfigDetail.Config.StartTime);
@@ -506,7 +506,7 @@ function RenderEventEdit() {
             var pos = $(this).data("pos");
             var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
             var isCopy = $(this).prop('checked');
-            selectedConfig.ConfigDetail.Settings[position].IsDefault = !isCopy;
+            selectedConfig.ConfigDetail.Settings[position].IsCopy = isCopy;
             if (isCopy) {
                 $("#ckbDefault" + pos).prop("checked", false);
                 $(".input-default-" + pos).each(function () {
@@ -868,7 +868,8 @@ function ValidateNewConfigModel() {
 
                     showAlertMessage('editErrMsg', message, 1);
                 } else {
-                    $('#detail-information-popup').dialog('close');
+                    $('#popupContainer').html("");
+                    $('#popupContainer').dialog('close');
                     showAlertMessage('errMsg', "Added Config Successfully.", 0);
                     GetSetting();
                 }
