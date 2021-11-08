@@ -313,6 +313,7 @@
                                 DefaultValueMember = reader["DefaultValueMember"].ToString(),
                                 DefaultValueSuper = reader["DefaultValueSuper"].ToString(),
                                 IsDefault = Convert.ToBoolean(reader["IsDefault"].ToString()),
+                                IsCopy = !Convert.ToBoolean(reader["IsDefault"].ToString()),
                                 IsLive = Convert.ToBoolean(reader["IsLive"].ToString()),
                                 SettingName = reader["SettingName"].ToString(),
                                 SettingType = Convert.ToInt32(reader["SettingType"].ToString()),

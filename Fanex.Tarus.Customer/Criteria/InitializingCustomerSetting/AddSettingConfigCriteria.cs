@@ -52,13 +52,13 @@ namespace Fanex.Tarus.Customer.Criteria.InitializingCustomerSetting
                 xmlConfig.Append("IsLive = \"" + (setting.IsLive ? "1" : "0") + "\" ");
                 xmlConfig.Append("SettingType = \"" + setting.SettingType + "\" ");
                 xmlConfig.Append("IsDefault = \"" + (setting.IsDefault ? "1" : "0") + "\" ");
-                if(setting.CopyFromSportType > 0) xmlConfig.Append("CopyFromSportType = \"" + setting.CopyFromSportType + "\" ");
-                if (setting.CopyFromBetType > 0) xmlConfig.Append("CopyFromBetType = \"" + setting.CopyFromBetType + "\" ");
-                if (!string.IsNullOrEmpty(setting.DefaultValueSuper)) xmlConfig.Append("DefaultValueSuper = \"" + setting.DefaultValueSuper + "\" ");
-                if (!string.IsNullOrEmpty(setting.DefaultValueMaster)) xmlConfig.Append("DefaultValueMaster = \"" + setting.DefaultValueMaster + "\" ");
-                if (!string.IsNullOrEmpty(setting.DefaultValueAgent)) xmlConfig.Append("DefaultValueAgent = \"" + setting.DefaultValueAgent + "\" ");
-                if (!string.IsNullOrEmpty(setting.DefaultValueMember)) xmlConfig.Append("DefaultValueMember = \"" + setting.DefaultValueMember + "\" ");
-                if (!string.IsNullOrEmpty(setting.SpecialRequirement)) xmlConfig.Append("SpecialRequirement = \"" + setting.SpecialRequirement + "\" ");
+                if(!setting.IsDefault && setting.CopyFromSportType > 0) xmlConfig.Append("CopyFromSportType = \"" + setting.CopyFromSportType + "\" ");
+                if (!setting.IsDefault && setting.CopyFromBetType > 0) xmlConfig.Append("CopyFromBetType = \"" + setting.CopyFromBetType + "\" ");
+                if (setting.IsDefault && !string.IsNullOrEmpty(setting.DefaultValueSuper)) xmlConfig.Append("DefaultValueSuper = \"" + setting.DefaultValueSuper + "\" ");
+                if (setting.IsDefault && !string.IsNullOrEmpty(setting.DefaultValueMaster)) xmlConfig.Append("DefaultValueMaster = \"" + setting.DefaultValueMaster + "\" ");
+                if (setting.IsDefault && !string.IsNullOrEmpty(setting.DefaultValueAgent)) xmlConfig.Append("DefaultValueAgent = \"" + setting.DefaultValueAgent + "\" ");
+                if (setting.IsDefault && !string.IsNullOrEmpty(setting.DefaultValueMember)) xmlConfig.Append("DefaultValueMember = \"" + setting.DefaultValueMember + "\" ");
+                if (setting.IsDefault && !string.IsNullOrEmpty(setting.SpecialRequirement)) xmlConfig.Append("SpecialRequirement = \"" + setting.SpecialRequirement + "\" ");
                 xmlConfig.Append("/>");
             }
 

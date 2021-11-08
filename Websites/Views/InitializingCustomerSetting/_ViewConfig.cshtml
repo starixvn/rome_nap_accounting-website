@@ -1,4 +1,7 @@
-﻿<div id="viewContainer" class="grid-container" style="display: none;">
-    <div id="view-information" class="freegrid">
-    </div>
+﻿@using Fanex.Tarus.Customer.ViewModels.InitializingCustomerSetting
+
+@model ConfigSettingViewModel
+
+<div id="view-information" class="freegrid">
+    @Html.Partial("~/Views/InitializingCustomerSetting/_ConfigDetail.cshtml", Model)
 </div>

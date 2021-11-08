@@ -215,81 +215,66 @@ function RenderSettings() {
     $('#gridCustomerSetting').fanexGrid(gridOptions);
 }
 
-function RenderDcsMatrix(type, callbackfunc, params, enableInput = true) {
-    dcsproducts = [];
+function RenderDcsMatrix() {
     parent.BlockUI();
     $.ajax({
         type: "GET",
         url: "GetProductSportBettype",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
         success: function (rs) {
-            dcsproducts = rs;
-            InitFilter("Edit");
+            $("#popupContainer").html(rs);
         },
         error: function (event, jqXHR, ajaxSettings) {
             showAlertMessage('editErrMsg', "Internal server error.", 1);
         },
         complete: function () {
             try { parent.jQuery.unblockUI(); } catch (e) { }
-            if (callbackfunc) {
-                callbackfunc(params, enableInput);
-            }
+
+            $("#editErrMsg").html("");
+            $("#btn-add").addClass("hidden");
+            $("#btn-edit").addClass("hidden");
+            $("#filterDiv").removeClass("hidden");
+            InitFilter();
+            UpdateSelectSport();
         }
     });
 }
 
-function InitFilter(type) {
-    var productFilter = $("#" + type + "ProductSelect");
-    if (dcsproducts) {
-        productFilter.empty();
-        productFilter.append(new Option("Please select", ""));
-        dcsproducts.forEach(function (item, index) {
-            productFilter.append(new Option('[' + item.ProductId + '] ' + item.ProductName, item.ProductId));
-        });
+function InitFilter() {
+    InitFilterBehavior();
+    $("#EditProductSelect").select2();
+    if (selectedConfig && selectedConfig.ConfigDetail) {
+        $("#EditProductSelect").val(selectedConfig.ConfigDetail.Config.ProductId).trigger("change");
+    } else {
+        RenderSportType();
     }
+    UpdateSelectSport();
+} 
 
-    var sportFilter = $("#" + type + "SportSelect");
-    sportFilter.empty();
-    sportFilter.append(new Option("Please select", ""));
-    sportFilter.attr('disabled', 'disabled');
-    var bettypeFilter = $("#" + type + "BettypeSelect");
-    bettypeFilter.empty();
-    bettypeFilter.append(new Option("Please select", ""));
-    bettypeFilter.attr('disabled', 'disabled');
-
-    $("#btnRenderNewConfig").off('click');
-    $("#btnRenderNewConfig").on('click', RenderNewConfig);
-}
-
-function InitFilterBehavior(type) {
-    var productFilter = $("#" + type + "ProductSelect");
+function InitFilterBehavior() {
+    var productFilter = $("#EditProductSelect");
     productFilter.change(function () {
-        var selectedProductId = $("#" + type + "ProductSelect").val();
+        var selectedProductId = $("#EditProductSelect").val();
         selectedProduct = dcsproducts.find(element => element.ProductId.toString() === selectedProductId);
-        RenderSportType(type);
+        RenderSportType();
+        UpdateSelectSport();
     });
 }
 
 function EditConfig(configId) {
     isAddConfig = false;
-    $("#editErrMsg").html("");
-    $("#grid-information").html("");
-    $("#btn-add").addClass("hidden");
-    $("#btn-edit").removeClass("hidden");
-    $("#filterDiv").removeClass("hidden");
-    RenderDcsMatrix("Edit", GetConfigDetail, configId, true);
-    $('#detail-information-popup').dialog({
+    $("#popupContainer").html("");
+    $('#popupContainer').dialog({
         title: 'Config ' + configId,
         modal: true,
         width: '850',
         height: '600'
     });
+    GetConfigDetail(configId);
 }
 
 function ViewConfig(configId) {
-    $("#view-information").html("");
-    $('#viewContainer').dialog({
+    $("#popupContainer").html("");
+    $('#popupContainer').dialog({
         title: 'Config ' + configId,
         modal: true,
         width: '850',
@@ -300,38 +285,35 @@ function ViewConfig(configId) {
 
 function OpenAddConfig() {
     isAddConfig = true;
-    $("#editErrMsg").html("");
-    $("#grid-information").html("");
-    $("#btn-add").removeClass("hidden");
-    $("#btn-edit").addClass("hidden");
-    $("#filterDiv").removeClass("hidden");
-    RenderDcsMatrix("Edit");
-    $('#detail-information-popup').dialog({
+    $("#popupContainer").html("");
+    $('#popupContainer').dialog({
         title: 'Add Config',
         modal: true,
         width: '850',
         height: '600'
     });
+    RenderDcsMatrix();
 }
 
-function GetConfigDetail(configId, enableInput = true) {
+function GetConfigDetail(configId) {
     selectedConfig = null;
     parent.BlockUI();
     $.ajax({
         type: "GET",
         url: "GetConfigDetail?configId=" + configId,
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
         success: function (rs) {
-            selectedConfig = rs;
-            $("#grid-information").html(rs.ConfigSettingHtml);
-            RenderEditConfigDetail(enableInput);
+            $("#popupContainer").html(rs);
         },
         error: function (event, jqXHR, ajaxSettings) {
             showAlertMessage('editErrMsg', "Internal server error.", 1);
         },
         complete: function () {
             try { parent.jQuery.unblockUI(); } catch (e) { }
+
+            $("#editErrMsg").html("");
+            $("#btn-add").addClass("hidden");
+            $("#btn-edit").removeClass("hidden");
+            RenderEditConfigDetail();
         }
     });
 }
@@ -343,7 +325,7 @@ function GetViewConfigDetail(configId) {
         url: "ViewConfigDetail?configId=" + configId,
         contentType: "application/json; charset=utf-8",
         success: function (rs) {
-            $("#view-information").html(rs);
+            $("#popupContainer").html(rs);
             RenderViewConfigDetail();
         },
         error: function (event, jqXHR, ajaxSettings) {
@@ -355,28 +337,22 @@ function GetViewConfigDetail(configId) {
     });
 }
 
+function RenderEditConfigDetail() {
+    InitFilter();
+    RenderSiteSelection();
+    RenderCurrencySelection(true);
+    RenderEventEdit();
+}
+
 function RenderViewConfigDetail() {
-    RenderSiteSelection("Edit", false);
-    RenderCurrencySelection("Edit", false);
+    RenderSiteSelection(false);
+    RenderCurrencySelection(false);
 
     $("#EditStartTime").val(selectedConfig.ConfigDetail.Config.StartTime);
     SetupCalendar("EditStartTime");
     $('#EditRemark').val(selectedConfig.ConfigDetail.Config.Remark);
     $('#ckbEditIsTest').prop('checked', selectedConfig.ConfigDetail.Config.IsTest);
     DisableEditInput(true);
-}
-
-function RenderEditConfigDetail(enableInput) {
-    $("#EditProductSelect").select2();
-    $("#EditProductSelect").val(selectedConfig.ConfigDetail.Config.ProductId).trigger("change");
-    RenderSportType("Edit", enableInput);
-    UpdateSelectSport("Edit", enableInput);
-    RenderSiteSelection("Edit", enableInput);
-    RenderCurrencySelection("Edit", enableInput);
-    RenderEventEdit();
-    if (!enableInput) {
-        DisableEditInput(true);
-    }
 }
 
 function DisableEditInput(isDisabled) {
@@ -387,14 +363,14 @@ function DisableEditInput(isDisabled) {
     });
 }
 
-function RenderSiteSelection(type, enableInput) {
-    var siteSelect = $("#" + type + "SiteSelect");
+function RenderSiteSelection(enableInput = true) {
+    var siteSelect = $("#EditSiteSelect");
     siteSelect.empty();
     var multiselectData = [];
     if (selectedConfig) {
         selectedConfig.Sites.forEach(function (item, index) {
             multiselectData.push({
-                Id: 'optsite' + type + item.Id,
+                Id: 'optsiteEdit' + item.Id,
                 Value: item.Id,
                 Text: item.Name,
                 Checked: selectedConfig && selectedConfig.ConfigDetail.Config.SiteIdList.indexOf(item.Id) >= 0,
@@ -420,14 +396,14 @@ function RenderSiteSelection(type, enableInput) {
     });
 }
 
-function RenderCurrencySelection(type, enableInput) {
-    var currencySelect = $("#" + type + "CurrencySelect");
+function RenderCurrencySelection(enableInput) {
+    var currencySelect = $("#EditCurrencySelect");
     currencySelect.empty();
     var multiselectData = [];
     if (selectedConfig) {
         selectedConfig.Currencies.forEach(function (item, index) {
             multiselectData.push({
-                Id: 'optcurrency' + type + item.Id,
+                Id: 'optcurrencyEdit' + item.Id,
                 Value: item.Id,
                 Text: item.Name,
                 Checked: selectedConfig && selectedConfig.ConfigDetail.Config.CurrencyIdList.indexOf(item.Id) >= 0,
@@ -701,8 +677,8 @@ function SetupCalendar(divId) {
     });
 }
 
-function RenderSportType(type, enableInput = true) {
-    var sportFilter = $("#" + type + "SportSelect");
+function RenderSportType() {
+    var sportFilter = $("#EditSportSelect");
     sportFilter.empty();
     sportFilter.removeAttr('disabled');
     var multiselectData = [];
@@ -711,7 +687,7 @@ function RenderSportType(type, enableInput = true) {
             multiselectData.push({
                 Id: 'sport' + item.SportId,
                 Value: item.SportId,
-                Text: '[' + item.SportId + '] ' + item.SportName,
+                Text: item.SportName,
                 Checked: selectedConfig && selectedConfig.ConfigDetail.Config.SportTypeIdList && selectedConfig.ConfigDetail.Config.SportTypeIdList.indexOf(item.SportId) >= 0,
                 Enable: true,
                 CssClass: "",
@@ -728,39 +704,38 @@ function RenderSportType(type, enableInput = true) {
         isCheckAll: false,
         showFooter: false,
         showFilter: true,
-        disabled: !enableInput,
         checkAllText: "All",
         listData: multiselectData,
         noItemText: "Select Sport",
-        onCheck: function () { UpdateSelectSport(type); }
+        onCheck: function () { UpdateSelectSport(); }
     });
 }
 
-function UpdateSelectSport(type, enableInput = true) {
+function UpdateSelectSport() {
     selectedSports = [];
-    var selectedSportIds = $("#" + type + "SportSelect").multiSelect("getCheckedItems");
+    var selectedSportIds = $("#EditSportSelect").multiSelect("getCheckedItems");
     if (selectedSportIds) {
         selectedSportIds.forEach(function (item, index) {
             selectedSports.push(selectedProduct.Sports.find(element => element.SportId.toString() === item));
         });
     }
-    RenderBetType(type, enableInput);
+    RenderBetType();
 }
 
-function RenderBetType(type, enableInput = true) {
-    var bettypeFilter = $("#" + type + "BettypeSelect");
+function RenderBetType() {
+    var bettypeFilter = $("#EditBettypeSelect");
     bettypeFilter.empty();
     bettypeFilter.removeAttr('disabled');
     var multiselectData = [];
     if (selectedSports) {
         selectedSports.forEach(function (item, index) {
             item.Bettypes.forEach(function (bt) {
-                var existbt = multiselectData.find(element => element.Id === 'bettype' + bt.BettypeName);
+                var existbt = multiselectData.find(element => element.Id === 'bettype' + bt.BettypeId);
                 if (!existbt) {
                     multiselectData.push({
                         Id: 'bettype' + bt.BettypeId,
                         Value: bt.BettypeId,
-                        Text: '[' + bt.BettypeId + '] ' + bt.BettypeName,
+                        Text: bt.BettypeName,
                         Checked: selectedConfig && selectedConfig.ConfigDetail.Config.BetTypeIdList &&selectedConfig.ConfigDetail.Config.BetTypeIdList.indexOf(bt.BettypeId) >= 0,
                         Enable: true,
                         CssClass: "",
@@ -779,7 +754,6 @@ function RenderBetType(type, enableInput = true) {
         isCheckAll: false,
         showFooter: false,
         showFilter: true,
-        disabled: !enableInput,
         checkAllText: "All",
         listData: multiselectData,
         noItemText: "Select Bettype"
@@ -787,6 +761,7 @@ function RenderBetType(type, enableInput = true) {
 }
 
 function RenderNewConfig() {
+    $("#editErrMsg").html("");
     var request = {
         ProductId: $("#EditProductSelect").val(),
         SportIdList: $("#EditSportSelect").multiSelect("getCheckedItems").map(Number),
@@ -813,20 +788,23 @@ function RenderNewConfig() {
     $.ajax({
         type: "POST",
         url: "GenerateConfigSetting",
-        dataType: 'json',
         data: request,
         success: function (rs) {
-            selectedConfig = rs;
-            $("#grid-information").html(rs.ConfigSettingHtml);
-            RenderEditConfigDetail(true);
+            $("#grid-information").html(rs);
+            RenderEditConfigDetail();
         },
         error: function (event, jqXHR, ajaxSettings) {
             showAlertMessage('editErrMsg', "Internal server error.", 1);
         },
         complete: function () {
             try { parent.jQuery.unblockUI(); } catch (e) { }
+
+            if (isAddConfig) {
+                $("#btn-add").removeClass("hidden");
+            }
         }
     });
+    
 }
 
 function UpdateConfigModel() {
@@ -923,7 +901,8 @@ function AddConfigModel() {
                 showAlertMessage('editErrMsg', message, 1);
                 GetSetting();
             } else {
-                $('#detail-information-popup').dialog('close');
+                $('#popupContainer').html("");
+                $('#popupContainer').dialog('close');
                 showAlertMessage('errMsg', "Added Config Successfully.", 0);
                 GetSetting();
             }
@@ -992,7 +971,5 @@ function DeleteConfig(configId) {
 }
 
 $(document).ready(function () {
-    InitFilterBehavior("Add");
-    InitFilterBehavior("Edit");
     GetSetting();
 });

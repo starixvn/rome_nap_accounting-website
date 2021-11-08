@@ -11,9 +11,9 @@
 
         public IEnumerable<SportBetTypeBySettingModel> SportBettypeBySettings { get; set; }
 
-        public IEnumerable<IGrouping<int, SettingInforModel>> GroupSettings { get; set; }
+        public IEnumerable<ProductModel> ProductModels { get; set; }
 
-        public string ConfigSettingHtml { get; set; }
+        public IEnumerable<IGrouping<int, SettingInforModel>> GroupSettings { get; set; }
 
         public IEnumerable<BaseModel> Currencies { get; set; }
 

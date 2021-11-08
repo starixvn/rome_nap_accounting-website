@@ -14,7 +14,7 @@ namespace Fanex.Tarus.Customer.Entities.InitializingCustomerSetting
         public const string StakeLevel = "Stake Level";
 
         private const string FormatDisplay = "[{0}] {1}";
-        private const string IdKey = "{0}{1}{2}{3}{4}{5}";
+        private const string IdKey = "{0}-{1}-{2}-{3}";
 
         public string SettingId { get => string.Concat(SettingType, "-", SportType, "-", BetType ); } 
 
@@ -35,6 +35,8 @@ namespace Fanex.Tarus.Customer.Entities.InitializingCustomerSetting
         public int SettingType { get; set; }
 
         public bool IsDefault { get; set; }
+
+        public bool IsCopy { get; set; }
 
         public int CopyFromSportType { get; set; }
 
@@ -60,36 +62,40 @@ namespace Fanex.Tarus.Customer.Entities.InitializingCustomerSetting
 
         public string DisplayBettypeName { get => string.Format(FormatDisplay, BetType, BetTypeName); }
 
-        public string CheckBoxCopy { get => IsDefault ? string.Empty : "checked"; }
+        public string CheckBoxCopy { get => IsCopy ? "checked" : string.Empty; }
 
         public string CheckBoxDefault { get => IsDefault ? "checked" : string.Empty; }
 
         public string CheckBoxAutoReset { get => SpecialRequirement == "1" ? "checked" : string.Empty; }
 
-        public string DisableCopy { get => IsDefault ? string.Empty : "disabled"; }
+        public string DisableCopy { get => IsCopy ? "disabled" : string.Empty; }
 
         public string DisableDefault { get => IsDefault ? "disabled" : string.Empty; }
 
-        public string TargetSportType { get => string.Format(IdKey, "sport-", SettingName.Replace(" ", string.Empty), SportType, SportName.Replace(" ", string.Empty), string.Empty, string.Empty); }
+        public string TargetSportType { get => string.Format(IdKey, "sport", SettingType, SportType, string.Empty); }
 
-        public string TargetBetType { get => string.Format(IdKey, "bettype-", SettingName.Replace(" ", string.Empty), SportType, SportName.Replace(" ", string.Empty), BetType, BetTypeName.Replace(" ", string.Empty)); }
+        public string TargetBetType { get => string.Format(IdKey, "bettype", SettingType, SportType, BetType); }
 
-        public SettingInforModel(int id, int settingType, string settingName, int sportType, int bettype, int defaultSportType, int defaultBettype, bool isLive)
+        public SettingInforModel(int id, int settingType, string settingName, int sportType, string sportName, int bettype,string bettypeName, int defaultSportType, int defaultBettype, bool isLive)
         {
             Id = id;
             SettingType = settingType;
             SettingName = settingName;
             SportType = sportType;
+            SportName = sportName;
             BetType = bettype;
+            BetTypeName = bettypeName;
             IsLive = isLive;
             switch (settingName)
             {
                 case LossLimit:
                 case StakeLevel:
                     IsDefault = true;
+                    IsCopy = false;
                     break;
                 case Commission:
                     IsDefault = true;
+                    IsCopy = false;
                     DefaultValueSuper = "0.0001";
                     DefaultValueMaster = "0.0001";
                     DefaultValueAgent = "0.0001";
@@ -97,6 +103,7 @@ namespace Fanex.Tarus.Customer.Entities.InitializingCustomerSetting
                     break;
                 case ProductStatus:
                     IsDefault = true;
+                    IsCopy = false;
                     DefaultValueSuper = "1";
                     DefaultValueMaster = "1";
                     DefaultValueAgent = "1";
@@ -104,6 +111,7 @@ namespace Fanex.Tarus.Customer.Entities.InitializingCustomerSetting
                     break;
                 default:
                     IsDefault = false;
+                    IsCopy = true;
                     CopyFromSportType = defaultSportType;
                     CopyFromBetType = defaultBettype;
                     break;

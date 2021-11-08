@@ -11,7 +11,9 @@ namespace Fanex.Tarus.Customer.Controller.InitializingCustomerSetting
     public class InitCustSettingController : BaseController
     {
         private readonly string _indexViewPath = "~/Views/InitializingCustomerSetting/Index.cshtml";
-        private readonly string _configDetailPath = "~/Views/InitializingCustomerSetting/_ConfigDetail.cshtml";
+        private readonly string _viewConfigPath = "~/Views/InitializingCustomerSetting/_ViewConfig.cshtml";
+        private readonly string _configPath = "~/Views/InitializingCustomerSetting/_ConfigDetail.cshtml";
+        private readonly string _addEditPath = "~/Views/InitializingCustomerSetting/_AddEditConfig.cshtml";
         private readonly IInitializingCustomerSettingService service;
 
         public InitCustSettingController()
@@ -42,23 +44,23 @@ namespace Fanex.Tarus.Customer.Controller.InitializingCustomerSetting
             return Json(service.AbortConfigSetting(configId, AppSession.AccId, HttpContext.Request.UserHostAddress));
         }
 
-        [HttpGet, AuthenticateRead]
+        [HttpGet, AuthenticateHost]
         public ActionResult GetProductSportBettype()
         {
-            return Json(service.GetProductSportBettype(), JsonRequestBehavior.AllowGet);
+            return PartialView(_addEditPath, service.GetProductSportBettype());
         }
 
         [HttpGet, AuthenticateRead]
         public ActionResult GetConfigDetail(int configId)
         {
-            return Json(service.GetConfigDetail(configId), JsonRequestBehavior.AllowGet);
+            return PartialView(_addEditPath, service.GetConfigDetail(configId));
         }
 
 
         [HttpPost, AuthenticateHost]
         public ActionResult GenerateConfigSetting(GenerateConfigSettingRequest request)
         {
-            return Json(service.GenerateConfigSetting(request));
+            return PartialView(_configPath, service.GenerateConfigSetting(request));
         }
 
         [HttpPost, AuthenticateHost]
@@ -82,7 +84,7 @@ namespace Fanex.Tarus.Customer.Controller.InitializingCustomerSetting
         [HttpGet, AuthenticateRead]
         public ActionResult ViewConfigDetail(int configId)
         {
-            return PartialView(_configDetailPath, service.GetConfigDetail(configId));
+            return PartialView(_viewConfigPath, service.GetConfigDetail(configId));
         }
     }
 }
