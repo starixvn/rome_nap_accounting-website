@@ -91,10 +91,10 @@ namespace Fanex.Tarus.Customer.Entities.InitializingCustomerSetting
                 case Commission:
                     IsDefault = false;
                     IsCopy = false;
-                    DefaultValueSuper = "0.0001";
-                    DefaultValueMaster = "0.0001";
-                    DefaultValueAgent = "0.0001";
-                    DefaultValueMember = "0.0001";
+                    DefaultValueSuper = "0";
+                    DefaultValueMaster = "0";
+                    DefaultValueAgent = "0";
+                    DefaultValueMember = "0";
                     break;
                 case ProductStatus:
                     IsDefault = false;
@@ -102,7 +102,7 @@ namespace Fanex.Tarus.Customer.Entities.InitializingCustomerSetting
                     DefaultValueSuper = "1";
                     DefaultValueMaster = "1";
                     DefaultValueAgent = "1";
-                    DefaultValueMember = "0";
+                    DefaultValueMember = "1";
                     break;
                 case WinLossLimit:
                     IsDefault = false;

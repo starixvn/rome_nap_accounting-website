@@ -50,10 +50,10 @@
             <!-- Product Status -->
             if (setting.SettingName == "Product Status")
             {
-                var statussuper = setting.IsDefault && (int)Convert.ToDouble(setting.DefaultValueSuper) == 1 ? string.Format(StatusEnable, "super", setting.SettingId) : string.Format(StatusDisable, "super", setting.SettingId);
-                var statusmaster = setting.IsDefault && (int)Convert.ToDouble(setting.DefaultValueMaster) == 1 ? string.Format(StatusEnable, "master", setting.SettingId) : string.Format(StatusDisable, "master", setting.SettingId);
-                var statusagent = setting.IsDefault && (int)Convert.ToDouble(setting.DefaultValueAgent) == 1 ? string.Format(StatusEnable, "agent", setting.SettingId) : string.Format(StatusDisable, "agent", setting.SettingId);
-                var statusmember = setting.IsDefault && (int)Convert.ToDouble(setting.DefaultValueMember) == 1 ? string.Format(StatusEnable, "member", setting.SettingId) : string.Format(StatusDisable, "member", setting.SettingId);
+                var statussuper = setting.DefaultValueSuper != "" && (int)Convert.ToDouble(setting.DefaultValueSuper) == 1 ? string.Format(StatusEnable, "super", setting.SettingId) : string.Format(StatusDisable, "super", setting.SettingId);
+                var statusmaster = setting.DefaultValueMaster != "" && (int)Convert.ToDouble(setting.DefaultValueMaster) == 1 ? string.Format(StatusEnable, "master", setting.SettingId) : string.Format(StatusDisable, "master", setting.SettingId);
+                var statusagent = setting.DefaultValueAgent != "" && (int)Convert.ToDouble(setting.DefaultValueAgent) == 1 ? string.Format(StatusEnable, "agent", setting.SettingId) : string.Format(StatusDisable, "agent", setting.SettingId);
+                var statusmember = setting.DefaultValueMember != "" && (int)Convert.ToDouble(setting.DefaultValueMember) == 1 ? string.Format(StatusEnable, "member", setting.SettingId) : string.Format(StatusDisable, "member", setting.SettingId);
 
                 <tr class="setting-row row-item text-center">
                     <td class="setting-col col-item" rowspan="6">[@setting.SportType] @setting.SportName</td>

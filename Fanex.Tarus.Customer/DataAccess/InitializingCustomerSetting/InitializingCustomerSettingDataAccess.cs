@@ -35,9 +35,9 @@
     public class InitializingCustomerSettingDataAccess : IInitializingCustomerSettingDataAccess
     {
         private const string FormatDisplay = "[{0}] {1}";
-        private const string ProductCacheKey = "Product-{0}";
-        private const string SportCacheKey = "Sport-{0}";
-        private const string BettypeCacheKey = "BetType-{0}";
+        private const string ProductCacheKey = "InitCust-Product-{0}";
+        private const string SportCacheKey = "InitCust-Sport-{0}";
+        private const string BettypeCacheKey = "InitCust-BetType-{0}";
         private readonly MemoryCache _MemoryCache;
 
         public InitializingCustomerSettingDataAccess()

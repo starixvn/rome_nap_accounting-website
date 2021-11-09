@@ -492,6 +492,7 @@ function RenderEventEdit() {
                 $(".input-copy-" + pos).each(function () {
                     $(this).prop("disabled", true);
                 });
+                selectedConfig.ConfigDetail.Settings[position].IsCopy = false;
             }
 
             $(".input-default-" + pos).each(function () {
@@ -512,6 +513,7 @@ function RenderEventEdit() {
                 $(".input-default-" + pos).each(function () {
                     $(this).prop("disabled", true);
                 });
+                selectedConfig.ConfigDetail.Settings[position].IsDefault = false;
             }
             $(".input-copy-" + pos).each(function () {
                 $(this).prop("disabled", !isCopy);
