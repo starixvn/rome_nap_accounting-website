@@ -18,7 +18,7 @@
     <div class="filterBox" style="border: solid 1px #7C98A4; width:100%">
         <div class="filterContent">
             <div class="floatLeft w200">
-                <label for="EditProductSelect">Product:</label>
+                <label for="EditProductSelect">Product<span style="color: red;">*</span>:</label>
                 @Html.DropDownList("EditProductSelect",
                             productOptions,
                             new
@@ -27,13 +27,13 @@
                             })
             </div>
             <div class="floatLeft w200">
-                <label for="EditSportSelect">Sport:</label>
+                <label for="EditSportSelect">Sport<span style="color: red;">*</span>:</label>
                 <select id="EditSportSelect" class="setting-edit">
                     <option value="" disabled selected>Please select</option>
                 </select>
             </div>
             <div class="floatLeft w200">
-                <label for="EditBettypeSelect">Bettype:</label>
+                <label for="EditBettypeSelect">Bettype<span style="color: red;">*</span>:</label>
                 <select id="EditBettypeSelect" class="setting-edit">
                     <option value="" disabled selected>Please select</option>
                 </select>

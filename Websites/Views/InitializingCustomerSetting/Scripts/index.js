@@ -811,18 +811,32 @@ function RenderNewConfig() {
 
 function UpdateConfigModel() {
     $("#editErrMsg").html("");
-    parent.BlockUI();
     selectedConfig.ConfigDetail.Config.SiteIdList = $("#EditSiteSelect").multiSelect("getCheckedItems").map(Number);
+    if (selectedConfig.ConfigDetail.Config.SiteIdList.length === 0) {
+        showAlertMessage('editErrMsg', "Site cannot be null.", 1);
+        return;
+    }
+    selectedConfig.ConfigDetail.Config.CurrencyIdList = $("#EditCurrencySelect").multiSelect("getCheckedItems").map(Number);
+    if (selectedConfig.ConfigDetail.Config.CurrencyIdList.length === 0) {
+        showAlertMessage('editErrMsg', "Currency cannot be null.", 1);
+        return;
+    }
+
     if (selectedConfig.Sites.length === selectedConfig.ConfigDetail.Config.SiteIdList.length) {
         selectedConfig.ConfigDetail.Config.SiteIdList = [0];
     }
-    selectedConfig.ConfigDetail.Config.CurrencyIdList = $("#EditCurrencySelect").multiSelect("getCheckedItems").map(Number);
     if (selectedConfig.Currencies.length === selectedConfig.ConfigDetail.Config.CurrencyIdList.length) {
         selectedConfig.ConfigDetail.Config.CurrencyIdList = [0];
     }
     selectedConfig.ConfigDetail.Config.StartTime = $("#EditStartTime").val();
+    if (selectedConfig.ConfigDetail.Config.StartTime === "") {
+        showAlertMessage('editErrMsg', "Start Time cannot be null.", 1);
+        return;
+    }
     selectedConfig.ConfigDetail.Config.IsTest = $("#ckbEditIsTest").prop('checked');
     selectedConfig.ConfigDetail.Config.Remark = $("#EditRemark").val();
+
+    parent.BlockUI();
     $.ajax({
         type: "POST",
         url: "UpdateConfigSetting",
@@ -853,14 +867,28 @@ function UpdateConfigModel() {
 function ValidateNewConfigModel() {
     $("#editErrMsg").html("");
     parent.BlockUI();
+    selectedConfig.ConfigDetail.Config.SiteIdList = $("#EditSiteSelect").multiSelect("getCheckedItems").map(Number);
+    if (selectedConfig.ConfigDetail.Config.SiteIdList.length === 0) {
+        showAlertMessage('editErrMsg', "Site cannot be null.", 1);
+        return;
+    }
+    selectedConfig.ConfigDetail.Config.CurrencyIdList = $("#EditCurrencySelect").multiSelect("getCheckedItems").map(Number);
+    if (selectedConfig.ConfigDetail.Config.CurrencyIdList.length === 0) {
+        showAlertMessage('editErrMsg', "Currency cannot be null.", 1);
+        return;
+    }
     if (selectedConfig.Sites.length === selectedConfig.ConfigDetail.Config.SiteIdList.length) {
         selectedConfig.ConfigDetail.Config.SiteIdList = [0];
     }
-    selectedConfig.ConfigDetail.Config.CurrencyIdList = $("#EditCurrencySelect").multiSelect("getCheckedItems").map(Number);
     if (selectedConfig.Currencies.length === selectedConfig.ConfigDetail.Config.CurrencyIdList.length) {
         selectedConfig.ConfigDetail.Config.CurrencyIdList = [0];
     }
     selectedConfig.ConfigDetail.Config.StartTime = $("#EditStartTime").val();
+
+    if (selectedConfig.ConfigDetail.Config.StartTime === "") {
+        showAlertMessage('editErrMsg', "Start Time cannot be null.", 1);
+        return;
+    }
     selectedConfig.ConfigDetail.Config.IsTest = $("#ckbEditIsTest").prop('checked');
     selectedConfig.ConfigDetail.Config.Remark = $("#EditRemark").val();
     $.ajax({
@@ -987,4 +1015,5 @@ function DeleteConfig(configId) {
 
 $(document).ready(function () {
     GetSetting();
+    setInterval(GetSetting, 5000);
 });
