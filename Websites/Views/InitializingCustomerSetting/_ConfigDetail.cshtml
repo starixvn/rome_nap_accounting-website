@@ -87,7 +87,7 @@
                                 @data_target_settingtype = setting.SettingName.Replace(" ", string.Empty).ToLowerInvariant(),
                                 @data_target_bettype = setting.TargetBetType,
                                 @data_pos = setting.SettingId,
-                                @disabled = setting.DisableDefault
+                                @disabled = setting.DisableCopy
                             })
                     </td>
                     <td class="setting-col col-item">
@@ -97,7 +97,7 @@
                         {
                             @class = "edit-input sel-bettype-copy input-copy-" + setting.SettingId,
                             @data_pos = setting.SettingId,
-                            @disabled = setting.DisableDefault
+                            @disabled = setting.DisableCopy
                         })
                     </td>
                     <td class="setting-col col-item"></td>
@@ -133,7 +133,7 @@
                                 @data_target_settingtype = setting.SettingName.Replace(" ", string.Empty).ToLowerInvariant(),
                                 @data_target_bettype = setting.TargetBetType,
                                 @data_pos = setting.SettingId,
-                                @disabled = setting.DisableDefault
+                                @disabled = setting.DisableCopy
                             })
                     </td>
                     <td class="setting-col col-item">
@@ -143,7 +143,7 @@
                         {
                             @class = "edit-input sel-bettype-copy input-copy-" + setting.SettingId,
                             @data_pos = setting.SettingId,
-                            @disabled = setting.DisableDefault
+                            @disabled = setting.DisableCopy
                         })
                     </td>
                     <td class="setting-col col-item"></td>
@@ -163,10 +163,10 @@
                     <td class="setting-col col-item">Member</td>
                 </tr>
                 <tr class="setting-row row-item">
-                    <td class="setting-col col-item"><input class="@("edit-input input-com-super input-default-" + setting.SettingId)" type="text" value="@setting.DefaultValueSuper" data-pos=@setting.SettingId @setting.DisableCopy /></td>
-                    <td class="setting-col col-item"><input class="@("edit-input input-com-master input-default-" + setting.SettingId)" type="text" value="@setting.DefaultValueMaster" data-pos=@setting.SettingId @setting.DisableCopy /></td>
-                    <td class="setting-col col-item"><input class="@("edit-input input-com-agent input-default-" + setting.SettingId)" type="text" value="@setting.DefaultValueAgent" data-pos=@setting.SettingId @setting.DisableCopy /></td>
-                    <td class="setting-col col-item"><input class="@("edit-input input-com-member input-default-" + setting.SettingId)" type="text" value="@setting.DefaultValueMember" data-pos=@setting.SettingId @setting.DisableCopy /></td>
+                    <td class="setting-col col-item"><input class="@("edit-input input-com-super input-default-" + setting.SettingId)" type="text" value="@setting.DefaultValueSuper" data-pos=@setting.SettingId @setting.DisableDefault /></td>
+                    <td class="setting-col col-item"><input class="@("edit-input input-com-master input-default-" + setting.SettingId)" type="text" value="@setting.DefaultValueMaster" data-pos=@setting.SettingId @setting.DisableDefault /></td>
+                    <td class="setting-col col-item"><input class="@("edit-input input-com-agent input-default-" + setting.SettingId)" type="text" value="@setting.DefaultValueAgent" data-pos=@setting.SettingId @setting.DisableDefault /></td>
+                    <td class="setting-col col-item"><input class="@("edit-input input-com-member input-default-" + setting.SettingId)" type="text" value="@setting.DefaultValueMember" data-pos=@setting.SettingId @setting.DisableDefault /></td>
                 </tr>
                 <tr class="setting-row row-item text-center">
                     <td class="setting-col col-item" rowspan="2"><input id="@("ckbCopy" + setting.SettingId)" class="edit-input ckb-copy" type="checkbox" @setting.CheckBoxCopy data-pos=@setting.SettingId />Copy From</td>
@@ -185,7 +185,7 @@
                                 @data_target_settingtype = setting.SettingName.Replace(" ", string.Empty).ToLowerInvariant(),
                                 @data_target_bettype = setting.TargetBetType,
                                 @data_pos = setting.SettingId,
-                                @disabled = setting.DisableDefault
+                                @disabled = setting.DisableCopy
                             })
                     </td>
                     <td class="setting-col col-item">
@@ -195,7 +195,7 @@
                         {
                             @class = "edit-input sel-bettype-copy input-copy-" + setting.SettingId,
                             @data_pos = setting.SettingId,
-                            @disabled = setting.DisableDefault
+                            @disabled = setting.DisableCopy
                         })
                     </td>
                     <td class="setting-col col-item"></td>
@@ -210,7 +210,7 @@
                     <td class="setting-col col-item" rowspan="4">[@setting.BetType] @setting.BetTypeName</td>
                     <td class="setting-col col-item" rowspan="2"><input id="@("ckbDefault" + setting.SettingId)" class="edit-input ckb-default" type="checkbox" @setting.CheckBoxDefault data-pos=@setting.SettingId />Default</td>
                     <td class="setting-col col-item">Maximum Loss</td>
-                    <td class="setting-col col-item" rowspan="2"><input id="@("ckbAutoReset" + setting.SettingId)" class="@("edit-input ckb-auto-reset input-default-" + setting.SettingId)" type="checkbox" @setting.CheckBoxAutoReset data-pos=@setting.SettingId @setting.DisableCopy />Daily auto reset limit (at 12 noon GMT+8)</td>
+                    <td class="setting-col col-item" rowspan="2"><input id="@("ckbAutoReset" + setting.SettingId)" class="@("edit-input ckb-auto-reset input-default-" + setting.SettingId)" type="checkbox" @setting.CheckBoxAutoReset data-pos=@setting.SettingId @setting.DisableDefault />Daily auto reset limit (at 12 noon GMT+8)</td>
                     <td class="setting-col col-item"></td>
                     <td class="setting-col col-item"></td>
                 </tr>
@@ -236,7 +236,7 @@
                                 @data_target_settingtype = setting.SettingName.Replace(" ", string.Empty).ToLowerInvariant(),
                                 @data_target_bettype = setting.TargetBetType,
                                 @data_pos = setting.SettingId,
-                                @disabled = setting.DisableDefault
+                                @disabled = setting.DisableCopy
                             })
                     </td>
                     <td class="setting-col col-item">
@@ -246,7 +246,7 @@
                         {
                             @class = "edit-input sel-bettype-copy input-copy-" + setting.SettingId,
                             @data_pos = setting.SettingId,
-                            @disabled = setting.DisableDefault
+                            @disabled = setting.DisableCopy
                         })
                     </td>
                     <td class="setting-col col-item"></td>
@@ -275,7 +275,7 @@
                                 @data_target_settingtype = setting.SettingName.Replace(" ", string.Empty).ToLowerInvariant(),
                                 @data_target_bettype = setting.TargetBetType,
                                 @data_pos = setting.SettingId,
-                                @disabled = setting.DisableDefault
+                                @disabled = setting.DisableCopy
                             })
                     </td>
                     <td class="setting-col col-item">
@@ -285,7 +285,7 @@
                         {
                             @class = "edit-input sel-bettype-copy input-copy-" + setting.SettingId,
                             @data_pos = setting.SettingId,
-                            @disabled = setting.DisableDefault
+                            @disabled = setting.DisableCopy
                         })
                     </td>
                     <td class="setting-col col-item"></td>
@@ -320,12 +320,12 @@
                     <td class="setting-col col-item" rowspan="2"><input id="@("ckbDefault" + setting.SettingId)" class="edit-input ckb-default" type="checkbox" @setting.CheckBoxDefault data-pos=@setting.SettingId />Default</td>
                     <td class="setting-col col-item">Maximum Win</td>
                     <td class="setting-col col-item">Maximum Loss</td>
-                    <td class="setting-col col-item" rowspan="2"><input id="@("ckbAutoReset" + setting.SettingId)" class="@("edit-input ckb-auto-reset input-default-" + setting.SettingId)" type="checkbox" @setting.CheckBoxAutoReset data-pos=@setting.SettingId @setting.DisableCopy />Daily auto reset limit (at 12 noon GMT+8)</td>
+                    <td class="setting-col col-item" rowspan="2"><input id="@("ckbAutoReset" + setting.SettingId)" class="@("edit-input ckb-auto-reset input-default-" + setting.SettingId)" type="checkbox" @setting.CheckBoxAutoReset data-pos=@setting.SettingId @setting.DisableDefault />Daily auto reset limit (at 12 noon GMT+8)</td>
                     <td class="setting-col col-item"></td>
                 </tr>
                 <tr class="setting-row row-item text-center">
                     <td class="setting-col col-item">
-                        <select class="@("edit-input max-winloss input-default-" + setting.SettingId)" data-pos=@setting.SettingId @setting.DisableCopy>
+                        <select class="@("edit-input max-winloss input-default-" + setting.SettingId)" data-pos=@setting.SettingId @setting.DisableDefault>
                             <option value="3">3X</option>
                             <option value="5">5X</option>
                             <option value="10">10X</option>
@@ -353,7 +353,7 @@
                                 @data_target_settingtype = setting.SettingName.Replace(" ", string.Empty).ToLowerInvariant(),
                                 @data_target_bettype = setting.TargetBetType,
                                 @data_pos = setting.SettingId,
-                                @disabled = setting.DisableDefault
+                                @disabled = setting.DisableCopy
                             })
                     </td>
                     <td class="setting-col col-item">
@@ -363,7 +363,7 @@
                         {
                             @class = "edit-input sel-bettype-copy input-copy-" + setting.SettingId,
                             @data_pos = setting.SettingId,
-                            @disabled = setting.DisableDefault
+                            @disabled = setting.DisableCopy
                         })
                     </td>
                     <td class="setting-col col-item"></td>

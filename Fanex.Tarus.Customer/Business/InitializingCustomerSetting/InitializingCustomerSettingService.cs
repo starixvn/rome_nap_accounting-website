@@ -6,7 +6,6 @@
     using Fanex.Tarus.Customer.Entities;
     using System.Collections.Generic;
     using Fanex.Tarus.Customer.Entities.InitializingCustomerSetting;
-    using Fanex.Tarus.Infrastructure.Caching;
     using System.Linq;
     using Fanex.Tarus.Customer.Requests.InitializingCustomerSetting;
     using System.Web.Mvc;
@@ -341,7 +340,7 @@
             var setting = settings.FirstOrDefault(item => item.Id == message.Id);
             if(setting != null)
             {
-                return string.Format(ErrorMessage, setting.SettingName, CacheRef.GetSportName(setting.SportType), CacheRef.GetBettype(setting.BetType), message.ErrorMsg);
+                return string.Format(ErrorMessage, setting.SettingName, setting.SportName, setting.BetTypeName, message.ErrorMsg);
             }
 
             return message.ErrorMsg;

@@ -68,9 +68,9 @@ namespace Fanex.Tarus.Customer.Entities.InitializingCustomerSetting
 
         public string CheckBoxAutoReset { get => SpecialRequirement == "1" ? "checked" : string.Empty; }
 
-        public string DisableCopy { get => IsCopy ? "disabled" : string.Empty; }
+        public string DisableCopy { get => IsCopy ? string.Empty : "disabled"; }
 
-        public string DisableDefault { get => IsDefault ? "disabled" : string.Empty; }
+        public string DisableDefault { get => IsDefault ? string.Empty : "disabled"; }
 
         public string TargetSportType { get => string.Format(IdKey, "sport", SettingId); }
 
