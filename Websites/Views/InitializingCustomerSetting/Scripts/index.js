@@ -601,6 +601,21 @@ function ChangeSuperStatus() {
         statusDiv.html("Disable");
         statusDiv.addClass("status-disable");
         statusDiv.removeClass("status-enable");
+        var targetMaster = statusDiv.data("master");
+        selectedConfig.ConfigDetail.Settings[position].DefaultValueMaster = "0";
+        $("#" + targetMaster).html("Disable");
+        $("#" + targetMaster).addClass("status-disable");
+        $("#" + targetMaster).removeClass("status-enable");
+        var targetAgent = statusDiv.data("agent");
+        selectedConfig.ConfigDetail.Settings[position].DefaultValueAgent = "0";
+        $("#" + targetAgent).html("Disable");
+        $("#" + targetAgent).addClass("status-disable");
+        $("#" + targetAgent).removeClass("status-enable");
+        var targetMember = statusDiv.data("member");
+        selectedConfig.ConfigDetail.Settings[position].DefaultValueMember = "0";
+        $("#" + targetMember).html("Disable");
+        $("#" + targetMember).addClass("status-disable");
+        $("#" + targetMember).removeClass("status-enable");
     }
 
 }
@@ -614,6 +629,9 @@ function ChangeMasterStatus() {
     }
     var nextEnable = statusDiv.html() !== "Enable";
     if (nextEnable) {
+        if (selectedConfig.ConfigDetail.Settings[position].DefaultValueSuper !== "" && parseInt(selectedConfig.ConfigDetail.Settings[position].DefaultValueSuper) === 0) {
+            return;
+        }
         selectedConfig.ConfigDetail.Settings[position].DefaultValueMaster = "1";
         statusDiv.html("Enable");
         statusDiv.removeClass("status-disable");
@@ -623,6 +641,16 @@ function ChangeMasterStatus() {
         statusDiv.html("Disable");
         statusDiv.addClass("status-disable");
         statusDiv.removeClass("status-enable");
+        var targetAgent = statusDiv.data("agent");
+        selectedConfig.ConfigDetail.Settings[position].DefaultValueAgent = "0";
+        $("#" + targetAgent).html("Disable");
+        $("#" + targetAgent).addClass("status-disable");
+        $("#" + targetAgent).removeClass("status-enable");
+        var targetMember = statusDiv.data("member");
+        selectedConfig.ConfigDetail.Settings[position].DefaultValueMember = "0";
+        $("#" + targetMember).html("Disable");
+        $("#" + targetMember).addClass("status-disable");
+        $("#" + targetMember).removeClass("status-enable");
     }
 }
 
@@ -635,6 +663,9 @@ function ChangeAgentStatus() {
     }
     var nextEnable = statusDiv.html() !== "Enable";
     if (nextEnable) {
+        if (selectedConfig.ConfigDetail.Settings[position].DefaultValueMaster !== "" && parseInt(selectedConfig.ConfigDetail.Settings[position].DefaultValueMaster) === 0) {
+            return;
+        }
         selectedConfig.ConfigDetail.Settings[position].DefaultValueAgent = "1";
         statusDiv.html("Enable");
         statusDiv.removeClass("status-disable");
@@ -644,6 +675,11 @@ function ChangeAgentStatus() {
         statusDiv.html("Disable");
         statusDiv.addClass("status-disable");
         statusDiv.removeClass("status-enable");
+        var targetMember = statusDiv.data("member");
+        selectedConfig.ConfigDetail.Settings[position].DefaultValueMember = "0";
+        $("#" + targetMember).html("Disable");
+        $("#" + targetMember).addClass("status-disable");
+        $("#" + targetMember).removeClass("status-enable");
     }
 }
 
@@ -656,6 +692,9 @@ function ChangeMemberStatus() {
     }
     var nextEnable = statusDiv.html() !== "Enable";
     if (nextEnable) {
+        if (selectedConfig.ConfigDetail.Settings[position].DefaultValueAgent !== "" && parseInt(selectedConfig.ConfigDetail.Settings[position].DefaultValueAgent) === 0) {
+            return;
+        }
         selectedConfig.ConfigDetail.Settings[position].DefaultValueMember = "1";
         statusDiv.html("Enable");
         statusDiv.removeClass("status-disable");

@@ -5,8 +5,8 @@
 
 @model ConfigSettingViewModel
 @{
-    const string StatusEnable = "<p class=\"setting-status status-enable input-status-{0}\" id=\"status-{0}-{1}\" data-pos=\"{1}\">Enable</p>";
-    const string StatusDisable = "<p class=\"setting-status status-disable input-status-{0}\" id=\"status-{0}-{1}\" data-pos=\"{1}\">Disable</p>";
+    const string StatusEnable = "<p class=\"setting-status status-enable input-status-{0}\" id=\"status-{0}-{1}\" data-pos=\"{1}\" data-master=\"status-master-{1}\" data-agent=\"status-agent-{1}\" data-member=\"status-member-{1}\">Enable</p>";
+    const string StatusDisable = "<p class=\"setting-status status-disable input-status-{0}\" id=\"status-{0}-{1}\" data-pos=\"{1}\" data-master=\"status-master-{1}\" data-agent=\"status-agent-{1}\" data-member=\"status-member-{1}\">Disable</p>";
 }
 
 <table class="setting-table">
