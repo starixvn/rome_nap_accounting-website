@@ -73,9 +73,20 @@
             var criteria = new GetConfigDetailCriteria(configId);
             var config = dataAccess.GetConfigDetail(criteria);
             var productDcs = dataAccess.GetProductDcsModel(new DcsProductMatrixCriteria());
+            var allSettings = productDcs.Where(item => item.ProductId == config.Config.ProductId
+                                                    && config.Config.SportTypeIdList.Contains(item.SportId)
+                                                    && config.Config.BetTypeIdList.Contains(item.BettypeId))
+                                         .OrderBy(item => item.SettingTypeId);
+            foreach (var setting in allSettings)
+            {
+                if(!config.Settings.Exists(cfs => cfs.SettingType == setting.SettingTypeId && cfs.SportType == setting.SportId && cfs.BetType == setting.BettypeId))
+                {
+                    config.Settings.Add(new SettingInforModel(config.Settings.Count + 2, setting));
+                }
+            }
             var sportbettypesetting = GetSportAndBettypeWithSetting(productDcs);
-            var sites = dataAccess.GetSites();
-            var exchangeCurrencies = dataAccess.GetExchangeCurrency();
+            var sites = dataAccess.GetSites().ToList();
+            var exchangeCurrencies = dataAccess.GetExchangeCurrency().ToList();
             var groupSettings = config.Settings.GroupBy(setting => setting.SettingType);
             foreach (var group in groupSettings)
             {
@@ -87,11 +98,14 @@
                     if(selectedSport == null)
                     {
                         selectedSport = selectedSetting.Sports.FirstOrDefault();
+                        setting.CopyFromSportType = selectedSport.SportId;
+                        setting.CopyFromBetType = selectedSport.Bettypes[0].BettypeId;
                     }
                     setting.BetTypeOptions = BuildBettypeOptions(selectedSport.Bettypes, setting.CopyFromBetType).ToList();
                 }
             }
-
+            sites.RemoveAt(0);
+            exchangeCurrencies.RemoveAt(0);
             var result = new ConfigSettingViewModel
             {
                 ConfigDetail = config,
@@ -142,15 +156,17 @@
                                                     && request.SportIdList.Contains(item.SportId)
                                                     && request.BettypeIdList.Contains(item.BettypeId))
                                          .OrderBy(item => item.SettingTypeId);
-            var settingInfos = GenerateSettingInfoModel(settings.ToList(), sportbettypesetting.ToList()).ToList();
+            var settingInfos = GenerateSettingInfoModel(settings.ToList()).ToList();
             var groupSettings = settingInfos.GroupBy(setting => setting.SettingType);
             foreach (var settingGroup in groupSettings)
             {
                 var sportBettype = sportbettypesetting.FirstOrDefault(st => st.SettingName == settingGroup.FirstOrDefault().SettingName);
                 foreach (var setting in settingGroup)
                 {
-                    setting.SportTypeOptions = BuildSportOptions(sportBettype.Sports, 0).ToList();
-                    setting.BetTypeOptions = BuildBettypeOptions(sportBettype.Sports[0].Bettypes, 0).ToList();
+                    setting.CopyFromSportType = sportBettype.Sports[0].SportId;
+                    setting.SportTypeOptions = BuildSportOptions(sportBettype.Sports, setting.CopyFromSportType).ToList();
+                    setting.CopyFromBetType = sportBettype.Sports[0].Bettypes[0].BettypeId;
+                    setting.BetTypeOptions = BuildBettypeOptions(sportBettype.Sports[0].Bettypes, setting.CopyFromBetType).ToList();
                 }
             }
 
@@ -160,9 +176,12 @@
                 Settings = settingInfos
             };
 
-            var sites = dataAccess.GetSites();
+            var sites = dataAccess.GetSites().ToList();
 
-            var exchangeCurrencies = dataAccess.GetExchangeCurrency();
+            var exchangeCurrencies = dataAccess.GetExchangeCurrency().ToList();
+
+            sites.RemoveAt(0);
+            exchangeCurrencies.RemoveAt(0);
 
             return new ConfigSettingViewModel
             {
@@ -306,15 +325,12 @@
             }
         }
 
-        private IEnumerable<SettingInforModel> GenerateSettingInfoModel(List<ProductDcsModel> settings, List<SportBetTypeBySettingModel> sportBetTypeBySettings)
+        private IEnumerable<SettingInforModel> GenerateSettingInfoModel(List<ProductDcsModel> settings)
         {
             var result = new List<SettingInforModel>();
             for (int i = 0; i < settings.Count; i++)
             {
-                var setting = settings[i];
-                var sportBettype = sportBetTypeBySettings.FirstOrDefault(st => st.SettingName == setting.SettingTypeName);
-
-                result.Add(new SettingInforModel(i + 1, setting.SettingTypeId, setting.SettingTypeName, setting.SportId, setting.SportName, setting.BettypeId, setting.BettypeName, sportBettype.Sports[0].SportId, sportBettype.Sports[0].Bettypes[0].BettypeId, setting.IsLive));
+                result.Add(new SettingInforModel(i + 1, settings[i]));
             }
 
             return result;

@@ -380,19 +380,19 @@ function RenderSiteSelection(enableInput = true) {
             });
         });
     }
-
+    isAllSite = selectedConfig && selectedConfig.ConfigDetail.Config.SiteIdList.indexOf(0) >= 0;
     siteSelect.multiSelect({
         minWidth: 120,
         maxHeight: 450,
         shadow: true,
         showHeader: true,
-        isCheckAll: false,
+        isCheckAll: isAllSite,
         showFooter: false,
         showFilter: true,
         disabled: !enableInput,
-        checkAllText: "All",
+        checkAllText: "[0] All Sites",
         listData: multiselectData,
-        noItemText: "Select Sites"
+        noItemText: "Select Sites",
     });
 }
 
@@ -419,11 +419,11 @@ function RenderCurrencySelection(enableInput) {
         maxHeight: 450,
         shadow: true,
         showHeader: true,
-        isCheckAll: false,
+        isCheckAll: selectedConfig && selectedConfig.ConfigDetail.Config.CurrencyIdList.indexOf(0) >= 0,
         showFooter: false,
         showFilter: true,
         disabled: !enableInput,
-        checkAllText: "All",
+        checkAllText: "[0] All currencies",
         listData: multiselectData,
         noItemText: "Select Currencies"
     });
@@ -811,7 +811,13 @@ function UpdateConfigModel() {
     $("#editErrMsg").html("");
     parent.BlockUI();
     selectedConfig.ConfigDetail.Config.SiteIdList = $("#EditSiteSelect").multiSelect("getCheckedItems").map(Number);
+    if (selectedConfig.Sites.length === selectedConfig.ConfigDetail.Config.SiteIdList.length) {
+        selectedConfig.ConfigDetail.Config.SiteIdList = [0];
+    }
     selectedConfig.ConfigDetail.Config.CurrencyIdList = $("#EditCurrencySelect").multiSelect("getCheckedItems").map(Number);
+    if (selectedConfig.Currencies.length === selectedConfig.ConfigDetail.Config.CurrencyIdList.length) {
+        selectedConfig.ConfigDetail.Config.CurrencyIdList = [0];
+    }
     selectedConfig.ConfigDetail.Config.StartTime = $("#EditStartTime").val();
     selectedConfig.ConfigDetail.Config.IsTest = $("#ckbEditIsTest").prop('checked');
     selectedConfig.ConfigDetail.Config.Remark = $("#EditRemark").val();
@@ -837,6 +843,7 @@ function UpdateConfigModel() {
         },
         complete: function () {
             try { parent.jQuery.unblockUI(); } catch (e) { }
+            GetSetting();
         }
     });
 }
@@ -844,8 +851,13 @@ function UpdateConfigModel() {
 function ValidateNewConfigModel() {
     $("#editErrMsg").html("");
     parent.BlockUI();
-    selectedConfig.ConfigDetail.Config.SiteIdList = $("#EditSiteSelect").multiSelect("getCheckedItems").map(Number);
+    if (selectedConfig.Sites.length === selectedConfig.ConfigDetail.Config.SiteIdList.length) {
+        selectedConfig.ConfigDetail.Config.SiteIdList = [0];
+    }
     selectedConfig.ConfigDetail.Config.CurrencyIdList = $("#EditCurrencySelect").multiSelect("getCheckedItems").map(Number);
+    if (selectedConfig.Currencies.length === selectedConfig.ConfigDetail.Config.CurrencyIdList.length) {
+        selectedConfig.ConfigDetail.Config.CurrencyIdList = [0];
+    }
     selectedConfig.ConfigDetail.Config.StartTime = $("#EditStartTime").val();
     selectedConfig.ConfigDetail.Config.IsTest = $("#ckbEditIsTest").prop('checked');
     selectedConfig.ConfigDetail.Config.Remark = $("#EditRemark").val();

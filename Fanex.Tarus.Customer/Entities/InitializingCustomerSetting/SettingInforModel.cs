@@ -14,7 +14,7 @@ namespace Fanex.Tarus.Customer.Entities.InitializingCustomerSetting
         public const string StakeLevel = "Stake Level";
 
         private const string FormatDisplay = "[{0}] {1}";
-        private const string IdKey = "{0}-{1}-{2}-{3}";
+        private const string IdKey = "{0}-{1}";
 
         public string SettingId { get => string.Concat(SettingType, "-", SportType, "-", BetType ); } 
 
@@ -72,29 +72,24 @@ namespace Fanex.Tarus.Customer.Entities.InitializingCustomerSetting
 
         public string DisableDefault { get => IsDefault ? "disabled" : string.Empty; }
 
-        public string TargetSportType { get => string.Format(IdKey, "sport", SettingType, SportType, string.Empty); }
+        public string TargetSportType { get => string.Format(IdKey, "sport", SettingId); }
 
-        public string TargetBetType { get => string.Format(IdKey, "bettype", SettingType, SportType, BetType); }
+        public string TargetBetType { get => string.Format(IdKey, "bettype", SettingId); }
 
-        public SettingInforModel(int id, int settingType, string settingName, int sportType, string sportName, int bettype,string bettypeName, int defaultSportType, int defaultBettype, bool isLive)
+        public SettingInforModel(int id, ProductDcsModel setting)
         {
             Id = id;
-            SettingType = settingType;
-            SettingName = settingName;
-            SportType = sportType;
-            SportName = sportName;
-            BetType = bettype;
-            BetTypeName = bettypeName;
-            IsLive = isLive;
-            switch (settingName)
+            SettingType = setting.SettingTypeId;
+            SettingName = setting.SettingTypeName;
+            SportType = setting.SportId;
+            SportName = setting.SportName;
+            BetType = setting.BettypeId;
+            BetTypeName = setting.BettypeName;
+            IsLive = setting.IsLive;
+            switch (setting.SettingTypeName)
             {
-                case LossLimit:
-                case StakeLevel:
-                    IsDefault = true;
-                    IsCopy = false;
-                    break;
                 case Commission:
-                    IsDefault = true;
+                    IsDefault = false;
                     IsCopy = false;
                     DefaultValueSuper = "0.0001";
                     DefaultValueMaster = "0.0001";
@@ -102,18 +97,21 @@ namespace Fanex.Tarus.Customer.Entities.InitializingCustomerSetting
                     DefaultValueMember = "0.0001";
                     break;
                 case ProductStatus:
-                    IsDefault = true;
+                    IsDefault = false;
                     IsCopy = false;
                     DefaultValueSuper = "1";
                     DefaultValueMaster = "1";
                     DefaultValueAgent = "1";
                     DefaultValueMember = "0";
                     break;
+                case WinLossLimit:
+                    IsDefault = false;
+                    IsCopy = false;
+                    DefaultValueSuper = "0";
+                    break;
                 default:
                     IsDefault = false;
-                    IsCopy = true;
-                    CopyFromSportType = defaultSportType;
-                    CopyFromBetType = defaultBettype;
+                    IsCopy = false;
                     break;
             }
         }
