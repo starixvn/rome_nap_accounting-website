@@ -221,7 +221,18 @@ function RenderDcsMatrix() {
         type: "GET",
         url: "GetProductSportBettype",
         success: function (rs) {
-            $("#popupContainer").html(rs);
+            if (rs && rs.ErrorCode !== undefined && rs.ErrorCode !== 0) {
+                showAlertMessage('errMsg', rs.ErrorMessage, 1);
+            } else {
+                $("#popupContainer").html(rs);
+                $('#popupContainer').dialog({
+                    title: 'Add Config',
+                    modal: true,
+                    width: '850',
+                    height: '600'
+                });
+            }
+            
         },
         error: function (event, jqXHR, ajaxSettings) {
             showAlertMessage('editErrMsg', "Internal server error.", 1);
@@ -262,24 +273,13 @@ function InitFilterBehavior() {
 
 function EditConfig(configId) {
     isAddConfig = false;
+    $("#errMsg").html("");
     $("#popupContainer").html("");
-    $('#popupContainer').dialog({
-        title: 'Config ' + configId,
-        modal: true,
-        width: '850',
-        height: '600'
-    });
     GetConfigDetail(configId);
 }
 
 function ViewConfig(configId) {
     $("#popupContainer").html("");
-    $('#popupContainer').dialog({
-        title: 'Config ' + configId,
-        modal: true,
-        width: '850',
-        height: '600'
-    });
     GetViewConfigDetail(configId);
 }
 
@@ -288,13 +288,8 @@ function OpenAddConfig() {
     selectedConfig = null;
     selectedProduct = null;
     selectedSports = [];
+    $("#errMsg").html("");
     $("#popupContainer").html("");
-    $('#popupContainer').dialog({
-        title: 'Add Config',
-        modal: true,
-        width: '850',
-        height: '600'
-    });
     RenderDcsMatrix();
 }
 
@@ -305,7 +300,17 @@ function GetConfigDetail(configId) {
         type: "GET",
         url: "GetConfigDetail?configId=" + configId,
         success: function (rs) {
-            $("#popupContainer").html(rs);
+            if (rs && rs.ErrorCode !== undefined && rs.ErrorCode !== 0) {
+                showAlertMessage('errMsg', rs.ErrorMessage, 1);
+            } else {
+                $("#popupContainer").html(rs);
+                $('#popupContainer').dialog({
+                    title: 'Config ' + configId,
+                    modal: true,
+                    width: '850',
+                    height: '600'
+                });
+            }
         },
         error: function (event, jqXHR, ajaxSettings) {
             showAlertMessage('editErrMsg', "Internal server error.", 1);
@@ -322,14 +327,26 @@ function GetConfigDetail(configId) {
 }
 
 function GetViewConfigDetail(configId) {
+    $("#errMsg").html("");
     parent.BlockUI();
     $.ajax({
         type: "GET",
         url: "ViewConfigDetail?configId=" + configId,
         contentType: "application/json; charset=utf-8",
         success: function (rs) {
-            $("#popupContainer").html(rs);
-            RenderViewConfigDetail();
+            if (rs && rs.ErrorCode !== undefined && rs.ErrorCode !== 0) {
+                showAlertMessage('errMsg', rs.ErrorMessage, 1);
+            } else {
+                $("#popupContainer").html(rs);
+                $('#popupContainer').dialog({
+                    title: 'Config ' + configId,
+                    modal: true,
+                    width: '850',
+                    height: '600'
+                });
+
+                RenderViewConfigDetail();
+            }
         },
         error: function (event, jqXHR, ajaxSettings) {
             showAlertMessage('editErrMsg', "Internal server error.", 1);

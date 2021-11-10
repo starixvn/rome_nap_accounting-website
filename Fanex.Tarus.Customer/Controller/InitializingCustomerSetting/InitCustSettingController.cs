@@ -50,7 +50,7 @@ namespace Fanex.Tarus.Customer.Controller.InitializingCustomerSetting
             return PartialView(_addEditPath, service.GetProductSportBettype());
         }
 
-        [HttpGet, AuthenticateRead]
+        [HttpGet, AuthenticateHost]
         public ActionResult GetConfigDetail(int configId)
         {
             return PartialView(_addEditPath, service.GetConfigDetail(configId));
