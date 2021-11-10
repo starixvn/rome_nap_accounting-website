@@ -201,8 +201,8 @@ function RenderSettings() {
             { HeaderText: "Currency", Width: 150, Name: "Currency", HeaderAlign: "center", CellAlign: "left" },
             { HeaderText: "Status", Width: 100, Name: "Status", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "Steps", Width: 250, Name: "Steps", HeaderAlign: "center", CellAlign: "left" },
-            { HeaderText: "Start Time(GMT-4)", Width: 150, Name: "StartTime", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: "End Time(GMT-4)", Width: 150, Name: "EndTime", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Start Time (GMT-4)", Width: 150, Name: "StartTime", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "End Time (GMT-4)", Width: 150, Name: "EndTime", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "Is Test", Width: 50, Name: "IsTest", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "Remark", Width: 200, Name: "Remark", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "Action", Width: 100, Name: "Action", HeaderAlign: "center", CellAlign: "center" }
@@ -285,6 +285,9 @@ function ViewConfig(configId) {
 
 function OpenAddConfig() {
     isAddConfig = true;
+    selectedConfig = null;
+    selectedProduct = null;
+    selectedSports = [];
     $("#popupContainer").html("");
     $('#popupContainer').dialog({
         title: 'Add Config',
@@ -380,13 +383,12 @@ function RenderSiteSelection(enableInput = true) {
             });
         });
     }
-    isAllSite = selectedConfig && selectedConfig.ConfigDetail.Config.SiteIdList.indexOf(0) >= 0;
     siteSelect.multiSelect({
         minWidth: 120,
         maxHeight: 450,
         shadow: true,
         showHeader: true,
-        isCheckAll: isAllSite,
+        isCheckAll: selectedConfig && selectedConfig.ConfigDetail.Config.SiteIdList.indexOf(0) >= 0,
         showFooter: false,
         showFilter: true,
         disabled: !enableInput,
@@ -710,6 +712,7 @@ function ChangeMemberStatus() {
 function SetupCalendar(divId) {
     $('#' + divId).datetimepicker({
         format: 'm/d/Y H:i:00 A',
+        minDate: today,
         step: 5
     });
 
@@ -810,6 +813,11 @@ function RenderNewConfig() {
         ConfigId: 0
     };
 
+    if (request.ProductId === "") {
+        showAlertMessage('editErrMsg', "Product cannot be null.", 1);
+        return;
+    }
+
     if (request.SportIdList.length === 0) {
         showAlertMessage('editErrMsg', "Sport Type cannot be null.", 1);
         return;
@@ -905,7 +913,6 @@ function UpdateConfigModel() {
 
 function ValidateNewConfigModel() {
     $("#editErrMsg").html("");
-    parent.BlockUI();
     selectedConfig.ConfigDetail.Config.SiteIdList = $("#EditSiteSelect").multiSelect("getCheckedItems").map(Number);
     if (selectedConfig.ConfigDetail.Config.SiteIdList.length === 0) {
         showAlertMessage('editErrMsg', "Site cannot be null.", 1);
@@ -930,6 +937,7 @@ function ValidateNewConfigModel() {
     }
     selectedConfig.ConfigDetail.Config.IsTest = $("#ckbEditIsTest").prop('checked');
     selectedConfig.ConfigDetail.Config.Remark = $("#EditRemark").val();
+    parent.BlockUI();
     $.ajax({
         type: "POST",
         url: "ValidateAddConfigSetting",
