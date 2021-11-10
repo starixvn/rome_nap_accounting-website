@@ -1054,5 +1054,4 @@ function DeleteConfig(configId) {
 
 $(document).ready(function () {
     GetSetting();
-    setInterval(GetSetting, 5000);
 });
