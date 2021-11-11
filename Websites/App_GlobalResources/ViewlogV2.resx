@@ -2209,4 +2209,10 @@ Max Keno (20+1) 2</value>
   <data name="MPPMv2Saba" xml:space="preserve">
     <value>Max Payout Per Match</value>
   </data>
+  <data name="disable202_1530" xml:space="preserve">
+    <value>Disabled Max Keno 3</value>
+  </data>
+  <data name="disable202_1531" xml:space="preserve">
+    <value>Disabled Max Keno 4</value>
+  </data>
 </root>
