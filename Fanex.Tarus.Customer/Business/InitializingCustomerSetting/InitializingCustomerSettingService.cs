@@ -35,7 +35,7 @@
         private readonly IInitializingCustomerSettingDataAccess dataAccess;
 
         private const string FormatDisplay = "[{0}] {1}";
-        private const string ErrorMessage = "{0}-{1}-{2}: {3}";
+        private const string ErrorMessage = "Row {0}: {1}";
 
         public InitializingCustomerSettingService()
         {
@@ -87,11 +87,14 @@
             var sites = dataAccess.GetSites().ToList();
             var exchangeCurrencies = dataAccess.GetExchangeCurrency().ToList();
             var groupSettings = config.Settings.GroupBy(setting => setting.SettingType);
+
+            var pos = 1;
             foreach (var group in groupSettings)
             {
                 var selectedSetting = sportbettypesetting.FirstOrDefault(st => st.SettingName == group.FirstOrDefault().SettingName);
                 foreach (var setting in group)
                 {
+                    setting.Id = pos;
                     setting.SportTypeOptions = BuildSportOptions(selectedSetting.Sports, setting.CopyFromSportType).ToList();
                     var selectedSport = selectedSetting.Sports.FirstOrDefault(sp => sp.SportId == setting.CopyFromSportType);
                     if(selectedSport == null)
@@ -101,6 +104,7 @@
                         setting.CopyFromBetType = selectedSport.Bettypes[0].BettypeId;
                     }
                     setting.BetTypeOptions = BuildBettypeOptions(selectedSport.Bettypes, setting.CopyFromBetType).ToList();
+                    pos++;
                 }
             }
             sites.RemoveAt(0);
@@ -340,7 +344,7 @@
             var setting = settings.FirstOrDefault(item => item.Id == message.Id);
             if(setting != null)
             {
-                return string.Format(ErrorMessage, setting.SettingName, setting.SportName, setting.BetTypeName, message.ErrorMsg);
+                return string.Format(ErrorMessage, setting.Id, message.ErrorMsg);
             }
 
             return message.ErrorMsg;

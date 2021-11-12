@@ -185,7 +185,7 @@ function RenderSettings() {
         row.Columns.push({ Name: 'StartTime', TdClass: GetStartTimeClass(setting.StartTime), Value: setting.StartTime });
         row.Columns.push({ Name: 'EndTime', TdClass: null, Value: setting.EndTime });
         row.Columns.push({ Name: 'IsTest', TdClass: null, Value: setting.IsTest ? 1 : 0 });
-        row.Columns.push({ Name: 'Remark', TdClass: null, Value: setting.Remark });
+        row.Columns.push({ Name: 'Remark', TdClass: "remark", Value: setting.Remark });
         row.Columns.push({ Name: 'Action', TdClass: null, Value: RenderAction(setting.Status, setting.ConfigId) });
         bodyRows.push(row);
     }
@@ -197,15 +197,15 @@ function RenderSettings() {
             { HeaderText: "Product", Width: 100, Name: "Product", HeaderAlign: "center", CellAlign: "left" },
             { HeaderText: "Sport", Width: 100, Name: "Sport", HeaderAlign: "center", CellAlign: "left" },
             { HeaderText: "Bet Type", Width: 100, Name: "BetType", HeaderAlign: "center", CellAlign: "left" },
-            { HeaderText: "Site", Width: 100, Name: "Site", HeaderAlign: "center", CellAlign: "left" },
-            { HeaderText: "Currency", Width: 150, Name: "Currency", HeaderAlign: "center", CellAlign: "left" },
-            { HeaderText: "Status", Width: 100, Name: "Status", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Site", Width: 90, Name: "Site", HeaderAlign: "center", CellAlign: "left" },
+            { HeaderText: "Currency", Width: 90, Name: "Currency", HeaderAlign: "center", CellAlign: "left" },
+            { HeaderText: "Status", Width: 50, Name: "Status", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "Steps", Width: 250, Name: "Steps", HeaderAlign: "center", CellAlign: "left" },
-            { HeaderText: "Start Time (GMT-4)", Width: 150, Name: "StartTime", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: "End Time (GMT-4)", Width: 150, Name: "EndTime", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: "Is Test", Width: 50, Name: "IsTest", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: "Remark", Width: 200, Name: "Remark", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: "Action", Width: 100, Name: "Action", HeaderAlign: "center", CellAlign: "center" }
+            { HeaderText: "Start Time (GMT-4)", Width: 65, Name: "StartTime", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "End Time (GMT-4)", Width: 65, Name: "EndTime", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Is Test", Width: 40, Name: "IsTest", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Remark", Width: 100, Name: "Remark", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Action", Width: 80, Name: "Action", HeaderAlign: "center", CellAlign: "center" }
         ],
         bodyRows: bodyRows,
         gridExpandHeight: 200,
@@ -228,7 +228,7 @@ function RenderDcsMatrix() {
                 $('#popupContainer').dialog({
                     title: 'Add Config',
                     modal: true,
-                    width: '850',
+                    width: '1000',
                     height: '600'
                 });
             }
@@ -307,7 +307,7 @@ function GetConfigDetail(configId) {
                 $('#popupContainer').dialog({
                     title: 'Config ' + configId,
                     modal: true,
-                    width: '850',
+                    width: '1000',
                     height: '600'
                 });
             }
@@ -341,7 +341,7 @@ function GetViewConfigDetail(configId) {
                 $('#popupContainer').dialog({
                     title: 'Config ' + configId,
                     modal: true,
-                    width: '850',
+                    width: '1000',
                     height: '600'
                 });
 
@@ -512,6 +512,13 @@ function RenderEventEdit() {
                     $(this).prop("disabled", true);
                 });
                 selectedConfig.ConfigDetail.Settings[position].IsCopy = false;
+                $(".input-status-default-" + pos).each(function () {
+                    $(this).removeClass("input-status-disable");
+                });
+            } else {
+                $(".input-status-default-" + pos).each(function () {
+                    $(this).addClass("input-status-disable");
+                });
             }
 
             $(".input-default-" + pos).each(function () {
@@ -533,6 +540,9 @@ function RenderEventEdit() {
                     $(this).prop("disabled", true);
                 });
                 selectedConfig.ConfigDetail.Settings[position].IsDefault = false;
+                $(".input-status-default-" + pos).each(function () {
+                    $(this).addClass("input-status-disable");
+                });
             }
             $(".input-copy-" + pos).each(function () {
                 $(this).prop("disabled", !isCopy);
@@ -768,7 +778,7 @@ function RenderSportType() {
         checkAllText: "All",
         listData: multiselectData,
         noItemText: "Select Sport",
-        onCheck: function () { UpdateSelectSport(); }
+        onCheck: UpdateSelectSport
     });
 }
 

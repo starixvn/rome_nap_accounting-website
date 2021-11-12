@@ -251,12 +251,10 @@
                     if (reader.NextResult())
                     {
                         var configDetails = new List<SettingInforModel>();
-                        var pos = 1;
                         while (reader.Read())
                         {
                             var setting = new SettingInforModel
                             {
-                                Id = pos,
                                 ConfigId = Convert.ToInt32(reader["configid"].ToString()),
                                 BetType = Convert.ToInt32(reader["BetType"].ToString()),
                                 CopyFromBetType = Convert.IsDBNull(reader["CopyFromBetType"]) ? 0 : Convert.ToInt32(reader["CopyFromBetType"].ToString()),
@@ -279,8 +277,6 @@
                             };
 
                             configDetails.Add(setting);
-
-                            pos++;
                         }
 
                         result.Settings = configDetails;

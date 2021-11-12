@@ -62,6 +62,13 @@
     margin: auto;
 }
 
+.input-status-disable {
+    background-color: grey;
+    cursor: default;
+    color: #fff;
+    margin: auto;
+}
+
 .setting-table {
     border-spacing: 0;
     width: 100%;
@@ -137,4 +144,25 @@
 
 .previous-time {
     color: grey;
+}
+
+.td-row {
+    width: 20px;
+}
+
+.td-sport {
+    width: 60px;
+}
+
+.td-copy {
+    text-align: left;
+    width: 90px;
+}
+
+.td-setting {
+    width: 185px;
+}
+
+.remark {
+    line-break: anywhere;
 }
