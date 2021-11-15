@@ -252,7 +252,7 @@ function RenderDcsMatrix() {
 
 function InitFilter() {
     InitFilterBehavior();
-    $("#EditProductSelect").select2();
+    $("#EditProductSelect").select2({ width: "135px" });
     if (selectedConfig && selectedConfig.ConfigDetail) {
         $("#EditProductSelect").val(selectedConfig.ConfigDetail.Config.ProductId).trigger("change");
     } else {
@@ -345,6 +345,7 @@ function GetViewConfigDetail(configId) {
                     height: '600'
                 });
 
+                RenderSelectView();
                 RenderViewConfigDetail();
             }
         },
@@ -401,8 +402,8 @@ function RenderSiteSelection(enableInput = true) {
         });
     }
     siteSelect.multiSelect({
-        minWidth: 120,
-        maxHeight: 450,
+        minWidth: 140,
+        maxHeight: 250,
         shadow: true,
         showHeader: true,
         isCheckAll: selectedConfig && selectedConfig.ConfigDetail.Config.SiteIdList.indexOf(0) >= 0,
@@ -411,7 +412,7 @@ function RenderSiteSelection(enableInput = true) {
         disabled: !enableInput,
         checkAllText: "[0] All Sites",
         listData: multiselectData,
-        noItemText: "Select Sites",
+        noItemText: "Select Sites"
     });
 }
 
@@ -434,8 +435,8 @@ function RenderCurrencySelection(enableInput) {
     }
 
     currencySelect.multiSelect({
-        minWidth: 120,
-        maxHeight: 450,
+        minWidth: 140,
+        maxHeight: 250,
         shadow: true,
         showHeader: true,
         isCheckAll: selectedConfig && selectedConfig.ConfigDetail.Config.CurrencyIdList.indexOf(0) >= 0,
@@ -445,6 +446,45 @@ function RenderCurrencySelection(enableInput) {
         checkAllText: "[0] All currencies",
         listData: multiselectData,
         noItemText: "Select Currencies"
+    });
+}
+
+function RenderSelectView() {
+    $(".sel-sport-copy").each(function () {
+        var pos = $(this).data("pos");
+        $(this).select2({ width: "100%" });
+    });
+    $(".sel-bettype-copy").each(function () {
+        var pos = $(this).data("pos");
+        $(this).select2({ width: "100%" });
+    });
+    $(".input-com-super").each(function () {
+        var pos = $(this).data("pos");
+        var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
+        var comm = selectedConfig.ConfigDetail.Settings[position].DefaultValueSuper;
+        $(this).val(parseFloat(comm)).change();
+        $(this).select2({ width: "100%", disabled: true });
+    });
+    $(".input-com-master").each(function () {
+        var pos = $(this).data("pos");
+        var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
+        var comm = selectedConfig.ConfigDetail.Settings[position].DefaultValueMaster;
+        $(this).val(parseFloat(comm)).change();
+        $(this).select2({ width: "100%", disabled: true });
+    });
+    $(".input-com-agent").each(function () {
+        var pos = $(this).data("pos");
+        var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
+        var comm = selectedConfig.ConfigDetail.Settings[position].DefaultValueAgent;
+        $(this).val(parseFloat(comm)).change();
+        $(this).select2({ width: "100%", disabled: true });
+    });
+    $(".input-com-member").each(function () {
+        var pos = $(this).data("pos");
+        var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
+        var comm = selectedConfig.ConfigDetail.Settings[position].DefaultValueMember;
+        $(this).val(parseFloat(comm)).change();
+        $(this).select2({ width: "100%", disabled: true });
     });
 }
 
@@ -479,20 +519,18 @@ function RenderEventEdit() {
                 });
                 selectedConfig.ConfigDetail.Settings[position].CopyFromBetType = editSport.Bettypes[0].BettypeId;
             }
-            bettypeSel.select2();
+            $(bettypeSel).select2({ width: "100%"});
         });
-        $(this).select2();
-        $(this).prop("disabled", !selectedConfig.ConfigDetail.Settings[position].IsCopy);
+        $(this).select2({ width: "100%", disabled: !selectedConfig.ConfigDetail.Settings[position].IsCopy });
     });
 
     $(".sel-bettype-copy").each(function () {
         var pos = $(this).data("pos");
         var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
-        $(this).select2();
+        $(this).select2({ width: "100%", disabled: !selectedConfig.ConfigDetail.Settings[position].IsCopy });
         $(this).change(function () {
             selectedConfig.ConfigDetail.Settings[position].CopyFromBetType = $(this).val();
         });
-        $(this).prop("disabled", !selectedConfig.ConfigDetail.Settings[position].IsCopy);
     });
 
     $("#EditStartTime").val(selectedConfig.ConfigDetail.Config.StartTime);
@@ -563,37 +601,75 @@ function RenderEventEdit() {
         });
     }); 
     $(".input-headline").each(function () {
-        $(this).change(function () {
+        $(this).off("change").on("change", function () {
+            var usernames = $(this);
+            var usernamesValue = $.trim(usernames.val());
+            if (usernamesValue.length > 0) {
+                if (usernamesValue.indexOf("\n") >= 0) {
+                    usernamesValue = usernamesValue.replace(/\n/g, " ");
+                }
+
+                if (usernamesValue.indexOf("\r") >= 0) {
+                    usernamesValue = usernamesValue.replace(/\r/g, " ");
+                }
+
+                if (usernamesValue.indexOf("\t") >= 0) {
+                    usernamesValue = usernamesValue.replace(/\t/g, " ");
+                }
+
+                usernamesValue = usernamesValue.replace(/\s/g, ",");
+                var usernamesArray = usernamesValue.split(",").filter(item => item.length > 0);
+                usernames.val(usernamesArray.join(","));
+            }
+
+            var el = this;
+            setTimeout(function () {
+                el.style.cssText = 'height:auto; padding:0';
+                el.style.cssText = 'height:' + el.scrollHeight + 'px';
+            }, 0);
+
             var pos = $(this).data("pos");
             var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
             selectedConfig.ConfigDetail.Settings[position].SpecialRequirement = $(this).val();
         });
     });
     $(".input-com-super").each(function () {
+        var pos = $(this).data("pos");
+        var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
+        var comm = selectedConfig.ConfigDetail.Settings[position].DefaultValueSuper;
+        $(this).select2({ width: "100%", disabled: !selectedConfig.ConfigDetail.Settings[position].IsDefault });
+        $(this).val(parseFloat(comm)).change();
         $(this).change(function () {
-            var pos = $(this).data("pos");
-            var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
             selectedConfig.ConfigDetail.Settings[position].DefaultValueSuper = $(this).val();
         });
     });
     $(".input-com-master").each(function () {
+        var pos = $(this).data("pos");
+        var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
+        var comm = selectedConfig.ConfigDetail.Settings[position].DefaultValueMaster;
+        $(this).select2({ width: "100%", disabled: !selectedConfig.ConfigDetail.Settings[position].IsDefault });
+        $(this).val(parseFloat(comm)).change();
         $(this).change(function () {
-            var pos = $(this).data("pos");
-            var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
             selectedConfig.ConfigDetail.Settings[position].DefaultValueMaster = $(this).val();
         });
     });
     $(".input-com-agent").each(function () {
+        var pos = $(this).data("pos");
+        var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
+        var comm = selectedConfig.ConfigDetail.Settings[position].DefaultValueAgent;
+        $(this).select2({ width: "100%", disabled: !selectedConfig.ConfigDetail.Settings[position].IsDefault });
+        $(this).val(parseFloat(comm)).change();
         $(this).change(function () {
-            var pos = $(this).data("pos");
-            var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
             selectedConfig.ConfigDetail.Settings[position].DefaultValueAgent = $(this).val();
         });
     });
     $(".input-com-member").each(function () {
+        var pos = $(this).data("pos");
+        var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
+        var comm = selectedConfig.ConfigDetail.Settings[position].DefaultValueMember;
+        $(this).select2({ width: "100%", disabled: !selectedConfig.ConfigDetail.Settings[position].IsDefault });
+        $(this).val(parseFloat(comm)).change();
         $(this).change(function () {
-            var pos = $(this).data("pos");
-            var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
             selectedConfig.ConfigDetail.Settings[position].DefaultValueMember = $(this).val();
         });
     });
@@ -768,7 +844,7 @@ function RenderSportType() {
     }
 
     sportFilter.multiSelect({
-        minWidth: 160,
+        minWidth: 140,
         maxHeight: 450,
         shadow: true,
         showHeader: true,
@@ -927,8 +1003,11 @@ function UpdateConfigModel() {
             } else {
                 showAlertMessage('editErrMsg', "Updated Successfully.", 0);
             }
+
+            $("#popupContainer").scrollTop(0);
         },
         error: function (event, jqXHR, ajaxSettings) {
+            $("#popupContainer").scrollTop(0);
             showAlertMessage('editErrMsg', "Internal server error.", 1);
         },
         complete: function () {
@@ -983,6 +1062,7 @@ function ValidateNewConfigModel() {
                     });
 
                     showAlertMessage('editErrMsg', message, 1);
+                    $("#popupContainer").scrollTop(0);
                 } else {
                     $('#popupContainer').html("");
                     $('#popupContainer').dialog('close');
@@ -992,6 +1072,7 @@ function ValidateNewConfigModel() {
             }
         },
         error: function (event, jqXHR, ajaxSettings) {
+            $("#popupContainer").scrollTop(0);
             showAlertMessage('editErrMsg', "Internal server error.", 1);
         },
         complete: function () {

@@ -19,5 +19,7 @@
         public string SettingTypeName { get; set; }
 
         public bool IsLive { get; set; }
+
+        public decimal MaxDiscount { get; set; }
     }
 }

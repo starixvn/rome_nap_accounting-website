@@ -21,6 +21,10 @@
     word-break: break-all;
 }
 
+#grid-information {
+    min-height: 400px;
+}
+
 .info-link {
     color: blue;
     cursor: pointer;
@@ -165,4 +169,13 @@
 
 .remark {
     line-break: anywhere;
+}
+
+.label-filter {
+    display: inline-block;
+    text-align: right;
+}
+
+.ckb {
+    margin-bottom: 0px;
 }

@@ -10,10 +10,10 @@ namespace Fanex.Tarus.Customer.Controller.InitializingCustomerSetting
 {
     public class InitCustSettingController : BaseController
     {
-        private readonly string _indexViewPath = "~/Views/InitializingCustomerSetting/Index.cshtml";
-        private readonly string _viewConfigPath = "~/Views/InitializingCustomerSetting/_ViewConfig.cshtml";
-        private readonly string _configPath = "~/Views/InitializingCustomerSetting/_ConfigDetail.cshtml";
-        private readonly string _addEditPath = "~/Views/InitializingCustomerSetting/_AddEditConfig.cshtml";
+        private readonly string _indexViewPath = "~/Views/ITConfiguration/InitializingCustomerSetting/Index.cshtml";
+        private readonly string _viewConfigPath = "~/Views/ITConfiguration/InitializingCustomerSetting/_ViewConfig.cshtml";
+        private readonly string _configPath = "~/Views/ITConfiguration/InitializingCustomerSetting/_ConfigDetail.cshtml";
+        private readonly string _addEditPath = "~/Views/ITConfiguration/InitializingCustomerSetting/_AddEditConfig.cshtml";
         private readonly IInitializingCustomerSettingService service;
 
         public InitCustSettingController()

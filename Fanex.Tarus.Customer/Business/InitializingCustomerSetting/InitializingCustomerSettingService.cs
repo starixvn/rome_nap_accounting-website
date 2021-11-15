@@ -74,19 +74,22 @@
             var productDcs = dataAccess.GetProductDcsModel(new DcsProductMatrixCriteria());
             var allSettings = productDcs.Where(item => item.ProductId == config.Config.ProductId
                                                     && config.Config.SportTypeIdList.Contains(item.SportId)
-                                                    && config.Config.BetTypeIdList.Contains(item.BettypeId))
-                                         .OrderBy(item => item.SettingTypeId);
+                                                    && config.Config.BetTypeIdList.Contains(item.BettypeId));
             foreach (var setting in allSettings)
             {
-                if(!config.Settings.Exists(cfs => cfs.SettingType == setting.SettingTypeId && cfs.SportType == setting.SportId && cfs.BetType == setting.BettypeId))
+                var existSetting = config.Settings.FirstOrDefault(cfs => cfs.SettingType == setting.SettingTypeId && cfs.SportType == setting.SportId && cfs.BetType == setting.BettypeId);
+                if (existSetting == null)
                 {
                     config.Settings.Add(new SettingInforModel(config.Settings.Count + 2, setting));
+                } else
+                {
+                    existSetting.MaxDiscount = setting.MaxDiscount;
                 }
             }
             var sportbettypesetting = GetSportAndBettypeWithSetting(productDcs);
             var sites = dataAccess.GetSites().ToList();
             var exchangeCurrencies = dataAccess.GetExchangeCurrency().ToList();
-            var groupSettings = config.Settings.GroupBy(setting => setting.SettingType);
+            var groupSettings = config.Settings.OrderBy(st => st.SettingOrder).ThenBy(st => st.SettingType).GroupBy(setting => setting.SettingType);
 
             var pos = 1;
             foreach (var group in groupSettings)
@@ -157,10 +160,9 @@
 
             var settings = productmatrix.Where(item => item.ProductId == request.ProductId
                                                     && request.SportIdList.Contains(item.SportId)
-                                                    && request.BettypeIdList.Contains(item.BettypeId))
-                                         .OrderBy(item => item.SettingTypeId);
+                                                    && request.BettypeIdList.Contains(item.BettypeId));
             var settingInfos = GenerateSettingInfoModel(settings.ToList()).ToList();
-            var groupSettings = settingInfos.GroupBy(setting => setting.SettingType);
+            var groupSettings = settingInfos.OrderBy(st => st.SettingOrder).ThenBy(st => st.SettingType).GroupBy(setting => setting.SettingType);
             foreach (var settingGroup in groupSettings)
             {
                 var sportBettype = sportbettypesetting.FirstOrDefault(st => st.SettingName == settingGroup.FirstOrDefault().SettingName);

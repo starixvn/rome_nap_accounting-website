@@ -16,7 +16,21 @@ namespace Fanex.Tarus.Customer.Entities.InitializingCustomerSetting
         private const string FormatDisplay = "[{0}] {1}";
         private const string IdKey = "{0}-{1}";
 
-        public string SettingId { get => string.Concat(SettingType, "-", SportType, "-", BetType ); } 
+
+        private readonly Dictionary<string, int> SettingtTypeOrders = new Dictionary<string, int>
+        {
+            {"Product Status", 0 },
+            {"Commission", 1 },
+            {"Bet Setting", 2 },
+            {"Position Taking", 3 },
+            {"Win Loss Limit", 4 },
+            {"Loss Limit", 5 },
+            {"Stake Level", 6 }
+        };
+
+        public string SettingId { get => string.Concat(SettingType, "-", SportType, "-", BetType ); }
+
+        public int SettingOrder { get { return SettingtTypeOrders.ContainsKey(SettingName) ? SettingtTypeOrders[SettingName] : 999; } }
 
         public int Id { get; set; }
 
@@ -54,9 +68,13 @@ namespace Fanex.Tarus.Customer.Entities.InitializingCustomerSetting
 
         public string SettingName { get; set; }
 
+        public decimal MaxDiscount { get; set; }
+
         public List<SelectListItem> SportTypeOptions { get; set; }
 
         public List<SelectListItem> BetTypeOptions { get; set; }
+
+        public List<SelectListItem> CommissionOptions { get => BuildCommisionOptions(); }
 
         public string DisplaySportName { get => string.Format(FormatDisplay, SportType, SportName); }
 
@@ -86,6 +104,7 @@ namespace Fanex.Tarus.Customer.Entities.InitializingCustomerSetting
             BetType = setting.BettypeId;
             BetTypeName = setting.BettypeName;
             IsLive = setting.IsLive;
+            MaxDiscount = setting.MaxDiscount;
             switch (setting.SettingTypeName)
             {
                 case Commission:
@@ -118,6 +137,17 @@ namespace Fanex.Tarus.Customer.Entities.InitializingCustomerSetting
 
         public SettingInforModel()
         {
+        }
+
+        private List<SelectListItem> BuildCommisionOptions()
+        {
+            var result = new List<SelectListItem>();
+            for (decimal i = 0; i <= MaxDiscount; i = i + (decimal)0.0005)
+            {
+                result.Add(new SelectListItem { Text = i.ToString("0.####"), Value = i.ToString("0.####") });
+            }
+
+            return result;
         }
     }
 }

@@ -18,7 +18,7 @@
     <div class="filterBox" style="border: solid 1px #7C98A4; width:100%">
         <div class="filterContent" style="padding:0 5px;">
             <div class="floatLeft">
-                <label for="EditProductSelect">Product<span style="color: red;">*</span>:</label>
+                <label for="EditProductSelect" class="edit-label label-filter w60">Product<span style="color: red;">*</span>:</label>
                 @Html.DropDownList("EditProductSelect",
                             productOptions,
                             new
@@ -27,13 +27,13 @@
                             })
             </div>
             <div class="floatLeft">
-                <label for="EditSportSelect">Sport<span style="color: red;">*</span>:</label>
+                <label for="EditSportSelect" class="edit-label label-filter w60">Sport<span style="color: red;">*</span>:</label>
                 <select id="EditSportSelect" class="setting-edit">
                     <option value="" disabled selected>Please select</option>
                 </select>
             </div>
             <div class="floatLeft">
-                <label for="EditBettypeSelect">Bettype<span style="color: red;">*</span>:</label>
+                <label for="EditBettypeSelect" class="edit-label label-filter w120">Bettype<span style="color: red;">*</span>:</label>
                 <select id="EditBettypeSelect" class="setting-edit">
                     <option value="" disabled selected>Please select</option>
                 </select>
@@ -50,7 +50,7 @@
     <div id="grid-information" class="freegrid">
         @if (Model.ConfigDetail != null)
         {
-            @Html.Partial("~/Views/InitializingCustomerSetting/_ConfigDetail.cshtml", Model)
+            @Html.Partial("~/Views/ITConfiguration/InitializingCustomerSetting/_ConfigDetail.cshtml", Model)
         }
     </div>
     <div style="text-align: center">

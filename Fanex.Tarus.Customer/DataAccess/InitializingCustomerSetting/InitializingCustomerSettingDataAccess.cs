@@ -309,7 +309,8 @@
                             BettypeName = GetBetTypeName(bettypeId),
                             SettingTypeId = Convert.ToInt32(reader["settingtype"]),
                             SettingTypeName = reader["settingname"].ToString(),
-                            IsLive = Convert.ToBoolean(reader["islive"])
+                            IsLive = Convert.ToBoolean(reader["islive"]),
+                            MaxDiscount = Convert.IsDBNull(reader["maxdiscount"]) ? 0 : Convert.ToDecimal(reader["maxdiscount"])
                         });
                     }
                 }
