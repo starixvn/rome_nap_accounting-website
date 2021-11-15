@@ -2,6 +2,7 @@
 {
     using System;
     using Fanex.NAP.Framework.Data;
+    using Sunplus.Accounting.DataAccess.Report;
 
     public class GetAGCasinoBetDetailsCriteria : CriteriaBase
     {
@@ -22,6 +23,10 @@
         public int PageSize { get; set; }
 
         public int TotalRows { get; set; }
+
+        public DateTime MoveBetsDay => ReportUtils.BalanceUp.MoveBetsDay;
+
+        public DateTime BalanceUpDay => ReportUtils.BalanceUp.BalanceUpDay;
 
         public override string GetSettingKey()
         {

@@ -1,6 +1,8 @@
 ﻿namespace Fanex.Tarus.BetList.Criteria
 {
+    using System;
     using Fanex.NAP.Framework.Data;
+    using Sunplus.Accounting.DataAccess.Report;
 
     public class GetCashOutDetailCriteria : CriteriaBase, ICriteria
     {
@@ -14,6 +16,10 @@
 
         [SpParam(Ignored = true)]
         public string Title { get; set; }
+
+        public DateTime MoveBetsDay => ReportUtils.BalanceUp.MoveBetsDay;
+
+        public DateTime BalanceUpDay => ReportUtils.BalanceUp.BalanceUpDay;
 
         public override string GetSettingKey()
         {
