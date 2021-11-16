@@ -94,6 +94,8 @@ namespace Fanex.Tarus.Customer.Entities.InitializingCustomerSetting
 
         public string TargetBetType { get => string.Format(IdKey, "bettype", SettingId); }
 
+        public bool IsRequiredSpecialRequirement { get => SettingName == ProductStatus; }
+
         public SettingInforModel(int id, ProductDcsModel setting)
         {
             Id = id;

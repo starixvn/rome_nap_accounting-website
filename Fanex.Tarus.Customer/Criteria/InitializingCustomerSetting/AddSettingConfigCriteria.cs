@@ -62,7 +62,7 @@ namespace Fanex.Tarus.Customer.Criteria.InitializingCustomerSetting
                 if (setting.IsDefault && !string.IsNullOrEmpty(setting.DefaultValueMaster)) xmlConfig.Append("DefaultValueMaster = \"" + setting.DefaultValueMaster + "\" ");
                 if (setting.IsDefault && !string.IsNullOrEmpty(setting.DefaultValueAgent)) xmlConfig.Append("DefaultValueAgent = \"" + setting.DefaultValueAgent + "\" ");
                 if (setting.IsDefault && !string.IsNullOrEmpty(setting.DefaultValueMember)) xmlConfig.Append("DefaultValueMember = \"" + setting.DefaultValueMember + "\" ");
-                if (setting.IsDefault && !string.IsNullOrEmpty(setting.SpecialRequirement)) xmlConfig.Append("SpecialRequirement = \"" + setting.SpecialRequirement + "\" ");
+                if ((setting.IsDefault && !string.IsNullOrEmpty(setting.SpecialRequirement)) || setting.IsRequiredSpecialRequirement) xmlConfig.Append("SpecialRequirement = \"" + setting.SpecialRequirement + "\" ");
                 xmlConfig.Append("/>");
             }
 
