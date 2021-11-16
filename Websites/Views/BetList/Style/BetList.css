@@ -649,3 +649,8 @@ span.ui-dialog-title-dialog-modal-TennisResult {
     color: #bbb;
     display: block;
 }
+
+.status-col{
+    width: 100px;
+    word-break: break-word;
+}

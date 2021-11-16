@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Functions SiteId="104" SiteName="NAP - Accounting">
-  <Function Name="IPVN">
-    <Setting Key="GetIPVN" SpName="GetIPVN" DbName="DBCust.IPDB.bodbAdminNet" />
+  <Function Name="IP">
+    <Setting Key="GetIPVN" SpName="GetIPVN_xpre" DbName="DBCust.IPDB.bodbAdminNet" />
+    <Setting Key="Acc_GetIPInfo_Full" SpName="Acc_GetIPInfo_Full_xpre" DbName="DBCust.IPDB.bodbAdminNet" />
   </Function>
 </Functions>
