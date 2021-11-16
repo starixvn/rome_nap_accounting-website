@@ -84,6 +84,7 @@
                 } else
                 {
                     existSetting.MaxDiscount = setting.MaxDiscount;
+                    existSetting.IntervalValue = setting.IntervalValue;
                 }
             }
             var sportbettypesetting = GetSportAndBettypeWithSetting(productDcs);

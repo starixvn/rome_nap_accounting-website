@@ -21,5 +21,7 @@
         public bool IsLive { get; set; }
 
         public decimal MaxDiscount { get; set; }
+
+        public decimal IntervalValue { get; set; }
     }
 }

@@ -70,6 +70,8 @@ namespace Fanex.Tarus.Customer.Entities.InitializingCustomerSetting
 
         public decimal MaxDiscount { get; set; }
 
+        public decimal IntervalValue { get; set; }
+
         public List<SelectListItem> SportTypeOptions { get; set; }
 
         public List<SelectListItem> BetTypeOptions { get; set; }
@@ -107,6 +109,7 @@ namespace Fanex.Tarus.Customer.Entities.InitializingCustomerSetting
             BetTypeName = setting.BettypeName;
             IsLive = setting.IsLive;
             MaxDiscount = setting.MaxDiscount;
+            IntervalValue = setting.IntervalValue;
             switch (setting.SettingTypeName)
             {
                 case Commission:
@@ -144,7 +147,9 @@ namespace Fanex.Tarus.Customer.Entities.InitializingCustomerSetting
         private List<SelectListItem> BuildCommisionOptions()
         {
             var result = new List<SelectListItem>();
-            for (decimal i = 0; i <= MaxDiscount; i = i + (decimal)0.0005)
+            if (MaxDiscount == 0 || IntervalValue == 0) return result;
+
+            for (decimal i = 0; i <= MaxDiscount; i = i + IntervalValue)
             {
                 result.Add(new SelectListItem { Text = i.ToString("0.####"), Value = i.ToString("0.####") });
             }
