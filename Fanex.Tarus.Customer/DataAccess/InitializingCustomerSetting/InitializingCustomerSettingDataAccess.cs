@@ -190,7 +190,8 @@
             var currencyList = new List<string>();
             foreach (var currency in currencyIds)
             {
-                currencyList.Add(currencies.FirstOrDefault(c => c.Id == currency).Name);
+                var targetCurrency = currencies.FirstOrDefault(c => c.Id == currency);
+                currencyList.Add(targetCurrency != null ? targetCurrency.Name : string.Format(FormatDisplay, currency, string.Empty));
             }
             model.CurrencyIdList = currencyIds;
             model.CurrencyList = currencyList;
@@ -199,7 +200,8 @@
             var siteList = new List<string>();
             foreach (var site in siteIds)
             {
-                siteList.Add(sites.FirstOrDefault(c => c.Id == site).Name);
+                var targetSite = sites.FirstOrDefault(c => c.Id == site);
+                siteList.Add(targetSite != null ? targetSite.Name : string.Format(FormatDisplay, site, string.Empty));
             }
             model.SiteIdList = siteIds;
             model.SiteList = siteList;

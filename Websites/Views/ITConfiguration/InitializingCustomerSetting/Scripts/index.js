@@ -451,11 +451,9 @@ function RenderCurrencySelection(enableInput) {
 
 function RenderSelectView() {
     $(".sel-sport-copy").each(function () {
-        var pos = $(this).data("pos");
         $(this).select2({ width: "100%" });
     });
     $(".sel-bettype-copy").each(function () {
-        var pos = $(this).data("pos");
         $(this).select2({ width: "100%" });
     });
     $(".input-com-super").each(function () {
@@ -633,6 +631,32 @@ function RenderEventEdit() {
             selectedConfig.ConfigDetail.Settings[position].SpecialRequirement = $(this).val();
         });
     });
+    $(".input-com-member").each(function () {
+        var pos = $(this).data("pos");
+        var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
+        $(this).change(function () {
+            selectedConfig.ConfigDetail.Settings[position].DefaultValueMember = $(this).val();
+        });
+    });
+
+    $(".input-com-agent").each(function () {
+        var pos = $(this).data("pos");
+        var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
+        $(this).change(function () {
+            selectedConfig.ConfigDetail.Settings[position].DefaultValueAgent = $(this).val();
+            RenderCommMember(pos, position);
+        });
+    });
+
+    $(".input-com-master").each(function () {
+        var pos = $(this).data("pos");
+        var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
+        $(this).change(function () {
+            selectedConfig.ConfigDetail.Settings[position].DefaultValueMaster = $(this).val();
+            RenderCommAgent(pos, position);
+        });
+    });
+
     $(".input-com-super").each(function () {
         var pos = $(this).data("pos");
         var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
@@ -641,37 +665,9 @@ function RenderEventEdit() {
         $(this).val(parseFloat(comm)).change();
         $(this).change(function () {
             selectedConfig.ConfigDetail.Settings[position].DefaultValueSuper = $(this).val();
+            RenderCommMaster(pos, position);
         });
-    });
-    $(".input-com-master").each(function () {
-        var pos = $(this).data("pos");
-        var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
-        var comm = selectedConfig.ConfigDetail.Settings[position].DefaultValueMaster;
-        $(this).select2({ width: "100%", disabled: !selectedConfig.ConfigDetail.Settings[position].IsDefault });
-        $(this).val(parseFloat(comm)).change();
-        $(this).change(function () {
-            selectedConfig.ConfigDetail.Settings[position].DefaultValueMaster = $(this).val();
-        });
-    });
-    $(".input-com-agent").each(function () {
-        var pos = $(this).data("pos");
-        var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
-        var comm = selectedConfig.ConfigDetail.Settings[position].DefaultValueAgent;
-        $(this).select2({ width: "100%", disabled: !selectedConfig.ConfigDetail.Settings[position].IsDefault });
-        $(this).val(parseFloat(comm)).change();
-        $(this).change(function () {
-            selectedConfig.ConfigDetail.Settings[position].DefaultValueAgent = $(this).val();
-        });
-    });
-    $(".input-com-member").each(function () {
-        var pos = $(this).data("pos");
-        var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
-        var comm = selectedConfig.ConfigDetail.Settings[position].DefaultValueMember;
-        $(this).select2({ width: "100%", disabled: !selectedConfig.ConfigDetail.Settings[position].IsDefault });
-        $(this).val(parseFloat(comm)).change();
-        $(this).change(function () {
-            selectedConfig.ConfigDetail.Settings[position].DefaultValueMember = $(this).val();
-        });
+        RenderCommMaster(pos, position);
     });
 
     $(".input-status-super").each(function () {
@@ -686,6 +682,60 @@ function RenderEventEdit() {
     $(".input-status-member").each(function () {
         $(this).on('click', ChangeMemberStatus);
     });
+}
+
+function RenderCommMaster(pos, position) {
+    var selDiv = $("#input-com-master-" + pos);
+    var options = selectedConfig.ConfigDetail.Settings[position].CommissionOptions;
+    selDiv.empty();
+    if (options) {
+        var currentValue = parseFloat(selectedConfig.ConfigDetail.Settings[position].DefaultValueMaster);
+        var maxValue = parseFloat(selectedConfig.ConfigDetail.Settings[position].DefaultValueSuper);
+        if (currentValue > maxValue) selectedConfig.ConfigDetail.Settings[position].DefaultValueMaster = selectedConfig.ConfigDetail.Settings[position].DefaultValueSuper;
+        options.forEach(function (opt) {
+            if (parseFloat(opt.Value) <= maxValue) {
+                selDiv.append(new Option(opt.Text, opt.Value));
+            }
+        });
+    }
+    selDiv.select2({ width: "100%", disabled: !selectedConfig.ConfigDetail.Settings[position].IsDefault });
+    selDiv.val(parseFloat(selectedConfig.ConfigDetail.Settings[position].DefaultValueMaster)).change();
+}
+
+function RenderCommAgent(pos, position) {
+    var selDiv = $("#input-com-agent-" + pos);
+    var options = selectedConfig.ConfigDetail.Settings[position].CommissionOptions;
+    selDiv.empty();
+    if (options) {
+        var currentValue = parseFloat(selectedConfig.ConfigDetail.Settings[position].DefaultValueAgent);
+        var maxValue = parseFloat(selectedConfig.ConfigDetail.Settings[position].DefaultValueMaster);
+        if (currentValue > maxValue) selectedConfig.ConfigDetail.Settings[position].DefaultValueAgent = selectedConfig.ConfigDetail.Settings[position].DefaultValueMaster;
+        options.forEach(function (opt) {
+            if (parseFloat(opt.Value) <= maxValue) {
+                selDiv.append(new Option(opt.Text, opt.Value));
+            }
+        });
+    }
+    selDiv.select2({ width: "100%", disabled: !selectedConfig.ConfigDetail.Settings[position].IsDefault });
+    selDiv.val(parseFloat(selectedConfig.ConfigDetail.Settings[position].DefaultValueAgent)).change();
+}
+
+function RenderCommMember(pos, position) {
+    var selDiv = $("#input-com-member-" + pos);
+    var options = selectedConfig.ConfigDetail.Settings[position].CommissionOptions;
+    selDiv.empty();
+    if (options) {
+        var currentValue = parseFloat(selectedConfig.ConfigDetail.Settings[position].DefaultValueMember);
+        var maxValue = parseFloat(selectedConfig.ConfigDetail.Settings[position].DefaultValueAgent);
+        if (currentValue > maxValue) selectedConfig.ConfigDetail.Settings[position].DefaultValueMember = selectedConfig.ConfigDetail.Settings[position].DefaultValueAgent;
+        options.forEach(function (opt) {
+            if (parseFloat(opt.Value) <= maxValue) {
+                selDiv.append(new Option(opt.Text, opt.Value));
+            }
+        });
+    }
+    selDiv.select2({ width: "100%", disabled: !selectedConfig.ConfigDetail.Settings[position].IsDefault });
+    selDiv.val(parseFloat(selectedConfig.ConfigDetail.Settings[position].DefaultValueMember)).change();
 }
 
 function ChangeSuperStatus() {
