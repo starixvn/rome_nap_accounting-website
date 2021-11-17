@@ -228,7 +228,7 @@ function RenderDcsMatrix() {
                 $('#popupContainer').dialog({
                     title: 'Add Config',
                     modal: true,
-                    width: '1000',
+                    width: '1100',
                     height: '600'
                 });
             }
@@ -307,7 +307,7 @@ function GetConfigDetail(configId) {
                 $('#popupContainer').dialog({
                     title: 'Config ' + configId,
                     modal: true,
-                    width: '1000',
+                    width: '1100',
                     height: '600'
                 });
             }
@@ -341,7 +341,7 @@ function GetViewConfigDetail(configId) {
                 $('#popupContainer').dialog({
                     title: 'Config ' + configId,
                     modal: true,
-                    width: '1000',
+                    width: '1100',
                     height: '600'
                 });
 

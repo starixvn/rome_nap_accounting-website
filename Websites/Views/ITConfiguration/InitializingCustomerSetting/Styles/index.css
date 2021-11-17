@@ -8,7 +8,7 @@
     margin-top: 4px;
     padding-top: 4px;
     padding-bottom: 5px;
-    background: url('../../../App_Themes/Images/Banner/bg_head_tb.jpg') repeat-x scroll left bottom #FFFFFF;
+    background: url('../../../../App_Themes/Images/Banner/bg_head_tb.jpg') repeat-x scroll left bottom #FFFFFF;
     border: 1px solid #7C98A4;
     text-align: left;
 }
@@ -176,6 +176,19 @@
     text-align: right;
 }
 
-.ckb {
-    margin-bottom: 0px;
+.div-ckb {
+    display: flex;
+    align-items: center;
+}
+
+.div-daily {
+    display: block;
+}
+
+.div-daily span {
+    vertical-align: middle;
+}
+
+.ckb-auto-reset {
+    vertical-align: middle;
 }
