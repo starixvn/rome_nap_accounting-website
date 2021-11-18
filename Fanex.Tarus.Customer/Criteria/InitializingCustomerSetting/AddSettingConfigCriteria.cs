@@ -45,7 +45,7 @@ namespace Fanex.Tarus.Customer.Criteria.InitializingCustomerSetting
             for (int i = 0; i < settings.Count; i++)
             {
                 var setting = settings[i];
-                if(!setting.IsCopy && !setting.IsDefault)
+                if (!setting.IsCopy && !setting.IsDefault)
                 {
                     continue;
                 }
@@ -57,19 +57,44 @@ namespace Fanex.Tarus.Customer.Criteria.InitializingCustomerSetting
                 xmlConfig.Append("IsLive = \"" + (setting.IsLive ? "1" : "0") + "\" ");
                 xmlConfig.Append("SettingType = \"" + setting.SettingType + "\" ");
                 xmlConfig.Append("IsDefault = \"" + (setting.IsDefault ? "1" : "0") + "\" ");
-                if(!setting.IsDefault && setting.CopyFromSportType > 0) xmlConfig.Append("CopyFromSportType = \"" + setting.CopyFromSportType + "\" ");
-                if (!setting.IsDefault && setting.CopyFromBetType > 0) xmlConfig.Append("CopyFromBetType = \"" + setting.CopyFromBetType + "\" ");
-                if (setting.IsDefault && !string.IsNullOrEmpty(setting.DefaultValueSuper)) xmlConfig.Append("DefaultValueSuper = \"" + setting.DefaultValueSuper + "\" ");
-                if (setting.IsDefault && !string.IsNullOrEmpty(setting.DefaultValueMaster)) xmlConfig.Append("DefaultValueMaster = \"" + setting.DefaultValueMaster + "\" ");
-                if (setting.IsDefault && !string.IsNullOrEmpty(setting.DefaultValueAgent)) xmlConfig.Append("DefaultValueAgent = \"" + setting.DefaultValueAgent + "\" ");
-                if (setting.IsDefault && !string.IsNullOrEmpty(setting.DefaultValueMember)) xmlConfig.Append("DefaultValueMember = \"" + setting.DefaultValueMember + "\" ");
-                if (setting.IsDefault && !string.IsNullOrEmpty(setting.SpecialRequirement))
+                if (!setting.IsDefault && setting.CopyFromSportType > 0)
                 {
-                    xmlConfig.Append("SpecialRequirement = \"" + setting.SpecialRequirement + "\" ");
-                } else if (setting.IsRequiredHeadline)
+                    xmlConfig.Append("CopyFromSportType = \"" + setting.CopyFromSportType + "\" ");
+                }
+
+                if (!setting.IsDefault && setting.CopyFromBetType > 0)
+                {
+                    xmlConfig.Append("CopyFromBetType = \"" + setting.CopyFromBetType + "\" ");
+                }
+
+                if (setting.IsDefault && !string.IsNullOrEmpty(setting.DefaultValueSuper))
+                {
+                    xmlConfig.Append("DefaultValueSuper = \"" + setting.DefaultValueSuper + "\" ");
+                }
+
+                if (setting.IsDefault && !string.IsNullOrEmpty(setting.DefaultValueMaster))
+                {
+                    xmlConfig.Append("DefaultValueMaster = \"" + setting.DefaultValueMaster + "\" ");
+                }
+
+                if (setting.IsDefault && !string.IsNullOrEmpty(setting.DefaultValueAgent))
+                {
+                    xmlConfig.Append("DefaultValueAgent = \"" + setting.DefaultValueAgent + "\" ");
+                }
+
+                if (setting.IsDefault && !string.IsNullOrEmpty(setting.DefaultValueMember))
+                {
+                    xmlConfig.Append("DefaultValueMember = \"" + setting.DefaultValueMember + "\" ");
+                }
+
+                if (setting.IsRequiredHeadline)
                 {
                     var headline = setting.SpecialRequirement == null ? string.Empty : string.Join(",", setting.SpecialRequirement.ToUpperInvariant().Split(',').Distinct());
                     xmlConfig.Append("SpecialRequirement = \"" + headline + "\" ");
+                }
+                else if (setting.IsDefault && !string.IsNullOrEmpty(setting.SpecialRequirement))
+                {
+                    xmlConfig.Append("SpecialRequirement = \"" + setting.SpecialRequirement + "\" ");
                 }
                 xmlConfig.Append("/>");
             }

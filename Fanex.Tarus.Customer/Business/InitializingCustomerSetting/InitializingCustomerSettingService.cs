@@ -164,15 +164,19 @@
                                                     && request.BettypeIdList.Contains(item.BettypeId));
             var settingInfos = GenerateSettingInfoModel(settings.ToList()).ToList();
             var groupSettings = settingInfos.OrderBy(st => st.SettingOrder).ThenBy(st => st.SettingType).GroupBy(setting => setting.SettingType);
+
+            var pos = 1;
             foreach (var settingGroup in groupSettings)
             {
                 var sportBettype = sportbettypesetting.FirstOrDefault(st => st.SettingName == settingGroup.FirstOrDefault().SettingName);
                 foreach (var setting in settingGroup)
                 {
+                    setting.Id = pos;
                     setting.CopyFromSportType = sportBettype.Sports[0].SportId;
                     setting.SportTypeOptions = BuildSportOptions(sportBettype.Sports, setting.CopyFromSportType).ToList();
                     setting.CopyFromBetType = sportBettype.Sports[0].Bettypes[0].BettypeId;
                     setting.BetTypeOptions = BuildBettypeOptions(sportBettype.Sports[0].Bettypes, setting.CopyFromBetType).ToList();
+                    pos++;
                 }
             }
 
