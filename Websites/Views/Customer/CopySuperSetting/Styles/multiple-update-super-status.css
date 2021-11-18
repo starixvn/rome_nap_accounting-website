@@ -1,0 +1,8 @@
+﻿.highlight-error {
+    color: red;
+}
+
+.alertboxerr {
+    max-height: 150px;
+    overflow: auto;
+}

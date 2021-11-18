@@ -340,6 +340,7 @@
     <Compile Include="Business\LicenseeSubsidiary\LicenseeSubsidiaryService.cs" />
     <Compile Include="Business\ManageRobots2\IManageRobots2Service.cs" />
     <Compile Include="Business\ManageRobots2\ManageRobots2Service.cs" />
+    <Compile Include="Business\MultipleUpdateSuperStatus\MultipleUpdateSuperStatusService.cs" />
     <Compile Include="Business\NG2\ISyncCurrencyService.cs" />
     <Compile Include="Business\NG2\ISyncCustomerService.cs" />
     <Compile Include="Business\NG2\SyncCurrencyService.cs" />
@@ -381,6 +382,7 @@
     <Compile Include="Controller\Casino\SyncCasinoController.cs" />
     <Compile Include="Controller\Chatbot\ChatbotController.cs" />
     <Compile Include="Controller\CN88Customer\MoveCN88SuperController.cs" />
+    <Compile Include="Controller\MultipleUpdateSuperStatusController.cs" />
     <Compile Include="Controller\CopySuperSettingController.cs" />
     <Compile Include="Controller\CopyVRSettingController.cs" />
     <Compile Include="Controller\LicenseeOddGroupController.cs" />
@@ -483,6 +485,7 @@
     <Compile Include="Criteria\LockUnsuspend\UpdateCustomerCriteria.cs" />
     <Compile Include="Criteria\ManageRobots2\CheckIsRobotCriteria.cs" />
     <Compile Include="Criteria\LicenseeSubsidiary\GetCopiedAccountsCriteria.cs" />
+    <Compile Include="Criteria\MultipleUpdateSuperStatus\GetSupersStatusCriteria.cs" />
     <Compile Include="Criteria\NewLicensee\GetCurrenciesBySystemCriteria.cs" />
     <Compile Include="Criteria\ParlayMaxPayout\MaxPayoutSelectCriteria.cs" />
     <Compile Include="Criteria\ParlayMaxPayout\MaxPayoutCheckCriteria.cs" />
@@ -551,6 +554,7 @@
     <Compile Include="DataAccess\LockUnsuspend\LockUnsuspendService.cs" />
     <Compile Include="DataAccess\ManageRobots2\IManageRobots2DataAccess.cs" />
     <Compile Include="DataAccess\ManageRobots2\ManageRobots2DataAccess.cs" />
+    <Compile Include="DataAccess\MultipleUpdateSuperStatus\MultipleUpdateSuperStatusDataAccess.cs" />
     <Compile Include="DataAccess\NewLicensee\INewLicenseeRepository.cs" />
     <Compile Include="DataAccess\NewLicensee\NewLicenseeRepository.cs" />
     <Compile Include="DataAccess\NG2\ISyncCustomerRepository.cs" />
@@ -647,6 +651,7 @@
     <Compile Include="Entities\LicenseeDcsSetting\PTEntity.cs" />
     <Compile Include="Entities\LockUnsuspend\LockUnsuspendResultEntity.cs" />
     <Compile Include="Entities\ManageRobots2\RobotStatus.cs" />
+    <Compile Include="Entities\MultipleUpdateSuperStatus\SuperStatusEntity.cs" />
     <Compile Include="Entities\Player3rd\Player3rd.cs" />
     <Compile Include="Entities\SettingCustomer\OpenCustomer\SingleOpenDownline.cs" />
     <Compile Include="Entities\SettingCustomer\OpenCustomer\SingleOpenAffectedDownline.cs" />
@@ -686,6 +691,11 @@
     <Compile Include="Requests\CustomerSetting\Suspend\GetSingleSuspendCustomerInfoQuery.cs" />
     <Compile Include="Requests\GetMessageLogsQuery.cs" />
     <Compile Include="Requests\LicenseeOddsGroup\UpdateOddsGroupRequest.cs" />
+    <Compile Include="Requests\MultipleUpdateSuperStatus\UpdatedCustomerIinfo.cs" />
+    <Compile Include="Requests\MultipleUpdateSuperStatus\UpdateSupersProtectedStatusRequest.cs" />
+    <Compile Include="Requests\MultipleUpdateSuperStatus\UpdateSupersSuspendedStatusRequest.cs" />
+    <Compile Include="Requests\MultipleUpdateSuperStatus\UpdateSupersClosedStatusRequest.cs" />
+    <Compile Include="Requests\MultipleUpdateSuperStatus\GetSupersStatusRequest.cs" />
     <Compile Include="Requests\ParlayMaxPayout\ParlayMaxPayoutSelectRequest.cs" />
     <Compile Include="Requests\ParlayMaxPayout\ParlayMaxPayoutUpdateRequest.cs" />
     <Compile Include="Resources\BetCreditHistoryLabels.Designer.cs">
@@ -770,6 +780,8 @@
     <Compile Include="ViewModels\LicenseeOddsGroup\AgentOddsGroupViewModel.cs" />
     <Compile Include="ViewModels\LicenseeOddsGroup\FilterViewModel.cs" />
     <Compile Include="ViewModels\LockUnsuspend\LockUnsuspendResultViewModel.cs" />
+    <Compile Include="ViewModels\MultipleUpdateSuperStatus\SupersStatusViewModel.cs" />
+    <Compile Include="ViewModels\MultipleUpdateSuperStatus\UpdateResultEntity.cs" />
     <Compile Include="ViewModels\ParlayMaxPayout\ParlayMaxPayoutViewModel.cs" />
     <Compile Include="ViewModels\ViewPeriodsCN88\ViewPeriodsCN88ViewModel.cs" />
   </ItemGroup>

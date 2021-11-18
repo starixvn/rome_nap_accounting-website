@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Sunplus.Accounting.Business.Customer
 {
-    internal static class CustomerAppSettings
+    public static class CustomerAppSettings
     {
         private static IDictionary<string, bool> protectedModeOfferSites;
 

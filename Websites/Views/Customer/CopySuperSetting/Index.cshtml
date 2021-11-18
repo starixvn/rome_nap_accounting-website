@@ -8,60 +8,39 @@
     <link href="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Grid.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Pagination.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/Views/Customer/CopySuperSetting/Styles/copy-super-setting.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Views/Customer/CopySuperSetting/Styles/multiple-update-super-status.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/App_Themes/LeftPanel/left_panel.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
 </head>
 <body>
-    <div class="main" style="display:inline-flex;">
+    <div class="main">
         <div class="maincontent">
-            <table border="0" cellpadding="0" cellspacing="0" class="maincontent_header">
-                <tbody>
-                    <tr>
-                        <td class="maincontent_headerL"></td>
-                        <td class="maincontent_headerC">
-                            Copy Super Setting
-                        </td>
-                        <td class="maincontent_headerR"></td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="mainContent">
-                <div id="errMsg"></div>
-                <div id="errSupers"></div>
-                <div class="bg_table">
-                    <div>
-                        <div class="inputSuper">
-                            <label for="sourcesuper">
-                                Source Super<span style="color: red;">*</span>
-                            </label>
-                            <br />
-                            <input type="text" style="margin-top: 5px;" id="sourcesuper" maxlength="30"/>
-                        </div>
-                        <div class="inputSuper">
-                            <label for="superlist">
-                                Copy setting to Supers<span style="color: red;">*</span> (Maximum 500 supers, separated by comma ',')
-                            </label>
-                            <br />
-                            <textarea type="text" style="margin-top: 5px;" id="superlist" rows="15" cols="100"></textarea>
-                        </div>
-                        <input type="button" id="btnCheckSupers" value="Select" class="btn inputSuper" onclick="CheckSuper()" />
-                    </div>
-                </div>
-                <div id="superSetting" class="setting-actions hidden">
-                    <div id="gridBettypeContainer" class="grid-container">
-                        <div id="settings" class="freegrid"></div>
-                    </div>
-                    <div class="setting-actions">
-                        <input type="button" value="Submit" class="btn" onclick="ApplySetting()" />
-                        <input type="button" value="Reset" class="btn" onclick="ResetSelect()" />
+            <div id="divMainHeader" style="height:27px; background-color:#fff; position:fixed; width:100%; margin-top:-4px; padding-top:10px;">
+
+                <div class="box_header" style="width: 100%;">
+                    <div class="left_tab" style="width: 100%">
+                        <ul id="tabs">
+                            <li id="tab_1" class="current"><a href="javascript:SwitchTab('tab_1', 'tab_content_1');"><span>Copy Super Setting</span></a></li>
+                            <li id="tab_2"><a href="javascript:SwitchTab('tab_2', 'tab_content_2');"><span>Multiple Update Super Status</span></a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
+            <div id="tab_content_1" style="margin-top:38px;">
+                @Html.Partial("~/Views/Customer/CopySuperSetting/_CopySuperSetting.cshtml")
+            </div>
+            <div id="tab_content_2" style="display: none;margin-top:38px">
+                @Html.Partial("~/Views/Customer/CopySuperSetting/_MultipleUpdateSuperStatus.cshtml")
+            </div>
         </div>
+
     </div>
     <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-1.8.2.min.js?v=" + WebSettings.Version)"></script>
     <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-ui-1.9.1.min.js?v=" + WebSettings.Version)"></script>
     <script type="text/javascript" src="@Url.Content("~/js/common.js?v=" + WebSettings.Version)"></script>
     <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Grid.js?v=" + WebSettings.Version)"></script>
     <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Pagination.js?v=" + WebSettings.Version)"></script>
-    <script type="text/javascript" src="@Url.Content("~/Views/Customer/CopySuperSetting/Scripts/index.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Views/Customer/CopySuperSetting/Scripts/TabHandler.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Views/Customer/CopySuperSetting/Scripts/CopySuperSetting.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Views/Customer/CopySuperSetting/Scripts/MultipleUpdateSuperStatus.js?v=" + WebSettings.Version)"></script>
 </body>
 </html>
