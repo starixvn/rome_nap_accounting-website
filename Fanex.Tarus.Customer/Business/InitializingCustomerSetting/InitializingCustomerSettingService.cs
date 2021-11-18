@@ -375,6 +375,7 @@
             {
                 IsConfirmed = true
             };
+
             var resultMessages = dataAccess.AddUpdateConfigSetting(criteria);
             foreach (var msg in resultMessages)
             {

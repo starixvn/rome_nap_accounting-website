@@ -96,7 +96,7 @@ namespace Fanex.Tarus.Customer.Entities.InitializingCustomerSetting
 
         public string TargetBetType { get => string.Format(IdKey, "bettype", SettingId); }
 
-        public bool IsRequiredSpecialRequirement { get => SettingName == ProductStatus; }
+        public bool IsRequiredHeadline { get => SettingName == ProductStatus; }
 
         public SettingInforModel(int id, ProductDcsModel setting)
         {
@@ -123,6 +123,7 @@ namespace Fanex.Tarus.Customer.Entities.InitializingCustomerSetting
                 case ProductStatus:
                     IsDefault = false;
                     IsCopy = false;
+                    SpecialRequirement = string.Empty;
                     DefaultValueSuper = "1";
                     DefaultValueMaster = "1";
                     DefaultValueAgent = "1";

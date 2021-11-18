@@ -293,8 +293,9 @@ function OpenAddConfig() {
     RenderDcsMatrix();
 }
 
-function GetConfigDetail(configId) {
+function GetConfigDetail(configId, isDialogOpened = false) {
     selectedConfig = null;
+    $("#editErrMsg").html("");
     parent.BlockUI();
     $.ajax({
         type: "GET",
@@ -304,12 +305,16 @@ function GetConfigDetail(configId) {
                 showAlertMessage('errMsg', rs.ErrorMessage, 1);
             } else {
                 $("#popupContainer").html(rs);
-                $('#popupContainer').dialog({
-                    title: 'Config ' + configId,
-                    modal: true,
-                    width: '1100',
-                    height: '600'
-                });
+                if (!isDialogOpened) {
+                    $('#popupContainer').dialog({
+                        title: 'Config ' + configId,
+                        modal: true,
+                        width: '1100',
+                        height: '600'
+                    });
+                } else {
+                    showAlertMessage('editErrMsg', "Updated Successfully.", 0);
+                }
             }
         },
         error: function (event, jqXHR, ajaxSettings) {
@@ -318,7 +323,6 @@ function GetConfigDetail(configId) {
         complete: function () {
             try { parent.jQuery.unblockUI(); } catch (e) { }
 
-            $("#editErrMsg").html("");
             $("#btn-add").addClass("hidden");
             $("#btn-edit").removeClass("hidden");
             RenderEditConfigDetail();
@@ -1050,18 +1054,17 @@ function UpdateConfigModel() {
                 });
 
                 showAlertMessage('editErrMsg', message, 1);
+                try { parent.jQuery.unblockUI(); } catch (e) { }
             } else {
-                showAlertMessage('editErrMsg', "Updated Successfully.", 0);
+                GetConfigDetail(selectedConfig.ConfigDetail.Config.ConfigId, true);
             }
-
-            $("#popupContainer").scrollTop(0);
         },
         error: function (event, jqXHR, ajaxSettings) {
-            $("#popupContainer").scrollTop(0);
             showAlertMessage('editErrMsg', "Internal server error.", 1);
+            try { parent.jQuery.unblockUI(); } catch (e) { }
         },
         complete: function () {
-            try { parent.jQuery.unblockUI(); } catch (e) { }
+            $("#popupContainer").scrollTop(0);
             GetSetting();
         }
     });
