@@ -246,7 +246,6 @@ function RenderDcsMatrix() {
             $("#btn-edit").addClass("hidden");
             $("#filterDiv").removeClass("hidden");
             InitFilter();
-            UpdateSelectSport();
         }
     });
 }
@@ -260,6 +259,7 @@ function InitFilter() {
         RenderSportType();
     }
     UpdateSelectSport();
+    RenderBetTypeOptions();
 } 
 
 function InitFilterBehavior() {
@@ -269,6 +269,7 @@ function InitFilterBehavior() {
         selectedProduct = dcsproducts.find(element => element.ProductId.toString() === selectedProductId);
         RenderSportType();
         UpdateSelectSport();
+        RenderBetTypeOptions();
     });
 }
 
@@ -909,14 +910,17 @@ function RenderSportType() {
         checkAllText: "All",
         listData: multiselectData,
         noItemText: "Select Sport",
-        onCheck: UpdateSelectSport
+        onCheck: function () {
+            isNeedRenderBettype = true;
+            UpdateSelectSport();
+        }
     });
 
     $("#EditSportSelect").next('div.ui-multiselect-options').on('close', function () { return false; });
     $("#EditSportSelect").next('div.ui-multiselect-options').off('close');
     $("#EditSportSelect").next('div.ui-multiselect-options').on('close',
         function () {
-            if (isNeedRenderBettype) RenderBetType();
+            if (isNeedRenderBettype) RenderBetTypeOptions();
         });
 }
 
@@ -928,11 +932,9 @@ function UpdateSelectSport() {
             selectedSports.push(selectedProduct.Sports.find(element => element.SportId.toString() === item));
         });
     }
-
-    isNeedRenderBettype = true;
 }
 
-function RenderBetType() {
+function RenderBetTypeOptions() {
     isNeedRenderBettype = false;
     var bettypeFilter = $("#EditBettypeSelect");
     bettypeFilter.empty();
