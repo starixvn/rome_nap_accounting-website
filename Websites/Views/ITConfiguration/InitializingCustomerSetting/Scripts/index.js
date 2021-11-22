@@ -4,6 +4,7 @@ var selectedProduct = null;
 var selectedSports = [];
 var selectedConfig = null;
 var isAddConfig = false;
+var isNeedRenderBettype = false;
 function GetSetting() {
     parent.BlockUI();
     $.ajax({
@@ -910,6 +911,13 @@ function RenderSportType() {
         noItemText: "Select Sport",
         onCheck: UpdateSelectSport
     });
+
+    $("#EditSportSelect").next('div.ui-multiselect-options').on('close', function () { return false; });
+    $("#EditSportSelect").next('div.ui-multiselect-options').off('close');
+    $("#EditSportSelect").next('div.ui-multiselect-options').on('close',
+        function () {
+            if (isNeedRenderBettype) RenderBetType();
+        });
 }
 
 function UpdateSelectSport() {
@@ -920,10 +928,12 @@ function UpdateSelectSport() {
             selectedSports.push(selectedProduct.Sports.find(element => element.SportId.toString() === item));
         });
     }
-    RenderBetType();
+
+    isNeedRenderBettype = true;
 }
 
 function RenderBetType() {
+    isNeedRenderBettype = false;
     var bettypeFilter = $("#EditBettypeSelect");
     bettypeFilter.empty();
     bettypeFilter.removeAttr('disabled');
