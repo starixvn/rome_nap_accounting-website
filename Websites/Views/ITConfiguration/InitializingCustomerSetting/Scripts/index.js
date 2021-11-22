@@ -5,6 +5,7 @@ var selectedSports = [];
 var selectedConfig = null;
 var isAddConfig = false;
 var isNeedRenderBettype = false;
+var isLoadCachedFilter = false;
 function GetSetting() {
     parent.BlockUI();
     $.ajax({
@@ -251,6 +252,8 @@ function RenderDcsMatrix() {
 }
 
 function InitFilter() {
+    isLoadCachedFilter = true;
+
     InitFilterBehavior();
     $("#EditProductSelect").select2({ width: "135px" });
     if (selectedConfig && selectedConfig.ConfigDetail) {
@@ -260,6 +263,8 @@ function InitFilter() {
     }
     UpdateSelectSport();
     RenderBetTypeOptions();
+
+    isLoadCachedFilter = false;
 } 
 
 function InitFilterBehavior() {
@@ -891,7 +896,7 @@ function RenderSportType() {
                 Id: 'sport' + item.SportId,
                 Value: item.SportId,
                 Text: item.SportName,
-                Checked: selectedConfig && selectedConfig.ConfigDetail.Config.SportTypeIdList && selectedConfig.ConfigDetail.Config.SportTypeIdList.indexOf(item.SportId) >= 0,
+                Checked: isLoadCachedFilter && selectedConfig && selectedConfig.ConfigDetail.Config.SportTypeIdList && selectedConfig.ConfigDetail.Config.SportTypeIdList.indexOf(item.SportId) >= 0,
                 Enable: true,
                 CssClass: "",
                 Items: []
@@ -949,7 +954,7 @@ function RenderBetTypeOptions() {
                         Id: 'bettype' + bt.BettypeId,
                         Value: bt.BettypeId,
                         Text: bt.BettypeName,
-                        Checked: selectedConfig && selectedConfig.ConfigDetail.Config.BetTypeIdList &&selectedConfig.ConfigDetail.Config.BetTypeIdList.indexOf(bt.BettypeId) >= 0,
+                        Checked: isLoadCachedFilter && selectedConfig && selectedConfig.ConfigDetail.Config.BetTypeIdList &&selectedConfig.ConfigDetail.Config.BetTypeIdList.indexOf(bt.BettypeId) >= 0,
                         Enable: true,
                         CssClass: "",
                         Items: []
