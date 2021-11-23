@@ -154,16 +154,16 @@ function RenderAction(status, configId) {
     return '<a href="javascript:void(0);" alt = "View" style = "cursor: pointer" onclick = "ViewConfig(' + configId + ')" >[View]</a>';
 }
 
-function GetStartTimeClass(time) {
-    if (time && !IsFutureTime(time)) {
+function GetStartTimeClass(starttime) {
+    if (starttime && !IsFutureTime(starttime)) {
         return "previous-time";
     }
 
-    return null;
+    return "";
 }
 
-function IsFutureTime(time) {
-    var selectDate = new Date(time);
+function IsFutureTime(starttime) {
+    var selectDate = new Date(starttime);
     var todayDate = new Date(today);
 
     return +selectDate > +todayDate;
@@ -175,20 +175,21 @@ function RenderSettings() {
     var steps = configSettings.Steps;
     for (var i = 0; i < configSettings.ConfigSettings.length; i++) {
         var setting = configSettings.ConfigSettings[i];
+        var startTimeClass = GetStartTimeClass(setting.StartTime);
         var row = { Columns: [] };
-        row.Columns.push({ Name: 'ConfigId', TdClass: null, Value: setting.ConfigId });
-        row.Columns.push({ Name: 'Product', TdClass: null, Value: setting.ProductName });
-        row.Columns.push({ Name: 'Sport', TdClass: null, Value: RenderSports(i) });
-        row.Columns.push({ Name: 'BetType', TdClass: null, Value: RenderBettypes(i) });
-        row.Columns.push({ Name: 'Site', TdClass: null, Value: RenderSite(i) });
-        row.Columns.push({ Name: 'Currency', TdClass: null, Value: RenderCurrency(i) });
-        row.Columns.push({ Name: 'Status', TdClass: null, Value: RenderStatus(setting.Status) });
-        row.Columns.push({ Name: 'Steps', TdClass: null, Value: RenderStep(setting, steps) });
-        row.Columns.push({ Name: 'StartTime', TdClass: GetStartTimeClass(setting.StartTime), Value: setting.StartTime });
-        row.Columns.push({ Name: 'EndTime', TdClass: null, Value: setting.EndTime });
-        row.Columns.push({ Name: 'IsTest', TdClass: null, Value: setting.IsTest ? 1 : 0 });
-        row.Columns.push({ Name: 'Remark', TdClass: "remark", Value: setting.Remark });
-        row.Columns.push({ Name: 'Action', TdClass: null, Value: RenderAction(setting.Status, setting.ConfigId) });
+        row.Columns.push({ Name: 'ConfigId', TdClass: startTimeClass, Value: setting.ConfigId });
+        row.Columns.push({ Name: 'Product', TdClass: startTimeClass, Value: setting.ProductName });
+        row.Columns.push({ Name: 'Sport', TdClass: startTimeClass, Value: RenderSports(i) });
+        row.Columns.push({ Name: 'BetType', TdClass: startTimeClass, Value: RenderBettypes(i) });
+        row.Columns.push({ Name: 'Site', TdClass: startTimeClass, Value: RenderSite(i) });
+        row.Columns.push({ Name: 'Currency', TdClass: startTimeClass, Value: RenderCurrency(i) });
+        row.Columns.push({ Name: 'Status', TdClass: startTimeClass, Value: RenderStatus(setting.Status) });
+        row.Columns.push({ Name: 'Steps', TdClass: startTimeClass, Value: RenderStep(setting, steps) });
+        row.Columns.push({ Name: 'StartTime', TdClass: startTimeClass, Value: setting.StartTime });
+        row.Columns.push({ Name: 'EndTime', TdClass: startTimeClass, Value: setting.EndTime });
+        row.Columns.push({ Name: 'IsTest', TdClass: startTimeClass, Value: setting.IsTest ? 1 : 0 });
+        row.Columns.push({ Name: 'Remark', TdClass: startTimeClass + " remark", Value: setting.Remark });
+        row.Columns.push({ Name: 'Action', TdClass: startTimeClass, Value: RenderAction(setting.Status, setting.ConfigId) });
         bodyRows.push(row);
     }
 
@@ -380,8 +381,8 @@ function RenderViewConfigDetail() {
     RenderSiteSelection(false);
     RenderCurrencySelection(false);
 
-    $("#EditStartTime").val(selectedConfig.ConfigDetail.Config.StartTime);
     SetupCalendar("EditStartTime");
+    $("#EditStartTime").val(selectedConfig.ConfigDetail.Config.StartTime).trigger("change");
     $('#EditRemark').val(selectedConfig.ConfigDetail.Config.Remark);
     $('#ckbEditIsTest').prop('checked', selectedConfig.ConfigDetail.Config.IsTest);
     DisableEditInput(true);
@@ -542,8 +543,8 @@ function RenderEventEdit() {
         });
     });
 
-    $("#EditStartTime").val(selectedConfig.ConfigDetail.Config.StartTime);
     SetupCalendar("EditStartTime");
+    $("#EditStartTime").val(selectedConfig.ConfigDetail.Config.StartTime).trigger("change");
     $('#EditRemark').val(selectedConfig.ConfigDetail.Config.Remark);
     $('#ckbEditIsTest').prop('checked', selectedConfig.ConfigDetail.Config.IsTest);
 
@@ -875,7 +876,7 @@ function ChangeMemberStatus() {
 
 function SetupCalendar(divId) {
     $('#' + divId).datetimepicker({
-        format: 'm/d/Y H:i:00 A',
+        format: 'm/d/Y H:i:00',
         minDate: today,
         step: 5
     });

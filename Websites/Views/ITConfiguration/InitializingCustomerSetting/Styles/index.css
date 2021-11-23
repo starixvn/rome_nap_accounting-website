@@ -147,7 +147,7 @@
 }
 
 .previous-time {
-    color: grey;
+    background-color: #b5b0b0 !important;
 }
 
 .td-row {

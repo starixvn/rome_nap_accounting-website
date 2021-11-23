@@ -1,6 +1,7 @@
 ﻿namespace Fanex.Tarus.Customer.DataAccess.InitializingCustomerSetting
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Data;
     using System.Linq;
@@ -58,6 +59,11 @@
 
             using (ObjectDb objDB = new ObjectDb("Acc_ExchangeCurrencySel"))
             {
+                Hashtable hashtableParams = new Hashtable
+                {
+                    { "mode", 2 }
+                };
+                objDB.AssignParamValues(hashtableParams);
                 using (var reader = objDB.ExecuteReader())
                 {
                     if (reader != null)
@@ -154,8 +160,8 @@
                 ProductId = Convert.ToInt32(reader["productid"].ToString()),
                 IsTest = Convert.ToBoolean(reader["istest"].ToString()),
                 Remark = reader["remark"].ToString(),
-                StartTime = reader["starttime"].ToString(),
-                EndTime = reader["endtime"].ToString(),
+                StartTime = Convert.IsDBNull(reader["starttime"]) ? string.Empty : Convert.ToDateTime(reader["starttime"]).ToString("MM/dd/yyyy HH:mm:ss"),
+                EndTime = Convert.IsDBNull(reader["endtime"]) ? string.Empty : Convert.ToDateTime(reader["endtime"]).ToString("MM/dd/yyyy HH:mm:ss"),
                 CurrentStep = reader["currentstep"].ToString(),
                 ProcessedSteps = reader["processedstep"].ToString(),
                 Status = Convert.ToInt32(reader["status"].ToString()),
@@ -239,8 +245,8 @@
                             ProductId = Convert.ToInt32(reader["productid"].ToString()),
                             IsTest = Convert.ToBoolean(reader["istest"].ToString()),
                             Remark = reader["remark"].ToString(),
-                            StartTime = reader["starttime"].ToString(),
-                            EndTime = reader["endtime"].ToString(),
+                            StartTime = Convert.IsDBNull(reader["starttime"]) ? string.Empty : Convert.ToDateTime(reader["starttime"]).ToString("MM/dd/yyyy HH:mm:ss"),
+                            EndTime = Convert.IsDBNull(reader["endtime"]) ? string.Empty : Convert.ToDateTime(reader["endtime"]).ToString("MM/dd/yyyy HH:mm:ss"),
                             CurrentStep = reader["currentstep"].ToString(),
                             ProcessedSteps = reader["processedstep"].ToString(),
                             SportTypeIdList = reader["sporttypelist"].ToString().Split(',').Select(id => Convert.ToInt32(id)),
