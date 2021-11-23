@@ -1031,7 +1031,7 @@ function RenderNewConfig() {
     
 }
 
-function UpdateConfigModel() {
+function ValidateUpdateConfigModel() {
     $("#editErrMsg").html("");
     selectedConfig.ConfigDetail.Config.SiteIdList = $("#EditSiteSelect").multiSelect("getCheckedItems").map(Number);
     if (selectedConfig.ConfigDetail.Config.SiteIdList.length === 0) {
@@ -1057,7 +1057,42 @@ function UpdateConfigModel() {
     }
     selectedConfig.ConfigDetail.Config.IsTest = $("#ckbEditIsTest").prop('checked');
     selectedConfig.ConfigDetail.Config.Remark = $("#EditRemark").val();
+    parent.BlockUI();
+    $.ajax({
+        type: "POST",
+        url: "ValidateUpdateConfigSetting",
+        data: selectedConfig.ConfigDetail,
+        success: function (rs) {
+            if (rs.IsWarning) {
+                if (confirm("There already exists a configuration that has the same product/sport type/bet type, currency, setting type in the system with status \"Completed\". Are you sure you want to edit this config ?")) {
+                    UpdateConfigModel();
+                }
+            } else {
+                if (rs && rs.Errors.length > 0) {
+                    var message = "";
+                    rs.Errors.forEach(function (err) {
+                        message = message + err.ErrorMsg + "</br>";
+                    });
 
+                    showAlertMessage('editErrMsg', message, 1);
+                    $("#popupContainer").scrollTop(0);
+                    try { parent.jQuery.unblockUI(); } catch (e) { }
+                } else {
+                    $("#popupContainer").scrollTop(0);
+                    GetConfigDetail(selectedConfig.ConfigDetail.Config.ConfigId, true);
+                }
+            }
+        },
+        error: function (event, jqXHR, ajaxSettings) {
+            $("#popupContainer").scrollTop(0);
+            showAlertMessage('editErrMsg', "Internal server error.", 1);
+            try { parent.jQuery.unblockUI(); } catch (e) { }
+        }
+    });
+}
+
+function UpdateConfigModel() {
+    $("#editErrMsg").html("");
     parent.BlockUI();
     $.ajax({
         type: "POST",
@@ -1122,7 +1157,7 @@ function ValidateNewConfigModel() {
         data: selectedConfig.ConfigDetail,
         success: function (rs) {
             if (rs.IsWarning) {
-                if (confirm("There already exists a configuration that has the same product/sport type/bet type, currency, setting type in the system with status \"Completed\".Are you sure you want to add this config ?")) {
+                if (confirm("There already exists a configuration that has the same product/sport type/bet type, currency, setting type in the system with status \"Completed\". Are you sure you want to add this config ?")) {
                     AddConfigModel();
                 }
             } else {

@@ -28,6 +28,8 @@
 
         IEnumerable<InsertErrorModel> AddConfigSetting(ConfigModel request);
 
+        ValidateResultModel ValidateUpdateConfigSetting(ConfigModel request);
+
         IEnumerable<InsertErrorModel> UpdateConfigSetting(ConfigModel request);
     }
     public class InitializingCustomerSettingService : IInitializingCustomerSettingService
@@ -392,6 +394,13 @@
         public ValidateResultModel ValidateAddConfigSetting(ConfigModel request)
         {
             var criteria = new AddSettingConfigCriteria(request);
+
+            return dataAccess.ValidateConfigSetting(criteria);
+        }
+
+        public ValidateResultModel ValidateUpdateConfigSetting(ConfigModel request)
+        {
+            var criteria = new EditSettingConfigCriteria(request);
 
             return dataAccess.ValidateConfigSetting(criteria);
         }

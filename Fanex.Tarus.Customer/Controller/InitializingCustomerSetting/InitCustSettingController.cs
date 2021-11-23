@@ -74,7 +74,13 @@ namespace Fanex.Tarus.Customer.Controller.InitializingCustomerSetting
         {
             return Json(service.AddConfigSetting(request));
         }
-        
+
+        [HttpPost, AuthenticateHost]
+        public ActionResult ValidateUpdateConfigSetting(ConfigModel request)
+        {
+            return Json(service.ValidateUpdateConfigSetting(request));
+        }
+
         [HttpPost, AuthenticateHost]
         public ActionResult UpdateConfigSetting(ConfigModel request)
         {
