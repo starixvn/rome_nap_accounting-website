@@ -22,7 +22,7 @@ namespace Fanex.Tarus.Customer.Criteria.InitializingCustomerSetting
         public int IsWarning { get; set; }
         public bool IsConfirmed { get; set; }
 
-        public AddSettingConfigCriteria(ConfigModel request)
+        public AddSettingConfigCriteria(ConfigModel request, string ip)
         {
             ProductID = request.Config.ProductId;
             SportTypeList = string.Join(",", request.Config.SportTypeIdList);
@@ -33,6 +33,7 @@ namespace Fanex.Tarus.Customer.Criteria.InitializingCustomerSetting
             IsTest = request.Config.IsTest ? 1 : 0;
             Remark = request.Config.Remark;
             XMLConfig = BuildXmlConfig(request.Settings);
+            IP = ip;
         }
 
         public override string GetSettingKey()

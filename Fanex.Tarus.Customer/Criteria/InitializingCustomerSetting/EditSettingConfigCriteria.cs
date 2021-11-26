@@ -4,7 +4,7 @@ namespace Fanex.Tarus.Customer.Criteria.InitializingCustomerSetting
 {
     public class EditSettingConfigCriteria : AddSettingConfigCriteria
     {
-        public EditSettingConfigCriteria(ConfigModel request) : base(request)
+        public EditSettingConfigCriteria(ConfigModel request, string ip) : base(request, ip)
         {
             ConfigID = request.Config.ConfigId;
         }

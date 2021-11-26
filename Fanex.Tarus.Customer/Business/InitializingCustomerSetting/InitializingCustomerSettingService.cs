@@ -24,13 +24,13 @@
 
         ConfigSettingViewModel GenerateConfigSetting(GenerateConfigSettingRequest request);
 
-        ValidateResultModel ValidateAddConfigSetting(ConfigModel request);
+        ValidateResultModel ValidateAddConfigSetting(ConfigModel request, string ip);
 
-        IEnumerable<InsertErrorModel> AddConfigSetting(ConfigModel request);
+        IEnumerable<InsertErrorModel> AddConfigSetting(ConfigModel request, string ip);
 
-        ValidateResultModel ValidateUpdateConfigSetting(ConfigModel request);
+        ValidateResultModel ValidateUpdateConfigSetting(ConfigModel request, string ip);
 
-        IEnumerable<InsertErrorModel> UpdateConfigSetting(ConfigModel request);
+        IEnumerable<InsertErrorModel> UpdateConfigSetting(ConfigModel request, string ip);
     }
     public class InitializingCustomerSettingService : IInitializingCustomerSettingService
     {
@@ -359,9 +359,9 @@
             return message.ErrorMsg;
         }
 
-        public IEnumerable<InsertErrorModel> AddConfigSetting(ConfigModel request)
+        public IEnumerable<InsertErrorModel> AddConfigSetting(ConfigModel request, string ip)
         {
-            var criteria = new AddSettingConfigCriteria(request)
+            var criteria = new AddSettingConfigCriteria(request, ip)
             {
                 IsConfirmed = true
             };
@@ -375,9 +375,9 @@
             return resultMessages;
         }
 
-        public IEnumerable<InsertErrorModel> UpdateConfigSetting(ConfigModel request)
+        public IEnumerable<InsertErrorModel> UpdateConfigSetting(ConfigModel request, string ip)
         {
-            var criteria = new EditSettingConfigCriteria(request)
+            var criteria = new EditSettingConfigCriteria(request, ip)
             {
                 IsConfirmed = true
             };
@@ -391,16 +391,16 @@
             return resultMessages;
         }
 
-        public ValidateResultModel ValidateAddConfigSetting(ConfigModel request)
+        public ValidateResultModel ValidateAddConfigSetting(ConfigModel request, string ip)
         {
-            var criteria = new AddSettingConfigCriteria(request);
+            var criteria = new AddSettingConfigCriteria(request, ip);
 
             return dataAccess.ValidateConfigSetting(criteria);
         }
 
-        public ValidateResultModel ValidateUpdateConfigSetting(ConfigModel request)
+        public ValidateResultModel ValidateUpdateConfigSetting(ConfigModel request, string ip)
         {
-            var criteria = new EditSettingConfigCriteria(request);
+            var criteria = new EditSettingConfigCriteria(request, ip);
 
             return dataAccess.ValidateConfigSetting(criteria);
         }

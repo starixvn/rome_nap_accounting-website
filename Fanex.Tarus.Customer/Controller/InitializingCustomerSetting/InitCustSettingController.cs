@@ -66,25 +66,25 @@ namespace Fanex.Tarus.Customer.Controller.InitializingCustomerSetting
         [HttpPost, AuthenticateHost]
         public ActionResult ValidateAddConfigSetting(ConfigModel request)
         {
-            return Json(service.ValidateAddConfigSetting(request));
+            return Json(service.ValidateAddConfigSetting(request, HttpContext.Request.UserHostAddress));
         }
 
         [HttpPost, AuthenticateHost]
         public ActionResult AddConfigSetting(ConfigModel request)
         {
-            return Json(service.AddConfigSetting(request));
+            return Json(service.AddConfigSetting(request, HttpContext.Request.UserHostAddress));
         }
 
         [HttpPost, AuthenticateHost]
         public ActionResult ValidateUpdateConfigSetting(ConfigModel request)
         {
-            return Json(service.ValidateUpdateConfigSetting(request));
+            return Json(service.ValidateUpdateConfigSetting(request, HttpContext.Request.UserHostAddress));
         }
 
         [HttpPost, AuthenticateHost]
         public ActionResult UpdateConfigSetting(ConfigModel request)
         {
-            return Json(service.UpdateConfigSetting(request));
+            return Json(service.UpdateConfigSetting(request, HttpContext.Request.UserHostAddress));
         }
 
         [HttpGet, AuthenticateRead]
