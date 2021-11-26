@@ -46,7 +46,7 @@
     @Html.Partial("~/Views/ITConfiguration/InitializingCustomerSetting/_Popup.cshtml")
 
     <script type="text/javascript">
-        var today = "@DateTime.Today.ToString("MM/dd/yyyy")";
+        var today = "@DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss")";
     </script>
 
     <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-1.8.2.min.js?v=" + WebSettings.Version)"></script>

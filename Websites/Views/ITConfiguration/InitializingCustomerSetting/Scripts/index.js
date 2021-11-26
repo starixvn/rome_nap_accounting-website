@@ -462,6 +462,13 @@ function RenderCurrencySelection(enableInput) {
 }
 
 function RenderSelectView() {
+    $(".max-winloss").each(function () {
+        var pos = $(this).data("pos");
+        var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
+        if (!isNaN(selectedConfig.ConfigDetail.Settings[position].DefaultValueSuper)) {
+            $(this).val(parseInt(selectedConfig.ConfigDetail.Settings[position].DefaultValueSuper).toString());
+        }
+    });
     $(".sel-sport-copy").each(function () {
         $(this).select2({ width: "100%" });
     });
