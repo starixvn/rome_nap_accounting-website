@@ -45,7 +45,7 @@ function RenderBettypes(pos) {
     var bettypes = configSettings.ConfigSettings[pos].BetTypeList;
     if (bettypes.length > 3) {
         return bettypes[0] + ' </br>' + bettypes[1] + ' </br>' + bettypes[2]
-            + ' </br> <a class="info-link" href="javascript:void(0);" onclick="OpenBetTypeDialogInformation(' + pos + ')">View all ' + bettypes.length + ' currencies</a>';
+            + ' </br> <a class="info-link" href="javascript:void(0);" onclick="OpenBetTypeDialogInformation(' + pos + ')">View all ' + bettypes.length + ' bet types</a>';
     } else {
         return bettypes.join('</br>');
     }
@@ -1057,6 +1057,7 @@ function ValidateUpdateConfigModel() {
     if (selectedConfig.Currencies.length === selectedConfig.ConfigDetail.Config.CurrencyIdList.length) {
         selectedConfig.ConfigDetail.Config.CurrencyIdList = [0];
     }
+
     selectedConfig.ConfigDetail.Config.StartTime = $("#EditStartTime").val();
     if (selectedConfig.ConfigDetail.Config.StartTime === "") {
         showAlertMessage('editErrMsg', "Start Time cannot be null.", 1);
