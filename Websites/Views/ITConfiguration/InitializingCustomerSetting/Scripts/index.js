@@ -235,7 +235,6 @@ function RenderDcsMatrix() {
                     height: '600'
                 });
             }
-            
         },
         error: function (event, jqXHR, ajaxSettings) {
             showAlertMessage('editErrMsg', "Internal server error.", 1);
@@ -767,29 +766,19 @@ function ChangeSuperStatus() {
     var nextEnable = statusDiv.html() !== "Enable";
     if (nextEnable) {
         selectedConfig.ConfigDetail.Settings[position].DefaultValueSuper = "1";
-        statusDiv.html("Enable");
-        statusDiv.removeClass("status-disable");
-        statusDiv.addClass("status-enable");
+        EnableStatusDiv(statusDiv);
     } else {
         selectedConfig.ConfigDetail.Settings[position].DefaultValueSuper = "0";
-        statusDiv.html("Disable");
-        statusDiv.addClass("status-disable");
-        statusDiv.removeClass("status-enable");
+        DisableStatusDiv(statusDiv);
         var targetMaster = statusDiv.data("master");
         selectedConfig.ConfigDetail.Settings[position].DefaultValueMaster = "0";
-        $("#" + targetMaster).html("Disable");
-        $("#" + targetMaster).addClass("status-disable");
-        $("#" + targetMaster).removeClass("status-enable");
+        DisableStatusDiv($("#" + targetMaster));
         var targetAgent = statusDiv.data("agent");
         selectedConfig.ConfigDetail.Settings[position].DefaultValueAgent = "0";
-        $("#" + targetAgent).html("Disable");
-        $("#" + targetAgent).addClass("status-disable");
-        $("#" + targetAgent).removeClass("status-enable");
+        DisableStatusDiv($("#" + targetAgent));
         var targetMember = statusDiv.data("member");
         selectedConfig.ConfigDetail.Settings[position].DefaultValueMember = "0";
-        $("#" + targetMember).html("Disable");
-        $("#" + targetMember).addClass("status-disable");
-        $("#" + targetMember).removeClass("status-enable");
+        DisableStatusDiv($("#" + targetMember));
     }
 
 }
@@ -807,24 +796,16 @@ function ChangeMasterStatus() {
             return;
         }
         selectedConfig.ConfigDetail.Settings[position].DefaultValueMaster = "1";
-        statusDiv.html("Enable");
-        statusDiv.removeClass("status-disable");
-        statusDiv.addClass("status-enable");
+        EnableStatusDiv(statusDiv);
     } else {
         selectedConfig.ConfigDetail.Settings[position].DefaultValueMaster = "0";
-        statusDiv.html("Disable");
-        statusDiv.addClass("status-disable");
-        statusDiv.removeClass("status-enable");
+        DisableStatusDiv(statusDiv);
         var targetAgent = statusDiv.data("agent");
         selectedConfig.ConfigDetail.Settings[position].DefaultValueAgent = "0";
-        $("#" + targetAgent).html("Disable");
-        $("#" + targetAgent).addClass("status-disable");
-        $("#" + targetAgent).removeClass("status-enable");
+        DisableStatusDiv($("#" + targetAgent));
         var targetMember = statusDiv.data("member");
         selectedConfig.ConfigDetail.Settings[position].DefaultValueMember = "0";
-        $("#" + targetMember).html("Disable");
-        $("#" + targetMember).addClass("status-disable");
-        $("#" + targetMember).removeClass("status-enable");
+        DisableStatusDiv($("#" + targetMember));
     }
 }
 
@@ -841,19 +822,13 @@ function ChangeAgentStatus() {
             return;
         }
         selectedConfig.ConfigDetail.Settings[position].DefaultValueAgent = "1";
-        statusDiv.html("Enable");
-        statusDiv.removeClass("status-disable");
-        statusDiv.addClass("status-enable");
+        EnableStatusDiv(statusDiv);
     } else {
         selectedConfig.ConfigDetail.Settings[position].DefaultValueAgent = "0";
-        statusDiv.html("Disable");
-        statusDiv.addClass("status-disable");
-        statusDiv.removeClass("status-enable");
+        DisableStatusDiv(statusDiv);
         var targetMember = statusDiv.data("member");
         selectedConfig.ConfigDetail.Settings[position].DefaultValueMember = "0";
-        $("#" + targetMember).html("Disable");
-        $("#" + targetMember).addClass("status-disable");
-        $("#" + targetMember).removeClass("status-enable");
+        DisableStatusDiv($("#" + targetMember));
     }
 }
 
@@ -870,15 +845,23 @@ function ChangeMemberStatus() {
             return;
         }
         selectedConfig.ConfigDetail.Settings[position].DefaultValueMember = "1";
-        statusDiv.html("Enable");
-        statusDiv.removeClass("status-disable");
-        statusDiv.addClass("status-enable");
+        EnableStatusDiv(statusDiv);
     } else {
         selectedConfig.ConfigDetail.Settings[position].DefaultValueMember = "0";
-        statusDiv.html("Disable");
-        statusDiv.addClass("status-disable");
-        statusDiv.removeClass("status-enable");
+        DisableStatusDiv(statusDiv);
     }
+}
+
+function EnableStatusDiv(targetDiv) {
+    targetDiv.html("Enable");
+    targetDiv.removeClass("status-disable");
+    targetDiv.addClass("status-enable");
+}
+
+function DisableStatusDiv(targetDiv) {
+    targetDiv.html("Disable");
+    targetDiv.addClass("status-disable");
+    targetDiv.removeClass("status-enable");
 }
 
 function SetupCalendar(divId) {
@@ -1038,17 +1021,18 @@ function RenderNewConfig() {
     
 }
 
-function ValidateUpdateConfigModel() {
-    $("#editErrMsg").html("");
+function ValidateBeforeAddUpdate() {
     selectedConfig.ConfigDetail.Config.SiteIdList = $("#EditSiteSelect").multiSelect("getCheckedItems").map(Number);
     if (selectedConfig.ConfigDetail.Config.SiteIdList.length === 0) {
         showAlertMessage('editErrMsg', "Site cannot be null.", 1);
-        return;
+
+        return false;
     }
     selectedConfig.ConfigDetail.Config.CurrencyIdList = $("#EditCurrencySelect").multiSelect("getCheckedItems").map(Number);
     if (selectedConfig.ConfigDetail.Config.CurrencyIdList.length === 0) {
         showAlertMessage('editErrMsg', "Currency cannot be null.", 1);
-        return;
+
+        return false;
     }
 
     if (selectedConfig.Sites.length === selectedConfig.ConfigDetail.Config.SiteIdList.length) {
@@ -1061,10 +1045,22 @@ function ValidateUpdateConfigModel() {
     selectedConfig.ConfigDetail.Config.StartTime = $("#EditStartTime").val();
     if (selectedConfig.ConfigDetail.Config.StartTime === "") {
         showAlertMessage('editErrMsg', "Start Time cannot be null.", 1);
-        return;
+
+        return false;
     }
     selectedConfig.ConfigDetail.Config.IsTest = $("#ckbEditIsTest").prop('checked');
     selectedConfig.ConfigDetail.Config.Remark = $("#EditRemark").val();
+
+    return true;
+}
+
+function ValidateUpdateConfigModel() {
+    $("#editErrMsg").html("");
+    if (!ValidateBeforeAddUpdate()) {
+        $("#popupContainer").scrollTop(0);
+        return;
+    }
+
     parent.BlockUI();
     $.ajax({
         type: "POST",
@@ -1077,12 +1073,7 @@ function ValidateUpdateConfigModel() {
                 }
             } else {
                 if (rs && rs.Errors.length > 0) {
-                    var message = "";
-                    rs.Errors.forEach(function (err) {
-                        message = message + err.ErrorMsg + "</br>";
-                    });
-
-                    showAlertMessage('editErrMsg', message, 1);
+                    ShowAddEditError(rs);
                     $("#popupContainer").scrollTop(0);
                     try { parent.jQuery.unblockUI(); } catch (e) { }
                 } else {
@@ -1109,12 +1100,7 @@ function UpdateConfigModel() {
         data: selectedConfig.ConfigDetail,
         success: function (rs) {
             if (rs && rs.length > 0) {
-                var message = "";
-                rs.forEach(function (err) {
-                    message = message + err.ErrorMsg + "</br>";
-                });
-
-                showAlertMessage('editErrMsg', message, 1);
+                ShowAddEditError(rs);
                 try { parent.jQuery.unblockUI(); } catch (e) { }
             } else {
                 GetConfigDetail(selectedConfig.ConfigDetail.Config.ConfigId, true);
@@ -1133,30 +1119,11 @@ function UpdateConfigModel() {
 
 function ValidateNewConfigModel() {
     $("#editErrMsg").html("");
-    selectedConfig.ConfigDetail.Config.SiteIdList = $("#EditSiteSelect").multiSelect("getCheckedItems").map(Number);
-    if (selectedConfig.ConfigDetail.Config.SiteIdList.length === 0) {
-        showAlertMessage('editErrMsg', "Site cannot be null.", 1);
+    if (!ValidateBeforeAddUpdate()) {
+        $("#popupContainer").scrollTop(0);
         return;
     }
-    selectedConfig.ConfigDetail.Config.CurrencyIdList = $("#EditCurrencySelect").multiSelect("getCheckedItems").map(Number);
-    if (selectedConfig.ConfigDetail.Config.CurrencyIdList.length === 0) {
-        showAlertMessage('editErrMsg', "Currency cannot be null.", 1);
-        return;
-    }
-    if (selectedConfig.Sites.length === selectedConfig.ConfigDetail.Config.SiteIdList.length) {
-        selectedConfig.ConfigDetail.Config.SiteIdList = [0];
-    }
-    if (selectedConfig.Currencies.length === selectedConfig.ConfigDetail.Config.CurrencyIdList.length) {
-        selectedConfig.ConfigDetail.Config.CurrencyIdList = [0];
-    }
-    selectedConfig.ConfigDetail.Config.StartTime = $("#EditStartTime").val();
 
-    if (selectedConfig.ConfigDetail.Config.StartTime === "") {
-        showAlertMessage('editErrMsg', "Start Time cannot be null.", 1);
-        return;
-    }
-    selectedConfig.ConfigDetail.Config.IsTest = $("#ckbEditIsTest").prop('checked');
-    selectedConfig.ConfigDetail.Config.Remark = $("#EditRemark").val();
     parent.BlockUI();
     $.ajax({
         type: "POST",
@@ -1170,12 +1137,7 @@ function ValidateNewConfigModel() {
                 }
             } else {
                 if (rs && rs.Errors.length > 0) {
-                    var message = "";
-                    rs.Errors.forEach(function (err) {
-                        message = message + err.ErrorMsg + "</br>";
-                    });
-
-                    showAlertMessage('editErrMsg', message, 1);
+                    ShowAddEditError(rs);
                     $("#popupContainer").scrollTop(0);
                 } else {
                     $('#popupContainer').html("");
@@ -1205,12 +1167,7 @@ function AddConfigModel() {
         data: selectedConfig.ConfigDetail,
         success: function (rs) {
             if (rs && rs.length > 0) {
-                var message = "";
-                rs.forEach(function (err) {
-                    message = message + err.ErrorMsg + "</br>";
-                });
-
-                showAlertMessage('editErrMsg', message, 1);
+                ShowAddEditError(rs);
                 GetSetting();
             } else {
                 $('#popupContainer').html("");
@@ -1226,6 +1183,15 @@ function AddConfigModel() {
             try { parent.jQuery.unblockUI(); } catch (e) { }
         }
     });
+}
+
+function ShowAddEditError(result) {
+    var message = "";
+    result.forEach(function (err) {
+        message = message + err.ErrorMsg + "</br>";
+    });
+
+    showAlertMessage('editErrMsg', message, 1);
 }
 
 function AbortConfig(configId) {
