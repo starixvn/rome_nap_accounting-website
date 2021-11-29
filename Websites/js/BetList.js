@@ -450,7 +450,7 @@ function showRnGCasinoDetails(transId, winlossDate, custId, transType) {
 function showRNGWARBetDetails(transId, winlossDate, custId, transType) {
     var rngCasinoParam = {
         url: "RNGCasinoBetList/BetDetails",
-        title: "RNG War - Detailed Bet list -" + winlossDate.split(" ")[0],
+        title: "Funky Games - Detailed Bet list -" + winlossDate.split(" ")[0],
         jsonParam: { TransId: transId, TransType: transType, CustId: custId, SportType: 224, PageSize: 500 },
         width: 1080,
         height: 600
@@ -1045,7 +1045,7 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
         case 210: // RNG Casino.
             return getRNGCasinoParam(matchid, race, bettype, sporttype, refno, winlostdate);
 
-        case 224: //RNG War
+        case 224: //Funky Games
             return getRNGWarCasinoParam(matchcode, betcheck);
 
         case 225: // ION Casino
@@ -1265,7 +1265,7 @@ function getBBinParam(transdesc, betcheck, bettype) {
 function getRNGWarCasinoParam(matchcode, betcheck) {
     return {
         url: "ThirdParty/Result",
-        title: "RNG War Result",
+        title: "Funky Games Result",
         jsonParam: { custId: betcheck, gameId: matchcode, productId: 50 },
         width: 945,
         height: 500

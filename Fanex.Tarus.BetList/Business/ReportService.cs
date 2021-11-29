@@ -290,6 +290,8 @@
                 return SportContants.GDG;
             if (5401 <= betTypeId && betTypeId <= 5499)
                 return SportContants.MaxGame;
+            if (5500 <= betTypeId && betTypeId <= 5599)
+                return SportContants.RNGWar;
             if (3701 <= betTypeId && betTypeId <= 3799)
                 return SportContants.PPLiveCasino;
             if (7001 <= betTypeId && betTypeId <= 7300)
@@ -300,6 +302,7 @@
                 return SportContants.AdvantPlay;
             if (7801 <= betTypeId && betTypeId <= 7899)
                 return SportContants.AdvantPlayMini;
+            
             return 0;
         }
 
