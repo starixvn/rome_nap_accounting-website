@@ -2080,7 +2080,7 @@
     <value>Disabled Table Game</value>
   </data>
   <data name="Disable224_5500" xml:space="preserve">
-    <value>Disabled RNG War</value>
+    <value>Disabled Funky Games</value>
   </data>
   <data name="Disable98_1" xml:space="preserve">
     <value>Disabled Saba Virtual Sports</value>
@@ -2208,5 +2208,11 @@ Max Keno (20+1) 2</value>
   </data>
   <data name="MPPMv2Saba" xml:space="preserve">
     <value>Max Payout Per Match</value>
+  </data>
+  <data name="disable202_1530" xml:space="preserve">
+    <value>Disabled Max Keno 3</value>
+  </data>
+  <data name="disable202_1531" xml:space="preserve">
+    <value>Disabled Max Keno 4</value>
   </data>
 </root>
