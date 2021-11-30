@@ -16,6 +16,7 @@ namespace Fanex.Tarus.BetList.Constants
         public const int UnderSettlement = 3;
         public const int Pending = 4;
         public const int AbnormalBets = 99;
+        public const int CashOut = 88;
 
         public static IDictionary<int, string> List { get; } = new Dictionary<int, string>
         {
@@ -30,6 +31,7 @@ namespace Fanex.Tarus.BetList.Constants
             [Refund] = nameof(Refund),
             [Void] = nameof(Void),
             [AbnormalBets] = nameof(AbnormalBets),
+            [CashOut] = nameof(CashOut),
         };
     }
 }
