@@ -1,0 +1,21 @@
+﻿<div id="MultipleUpdateSuperStatus_errMsg"></div>
+<div id="MultipleUpdateSuperStatus_errSupers"></div>
+<div class="bg_table">
+    <div>
+        <div class="inputSuper">
+            <label for="MultipleUpdateSuperStatus_superlist">
+                Enter list of Super Account usernames<span style="color: red;">*</span> (Maximum 500 Supers, separated by comma ',')
+            </label>
+            <br />
+            <textarea type="text" style="margin-top: 5px;" id="MultipleUpdateSuperStatus_superlist" rows="15" cols="100"></textarea>
+        </div>
+        <input type="button" id="MultipleUpdateSuperStatus_btnCheckSupers" value="Select" class="btn inputSuper" onclick="MultipleUpdateSuperStatus_CheckSuper()" />
+    </div>
+</div>
+<div id="MultipleUpdateSuperStatus_superSetting" class="setting-actions hidden">
+    <div id="MultipleUpdateSuperStatus_gridBettypeContainer" class="grid-container">
+        <div id="MultipleUpdateSuperStatus_grid" class="freegrid"></div>
+    </div>
+</div>
+<div id="dialog-confirm" title="Confirmation">
+</div>
