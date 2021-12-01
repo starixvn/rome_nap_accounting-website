@@ -867,7 +867,8 @@ function DisableStatusDiv(targetDiv) {
 function SetupCalendar(divId) {
     $('#' + divId).datetimepicker({
         format: 'm/d/Y H:i:00',
-        minDate: today,
+        formatDate: 'm/d/Y',
+        minDate: mindate,
         step: 5
     });
 
