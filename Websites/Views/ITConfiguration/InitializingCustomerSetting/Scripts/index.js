@@ -868,7 +868,10 @@ function SetupCalendar(divId) {
     $('#' + divId).datetimepicker({
         format: 'm/d/Y H:i:00',
         formatDate: 'm/d/Y',
-        minDate: mindate,
+        formatTime: 'H:i',
+        defaultDate: minDate,
+        defaultTime: minTime,
+        minDate: minDate,
         step: 5
     });
 
