@@ -73,6 +73,11 @@
         {
             var criteria = new GetConfigDetailCriteria(configId);
             var config = dataAccess.GetConfigDetail(criteria);
+            if(config.Config == null)
+            {
+                return new ConfigSettingViewModel { Error = new Result(-1, "This row does not exist, please refresh again.") };
+            }
+
             var productDcs = dataAccess.GetProductDcsModel(new DcsProductMatrixCriteria());
             var allSettings = productDcs.Where(item => item.ProductId == config.Config.ProductId
                                                     && config.Config.SportTypeIdList.Contains(item.SportId)

@@ -18,5 +18,7 @@
         public IEnumerable<BaseModel> Currencies { get; set; }
 
         public IEnumerable<BaseModel> Sites { get; set; }
+
+        public Result Error { get; set; }
     }
 }

@@ -322,6 +322,10 @@ function GetConfigDetail(configId, isDialogOpened = false) {
                 } else {
                     showAlertMessage('editErrMsg', "Updated Successfully.", 0);
                 }
+
+                $("#btn-add").addClass("hidden");
+                $("#btn-edit").removeClass("hidden");
+                RenderEditConfigDetail();
             }
         },
         error: function (event, jqXHR, ajaxSettings) {
@@ -329,10 +333,6 @@ function GetConfigDetail(configId, isDialogOpened = false) {
         },
         complete: function () {
             try { parent.jQuery.unblockUI(); } catch (e) { }
-
-            $("#btn-add").addClass("hidden");
-            $("#btn-edit").removeClass("hidden");
-            RenderEditConfigDetail();
         }
     });
 }

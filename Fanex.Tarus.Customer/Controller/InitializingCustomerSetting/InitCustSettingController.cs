@@ -53,7 +53,13 @@ namespace Fanex.Tarus.Customer.Controller.InitializingCustomerSetting
         [HttpGet, AuthenticateHost]
         public ActionResult GetConfigDetail(int configId)
         {
-            return PartialView(_addEditPath, service.GetConfigDetail(configId));
+            var viewModel = service.GetConfigDetail(configId);
+            if (viewModel.Error != null)
+            {
+                return Json(viewModel.Error, JsonRequestBehavior.AllowGet);
+            }
+
+            return PartialView(_addEditPath, viewModel);
         }
 
 
@@ -90,7 +96,13 @@ namespace Fanex.Tarus.Customer.Controller.InitializingCustomerSetting
         [HttpGet, AuthenticateRead]
         public ActionResult ViewConfigDetail(int configId)
         {
-            return PartialView(_viewConfigPath, service.GetConfigDetail(configId));
+            var viewModel = service.GetConfigDetail(configId);
+            if (viewModel.Error != null)
+            {
+                return Json(viewModel.Error, JsonRequestBehavior.AllowGet);
+            }
+
+            return PartialView(_viewConfigPath, viewModel);
         }
     }
 }
