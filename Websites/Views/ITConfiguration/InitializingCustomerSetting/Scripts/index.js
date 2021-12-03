@@ -1083,6 +1083,7 @@ function ValidateUpdateConfigModel() {
                 } else {
                     $("#popupContainer").scrollTop(0);
                     GetConfigDetail(selectedConfig.ConfigDetail.Config.ConfigId, true);
+                    GetSetting();
                 }
             }
         },
