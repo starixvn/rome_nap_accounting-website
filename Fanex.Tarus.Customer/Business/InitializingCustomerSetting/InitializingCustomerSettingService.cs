@@ -399,15 +399,26 @@
         public ValidateResultModel ValidateAddConfigSetting(ConfigModel request, string ip)
         {
             var criteria = new AddSettingConfigCriteria(request, ip);
+            var result = dataAccess.ValidateConfigSetting(criteria);
+            foreach (var msg in result.Errors)
+            {
+                msg.ErrorMsg = MappingMessageResult(msg, request.Settings);
+            }
 
-            return dataAccess.ValidateConfigSetting(criteria);
+            return result;
         }
 
         public ValidateResultModel ValidateUpdateConfigSetting(ConfigModel request, string ip)
         {
             var criteria = new EditSettingConfigCriteria(request, ip);
 
-            return dataAccess.ValidateConfigSetting(criteria);
+            var result = dataAccess.ValidateConfigSetting(criteria);
+            foreach (var msg in result.Errors)
+            {
+                msg.ErrorMsg = MappingMessageResult(msg, request.Settings);
+            }
+
+            return result;
         }
     }
 }

@@ -1077,7 +1077,7 @@ function ValidateUpdateConfigModel() {
                 }
             } else {
                 if (rs && rs.Errors.length > 0) {
-                    ShowAddEditError(rs);
+                    ShowAddEditError(rs.Errors);
                     $("#popupContainer").scrollTop(0);
                     try { parent.jQuery.unblockUI(); } catch (e) { }
                 } else {
@@ -1141,7 +1141,7 @@ function ValidateNewConfigModel() {
                 }
             } else {
                 if (rs && rs.Errors.length > 0) {
-                    ShowAddEditError(rs);
+                    ShowAddEditError(rs.Errors);
                     $("#popupContainer").scrollTop(0);
                 } else {
                     $('#popupContainer').html("");
