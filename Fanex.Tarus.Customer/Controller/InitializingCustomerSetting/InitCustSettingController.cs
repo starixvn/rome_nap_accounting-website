@@ -70,24 +70,28 @@ namespace Fanex.Tarus.Customer.Controller.InitializingCustomerSetting
         }
 
         [HttpPost, AuthenticateHost]
+        [ValidateInput(false)]
         public ActionResult ValidateAddConfigSetting(ConfigModel request)
         {
             return Json(service.ValidateAddConfigSetting(request, HttpContext.Request.UserHostAddress));
         }
 
         [HttpPost, AuthenticateHost]
+        [ValidateInput(false)]
         public ActionResult AddConfigSetting(ConfigModel request)
         {
             return Json(service.AddConfigSetting(request, HttpContext.Request.UserHostAddress));
         }
 
         [HttpPost, AuthenticateHost]
+        [ValidateInput(false)]
         public ActionResult ValidateUpdateConfigSetting(ConfigModel request)
         {
             return Json(service.ValidateUpdateConfigSetting(request, HttpContext.Request.UserHostAddress));
         }
 
         [HttpPost, AuthenticateHost]
+        [ValidateInput(false)]
         public ActionResult UpdateConfigSetting(ConfigModel request)
         {
             return Json(service.UpdateConfigSetting(request, HttpContext.Request.UserHostAddress));

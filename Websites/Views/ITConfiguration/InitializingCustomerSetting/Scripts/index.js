@@ -6,6 +6,7 @@ var selectedConfig = null;
 var isAddConfig = false;
 var isNeedRenderBettype = false;
 var isLoadCachedFilter = false;
+let headlineRegex = /^[0-9a-zA-Z\s\\r\\n~.?:;!|@#$%&*\(\)\{\}+-\\"]+$/;
 function GetSetting() {
     parent.BlockUI();
     $.ajax({
@@ -188,7 +189,7 @@ function RenderSettings() {
         row.Columns.push({ Name: 'StartTime', TdClass: startTimeClass, Value: setting.StartTime });
         row.Columns.push({ Name: 'EndTime', TdClass: startTimeClass, Value: setting.EndTime });
         row.Columns.push({ Name: 'IsTest', TdClass: startTimeClass, Value: setting.IsTest ? 1 : 0 });
-        row.Columns.push({ Name: 'Remark', TdClass: startTimeClass + " remark", Value: setting.Remark });
+        row.Columns.push({ Name: 'Remark', TdClass: startTimeClass + " remark", Value: setting.Remark.replaceAll('<', '&lt').replaceAll('>', '&gt') });
         row.Columns.push({ Name: 'Action', TdClass: startTimeClass, Value: RenderAction(setting.Status, setting.ConfigId) });
         bodyRows.push(row);
     }
@@ -1026,6 +1027,12 @@ function RenderNewConfig() {
 }
 
 function ValidateBeforeAddUpdate() {
+    selectedConfig.ConfigDetail.Config.Remark = $("#EditRemark").val();
+    if (!headlineRegex.test(selectedConfig.ConfigDetail.Config.Remark)) {
+        showAlertMessage('editErrMsg', "Invalid Remark.", 1);
+
+        return false;
+    }
     selectedConfig.ConfigDetail.Config.SiteIdList = $("#EditSiteSelect").multiSelect("getCheckedItems").map(Number);
     if (selectedConfig.ConfigDetail.Config.SiteIdList.length === 0) {
         showAlertMessage('editErrMsg', "Site cannot be null.", 1);
@@ -1053,7 +1060,6 @@ function ValidateBeforeAddUpdate() {
         return false;
     }
     selectedConfig.ConfigDetail.Config.IsTest = $("#ckbEditIsTest").prop('checked');
-    selectedConfig.ConfigDetail.Config.Remark = $("#EditRemark").val();
 
     return true;
 }

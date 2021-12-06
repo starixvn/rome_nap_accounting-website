@@ -6,6 +6,6 @@
     {
         public bool IsWarning { get; set; }
 
-        public IEnumerable<InsertErrorModel> Errors { get; set; }
+        public List<InsertErrorModel> Errors { get; set; }
     }
 }

@@ -9,6 +9,7 @@
     using System.Linq;
     using Fanex.Tarus.Customer.Requests.InitializingCustomerSetting;
     using System.Web.Mvc;
+    using System.Text.RegularExpressions;
 
     public interface IInitializingCustomerSettingService
     {
@@ -38,6 +39,7 @@
 
         private const string FormatDisplay = "[{0}] {1}";
         private const string ErrorMessage = "Row {0}: {1}";
+        private const string HeadlineRegex = @"^[0-9a-zA-Z\s~.?:;!|@#$%&*\(\)\{\}+-]+$";
 
         public InitializingCustomerSettingService()
         {
@@ -399,7 +401,13 @@
         public ValidateResultModel ValidateAddConfigSetting(ConfigModel request, string ip)
         {
             var criteria = new AddSettingConfigCriteria(request, ip);
-            var result = dataAccess.ValidateConfigSetting(criteria);
+            var result = ValidateHeadlines(request);
+
+            if (!result.Errors.Any())
+            {
+                result = dataAccess.ValidateConfigSetting(criteria);
+            }
+
             foreach (var msg in result.Errors)
             {
                 msg.ErrorMsg = MappingMessageResult(msg, request.Settings);
@@ -412,12 +420,42 @@
         {
             var criteria = new EditSettingConfigCriteria(request, ip);
 
-            var result = dataAccess.ValidateConfigSetting(criteria);
+            var result = ValidateHeadlines(request);
+
+            if (!result.Errors.Any())
+            {
+                result = dataAccess.ValidateConfigSetting(criteria);
+            }
+
             foreach (var msg in result.Errors)
             {
                 msg.ErrorMsg = MappingMessageResult(msg, request.Settings);
             }
 
+            return result;
+        }
+
+        private ValidateResultModel ValidateHeadlines(ConfigModel request)
+        {
+            var result = new ValidateResultModel
+            {
+                Errors = new List<InsertErrorModel>()
+            };
+
+            foreach (var setting in request.Settings)
+            {
+                if (setting.SettingName == SettingInforModel.ProductStatus
+                    && !string.IsNullOrEmpty(setting.SpecialRequirement)
+                    && !Regex.IsMatch(setting.SpecialRequirement, HeadlineRegex))
+                {
+                    result.Errors.Add(new InsertErrorModel
+                    {
+                        Id = setting.Id,
+                        ErrorCode = -1,
+                        ErrorMsg = "Invalid Headlines."
+                    });
+                }
+            }
             return result;
         }
     }
