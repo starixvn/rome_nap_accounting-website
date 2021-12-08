@@ -1,4 +1,5 @@
-﻿@using Fanex.Tarus.Admin.ManageProductSetting.ViewModel;
+﻿@using Sunplus.Accounting.Core.Configurations;
+@using Fanex.Tarus.Admin.ManageProductSetting.ViewModel;
 @model ManageProductSettingViewModel
 <div class="filterBox" style="border: solid 1px #7C98A4; height:80px;">
     <div class="filterContent">
@@ -26,3 +27,7 @@
 <div id="gridVDContainer" class="grid-container">
     <div id="gridVDId" class="freegrid"></div>
 </div>
+
+@Html.Partial("~/Views/Admin/ManageProductSetting/VendorGlobalSetting/_UpdateVendor.cshtml")
+
+<script type="text/javascript" src="@Url.Content("~/Views/Admin/ManageProductSetting/VendorGlobalSetting/index.js?v=" + @WebSettings.Version)"></script>

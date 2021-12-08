@@ -1,4 +1,5 @@
-﻿@using Fanex.Tarus.Admin.ManageProductSetting.ViewModel;
+﻿@using Sunplus.Accounting.Core.Configurations;
+@using Fanex.Tarus.Admin.ManageProductSetting.ViewModel;
 @model ManageProductSettingViewModel
 
 <div class="filterBox" style="border: solid 1px #7C98A4; overflow: hidden;">
@@ -31,3 +32,6 @@
 <div id="gridSportContainer" class="grid-container">
     <div id="gridCanSee" class="freegrid"></div>
 </div>
+
+
+<script type="text/javascript" src="@Url.Content("~/Views/Admin/ManageProductSetting/CanSee/Scripts/Index.js?v=" + @WebSettings.Version)"></script>

@@ -24,8 +24,8 @@ function SearchProduct(pageSize, pageIndex) {
 
 function RenderProductData(data, pageSize, pageIndex) {
     var bodyRows = [];
-    var rowCount = data.ProductEntities.length;
-    for (i = 0; i < rowCount; i++) {
+    let rowCount = data.ProductEntities.length;
+    for (var i = 0; i < rowCount; i++) {
         var row = { Columns: [] };
         row.Columns.push({ Name: 'ProductID', Value: data.ProductEntities[i].ProductID });
         row.Columns.push({ Name: 'ProductName', Value: data.ProductEntities[i].ProductName });
@@ -164,7 +164,7 @@ function SetupCalendar() {
     var day = dates[1];
     month = month < 10 ? '0' + month : month;
     day = day < 10 ? '0' + day : day;
-    var selectionDate = year + month + dates;
+    var selectionDate = year + month + day;
 
     var cal = Calendar.setup({
         animation: false,

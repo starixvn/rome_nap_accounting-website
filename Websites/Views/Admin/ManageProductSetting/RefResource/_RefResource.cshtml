@@ -17,3 +17,8 @@
     <div id="errRefResMsg"></div>
     <div id="gridRefResId" class="freegrid"></div>
 </div>
+
+
+@Html.Partial("~/Views/Admin/ManageProductSetting/RefResource/_UpdateRefResource.cshtml")
+
+<script type="text/javascript" src="@Url.Content("~/Views/Admin/ManageProductSetting/RefResource/Scripts/RefResource.js?v=" + @WebSettings.Version)"></script>

@@ -1,4 +1,5 @@
-﻿<div class="filterBox" style="border: solid 1px #7C98A4; height:80px;">
+﻿@using Sunplus.Accounting.Core.Configurations;
+<div class="filterBox" style="border: solid 1px #7C98A4; height:80px;">
     <div class="filterContent">
         <div id="err3rdMsg"></div>
         <div class="floatLeft w70"><label for="txtProduct3rdID">ProductId</label></div>
@@ -42,3 +43,7 @@
 <div id="grid3rdContainer" class="grid-container">
     <div id="grid3rdId" class="freegrid"></div>
 </div>
+
+@Html.Partial("~/Views/Admin/ManageProductSetting/Product3rd/_UpdateProduct3rd.cshtml")
+
+<script type="text/javascript" src="@Url.Content("~/Views/Admin/ManageProductSetting/Product3rd/index.js?v=" + @WebSettings.Version)"></script>

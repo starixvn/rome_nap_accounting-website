@@ -49,3 +49,7 @@
 <div id="gridSBMContainer" class="grid-container">
     <div id="gridSBMId" class="freegrid"></div>
 </div>
+
+@Html.Partial("~/Views/Admin/ManageProductSetting/SportBettypeMatrix/_UpdateSportBettypeMatrix.cshtml")
+
+<script type="text/javascript" src="@Url.Content("~/Views/Admin/ManageProductSetting/SportBettypeMatrix/Scripts/SportBettypeMatrix.js?v=" + @WebSettings.Version)"></script>

@@ -13,6 +13,7 @@ function SwitchSubTab(id, contentId) {
     UpdateResetWinningSampleUrl();
 }
 
+
 function UpdateResetWinningSampleUrl() {
     switch (cachedSubTabId) {
         case "sub_tab_1":
@@ -544,3 +545,7 @@ function DeleteDWLListExtraPT(index) {
         });
     }
 }
+
+$(document).ready(function () {
+    UpdateResetWinningSampleUrl();
+});
