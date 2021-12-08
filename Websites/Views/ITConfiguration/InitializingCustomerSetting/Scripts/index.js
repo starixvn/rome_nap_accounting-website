@@ -1028,7 +1028,7 @@ function RenderNewConfig() {
 
 function ValidateBeforeAddUpdate() {
     selectedConfig.ConfigDetail.Config.Remark = $("#EditRemark").val();
-    if (!headlineRegex.test(selectedConfig.ConfigDetail.Config.Remark)) {
+    if (selectedConfig.ConfigDetail.Config.Remark && selectedConfig.ConfigDetail.Config.Remark !== "" && !headlineRegex.test(selectedConfig.ConfigDetail.Config.Remark)) {
         showAlertMessage('editErrMsg', "Invalid Remark.", 1);
 
         return false;
