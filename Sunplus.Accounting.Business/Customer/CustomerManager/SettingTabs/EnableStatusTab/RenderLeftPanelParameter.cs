@@ -63,5 +63,7 @@ namespace Sunplus.Accounting.Business.Customer
         public bool IsShowSabaVirtualSports { get; set; }
 
         public bool IsShowBitcoin { get; set; }
+
+        public bool IsShowCashout { get; set; }
     }
 }

@@ -90,6 +90,8 @@
 
         public bool HideBitcoin { get; private set; } = true;
 
+        public bool HideCashout { get; private set; } = true;
+
         public bool HideRNGLottery { get; private set; } = true;
 
         public bool HideVirtualSports2 { get; private set; } = true;
@@ -183,6 +185,11 @@
                                 bool isSyncUplineFishingWorld = Utils.ToBoolean(row["IsSyncedUpline"]);
 
                                 HideEnableAndEditFishingWorld = (SearchAccountRoleId < 4 && isHideUplineFishingWorld) || !isSyncUplineFishingWorld;
+
+                                break;
+
+                            case "25":
+                                HideCashout = Utils.ToBoolean(row["IsHidden"]) || !WebSettings.EnableCashOut || IsDeposit;
 
                                 break;
 

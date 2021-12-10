@@ -2518,4 +2518,10 @@
   <data name="enableBitcoin" xml:space="preserve">
     <value>Bitcoin</value>
   </data>
+  <data name="lblDisabledCashoutUpline" xml:space="preserve">
+    <value>Cash Out has been disabled at upline</value>
+  </data>
+  <data name="enableCashout" xml:space="preserve">
+    <value>Cash Out</value>
+  </data>
 </root>

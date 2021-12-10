@@ -51,7 +51,8 @@
                 IsShowSabaclub = !customerInfoViewModel.HideSabaclub,
                 IsShowVGaming = !customerInfoViewModel.HideVGaming,
                 IsShowSabaVirtualSports = !customerInfoViewModel.HideSabaVirtualSports,
-                IsShowBitcoin = !customerInfoViewModel.HideBitcoin
+                IsShowBitcoin = !customerInfoViewModel.HideBitcoin,
+                IsShowCashout = !customerInfoViewModel.HideCashout
             };
 
             htmlcontent = RenderClosedStatus(htmlcontent, customerInfoViewModel);
@@ -549,6 +550,20 @@
                                                renderLeftPanelParameter,
                                                "Update Fishing World Status",
                                                24);
+                            break;
+
+                        case "25":
+                            _renderLeftPanelService.RenderEnableProductBoxDCS2(
+                                               row1,
+                                               productRow,
+                                               sg,
+                                               ref htmlcontent,
+                                               isManageCustomerAccess,
+                                               "Cashout",
+                                               renderLeftPanelParameter.IsShowCashout,
+                                               renderLeftPanelParameter,
+                                               "Update Cash Out Status",
+                                               25);
                             break;
 
                         case "27":
