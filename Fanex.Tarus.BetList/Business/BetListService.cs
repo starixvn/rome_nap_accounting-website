@@ -482,7 +482,7 @@ namespace Fanex.Tarus.BetList.Business
             }
 
             return new KeyValuePair<string, IList<TicketDetail>>(betData.Key.errCode != 0 ?
-                string.Format(BetListResources.BetlistMaxTotalRowMessageError, betData.Key.maxTotalRow, ReportService.BetlistMaxTotalRow) : 
+                string.Format(BetListResources.BetlistMaxTotalRowMessageError, betData.Key.maxTotalRow, ReportService.BetlistMaxTotalRow) :
                 string.Empty, new List<TicketDetail>());
         }
 
@@ -675,6 +675,11 @@ namespace Fanex.Tarus.BetList.Business
                         betDetail.StakeHtml = BetListExtension.BuildStake(betDetail, ref builder, ticketHelper);
                         betDetail.OddHtml = builder.BuildOdds(betDetail.Ticket, outputLiveCasino, funcGetOddsTypeName);
                         betDetail.StatusHtml = betListHelper.BuildStatus(betDetail.Ticket, ticketHelper, outputLiveCasino, factory, builder);
+                        if (betDetail.StatusHtml.Contains("Void") 
+                            || betDetail.StatusHtml.Contains("Abnormal Bet"))
+                        {
+                            systempParlayModel.HideCombinationDetail = true;
+                        }
                     }
 
                     if (systempParlayModel.SystemParlayChoice != null)
