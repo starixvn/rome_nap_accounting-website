@@ -136,7 +136,6 @@
             TemplateHandler.Assign(ref htmlcontent, "{rngLotteryLinkSetting}", string.Format(creditDCSLink, Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdRNGLottery));
             TemplateHandler.Assign(ref htmlcontent, "{virtualGamesLinkSetting}", string.Format(creditDCSLink, Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdVirtualGames));
             TemplateHandler.Assign(ref htmlcontent, "{BitcoinLinkSetting}", string.Format(creditDCSLink, 69));
-            TemplateHandler.Assign(ref htmlcontent, "{CashoutLinkSetting}", string.Format(creditDCSLink, 25));
             TemplateHandler.Assign(ref htmlcontent, "{sabaclubLinkSetting}", string.Format(creditDCSLink, 42));
             TemplateHandler.Assign(ref htmlcontent, "{agcasinoLinkSetting}", agCasinoLinkSetting);
             TemplateHandler.Assign(ref htmlcontent, "{vgamingLinkSetting}", string.Format(creditDCSLink, 66));
@@ -223,11 +222,6 @@
             if (customerInfoViewModel.HideBitcoin)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Bitcoin");
-            }
-
-            if (customerInfoViewModel.HideCashout)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Cashout");
             }
 
             if (customerInfoViewModel.HideSabaclub)
