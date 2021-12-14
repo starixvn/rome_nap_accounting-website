@@ -6,7 +6,7 @@ var selectedConfig = null;
 var isAddConfig = false;
 var isNeedRenderBettype = false;
 var isLoadCachedFilter = false;
-let headlineRegex = /^[0-9a-zA-Z\s\\r\\n~.?:;!|@#$%&*\(\)\{\}+-\\"]+$/;
+let headlineRegex = /^[0-9a-zA-Z\s\\r\\n~.,?:;!|@#$%&*\(\)\{\}+-\\"]+$/;
 function GetSetting() {
     parent.BlockUI();
     $.ajax({

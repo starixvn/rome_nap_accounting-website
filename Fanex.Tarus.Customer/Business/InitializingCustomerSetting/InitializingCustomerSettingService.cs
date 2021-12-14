@@ -39,7 +39,7 @@
 
         private const string FormatDisplay = "[{0}] {1}";
         private const string ErrorMessage = "Row {0}: {1}";
-        private const string HeadlineRegex = @"^[0-9a-zA-Z\s~.?:;!|@#$%&*\(\)\{\}+-]+$";
+        private const string HeadlineRegex = @"^[0-9a-zA-Z\s~,.?:;!|@#$%&*\(\)\{\}+-]+$";
 
         public InitializingCustomerSettingService()
         {
