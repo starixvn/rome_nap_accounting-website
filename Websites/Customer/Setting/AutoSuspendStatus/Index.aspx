@@ -2,14 +2,14 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
+<head>
     <title>Auto Suspend Status</title>
     <link rel="stylesheet" type="text/css" href="../../../App_Themes/Public/common.css" />
     <link rel="stylesheet" type="text/css" href="../../../App_Themes/Public/table.css" />
     <link rel="stylesheet" type="text/css" href="../../../App_Themes/Public/input.css" />
     <link rel="stylesheet" type="text/css" href="../../../App_Themes/Public/Message.css" />
     <link rel="stylesheet" type="text/css" href="../../../js/ToolTip/Tipsy-Tooltip/tipsy.css" />
-    <link rel="stylesheet" type="text/css" href="Styles/AutoSuspendStatus.css" />
+    <link rel="stylesheet" type="text/css" href="Styles/AutoSuspendStatus.css?v=<%= Sunplus.Accounting.Core.Common.AccCommon.Version() %>" />
 </head>
 <body>
     <form id="form1" runat="server">
@@ -43,7 +43,7 @@
                                 <span id="checkbox-enable-autosuspend-othersports-disable" class="checkbox-unchecked display-none"
                                     title="Upline has been auto suspended"></span>
                                 <label id="label-enable-autosuspend-othersports" class="label-for-checkbox" for="checkbox-enable-autosuspend-othersports">
-                                    Auto Suspend Other Sports
+                                    Auto Suspend Other Sports (Exclude Esports & Basketball)
                                 </label>
                             </td>
                         </tr>
