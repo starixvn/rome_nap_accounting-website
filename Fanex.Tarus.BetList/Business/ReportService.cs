@@ -195,7 +195,7 @@
         public static bool IsPP(int betTypeId)
         {
             return (4101 <= betTypeId && betTypeId <= 4300) ||
-                6701 <= betTypeId && betTypeId <= 7000;
+                (6701 <= betTypeId && betTypeId <= 7000);
         }
 
         public static bool IsNG2NeedSuffix(int betTypeId)

@@ -988,7 +988,7 @@ function isFM2(betttype) {
     return (betttype >= 221 && betttype <= 227)
 }
 
-function getResultParamBySportType(matchid, race, bettype, sporttype, refno, username, winlostdate, refno_mixparlay, league, is_outright, betid, matchcode, betcheck, transdesc, siteId) {
+function getResultParamBySportType(matchid, race, bettype, sporttype, refno, username, winlostdate, refno_mixparlay, league, is_outright, currencyId, gameId3rd, custId, transId3rd, siteId) {
     switch (sporttype) {
         case 5: // Tennis.
             return getTennisParam();
@@ -1003,29 +1003,29 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
             return getHappy5Param(matchid);
 
         case 167: // CG
-            return getCGParam(transdesc, betcheck, matchcode, betid);
+            return getCGParam(custId, transId3rd, gameId3rd, currencyId, siteId);
 
         case 168: // Happy5 Linked Games
-            return getLinkedGamesParam(betid, refno);
+            return getLinkedGamesParam(custId, refno, gameId3rd, currencyId, siteId);
 
         case 169: // Sports Lottery
-            return getSportsLotteryParam(betcheck, transdesc);
+            return getSportsLotteryParam(custId, transId3rd, gameId3rd, currencyId, siteId);
 
         case 170: // PP Live Casino
-            return getPPLiveCasinoParam(betcheck, transdesc, bettype);
+            return getPPLiveCasinoParam(bettype, custId, transId3rd, gameId3rd, currencyId, siteId, bettype);
 
         case 171: // VGaming
         case 173: // VGaming
             // custId, gameroundid, gameid, siteId, sporttype, currencyname
-            return getVGamingParam(betcheck, transdesc, bettype, matchcode, sporttype, username);
+            return getVGamingParam(custId, transId3rd, bettype, gameId3rd, sporttype, username);
 
         case 175: //Bitcoin
             return getBitcoinParam(matchid, sporttype);
-	case 172: // AdvantPlay
-            return getAdvantPlayParam(transdesc, betcheck, matchcode, betid);
+        case 172: // AdvantPlay
+            return getAdvantPlayParam(custId, transId3rd, gameId3rd, currencyId, siteId);
 
         case 174: // AdvantPlay Mini
-            return getAdvantPlayMiniParam(transdesc, betcheck, matchcode, betid);
+            return getAdvantPlayMiniParam(custId, transId3rd, gameId3rd, currencyId, siteId);
         case 181:
         case 182:
         case 183:
@@ -1038,71 +1038,70 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
         case 150:
         case 200: // Saba.Club
             // custId, gameroundid, gameid, siteId
-            return getSabaClubParam(betcheck, transdesc, bettype, matchcode, sporttype);
+            return getSabaClubParam(custId, transId3rd, bettype, gameId3rd, sporttype);
 
         case 208:
         case 209:
         case 210: // RNG Casino.
-            return getRNGCasinoParam(matchid, race, bettype, sporttype, refno, winlostdate);
+            return getRNGCasinoParam(custId, transId3rd, gameId3rd, currencyId, siteId);
 
         case 224: //Funky Games
-            return getRNGWarCasinoParam(matchcode, betcheck);
+            return getRNGWarCasinoParam(custId, transId3rd, gameId3rd, currencyId, siteId);
 
         case 225: // ION Casino
-            return getIONCasinoParam(matchcode, betcheck);
+            return getIONCasinoParam(custId, transId3rd, gameId3rd, currencyId, siteId);
 
         case 231: // Leap Gaming
-            return getLeapGamingParam(transdesc);
+            return getLeapGamingParam(transId3rd);
 
         case 232: // PG Soft
-            return getPGSoftCasinoParam(transdesc, betcheck, matchcode);
+            return getPGSoftCasinoParam(custId, transId3rd, gameId3rd, currencyId, siteId);
 
         case 236: // GDG
-            return getGDGParam(transdesc, betcheck, matchcode, league);
+            return getGDGParam(custId, transId3rd, gameId3rd, currencyId, siteId);
 
         case 239: // BG
-            return getBGParam(transdesc, betcheck, league, matchcode);
+            return getBGParam(custId, transId3rd, gameId3rd, currencyId, siteId);
 
         case 241: // BBIN
-            return getBBinParam(betcheck, transdesc, matchcode, betid, siteId);
+            return getBBinParam(custId, transId3rd, gameId3rd, currencyId, siteId);
 
         case 211: // Allbet.        
         case 242: // GTCasino.
         case 243: // SexyGaming.
         case 244: // SaGaming.
         case 233: // WM
-            return getLiveCasinoParam(transdesc, matchcode, bettype, sporttype);
+            return getLiveCasinoParam(transId3rd, gameId3rd, bettype, sporttype);
 
         case 212: // Macau Games.
-            return getMacauGamesParam(matchcode, betcheck);
+            return getMacauGamesParam(custId, transId3rd, gameId3rd, currencyId, siteId);
 
         case 219: // Fishing World.
-            return getFishingWorldParam(matchcode, betcheck);
+            return getFishingWorldParam(gameId3rd, custId);
 
         case 245: //Virtual Games
             return getVirtualGamesParam(refno);
 
         case 247: //Spadegaming
-            return getSpadegamingParam(matchcode, betcheck);
+            return getSpadegamingParam(custId, transId3rd, gameId3rd, currencyId, siteId);
 
         case 248: //PP
-            return getPPParam(matchcode, betcheck);
+            return getPPParam(custId, transId3rd, gameId3rd, currencyId, siteId);
 
         case 250: // AGCasino.
             return getAGCasinoParam(refno, bettype);
 
         case 165:
-            // custId, gameTypeId, transId3rd, viewerLevel
-            return getCardClubParam(betcheck, bettype, sporttype, matchcode);
+            return getCardClubParam(bettype, custId, transId3rd, gameId3rd, currencyId, siteId);
 
         case 234:
-            return getJokerParam(transdesc, betcheck, matchcode);
+            return getJokerParam(custId, transId3rd, gameId3rd, currencyId, siteId);
 
         case 237: //MaxGame
-            return getMaxGameParam(betcheck, transdesc, bettype, matchcode, betid);
+            return getMaxGameParam(custId, transId3rd, gameId3rd, currencyId, siteId, bettype, winlostdate);
 
         case 238:
-            return getHabaneroParam(transdesc, betcheck, matchcode, betid);
+            return getHabaneroParam(custId, transId3rd, gameId3rd, currencyId, siteId);
 
         default:
             return undefined;
@@ -1215,11 +1214,13 @@ function getVirtualHRAndTennisParam(matchid, sporttype) {
     };
 }
 
-function getRNGCasinoParam(matchid, race, bettype, sporttype, refno, winlostdate) {
+function getRNGCasinoParam(custId, transId3rd, gameId3rd, currencyId, siteId) {
     return {
-        url: "RNGCasinoBetList/GetHandHistory",
+        url: "ThirdParty/RNGCasinoResult",
         title: "RNG Casino Result",
-        jsonParam: { Refno: refno, RoleId: 0, MatchId: matchid, Race: race, BetType: bettype, SportType: sporttype, WinLostDate: winlostdate },
+        jsonParam: {
+            custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, currencyId: currencyId, siteId: siteId, productId: 6
+        },
         width: 835,
         height: 675
     };
@@ -1252,7 +1253,7 @@ function getLiveCasinoParam(transdesc, betcheck, bettype, sporttype) {
     };
 }
 
-function getBBinParam(custId, transId3rd, gameId3rd, currency, siteId) {
+function getBBinParam(custId, transId3rd, gameId3rd, currencyId, siteId) {
     return {
         url: "ThirdParty/BBINResult",
         title: "BBIN Result",
@@ -1262,7 +1263,7 @@ function getBBinParam(custId, transId3rd, gameId3rd, currency, siteId) {
             custId: custId,
             TransId3rd: transId3rd,
             GameId3rd: gameId3rd,
-            Currency: currency,
+            Currency: currencyId,
             SiteId: siteId
         },
         width: 945,
@@ -1270,95 +1271,93 @@ function getBBinParam(custId, transId3rd, gameId3rd, currency, siteId) {
     };
 }
 
-function getRNGWarCasinoParam(matchcode, betcheck) {
+function getRNGWarCasinoParam(custId, transId3rd, gameId3rd, currencyId, siteId) {
     return {
-        url: "ThirdParty/Result",
+        url: "ThirdParty/RNGWarResult",
         title: "Funky Games Result",
-        jsonParam: { custId: betcheck, gameId: matchcode, productId: 50 },
+        jsonParam: { custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, currencyId: currencyId, siteId: siteId, productId: 50},
         width: 945,
         height: 500
     };
 }
 
-function getPGSoftCasinoParam(gameId, custId, gameCode) {
+function getPGSoftCasinoParam(custId, transId3rd, gameId3rd, currencyId, siteId) {
     return {
-        url: "ThirdParty/Result",
+        url: "ThirdParty/PGSoftResult",
         title: "PG Soft Result",
-        jsonParam: { custId: custId, gameId: gameId, gameCode: gameCode, productId: 55 },
+        jsonParam: { custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, currencyId: currencyId, siteId: siteId, productId: 55 },
         width: 945,
         height: 800
     };
 }
 
-function getBGParam(transId3rd, custId, currencyId, siteId) {
+function getBGParam(custId, transId3rd, gameId3rd, currencyId, siteId) {
     return {
-        url: "ThirdParty/Result",
+        url: "ThirdParty/BGResult",
         title: "BG Result",
-        jsonParam: { custId: custId, gameId: transId3rd, gameCode: currencyId, siteid: siteId, productId: 57 },
+        jsonParam: { custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, currencyId: currencyId, siteId: siteId, productId: 57 },
         width: 850,
         height: 800
     };
 }
 
-function getGDGParam(transId3rd, custId, gameId3rd, siteId) {
+function getGDGParam(custId, transId3rd, gameId3rd, currencyId, siteId) {
     return {
-        url: "ThirdParty/Result",
+        url: "ThirdParty/GDGResult",
         title: "GDG Result",
-        jsonParam: { custId: custId, gameId: transId3rd, gameCode: gameId3rd, productId: 59, siteId: siteId },
+        jsonParam: { custId: custId, TransId3rd: transId3rd, GameId3rd: gameId3rd, productId: 59, siteId: siteId, currencyid: currencyId },
         width: 850,
         height: 800
     };
 }
 
-function getHabaneroParam(transId3rd, custId, gameId3rd, siteId) {
+function getHabaneroParam(custId, transId3rd, gameId3rd, currencyId, siteId) {
     return {
         url: "ThirdParty/HabaneroResult",
         title: "Habanero Result",
-        jsonParam: { custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, productId: 61, siteId: siteId },
+        jsonParam: { custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, productId: 61, siteId: siteId, CurrencyId: currencyId },
         width: 850,
         height: 800
     };
 }
 
-function getCGParam(transId3rd, custId, gameId3rd, siteId) {
+function getCGParam(custId, transId3rd, gameId3rd, currencyId, siteId) {
     return {
         url: "ThirdParty/CGResult",
         title: "CG Result",
-        jsonParam: { custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, productId: 62, siteId: siteId },
+        jsonParam: { custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, productId: 62, siteId: siteId, currenctyId: currencyId },
         width: 850,
         height: 800
     };
 }
 
-function getAdvantPlayParam(transId3rd, custId, gameId3rd, siteId) {
+function getAdvantPlayParam(custId, transId3rd, gameId3rd, currencyId, siteId) {
     return {
         url: "ThirdParty/AdvantPlayResult",
         title: "AdvantPlay Result",
-        jsonParam: { custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, productId: 67, siteId: siteId },
+        jsonParam: { custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, productId: 67, siteId: siteId, currenctyId: currencyId },
         width: 850,
         height: 800
     };
 }
 
-function getAdvantPlayMiniParam(transId3rd, custId, gameId3rd, siteId) {
+function getAdvantPlayMiniParam(custId, transId3rd, gameId3rd, currencyId, siteId) {
     return {
         url: "ThirdParty/AdvantPlayMiniResult",
         title: "AdvantPlay Mini Result",
-        jsonParam: { custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, productId: 68, siteId: siteId },
+        jsonParam: { custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, siteId: siteId, currenctyId: currencyId, productId: 68},
         width: 850,
         height: 800
     };
 }
 
-function getCardClubParam(custId, gameTypeId, sportType, transId3rd) {
-    var title = resultTitle === undefined ? "Result page" : resultTitle;
+function getCardClubParam(bettype, custId, transId3rd, gameId3rd, currencyId, siteId) {
     return {
-        url: "../Report/ViewCardClubResult.aspx",
-        title: title,
-        jsonParam: { custId: custId, gameTypeId: gameTypeId, transId3rd: transId3rd },
-        width: 945,
-        height: 500,
-        iframe: "innerFrame" + resultTitle.replace(/[^a-z0-9\s]/gi, "").replace(/\s/g, "").replace(/\//g, "")
+        url: "ThirdParty/CardClubResult",
+        title: "Arcadia Gaming Result",
+        jsonParam: { BetTypeId: bettype, custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, siteId: siteId, currenctyId: currencyId, productId: 34 },
+        width: 850,
+        height: 800
     };
 }
 
@@ -1386,32 +1385,31 @@ function getSabaClubParam(custId, gameRoundId, gameId, siteId, sportType) {
     };
 }
 
-function getMacauGamesParam(matchcode, betcheck) {
+function getMacauGamesParam(custId, transId3rd, gameId3rd, currencyId, siteId) {
     return {
-        url: "../Report/ViewVoidbridgeResult.aspx",
+        url: "ThirdParty/VoidbridgeResult",
         title: "Macau Games Result",
-        jsonParam: { custId: betcheck, betCheck: matchcode },
-        width: 945,
-        height: 500,
-        iframe: "innerFrameMacauGamesResult"
-    };
-}
-
-function getIONCasinoParam(matchcode, betcheck) {
-    return {
-        url: "ThirdParty/Result",
-        title: "ION Result",
-        jsonParam: { custId: betcheck, gameId: matchcode, productId: 52 },
+        jsonParam: { custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, siteId: siteId, currenctyId: currencyId, productId: 22},
         width: 945,
         height: 500
     };
 }
 
-function getSpadegamingParam(matchcode, betcheck) {
+function getIONCasinoParam(custId, transId3rd, gameId3rd, currencyId, siteId) {
     return {
-        url: "ThirdParty/Result",
+        url: "ThirdParty/IONResult",
+        title: "ION Result",
+        jsonParam: { custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, siteId: siteId, currenctyId: currencyId, productId: 52 },
+        width: 945,
+        height: 500
+    };
+}
+
+function getSpadegamingParam(custId, transId3rd, gameId3rd, currencyId, siteId) {
+    return {
+        url: "ThirdParty/SpadegamingResult",
         title: "Spadegaming Result",
-        jsonParam: { custId: betcheck, gameId: matchcode, productId: 36 },
+        jsonParam: { custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, siteId: siteId, currenctyId: currencyId, productId: 36},
         width: 945,
         height: 500
     };
@@ -1427,7 +1425,7 @@ function getVirtualGamesParam(betcheck) {
     };
 }
 
-function getMaxGameParam(custId, transId3rd, betType, endTime, siteId) {
+function getMaxGameParam(custId, transId3rd, gameId3rd, currencyId, siteId, betType, endTime) {
     return {
         url: "ThirdParty/MaxGameResult",
         title: "MaxGame Result",
@@ -1436,16 +1434,18 @@ function getMaxGameParam(custId, transId3rd, betType, endTime, siteId) {
             productId: 60,
             custId: custId,
             transId3rd: transId3rd,
-            betType: betType,
+            gameId3rd: gameId3rd,
+            BetTypeId: betType,
             EndTime: endTime,
-            SiteId: siteId
+            SiteId: siteId,
+            CurrencyId: currencyId
         },
         width: 945,
         height: 500
     };
 }
 
-function getPPLiveCasinoParam(custId, gameId3rd, betType) {
+function getPPLiveCasinoParam(bettype, custId, transId3rd, gameId3rd, currencyId, siteId, bettype) {
     return {
         url: "ThirdParty/PPLiveCasinoResult",
         title: "PP Live Casino Result",
@@ -1454,49 +1454,53 @@ function getPPLiveCasinoParam(custId, gameId3rd, betType) {
             productId: 65,
             custId: custId,
             gameId3rd: gameId3rd,
-            betType: betType
+            TransId3rd: transId3rd,
+            betType: bettype,
+            CurrencyId: currencyId,
+            SiteId: siteId,
+            BetTypeId: bettype
         },
         width: 945,
         height: 500
     };
 }
 
-function getSportsLotteryParam(custId, transId3rd) {
+function getSportsLotteryParam(custId, transId3rd, gameId3rd, currencyId, siteId) {
     return {
         url: "ThirdParty/SportsLotteryResult",
         title: "Sports Lottery Result",
-        jsonParam: { productId: 63, custId: custId, transId3rd: transId3rd },
+        jsonParam: { productId: 63, custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, CurrencyId: currencyId, SiteId: siteId },
         width: 945,
         height: 800
     };
 
 }
-function getLinkedGamesParam(custId, transId3rd) {
+function getLinkedGamesParam(custId, transId3rd, gameId3rd, currencyId, siteId) {
     return {
         url: "ThirdParty/LinkedGamesResult",
         title: "Happy 5 Linked Games Result",
-        jsonParam: { productId: 3, custId: custId, transId3rd: transId3rd },
+        jsonParam: { productId: 3, custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, CurrencyId: currencyId, SiteId: siteId},
         width: 945,
         height: 800
     };
 }
 
 
-function getPPParam(matchcode, betcheck) {
+function getPPParam(custId, transId3rd, gameId3rd, currencyId, siteId) {
     return {
-        url: "ThirdParty/Result",
+        url: "ThirdParty/PPResult",
         title: "PP Result",
-        jsonParam: { custId: betcheck, gameId: matchcode, productId: 32 },
+        jsonParam: { custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, productId: 32, CurrencyId: currencyId, SiteId: siteId },
         width: 945,
         height: 500
     };
 }
 
-function getJokerParam(gameId, custId, gameCode) {
+function getJokerParam(custId, transId3rd, gameId3rd, currencyId, siteId) {
     return {
-        url: "ThirdParty/Result",
+        url: "ThirdParty/JokerResult",
         title: "Joker Result",
-        jsonParam: { custId: custId, gameId: gameId, gameCode: gameCode, productId: 56 },
+        jsonParam: { custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, currencyId: currencyId, productId: 56, SiteId: siteId },
         width: 945,
         height: 800
     };

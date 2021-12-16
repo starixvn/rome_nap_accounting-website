@@ -2,11 +2,6 @@
 {
     using System.Web.Mvc;
     using CustomerSetting.Module.Core.Web.Controllers;
-    using Fanex.Result.Core.Habanero;
-    using Fanex.Result.Core.LinkedGames;
-    using Fanex.Result.Core.MaxGame;
-    using Fanex.Result.Core.PPLiveCasino;
-    using Fanex.Result.Core.SportsLottery;
     using Fanex.Result.Core.ThirdParty;
     using Fanex.Result.Core.ThirdParty.Models;
     using Fanex.Result.Core.VirtualGames;
@@ -38,14 +33,7 @@
             return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(ProductResultTitle, result));
         }
 
-        public ActionResult SportsLotteryResult(int productId, string custId, string transId3rd)
-        {
-            SetProductResultTitle(productId);
-            var service = new SportsLotteryResult();
-            var result = service.GetResultDetail(custId, transId3rd, isDesktop: true);
-
-            return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(ProductResultTitle, new SuccessResult(result)));
-        }
+        public ActionResult SportsLotteryResult(ThirdPartyResultRequest request) => BaseResult(request, "SportsLotteryResultConfigs");
 
         public ActionResult VirtualGamesResult(int productId, string gameId)
         {
@@ -56,83 +44,108 @@
             return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(ProductResultTitle, new SuccessResult(result)));
         }
 
-        public ActionResult LinkedGamesResult(int productId, string custId, string transId3rd)
+        public ActionResult LinkedGamesResult(ThirdPartyResultRequest request) => BaseResult(request, "LinkedGamesResultConfigs");
+
+        public ActionResult MaxGameResult(ThirdPartyResultRequest request)
         {
-            SetProductResultTitle(productId);
-            var service = new LinkedGamesResult();
-            var result = service.GetResult(custId, transId3rd, isDesktop: true);
-
-            return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(ProductResultTitle, new SuccessResult(result)));
-        }
-
-        public ActionResult MaxGameResult(int productId, string custId, string transId3rd, int betType, string endTime, string siteId)
-        {
-            SetProductResultTitle(productId);
-            var service = new MaxGameResult();
-            var result = service.GetResult(custId, transId3rd, betType, endTime, siteId);
-
-            return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(ProductResultTitle, new SuccessResult(result)));
-        }
-
-        public ActionResult PPLiveCasinoResult(int productId, string custId, string gameId3rd, int betType)
-        {
-            SetProductResultTitle(productId);
-            var service = new PPLiveCasinoResult();
-            var result = service.GetResult(custId, gameId3rd, betType);
-
-            return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(ProductResultTitle, new SuccessResult(result)));
-        }
-
-        public ActionResult HabaneroResult(int productId, string custId, string transId3rd, string gameId3rd, string siteId)
-        {
-            SetProductResultTitle(productId);
-            var service = new HabaneroResult("HabaneroResultConfigs");
-            var result = service.GetResult(custId, transId3rd, gameId3rd, siteId);
-
-            return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(ProductResultTitle, new SuccessResult(result)));
-        }
-
-        public ActionResult CGResult(int productId, string custId, string transId3rd, string gameId3rd, string siteId)
-        {
-            SetProductResultTitle(productId);
-            var service = new HabaneroResult("CGResultConfigs");
-            var result = service.GetResult(custId, transId3rd, gameId3rd, siteId);
-
-            return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(ProductResultTitle, new SuccessResult(result)));
-        }
-
-        public ActionResult AdvantPlayResult(int productId, string custId, string transId3rd, string gameId3rd, string siteId)
-        {
-            SetProductResultTitle(productId);
-            var service = new HabaneroResult("AdvantPlayResultConfigs");
-            var result = service.GetResult(custId, transId3rd, gameId3rd, siteId);
-
-            return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(ProductResultTitle, new SuccessResult(result)));
-        }
-
-        public ActionResult AdvantPlayMiniResult(int productId, string custId, string transId3rd, string gameId3rd, string siteId)
-        {
-            SetProductResultTitle(productId);
-            var service = new HabaneroResult("AdvantPlayMiniResultConfigs");
-            var result = service.GetResult(custId, transId3rd, gameId3rd, siteId);
-
-            return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(ProductResultTitle, new SuccessResult(result)));
-        }
-
-        public ActionResult BBINResult(int productId, int custId, string transId3rd, string gameId3rd, int currency, string siteId)
-        {
-            SetProductResultTitle(productId);
-            var service = new ThirdPartyResult("BBINResultConfigs");
-            var request = new ResultRequest(custId, transId3rd, gameId3rd, currency)
+            SetProductResultTitle(request.ProductId);
+            var service = new ThirdPartyResult("MaxGameResultConfigs");
+            var resultRequest = new ResultRequest(request.CustId, request.TransId3rd, request.GameId3rd, request.CurrencyId, request.SiteId)
             {
-                SiteId = siteId
+                BetTypeId = request.BetTypeId,
+                EndTime = request.EndTime
             };
-            var result = service.GetResultGET(request);
+
+            var result = service.GetResultGET(resultRequest);
+            return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(ProductResultTitle, new SuccessResult(result)));
+        }
+        public ActionResult PPLiveCasinoResult(ThirdPartyResultRequest request)
+        {
+            SetProductResultTitle(request.ProductId);
+            var service = new ThirdPartyResult("PPLiveCasinoResultConfigs");
+            var resultRequest = new ResultRequest(request.CustId, request.TransId3rd, request.GameId3rd, request.CurrencyId, request.SiteId)
+            {
+                BetTypeId = request.BetTypeId
+            };
+
+            var result = service.GetResultGET(resultRequest);
+            return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(ProductResultTitle, new SuccessResult(result)));
+        }
+
+        public ActionResult PPResult(ThirdPartyResultRequest request) => BaseResult(request, "PPResultConfigs");
+
+        public ActionResult HabaneroResult(ThirdPartyResultRequest request) => BaseResult(request, "HabaneroResultConfigs");
+
+        public ActionResult CGResult(ThirdPartyResultRequest request) => BaseResult(request, "CGResultConfigs");
+
+        public ActionResult AdvantPlayResult(ThirdPartyResultRequest request) => BaseResult(request, "AdvantPlayResultConfigs");
+
+        public ActionResult AdvantPlayMiniResult(ThirdPartyResultRequest request) => BaseResult(request, "AdvantPlayMiniResultConfigs");
+        public ActionResult JokerResult(ThirdPartyResultRequest request) => BaseResult(request, "JokerResultConfigs");
+
+        public ActionResult PGSoftResult(ThirdPartyResultRequest request) => BaseResult(request, "PGSoftResultConfigs");
+
+        public ActionResult GDGResult(ThirdPartyResultRequest request) => BaseResult(request, "GDGResultConfigs");
+
+        public ActionResult IONResult(ThirdPartyResultRequest request) => BaseResult(request, "IONCasinoResultConfigs");
+
+        public ActionResult RNGWarResult(ThirdPartyResultRequest request) => BaseResult(request, "RNGWarResultConfigs");
+
+        public ActionResult SpadegamingResult(ThirdPartyResultRequest request) => BaseResult(request, "SpadegamingResultConfigs");
+
+        public ActionResult CardClubResult(ThirdPartyResultRequest request)
+        {
+            SetProductResultTitle(request.ProductId);
+            var service = new ThirdPartyResult("CardClubResultConfigs");
+            var resultRequest = new ResultRequest(request.CustId, request.TransId3rd, request.GameId3rd, request.CurrencyId, request.SiteId)
+            {
+                BetTypeId = request.BetTypeId
+            };
+            var result = service.GetResultGET(resultRequest);
+
+            return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(ProductResultTitle, new SuccessResult(result)));
+        }
+        public ActionResult BGResult(ThirdPartyResultRequest request) => BaseResult(request, "BGResultConfigs");
+
+        public ActionResult RNGCasinoResult(ThirdPartyResultRequest request) => BaseResult(request, "RNGCasinoResultConfigs");
+
+        public ActionResult VoidbridgeResult(ThirdPartyResultRequest request)
+        => BaseResult(request, "VoidbridgeResultConfigs");
+
+        public ActionResult BBINResult(ThirdPartyResultRequest request) => BaseResult(request, "BBINResultConfigs");
+
+        private ActionResult BaseResult(ThirdPartyResultRequest request, string configName)
+        {
+            SetProductResultTitle(request.ProductId);
+            var service = new ThirdPartyResult(configName);
+            var resultRequest = new ResultRequest(request.CustId, request.TransId3rd, request.GameId3rd, request.CurrencyId, request.SiteId);
+            var result = service.GetResultGET(resultRequest);
 
             return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(ProductResultTitle, new SuccessResult(result)));
         }
 
         private void SetProductResultTitle(int productId)
             => ProductResultTitle = CacheRef.GetProductName(productId) + " Result";
+    }
+
+    public class ThirdPartyResultRequest
+    {
+        public int ProductId { get; set; }
+
+        public string SiteId { get; set; }
+
+        public int CustId { get; set; }
+
+        public string TransId3rd { get; set; }
+
+        public string GameId3rd { get; set; }
+
+        public string Language { get; set; }
+
+        public int CurrencyId { get; set; }
+
+        public int BetTypeId { get; set; }
+
+        public string EndTime { get; set; }
     }
 }

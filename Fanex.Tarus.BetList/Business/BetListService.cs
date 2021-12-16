@@ -198,11 +198,11 @@ namespace Fanex.Tarus.BetList.Business
                     ExtraInfo = r.Table.Columns.Contains("ExtraInfo") ? Converter.ToString2(r["ExtraInfo"]) : string.Empty,
 
                     Currency = r.Table.Columns.Contains("Currency") ? Converter.ToString2(r["Currency"]) : string.Empty,
+                    CurrencyId = r.Table.Columns.Contains("CurrencyId") ? Converter.ToInt(r["CurrencyId"]) : 0,
 
                     WalletType = r.Table.Columns.Contains("wallettype") ? Convert.ToByte(r["wallettype"]) : (byte)0,
                     RefCode = r.Table.Columns.Contains("refcode") ? Convert.ToInt64(r["refcode"]) : 0,
-                    SettlementStatus = r.Table.Columns.Contains("SettlementStatus") ? Convert.ToByte(r["SettlementStatus"]) : (byte)0,
-                    CurrencyId = r.Table.Columns.Contains("CurrencyId") ? Convert.ToInt32(r["CurrencyId"]) : 0,
+                    SettlementStatus = r.Table.Columns.Contains("SettlementStatus") ? Convert.ToByte(r["SettlementStatus"]) : (byte)0,                    
                     SiteId = r.Table.Columns.Contains("SiteId") ? Converter.ToString2(r["SiteId"]) : ""
                 },
                 ChoiceHtml = string.Empty,
@@ -427,10 +427,12 @@ namespace Fanex.Tarus.BetList.Business
                     ExtraInfo = Converter.ToString2(r["ExtraInfo"]),
 
                     Currency = Converter.ToString2(r["Currency"]),
+                    CurrencyId = r.Table.Columns.Contains("CurrencyId") ? Converter.To<int>(r["CurrencyId"]) : 0,
 
                     WalletType = r.Table.Columns.Contains("wallettype") ? Converter.To<byte>(r["wallettype"]) : (byte)0,
                     RefCode = r.Table.Columns.Contains("refcode") ? Converter.To<long>(r["refcode"]) : 0,
-                    SettlementStatus = r.Table.Columns.Contains("SettlementStatus") ? Convert.ToByte(r["SettlementStatus"]) : (byte)0
+                    SettlementStatus = r.Table.Columns.Contains("SettlementStatus") ? Convert.ToByte(r["SettlementStatus"]) : (byte)0,
+                    SiteId = r.Table.Columns.Contains("SiteId") ? Converter.ToString2(r["SiteId"]) : ""
                 },
                 ChoiceHtml = string.Empty,
                 OddHtml = string.Empty,
@@ -989,7 +991,9 @@ namespace Fanex.Tarus.BetList.Business
                                 Currency = r.Table.Columns.Contains("Currency") ? Converter.ToString2(r["Currency"]) : string.Empty,
                                 WalletType = Utils.ToByte(r["wallettype"]),
                                 RefCode = Utils.ToInt64(r["refcode"]),
-                                SettlementStatus = r.Table.Columns.Contains("SettlementStatus") ? Convert.ToByte(r["SettlementStatus"]) : (byte)0
+                                SettlementStatus = r.Table.Columns.Contains("SettlementStatus") ? Convert.ToByte(r["SettlementStatus"]) : (byte)0,
+                                CurrencyId = r.Table.Columns.Contains("CurrencyId") ? Converter.ToInt(r["CurrencyId"]) : 0,
+                                SiteId = r.Table.Columns.Contains("SiteId") ? Converter.ToString2(r["SiteId"]) : ""
                             },
                             ChoiceHtml = string.Empty,
                             OddHtml = string.Empty,
@@ -1182,7 +1186,9 @@ namespace Fanex.Tarus.BetList.Business
 
                                 WalletType = Convert.ToByte(r["wallettype"]),
                                 RefCode = Convert.ToInt64(r["refcode"]),
-                                SettlementStatus = r.Table.Columns.Contains("SettlementStatus") ? Convert.ToByte(r["SettlementStatus"]) : (byte)0
+                                SettlementStatus = r.Table.Columns.Contains("SettlementStatus") ? Convert.ToByte(r["SettlementStatus"]) : (byte)0,
+                                SiteId = r.Table.Columns.Contains("SiteId") ? Converter.ToString2(r["SiteId"]) : "",
+                                CurrencyId = r.Table.Columns.Contains("CurrencyId") ? Converter.ToInt(r["CurrencyId"]) : 0,
                             },
                             ChoiceHtml = string.Empty,
                             OddHtml = string.Empty,
