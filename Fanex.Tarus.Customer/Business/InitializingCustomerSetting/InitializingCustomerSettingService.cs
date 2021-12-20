@@ -1,15 +1,16 @@
 ﻿namespace Fanex.Tarus.Customer.Business.InitializingCustomerSetting
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text.RegularExpressions;
+    using System.Web;
+    using System.Web.Mvc;
     using Fanex.Tarus.Customer.Criteria.InitializingCustomerSetting;
     using Fanex.Tarus.Customer.DataAccess.InitializingCustomerSetting;
-    using Fanex.Tarus.Customer.ViewModels.InitializingCustomerSetting;
     using Fanex.Tarus.Customer.Entities;
-    using System.Collections.Generic;
     using Fanex.Tarus.Customer.Entities.InitializingCustomerSetting;
-    using System.Linq;
     using Fanex.Tarus.Customer.Requests.InitializingCustomerSetting;
-    using System.Web.Mvc;
-    using System.Text.RegularExpressions;
+    using Fanex.Tarus.Customer.ViewModels.InitializingCustomerSetting;
 
     public interface IInitializingCustomerSettingService
     {
@@ -75,7 +76,7 @@
         {
             var criteria = new GetConfigDetailCriteria(configId);
             var config = dataAccess.GetConfigDetail(criteria);
-            if(config.Config == null)
+            if (config.Config == null)
             {
                 return new ConfigSettingViewModel { Error = new Result(-1, "This row does not exist, please refresh again.") };
             }
@@ -90,7 +91,8 @@
                 if (existSetting == null)
                 {
                     config.Settings.Add(new SettingInforModel(config.Settings.Count + 2, setting));
-                } else
+                }
+                else
                 {
                     existSetting.MaxDiscount = setting.MaxDiscount;
                     existSetting.IntervalValue = setting.IntervalValue;
@@ -110,7 +112,7 @@
                     setting.Id = pos;
                     setting.SportTypeOptions = BuildSportOptions(selectedSetting.Sports, setting.CopyFromSportType).ToList();
                     var selectedSport = selectedSetting.Sports.FirstOrDefault(sp => sp.SportId == setting.CopyFromSportType);
-                    if(selectedSport == null)
+                    if (selectedSport == null)
                     {
                         selectedSport = selectedSetting.Sports.FirstOrDefault();
                         setting.CopyFromSportType = selectedSport.SportId;
@@ -142,7 +144,7 @@
         public ConfigSettingViewModel GetProductSportBettype()
         {
             var productDcs = dataAccess.GetProductDcsModel(new DcsProductMatrixCriteria());
-            
+
             return new ConfigSettingViewModel
             {
                 ProductModels = GenerateProductModels(productDcs)
@@ -214,7 +216,7 @@
 
         private IEnumerable<SelectListItem> BuildSportOptions(IEnumerable<SportModel> sports, int selectedSport)
         {
-            return sports.Select(sp => new SelectListItem { Value = sp.SportId.ToString(), Text = sp.SportName, Selected = selectedSport == sp.SportId});
+            return sports.Select(sp => new SelectListItem { Value = sp.SportId.ToString(), Text = sp.SportName, Selected = selectedSport == sp.SportId });
         }
 
         private IEnumerable<SelectListItem> BuildBettypeOptions(IEnumerable<BettypeModel> bettypes, int selectedBettype)
@@ -358,7 +360,7 @@
         private string MappingMessageResult(InsertErrorModel message, List<SettingInforModel> settings)
         {
             var setting = settings.FirstOrDefault(item => item.Id == message.Id);
-            if(setting != null)
+            if (setting != null)
             {
                 return string.Format(ErrorMessage, setting.Id, message.ErrorMsg);
             }
@@ -444,17 +446,21 @@
 
             foreach (var setting in request.Settings)
             {
-                if (setting.SettingName == SettingInforModel.ProductStatus
-                    && !string.IsNullOrEmpty(setting.SpecialRequirement)
-                    && !Regex.IsMatch(setting.SpecialRequirement, HeadlineRegex))
+                if (setting.IsRequiredHeadline)
                 {
-                    result.Errors.Add(new InsertErrorModel
+                    setting.SpecialRequirement = HttpUtility.HtmlDecode(setting.SpecialRequirement);
+                    if (!string.IsNullOrEmpty(setting.SpecialRequirement)
+                        && !Regex.IsMatch(setting.SpecialRequirement, HeadlineRegex))
                     {
-                        Id = setting.Id,
-                        ErrorCode = -1,
-                        ErrorMsg = "Invalid Headlines."
-                    });
+                        result.Errors.Add(new InsertErrorModel
+                        {
+                            Id = setting.Id,
+                            ErrorCode = -1,
+                            ErrorMsg = "Invalid Headlines."
+                        });
+                    }
                 }
+
             }
             return result;
         }

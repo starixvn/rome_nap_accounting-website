@@ -647,7 +647,7 @@ function RenderEventEdit() {
 
             var pos = $(this).data("pos");
             var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
-            selectedConfig.ConfigDetail.Settings[position].SpecialRequirement = $(this).val();
+            selectedConfig.ConfigDetail.Settings[position].SpecialRequirement = $(this).val().encodeHtml();
         });
     });
     $(".input-com-member").each(function () {
@@ -1027,7 +1027,7 @@ function RenderNewConfig() {
 }
 
 function ValidateBeforeAddUpdate() {
-    selectedConfig.ConfigDetail.Config.Remark = $("#EditRemark").val();
+    selectedConfig.ConfigDetail.Config.Remark = $("#EditRemark").val().encodeHtml();
     if (selectedConfig.ConfigDetail.Config.Remark && selectedConfig.ConfigDetail.Config.Remark !== "" && !headlineRegex.test(selectedConfig.ConfigDetail.Config.Remark)) {
         showAlertMessage('editErrMsg', "Invalid Remark.", 1);
 
@@ -1258,6 +1258,11 @@ function DeleteConfig(configId) {
         });
     }
 }
+
+String.prototype.encodeHtml = function () {
+    var str = this;
+    return $('<div/>').text(str).html();
+};
 
 $(document).ready(function () {
     GetSetting();

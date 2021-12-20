@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Web;
 using Fanex.NAP.Framework.Data;
 using Fanex.Tarus.Customer.Entities.InitializingCustomerSetting;
 
@@ -31,7 +32,7 @@ namespace Fanex.Tarus.Customer.Criteria.InitializingCustomerSetting
             Currency = string.Join(",", request.Config.CurrencyIdList);
             StartTime = request.Config.StartTime;
             IsTest = request.Config.IsTest ? 1 : 0;
-            Remark = request.Config.Remark;
+            Remark = HttpUtility.HtmlDecode(request.Config.Remark);
             XMLConfig = BuildXmlConfig(request.Settings);
             IP = ip;
         }
