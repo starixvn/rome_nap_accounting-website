@@ -196,6 +196,15 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Loss Limit.
+        /// </summary>
+        public static string LossLimit {
+            get {
+                return ResourceManager.GetString("LossLimit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Max Bet.
         /// </summary>
         public static string MaxBet {
@@ -340,6 +349,15 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Stake Level.
+        /// </summary>
+        public static string StakeLevel {
+            get {
+                return ResourceManager.GetString("StakeLevel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Status.
         /// </summary>
         public static string Status {
@@ -417,6 +435,15 @@ namespace Fanex.Tarus.Customer.Resources {
         public static string UpdateStatusSuccessfully {
             get {
                 return ResourceManager.GetString("UpdateStatusSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Win Loss Limit.
+        /// </summary>
+        public static string WinLossLimit {
+            get {
+                return ResourceManager.GetString("WinLossLimit", resourceCulture);
             }
         }
     }

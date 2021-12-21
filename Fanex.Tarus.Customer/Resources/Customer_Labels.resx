@@ -311,10 +311,10 @@
   </data>
   <data name="Enabled" xml:space="preserve">
     <value>Enabled</value>
-  </data> 
+  </data>
   <data name="No" xml:space="preserve">
     <value>No</value>
-  </data>   
+  </data>
   <data name="Notes" xml:space="preserve">
     <value>Notes</value>
   </data>
@@ -323,7 +323,7 @@
   </data>
   <data name="New_Virtual_Rate" xml:space="preserve">
     <value>New Virtual Rate</value>
-  </data> 
+  </data>
   <data name="EnableGoldDeluxe" xml:space="preserve">
     <value>Enable Gold Deluxe</value>
   </data>

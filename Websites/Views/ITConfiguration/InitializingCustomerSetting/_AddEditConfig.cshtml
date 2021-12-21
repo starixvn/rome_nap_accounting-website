@@ -1,0 +1,63 @@
+﻿@using Fanex.Tarus.Customer.ViewModels.InitializingCustomerSetting
+
+@model ConfigSettingViewModel
+@{ 
+    var productOptions = new List<SelectListItem>() {
+        new SelectListItem
+        {
+            Text = "Please select",
+            Value = ""
+        }
+    };
+    foreach (var product in Model.ProductModels)
+    {
+        productOptions.Add(new SelectListItem { Text = product.ProductName, Value = product.ProductId.ToString(), Selected = Model.ConfigDetail != null && product.ProductId == Model.ConfigDetail.Config.ProductId });
+    }
+}
+<div id="filterDiv" style="display: flex; width:100%;">
+    <div class="filterBox" style="border: solid 1px #7C98A4; width:100%">
+        <div class="filterContent" style="padding:0 5px;">
+            <div class="floatLeft">
+                <label for="EditProductSelect" class="edit-label label-filter w60">Product<span style="color: red;">*</span>:</label>
+                @Html.DropDownList("EditProductSelect",
+                            productOptions,
+                            new
+                            {
+                                @class = "setting-edit" 
+                            })
+            </div>
+            <div class="floatLeft">
+                <label for="EditSportSelect" class="edit-label label-filter w60">Sport<span style="color: red;">*</span>:</label>
+                <select id="EditSportSelect" class="setting-edit">
+                    <option value="" disabled selected>Please select</option>
+                </select>
+            </div>
+            <div class="floatLeft">
+                <label for="EditBettypeSelect" class="edit-label label-filter w120">Bettype<span style="color: red;">*</span>:</label>
+                <select id="EditBettypeSelect" class="setting-edit">
+                    <option value="" disabled selected>Please select</option>
+                </select>
+            </div>
+        </div>
+        <div class="floatLeft">
+            <input id="btnRenderNewConfig" type="button" value="Search" class="btn btn-edit" onclick="RenderNewConfig();">
+        </div>
+    </div>
+</div>
+<div style="clear: both"></div>
+<div id="editErrMsg" style="margin-top: 20px; word-break: break-all;"></div>
+<div id="editContainer" class="grid-container">
+    <div id="grid-information" class="freegrid">
+        @if (Model.ConfigDetail != null)
+        {
+            @Html.Partial("~/Views/ITConfiguration/InitializingCustomerSetting/_ConfigDetail.cshtml", Model)
+        }
+    </div>
+    <div style="text-align: center">
+        <input id="btn-edit" class="btn btn-edit" type="button" value="Update" onclick="ValidateUpdateConfigModel();" />
+        <input id="btn-add" class="btn btn-edit" type="button" value="Add" onclick="ValidateNewConfigModel();" />
+    </div>
+</div>
+<script>
+    dcsproducts = @Html.Raw(Json.Encode(Model.ProductModels));
+</script>

@@ -237,4 +237,13 @@
   <data name="Bettype" xml:space="preserve">
     <value>Bettype</value>
   </data>
+  <data name="LossLimit" xml:space="preserve">
+    <value>Loss Limit</value>
+  </data>
+  <data name="WinLossLimit" xml:space="preserve">
+    <value>Win Loss Limit</value>
+  </data>
+  <data name="StakeLevel" xml:space="preserve">
+    <value>Stake Level</value>
+  </data>
 </root>

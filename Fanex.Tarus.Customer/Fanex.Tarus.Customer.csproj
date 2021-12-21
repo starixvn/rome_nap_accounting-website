@@ -70,6 +70,9 @@
       <HintPath>..\packages\ExcelUtil.29.3.0.1000\lib\net40\ExcelUtil.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.Caching, Version=2.2.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Caching.2.2.2\lib\net461\Fanex.Caching.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.Common, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Common.1.1.0.1\lib\net40\Fanex.Common.dll</HintPath>
       <Private>True</Private>
@@ -277,6 +280,9 @@
     </Reference>
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Transactions" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -333,6 +339,7 @@
     <Compile Include="Business\ExtraPtGroup\IExtraPtService.cs" />
     <Compile Include="Business\GoldDeluxe\GoldDeluxeService.cs" />
     <Compile Include="Business\GoldDeluxe\IGoldDeluxeService.cs" />
+    <Compile Include="Business\InitializingCustomerSetting\InitializingCustomerSettingService.cs" />
     <Compile Include="Business\LicenseeDcsSetting\ILicenseeDcsSettingService.cs" />
     <Compile Include="Business\LicenseeDcsSetting\LicenseeDcsSettingService.cs" />
     <Compile Include="Business\LicenseeOddsGroup\LicenseeOddsGroupService.cs" />
@@ -385,6 +392,7 @@
     <Compile Include="Controller\MultipleUpdateSuperStatusController.cs" />
     <Compile Include="Controller\CopySuperSettingController.cs" />
     <Compile Include="Controller\CopyVRSettingController.cs" />
+    <Compile Include="Controller\InitializingCustomerSetting\InitCustSettingController.cs" />
     <Compile Include="Controller\LicenseeOddGroupController.cs" />
     <Compile Include="Controller\ParlayMaxPayoutController.cs" />
     <Compile Include="Controller\Player3rdController.cs" />
@@ -461,6 +469,13 @@
     <Compile Include="Criteria\ExtraPtGroup\ProductCriteria.cs" />
     <Compile Include="Criteria\GoldDeluxe\GetGoldDeluxeStatusCriteria.cs" />
     <Compile Include="Criteria\GoldDeluxe\UpdateGoldDeluxeStatusCriteria.cs" />
+    <Compile Include="Criteria\InitializingCustomerSetting\AddSettingConfigCriteria.cs" />
+    <Compile Include="Criteria\InitializingCustomerSetting\DCSProductMatrixCriteria.cs" />
+    <Compile Include="Criteria\InitializingCustomerSetting\DeleteConfigCriteria.cs" />
+    <Compile Include="Criteria\InitializingCustomerSetting\EditSettingConfigCriteria.cs" />
+    <Compile Include="Criteria\InitializingCustomerSetting\GetConfigDetailCriteria.cs" />
+    <Compile Include="Criteria\InitializingCustomerSetting\GetSettingCriteria.cs" />
+    <Compile Include="Criteria\InitializingCustomerSetting\UpdateConfigStatusCriteria.cs" />
     <Compile Include="Criteria\LicenseeDcsSetting\GetAgentCriteria.cs" />
     <Compile Include="Criteria\LicenseeDcsSetting\GetStakeLevelCriteria.cs" />
     <Compile Include="Criteria\LicenseeDcsSetting\GetBetSettingCriteria.cs" />
@@ -545,6 +560,7 @@
     <Compile Include="DataAccess\ExtraPtGroup\IExtraPtRepository.cs" />
     <Compile Include="DataAccess\GoldDeluxe\GoldDeluxeRepository.cs" />
     <Compile Include="DataAccess\GoldDeluxe\IGoldDeluxeRepository.cs" />
+    <Compile Include="DataAccess\InitializingCustomerSetting\InitializingCustomerSettingDataAccess.cs" />
     <Compile Include="DataAccess\LicenseeDcsSetting\ILicenseeDcsSettingDataAccess.cs" />
     <Compile Include="DataAccess\LicenseeDcsSetting\LicenseeDcsSettingDataAccess.cs" />
     <Compile Include="DataAccess\LicenseeOddsGroup\ILicenseeOddsGroupDataAccess.cs" />
@@ -645,6 +661,17 @@
     <Compile Include="Entities\ExtraPtGroup\Group.cs" />
     <Compile Include="Entities\ExtraPtGroup\Product.cs" />
     <Compile Include="Entities\GoldDeluxe\GoldDeluxeStatus.cs" />
+    <Compile Include="Entities\InitializingCustomerSetting\BettypeModel.cs" />
+    <Compile Include="Entities\InitializingCustomerSetting\ConfigModel.cs" />
+    <Compile Include="Entities\InitializingCustomerSetting\InsertErrorModel.cs" />
+    <Compile Include="Entities\InitializingCustomerSetting\ProductDCSModel.cs" />
+    <Compile Include="Entities\InitializingCustomerSetting\ProductModel.cs" />
+    <Compile Include="Entities\InitializingCustomerSetting\SettingConfigModel.cs" />
+    <Compile Include="Entities\InitializingCustomerSetting\SettingInforModel.cs" />
+    <Compile Include="Entities\InitializingCustomerSetting\SettingTypeModel.cs" />
+    <Compile Include="Entities\InitializingCustomerSetting\SportBetTypeBySettingModel.cs" />
+    <Compile Include="Entities\InitializingCustomerSetting\SportModel.cs" />
+    <Compile Include="Entities\InitializingCustomerSetting\ValidateResultModel.cs" />
     <Compile Include="Entities\JsonWithoutNullField.cs" />
     <Compile Include="Entities\LicenseeDcsSetting\StakeLevelEntity.cs" />
     <Compile Include="Entities\LicenseeDcsSetting\StakeLevelGroupEntity.cs" />
@@ -690,6 +717,7 @@
     <Compile Include="Requests\CustomerSetting\Suspend\GetMultipleSuspendCustomerInfoQuery.cs" />
     <Compile Include="Requests\CustomerSetting\Suspend\GetSingleSuspendCustomerInfoQuery.cs" />
     <Compile Include="Requests\GetMessageLogsQuery.cs" />
+    <Compile Include="Requests\InitializingCustomerSetting\GenerateConfigSettingRequest.cs" />
     <Compile Include="Requests\LicenseeOddsGroup\UpdateOddsGroupRequest.cs" />
     <Compile Include="Requests\MultipleUpdateSuperStatus\UpdatedCustomerIinfo.cs" />
     <Compile Include="Requests\MultipleUpdateSuperStatus\UpdateSupersProtectedStatusRequest.cs" />
@@ -729,6 +757,8 @@
     <Compile Include="ViewModels\CustomerSetting\Suspend\SingleUpdateViewModel.cs" />
     <Compile Include="ViewModels\CustomerSetting\Suspend\SuspendedCustomerDetailViewModel.cs" />
     <Compile Include="ViewModels\CustomerSetting\Suspend\SuspendMatrixViewModel.cs" />
+    <Compile Include="ViewModels\InitializingCustomerSetting\ConfigSettingViewModel.cs" />
+    <Compile Include="ViewModels\InitializingCustomerSetting\InitializingCustomerSettingViewModel.cs" />
     <Compile Include="ViewModels\LicenseeDcsSetting\StakeLevelViewModel.cs" />
     <Compile Include="Entities\LicenseeDcsSetting\BetSettingEntity.cs" />
     <Compile Include="Entities\LicenseeDcsSetting\GlobalStakeLevelEntity.cs" />

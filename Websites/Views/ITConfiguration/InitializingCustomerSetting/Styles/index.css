@@ -1,0 +1,194 @@
+﻿.floatLeft {
+    float: left;
+    padding: 10px;
+}
+
+.filterBox {
+    min-height: 100%;
+    margin-top: 4px;
+    padding-top: 4px;
+    padding-bottom: 5px;
+    background: url('../../../../App_Themes/Images/Banner/bg_head_tb.jpg') repeat-x scroll left bottom #FFFFFF;
+    border: 1px solid #7C98A4;
+    text-align: left;
+}
+
+.w180 {
+    width: 180px;
+}
+
+.word-break {
+    word-break: break-all;
+}
+
+#grid-information {
+    min-height: 400px;
+}
+
+.info-link {
+    color: blue;
+    cursor: pointer;
+}
+
+.status_planned {
+    color: green;
+}
+
+.status_running {
+    color: orange;
+}
+
+.status_completed {
+    color: black;
+}
+
+.status_aborted {
+    color: red;
+}
+
+.setting-status {
+    border-radius: 3px;
+    display: inline-block;
+    font-weight: normal;
+    padding: 3px 4px;
+    min-width: 55px;
+}
+
+.status-enable {
+    background-color: #1e84c4;
+    color: #fff;
+    margin: auto;
+}
+
+.status-disable {
+    background-color: #d9534f;
+    color: #fff;
+    margin: auto;
+}
+
+.input-status-disable {
+    background-color: grey;
+    cursor: default;
+    color: #fff;
+    margin: auto;
+}
+
+.setting-table {
+    border-spacing: 0;
+    width: 100%;
+}
+
+.setting-row {
+}
+
+.setting-col {
+    padding: 5px !important;
+}
+.row-header {
+}
+
+.col-header {
+    font-weight: bold;
+    background-color: #6aa0f7 !important;
+    border-color: #6aa0f7 !important;
+}
+
+.row-item {
+}
+
+.col-item {
+}
+
+.text-center {
+    text-align: center;
+}
+
+.sel-sport-copy {
+    width: 120px;
+}
+
+.sel-bettype-copy {
+    width: 120px;
+}
+
+.w300 {
+    width: 300px;
+}
+.edit-general-info {
+    display: flex;
+    align-items: center;
+}
+.edit-label {
+    padding-right: 5px;
+}
+
+.step-complete {
+    color: black;
+}
+
+.complete-string {
+    font-weight: bold;
+}
+
+.step-running {
+    color: orange;
+}
+
+.running-string {
+    font-weight: bold;
+}
+
+.step-abort {
+    color: red;
+}
+
+.abort-string {
+    font-weight: bold;
+}
+
+.previous-time {
+    background-color: #b5b0b0 !important;
+}
+
+.td-row {
+    width: 20px;
+}
+
+.td-sport {
+    width: 60px;
+}
+
+.td-copy {
+    text-align: left;
+    width: 90px;
+}
+
+.td-setting {
+    width: 185px;
+}
+
+.remark {
+    line-break: anywhere;
+}
+
+.label-filter {
+    display: inline-block;
+    text-align: right;
+}
+
+.div-ckb {
+    display: flex;
+    align-items: center;
+}
+
+.div-daily {
+    display: block;
+}
+
+.div-daily span {
+    vertical-align: middle;
+}
+
+.ckb-auto-reset {
+    vertical-align: middle;
+}
