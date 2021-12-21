@@ -63,17 +63,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
         /// <returns></returns>
         bool CheckPermissionFinance();
 
-        /// <summary>
-        /// Update syncCasino Data
-        /// </summary>
-        /// <param name="customer">Information of Customer</param>
-        /// <param name="currentContext">Current Context</param>
-        /// <returns></returns>
-        bool UpdateSyncCasinoAfterEditCustomer(ICustomer customer, IRequestContext currentContext);
-
         Fanex.Tarus.Customer.Entities.Result UpdateDoubleComm(int userId, int custId, bool isDoubleComm);
-
-        string GetRNGSiteNameByCustId(int custId);
 
         Fanex.Tarus.Customer.Entities.Result UpdateAllDayBalTransfer(int custId, bool isAllDayBalTransfer, bool isIncludedDownline, int userId, string ip);
 

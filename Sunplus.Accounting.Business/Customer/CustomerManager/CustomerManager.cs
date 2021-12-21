@@ -11,7 +11,6 @@
     using DNAide.Core;
     using DNAide.Web;
     using Entities;
-    using Entities.Casino;
     using Entities.Customer;
     using Fanex.Module.NG2.Entities;
     using Fanex.Module.NG2.Services;
@@ -317,29 +316,6 @@
 
         #endregion Enable Number game for Downline
 
-        public Result AutoInsertThridPartyAccount(CSCustomerDetail custInfo, CustDetail uplineInfo, int userId, string userName, string ip)
-        {
-            // Delay 3 sec to allow system do replication.
-            System.Threading.Thread.Sleep(3000);
-
-            var result = new Result();
-            if (uplineInfo.IsUplineSyncCasino)
-            {
-                System.Threading.Thread.Sleep(3000);
-                var csService = new PT.Casino.CasinoManager();
-
-                csService.AutoInsertCasinoAccount(custInfo, userId, userName, ip);
-            }
-
-            if (uplineInfo.IsUplineSyncNG2)
-            {
-                ING2StatusService syncService = new NG2StatusService();
-                syncService.AutoInsertAccount(custInfo.IBCCustID, custInfo.UserName, (RoleId)custInfo.RoleId, custInfo.UpperCustID, custInfo.IsDisableNG2Upline, SiteId.NAP, custInfo.Currency, AppSession.AccId, AccCommon.SystemId);
-            }
-
-            return result;
-        }
-
         public string GetRNGSiteNameByCustId(int custId) => _customerDAO.GetRNGSiteNameByCustId(custId);
 
         #region private functions
@@ -446,7 +422,6 @@
                 AppSession.SuperID = customerInfoViewModel.SuperId;
                 AppSession.SusperUserName = customerInfoViewModel.SuperName;
 
-                AppSession.IsSyncCSCurrentCust = customerInfoViewModel.SyncRnGCasino;
                 AppSession.IsInternal = customerInfoViewModel.IsInternalUser;
             }
         }

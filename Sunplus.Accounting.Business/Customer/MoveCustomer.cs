@@ -111,74 +111,10 @@ namespace Sunplus.Accounting.Business.Customer
                 
                 var customerRngSiteName = new Sunplus.Accounting.DataAccess.AdoNet.CustomerDAO().GetRNGSiteNameByCustId(_downlineDetail.CustID);
 
-                #region Didn't Synchronize Casino
-
-                if (!_downlineDetail.IsCasinoSync)
-                {
-                    error = Sunplus.Accounting.DataAccess.IBCDLL.Customer.UpdateCustomer.CustomerUpdMoveCustRpt(downlineUser, uplineUser,
-                                                                                  accId.ToString(),
-                                                                                  MoveTypeName(custType));
-                    if (error.IsSuccess())
-                    {
-                        return MoveSuccessfully(downlineUser);
-                    }
-
-                    return StringUtils.ParseToJSMsg(error.ErrorMsg);
-                  
-                }
-
-                #endregion Didn't Synchronize Casino
-
-                if (!_uplineDetail.IsCasinoSync)
-                {
-                    return StringUtils.ParseToJSMsg(NotSync(uplineUser));
-                }
-
-                //Move from Casino
-                List<ErrorDetail> errors = MoveCasino(custType, downlineUser, uplineUser, customerRngSiteName);
-
-                if (errors != null)
-                {
-                    if (errors.Count > 0)
-                    {
-                        return errors.Aggregate(ResourceExtension.GetResourceValue(ResourceExtension.Resources.MoveCust, "lblErrorFromCasino") + "<br>", (current, errorDetail) => current + ("- " + errorDetail.ErrCode + ": " + errorDetail.ErrorMessage) + "<br>");
-                    }
-                }
-
                 //Move from IBC
                 error = Sunplus.Accounting.DataAccess.IBCDLL.Customer.UpdateCustomer.CustomerUpdMoveCustRpt(downlineUser, uplineUser,
                                                                                  accId.ToString(),
                                                                                  MoveTypeName(custType));
-                if (!error.IsSuccess())
-                {
-                    //Rollback data Casino when got problem with moving from IBC
-                    bool rollBackResultCasino = RollbackCasino(custType, downlineUser, customerRngSiteName);
-                    string errMsg = ResourceExtension.GetResourceValue(ResourceExtension.Resources.MoveCust, "lblErrorFromIBC") + error.ErrorMsg;
-                    string rollBackFunction = "";
-
-                    switch (custType)
-                    {
-                        case MoveType.Agent:
-                            rollBackFunction = "RollbackAgent";
-                            break;
-
-                        case MoveType.Master:
-                            rollBackFunction = "RollbackMaster";
-                            break;
-                    }
-
-                    if (!rollBackResultCasino)
-                    {
-                        errMsg += "<br>" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.MoveCust, "lblErrorFromCasino") + rollBackFunction;
-                    }
-
-                    return errMsg;
-                }
-
-                //Complete moving customer
-                CompleteMoveCasino(custType, downlineUser, customerRngSiteName);
-
-
                 return MoveSuccessfully(downlineUser);
             }
             catch (Exception ex)
@@ -187,49 +123,6 @@ namespace Sunplus.Accounting.Business.Customer
                 return StringUtils.ParseToJSMsg(ex.Message);
             }
         }
-      
-        #region Casino
-
-        private static List<ErrorDetail> MoveCasino(MoveType custType, string downlineUser, string uplineUser, string siteName)
-        {
-            switch (custType)
-            {
-                case MoveType.Agent:
-                    return IBCProvider.Casino.MoveAgent(downlineUser, uplineUser, CurrentUserIp, AppSession.AccId,
-                                                           AppSession.Username, siteName);
-                //Move Master
-                default:
-                    return IBCProvider.Casino.MoveMaster(downlineUser, uplineUser, CurrentUserIp, AppSession.AccId,
-                                                           AppSession.Username, siteName);
-            }
-        }
-
-        private static bool RollbackCasino(MoveType custType, string downlineUsername, string siteName)
-        {
-            switch (custType)
-            {
-                case MoveType.Agent:
-                    return IBCProvider.Casino.RollbackAgent(downlineUsername, true, siteName);
-                default:
-                    return IBCProvider.Casino.RollbackMaster(downlineUsername, true, siteName);
-            }
-        }
-
-        private static void CompleteMoveCasino(MoveType custType, string downlineUsername, string siteName)
-        {
-            switch (custType)
-            {
-                case MoveType.Agent:
-                    IBCProvider.Casino.RollbackAgent(downlineUsername, false, siteName);
-                    break;
-
-                default:
-                    IBCProvider.Casino.RollbackMaster(downlineUsername, false, siteName);
-                    break;
-            }
-        }
-
-        #endregion Casino
        
     }
 }

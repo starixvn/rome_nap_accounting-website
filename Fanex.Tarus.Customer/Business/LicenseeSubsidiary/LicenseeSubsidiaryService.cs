@@ -26,54 +26,6 @@ namespace Fanex.Tarus.Customer.Business.LicenseeSubsidiary
             => licenseeDataAccess.Generate(new GetCopiedAccountsCriteria(username, number));
 
         public Result Create(string username, string existedUsername, int userId, string ip)
-        {
-            var result = licenseeDataAccess.Create(new CreateLicenseeSubsidiaryCriteria(username, existedUsername, userId, ip));
-            if (result.IsSuccess)
-            {
-                SyncCasino(result.CustId, username, result.ExistedCustId, userId, ip);
-            }
-
-            return result;
-        }
-
-        private void SyncCasino(int custId, string username, int existedCustId, int userId, string ip)
-        {
-            try
-            {
-                var customerInfo = CasinoManager.GetCustInfoIBC(existedCustId, WebSettings.SettingStatus);
-                if (!customerInfo.CasinoSync)
-                {
-                    return;
-                }
-
-                var casinoCustomer = new CasinoLibrary.SBAgent.Customer();
-                var isSuccess = casinoCustomer.AutoInsertAccountFromExisting(
-                    LicenseeCasinoNo,
-                    custId,
-                    existedCustId,
-                    username,
-                    string.Empty,
-                    string.Empty,
-                    string.Empty,
-                    Encryption.CfsEnCode("123qwe"),
-                    string.Empty,
-                    string.Empty,
-                    string.Empty,
-                    DateTime.Now,
-                    ip,
-                    userId,
-                    AppSession.AccUserName,
-                    NapSystem);
-
-                if (isSuccess)
-                {
-                    CasinoManager.UpdateCSStatus(custId, true, customerInfo.CasinoDisabled, true, customerInfo.SiteName);
-                }
-            }
-            catch (Exception ex)
-            {
-                LogExtensions.CasinoExceptionHandler(ex);
-            }
-        }
+            => licenseeDataAccess.Create(new CreateLicenseeSubsidiaryCriteria(username, existedUsername, userId, ip));
     }
 }

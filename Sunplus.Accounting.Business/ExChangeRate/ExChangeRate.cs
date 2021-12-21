@@ -9,8 +9,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.UI.HtmlControls;
-using CasinoLibrary.Model.UserException;
-using CasinoLibrary.SBAgent;
 using DNAide.Core;
 using DNAide.Data;
 using DNAide.Utils;
@@ -135,25 +133,8 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 hash.Add("code", Code.Trim());
                 hash.Add("description", Description);
                 hash.Add("multipliedby", Convert.ToInt32(MultipliedBy.Trim()));
-
-                int errcode = 0;
-                string errmsg = "";
-                int exchangeid = 0;
-
-                IBCProvider.ExChangeRate.ExchangeIns(hash, ref errcode, ref errmsg, ref exchangeid);
-
-                msg = errmsg;
-                int exid = exchangeid;
-                if (msg.Length == 0)
-                {
-                    BasicInfo info = new BasicInfo();
-                    bool isSuc = info.UpdateExchange(Globals.CASINO_GROUP1, exid, currency, CastAide.AsDouble(actualrate), Code);
-                }
-            }
-            catch (ErrorException casinoEx)
-            {
-                msg = casinoEx.Message;
-                LogExtensions.CasinoExceptionHandler(new Exception(casinoEx.Message, casinoEx));
+                var result = IBCProvider.ExChangeRate.ExchangeIns(hash);
+                msg = result.ErrorMessage;
             }
             catch (Exception ex)
             {
@@ -324,22 +305,18 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 hash.Add("errcode", 0);
                 hash.Add("errmsg", "");
                 hash.Add("description", Description);
+                hash.Add("code", Code.Trim());
                 hash.Add("multipliedby", Convert.ToInt32(MultipliedBy.Trim()));
 
                 DbResult rs;
                 rs = IBCProvider.ExChangeRate.ExchangeSelByID(exid);// get info to send email
                 DataRow[] Rows = rs.ResultSet.Tables[0].Select();
 
-                int errcode = 0;
-                string errmsg = "";
-
-                IBCProvider.ExChangeRate.ExchangeUpd(hash, ref errcode, ref errmsg);
-                msg = errmsg;
+                var result = IBCProvider.ExChangeRate.ExchangeUpd(hash);
+                msg = result.ErrorMessage;
 
                 if (msg.Length == 0)
                 {
-                    BasicInfo info = new BasicInfo();
-                    bool isSuc = info.UpdateExchange(Globals.CASINO_GROUP1, exid, currency, CastAide.AsDouble(actualrate), Code);
                     string tplSubject = "Exchange Rate was changed";
                     SendEmail_Template mail = new SendEmail_Template();
                     foreach (DataRow dr in Rows)
@@ -367,16 +344,12 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                                                   tplSubject, mail.ToString());
                 }
             }
-            catch (ErrorException casinoEx)
-            {
-                msg = casinoEx.Message;
-                LogExtensions.CasinoExceptionHandler(new Exception(casinoEx.Message, casinoEx));
-            }
             catch (Exception ex)
             {
                 msg = ex.Message;
                 LogExtensions.ExceptionHandler(ex);
             }
+
             return msg;
         }
 

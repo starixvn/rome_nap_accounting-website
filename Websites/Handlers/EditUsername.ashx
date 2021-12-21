@@ -3,8 +3,6 @@
 using System;
 using System.Web;
 using System.Web.SessionState;
-using CasinoLibrary;
-using CasinoLibrary.SBAgent;
 using System.Data;
 
 using BLL;
@@ -35,35 +33,15 @@ public class EditUsername : BaseHandler
                 string accId = context.Session["AccId"].ToString();
 
                 int custid = 0;
-                CustomerDetail custcs = Sunplus.Accounting.DataAccess.APIClient.IBCLibProvider.Instance.GetCustomerDetail(oldUser);
-                if (WebSettings.disableCS && custcs.IsCasinoSync)
-                {
+                IBCUtils.IbcError err = Sunplus.Accounting.DataAccess.IBCDLL.Customer.UpdateCustomer.CustomerUpdUserNameRpt(oldUser, newUser, accId, out custid);
 
-                    string errCS = string.Format(Resources.ErrorMsg.error_LockUpdateStatus, "CHANGE USERNAME");
-                    context.Response.Write("parent.alert_error('" + IBCUtils.Encryption.RemoveSpecialChars(errCS) + "','errMsg');");
+                if (err.IsSuccess())
+                {
+                    context.Response.Write("parent.parent.jQuery.unblockUI();parent.alert_error('" + AlertMessage.GetMsg("Update CustId successfully.", AlertMessage.MsgType.Success) + "','errMsg');");
                 }
                 else
                 {
-                    IBCUtils.IbcError err = Sunplus.Accounting.DataAccess.IBCDLL.Customer.UpdateCustomer.CustomerUpdUserNameRpt(oldUser, newUser, accId, out custid);
-
-                    bool success = err.IsSuccess();
-                    if (custid != 0 && success) // Have been synchronized casino
-                    {
-                        if (!WebSettings.disableCS && custcs.IsCasinoSync)
-                        {
-                            CasinoLibrary.SBAgent.Customer csCustomer = new CasinoLibrary.SBAgent.Customer();
-                            csCustomer.SiteName = new Sunplus.Accounting.Business.Customer.CustomerManager().GetRNGSiteNameByCustId(custid);
-                            success = csCustomer.UpdateUserName(custid, newUser, context.Request.UserHostAddress, int.Parse(accId), AppSession.Username, 3);
-                        }
-                    }
-                    if (success)
-                    {
-                        context.Response.Write("parent.parent.jQuery.unblockUI();parent.alert_error('" + AlertMessage.GetMsg("Update CustId successfully.", AlertMessage.MsgType.Success) + "','errMsg');");
-                    }
-                    else
-                    {
-                        context.Response.Write("parent.parent.jQuery.unblockUI();parent.alert_error('" + AlertMessage.GetMsg(err.ErrorMsg, AlertMessage.MsgType.Error) + "','errMsg');");
-                    }
+                    context.Response.Write("parent.parent.jQuery.unblockUI();parent.alert_error('" + AlertMessage.GetMsg(err.ErrorMsg, AlertMessage.MsgType.Error) + "','errMsg');");
                 }
             }
             catch (Exception ex)

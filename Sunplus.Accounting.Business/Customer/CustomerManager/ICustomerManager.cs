@@ -1,10 +1,9 @@
 namespace Sunplus.Accounting.Business.Customer
 {
+    using Entities;
+    using Entities.Customer;
     using System.Collections;
     using System.Collections.Generic;
-    using Entities;
-    using Entities.Casino;
-    using Entities.Customer;
 
     public interface ICustomerManager
     {
@@ -48,8 +47,6 @@ namespace Sunplus.Accounting.Business.Customer
             string maxbet, 
             string maxMatch, 
             string MaxBall);
-
-        //Result AutoInsertThridPartyAccount(CSCustomerDetail custInfo, CustDetail uplineInfo, int userId, string userName, string ip);
 
         string GetRNGSiteNameByCustId(int custId);
     }

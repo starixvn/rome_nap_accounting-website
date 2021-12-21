@@ -652,17 +652,8 @@ function OpenEditCustInfo(id, type) {
 //this function is used to Min Max Position Taking
 function OpenEditMinMaxPT(id, type) {
     var url = "Customer/v2/EditMinMaxPT.aspx?custId=" + id + "&type=" + type;
-    showPopup("Edit Min/max PT", url, "", "", 970, 700, false, 2000, null)}
-
-
-
-//open edit Casino window
-function OpenEditCS(id) {
-    var url = "Customer/PositionTakingCS.aspx?set=2&custId=" + id;
-    //showPopup("Update Casino Setting", url, "", "" , 900, 520);
-    showPopup("Update Casino Setting", url, "", "", 900, 520, false, 2000, null);
+    showPopup("Edit Min/max PT", url, "", "", 970, 700, false, 2000, null);
 }
-
 
 function PopUpWindow(url, width, height) {
     var top = (screen.height - height) / 2;

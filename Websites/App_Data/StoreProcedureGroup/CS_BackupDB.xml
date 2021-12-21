@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Functions SiteId="104" SiteName="NAP - Accounting">
+  <Function Name="Exchange Rate">
+    <Setting Key="TP_Admin_Exchange_UpdatePJExchange" SpName="TP_Admin_Exchange_UpdatePJExchange" DbName="CS_BackupDB" />
+    <Setting Key="CS_TP_Admin_Exchange_UpdateExchange" SpName="TP_Admin_Exchange_UpdateExchange" DbName="CS_BackupDB" />
+  </Function>
+</Functions>

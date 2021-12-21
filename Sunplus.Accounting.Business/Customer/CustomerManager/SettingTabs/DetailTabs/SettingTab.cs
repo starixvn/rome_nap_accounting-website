@@ -46,9 +46,7 @@
             var kenoSetting = string.Empty;
 
             var agCasinoLinkSetting = string.Empty;
-            var casinoLinkSetting = string.Empty;
 
-            var goldDeluxeLinkSetting = string.Empty;          
             var creditDCSLink = string.Empty;
             var cn88EditSettingLink = string.Empty;
             var cn88AddnewDownlineLink = string.Empty;
@@ -65,8 +63,6 @@
                     kenoSetting = string.Format("customersetting/KenoSetting/kenosetting/AgentEditMember?custId={0}&userId={1}", custId, AppSession.AccId);
                     TemplateHandler.Assign(ref htmlcontent, "{IsHidden1}", "hidden");
                     TemplateHandler.Assign(ref htmlcontent, "{IsShow1}", "");
-                    casinoLinkSetting = "CustomerSetting/Casino/Member/EditMember?id=" + custId + "&uplineid=" + parentId;
-                    goldDeluxeLinkSetting = string.Format("GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId={0}&uplineLevel=2&actorId={1}&custId={2}&level=1&formType=1", parentId, AppSession.AccId, custId);
                     creditDCSLink = "DCS/ViewCustomerSetting?productId={0}&language=en-US&customerLevel=1&uplinelevel=2&customerId=" + custId;
                     cn88EditSettingLink = $"CN88CustomerSetting/ViewCN88CustomerSetting/Edit?language=en-US&productId=1&customerLevel=1&uplineId={parentId}&customerId={custId}";
                     break;
@@ -80,8 +76,6 @@
                     kenoSetting = string.Format("customersetting/KenoSetting/kenosetting/EditAgent?custId={0}&userId={1}", custId, AppSession.AccId);
                     TemplateHandler.Assign(ref htmlcontent, "{type}", "Agent");
                     if (!CustomerUtils.IsTransferDaily(Convert.ToString(masterId))) TemplateHandler.RemoveBlock(ref htmlcontent, "editTransferTime");
-                    casinoLinkSetting = "CustomerSetting/Casino/Agent/EditAgent?id=" + custId + "&uplineid=" + parentId;
-                    goldDeluxeLinkSetting = string.Format("GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId={0}&uplineLevel=3&actorId={1}&custId={2}&level=2&formType=1", masterId, AppSession.AccId, custId);
                     creditDCSLink = "DCS/ViewCustomerSetting?productId={0}&language=en-US&customerLevel=2&customerId=" + custId;
                     cn88EditSettingLink = $"CN88CustomerSetting/ViewCN88CustomerSetting/Edit?language=en-US&productId=1&customerLevel=2&uplineId={parentId}&customerId={custId}";
                     cn88AddnewDownlineLink = $"CN88CustomerSetting/ViewCN88CustomerSetting/Create?language=en-US&productId=1&customerLevel=1&uplineId={custId}";
@@ -95,8 +89,6 @@
                     agCasinoLinkSetting = string.Format("AGCasino/EditAGCasinoGameSetting?customerId={0}&uplineId={1}&roleId={2}", custId, superId, roleId);
                     kenoSetting = string.Format("customersetting/KenoSetting/kenosetting/EditMaster?custId={0}&userId={1}", custId, AppSession.AccId);
                     TemplateHandler.Assign(ref htmlcontent, "{type}", "Master");
-                    casinoLinkSetting = "CustomerSetting/Casino/Master/EditMaster?id=" + custId + "&uplineid=" + parentId;
-                    goldDeluxeLinkSetting = string.Format("GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId={0}&upLineLevel=4&actorId={1}&custId={2}&level=3&formType=1", superId, AppSession.AccId, custId);
                     creditDCSLink = "DCS/ViewCustomerSetting?productId={0}&language=en-US&customerLevel=3&customerId=" + custId;
                     cn88EditSettingLink = $"CN88CustomerSetting/ViewCN88CustomerSetting/Edit?language=en-US&productId=1&customerLevel=3&uplineId={parentId}&customerId={custId}";
                     cn88AddnewDownlineLink = $"CN88CustomerSetting/ViewCN88CustomerSetting/Create?language=en-US&productId=1&customerLevel=2&uplineId={custId}";
@@ -111,8 +103,6 @@
                     kenoSetting = string.Format("customersetting/KenoSetting/kenosetting/EditSuper?custId={0}&userId={1}", custId, AppSession.AccId);
                     TemplateHandler.Assign(ref htmlcontent, "{type}", "Super");
                     if (custId < 100) TemplateHandler.RemoveBlock(ref htmlcontent, "editTransferTime"); // for dummy super
-                    casinoLinkSetting = "CustomerSetting/Casino/Super/EditSuper?id=" + custId + "&uplineid=0";
-                    goldDeluxeLinkSetting = string.Format("GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineId=0&upLineLevel=0&actorId={0}&custId={1}&level=4&formType=1", AppSession.AccId, custId);
                     creditDCSLink = "DCS/ViewCustomerSetting?productId={0}&language=en-US&customerLevel=4&customerId=" + custId;
                     cn88EditSettingLink = $"CN88CustomerSetting/ViewCN88CustomerSetting/Edit?language=en-US&productId=1&customerLevel=4&customerId={custId}";
                     cn88AddnewDownlineLink = $"CN88CustomerSetting/ViewCN88CustomerSetting/Create?language=en-US&productId=1&customerLevel=3&uplineId={custId}";
@@ -125,8 +115,6 @@
             TemplateHandler.Assign(ref htmlcontent, "{linkSettingInfo}", infoUrl);
             TemplateHandler.Assign(ref htmlcontent, "{virtualSportLinkSetting}", string.Format(creditDCSLink, 5));
             TemplateHandler.Assign(ref htmlcontent, "{kenoLinkSetting}", kenoSetting);
-            TemplateHandler.Assign(ref htmlcontent, "{casinoLinkSetting}", casinoLinkSetting);
-            TemplateHandler.Assign(ref htmlcontent, "{goldDeluxeLinkSetting}", goldDeluxeLinkSetting);
             TemplateHandler.Assign(ref htmlcontent, "{sportsbook2LinkSetting}", string.Format(creditDCSLink, 16));
             TemplateHandler.Assign(ref htmlcontent, "{liveCasinoLinkSetting}", string.Format(creditDCSLink, 41));
             TemplateHandler.Assign(ref htmlcontent, "{voidbridgeLinkSetting}", string.Format(creditDCSLink, 22));
@@ -159,11 +147,6 @@
 
         private string RemoveSettingBlock(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
         {
-            if (customerInfoViewModel.HideSettingLinkRnGCasino)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "edit-casino");
-            }            
-
             if (customerInfoViewModel.HideSettingLinkVirtualSports)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-VirtualSport");
@@ -172,12 +155,7 @@
             if (!customerInfoViewModel.ShowSettingLinkKenoCredit)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Keno");
-            }
-
-            if (!customerInfoViewModel.ShowSettingLinkGoldDeluxeCredit)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "edit-GoldDeluxe");
-            }            
+            }       
 
             if (!customerInfoViewModel.ShowSettingLinkAGCasinoDeposit)
             {

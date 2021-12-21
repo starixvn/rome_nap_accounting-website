@@ -20,8 +20,6 @@ namespace Sunplus.Accounting.Business.Customer
 
         public bool IsShowKeno { get; set; }
 
-        public bool IsShowGoldDeluxeForCredit { get; set; }
-
         public bool IsShowColossusBetsForDeposit { get; set; }
 
         public bool IsShowLiveCasinoForCredit { get; set; }

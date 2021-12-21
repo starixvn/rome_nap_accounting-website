@@ -140,24 +140,15 @@
   </data>
   <data name="-108" xml:space="preserve">
     <value>Enable/Disable Financial status  updated successfully</value>
-  </data> 
+  </data>
   <data name="betdaq_NoMatch" xml:space="preserve">
     <value>New match has not been created yet!</value>
   </data>
   <data name="ClosedAccount" xml:space="preserve">
     <value>Your account was closed. Please contact your supervisor.</value>
   </data>
-  <data name="error_LockUpdateStatus" xml:space="preserve">
-    <value>This {0} function is temporarily unavailable, please update later</value>
-  </data>
   <data name="error_MoveCust_Accounting" xml:space="preserve">
     <value>Error from Accounting: {0}</value>
-  </data>
-  <data name="error_MoveCust_Casino" xml:space="preserve">
-    <value>Error from Casino: {0}</value>
-  </data>
-  <data name="error_MoveCust_NotSync" xml:space="preserve">
-    <value>Error: {0} was not synchronized to Casino System.</value>
   </data>
   <data name="error_MoveCust_Successfully" xml:space="preserve">
     <value>Move {0} successfully.</value>
@@ -191,7 +182,7 @@
   </data>
   <data name="error_CreateFinanceAccountPermission" xml:space="preserve">
     <value>You're not authorized to create Finance (Internal) account.</value>
-  </data>  
+  </data>
   <data name="0" xml:space="preserve">
     <value>Updated successfully.</value>
   </data>

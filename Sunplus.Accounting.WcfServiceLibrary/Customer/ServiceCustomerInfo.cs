@@ -102,11 +102,5 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Customer
             var enableNG = CommonBootStrapper.Locator.GetInstance<ICustomerManager>();
             return enableNG.CheckEnableNGDownline(username);
         }
-
-        public Result AutoInsertThirdPartyAccount(Entities.Casino.CSCustomerDetail custInfo, CustDetail uplineInfo, int userId, string userName, string ip)
-        {
-            var customerService = new Sunplus.Accounting.Business.Customer.CustomerService();
-            return customerService.AutoInsertThridPartyAccount(custInfo, uplineInfo, userId, userName, ip);
-        }
     }
 }

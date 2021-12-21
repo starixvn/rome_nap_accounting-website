@@ -211,55 +211,6 @@
 
         }
 
-        private SettingControl GetSettingControlCasino(
-            int roleID,
-            bool isManageCustomerAccess,
-            string statusName,
-            bool currStatus,
-            bool syncCasino,
-            bool isAllowEdit,
-            bool isenabled,
-            bool disabledCSParent)
-        {
-            if (WebSettings.disableCS || !isAllowEdit || !syncCasino)
-            {
-                return new SettingControl(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblEnabledCasino"), false, true, string.Empty, string.Empty, string.Empty, string.Empty, statusName, roleID, false, "CS");
-            }
-            else
-            {
-                string classname = string.Empty;
-                string jsonclick = string.Empty;
-                string jsonmouseover = string.Empty;
-                string jsonmouseout = string.Empty;
-
-                if (isManageCustomerAccess)
-                {
-                    if (isenabled)
-                    {
-                        if (4 == roleID || !disabledCSParent)
-                        {
-                            classname = "canchange";
-                            jsonclick = "return leftPanelManager.viewProductStatusSetting({CustId}, '{Username}', {RoleId}, 6, 'Update Casino Status');";
-                        }
-                        else
-                        {
-                            classname = "cannotchange";
-                            jsonmouseout = "UnTip()";
-                            jsonmouseover = "Tip('" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblDisabledCSUpline") + "', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)";
-                        }
-                    }
-                    else
-                    {
-                        classname = "cannotchange";
-                        jsonmouseout = "UnTip()";
-                        jsonmouseover = "Tip('" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblDisabledAccount") + "', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)";
-                    }
-                }
-
-                return new SettingControl(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblEnabledCasino"), currStatus, false, jsonclick, jsonmouseout, jsonmouseover, classname, statusName, roleID, false, "CS");
-            }
-        }
-
         private SettingControl GetSettingControlOutright(
             int roleID,
             bool parentstatus,

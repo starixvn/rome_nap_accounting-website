@@ -104,10 +104,6 @@
 
         public bool ShowSettingLinkAGCasinoDeposit => WebSettings.EnableAGCasino && IsDeposit;
 
-        public bool ShowSettingLinkGoldDeluxeCredit => WebSettings.IsShowGoldDeluxeSettingForCredit && !IsDeposit;
-
-        public bool SyncUplineGoldDeluxe => Utils.ToBoolean(customerInfoRow["IsSyncUplineGoldDeluxe"]);
-
         public bool ShowEnableCheckBoxKeno => KenoSection.Instance.Enable;
 
         public bool ShowSettingLinkKenoCredit => KenoSection.Instance.ShowSetting && !IsDeposit;
