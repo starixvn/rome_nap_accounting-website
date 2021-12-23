@@ -92,6 +92,7 @@
                         {
                             Ticket = new Ticket
                             {
+                                CustId = Converter.To<long>(reader["CustId"]),
                                 TransId = Converter.To<long>(reader["transid"]),
                                 SportTypeId = Converter.ToInt(reader["SportType"]),
                                 BetTypeId = Converter.ToInt(reader["BetType"]),
@@ -127,7 +128,9 @@
                                 MatchCode = Converter.ToString2(reader["matchcode"]),
                                 BetCheck = Converter.ToString2(reader["betcheck"]),
                                 BetTeam = HasColumn(reader, "BetTeam") ? Converter.ToString2(reader["BetTeam"]) : string.Empty,
-                                Currency = HasColumn(reader, "Currency") ? Converter.ToString2(reader["currency"]) : string.Empty
+                                Currency = HasColumn(reader, "Currency") ? Converter.ToString2(reader["currency"]) : string.Empty,
+                                SiteId = Converter.ToString2(reader["SiteId"]),
+                                CurrencyId = Converter.ToInt(reader["CurrencyId"]),
                             },
                             ChoiceHtml = string.Empty,
                             OddHtml = string.Empty,

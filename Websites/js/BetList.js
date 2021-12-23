@@ -950,8 +950,8 @@ function ViewCashOutHistory(transId, refNo, betType, originalTransId, title) {
     openResultsPopUp(cashoutParam);
 }
 
-function ViewResult(matchid, race, bettype, sporttype, refno, username, winlostdate, refno_mixparlay, league, is_outright, betid, matchcode, betcheck, transdesc) {
-    var resultParam = getResultParamBySportType(matchid, race, bettype, sporttype, refno, username, winlostdate, refno_mixparlay, league, is_outright, betid, matchcode, betcheck, transdesc);
+function ViewResult(matchid, race, bettype, sporttype, refno, username, winlostdate, refno_mixparlay, league, is_outright, betid, matchcode, betcheck, transdesc, siteId) {
+    var resultParam = getResultParamBySportType(matchid, race, bettype, sporttype, refno, username, winlostdate, refno_mixparlay, league, is_outright, betid, matchcode, betcheck, transdesc, siteId);
 
     resultParam = resultParam || getResultParamByBetType(matchid, race, bettype, sporttype, refno, username, winlostdate, refno_mixparlay, league, is_outright, betid, matchcode);
 
@@ -988,7 +988,7 @@ function isFM2(betttype) {
     return (betttype >= 221 && betttype <= 227)
 }
 
-function getResultParamBySportType(matchid, race, bettype, sporttype, refno, username, winlostdate, refno_mixparlay, league, is_outright, betid, matchcode, betcheck, transdesc) {
+function getResultParamBySportType(matchid, race, bettype, sporttype, refno, username, winlostdate, refno_mixparlay, league, is_outright, betid, matchcode, betcheck, transdesc, siteId) {
     switch (sporttype) {
         case 5: // Tennis.
             return getTennisParam();
@@ -1064,7 +1064,7 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
             return getBGParam(transdesc, betcheck, league, matchcode);
 
         case 241: // BBIN
-            return getBBinParam(transdesc, matchcode, bettype);
+            return getBBinParam(betcheck, transdesc, matchcode, betid, siteId);
 
         case 211: // Allbet.        
         case 242: // GTCasino.
@@ -1252,13 +1252,21 @@ function getLiveCasinoParam(transdesc, betcheck, bettype, sporttype) {
     };
 }
 
-function getBBinParam(transdesc, betcheck, bettype) {
+function getBBinParam(custId, transId3rd, gameId3rd, currency, siteId) {
     return {
-        url: "Report/ViewBBinResult.aspx",
+        url: "ThirdParty/BBINResult",
         title: "BBIN Result",
-        jsonParam: { transDesc: transdesc, betcheck: betcheck },
+        jsonParam:
+        {
+            productId: 47,
+            custId: custId,
+            TransId3rd: transId3rd,
+            GameId3rd: gameId3rd,
+            Currency: currency,
+            SiteId: siteId
+        },
         width: 945,
-        height: 500
+        height: 900
     };
 }
 
