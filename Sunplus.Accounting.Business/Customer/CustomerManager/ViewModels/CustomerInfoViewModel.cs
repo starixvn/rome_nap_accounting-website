@@ -120,6 +120,8 @@
 
         public bool LockUnsuspend => Utils.ToBoolean(customerInfoRow["LockUnsuspend"]);
 
+        public bool HideSabaCasino { get; private set; } = true;
+
         public CustomerDetail CustParent
         {
             get
@@ -147,6 +149,10 @@
                             case "5":
                                 HideCheckBoxVirtualSports = (Utils.ToBoolean(row["IsHiddenUpline"]) && SearchAccountRoleId < 4) || !WebSettings.EnableVirtualSports;
                                 HideSettingLinkVirtualSports = (Utils.ToBoolean(row["IsHiddenUpline"]) && SearchAccountRoleId < 4) || !WebSettings.EnableVirtualSports || IsDeposit;
+                                break;
+
+                            case "6":
+                                HideSabaCasino = Utils.ToBoolean(row["IsHidden"]) || !WebSettings.IsShowSabaCasino || IsDeposit;
                                 break;
 
                             case "16":

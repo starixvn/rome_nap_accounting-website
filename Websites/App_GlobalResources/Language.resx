@@ -2524,4 +2524,10 @@
   <data name="enableCashout" xml:space="preserve">
     <value>Cash Out</value>
   </data>
+  <data name="lblDisabledSabaCasinoUpline" xml:space="preserve">
+    <value>Saba Casino has been disabled at upline</value>
+  </data>
+  <data name="enableSabaCasino" xml:space="preserve">
+    <value>Saba Casino</value>
+  </data>
 </root>

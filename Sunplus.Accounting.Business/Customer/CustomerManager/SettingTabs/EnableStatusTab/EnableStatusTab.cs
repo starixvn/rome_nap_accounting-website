@@ -46,7 +46,8 @@
                 IsShowVGaming = !customerInfoViewModel.HideVGaming,
                 IsShowSabaVirtualSports = !customerInfoViewModel.HideSabaVirtualSports,
                 IsShowBitcoin = !customerInfoViewModel.HideBitcoin,
-                IsShowCashout = !customerInfoViewModel.HideCashout
+                IsShowCashout = !customerInfoViewModel.HideCashout,
+                IsShowSabaCasino = !customerInfoViewModel.HideSabaCasino
             };
 
             htmlcontent = RenderClosedStatus(htmlcontent, customerInfoViewModel);
@@ -489,6 +490,34 @@
                                                renderLeftPanelParameter,
                                                "Update Virtual Sports Status",
                                                5);
+                            break;
+
+                        case "6":
+                            _renderLeftPanelService.RenderEnableProductBoxDCS2(
+                                               row1,
+                                               productRow,
+                                               sg,
+                                               ref htmlcontent,
+                                               isManageCustomerAccess,
+                                               "SabaCasino",
+                                               renderLeftPanelParameter.IsShowSabaCasino,
+                                               renderLeftPanelParameter,
+                                               "Update Saba Casino Status",
+                                               5);
+                            break;
+
+                        case "22":
+                            _renderLeftPanelService.RenderEnableProductBoxDCS2(
+                                               row1,
+                                               productRow,
+                                               sg,
+                                               ref htmlcontent,
+                                               isManageCustomerAccess,
+                                               "Voidbridge",
+                                               renderLeftPanelParameter.IsShowVoidbridge,
+                                               renderLeftPanelParameter,
+                                               "Update Macau Games Status",
+                                               22);
                             break;
 
                         case "23":
