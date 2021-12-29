@@ -1383,9 +1383,6 @@
   <data name="lblCustomerInfomation" xml:space="preserve">
     <value>Customer Information</value>
   </data>
-  <data name="lblEnabledCasino" xml:space="preserve">
-    <value>Casino</value>
-  </data>
   <data name="lblMaxTransferCredit" xml:space="preserve">
     <value>Member Max Transfer Credit</value>
   </data>
@@ -1395,20 +1392,11 @@
   <data name="lblUsername2" xml:space="preserve">
     <value>Nick Name</value>
   </data>
-  <data name="lblDisabledCSUpline" xml:space="preserve">
-    <value>Casino was disabled at upline</value>
-  </data>
   <data name="lblCSHeader" xml:space="preserve">
     <value>CS</value>
   </data>
   <data name="lblPositionTakingFormat" xml:space="preserve">
     <value>{0} Position</value>
-  </data>
-  <data name="strConfirmDisableCS" xml:space="preserve">
-    <value>WARNING!!! \n\n Are you sure you want to disable Casino on this customer and all it's downlines?</value>
-  </data>
-  <data name="strConfirmEnableCS" xml:space="preserve">
-    <value>Do you want to enable Casino on this customer and all it's downlines?</value>
   </data>
   <data name="lblCustomerSite" xml:space="preserve">
     <value>Site</value>
@@ -1433,9 +1421,6 @@
   </data>
   <data name="lblAuto" xml:space="preserve">
     <value>{0} Auto</value>
-  </data>
-  <data name="lblUplineHaveNotSyncToCasino" xml:space="preserve">
-    <value>Please synchronize Upline of this customer to Casino first.</value>
   </data>
   <data name="lbl1x2" xml:space="preserve">
     <value>1X2</value>
@@ -1553,12 +1538,6 @@
   </data>
   <data name="lblNA" xml:space="preserve">
     <value>N/A</value>
-  </data>
-  <data name="casinodownlines" xml:space="preserve">
-    <value>Casino Downlines</value>
-  </data>
-  <data name="casinodownlinesdisabled" xml:space="preserve">
-    <value>Casino downlines will be disabled as well</value>
   </data>
   <data name="lblAccountingUser" xml:space="preserve">
     <value>Type</value>
@@ -1773,9 +1752,6 @@
   <data name="sport" xml:space="preserve">
     <value>Sport</value>
   </data>
-  <data name="exitCSConfirmMsg" xml:space="preserve">
-    <value>Are you sure you want to exit without saving your casino setting?</value>
-  </data>
   <data name="resetMaxtransferSucceed" xml:space="preserve">
     <value>Accumulated transferable amount has been reset successfully.</value>
   </data>
@@ -1946,12 +1922,6 @@
   </data>
   <data name="lblSendMailSuccessfully" xml:space="preserve">
     <value>Your mail has been sent. </value>
-  </data>
-  <data name="lblInsertCasinoSetting" xml:space="preserve">
-    <value>Insert Casino Setting</value>
-  </data>
-  <data name="lblUpdatePTCasino" xml:space="preserve">
-    <value>Update PT Casino</value>
   </data>
   <data name="lblMathWinloss" xml:space="preserve">
     <value>Match Win Loss (2a)</value>
@@ -2144,9 +2114,6 @@
   </data>
   <data name="UnCheckBettingLimitMember" xml:space="preserve">
     <value>do not have any Betting Limit because the upline UNCHECK all, it is effetced to downline. By default, it will be taken the smallest Betting Limit from UPLINE</value>
-  </data>
-  <data name="CheckSynchronize" xml:space="preserve">
-    <value>If moved Master/Agent is already Synced Live Casino and new Super/Master is UnSynced then not allow to move</value>
   </data>
   <data name="lblP2PPrivateGameComm" xml:space="preserve">
     <value>Private Game</value>

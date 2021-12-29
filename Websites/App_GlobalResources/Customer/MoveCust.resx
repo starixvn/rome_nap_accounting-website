@@ -132,13 +132,6 @@
   <data name="ValidParams" xml:space="preserve">
     <value>ValidParams</value>
   </data>
-  <data name="ErrCustomerNotSync" xml:space="preserve">
-    <value>Error: {0} was not synchronized to Casino System.</value>
-  </data>
-  <data name="lblErrorFromCasino" xml:space="preserve">
-    <value>Errors from Casino System: </value>
-  </data>
-
   <data name="lblErrorFromIBC" xml:space="preserve">
     <value>Errors from IBC: </value>
   </data>

@@ -97,11 +97,6 @@ namespace Sunplus.Accounting.Business.Customer
             return StringUtils.ParseToJSMsg(string.Format(ResourceExtension.GetResourceValue(ResourceExtension.Resources.MoveCust, "MoveSuccessfully"), username));
         }
 
-        private static string NotSync(string username)
-        {
-            return StringUtils.ParseToJSMsg(string.Format(ResourceExtension.GetResourceValue(ResourceExtension.Resources.MoveCust, "ErrCustomerNotSync"), username));
-        }
-
         private string ExecuteMove(MoveType custType, string downlineUser, string uplineUser, int accId)
         {
             IbcError error;

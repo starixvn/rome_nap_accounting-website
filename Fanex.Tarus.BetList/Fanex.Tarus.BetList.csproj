@@ -207,10 +207,6 @@
     <Reference Include="Fanex.Result.Core.GlobalGaming, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.GlobalGaming.1.0.0.4\lib\net40\Fanex.Result.Core.GlobalGaming.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Result.Core.GoldDeluxe, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core-GoldDeluxe.1.0.4\lib\net40\Fanex.Result.Core.GoldDeluxe.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Fanex.Result.Core.GTCasino, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.GTCasino.1.0.0\lib\net40\Fanex.Result.Core.GTCasino.dll</HintPath>
     </Reference>
@@ -474,8 +470,6 @@
     <Compile Include="Business\Results\AGCasinoResultService.cs" />
     <Compile Include="Business\Results\LeapGamingResultService.cs" />
     <Compile Include="Business\Results\IAGCasinoResultService.cs" />
-    <Compile Include="Business\Results\IGoldDeluxeResultService.cs" />
-    <Compile Include="Business\Results\GoldDeluxeResultService.cs" />
     <Compile Include="Business\Results\IVirtualTennisResultService.cs" />
     <Compile Include="Business\Results\Happy5PopupResultService.cs" />
     <Compile Include="Business\Results\MetricGamingResultService.cs" />
@@ -546,7 +540,6 @@
     <Compile Include="Criteria\MapPlayerId3rdToCustIdCriteria.cs" />
     <Compile Include="Criteria\MixParlayDetailCriteria.cs" />
     <Compile Include="Criteria\Results\GetAGCasinoResultCriteria.cs" />
-    <Compile Include="Criteria\Results\GetGoldDeluxePopUpResultCriteria.cs" />
     <Compile Include="Criteria\Results\GetBitcoinResultCriteria.cs" />
     <Compile Include="Criteria\Results\GetVirtualTennisResultCriteria.cs" />
     <Compile Include="Criteria\Results\GetVirtualRacingResultCriteria.cs" />
@@ -566,8 +559,6 @@
     <Compile Include="DataAccess\ReportDataAccess.cs" />
     <Compile Include="DataAccess\Results\IAGCasinoResultDataAccess.cs" />
     <Compile Include="DataAccess\Results\AGCasinoResultDataAccess.cs" />
-    <Compile Include="DataAccess\Results\GoldDeluxeResultDataAccess.cs" />
-    <Compile Include="DataAccess\Results\IGoldDeluxeResultDataAccess.cs" />
     <Compile Include="DataAccess\Results\IVirtualTennisResultDataAccess.cs" />
     <Compile Include="DataAccess\Results\MetricGamingResultDataAccess.cs" />
     <Compile Include="DataAccess\Results\IMetricGamingResultDataAccess.cs" />

@@ -2,10 +2,8 @@
 
 using System;
 using System.Web;
-using System.Web.SessionState;
 using System.Collections;
 using Sunplus.Accounting.Business.Security;
-using Sunplus.Accounting.Entities.Casino;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
@@ -90,42 +88,8 @@ public class UpdateCustInfo : BaseHandler
                     IbcError error = UpdateCustomer.CustomerUpdUserInfoRpt(ht);
                     if (error.IsSuccess())
                     {
-
-                        // Update for casino
-                        if (Permissions.IsAllowCasino() && context.Request["hidSynCS"] != "False")
-                        {
-                            try //Cheat casino
-                            { // Store data for casino section
-                                CSCustomerDetail custInfo = Sunplus.Accounting.DataAccess.APIClient.IBCLibProvider.Instance.GetCustInfoIBC(ht["custid"].ToString(), ht);
-                                custInfo.Currency = CastAide.AsInt16(context.Request["hidCur"]);
-                                // Sync data to Casino
-                                CasinoLibrary.SBAgent.Customer csCustomer = new CasinoLibrary.SBAgent.Customer();
-                                //csCustomer.SiteName = new Sunplus.Accounting.Business.Customer.CustomerManager().GetRNGSiteNameByCustId(custId);
-                                csCustomer.SiteName = custInfo.SiteName;
-
-                                bool status = csCustomer.UpdateCustInfoNoStatus(custInfo.IBCCustID, custInfo.FirstName, custInfo.LastName,
-                                                                   custInfo.Phone, custInfo.MobilePhone, custInfo.Fax,
-                                                                   custInfo.Email, ht["address"].ToString(), CastAide.AsDateTime(ht["birthday"]),
-                                                                   ht["postal"].ToString(), ht["state"].ToString(), ht["remark"].ToString(),
-                                                                   context.Request.UserHostAddress, AppSession.CustID, AppSession.Username, 3);
-                            }
-                            catch (CasinoLibrary.Model.UserException.ErrorException casinoEx)
-                            {
-                                Sunplus.Accounting.Core.Extensions.LogExtensions.CasinoExceptionHandler(casinoEx);
-                            }
-                            catch (Exception ex)
-                            {
-                                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-                            }
-
-                        }
-
-
                         context.Response.Write("parent.alert_error('" + AlertMessage.GetMsg("Update Customer Information Successfully.", AlertMessage.MsgType.Success) + "','errMsg');");
-                        //if (string.IsNullOrEmpty(context.Request["fcustinfo"]))
-                        //{
                         context.Response.Write("parent.afterUpdate(true, 2000);");
-                        //}
                     }
                     else
                     {

@@ -194,8 +194,6 @@ $.fn.forceNumber = function () {
             isInternal: $internalUser.is(":checked"),
             currencyId: vm.currencyId,
             existingCustId: vm.existingCustId,
-            isSyncCasino: vm.isSyncCasino,
-            disableCasino: vm.disableCasino,
             custLevel: vm.custLevel,
             uplineId: vm.uplineId,
             isSyncNG2: vm.isSyncNG2,
