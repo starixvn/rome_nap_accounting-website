@@ -189,7 +189,7 @@
                                 break;
 
                             case "25":
-                                HideCashout = Utils.ToBoolean(row["IsHidden"]) || !WebSettings.EnableCashOut || IsDeposit;
+                                HideCashout = (Utils.ToBoolean(row["IsHidden"]) && SearchAccountRoleId < 4) || !WebSettings.EnableCashOut;
 
                                 break;
 
