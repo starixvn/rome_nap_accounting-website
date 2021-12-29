@@ -31,7 +31,6 @@
                     && !string.Equals(customerInfoViewModel.Currency, "Won", StringComparison.OrdinalIgnoreCase),
                 IsShowMacau = customerInfoViewModel.ShowMacauDeposit,
                 IsShowEnableBetTrade = customerInfoViewModel.ShowEnableBetTradeDeposit,
-                IsShowEnableCashOut = customerInfoViewModel.ShowEnableCashOutDeposit,
                 IsShowAutoSuspend = customerInfoViewModel.HasReadPermission_AutoSuspend,
                 IsDeposit = customerInfoViewModel.IsDeposit,
                 IsShowColossusBetsForDeposit = WebSettings.IsShowColossusBets && customerInfoViewModel.IsDeposit,
@@ -222,9 +221,6 @@
             TemplateHandler.Assign(ref htmlcontent, "{uplineStatusBetTrade}", "1");
             TemplateHandler.Assign(ref htmlcontent, "{betTradeId}", Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdBetTrade);
 
-            TemplateHandler.Assign(ref htmlcontent, "{uplineStatusCashOut}", "1");
-            TemplateHandler.Assign(ref htmlcontent, "{cashOutId}", Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdCashOut);
-
             TemplateHandler.Assign(ref htmlcontent, "{uplineStatusMacau}", "1");
             TemplateHandler.Assign(ref htmlcontent, "{macauId}", Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdMacau);
 
@@ -265,11 +261,6 @@
             if (!renderLeftPanelParameter.IsShowEnableBetTrade)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "BetTrade");
-            }
-
-            if (!renderLeftPanelParameter.IsShowEnableCashOut)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "EnableCashOut");
             }
 
             if (!renderLeftPanelParameter.IsShowMacau)

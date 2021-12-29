@@ -114,8 +114,6 @@
 
         public bool ShowEnableBetTradeDeposit => WebSettings.EnableBetTrade && SearchAccountRoleId.Equals(4) && IsDeposit;
 
-        public bool ShowEnableCashOutDeposit => WebSettings.EnableCashOut && SearchAccountRoleId.Equals(4) && IsDeposit;
-
         public bool ShowMacauDeposit => WebSettings.EnableMacau && SearchAccountRoleId.Equals(4) && IsDeposit;
 
         public bool HideSportsbook2 { get; private set; } = true;
