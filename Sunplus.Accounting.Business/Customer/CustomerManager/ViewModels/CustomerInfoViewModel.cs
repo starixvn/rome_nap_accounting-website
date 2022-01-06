@@ -90,6 +90,8 @@
 
         public bool HideBitcoin { get; private set; } = true;
 
+        public bool HideCashout { get; private set; } = true;
+
         public bool HideRNGLottery { get; private set; } = true;
 
         public bool HideVirtualSports2 { get; private set; } = true;
@@ -111,8 +113,6 @@
         public bool ShowSettingLinkKenoCredit => KenoSection.Instance.ShowSetting && !IsDeposit;
 
         public bool ShowEnableBetTradeDeposit => WebSettings.EnableBetTrade && SearchAccountRoleId.Equals(4) && IsDeposit;
-
-        public bool ShowEnableCashOutDeposit => WebSettings.EnableCashOut && SearchAccountRoleId.Equals(4) && IsDeposit;
 
         public bool ShowMacauDeposit => WebSettings.EnableMacau && SearchAccountRoleId.Equals(4) && IsDeposit;
 
@@ -183,6 +183,11 @@
                                 bool isSyncUplineFishingWorld = Utils.ToBoolean(row["IsSyncedUpline"]);
 
                                 HideEnableAndEditFishingWorld = (SearchAccountRoleId < 4 && isHideUplineFishingWorld) || !isSyncUplineFishingWorld;
+
+                                break;
+
+                            case "25":
+                                HideCashout = (Utils.ToBoolean(row["IsHidden"]) && SearchAccountRoleId < 4) || !WebSettings.EnableCashOut;
 
                                 break;
 

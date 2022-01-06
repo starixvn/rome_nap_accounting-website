@@ -31,7 +31,6 @@
                     && !string.Equals(customerInfoViewModel.Currency, "Won", StringComparison.OrdinalIgnoreCase),
                 IsShowMacau = customerInfoViewModel.ShowMacauDeposit,
                 IsShowEnableBetTrade = customerInfoViewModel.ShowEnableBetTradeDeposit,
-                IsShowEnableCashOut = customerInfoViewModel.ShowEnableCashOutDeposit,
                 IsShowAutoSuspend = customerInfoViewModel.HasReadPermission_AutoSuspend,
                 IsDeposit = customerInfoViewModel.IsDeposit,
                 IsShowColossusBetsForDeposit = WebSettings.IsShowColossusBets && customerInfoViewModel.IsDeposit,
@@ -51,7 +50,8 @@
                 IsShowSabaclub = !customerInfoViewModel.HideSabaclub,
                 IsShowVGaming = !customerInfoViewModel.HideVGaming,
                 IsShowSabaVirtualSports = !customerInfoViewModel.HideSabaVirtualSports,
-                IsShowBitcoin = !customerInfoViewModel.HideBitcoin
+                IsShowBitcoin = !customerInfoViewModel.HideBitcoin,
+                IsShowCashout = !customerInfoViewModel.HideCashout
             };
 
             htmlcontent = RenderClosedStatus(htmlcontent, customerInfoViewModel);
@@ -221,9 +221,6 @@
             TemplateHandler.Assign(ref htmlcontent, "{uplineStatusBetTrade}", "1");
             TemplateHandler.Assign(ref htmlcontent, "{betTradeId}", Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdBetTrade);
 
-            TemplateHandler.Assign(ref htmlcontent, "{uplineStatusCashOut}", "1");
-            TemplateHandler.Assign(ref htmlcontent, "{cashOutId}", Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdCashOut);
-
             TemplateHandler.Assign(ref htmlcontent, "{uplineStatusMacau}", "1");
             TemplateHandler.Assign(ref htmlcontent, "{macauId}", Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdMacau);
 
@@ -264,11 +261,6 @@
             if (!renderLeftPanelParameter.IsShowEnableBetTrade)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "BetTrade");
-            }
-
-            if (!renderLeftPanelParameter.IsShowEnableCashOut)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "EnableCashOut");
             }
 
             if (!renderLeftPanelParameter.IsShowMacau)
@@ -549,6 +541,20 @@
                                                renderLeftPanelParameter,
                                                "Update Fishing World Status",
                                                24);
+                            break;
+
+                        case "25":
+                            _renderLeftPanelService.RenderEnableProductBoxDCS2(
+                                               row1,
+                                               productRow,
+                                               sg,
+                                               ref htmlcontent,
+                                               isManageCustomerAccess,
+                                               "Cashout",
+                                               renderLeftPanelParameter.IsShowCashout,
+                                               renderLeftPanelParameter,
+                                               "Update Cash Out Status",
+                                               25);
                             break;
 
                         case "27":
