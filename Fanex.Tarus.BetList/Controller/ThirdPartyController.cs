@@ -5,32 +5,15 @@
     using Fanex.Result.Core.ThirdParty;
     using Fanex.Result.Core.ThirdParty.Models;
     using Fanex.Result.Core.VirtualGames;
-    using Fanex.Result.ThirdParty.Models;
+    using Fanex.Tarus.BetList.ViewModel;
     using Infrastructure.Caching;
-    using Logging;
-    using RestSharp;
-    using Result.ThirdParty.Models.Requests;
-    using Result.ThirdParty.Models.Views;
-    using Result.ThirdParty.Services;
-    using Result.ThirdParty.Services.Impl;
 
     public class ThirdPartyController : BaseController
     {
-        private readonly ProductResultServiceFactory serviceFactory;
         private string ProductResultTitle = string.Empty;
 
         public ThirdPartyController()
         {
-            serviceFactory = new ProductResultServiceFactoryImpl(Logger.Log, new RestClient());
-        }
-
-        public ActionResult Result(ThirdPartyResultBaseQuery message)
-        {
-            SetProductResultTitle(message.ProductId);
-            var productService = serviceFactory.CreateProductResultService(message.ProductId);
-            var result = productService.GetDetailLink(message);
-
-            return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(ProductResultTitle, result));
         }
 
         public ActionResult SportsLotteryResult(ThirdPartyResultRequest request) => BaseResult(request, "SportsLotteryResultConfigs");
@@ -41,7 +24,7 @@
             var service = new VirtualGamesResult();
             var result = service.GetDetailResult(gameId, "d");
 
-            return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(ProductResultTitle, new SuccessResult(result)));
+            return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(ProductResultTitle, result));
         }
 
         public ActionResult LinkedGamesResult(ThirdPartyResultRequest request) => BaseResult(request, "LinkedGamesResultConfigs");
@@ -57,7 +40,7 @@
             };
 
             var result = service.GetResultGET(resultRequest);
-            return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(ProductResultTitle, new SuccessResult(result)));
+            return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(ProductResultTitle, result));
         }
         public ActionResult PPLiveCasinoResult(ThirdPartyResultRequest request)
         {
@@ -69,7 +52,7 @@
             };
 
             var result = service.GetResultGET(resultRequest);
-            return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(ProductResultTitle, new SuccessResult(result)));
+            return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(ProductResultTitle, result));
         }
 
         public ActionResult PPResult(ThirdPartyResultRequest request) => BaseResult(request, "PPResultConfigs");
@@ -103,8 +86,9 @@
             };
             var result = service.GetResultGET(resultRequest);
 
-            return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(ProductResultTitle, new SuccessResult(result)));
+            return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(ProductResultTitle, result));
         }
+
         public ActionResult BGResult(ThirdPartyResultRequest request) => BaseResult(request, "BGResultConfigs");
 
         public ActionResult RNGCasinoResult(ThirdPartyResultRequest request) => BaseResult(request, "RNGCasinoResultConfigs");
@@ -121,7 +105,7 @@
             var resultRequest = new ResultRequest(request.CustId, request.TransId3rd, request.GameId3rd, request.CurrencyId, request.SiteId);
             var result = service.GetResultGET(resultRequest);
 
-            return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(ProductResultTitle, new SuccessResult(result)));
+            return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(ProductResultTitle, result));
         }
 
         private void SetProductResultTitle(int productId)

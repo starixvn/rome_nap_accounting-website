@@ -1,2 +1,0 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="ViewVoidbridgeResult.aspx.cs" Inherits="Report_ViewVoidbridgeResult" Theme="" Async="true" %>
-    <asp:Literal ID="lResult" runat="server"></asp:Literal>
