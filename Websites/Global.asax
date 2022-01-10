@@ -13,7 +13,6 @@
 <%@ Import Namespace="Microsoft.Practices.Unity.Configuration" %>
 <%@ Import Namespace="Fanex.Tarus.Web.Controllers.Areas" %>
 <%@ Import Namespace="Fanex.Tarus.Web.Controllers.Filters" %>
-<%@ Import Namespace="Fanex.GoldDeluxe.CoreSetting.Mappings" %>
 <%@ Import Namespace="Fanex.CustomerSetting.Client40" %>
 <%@ Import Namespace="Fanex.CustomerSetting.MatrixClient" %>
 <%@ Import Namespace="Fanex.Tarus.Security.Authenticate" %>
@@ -70,8 +69,6 @@
         SettingMatrixRegistration.Init();
 
         RegisterRoutes(RouteTable.Routes);
-
-        AutoMapperConfiguration.Configure();
 
         //Fanex.Logging.Extensions.Web.ExceptionHandler
         //    .UseConfig(new Fanex.Logging.Extensions.Web.LoggingConfiguration()
