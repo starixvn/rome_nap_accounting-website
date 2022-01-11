@@ -152,7 +152,7 @@
                                 break;
 
                             case "6":
-                                HideSabaCasino = Utils.ToBoolean(row["IsHidden"]) || !WebSettings.IsShowSabaCasino || IsDeposit;
+                                HideSabaCasino = (Utils.ToBoolean(row["IsHidden"]) && SearchAccountRoleId < 4) || !WebSettings.IsShowSabaCasino;
                                 break;
 
                             case "16":

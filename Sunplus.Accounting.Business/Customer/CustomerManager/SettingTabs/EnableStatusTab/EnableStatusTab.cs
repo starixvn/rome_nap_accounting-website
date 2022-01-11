@@ -503,7 +503,7 @@
                                                renderLeftPanelParameter.IsShowSabaCasino,
                                                renderLeftPanelParameter,
                                                "Update Saba Casino Status",
-                                               5);
+                                               6);
                             break;
 
                         case "22":
