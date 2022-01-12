@@ -297,6 +297,10 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                 $scope.loadData("#frmBitcoin", url);
                 $scope.resize("#frmBitcoin");
                 break;
+            case 'tabSabaCasino': url += "DCS/ViewCustomerSetting?productId=6&customerLevel=4&IsReadOnly=true&customerId=" + $scope.existedUser.userid;
+                $scope.loadData("#frmSabaCasino", url);
+                $scope.resize("#frmSabaCasino");
+                break;
             case 'tabGenealInformation': $("#divGeneralInformation").show();
         }
 
