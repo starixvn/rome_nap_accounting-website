@@ -1,0 +1,80 @@
+﻿<span id="errMsg" class="error-message"></span>
+<div id="clear2"></div>
+
+<div id="sContent" style="margin-top: 5px">
+    <div id="divExhangeRate" class="content-warper" style="width: 362px">
+        <div class="content-header clearfix">
+            <div class="header-scroll">
+                <table class="tbl-header-scroll">
+                    <tr>
+                        <td style="border-bottom: none 0px;">
+                            <div class="c" style="width:30px">
+                                #
+                            </div>
+                        </td>
+                        <td style="border-bottom: none 0px;">
+                            <div class="c" style="width:80px">
+                                Currency
+                            </div>
+                        </td>
+                        <td style="border-bottom: none 0px;">
+                            <div class="c" style="width:72px">
+                                Current Base Rate
+                            </div>
+                        </td>
+                        <td style="border-bottom: none 0px;">
+                            <div class="c" style="width:150px">
+                                New Base Rate
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="content-body clearfix" style="border-bottom:0px none">
+            <div class="body-scroll" style="height: 441px;">
+                <table class="tbl-body-scroll">
+                    <!--Content-->
+                    <tr class="{odd_even}">
+                        <td>
+                            <div class="c" style="width: 30px;">
+                                {RowNo}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="c" style="width: 80px;">
+                                {Currency}
+                                <input type="hidden" id="txtExrateId" value="{exrateId}" />
+                            </div>
+                        </td>
+                        <td class="r">
+                            <div style="width: 72px">
+                                {CurrentBaseRate}
+                            </div>
+                        </td>
+                        <td class="r">
+                            <div style="width: 150px">
+                                <input type="text" autocomplete="off" class="new-base-rate new-base-rate" id="txtNewBaseRate_{exrateId}" data-currency="{Currency}" data-exrateId="{exrateId}" onkeypress="return CheckDecNumber_ExRate(event);" />
+                            </div>
+                        </td>
+                    </tr>
+                    <!--/Content-->
+                </table>
+            </div>
+        </div>
+        <div class="content-footer clearfix" style="border-bottom:0px none">
+            <table class="tbl-body-scroll">
+                <tr>
+                    <td colspan="4" style="border-right:0px none; text-align:right">
+                        <span style="font-style: italic;"><span style="color: red;">*</span> Rows with null New Base Rate will not be changed.</span>
+                        <!--btnSubmit-->
+                        <input class="btn" type="button" id="btnsubmit" onclick="UpdateBaseRate()" value="Submit" />
+                        <!--btnSubmit-->
+                        <input class="btn" type="button" value="Reset" onclick="ResetEditBaseRate()" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <br />
+</div>
