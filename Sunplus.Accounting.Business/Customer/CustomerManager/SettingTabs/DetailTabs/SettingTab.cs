@@ -131,6 +131,7 @@
             TemplateHandler.Assign(ref htmlcontent, "{linkAddnewDownlineCN88}", cn88AddnewDownlineLink);
             TemplateHandler.Assign(ref htmlcontent, "{CustomerStatus}", customerInfoViewModel.CN88CustStatusName);
             TemplateHandler.Assign(ref htmlcontent, "{CustomerStatusId}", customerInfoViewModel.CN88CustStatus);                 
+            TemplateHandler.Assign(ref htmlcontent, "{SabaCasinoLinkSetting}", string.Format(creditDCSLink, 6));
 
             //---- for menu details -----------
             TemplateHandler.Assign(ref htmlcontent, "{linkSettingDetail}", detailUrl);
@@ -216,6 +217,11 @@
             if (customerInfoViewModel.IsDeposit || customerInfoViewModel.SearchAccountRoleId == 1)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "chatbot");
+            }
+
+            if (customerInfoViewModel.HideSabaCasino)
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "edit-sabacasino");
             }
 
             return htmlcontent;
