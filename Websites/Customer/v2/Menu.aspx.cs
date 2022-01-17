@@ -29,7 +29,8 @@ public partial class Others_Menu : System.Web.UI.Page
         lottery = 28,
         sabaclub = 42,
         vgaming = 66,
-        Bitcoin = 69
+        Bitcoin = 69,
+        sabaCasino = 6
     };
 
     protected void Page_Load(object sender, EventArgs e)
@@ -37,6 +38,7 @@ public partial class Others_Menu : System.Web.UI.Page
         this.tplMenu = WebUtils.LoadTemplate("Customer/v2/MenuUpdatePT.htm");
         Boolean AllowedCS, hideVirtualSports, hideLiveCasino, hideVoidbridge, hideNG2, hideFishingWorld, hideRNGLottery, hideVirtualGames, hideSabaclub, hideVGaming;
         Boolean hideBitcoin;
+        Boolean hideSabaCasino;
         string[] queryStringParams = Request.UrlReferrer.Query.Split('&');
         string custID = queryStringParams[0].ToString();
         custID = custID.Substring(8, custID.Length - 8);
@@ -68,6 +70,7 @@ public partial class Others_Menu : System.Web.UI.Page
         hideSabaclub = !CastAide.AsBoolean(db.Outputs["allowedsabaclub"]) || !WebSettings.IsShowSabaclub;
         hideVGaming = !CastAide.AsBoolean(db.Outputs["allowedvgaming"]) || !WebSettings.IsShowVGaming;
         hideBitcoin = !CastAide.AsBoolean(db.Outputs["allowedbitcoin"]) || !WebSettings.IsShowBitcoinBetting;
+        hideSabaCasino = !CastAide.AsBoolean(db.Outputs["allowedsabacasino"]) || !WebSettings.IsShowSabaCasino;
 
         string kenoPath = string.Empty;
         string creditDCSLink = string.Empty;
@@ -108,6 +111,7 @@ public partial class Others_Menu : System.Web.UI.Page
         this.RenderSettingTab("sabaclub", "{sabaclubLinkSetting}", string.Format(creditDCSLink, (int)products.sabaclub), hideSabaclub);
         this.RenderSettingTab("vgaming", "{vgamingLinkSetting}", string.Format(creditDCSLink, (int)products.vgaming), hideVGaming);
         this.RenderSettingTab("Bitcoin", "{BitcoinLinkSetting}", string.Format(creditDCSLink, (int)products.Bitcoin), hideBitcoin);
+        this.RenderSettingTab("SabaCasino", "{SabaCasinoLinkSetting}", string.Format(creditDCSLink, (int)products.sabaCasino), hideSabaCasino);
         this.sMenu.Text = this.tplMenu;
     }
 
