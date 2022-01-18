@@ -219,8 +219,7 @@
       <HintPath>..\packages\Fanex.BetList.RNGWar.1.0.0.3\lib\net40\Fanex.BetList.RNGWar.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.SabaClub, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.SabaClub.1.0.1-CasinoHoldemPoker-01\lib\net40\Fanex.BetList.SabaClub.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\Fanex.BetList.SabaClub.1.0.1\lib\net40\Fanex.BetList.SabaClub.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.SAGaming, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.SAGaming.1.0.0.4\lib\net40\Fanex.BetList.SAGaming.dll</HintPath>
