@@ -85,15 +85,9 @@ public partial class CustomerBalance : PageBase
             strcontent.Append("<script>datarows=[");
             int cnt = 0;
             DataRowCollection rows = ds.ResultSet.Tables[0].Rows;
-            int cntSyncCasino = 0;
 
             foreach (DataRow dr in rows)
             {
-                if (CastAide.AsBoolean(dr["SyncCasino"]))
-                {
-                    cntSyncCasino++;
-                }
-
                 strcontent.Append("[");
                 strcontent.Append("'" + string.Format(cult, "{0:#,##0.00}", (Convert.IsDBNull(dr["GivenCredit"]) ? "0.00" : dr["GivenCredit"])) + "',");
                 double balance = (Convert.IsDBNull(dr["balance"]) ? 0.00 : Convert.ToDouble(dr["Balance"]));
@@ -140,11 +134,6 @@ public partial class CustomerBalance : PageBase
                     strcontent.Append("'',");
                 }
 
-                if (CastAide.AsBoolean(dr["SyncCasino"]))
-                    strcontent.Append("'1',");
-                else
-                    strcontent.Append("'0',");
-
                 if (cnt < rows.Count - 1)
                 {
                     strcontent.Append("],");
@@ -167,7 +156,6 @@ public partial class CustomerBalance : PageBase
                 strcontent.Append("isDisableAll=true;");
             }
             
-            //strcontent.Append("var cntSyncCasino=" + cntSyncCasino + ";" );
             strcontent.Append(" RenderCustBalance(datarows, total, isDisableAll) ");
             strcontent.Append("</script>");
         }

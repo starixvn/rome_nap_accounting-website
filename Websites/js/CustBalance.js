@@ -16,7 +16,6 @@ var lastname=12;
 var firstname = 11;
 var chkdisable = 13;
 var isclosed = 14;
-var SyncCasino = 15;
 
 
 function RenderCustBalance(data, totalrow, _isDisableAll) {
@@ -71,10 +70,10 @@ function RenderCustBalance(data, totalrow, _isDisableAll) {
         content.push('<td class="r"><b>' + data[i][outstanding] + '</b></td>');
         content.push('<td class="c">');
         if (data[i][chkdisable] == "yes") {
-            content.push('    <input SyncCasino="'+ data[i][SyncCasino] +'" type="checkbox" id="' + data[i][id] + '" name="' + data[i][id] + '" value="' + data[i][yesterdaybalance_value] + '" disabled />');
+            content.push('    <input type="checkbox" id="' + data[i][id] + '" name="' + data[i][id] + '" value="' + data[i][yesterdaybalance_value] + '" disabled />');
         }
         else {
-            content.push('    <input SyncCasino="' + data[i][SyncCasino] + '" type="checkbox" id="' + data[i][id] + '" name="' + data[i][id] + '" value="' + data[i][yesterdaybalance_value] + '" onclick="_CheckItem(\'frmCustBal\',\'' + data[i][id] + '\');" />');
+            content.push('    <input type="checkbox" id="' + data[i][id] + '" name="' + data[i][id] + '" value="' + data[i][yesterdaybalance_value] + '" onclick="_CheckItem(\'frmCustBal\',\'' + data[i][id] + '\');" />');
         }
         content.push('</td>');
         content.push('<td class="c">');
