@@ -16,7 +16,21 @@
         {
         }
 
-        public ActionResult SportsLotteryResult(ThirdPartyResultRequest request) => BaseResult(request, "SportsLotteryResultConfigs");
+        public ActionResult SportsLotteryResult(ThirdPartyResultRequest request)
+        {
+            SetProductResultTitle(request.ProductId);
+            var service = new ThirdPartyResult("SportsLotteryResultConfigs");
+            var resultRequest = new ResultRequest(request.CustId, request.TransId3rd, request.GameId3rd, request.CurrencyId, request.SiteId)
+            {
+                BetTypeId = request.BetTypeId,
+                EndTime = request.EndTime,
+                Platform = "D"
+            };
+
+            var result = service.GetResultGET(resultRequest);
+            return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(ProductResultTitle, result));
+
+        }
 
         public ActionResult VirtualGamesResult(int productId, string gameId)
         {
@@ -64,6 +78,7 @@
         public ActionResult AdvantPlayResult(ThirdPartyResultRequest request) => BaseResult(request, "AdvantPlayResultConfigs");
 
         public ActionResult AdvantPlayMiniResult(ThirdPartyResultRequest request) => BaseResult(request, "AdvantPlayMiniResultConfigs");
+
         public ActionResult JokerResult(ThirdPartyResultRequest request) => BaseResult(request, "JokerResultConfigs");
 
         public ActionResult PGSoftResult(ThirdPartyResultRequest request) => BaseResult(request, "PGSoftResultConfigs");
