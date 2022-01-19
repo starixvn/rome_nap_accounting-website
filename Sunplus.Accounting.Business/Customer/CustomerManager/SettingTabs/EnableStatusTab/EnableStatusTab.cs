@@ -330,7 +330,22 @@
                     Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdRNGLottery,
                     "Update RNG Lottery Status"));
             }
-            
+
+            if (customerInfoViewModel.HideEnabledCheckBoxVoidbridge)
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "EnableMacauGames");
+            }
+            else
+            {
+                TemplateHandler.Assign(ref htmlcontent, "{macauGamesOnClickFunction}", _renderLeftPanelService.GetProductStatusJsFunction(
+                    customerInfoViewModel.IsDeposit,
+                    customerInfoViewModel.CustId,
+                    customerInfoViewModel.UserName,
+                    customerInfoViewModel.SearchAccountRoleId,
+                    22,
+                    "Update Macau Games Status"));
+            }
+
             return htmlcontent;
         }
 
@@ -499,20 +514,6 @@
                                                renderLeftPanelParameter,
                                                "Update Virtual Sports Status",
                                                5);
-                            break;
-
-                        case "22":
-                            _renderLeftPanelService.RenderEnableProductBoxDCS2(
-                                               row1,
-                                               productRow,
-                                               sg,
-                                               ref htmlcontent,
-                                               isManageCustomerAccess,
-                                               "Voidbridge",
-                                               renderLeftPanelParameter.IsShowVoidbridge,
-                                               renderLeftPanelParameter,
-                                               "Update Macau Games Status",
-                                               22);
                             break;
 
                         case "23":
