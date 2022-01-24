@@ -138,7 +138,7 @@ function InitFinanceCodeGridOptions() {
                 HeaderText: 'Remove\
                             <br />\
                             <button ' + isRemoveAllDisabled + ' class= "btn ' + isRemoveAllDisabled + '" style="width: 80px;padding: 0px;margin-top: 5px;" onclick="OpenRemoveAllConfigurations();">\
-                                <img src="/App_Themes/Images/icn_del.png" alt="Remove All" style="height:12px;margin-right:2px;" /> All\
+                                <img src="../App_Themes/Images/icn_del.png" alt="Remove All" style="height:12px;margin-right:2px;" /> All\
                             </button>' ,
                 Width: 140, Name: "Remove", HeaderAlign: "center", CellAlign: "center", CssClass: ""
             },
@@ -224,7 +224,7 @@ function RenderFinanceCodeGrid(data, totalItems, pageSize, pageIndex) {
                 row.Columns.push({ Name: "Agent", Value: RenderFinanceCodeCell(group[i].AgentName, group[i].FinanceCode) });
                 row.Columns.push({ Name: "Member", Value: RenderFinanceCodeCell(group[i].MemberName, group[i].FinanceCode) });
                 row.Columns.push({ Name: "AllowViewing", Value: '<input type="checkbox" ' + isChecked + ' onclick="HandleCheckIsView(' + group[i].GroupId + ',\'' + group[i].FinanceCode + '\',' + group[i].IsView + ',this);" />' });
-                row.Columns.push({ Name: "Remove", Value: '<img alt="Delete" title="Delete" src="/App_Themes/Images/icn_del.png" style="cursor: pointer; padding: 0 2px;" onclick="OpenRemoveConfiguration(' + group[i].GroupId + ',\'' + group[i].FinanceCode + '\',' + group[i].IsView + ',' + group[i].RoleId + ')" />' });
+                row.Columns.push({ Name: "Remove", Value: '<img alt="Delete" title="Delete" src="../App_Themes/Images/icn_del.png" style="cursor: pointer; padding: 0 2px;" onclick="OpenRemoveConfiguration(' + group[i].GroupId + ',\'' + group[i].FinanceCode + '\',' + group[i].IsView + ',' + group[i].RoleId + ')" />' });
                 
                 bodyRows.push(row);
             }
