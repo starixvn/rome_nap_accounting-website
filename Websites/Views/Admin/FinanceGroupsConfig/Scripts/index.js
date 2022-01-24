@@ -38,6 +38,7 @@ var divMessageBox = $("#message-box");
 
 var cachedValidationUsers = [];
 var cachedValidationCodes = [];
+var cachedGroupsDropdown = [];
 var cachedGroupId = null;
 var cachedCodeTotalItems = [];
 var cachedUserPageSize = 50;
@@ -277,7 +278,7 @@ function HandleSaveGroup(index, oldGroupId, username) {
             }
 
             RenderGroupsMultiSelect(null, function () {
-                Search(cachedUserPageSize, cachedCodePageIndex);
+                Search(cachedUserPageSize, cachedUserPageIndex);
             });
         },
         error: function (xhr) {
@@ -903,6 +904,7 @@ function RenderGroupsMultiSelect(newGroupId = null, callback = null) {
         url: window.rootUrl + 'FinanceGroupsConfig/GetGroups',
         type: 'GET',
         success: function (result) {
+            cachedGroupsDropdown = result;
             var listData = result.map(function (item) {
                 return {
                     Id: item.Id,
@@ -935,19 +937,13 @@ function RenderGroupsMultiSelect(newGroupId = null, callback = null) {
 }
 
 function RenderGroupsSelect(id, selectedGroupId = null) {
-    $.ajax({
-        url: window.rootUrl + 'FinanceGroupsConfig/GetGroups',
-        type: 'GET',
-        success: function (result) {
-            var defaultOption = selectedGroupId ? '<option value="" selected>None</option>' : '<option value="">Select a group</option>';
-            var options = result.map(function (item) {
-                var isSelected = selectedGroupId == item.Id ? 'selected' : '';
-                return '<option value="' + item.Id + '" ' + isSelected + ' >' + item.Name + '</option>';
-            }).join('');
-           
-            $('#' + id).html(defaultOption + options);
-        }
-    });
+    var defaultOption = selectedGroupId ? '<option value="" selected>None</option>' : '<option value="">Select a group</option>';
+    var options = cachedGroupsDropdown.map(function (item) {
+        var isSelected = selectedGroupId == item.Id ? 'selected' : '';
+        return '<option value="' + item.Id + '" ' + isSelected + ' >' + item.Name + '</option>';
+    }).join('');
+
+    $('#' + id).html(defaultOption + options);
 }
 
 function BlockUI() {
