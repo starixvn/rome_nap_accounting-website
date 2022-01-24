@@ -1,0 +1,32 @@
+﻿<div id="add-user-to-group" style="display: none;">
+    <div id="msgAddUser">
+    </div>
+    <div id="add-user-new-content" style="line-height: 28px; margin-top: 10px; border-collapse: collapse;">
+        <div>
+            <label><b>Finance Group</b><span class="color: red" ;> *</span></label>
+            <select id="ddlAddUserGroups" style="width: 100px">
+                <option value="" selected>Select a group</option>
+            </select>
+        </div>
+        <div>
+            <label for="txtAssignUsers"><b>Assign Finance Users to Group </b>(separated by ",")</label><br />
+            <textarea id="txtAssignUsers" cols="100" rows="10"></textarea><br />
+            <span><em>Maximum at 50 Usernames</em></span>
+        </div>
+        <div>
+            <input class="btn" type="submit" value="Cancel" onclick="CloseAddUserToGroup();"/>
+            <input class="btn btn-right" type="submit" value="Select" onclick="OpenReviewAddUserToGroup();" />
+        </div>
+    </div>
+    <div id="review-add-user-content" class="hidden">
+        <div class="review-user">
+            <p class="review-title"><b>These Finance Users will be assigned to Group <span id="spanAddUserGroupId"></span> : </b></p><br />
+            <div id="add-user-grid" class="freegrid"></div>
+        </div>
+        <div>
+            <input class="btn" type="submit" value="Cancel"  onclick="CloseAddUserToGroup();"/>
+            <input class="btn" type="submit" value="Back" onclick="BackAddUserToGroup();"/>
+            <input id="btnAddUser" class="btn btn-right" type="submit" value="Select" onclick="SubmitAddUserToGroup();" />
+        </div>
+    </div>
+</div>

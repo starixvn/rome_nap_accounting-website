@@ -1,0 +1,39 @@
+﻿.btn {
+    width: 150px;
+}
+
+.btn-right {
+    float: right;
+    margin-right: 20px;
+}
+
+.custom-dialog {
+    top: 5% !important;
+}
+
+.review-user {
+    margin-bottom: 20px;
+}
+
+.review-code {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.review-title {
+    margin-bottom: 0px;
+}
+
+.freegrid .grid-fixed-table tr.invalid-row td {
+    background-color: #FCE4D6;
+    color: red;
+}
+
+.freegrid tr.highlight-row:hover td {
+    background-color: #FFF2CC;
+}
+
+.disabled, .disabled:hover {
+    color: grey;
+    cursor: no-drop;
+}

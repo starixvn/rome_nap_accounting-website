@@ -463,6 +463,19 @@
     <Setting Key="Acc_Initial_DCS_SettingConfig_Del" SpName="Acc_Initial_DCS_SettingConfig_Del" DbName="DBCUST.CustDB.bodbAdminNet" />
     <Setting Key="Acc_Initial_DCS_ConfigStatus_Upd" SpName="Acc_Initial_DCS_ConfigStatus_Upd" DbName="DBCUST.CustDB.bodbAdminNet" />
   </Function>
+  <Function Name="Admin - Finance Groups Config">
+    <Setting Key="Acc_FinanceGroupsConfig_FinanceGroupSel" SpName="Acc_FinanceGroupsConfig_FinanceGroupSel" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_FinanceGroupsConfig_FinanceGroup_GroupUpd" SpName="Acc_FinanceGroupsConfig_FinanceGroup_GroupUpd" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_FinanceGroupsConfig_FinanceGroup_IsViewUpd" SpName="Acc_FinanceGroupsConfig_FinanceGroup_IsViewUpd" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_FinanceGroupsConfig_FinanceGroupDel" SpName="Acc_FinanceGroupsConfig_FinanceGroupDel" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_FinanceGroupsConfig_FinanceGroupInsValidation" SpName="Acc_FinanceGroupsConfig_FinanceGroupInsValidation" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_FinanceGroupsConfig_FinanceGroupIns" SpName="Acc_FinanceGroupsConfig_FinanceGroupIns" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_FinanceGroupsConfig_UsersInsValidation" SpName="Acc_FinanceGroupsConfig_UsersInsValidation" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_FinanceGroupsConfig_UsersIns" SpName="Acc_FinanceGroupsConfig_UsersIns" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_FinanceGroupsConfig_CodesInsValidation" SpName="Acc_FinanceGroupsConfig_CodesInsValidation" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_FinanceGroupsConfig_CodesIns" SpName="Acc_FinanceGroupsConfig_CodesIns" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_FinanceGroupsConfig_GroupSel" SpName="Acc_FinanceGroupsConfig_GroupSel" DbName="DBCUST.CustDB.bodbAdminNet" />
+  </Function>
   <Function Name="Ex.rate">
     <Setting Key="Acc_ExchangeMultiBaseRateUpd" SpName="Acc_ExchangeMultiBaseRateUpd" DbName="DBCUST.CustDB.bodbAdminNet" />
   </Function>

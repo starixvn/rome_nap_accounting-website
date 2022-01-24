@@ -1,0 +1,41 @@
+﻿<div id="add-new-group" style="display: none;">
+    <div id="msgAddNewGroup">
+    </div>
+    <div id="new-content" style="line-height: 28px; margin-top: 10px; border-collapse: collapse;">
+        <div>
+            <div><label for="txtNewUsers"><b>Assign Finance Users to new Group</b> (separated by ",")</label></div>
+            <div>
+                <textarea id="txtNewUsers" cols="145" rows="10"></textarea>
+                <br />
+                <span><em> Maximum at 50 Usernames</em></span>
+            </div>
+        </div>
+        <div>
+            <div><label for="txtNewCodes"><b>Assign Finance Codes to new Group</b> (separated by ",")</label></div>
+            <div>
+                <textarea id="txtNewCodes" cols="145" rows="10"></textarea>
+                <br />
+                <span><em>Maximum at 100 Codes</em></span>
+            </div>
+        </div>
+        <div>
+            <input id="btnCancelAdd" class="btn" type="submit" value="Cancel" onclick="CloseAddNewGroup();" />
+            <input id="btnReviewAdd" class="btn btn-right" type="submit" value="Select" onclick="OpenReviewNewGroup();" />
+        </div>
+    </div>
+    <div id="review-content" class="hidden">
+        <div class="review-user">
+            <p class="review-title">These Finance Users will be assigned to this group:</p><br />
+            <div id="new-user-grid" class="freegrid"></div>
+        </div>
+        <div class="review-code">
+            <p class="review-title">These Finance Codes will be added to this group:</p><br />
+            <div id="new-code-grid" class="freegrid"></div>
+        </div>
+        <div>
+            <input id="btnCancelReview" class="btn" type="submit" value="Cancel" onclick="CloseAddNewGroup();" />
+            <input id="btnCreateGroup" class="btn btn-right" type="submit" value="Create Group" onclick="SubmitAddNewGroup();" />
+            <input id="btnBackAdd" class="btn btn-right" type="submit" value="Back" onclick="BackAddNewGroup();" />
+        </div>
+    </div>
+</div>
