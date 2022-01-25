@@ -66,6 +66,22 @@ function Initialize() {
             ddlAllowViewing.prop('disabled', true);
         }
     });
+
+    $('input[type=text], textarea').keydown(function (e) {
+        if (e.key == 'Tab') {
+            e.preventDefault();
+            var start = this.selectionStart;
+            var end = this.selectionEnd;
+
+            // set textarea value to: text before caret + tab + text after caret
+            this.value = this.value.substring(0, start) +
+                "\t" + this.value.substring(end);
+
+            // put caret at right position again
+            this.selectionStart =
+                this.selectionEnd = start + 1;
+        }
+    });
 }
 
 function Search(pageSize = 50, pageIndex = 0) {
@@ -863,8 +879,6 @@ function RenderCodeReview(divContainer) {
 }
 
 function HandleCheckIsViewCodeValidation(event, index) {
-    event = event || window.event;
-    event.stopPropagation();
     cachedValidationCodes[index].IsView = cachedValidationCodes[index].IsView === 1 ? 0 : 1 ;
 }
 
@@ -873,20 +887,18 @@ function HandleSeperateValuesWithCommas(inputSelector) {
 
     if (inputValue.length > 0) {
         if (inputValue.indexOf("\n") >= 0) {
-            inputValue = inputValue.replace(/\n/g, " ");
+            inputValue = inputValue.replace(/\n/g, ",");
         }
 
         if (inputValue.indexOf("\r") >= 0) {
-            inputValue = inputValue.replace(/\r/g, " ");
+            inputValue = inputValue.replace(/\r/g, ",");
         }
 
         if (inputValue.indexOf("\t") >= 0) {
-            inputValue = inputValue.replace(/\t/g, " ");
+            inputValue = inputValue.replace(/\t/g, ",");
         }
 
-        inputValue = inputValue.replace(/\s/g, ",");
         var valuesArray = inputValue.split(",").filter(item => item.length > 0);
-
         inputSelector.val(valuesArray.join(","));
     }
 }
