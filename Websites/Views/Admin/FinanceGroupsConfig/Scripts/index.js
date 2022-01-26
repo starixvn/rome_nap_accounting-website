@@ -41,6 +41,7 @@ var cachedValidationCodes = [];
 var cachedGroupsDropdown = [];
 var cachedGroupId = null;
 var cachedCodeTotalItems = [];
+var cachedCodes = [];
 var cachedUserPageSize = 50;
 var cachedUserPageIndex = 0;
 var cachedCodePageSize = 50;
@@ -105,6 +106,7 @@ function Search(pageSize = 50, pageIndex = 0) {
         },
         success: function (result) {
             if (isCodeSelected) {
+                cachedCodes = result.FinanceCodes;
                 cachedCodeTotalItems = result.TotalItems;
                 RenderFinanceCodeGrid(result.FinanceCodes, result.TotalItems, pageSize, pageIndex);
             } else {
@@ -150,14 +152,22 @@ function InitFinanceCodeGridOptions() {
             { HeaderText: "Master", Width: 200, Name: "Master", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "Agent", Width: 200, Name: "Agent", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "Member", Width: 200, Name: "Member", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: "Allow Viewing", Width: 200, Name: "AllowViewing", HeaderAlign: "center", CellAlign: "center" },
+            {
+                HeaderText: 'Allow Viewing\
+                             <br />\
+                             <div style="display: flex;justify-content: center;align-items: center;margin-top: 3px">\
+                                 <input type="checkbox" style="margin-right: 5px;margin-top: 5px;" onclick="CheckAllIsView(this);"/>\
+                                 <input type="button" class="btn" style="width: 80px;padding: 0px;" value="Update" onclick="OpenUpdateIsView();" />\
+                             </div>',
+                Width: 200, Name: "AllowViewing", HeaderAlign: "center", CellAlign: "center"
+            },
             {
                 HeaderText: 'Remove\
                             <br />\
-                            <button ' + isRemoveAllDisabled + ' class= "btn ' + isRemoveAllDisabled + '" style="width: 80px;padding: 0px;margin-top: 5px;" onclick="OpenRemoveAllConfigurations();">\
+                            <button ' + isRemoveAllDisabled + ' class="btn ' + isRemoveAllDisabled + '" style="width: 80px;padding: 0px;margin-top: 5px;" onclick="OpenRemoveAllConfigurations();">\
                                 <img src="../App_Themes/Images/icn_del.png" alt="Remove All" style="height:12px;margin-right:2px;" /> All\
                             </button>' ,
-                Width: 140, Name: "Remove", HeaderAlign: "center", CellAlign: "center", CssClass: ""
+                Width: 140, Name: "Remove", HeaderAlign: "center", CellAlign: "center"
             },
         ],
         showDistinctRow: true,
@@ -224,7 +234,7 @@ function RenderFinanceCodeGrid(data, totalItems, pageSize, pageIndex) {
         codeGridOptions.pagerOption.totalItem = 1;
     } else {
         var groups = jlinq.from(data).group("GroupId");
-
+        var index = 0;
         for (var groupId in groups) {
             var group = groups[groupId];
 
@@ -240,10 +250,11 @@ function RenderFinanceCodeGrid(data, totalItems, pageSize, pageIndex) {
                 row.Columns.push({ Name: "Master", Value: RenderFinanceCodeCell(group[i].MasterName, group[i].FinanceCode) });
                 row.Columns.push({ Name: "Agent", Value: RenderFinanceCodeCell(group[i].AgentName, group[i].FinanceCode) });
                 row.Columns.push({ Name: "Member", Value: RenderFinanceCodeCell(group[i].MemberName, group[i].FinanceCode) });
-                row.Columns.push({ Name: "AllowViewing", Value: '<input type="checkbox" ' + isChecked + ' onclick="HandleCheckIsView(' + group[i].GroupId + ',\'' + group[i].FinanceCode + '\',' + group[i].IsView + ',this);" />' });
+                row.Columns.push({ Name: "AllowViewing", Value: '<input type="checkbox" class="is-view" ' + isChecked + ' onclick="HandleCheckIsView(' + index + ', this);" />'});
                 row.Columns.push({ Name: "Remove", Value: '<img alt="Delete" title="Delete" src="../App_Themes/Images/icn_del.png" style="cursor: pointer; padding: 0 2px;" onclick="OpenRemoveConfiguration(' + group[i].GroupId + ',\'' + group[i].FinanceCode + '\',' + group[i].IsView + ',' + group[i].RoleId + ')" />' });
                 
                 bodyRows.push(row);
+                index++;
             }
         }
 
@@ -312,34 +323,51 @@ function HandleCancelGroup(index, groupId, obj) {
     $('#group-cell-' + index).html(groupId);
 }
 
-function HandleCheckIsView(groupId, financeCode, isView, obj) {
-    try { parent.BlockUI(); } catch (e) { BlockUI(); }
-    $.ajax({
-        url: window.rootUrl + 'FinanceGroupsConfig/UpdateIsView',
-        type: 'Post',
-        dataType: 'json',
-        data: {
-            GroupId: groupId,
-            UserName: financeCode,
-            IsView: isView ? 0 : 1
-        },
-        success: function (result) {
-            if (result.ErrorCode) {
-                showAlertMessage('err-msg', result.ErrorCode, 1);
-                return;
+function HandleCheckIsView(index, obj) {
+    cachedCodes[index].IsView = $(obj).prop('checked') ? 1 : 0;
+}
+
+function CheckAllIsView(obj) {
+    var isChecked = $(obj).prop('checked');
+    var isView = isChecked ? 1 : 0;
+
+    $('.is-view').each(function (index) {
+        $(this).prop('checked', isChecked);
+        cachedCodes[index].IsView = isView;
+    });
+}
+
+function OpenUpdateIsView() {
+    OpenConfirmBox('Are you sure you want to update Allow Viewing of these Finance Codes', "Update Allow Viewing", function () {
+        try { parent.BlockUI(); } catch (e) { BlockUI(); }
+        $.ajax({
+            url: window.rootUrl + 'FinanceGroupsConfig/UpdateIsView',
+            type: 'Post',
+            dataType: 'json',
+            data: {
+                FinanceCodes: cachedCodes
+            },
+            success: function (result) {
+                if (result.ErrorCode) {
+                    showAlertMessage('err-msg', result.ErrorCode, 1);
+                    return;
+                }
+
+                Search(cachedCodePageSize, cachedCodePageIndex);
+            },
+            error: function (xhr) {
+                showAlertMessage('err-msg', 'Internal Server Error.', 1);
+            },
+            complete: function () {
+                try { parent.jQuery.unblockUI(); } catch (e) { UnBlockUI(); }
             }
-        },
-        error: function (xhr) {
-            showAlertMessage('err-msg', 'Internal Server Error.', 1);
-        },
-        complete: function () {
-            try { parent.jQuery.unblockUI(); } catch (e) { UnBlockUI(); }
-        }
+        });
     });
 }
 
 function OpenRemoveAllConfigurations() {
-    OpenConfirmBox('Are you sure you want to remove <b>' + cachedCodeTotalItems + '</b> configurations?', "Delete Configurations", function () {
+    OpenConfirmBox('Are you sure you want to remove <b>' + cachedCodeTotalItems + '</b> configurations? <br/> This action is permanent and cannot be undone.', "Delete Configurations", function () {
+        try { parent.BlockUI(); } catch (e) { BlockUI(); }
         $.ajax({
             url: window.rootUrl + 'FinanceGroupsConfig/RemoveAll',
             type: 'Post',
@@ -372,7 +400,7 @@ function OpenRemoveAllConfigurations() {
 }
 
 function OpenRemoveConfiguration(groupId, financeCode, isView, roleId) {
-    OpenConfirmBox("Are you sure you want to remove this configurations?", "Delete Configuration", function () {
+    OpenConfirmBox("Are you sure you want to remove this configurations? <br/> This action is permanent and cannot be undone.", "Delete Configuration", function () {
         RemoveConfig([{ GroupId: groupId, UserName: financeCode, IsView: isView, RoleId: roleId }]);
     });
 }
@@ -406,7 +434,7 @@ function RemoveConfig(groups) {
 }
 
 function OpenConfirmBox(message, removeText, removeFunction) {
-    confirmBox.html(message + "<br/> This action is permanent and cannot be undone.");
+    confirmBox.html(message);
     confirmBox.dialog({
         autoOpen: false,
         height: 120,
@@ -852,7 +880,7 @@ function RenderCodeReview(divContainer) {
 
         row.Columns.push({ Name: 'FinanceCodes', Value: cachedValidationCodes[i].UserName });
         row.Columns.push({
-            Name: 'AllowViewing', Value: isInvalid ? cachedValidationCodes[i].Status : '<input type="checkbox" checked onclick="HandleCheckIsViewCodeValidation(event,' + i + ')">'
+            Name: 'AllowViewing', Value: isInvalid ? cachedValidationCodes[i].Status : '<input type="checkbox" checked onclick="HandleCheckIsViewCodeValidation(' + i + ')">'
         });
 
         if (isInvalid) {
@@ -878,7 +906,7 @@ function RenderCodeReview(divContainer) {
     $('#' + divContainer).fanexGrid(gridOptions);
 }
 
-function HandleCheckIsViewCodeValidation(event, index) {
+function HandleCheckIsViewCodeValidation(index) {
     cachedValidationCodes[index].IsView = cachedValidationCodes[index].IsView === 1 ? 0 : 1 ;
 }
 
