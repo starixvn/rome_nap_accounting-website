@@ -88,8 +88,9 @@ function InsertExChangeRate() {
                     //document.getElementById('errMsg').innerHTML = rs.split('|')[1];
                     else {
                         parent.jQuery.unblockUI();
-                        showAlertMessage('errMsg', rs.split('|')[1], 0)
+                        showAlertMessage('errMsg', rs.split('|')[1], 0);
                         afterUpdate(false, 0);
+                        ReloadExchangeRateList();
                     }
                 }
                 InitFixedHeaderEx();
@@ -133,6 +134,7 @@ function UpdateEditExChangeRate() {
                     else {
                         showAlertMessage("errMsg", rs.split('|')[1], 0);
                         afterUpdate(false, 0);
+                        ReloadExchangeRateList();
                     }
                     try { parent.jQuery.unblockUI(); } catch (e) { }
                 }
@@ -145,34 +147,6 @@ function UpdateExChangeRate(exrateId) {
     var url = 'ExRate/EditRate.aspx?exrateId=' + exrateId;
 
     parent.OpenPopup(url, "Edit Exchange Rate", 870, 220, true, true, window, 2000, null, null);
-}
-
-function UpdateEditBaseRate() {
-    parent.BlockUI();
-
-    $.ajax({
-        type: 'POST',
-        url: '../Handlers/UpdateExRate.ashx',
-        async: true,
-        data: param,
-        success: function (rs) {
-            if (rs.length > 0) {
-                if (rs.split('|')[0] == 'no') {
-                    showAlertMessage("errMsg", rs.split('|')[1], 1);
-                }
-                else if (rs.split('|')[0] == '500') {
-                    showAlertMessage("errMsg", rs.split('|')[1], 1);
-                    afterUpdate(false, 0);
-                }
-                else {
-                    showAlertMessage("errMsg", rs.split('|')[1], 0);
-                    afterUpdate(false, 0);
-                }
-
-                parent.jQuery.unblockUI();
-            }
-        }
-    });
 }
 
 function CheckDecNumber_ExRate(e) {
@@ -266,6 +240,10 @@ function ResetEditBaseRate() {
     document.location.reload();
 }
 
+function ReloadExchangeRateList() {
+    window.top.frames['content'].window.frames['centerFr'].location.reload()
+}
+
 function UpdateBaseRate() {
     document.getElementById('errMsg').innerHTML = '';
     parent.BlockUI();
@@ -317,10 +295,13 @@ function UpdateBaseRate() {
                 else {
                     showAlertMessage("errMsg", rs.split('|')[1], 0);
                     afterUpdate(false, 0);
+                    ReloadExchangeRateList();
                 }
 
                 parent.jQuery.unblockUI();
-                setTimeout(parent.ClosePopup, 3000);
+                setTimeout(function () {
+                    parent.ClosePopup();
+                }, 3000);
             }
         }
     });
