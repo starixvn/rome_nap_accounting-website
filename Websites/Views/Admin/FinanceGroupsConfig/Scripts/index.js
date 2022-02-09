@@ -307,7 +307,7 @@ function HandleSaveGroup(index, oldGroupId, username) {
         },
         success: function (result) {
             if (result.ErrorCode) {
-                showAlertMessage('err-msg', result.ErrorCode , 1);
+                showAlertMessage('err-msg', result.ErrorMessage , 1);
                 return;
             }
 
@@ -356,7 +356,7 @@ function OpenUpdateIsView() {
             },
             success: function (result) {
                 if (result.ErrorCode) {
-                    showAlertMessage('err-msg', result.ErrorCode, 1);
+                    showAlertMessage('err-msg', result.ErrorMessage, 1);
                     return;
                 }
 
@@ -388,7 +388,7 @@ function OpenRemoveAllConfigurations() {
             },
             success: function (result) {
                 if (result.ErrorCode) {
-                    showAlertMessage('err-msg', result.ErrorCode, 1);
+                    showAlertMessage('err-msg', result.ErrorMessage, 1);
                     return;
                 }
 
@@ -423,7 +423,7 @@ function RemoveConfig(groups) {
         },
         success: function (result) {
             if (result.ErrorCode) {
-                showAlertMessage('err-msg', result.ErrorCode, 1);
+                showAlertMessage('err-msg', result.ErrorMessage, 1);
                 return;
             }
 
