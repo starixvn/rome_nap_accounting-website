@@ -86,10 +86,17 @@ function Initialize() {
 }
 
 function Search(pageSize = 50, pageIndex = 0) {
+    $('#err-msg').html('');
+
+    var groupIds = $("#ddlGroups").multiSelect("getCheckedItems").join();
+    if (groupIds.length === 0) {
+        showAlertMessage('err-msg', 'Please choose a Finance Group.', 1);
+        return;
+    }
+
     try { parent.BlockUI(); } catch (e) { BlockUI(); }
     var isCodeSelected = radioHtml.filter(":checked").val() === "financeCode";
     var isCheckedAll = isMultiselectCheckedAll('ddlGroups');
-    var groupIds = $("#ddlGroups").multiSelect("getCheckedItems").join();
 
     $.ajax({
         url: window.rootUrl + 'FinanceGroupsConfig/Select',
@@ -282,7 +289,7 @@ function HandleEditGroup(index, groupId, obj) {
     $(obj).addClass('hidden');
 
     $('#group-cell-' + index).html('<select id="group-select-' + index + '" style="width: 100%; height: 25px;"></select>');
-    RenderGroupsSelect('group-select-' + index, groupId);
+    RenderGroupsSelect('group-select-' + index, cachedGroupsDropdown, groupId);
 }
 
 function HandleSaveGroup(index, oldGroupId, username) {
@@ -574,7 +581,7 @@ function OpenAddUsersToGroup() {
         height: 'auto',
     });
 
-    RenderGroupsSelect('ddlAddUserGroups');
+    RenderGroupsSelect('ddlAddUserGroups', cachedGroupsDropdown);
 
     txtAssignUsers.off("change").on("change", function () {
         HandleSeperateValuesWithCommas(txtAssignUsers);
@@ -681,7 +688,10 @@ function OpenAddCodesToGroup() {
         height: 'auto',
     });
 
-    RenderGroupsSelect('ddlAddCodeGroups');
+    var groups = cachedGroupsDropdown.filter(function (group) {
+        return group.Id !== 0 && group.Id !== 1;
+    });
+    RenderGroupsSelect('ddlAddCodeGroups', groups);
 
     txtAssignCodes.off("change").on("change", function () {
         HandleSeperateValuesWithCommas(txtAssignCodes);
@@ -976,9 +986,9 @@ function RenderGroupsMultiSelect(newGroupId = null, callback = null) {
     })
 }
 
-function RenderGroupsSelect(id, selectedGroupId = null) {
+function RenderGroupsSelect(id, groups, selectedGroupId = null) {
     var defaultOption = selectedGroupId ? '<option value="" selected>None</option>' : '<option value="">Select a group</option>';
-    var options = cachedGroupsDropdown.map(function (item) {
+    var options = groups.map(function (item) {
         var isSelected = selectedGroupId == item.Id ? 'selected' : '';
         return '<option value="' + item.Id + '" ' + isSelected + ' >' + item.Name + '</option>';
     }).join('');
