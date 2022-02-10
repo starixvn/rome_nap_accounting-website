@@ -991,8 +991,8 @@ function RenderGroupsMultiSelect(newGroupId = null, callback = null) {
             cachedGroupsDropdown = result;
             var listData = result.map(function (item) {
                 return {
-                    Id: item.Id,
-                    Value: item.Id,
+                    Id: '' + item.Id,
+                    Value: '' + item.Id,
                     Text: item.Name,
                     Checked: newGroupId ? item.Id == newGroupId : true,
                     Enable: true
