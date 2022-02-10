@@ -135,6 +135,7 @@ function InitFinanceUsernameGridOptions() {
             { HeaderText: "Finance User Name", Width: 220, Name: "FinanceUserName", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "Finance Group", Width: 180, Name: "FinanceGroup", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "Edit", Width: 180, Name: "Edit", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Remove", Width: 180, Name: "Remove", HeaderAlign: "center", CellAlign: "center" },
         ],
         showDistinctRow: true,
         showPager: true,
@@ -216,6 +217,7 @@ function RenderFinanceUsernameGrid(data, totalItems, pageSize, pageIndex) {
                             <img border="0" style="cursor:pointer; width: 15px; margin-left: 7px;" src="../App_Themes/Images/undo.png" title="Cancel" alt="Cancel" onclick="HandleCancelGroup( ' + i + ',\'' + data[i].GroupId + '\',this);">\
                         </div>',
             });
+            row.Columns.push({ Name: "Remove", Value: '<img alt="Delete" title="Delete" src="../App_Themes/Images/icn_del.png" style="cursor: pointer; padding: 0 2px;" onclick="OpenRemoveGroup(' + '\'' + data[i].GroupId + '\',\'' + data[i].UserName + '\');"' });
             bodyRows.push(row);
         }
         userGridOptions.pagerOption.currentPage = pageIndex;
@@ -302,7 +304,7 @@ function HandleSaveGroup(index, oldGroupId, username) {
         dataType: 'json',
         data: {
             UserName: username,
-            OldGroupId: oldGroupId === 'None' ? '' : oldGroupId,
+            OldGroupId: oldGroupId,
             NewGroupId: newGroupId
         },
         success: function (result) {
@@ -321,6 +323,38 @@ function HandleSaveGroup(index, oldGroupId, username) {
         complete: function () {
             try { parent.jQuery.unblockUI(); } catch (e) { UnBlockUI(); }
         }
+    });
+}
+
+function OpenRemoveGroup(oldGroupId, username) {
+    OpenConfirmBox('Are you sure you want to remove this Finance User out of current Finance Group?', "Remove from Group", function () {
+        try { parent.BlockUI(); } catch (e) { BlockUI(); }
+        $.ajax({
+            url: window.rootUrl + 'FinanceGroupsConfig/Update',
+            type: 'Post',
+            dataType: 'json',
+            data: {
+                UserName: username,
+                OldGroupId: oldGroupId,
+                NewGroupId: ''
+            },
+            success: function (result) {
+                if (result.ErrorCode) {
+                    showAlertMessage('err-msg', result.ErrorMessage, 1);
+                    return;
+                }
+
+                RenderGroupsMultiSelect(null, function () {
+                    Search(cachedUserPageSize, cachedUserPageIndex);
+                });
+            },
+            error: function (xhr) {
+                showAlertMessage('err-msg', 'Internal Server Error.', 1);
+            },
+            complete: function () {
+                try { parent.jQuery.unblockUI(); } catch (e) { UnBlockUI(); }
+            }
+        });
     });
 }
 
@@ -987,7 +1021,7 @@ function RenderGroupsMultiSelect(newGroupId = null, callback = null) {
 }
 
 function RenderGroupsSelect(id, groups, selectedGroupId = null) {
-    var defaultOption = selectedGroupId ? '<option value="" selected>None</option>' : '<option value="">Select a group</option>';
+    var defaultOption = selectedGroupId ? '' : '<option value="">Select a group</option>';
     var options = groups.map(function (item) {
         var isSelected = selectedGroupId == item.Id ? 'selected' : '';
         return '<option value="' + item.Id + '" ' + isSelected + ' >' + item.Name + '</option>';
