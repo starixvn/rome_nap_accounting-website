@@ -1,4 +1,4 @@
-﻿@using Fanex.Result.ThirdParty.Models.Views
+﻿@using Fanex.Tarus.BetList.ViewModel
 @model ThirdPartyResultViewModel
 @{
     Layout = null;
@@ -12,17 +12,7 @@
 </head>
 <body>
     <div class="third-party-result">
-        @{
-            var result = Model.Result;
-            if (result.IsSuccess)
-            {
-                <iframe src="@result.Value" frameborder="0" class="handhistory-iframe"></iframe>
-            }
-            else
-            {
-                <div class='alertboxerr'><span class='icon-error'></span>@result.Value</div>
-            }
-        }
+        <iframe src="@Model.Result" frameborder="0" class="handhistory-iframe"></iframe>
     </div>
 </body>
 </html>

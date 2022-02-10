@@ -63,6 +63,8 @@
                                 BetCheck = Converter.ToString2(reader["betcheck"]),
                                 BetTeam = HasColumn(reader, "BetTeam") ? Converter.ToString2(reader["BetTeam"]) : string.Empty,
                                 Currency = HasColumn(reader, "Currency") ? Converter.ToString2(reader["Currency"]) : string.Empty,
+                                CurrencyId = HasColumn(reader, "CurrencyId") ? Converter.ToInt(reader["CurrencyId"]) : 0,
+                                SiteId = HasColumn(reader, "SiteId") ? Converter.ToString2(reader["SiteId"]) : "",
                                 LeagueId = Converter.ToInt(reader["leagueid"])
                             },
                             ChoiceHtml = string.Empty,
