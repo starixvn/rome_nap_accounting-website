@@ -587,13 +587,13 @@ function SubmitAddNewGroup() {
         success: function (result) {
             if (result.ErrorCode) {
                 CloseAddNewGroup();
-                OpenMessageBox('', result.ErrorMessage);
+                OpenMessageBox(result.ErrorMessage);
                 return;
             }
 
             var successMsg = 'Finance Group ' + result.GroupId + ' was created successfully with <b>' + result.NUsers + ' Finance Users</b> and  <b>' + result.NCodes + ' Finance Codes </b>';
             CloseAddNewGroup();
-            OpenMessageBox(successMsg, '', result.GroupId);
+            OpenMessageBox('', successMsg, result.GroupId);
         },
         error: function (xhr) {
             showAlertMessage('msgAddNewGroup', 'Internal Server Error.', 1);
@@ -689,13 +689,13 @@ function SubmitAddUserToGroup() {
         success: function (result) {
             if (result.ErrorCode) {
                 CloseAddUserToGroup();
-                OpenMessageBox('', result.ErrorMessage);
+                OpenMessageBox(result.ErrorMessage);
                 return;
             }
 
             var successMsg = '<b> ' + result.NRows + ' Finance Users</b> were assigned to Group ' + cachedGroupId + ' successfully.';
             CloseAddUserToGroup();
-            OpenMessageBox(successMsg, '', cachedGroupId);
+            OpenMessageBox('', successMsg, cachedGroupId, true);
         },
         error: function (xhr) {
             showAlertMessage('msgAddUser', 'Internal Server Error.', 1);
@@ -799,13 +799,13 @@ function SubmitAddCodeToGroup() {
         success: function (result) {
             if (result.ErrorCode) {
                 CloseAddCodeToGroup();
-                OpenMessageBox('', result.ErrorMessage);
+                OpenMessageBox(result.ErrorMessage);
                 return;
             }
 
             var successMsg = '<b> ' + result.NRows + ' Finance Codes</b> were assigned to Group ' + cachedGroupId + ' successfully.';
             CloseAddCodeToGroup();
-            OpenMessageBox(successMsg, '', cachedGroupId);
+            OpenMessageBox('', successMsg, cachedGroupId);
         },
         error: function (xhr) {
             showAlertMessage('msgAddCode', 'Internal Server Error.', 1);
@@ -822,12 +822,13 @@ function BackAddCodeToGroup() {
 }
 
 // Message Box
-function OpenMessageBox(successMsg, errorMsg, newGroupId) {
+function OpenMessageBox(errorMsg, successMsg, newGroupId, isAddUser = false) {
     divMessageBox.dialog({
         modal: true,
         width: '700px',
         height: 'auto',
     });
+
     if (successMsg !== '') {
         $('#finance-msg').html(successMsg);
         $('#message-btn-group').removeClass('hidden');
@@ -838,7 +839,7 @@ function OpenMessageBox(successMsg, errorMsg, newGroupId) {
             ViewGroupsCodes(newGroupId);
         });
         $('#btnOk').off('click').on('click', function () {
-            Reload();
+            Reload(isAddUser);
         });
     } else {
         $('#finance-msg').html(errorMsg).css({
@@ -872,11 +873,16 @@ function ViewGroupsCodes(newGroupId) {
     });
 }
 
-function Reload() {
+function Reload(isAddUser) {
     CloseMessageBox();
     RenderGroupsMultiSelect(null, function () {
         ResetFilters();
-        rdoFinanceCode.prop('checked', true).change();
+        if (isAddUser) {
+            rdoFinanceUsername.prop('checked', true).change();
+        }
+        else {
+            rdoFinanceCode.prop('checked', true).change();
+        }
         Search();
     });
 }
