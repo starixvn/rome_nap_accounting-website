@@ -316,8 +316,6 @@
 
         #endregion Enable Number game for Downline
 
-        public string GetRNGSiteNameByCustId(int custId) => _customerDAO.GetRNGSiteNameByCustId(custId);
-
         #region private functions
 
         private string RenderCustomerInfoTabs(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)

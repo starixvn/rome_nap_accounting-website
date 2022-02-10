@@ -47,7 +47,5 @@ namespace Sunplus.Accounting.Business.Customer
             string maxbet, 
             string maxMatch, 
             string MaxBall);
-
-        string GetRNGSiteNameByCustId(int custId);
     }
 }
