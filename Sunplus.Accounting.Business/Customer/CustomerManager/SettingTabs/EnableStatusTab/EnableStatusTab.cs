@@ -145,6 +145,8 @@
 
             TemplateHandler.Assign(ref htmlcontent, "{settingcontrol}", sg.GetHTMLSettingControl());
 
+            htmlcontent = RenderVirtualGamesControl(htmlcontent, renderLeftPanelParameter);
+
             return htmlcontent;
         }
 
@@ -572,20 +574,6 @@
                                                27);
                             break;
 
-                        case "38":
-                            _renderLeftPanelService.RenderEnableProductBoxDCS2(
-                                               row1,
-                                               productRow,
-                                               sg,
-                                               ref htmlcontent,
-                                               isManageCustomerAccess,
-                                               "VirtualGames",
-                                               renderLeftPanelParameter.IsShowVirtualGames,
-                                               renderLeftPanelParameter,
-                                               "Update Virtual Games Status",
-                                               Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdVirtualGames);
-                            break;
-
                         case "54":
                             _renderLeftPanelService.RenderEnableProductBoxDCS2(
                                                row1,
@@ -963,6 +951,26 @@
             else
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "AbnormalSession");
+            }
+
+            return htmlcontent;
+        }
+
+        private string RenderVirtualGamesControl(string htmlcontent, RenderLeftPanelParameter renderLeftPanelParameter)
+        {
+            if (!renderLeftPanelParameter.IsShowVirtualGames)
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "EnableVirtualGames");
+            }
+            else
+            {
+                TemplateHandler.Assign(ref htmlcontent, "{VirtualGamesOnClickFunction}", _renderLeftPanelService.GetProductStatusJsFunction(
+                    renderLeftPanelParameter.IsDeposit,
+                    renderLeftPanelParameter.CustId,
+                    renderLeftPanelParameter.Username,
+                    renderLeftPanelParameter.RoleId,
+                    Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdVirtualGames,
+                    "Update Virtual Games Status"));
             }
 
             return htmlcontent;
