@@ -479,7 +479,7 @@
       <HintPath>..\packages\Fanex.Tarus.CopySuperWinlossSetting.1.0.0.1\lib\net461\Fanex.Tarus.CopySuperWinlossSetting.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.DataAccess.Implement, Version=1.0.1.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.DataAccess.Implement.1.0.1.1\lib\net40\Fanex.Tarus.DataAccess.Implement.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.DataAccess.Implement.1.0.1.2-Beta01\lib\net40\Fanex.Tarus.DataAccess.Implement.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Entities, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Entities.1.0.0.6\lib\net40\Fanex.Tarus.Entities.dll</HintPath>
@@ -511,7 +511,7 @@
       <HintPath>..\packages\Fanex.Tarus.Web.Controller.1.0.1.5\lib\net40\Fanex.Tarus.Web.Controllers.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Web.Models, Version=1.0.0.8, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Web.Models.1.0.0.8\lib\net40\Fanex.Tarus.Web.Models.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.Web.Models.1.0.0.9-Beta02\lib\net40\Fanex.Tarus.Web.Models.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Voidbridge.BetDetail, Version=2.0.1.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Voidbridge.BetDetail.2.0.1.2\lib\net461\Fanex.Voidbridge.BetDetail.dll</HintPath>
