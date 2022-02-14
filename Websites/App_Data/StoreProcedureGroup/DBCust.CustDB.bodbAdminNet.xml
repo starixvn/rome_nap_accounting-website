@@ -463,9 +463,9 @@
   </Function>
   <Function Name="Admin - Finance Groups Config">
     <Setting Key="Acc_FinanceGroupsConfig_FinanceGroupSel" SpName="Acc_FinanceGroupsConfig_FinanceGroupSel_xtest" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_FinanceGroupsConfig_FinanceGroup_GroupUpd" SpName="Acc_FinanceGroupsConfig_FinanceGroup_GroupUpd_xtest" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_FinanceGroupsConfig_FinanceGroup_IsViewUpd" SpName="Acc_FinanceGroupsConfig_FinanceGroup_IsViewUpd_xtest" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_FinanceGroupsConfig_FinanceGroupDel" SpName="Acc_FinanceGroupsConfig_FinanceGroupDel_xtest" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_FinanceGroupsConfig_FinanceUser_GroupUpd" SpName="Acc_FinanceGroupsConfig_FinanceUser_GroupUpd_xtest" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_FinanceGroupsConfig_FinanceCode_IsViewUpd" SpName="Acc_FinanceGroupsConfig_FinanceCode_IsViewUpd_xtest" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_FinanceGroupsConfig_FinanceCodeDel" SpName="Acc_FinanceGroupsConfig_FinanceCodeDel_xtest" DbName="DBCUST.CustDB.bodbAdminNet" />
     <Setting Key="Acc_FinanceGroupsConfig_FinanceGroupInsValidation" SpName="Acc_FinanceGroupsConfig_FinanceGroupInsValidation_xtest" DbName="DBCUST.CustDB.bodbAdminNet" />
     <Setting Key="Acc_FinanceGroupsConfig_FinanceGroupIns" SpName="Acc_FinanceGroupsConfig_FinanceGroupIns_xtest" DbName="DBCUST.CustDB.bodbAdminNet" />
     <Setting Key="Acc_FinanceGroupsConfig_UsersInsValidation" SpName="Acc_FinanceGroupsConfig_UsersInsValidation_xtest" DbName="DBCUST.CustDB.bodbAdminNet" />
