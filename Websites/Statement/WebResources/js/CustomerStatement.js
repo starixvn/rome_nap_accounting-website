@@ -85,7 +85,7 @@ function completeUpdateIsInternal(rs) {
                         jQuery.param(criteria);
                     parent.OpenPopup(url,
                         options.title,
-                        1024,
+                        1080,
                         options.height,
                         true,
                         true,
