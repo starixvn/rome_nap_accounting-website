@@ -154,7 +154,7 @@
       <HintPath>..\packages\Fanex.BetList.SexyGaming.1.0.0.3\lib\net40\Fanex.BetList.SexyGaming.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.Spadegaming, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Spadegaming.1.0.0.3-jackpot-04\lib\net40\Fanex.BetList.Spadegaming.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.Spadegaming.1.0.0.3-jackpot-05\lib\net40\Fanex.BetList.Spadegaming.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.TableGames, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.TableGames.1.1.0\lib\net40\Fanex.BetList.TableGames.dll</HintPath>
