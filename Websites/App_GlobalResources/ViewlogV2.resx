@@ -2221,4 +2221,7 @@ Max Keno (20+1) 2</value>
   <data name="Disable176_8201" xml:space="preserve">
     <value>Disabled FGG</value>
   </data>
+  <data name="disable208_2101" xml:space="preserve">
+    <value>Disabled Saba Casino</value>
+  </data>
 </root>

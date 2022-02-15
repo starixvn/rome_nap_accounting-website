@@ -3345,4 +3345,7 @@
   <data name="MPPMv2Saba" xml:space="preserve">
     <value>Max Payout Per Match</value>
   </data>
+  <data name="disable208_2101" xml:space="preserve">
+    <value>Disabled Saba Casino</value>
+  </data>
 </root>
