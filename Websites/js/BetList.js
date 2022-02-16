@@ -1381,7 +1381,7 @@ function getSabaClubParam(custId, gameRoundId, gameId, siteId, sportType) {
         jsonParam: { custId: custId, GameRoundId: gameRoundId, GameId: gameId, SiteId: siteId, SportType: sportType },
         width: 945,
         height: 500,
-        iframe: "innerFrameSabaclubResult"
+        iframe: "innerFrameSabagamesResult"
     };
 }
 
