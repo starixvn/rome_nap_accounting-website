@@ -730,7 +730,7 @@ function showBGBetDetails(refno, winlossDate, custId, transType) {
 function showSabaClubDetails(refno, winlossDate, custId, transType) {
     var rngCasinoParam = {
         url: "RNGCasinoBetList/BetDetails",
-        title: "Saba.club Details",
+        title: "Saba.games Details",
         jsonParam: { TransId: refno, Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 200, PageSize: 500 },
         width: 1080,
         height: 600
@@ -808,7 +808,7 @@ function showVGamingJackpotWonDetails(transId, custId, betType) {
 }
 
 function showSabaClubJackpotWonDetails(transId, custId, betType) {
-    var title = "Saba.club Jackpot Won Details";
+    var title = "Saba.games Jackpot Won Details";
     var param = {
         url: "RNGCasinoBetList/JackpotDetails",
         title: title,
@@ -1036,7 +1036,7 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
         case 186: // Virtual Tennis.
             return getVirtualHRAndTennisParam(matchid, sporttype);
         case 150:
-        case 200: // Saba.Club
+        case 200: // Saba.games
             // custId, gameroundid, gameid, siteId
             return getSabaClubParam(custId, transId3rd, bettype, gameId3rd, sporttype);
 
@@ -1377,7 +1377,7 @@ function getSabaClubParam(custId, gameRoundId, gameId, siteId, sportType) {
 
     return {
         url: "../Report/ViewSabaClubResult.aspx",
-        title: "Saba.club Result",
+        title: "Saba.games Result",
         jsonParam: { custId: custId, GameRoundId: gameRoundId, GameId: gameId, SiteId: siteId, SportType: sportType },
         width: 945,
         height: 500,
