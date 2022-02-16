@@ -295,7 +295,7 @@
                     customerInfoViewModel.UserName,
                     customerInfoViewModel.SearchAccountRoleId,
                     42,
-                    "Update Saba.club Status"));
+                    "Update Saba.games Status"));
             }
 
             if (customerInfoViewModel.HideVGaming)
