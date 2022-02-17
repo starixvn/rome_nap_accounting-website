@@ -1,0 +1,32 @@
+﻿<div id="add-code-to-group" style="display: none;">
+    <div id="msgAddCode">
+    </div>
+    <div id="add-code-new-content" style="line-height: 28px; margin-top: 10px; border-collapse: collapse;">
+        <div>
+            <label><b>Finance Group</b><span class="color: red" ;> *</span></label>
+            <select id="ddlAddCodeGroups" style="width: 100px">
+                <option value="" selected>Select a group</option>
+            </select>
+        </div>
+        <div>
+            <label for="txtAssignCodes"><b>Assign Finance Codes to Group </b>(separated by ",")</label><br />
+            <textarea id="txtAssignCodes" cols="100" rows="10"></textarea><br />
+            <span><em>Maximum at 100 Codes</em></span>
+        </div>
+        <div>
+            <input class="btn" type="submit" value="Cancel" onclick="CloseAddCodeToGroup();" />
+            <input class="btn btn-right" type="submit" value="Select" onclick="OpenReviewAddCodeToGroup();" />
+        </div>
+    </div>
+    <div id="review-add-code-content" class="hidden">
+        <div class="review-code">
+            <p class="review-title"><b>These Finance Codes will be assigned to Group <span id="spanAddCodeGroupId"></span> : </b></p><br />
+            <div id="add-code-grid" class="freegrid"></div>
+        </div>
+        <div>
+            <input class="btn" type="submit" value="Cancel" onclick="CloseAddCodeToGroup();" />
+            <input class="btn" type="submit" value="Back" onclick="BackAddCodeToGroup();" />
+            <input id="btnAddCode" class="btn btn-right" type="submit" value="Select" onclick="SubmitAddCodeToGroup();" />
+        </div>
+    </div>
+</div>
