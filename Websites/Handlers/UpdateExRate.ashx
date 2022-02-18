@@ -14,10 +14,9 @@ using Sunplus.Accounting.Core.Configurations;
 using SCCACHE = Fanex.Tarus.Infrastructure.Caching.CacheHelper;
 
 
-public class UpdateExRate : IHttpHandler, IRequiresSessionState
-{
+public class UpdateExRate : IHttpHandler,IRequiresSessionState {
 
-    public void ProcessRequest(HttpContext context)
+    public void ProcessRequest (HttpContext context)
     {
         context.Response.ContentType = "text/html";
 
@@ -28,7 +27,7 @@ public class UpdateExRate : IHttpHandler, IRequiresSessionState
             string actualRate = CastAide.AsString(context.Request["BaseRate"]);
             string currency = context.Request["Currency"];
             string minbet = CastAide.AsString(context.Request["Minbet"]);
-            string minbetlive = CastAide.AsString(context.Request["MinbetLive"]);
+            string minbetlive = CastAide.AsString(context.Request["MinbetLive"]);           
             string Code = CastAide.AsString(context.Request["Code"]);
             string Description = CastAide.AsString(context.Request["Description"]);
             string MultipliedBy = CastAide.AsString(context.Request["MultipliedBy"]);
@@ -47,7 +46,7 @@ public class UpdateExRate : IHttpHandler, IRequiresSessionState
                 else
                 {
                     System.Threading.Thread.Sleep(3000);
-                    Dictionary<int, string> exchange;
+                    Dictionary <int, string> exchange;
                     exchange = IBCProvider.Utils.GetExchange();
                     SCCACHE.Set("exchange", exchange, DateTime.Now.AddHours(5));
                     //context.Response.Write("ok|"+ Resources.Language.lblInsertExSuccessful );
@@ -73,7 +72,7 @@ public class UpdateExRate : IHttpHandler, IRequiresSessionState
                         foreach (var item in currencies)
                         {
                             double rate = 0;
-                            double.TryParse(actualRate, System.Globalization.NumberStyles.Float, format, out rate);
+                            double.TryParse(actualRate, System.Globalization.NumberStyles.Float, format,  out rate);
                             if (item.CurrencyId == exRateId && rate != item.BaseRate)
                             {
                                 allowedCurrency = true;
@@ -129,22 +128,11 @@ public class UpdateExRate : IHttpHandler, IRequiresSessionState
                     context.Response.Write("no|" + errMsg);
                 }
             }
+
             else if (context.Request["type"] == "reset")
             {
                 exRateId = CastAide.AsInt32(context.Request["exrateId"]);
-                context.Response.Write(exRate.ResetEditExchangeRate(exRateId));
-            }
-            else if (context.Request["type"] == "editbaserate")
-            {
-                var result = exRate.EditBaseRate_UpdateBaseRate(context.Request["updateParams"]);
-                if (result.ErrorCode == 0)
-                {
-                    context.Response.Write("ok|The base rates have been updated successfully.");
-                }
-                else
-                {
-                    context.Response.Write("no|" + result.ErrorMessage);
-                }
+                context.Response.Write( exRate.ResetEditExchangeRate(exRateId));
             }
 
         }
@@ -155,10 +143,8 @@ public class UpdateExRate : IHttpHandler, IRequiresSessionState
         }
     }
 
-    public bool IsReusable
-    {
-        get
-        {
+    public bool IsReusable {
+        get {
             return false;
         }
     }
