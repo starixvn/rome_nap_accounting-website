@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.UI.HtmlControls;
 using CasinoLibrary.Model.UserException;
@@ -13,6 +15,7 @@ using DNAide.Core;
 using DNAide.Data;
 using DNAide.Utils;
 using DNAide.Web;
+using Fanex.Logging;
 using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
@@ -20,6 +23,7 @@ using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.Core.Web.TplCore.App_Templates.ExRate.App_Templates.ExRate;
 using Sunplus.Accounting.DataAccess;
+using Sunplus.Accounting.Entities;
 
 /// <summary>
 /// Summary description for ExChangeRate
@@ -168,6 +172,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
             TemplateHandler.Assign(ref tpl, "function", "UpdateEditExChangeRate();");
             TemplateHandler.Assign(ref tpl, "Function_Reset", "ResetValueWhenEdit();");
             TemplateHandler.Assign(ref tpl, "ReadOnly", "readonly='true'");
+            TemplateHandler.Assign(ref tpl, "disabled", "disabled='disabled'");
             DbResult rs = IBCProvider.ExChangeRate.ExchangeSelByID(exid);
             DataTable dt = rs.ResultSet.Tables[0];
             if (dt.Rows.Count == 0)
@@ -188,6 +193,40 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                     TemplateHandler.Assign(ref tpl, "MinbetLive", CastAide.AsString(dr["minbetlive"]));
                     TemplateHandler.Assign(ref tpl, "OfferSite", ExChangeRateHelper.BuildOfferSiteSelection(CastAide.AsString(dr["offersite"])));
                     TemplateHandler.Assign(ref tpl, "IsActive", CastAide.AsBoolean(dr["isactive"])? " checked": "");
+                    TemplateHandler.Assign(ref tpl, "exrateId", exid);
+                    tbxStandardCurrency.Value = CastAide.AsString(dr["Code"]);
+                }
+            }
+
+            return tpl;
+        }
+
+        public string EditBaseRate(int exid, HtmlInputText tbxStandardCurrency)
+        {
+            string tpl = WebUtils.LoadTemplateBySystem("ExRate/ExRateEditBaseRate.htm");
+            TemplateHandler.Assign(ref tpl, "function", "UpdateEditExChangeRate();");
+            TemplateHandler.Assign(ref tpl, "Function_Reset", "ResetValueWhenEdit();");
+            DbResult rs = IBCProvider.ExChangeRate.ExchangeSelAccount();
+            DataTable dt = rs.ResultSet.Tables[0];
+            StringBuilder bodyHtml = new StringBuilder();
+            if (dt.Rows.Count == 0)
+            {
+                tpl = GenAddContent("UpdateEditExChangeRate();");
+            }
+            else
+            {
+                foreach (DataRow dr in dt.Rows)
+                {
+                    TemplateHandler.Assign(ref tpl, "submit", "Submit");
+                    TemplateHandler.Assign(ref tpl, "reset", "Reset");
+                    TemplateHandler.Assign(ref tpl, "Currency", CastAide.AsString(dr["currency"]));
+                    TemplateHandler.Assign(ref tpl, "MultipliedBy", CastAide.AsString(dr["MultipliedBy"]));
+                    TemplateHandler.Assign(ref tpl, "Description", CastAide.AsString(dr["Description"]));
+                    TemplateHandler.Assign(ref tpl, "BaseRate", CastAide.AsString(dr["actualrate"]));
+                    TemplateHandler.Assign(ref tpl, "Minbet", CastAide.AsString(dr["minbet"]));
+                    TemplateHandler.Assign(ref tpl, "MinbetLive", CastAide.AsString(dr["minbetlive"]));
+                    TemplateHandler.Assign(ref tpl, "OfferSite", ExChangeRateHelper.BuildOfferSiteSelection(CastAide.AsString(dr["offersite"])));
+                    TemplateHandler.Assign(ref tpl, "IsActive", CastAide.AsBoolean(dr["isactive"]) ? " checked" : "");
                     TemplateHandler.Assign(ref tpl, "exrateId", exid);
                     tbxStandardCurrency.Value = CastAide.AsString(dr["Code"]);
                 }
@@ -341,9 +380,163 @@ namespace Sunplus.Accounting.Business.ExChangeRate
 
         #endregion UpdateEditExChangeRate
 
+        #region Edit Base Rate
+        public string EditBaseRate_GenListContent()
+        {
+            var rs = IBCProvider.ExChangeRate.ExchangeSelAccount();
+            DataRow[] Rows = rs.ResultSet.Tables[0].Select();
+            StringBuilder html = new StringBuilder();
+            string odd_even = "";
+            //StringBuilder html1 = new StringBuilder();
+            string tpl = WebUtils.LoadTemplateBySystem("ExRate/ExRateEditBaseRate.htm");
+            string tplContent = TemplateHandler.CopyBlock(tpl, "Content");
+            //string tplContent1 = TemplateHandler.CopyBlock(tpl, "Content1");
+            int rowIndex = 0;
+            foreach (DataRow dr in Rows)
+            {
+                rowIndex++;
+                int exid = CastAide.AsInt32(dr["exchangeid"]);
+                if (IsHideCurrencies(exid))
+                {
+                    continue;
+                }
+                odd_even = (odd_even == "") ? "evenrow" : "";
+                string exRow = tplContent;
+                //string exRow1 = tplContent1;
+                TemplateHandler.Assign(ref exRow, "RowNo", rowIndex);
+                TemplateHandler.Assign(ref exRow, "Currency", CastAide.AsString(dr["currency"]));
+                TemplateHandler.Assign(ref exRow, "CurrentBaseRate", CastAide.AsString(dr["actualrate"]));
+                TemplateHandler.Assign(ref exRow, "exrateId", exid);
+                TemplateHandler.Assign(ref exRow, "odd_even", odd_even);
+                //TemplateHandler.Assign(ref exRow1, "RowNo", rowIndex);
+                //TemplateHandler.Assign(ref exRow1, "Currency", CastAide.AsString(dr["currency"]));
+                //TemplateHandler.Assign(ref exRow1, "CurrentBaseRate", CastAide.AsString(dr["actualrate"]));
+                html.Append(exRow);
+                //html1.Append(exRow1);
+            }
+
+            if (!Permissions.GetHostPermission(Enumerations.Functions.ExRates.ExchangeRate))
+            {
+                TemplateHandler.RemoveBlock(ref tpl, "btnSubmit");
+            }
+
+            TemplateHandler.ReplaceBlock(ref tpl, "Content", html.ToString());
+            //TemplateHandler.ReplaceBlock(ref tpl, "Content1", html1.ToString());
+
+            return tpl;
+        }
+        #endregion Edit Base Rate
+
+        #region Update Base Rate
+        public Result EditBaseRate_UpdateBaseRate(string updateParams)
+        {
+            var result = this.EditBaseRate_UpdateMultipleBaseRate(updateParams);
+            if (result.ErrorCode != 0)
+            {
+                return result;
+            }
+
+            result = this.EditBaseRate_PrepareUpdateTables();
+            if (result.ErrorCode != 0)
+            {
+                return result;
+            }
+
+            Task.Run(() => EditBaseRate_UpdateExchangeTablesInBackground());
+            return result;
+        }
+
+        private Result EditBaseRate_UpdateMultipleBaseRate(string updateParams)
+        {
+            int errcode = 0;
+            string errmsg = "";
+            Hashtable param = new Hashtable();
+            param.Add("exchange", EditBaseRate_BuildXMLParam(updateParams));
+            param.Add("userid", AppSession.AccId);
+            param.Add("ip", HttpContext.Current.Request.UserHostAddress);
+            param.Add("errcode", 0);
+            param.Add("errmsg", "");
+            IBCProvider.ExChangeRate.ExchangeMultiBaseRateUpd(param, ref errcode, ref errmsg);
+            if (errcode != 0)
+            {
+                return new Result { ErrorCode = errcode, ErrorMessage = errmsg };
+            }
+
+            return new Result();
+        }
+
+        private Result EditBaseRate_PrepareUpdateTables()
+        {
+            int errcode = 0;
+            string errmsg = "";
+            var param = new Hashtable();
+            param.Add("errcode", 0);
+            param.Add("errmsg", "");
+            IBCProvider.ExChangeRate.ExchangeMultiBaseRatePrepareUpd(param, ref errcode, ref errmsg);
+            if (errcode != 0)
+            {
+                return new Result { ErrorCode = errcode, ErrorMessage = errmsg };
+            }
+
+            return new Result();
+        }
+
+        private void EditBaseRate_UpdateExchangeTablesInBackground()
+        {
+            LogService.Info("[Edit Base Rate] - Start update Tables");
+            string[] listTableNames = new string[] { "bettransRnG", "bettransLC", "translog", "bettrans", "Transfer_Coll", "bettransG", "Transfer" };
+            foreach(string tableName in listTableNames)
+            {
+                LogService.Info($"[Edit Base Rate] - 1st time - Updating table : {tableName}");
+                this.EditBaseRate_UpdateExchangeTable(tableName);
+                LogService.Info($"[Edit Base Rate] - 1st time - Updated table: {tableName}");
+            }
+
+            Thread.Sleep(5000);
+            foreach (string tableName in listTableNames)
+            {
+                LogService.Info($"[Edit Base Rate] - 2nd time - Updating table : {tableName}");
+                this.EditBaseRate_UpdateExchangeTable(tableName);
+                LogService.Info($"[Edit Base Rate] - 2nd time - Updated table: {tableName}");
+            }
+            LogService.Info("[Edit Base Rate] - End update Tables");
+        }
+
+        private void EditBaseRate_UpdateExchangeTable(string tableName)
+        {
+            try
+            {
+                var param = new Hashtable();
+                param.Add("tablename", tableName);
+                IBCProvider.ExChangeRate.ExchangeMultiBaseRateUpdateForTable(param);
+            }
+            catch (Exception ex)
+            {
+                // Must use try catch here to handle exception inside parallel task, because this exception is not handled by global.asax
+                LogExtensions.ExceptionHandler(ex);
+                // Rethrow to terminate process.
+                throw ex;
+            }
+        }
+        #endregion Update Base Rate
+
         private string changeColor(string value)
         {
             return "<span style='color:blue'>" + value + "</span>";
+        }
+
+        private string EditBaseRate_BuildXMLParam(string updateParams)
+        {
+            var exchangeXML = new StringBuilder();
+            exchangeXML.Append("<root>");
+            foreach (var param in updateParams.Trim(';').Split(';'))
+            {
+                var paramList = param.Trim(',').Split(',');
+                exchangeXML.Append($"<r ExchangeId=\"{paramList[0]}\" Actualrate=\"{paramList[1]}\"/>");
+            }
+
+            exchangeXML.Append("</root>");
+            return exchangeXML.ToString();
         }
     }
 }
