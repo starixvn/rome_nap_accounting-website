@@ -50,7 +50,7 @@
                 {SportContants.RNG_RNGGame, "RNGCasino_Details"},
                 {SportContants.RNG_MiniGame, "RNGCasino_Details"},
                 {SportContants.RNG_Mobile, "RNGCasino_Details"},
-                {SportContants.Sabaclub, "Sabaclub_Details"},
+                {SportContants.Sabaclub, "Saba.games_Details"},
                 {SportContants.IonCasino, "IONLiveCasino_Details"},
                 {SportContants.GDG, "GDG_Details"},
                 {SportContants.PPLiveCasino, "PPLiveCasino_Details"}
