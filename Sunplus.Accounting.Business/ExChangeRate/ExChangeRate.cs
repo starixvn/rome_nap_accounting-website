@@ -32,6 +32,8 @@ namespace Sunplus.Accounting.Business.ExChangeRate
 {
     public class ExChangeRate
     {
+        private readonly string editBaseRate_ErrMsg = "{0} - {1}:";
+
         #region GenAddContent
 
         public string GenAddContent(string FunctionName)
@@ -42,7 +44,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
             ex.Currency = string.Empty;
             ex.BaseRate = string.Empty;
             ex.Minbet = string.Empty;
-            ex.MinbetLive = string.Empty;           
+            ex.MinbetLive = string.Empty;
             ex.function = FunctionName;
             ex.exrateId = string.Empty;
             ex.Function_Reset = "ResetValue();";
@@ -60,7 +62,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
             var rs = IBCProvider.ExChangeRate.ExchangeSelAccount();
             DataRow[] Rows = rs.ResultSet.Tables[0].Select();
 
-            
+
 
             StringBuilder html = new StringBuilder();
             string tpl = WebUtils.LoadTemplateBySystem("ExRate/ExRateList1.htm");
@@ -192,7 +194,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                     TemplateHandler.Assign(ref tpl, "Minbet", CastAide.AsString(dr["minbet"]));
                     TemplateHandler.Assign(ref tpl, "MinbetLive", CastAide.AsString(dr["minbetlive"]));
                     TemplateHandler.Assign(ref tpl, "OfferSite", ExChangeRateHelper.BuildOfferSiteSelection(CastAide.AsString(dr["offersite"])));
-                    TemplateHandler.Assign(ref tpl, "IsActive", CastAide.AsBoolean(dr["isactive"])? " checked": "");
+                    TemplateHandler.Assign(ref tpl, "IsActive", CastAide.AsBoolean(dr["isactive"]) ? " checked" : "");
                     TemplateHandler.Assign(ref tpl, "exrateId", exid);
                     tbxStandardCurrency.Value = CastAide.AsString(dr["Code"]);
                 }
@@ -292,7 +294,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 html = CastAide.AsString(dr["actualrate"]) + "|";
                 html += CastAide.AsString(dr["currency"]) + "|";
                 html += CastAide.AsString(dr["minbet"]) + "|";
-                html += CastAide.AsString(dr["minbetlive"]) + "|";              
+                html += CastAide.AsString(dr["minbetlive"]) + "|";
                 html += CastAide.AsString(dr["Description"]) + "|";
                 html += CastAide.AsString(dr["MultipliedBy"]);
             }
@@ -353,13 +355,13 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                             mail.BaseRate = changeColor(actualrate.ToString());
 
                         mail.minbet = dr["minbet"].ToString();
-                        mail.minbetlive = dr["minbetlive"].ToString();   
+                        mail.minbetlive = dr["minbetlive"].ToString();
 
                         mail.IP = HttpContext.Current.Request.UserHostAddress;
                         mail.date = DateTime.Now.ToString();
                     }
 
-                   
+
                     SendMailExtension.AccSendMail(MailSection.HostName.Gmail, MailSection.ToMailExchangeRate,
                                                   MailSection.CCMailExchangeRate, MailSection.BCCMailExchangeRate,
                                                   tplSubject, mail.ToString());
@@ -372,7 +374,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
             }
             catch (Exception ex)
             {
-                msg = ex.Message;              
+                msg = ex.Message;
                 LogExtensions.ExceptionHandler(ex);
             }
             return msg;
@@ -387,10 +389,8 @@ namespace Sunplus.Accounting.Business.ExChangeRate
             DataRow[] Rows = rs.ResultSet.Tables[0].Select();
             StringBuilder html = new StringBuilder();
             string odd_even = "";
-            //StringBuilder html1 = new StringBuilder();
             string tpl = WebUtils.LoadTemplateBySystem("ExRate/ExRateEditBaseRate.htm");
             string tplContent = TemplateHandler.CopyBlock(tpl, "Content");
-            //string tplContent1 = TemplateHandler.CopyBlock(tpl, "Content1");
             int rowIndex = 0;
             foreach (DataRow dr in Rows)
             {
@@ -402,17 +402,15 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 }
                 odd_even = (odd_even == "") ? "evenrow" : "";
                 string exRow = tplContent;
-                //string exRow1 = tplContent1;
                 TemplateHandler.Assign(ref exRow, "RowNo", rowIndex);
                 TemplateHandler.Assign(ref exRow, "Currency", CastAide.AsString(dr["currency"]));
                 TemplateHandler.Assign(ref exRow, "CurrentBaseRate", CastAide.AsString(dr["actualrate"]));
+                TemplateHandler.Assign(ref exRow, "Code", CastAide.AsString(dr["CurrencyCode"]));
+                TemplateHandler.Assign(ref exRow, "minbet", CastAide.AsString(dr["minbet"]));
+                TemplateHandler.Assign(ref exRow, "minbetlive", CastAide.AsString(dr["minbetlive"]));
                 TemplateHandler.Assign(ref exRow, "exrateId", exid);
                 TemplateHandler.Assign(ref exRow, "odd_even", odd_even);
-                //TemplateHandler.Assign(ref exRow1, "RowNo", rowIndex);
-                //TemplateHandler.Assign(ref exRow1, "Currency", CastAide.AsString(dr["currency"]));
-                //TemplateHandler.Assign(ref exRow1, "CurrentBaseRate", CastAide.AsString(dr["actualrate"]));
                 html.Append(exRow);
-                //html1.Append(exRow1);
             }
 
             if (!Permissions.GetHostPermission(Enumerations.Functions.ExRates.ExchangeRate))
@@ -421,7 +419,6 @@ namespace Sunplus.Accounting.Business.ExChangeRate
             }
 
             TemplateHandler.ReplaceBlock(ref tpl, "Content", html.ToString());
-            //TemplateHandler.ReplaceBlock(ref tpl, "Content1", html1.ToString());
 
             return tpl;
         }
@@ -443,7 +440,8 @@ namespace Sunplus.Accounting.Business.ExChangeRate
             }
 
             Task.Run(() => EditBaseRate_UpdateExchangeTablesInBackground());
-            return result;
+            
+            return EditBaseRate_SyncToCSDB(updateParams);
         }
 
         private Result EditBaseRate_UpdateMultipleBaseRate(string updateParams)
@@ -485,7 +483,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
         {
             LogService.Info("[Edit Base Rate] - Start update Tables");
             string[] listTableNames = new string[] { "bettransRnG", "bettransLC", "translog", "bettrans", "Transfer_Coll", "bettransG", "Transfer" };
-            foreach(string tableName in listTableNames)
+            foreach (string tableName in listTableNames)
             {
                 LogService.Info($"[Edit Base Rate] - 1st time - Updating table : {tableName}");
                 this.EditBaseRate_UpdateExchangeTable(tableName);
@@ -537,6 +535,53 @@ namespace Sunplus.Accounting.Business.ExChangeRate
 
             exchangeXML.Append("</root>");
             return exchangeXML.ToString();
+        }
+
+        private Result EditBaseRate_SyncToCSDB(string updateParams)
+        {
+            var result = new Result();
+            var emailGridBody = new StringBuilder();
+            var index = 1;
+            foreach (var param in updateParams.Trim(';').Split(';'))
+            {
+                try
+                {
+                    var paramList = param.Trim(',').Split(',');
+                    var exid = int.Parse(paramList[0]);
+                    var actualrate = paramList[1];
+                    var currency = paramList[2];
+                    var code = paramList[3];
+                    var oldRate = paramList[4];
+                    var minbet = paramList[5];
+                    var minbetlive = paramList[6];
+                    BasicInfo info = new BasicInfo();
+                    bool isSuc = info.UpdateExchange(Globals.CASINO_GROUP1, exid, currency, CastAide.AsDouble(actualrate), code);
+                    emailGridBody.Append("<tr>");
+                    emailGridBody.Append($"<td>{index++}</td>");
+                    emailGridBody.Append($"<td>{exid}</td>");
+                    emailGridBody.Append($"<td>{currency}</td>");
+                    emailGridBody.Append($"<td>{oldRate}</td>");
+                    emailGridBody.Append($"<td>{actualrate}</td>");
+                    emailGridBody.Append("</tr>");
+                }
+                catch (ErrorException casinoEx)
+                {
+                    result.ErrorMessage = casinoEx.Message;
+                    LogExtensions.CasinoExceptionHandler(new Exception(casinoEx.Message, casinoEx));
+                }
+                catch (Exception ex)
+                {
+                    result.ErrorMessage = ex.Message;
+                    LogExtensions.ExceptionHandler(ex);
+                }
+            }
+
+            string tplSubject = "Exchange Rate was changed";
+
+            SendMailExtension.AccSendMail(MailSection.HostName.Gmail, MailSection.ToMailExchangeRate,
+                                          MailSection.CCMailExchangeRate, MailSection.BCCMailExchangeRate,
+                                          tplSubject, string.Format(Resources.ExchangeRate.UpdateMultipleExtRateSuccessCasinoEmail, emailGridBody.ToString()));
+            return result;
         }
     }
 }

@@ -54,7 +54,14 @@
                         </td>
                         <td class="r">
                             <div style="width: 150px">
-                                <input type="text" autocomplete="off" class="new-base-rate new-base-rate" id="txtNewBaseRate_{exrateId}" data-currency="{Currency}" data-exrateId="{exrateId}" onkeypress="return CheckDecNumber_ExRate(event);" />
+                                <input type="text" autocomplete="off" class="new-base-rate new-base-rate" id="txtNewBaseRate_{exrateId}" 
+                                       data-currency-code="{Code}" 
+                                       data-currency="{Currency}" 
+                                       data-old-rate="{CurrentBaseRate}" 
+                                       data-exrateId="{exrateId}"
+                                       data-minbet="{minbet}"
+                                       data-minbetlive="{minbetlive}"
+                                       onkeypress="return CheckDecNumber_ExRate(event);" />
                             </div>
                         </td>
                     </tr>

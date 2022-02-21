@@ -430,6 +430,11 @@
     <Compile Include="PT\ViewPT\ViewPTManager.cs" />
     <Compile Include="Report\Other\VirtualRateHistory.cs" />
     <Compile Include="Report\Reports.cs" />
+    <Compile Include="Resources\ExchangeRate.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ExchangeRate.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Labels.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -494,6 +499,10 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\ExchangeRate.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ExchangeRate.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Labels.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Labels.Designer.cs</LastGenOutput>

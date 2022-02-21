@@ -275,7 +275,14 @@ function UpdateBaseRate() {
 
     $newBaseRateList.each(function () {
         var $this = $(this);
-        param += $this.attr('data-exrateId') + ',' + $this.val() + ';';
+        param += $this.attr('data-exrateId') +
+            ',' + $this.val() +
+            ',' + $this.attr('data-currency') +
+            ',' + $this.attr('data-currency-code') +
+            ',' + $this.attr('data-old-rate') +
+            ',' + $this.attr('data-minbet') +
+            ',' + $this.attr('data-minbetlive') + 
+            ';';
     });
 
     $.ajax({
