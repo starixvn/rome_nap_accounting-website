@@ -1,0 +1,54 @@
+﻿@using Sunplus.Accounting.Core.Configurations;
+@{
+    Page.Title = "Initializing Stake Level";
+}
+<html>
+<head>
+    <link href="@Url.Content("~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/App_Themes/Public/common.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/App_Themes/LeftPanel/left_panel.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/App_Themes/Public/input.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/App_Themes/Public/table.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/App_Themes/Public/Message.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Grid.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Pagination.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/js/select2/select2.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/js/MultipleSelect/jquery.multiselect.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Views/ITConfiguration/InitializingStakeLevel/Styles/index.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div class="main">
+        <div class="maincontent">
+            <div id="divMainHeader" style="height:27px; background-color:#fff; position:fixed; width:100%; margin-top:-4px; padding-top:10px;">
+
+                <div class="box_header" style="width: 100%;">
+                    <div class="left_tab" style="width: 100%">
+                        <ul id="tabs">
+                            <li id="tab_1" class="current"><a href="javascript:SwitchTab('tab_1', 'tab_content_1');"><span>Initializing Stake Level</span></a></li>
+                            <li id="tab_2"><a href="javascript:SwitchTab('tab_2', 'tab_content_2');"><span>Import Excel</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div style ="margin-top:38px;">
+                @Html.Partial("~/Views/ITConfiguration/InitializingStakeLevel/_Filter.cshtml")
+            </div>
+            <div id="tab_content_1" >
+                @Html.Partial("~/Views/ITConfiguration/InitializingStakeLevel/_Grid.cshtml")
+            </div>
+            <div id="tab_content_2" style="display: none;">
+                @Html.Partial("~/Views/ITConfiguration/InitializingStakeLevel/_Excel.cshtml")
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-1.8.2.min.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-ui-1.9.1.min.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Grid.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Pagination.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/js/common.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/js/select2/select2.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/js/MultipleSelect/jquery.multiselect.min.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Views/ITConfiguration/InitializingStakeLevel/Scripts/index.js?v=" + WebSettings.Version)"></script>
+</body>
+</html>
