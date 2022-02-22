@@ -2215,4 +2215,7 @@ Max Keno (20+1) 2</value>
   <data name="disable202_1531" xml:space="preserve">
     <value>Disabled Max Keno 4</value>
   </data>
+  <data name="Disable9904_4001" xml:space="preserve">
+    <value>Disabled Jackpot</value>
+  </data>
 </root>

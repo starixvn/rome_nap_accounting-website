@@ -153,8 +153,8 @@
     <Reference Include="Fanex.BetList.SexyGaming, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.SexyGaming.1.0.0.3\lib\net40\Fanex.BetList.SexyGaming.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.Spadegaming, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Spadegaming.1.0.0.2\lib\net40\Fanex.BetList.Spadegaming.dll</HintPath>
+    <Reference Include="Fanex.BetList.Spadegaming, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.Spadegaming.1.0.0.3\lib\net40\Fanex.BetList.Spadegaming.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.TableGames, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.TableGames.1.1.0\lib\net40\Fanex.BetList.TableGames.dll</HintPath>
@@ -258,7 +258,7 @@
       <HintPath>..\packages\Fanex.Tarus.Entities.1.0.0.6\lib\net40\Fanex.Tarus.Entities.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.3\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.4.1\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Security, Version=1.0.1.9, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Security.1.0.1.9\lib\net40\Fanex.Tarus.Security.dll</HintPath>
@@ -374,7 +374,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Accounting.Core, Version=2.0.4.8, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.Core.2.0.4.8\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
+      <HintPath>..\packages\Sunplus.Accounting.Core.2.0.4.10\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.3.7, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.3.7\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>

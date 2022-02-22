@@ -1,7 +1,7 @@
 ﻿@model QueryViewModel
 @{
     Layout = null;
-    string assetsVersion = "202009011542";
+    string assetsVersion = "202009011544";
 }
 <!DOCTYPE html>
 <html>
@@ -191,7 +191,7 @@
 {
     var labelText = isDisabled ? Resources.Disabled : Resources.Enabled;
     var labelClass = isDisabledUpline ? "gray" : labelText.ToLowerInvariant();
-    var id = string.Format("{0}_{1}_{2}", labelClass, roleId, betType);
+    var id = string.Format("{0}_{1}_{2}_{3}", labelClass, roleId, sportType, betType);
     var roleName = Model.GetRoleName(roleId);
 
     var tbodyEnableDownlineTooltip = string.Format(Resources.SearchAccountTBodyTooltip, Resources.Enable.ToLower(), roleName);
@@ -223,9 +223,9 @@
     int totalDisabledUpline = 0)
 {
     var enabledSpanClass = "enabled" + (downlineStatus.IsDisabled || isDisabledUpline || totalDisabledUpline > 0 ? " gray" : string.Empty);
-    var enabledId = string.Format("enabled_{0}_{1}", roleId, betType);
+    var enabledId = string.Format("enabled_{0}_{1}_{2}", roleId, sportType, betType);
     var disabledSpanClass = "disabled" + (downlineStatus.IsDisabled || isDisabledUpline ? " gray" : string.Empty);
-    var disabledId = string.Format("disabled_{0}_{1}", roleId, betType);
+    var disabledId = string.Format("disabled_{0}_{1}_{2}", roleId, sportType, betType);
     var roleName = Model.GetRoleName(roleId);
 
     <td>
