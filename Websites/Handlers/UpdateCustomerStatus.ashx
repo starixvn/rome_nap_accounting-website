@@ -35,9 +35,7 @@ public class UpdateCustomerStatus : BaseHandler
                 context.Response.Write("<script type='text/javascript'>" + StringUtils.JS_Alert(errmsg) + "</script>");
                 return;
             }
-
-            var customerRngSite = new Sunplus.Accounting.DataAccess.AdoNet.CustomerDAO().GetRNGSiteNameByCustId(_custid);
-            string lockUpdate = "";
+            
             switch (type)
             {
                 case "suspended":                       

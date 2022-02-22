@@ -102,8 +102,6 @@ namespace Sunplus.Accounting.Business.Customer
             IbcError error;
             try
             {
-                bool isMoveAgent = custType.Equals(MoveType.Agent);      
-
                 //Move from IBC
                 error = Sunplus.Accounting.DataAccess.IBCDLL.Customer.UpdateCustomer.CustomerUpdMoveCustRpt(downlineUser, uplineUser,
                                                                                  accId.ToString(),
