@@ -1155,9 +1155,6 @@ function getResultParamByBetType(matchid, race, bettype, sporttype, refno, usern
         case bettype === 9 || bettype === 29 || bettype === 2799: // System Parlay, MixParlayVirtualSports2
             return getSystemParlayParam(matchid, refno_mixparlay, bettype, betid);
 
-        case bettype === 1701 || bettype === 1702 || bettype === 1703 || bettype === 1704 || bettype === 1705: // Gold Deluxe.
-            return getGoldDeluxeParam(bettype, refno);
-
         case bettype === 1231 || bettype === 1232 || bettype === 1233: // Virtual Horse Racing.
             return getVirtualHRAndTennisParam(matchid, sporttype);
 
@@ -1604,16 +1601,6 @@ function getNG2Param(matchId) {
         title: "Result",
         jsonParam: { matchId: matchId },
         width: 500,
-        height: 500
-    };
-}
-
-function getGoldDeluxeParam(bettype, refno) {
-    return {
-        url: "Report/ViewGoldDeluxeResult.aspx",
-        title: "Gold Deluxe",
-        jsonParam: { transId: refno, bettype: bettype },
-        width: 945,
         height: 500
     };
 }
