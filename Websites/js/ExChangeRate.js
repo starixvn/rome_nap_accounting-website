@@ -303,12 +303,12 @@ function UpdateBaseRate() {
                     showAlertMessage("errMsg", rs.split('|')[1], 0);
                     afterUpdate(false, 0);
                     ReloadExchangeRateList();
+                    setTimeout(function () {
+                        parent.ClosePopup();
+                    }, 3000);
                 }
 
                 parent.jQuery.unblockUI();
-                setTimeout(function () {
-                    parent.ClosePopup();
-                }, 3000);
             }
         }
     });

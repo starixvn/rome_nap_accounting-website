@@ -440,7 +440,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
             }
 
             Task.Run(() => EditBaseRate_UpdateExchangeTablesInBackground());
-            
+
             return EditBaseRate_SyncToCSDB(updateParams);
         }
 
@@ -542,9 +542,9 @@ namespace Sunplus.Accounting.Business.ExChangeRate
             var result = new Result();
             var emailGridBody = new StringBuilder();
             var index = 1;
-            foreach (var param in updateParams.Trim(';').Split(';'))
+            try
             {
-                try
+                foreach (var param in updateParams.Trim(';').Split(';'))
                 {
                     var paramList = param.Trim(',').Split(',');
                     var exid = int.Parse(paramList[0]);
@@ -564,23 +564,26 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                     emailGridBody.Append($"<td>{actualrate}</td>");
                     emailGridBody.Append("</tr>");
                 }
-                catch (ErrorException casinoEx)
-                {
-                    result.ErrorMessage = casinoEx.Message;
-                    LogExtensions.CasinoExceptionHandler(new Exception(casinoEx.Message, casinoEx));
-                }
-                catch (Exception ex)
-                {
-                    result.ErrorMessage = ex.Message;
-                    LogExtensions.ExceptionHandler(ex);
-                }
+
+                string tplSubject = "Exchange Rate was changed";
+
+                SendMailExtension.AccSendMail(MailSection.HostName.Gmail, MailSection.ToMailExchangeRate,
+                                              MailSection.CCMailExchangeRate, MailSection.BCCMailExchangeRate,
+                                              tplSubject, string.Format(Resources.ExchangeRate.UpdateMultipleExtRateSuccessCasinoEmail, emailGridBody.ToString()));
+            }
+            catch (ErrorException casinoEx)
+            {
+                result.ErrorCode = 1;
+                result.ErrorMessage = casinoEx.Message;
+                LogExtensions.CasinoExceptionHandler(new Exception(casinoEx.Message, casinoEx));
+            }
+            catch (Exception ex)
+            {
+                result.ErrorCode = 1;
+                result.ErrorMessage = ex.Message;
+                LogExtensions.ExceptionHandler(ex);
             }
 
-            string tplSubject = "Exchange Rate was changed";
-
-            SendMailExtension.AccSendMail(MailSection.HostName.Gmail, MailSection.ToMailExchangeRate,
-                                          MailSection.CCMailExchangeRate, MailSection.BCCMailExchangeRate,
-                                          tplSubject, string.Format(Resources.ExchangeRate.UpdateMultipleExtRateSuccessCasinoEmail, emailGridBody.ToString()));
             return result;
         }
     }

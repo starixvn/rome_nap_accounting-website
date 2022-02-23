@@ -180,66 +180,62 @@ public class UpdateExRate : IHttpHandler, IRequiresSessionState
     private Result EditBaseRate_SyncToNG2DB(IList<Fanex.Tarus.Customer.Entities.NG2.SyncCurrencyEntity> currencies, string updateParams)
     {
         var result = new Result();
-        try
+        var request = new ONEbook.NG2.API.DTO.SyncExchangeRate.Request();
+        var emailGridBody = new StringBuilder();
+        var index = 1;
+        request.Auth.SiteId = 2000;
+        request.UserId = AppSession.CurrentSession.UserId;
+        foreach (var param in updateParams.Trim(';').Split(';'))
         {
-            var request = new ONEbook.NG2.API.DTO.SyncExchangeRate.Request();
-            var emailGridBody = new StringBuilder();
-            var index = 1;
-            request.Auth.SiteId = 2000;
-            request.UserId = AppSession.CurrentSession.UserId;
-            foreach (var param in updateParams.Trim(';').Split(';'))
+            var paramList = param.Trim(',').Split(',');
+            var exRateId = int.Parse(paramList[0]);
+            var actualRate = paramList[1];
+            var currency = paramList[2];
+
+            var allowedCurrency = false;
+            var format = System.Globalization.CultureInfo.CurrentCulture.NumberFormat;
+            foreach (var item in currencies)
             {
-                var paramList = param.Trim(',').Split(',');
-                var exRateId = int.Parse(paramList[0]);
-                var actualRate = paramList[1];
-                var currency = paramList[2];
-
-                var allowedCurrency = false;
-                var format = System.Globalization.CultureInfo.CurrentCulture.NumberFormat;
-                foreach (var item in currencies)
+                double rate = 0;
+                double.TryParse(actualRate, System.Globalization.NumberStyles.Float, format, out rate);
+                if (item.CurrencyId == exRateId && rate != item.BaseRate)
                 {
-                    double rate = 0;
-                    double.TryParse(actualRate, System.Globalization.NumberStyles.Float, format, out rate);
-                    if (item.CurrencyId == exRateId && rate != item.BaseRate)
-                    {
-                        allowedCurrency = true;
-                        break;
-                    }
-                }
-
-                if (allowedCurrency)
-                {
-                    request.Call.CurrencyArray.Add(new ONEbook.NG2.API.DTO.SyncExchangeRate.CurrencyInfo { CurrencyId = exRateId, ExchangeRate = Fanex.CustomerSetting.Module.Core.Utils.ToDecimal(actualRate) });
-                    emailGridBody.Append("<tr>");
-                    emailGridBody.Append("<td>" + index + "</td>");
-                    emailGridBody.Append("<td>" + exRateId + "</td>");
-                    emailGridBody.Append("<td>" + currency + "</td>");
-                    emailGridBody.Append("<td>" + actualRate + "</td>");
-                    emailGridBody.Append("</tr>");
+                    allowedCurrency = true;
+                    break;
                 }
             }
 
-
-            ONEbook.NG2.API.Interface.IThirdPartyServices service = new ONEbook.NG2.API.Services();
-            var response = service.SyncExchangeRates(request);
-            if (!response.Result.IsSuccess)
+            if (allowedCurrency)
             {
-                // Send email notify IT to sync manually.
-                var to = System.Configuration.ConfigurationManager.AppSettings["ToMailNG2"];
-                var cc = System.Configuration.ConfigurationManager.AppSettings["CCMailNG2"];
-                var subject = Resources.MiniTemplate.UpdateExtRateFailedNg2Title;
-                subject = string.Format(subject, /*Fanex.Tarus.Infrastructure.Caching.CacheRef.GetProductName(23)*/"NG2");
-                var body = Resources.MiniTemplate.UpdateMultipleExtRateFailedNg2Email;
-                body = string.Format(body, emailGridBody.ToString());
-
-                SendMailExtension.AccSendMail(MailSection.HostName.Gmail, to, cc, "IT Team", subject, body);
+                request.Call.CurrencyArray.Add(new ONEbook.NG2.API.DTO.SyncExchangeRate.CurrencyInfo { CurrencyId = exRateId, ExchangeRate = Fanex.CustomerSetting.Module.Core.Utils.ToDecimal(actualRate) });
+                emailGridBody.Append("<tr>");
+                emailGridBody.Append("<td>" + index + "</td>");
+                emailGridBody.Append("<td>" + exRateId + "</td>");
+                emailGridBody.Append("<td>" + currency + "</td>");
+                emailGridBody.Append("<td>" + actualRate + "</td>");
+                emailGridBody.Append("</tr>");
             }
         }
-        catch (Exception ex)
+
+
+        ONEbook.NG2.API.Interface.IThirdPartyServices service = new ONEbook.NG2.API.Services();
+        var response = service.SyncExchangeRates(request);
+        if (!response.Result.IsSuccess)
         {
-            result.ErrorCode = 1;
-            result.ErrorMessage = ex.Message;
-            LogExtensions.ExceptionHandler(ex);
+            // Send email notify IT to sync manually.
+            var to = System.Configuration.ConfigurationManager.AppSettings["ToMailNG2"];
+            var cc = System.Configuration.ConfigurationManager.AppSettings["CCMailNG2"];
+            var subject = Resources.MiniTemplate.UpdateExtRateFailedNg2Title;
+            subject = string.Format(subject, /*Fanex.Tarus.Infrastructure.Caching.CacheRef.GetProductName(23)*/"NG2");
+            var body = Resources.MiniTemplate.UpdateMultipleExtRateFailedNg2Email;
+            body = string.Format(body, emailGridBody.ToString());
+
+            SendMailExtension.AccSendMail(MailSection.HostName.Gmail, to, cc, "IT Team", subject, body);
+        }
+        else
+        {
+            result.ErrorCode = response.Result.ErrorCode;
+            result.ErrorMessage = response.Result.ErrorDescription;
         }
 
         return result;
