@@ -441,7 +441,57 @@ namespace Sunplus.Accounting.Business.ExChangeRate
 
             Task.Run(() => EditBaseRate_UpdateExchangeTablesInBackground());
 
-            return EditBaseRate_SyncToCSDB(updateParams);
+            return result;
+        }
+
+        public Result EditBaseRate_SyncToCSDB(string updateParams)
+        {
+            var result = new Result();
+            var emailGridBody = new StringBuilder();
+            var index = 1;
+            try
+            {
+                foreach (var param in updateParams.Trim(';').Split(';'))
+                {
+                    var paramList = param.Trim(',').Split(',');
+                    var exid = int.Parse(paramList[0]);
+                    var actualrate = paramList[1];
+                    var currency = paramList[2];
+                    var code = paramList[3];
+                    var oldRate = paramList[4];
+                    var minbet = paramList[5];
+                    var minbetlive = paramList[6];
+                    BasicInfo info = new BasicInfo();
+                    bool isSuc = info.UpdateExchange(Globals.CASINO_GROUP1, exid, currency, CastAide.AsDouble(actualrate), code);
+                    emailGridBody.Append("<tr>");
+                    emailGridBody.Append($"<td>{index++}</td>");
+                    emailGridBody.Append($"<td>{exid}</td>");
+                    emailGridBody.Append($"<td>{currency}</td>");
+                    emailGridBody.Append($"<td>{oldRate}</td>");
+                    emailGridBody.Append($"<td>{actualrate}</td>");
+                    emailGridBody.Append("</tr>");
+                }
+
+                string tplSubject = "Exchange Rate was changed";
+
+                SendMailExtension.AccSendMail(MailSection.HostName.Gmail, MailSection.ToMailExchangeRate,
+                                              MailSection.CCMailExchangeRate, MailSection.BCCMailExchangeRate,
+                                              tplSubject, string.Format(Resources.ExchangeRate.UpdateMultipleExtRateSuccessCasinoEmail, emailGridBody.ToString()));
+            }
+            catch (ErrorException casinoEx)
+            {
+                result.ErrorCode = 1;
+                result.ErrorMessage = casinoEx.Message;
+                LogExtensions.CasinoExceptionHandler(new Exception(casinoEx.Message, casinoEx));
+            }
+            catch (Exception ex)
+            {
+                result.ErrorCode = 1;
+                result.ErrorMessage = ex.Message;
+                LogExtensions.ExceptionHandler(ex);
+            }
+
+            return result;
         }
 
         private Result EditBaseRate_UpdateMultipleBaseRate(string updateParams)
@@ -535,56 +585,6 @@ namespace Sunplus.Accounting.Business.ExChangeRate
 
             exchangeXML.Append("</root>");
             return exchangeXML.ToString();
-        }
-
-        private Result EditBaseRate_SyncToCSDB(string updateParams)
-        {
-            var result = new Result();
-            var emailGridBody = new StringBuilder();
-            var index = 1;
-            try
-            {
-                foreach (var param in updateParams.Trim(';').Split(';'))
-                {
-                    var paramList = param.Trim(',').Split(',');
-                    var exid = int.Parse(paramList[0]);
-                    var actualrate = paramList[1];
-                    var currency = paramList[2];
-                    var code = paramList[3];
-                    var oldRate = paramList[4];
-                    var minbet = paramList[5];
-                    var minbetlive = paramList[6];
-                    BasicInfo info = new BasicInfo();
-                    bool isSuc = info.UpdateExchange(Globals.CASINO_GROUP1, exid, currency, CastAide.AsDouble(actualrate), code);
-                    emailGridBody.Append("<tr>");
-                    emailGridBody.Append($"<td>{index++}</td>");
-                    emailGridBody.Append($"<td>{exid}</td>");
-                    emailGridBody.Append($"<td>{currency}</td>");
-                    emailGridBody.Append($"<td>{oldRate}</td>");
-                    emailGridBody.Append($"<td>{actualrate}</td>");
-                    emailGridBody.Append("</tr>");
-                }
-
-                string tplSubject = "Exchange Rate was changed";
-
-                SendMailExtension.AccSendMail(MailSection.HostName.Gmail, MailSection.ToMailExchangeRate,
-                                              MailSection.CCMailExchangeRate, MailSection.BCCMailExchangeRate,
-                                              tplSubject, string.Format(Resources.ExchangeRate.UpdateMultipleExtRateSuccessCasinoEmail, emailGridBody.ToString()));
-            }
-            catch (ErrorException casinoEx)
-            {
-                result.ErrorCode = 1;
-                result.ErrorMessage = casinoEx.Message;
-                LogExtensions.CasinoExceptionHandler(new Exception(casinoEx.Message, casinoEx));
-            }
-            catch (Exception ex)
-            {
-                result.ErrorCode = 1;
-                result.ErrorMessage = ex.Message;
-                LogExtensions.ExceptionHandler(ex);
-            }
-
-            return result;
         }
     }
 }

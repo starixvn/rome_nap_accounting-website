@@ -145,14 +145,13 @@ public class UpdateExRate : IHttpHandler, IRequiresSessionState
                 var result = exRate.EditBaseRate_UpdateBaseRate(context.Request["updateParams"]);
                 if (result.ErrorCode == 0)
                 {
-                    result = EditBaseRate_SyncToNG2DB(currencies, context.Request["updateParams"]);
-                    if (result.ErrorCode > 0)
-                    {
-                        context.Response.Write("no|" + result.ErrorMessage);
-                        return;
-                    }
-
+                    result = exRate.EditBaseRate_SyncToCSDB(context.Request["updateParams"]);
+                    EditBaseRate_SyncToNG2DB(currencies, context.Request["updateParams"]);
                     System.Threading.Thread.Sleep(3000);
+                }
+
+                if (result.ErrorCode == 0)
+                {
                     context.Response.Write("ok|The base rates have been updated successfully.");
                 }
                 else
@@ -177,11 +176,12 @@ public class UpdateExRate : IHttpHandler, IRequiresSessionState
         }
     }
 
-    private Result EditBaseRate_SyncToNG2DB(IList<Fanex.Tarus.Customer.Entities.NG2.SyncCurrencyEntity> currencies, string updateParams)
+    private void EditBaseRate_SyncToNG2DB(IList<Fanex.Tarus.Customer.Entities.NG2.SyncCurrencyEntity> currencies, string updateParams)
     {
         var result = new Result();
         var request = new ONEbook.NG2.API.DTO.SyncExchangeRate.Request();
         var emailGridBody = new StringBuilder();
+        var hasAllowedCurrencies = false;
         var index = 1;
         request.Auth.SiteId = 2000;
         request.UserId = AppSession.CurrentSession.UserId;
@@ -201,6 +201,7 @@ public class UpdateExRate : IHttpHandler, IRequiresSessionState
                 if (item.CurrencyId == exRateId && rate != item.BaseRate)
                 {
                     allowedCurrency = true;
+                    hasAllowedCurrencies = true;
                     break;
                 }
             }
@@ -217,27 +218,22 @@ public class UpdateExRate : IHttpHandler, IRequiresSessionState
             }
         }
 
-
-        ONEbook.NG2.API.Interface.IThirdPartyServices service = new ONEbook.NG2.API.Services();
-        var response = service.SyncExchangeRates(request);
-        if (!response.Result.IsSuccess)
+        if (hasAllowedCurrencies)
         {
-            // Send email notify IT to sync manually.
-            var to = System.Configuration.ConfigurationManager.AppSettings["ToMailNG2"];
-            var cc = System.Configuration.ConfigurationManager.AppSettings["CCMailNG2"];
-            var subject = Resources.MiniTemplate.UpdateExtRateFailedNg2Title;
-            subject = string.Format(subject, /*Fanex.Tarus.Infrastructure.Caching.CacheRef.GetProductName(23)*/"NG2");
-            var body = Resources.MiniTemplate.UpdateMultipleExtRateFailedNg2Email;
-            body = string.Format(body, emailGridBody.ToString());
+            ONEbook.NG2.API.Interface.IThirdPartyServices service = new ONEbook.NG2.API.Services();
+            var response = service.SyncExchangeRates(request);
+            if (!response.Result.IsSuccess)
+            {
+                // Send email notify IT to sync manually.
+                var to = System.Configuration.ConfigurationManager.AppSettings["ToMailNG2"];
+                var cc = System.Configuration.ConfigurationManager.AppSettings["CCMailNG2"];
+                var subject = Resources.MiniTemplate.UpdateExtRateFailedNg2Title;
+                subject = string.Format(subject, /*Fanex.Tarus.Infrastructure.Caching.CacheRef.GetProductName(23)*/"NG2");
+                var body = Resources.MiniTemplate.UpdateMultipleExtRateFailedNg2Email;
+                body = string.Format(body, emailGridBody.ToString());
 
-            SendMailExtension.AccSendMail(MailSection.HostName.Gmail, to, cc, "IT Team", subject, body);
+                SendMailExtension.AccSendMail(MailSection.HostName.Gmail, to, cc, "IT Team", subject, body);
+            }
         }
-        else
-        {
-            result.ErrorCode = response.Result.ErrorCode;
-            result.ErrorMessage = response.Result.ErrorDescription;
-        }
-
-        return result;
     }
 }
