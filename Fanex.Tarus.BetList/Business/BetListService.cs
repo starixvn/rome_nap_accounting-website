@@ -32,6 +32,7 @@ namespace Fanex.Tarus.BetList.Business
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Text;
+    using System.Text.RegularExpressions;
 
     /// <summary>
     /// TODO: Update summary.
@@ -91,7 +92,9 @@ namespace Fanex.Tarus.BetList.Business
                 },
                 ChoiceHtml = string.Empty,
                 OddHtml = string.Empty,
-                StakeHtml = string.Empty
+                StakeHtml = string.Empty,
+                IsChinaView = r.Table.Columns.Contains("IsChinaView") && Converter.ToBool(r["IsChinaView"]),
+                LeagueGroupId = r.Table.Columns.Contains("LeagueGroupId") ? Converter.ToInt(r["LeagueGroupId"]) : 0
             };
 
             try
@@ -111,6 +114,7 @@ namespace Fanex.Tarus.BetList.Business
                                 + builder.BuildChoice(betDetail.Ticket, ticketHelper, null, false)
                                 + builder.BuildTransEventDateAndStatusResult(betDetail.Ticket, null)
                             + (totalItem > 0 ? "</div>" + "<div class=\"line\"></div>" : "</div>");
+                        RemoveSabaWord(betDetail);
                     }
 
                     return betDetails;
@@ -202,7 +206,7 @@ namespace Fanex.Tarus.BetList.Business
 
                     WalletType = r.Table.Columns.Contains("wallettype") ? Convert.ToByte(r["wallettype"]) : (byte)0,
                     RefCode = r.Table.Columns.Contains("refcode") ? Convert.ToInt64(r["refcode"]) : 0,
-                    SettlementStatus = r.Table.Columns.Contains("SettlementStatus") ? Convert.ToByte(r["SettlementStatus"]) : (byte)0,                    
+                    SettlementStatus = r.Table.Columns.Contains("SettlementStatus") ? Convert.ToByte(r["SettlementStatus"]) : (byte)0,
                     SiteId = r.Table.Columns.Contains("SiteId") ? Converter.ToString2(r["SiteId"]) : ""
                 },
                 ChoiceHtml = string.Empty,
@@ -212,7 +216,9 @@ namespace Fanex.Tarus.BetList.Business
                 VirtualRate = r.Table.Columns.Contains("virtualrate") ? Converter.ToDecimal(r["virtualrate"]) : 0,
                 AgentPositionTaking2 = r.Table.Columns.Contains("apositiontaking2") ? Converter.ToDecimal(r["apositiontaking2"]) : 0,
                 MasterPositionTaking2 = r.Table.Columns.Contains("mpositiontaking2") ? Converter.ToDecimal(r["mpositiontaking2"]) : 0,
-                SuperPositionTaking2 = r.Table.Columns.Contains("spositiontaking2") ? Converter.ToDecimal(r["spositiontaking2"]) : 0
+                SuperPositionTaking2 = r.Table.Columns.Contains("spositiontaking2") ? Converter.ToDecimal(r["spositiontaking2"]) : 0,
+                IsChinaView = r.Table.Columns.Contains("IsChinaView") && Converter.ToBool(r["IsChinaView"]),
+                LeagueGroupId = r.Table.Columns.Contains("LeagueGroupId") ? Converter.ToInt(r["LeagueGroupId"]) : 0,
             };
 
             try
@@ -251,9 +257,33 @@ namespace Fanex.Tarus.BetList.Business
 
         public IList<TicketDetail> GetBetListByRefNo(BetListByRefNoCriteria betListByRefNoCriteria)
         {
-            return GetBetListBy(betListByRefNoCriteria);
+            var tickets = GetBetListBy(betListByRefNoCriteria);
+            foreach (TicketDetail ticket in tickets)
+            {
+                RemoveSabaWord(ticket);
+
+            }
+            return tickets;
         }
 
+        private void RemoveSabaWord(TicketDetail ticket)
+        {
+            var leagueGroupIds = new List<int> { 42, 74, 108 };
+            var sabaWords = new List<string> { " SABA", "SABA ", "SABA", " 沙巴", "沙巴 ", "沙巴" };
+            if (ticket.IsChinaView && leagueGroupIds.Any(i => i == ticket.LeagueGroupId))
+            {
+                var partern = $"<span class=\"leagueName\">(.+?)</span>";
+                var mainTicket = Regex.Match(ticket.ChoiceHtml, partern);
+                if (mainTicket.Success)
+                {
+                    foreach (string word in sabaWords)
+                    {
+                        var a = mainTicket.Value.Contains(word) ? mainTicket.Value.Replace(word, string.Empty) : mainTicket.Value;
+                        ticket.ChoiceHtml = ticket.ChoiceHtml.Replace(mainTicket.Value, a);
+                    }
+                }
+            }
+        }
         public IList<TicketDetail> GetBetListBetTradeDetails(BetListBetTradeDetailCriteria criteria)
         {
             return GetBetListBy(criteria);
@@ -681,7 +711,7 @@ namespace Fanex.Tarus.BetList.Business
                         betDetail.StakeHtml = BetListExtension.BuildStake(betDetail, ref builder, ticketHelper);
                         betDetail.OddHtml = builder.BuildOdds(betDetail.Ticket, outputLiveCasino, funcGetOddsTypeName);
                         betDetail.StatusHtml = betListHelper.BuildStatus(betDetail.Ticket, ticketHelper, outputLiveCasino, factory, builder);
-                        if (betDetail.StatusHtml.Contains("Void") 
+                        if (betDetail.StatusHtml.Contains("Void")
                             || betDetail.StatusHtml.Contains("Abnormal Bet"))
                         {
                             systempParlayModel.HideCombinationDetail = true;
