@@ -10,13 +10,16 @@ using DNAide.Core;
 using System.Collections.Generic;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Configurations;
+using Sunplus.Accounting.Entities;
+using System.Text;
 
 using SCCACHE = Fanex.Tarus.Infrastructure.Caching.CacheHelper;
 
 
-public class UpdateExRate : IHttpHandler,IRequiresSessionState {
+public class UpdateExRate : IHttpHandler, IRequiresSessionState
+{
 
-    public void ProcessRequest (HttpContext context)
+    public void ProcessRequest(HttpContext context)
     {
         context.Response.ContentType = "text/html";
 
@@ -27,7 +30,7 @@ public class UpdateExRate : IHttpHandler,IRequiresSessionState {
             string actualRate = CastAide.AsString(context.Request["BaseRate"]);
             string currency = context.Request["Currency"];
             string minbet = CastAide.AsString(context.Request["Minbet"]);
-            string minbetlive = CastAide.AsString(context.Request["MinbetLive"]);           
+            string minbetlive = CastAide.AsString(context.Request["MinbetLive"]);
             string Code = CastAide.AsString(context.Request["Code"]);
             string Description = CastAide.AsString(context.Request["Description"]);
             string MultipliedBy = CastAide.AsString(context.Request["MultipliedBy"]);
@@ -46,7 +49,7 @@ public class UpdateExRate : IHttpHandler,IRequiresSessionState {
                 else
                 {
                     System.Threading.Thread.Sleep(3000);
-                    Dictionary <int, string> exchange;
+                    Dictionary<int, string> exchange;
                     exchange = IBCProvider.Utils.GetExchange();
                     SCCACHE.Set("exchange", exchange, DateTime.Now.AddHours(5));
                     //context.Response.Write("ok|"+ Resources.Language.lblInsertExSuccessful );
@@ -72,7 +75,7 @@ public class UpdateExRate : IHttpHandler,IRequiresSessionState {
                         foreach (var item in currencies)
                         {
                             double rate = 0;
-                            double.TryParse(actualRate, System.Globalization.NumberStyles.Float, format,  out rate);
+                            double.TryParse(actualRate, System.Globalization.NumberStyles.Float, format, out rate);
                             if (item.CurrencyId == exRateId && rate != item.BaseRate)
                             {
                                 allowedCurrency = true;
@@ -128,11 +131,33 @@ public class UpdateExRate : IHttpHandler,IRequiresSessionState {
                     context.Response.Write("no|" + errMsg);
                 }
             }
-
             else if (context.Request["type"] == "reset")
             {
                 exRateId = CastAide.AsInt32(context.Request["exrateId"]);
-                context.Response.Write( exRate.ResetEditExchangeRate(exRateId));
+                context.Response.Write(exRate.ResetEditExchangeRate(exRateId));
+            }
+            else if (context.Request["type"] == "editbaserate")
+            {
+                // This 2 lines of code below must be called before update MBC database.
+                Fanex.Tarus.Customer.Business.NG2.ISyncCurrencyService syncCurrencyService = new Fanex.Tarus.Customer.Business.NG2.SyncCurrencyService();
+                var currencies = syncCurrencyService.SyncCurrencies().Currencies;
+
+                var result = exRate.EditBaseRate_UpdateBaseRate(context.Request["updateParams"]);
+                if (result.ErrorCode == 0)
+                {
+                    result = exRate.EditBaseRate_SyncToCSDB(context.Request["updateParams"]);
+                    EditBaseRate_SyncToNG2DB(currencies, context.Request["updateParams"]);
+                    System.Threading.Thread.Sleep(3000);
+                }
+
+                if (result.ErrorCode == 0)
+                {
+                    context.Response.Write("ok|The base rates have been updated successfully.");
+                }
+                else
+                {
+                    context.Response.Write("no|" + result.ErrorMessage);
+                }
             }
 
         }
@@ -143,10 +168,72 @@ public class UpdateExRate : IHttpHandler,IRequiresSessionState {
         }
     }
 
-    public bool IsReusable {
-        get {
+    public bool IsReusable
+    {
+        get
+        {
             return false;
         }
     }
 
+    private void EditBaseRate_SyncToNG2DB(IList<Fanex.Tarus.Customer.Entities.NG2.SyncCurrencyEntity> currencies, string updateParams)
+    {
+        var result = new Result();
+        var request = new ONEbook.NG2.API.DTO.SyncExchangeRate.Request();
+        var emailGridBody = new StringBuilder();
+        var hasAllowedCurrencies = false;
+        var index = 1;
+        request.Auth.SiteId = 2000;
+        request.UserId = AppSession.CurrentSession.UserId;
+        foreach (var param in updateParams.Trim(';').Split(';'))
+        {
+            var paramList = param.Trim(',').Split(',');
+            var exRateId = int.Parse(paramList[0]);
+            var actualRate = paramList[1];
+            var currency = paramList[2];
+
+            var allowedCurrency = false;
+            var format = System.Globalization.CultureInfo.CurrentCulture.NumberFormat;
+            foreach (var item in currencies)
+            {
+                double rate = 0;
+                double.TryParse(actualRate, System.Globalization.NumberStyles.Float, format, out rate);
+                if (item.CurrencyId == exRateId && rate != item.BaseRate)
+                {
+                    allowedCurrency = true;
+                    hasAllowedCurrencies = true;
+                    break;
+                }
+            }
+
+            if (allowedCurrency)
+            {
+                request.Call.CurrencyArray.Add(new ONEbook.NG2.API.DTO.SyncExchangeRate.CurrencyInfo { CurrencyId = exRateId, ExchangeRate = Fanex.CustomerSetting.Module.Core.Utils.ToDecimal(actualRate) });
+                emailGridBody.Append("<tr>");
+                emailGridBody.Append("<td>" + index + "</td>");
+                emailGridBody.Append("<td>" + exRateId + "</td>");
+                emailGridBody.Append("<td>" + currency + "</td>");
+                emailGridBody.Append("<td>" + actualRate + "</td>");
+                emailGridBody.Append("</tr>");
+            }
+        }
+
+        if (hasAllowedCurrencies)
+        {
+            ONEbook.NG2.API.Interface.IThirdPartyServices service = new ONEbook.NG2.API.Services();
+            var response = service.SyncExchangeRates(request);
+            if (!response.Result.IsSuccess)
+            {
+                // Send email notify IT to sync manually.
+                var to = System.Configuration.ConfigurationManager.AppSettings["ToMailNG2"];
+                var cc = System.Configuration.ConfigurationManager.AppSettings["CCMailNG2"];
+                var subject = Resources.MiniTemplate.UpdateExtRateFailedNg2Title;
+                subject = string.Format(subject, /*Fanex.Tarus.Infrastructure.Caching.CacheRef.GetProductName(23)*/"NG2");
+                var body = Resources.MiniTemplate.UpdateMultipleExtRateFailedNg2Email;
+                body = string.Format(body, emailGridBody.ToString());
+
+                SendMailExtension.AccSendMail(MailSection.HostName.Gmail, to, cc, "IT Team", subject, body);
+            }
+        }
+    }
 }
