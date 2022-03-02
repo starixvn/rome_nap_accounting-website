@@ -10,6 +10,7 @@
         ChargedComm = 5,
         WinLossLimit = 6,
         StakeLevel = 7,
-        StakeLevelGroup = 8
+        StakeLevelGroup = 8,
+        BetSettingWithoutMaxPerMatch = 11
     }
 }

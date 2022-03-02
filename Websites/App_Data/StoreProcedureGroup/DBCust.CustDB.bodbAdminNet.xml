@@ -283,17 +283,37 @@
     <Setting Key="NAP_LM_LicenseeSuperList" SpName="NAP_LM_LicenseeSuperList" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerSelAgentListBySuper" SpName="Acc_CustomerSelAgentListBySuper" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_Dep_SelDCSProduct" SpName="Acc_Dep_SelDCSProduct" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_Dep_CustSetting_PositionTakingSettingSelect" SpName="Acc_Dep_CustSetting_PositionTakingSettingSelect" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_Dep_CustSetting_PositionTakingSettingUpd" SpName="Acc_Dep_CustSetting_PositionTakingSettingUpd" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_Dep_CustSetting_BetLimitFullLineSettingSelect" SpName="Acc_Dep_CustSetting_BetLimitFullLineSettingSelect" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_Dep_CustSetting_BetLimitFullLineUpd" SpName="Acc_Dep_CustSetting_BetLimitFullLineUpd" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_Dep_CustSetting_StatusSelect" SpName="Acc_Dep_CustSetting_StatusSelect" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_Dep_CustSetting_StatusUpd" SpName="Acc_Dep_CustSetting_StatusUpd" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_Dep_CustSetting_GlobalStakeLevelSelect" SpName="Acc_Dep_CustSetting_GlobalStakeLevelSelect" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_Dep_CustSetting_GlobalStakeLevelUpdate" SpName="Acc_Dep_CustSetting_GlobalStakeLevelUpdate" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_Dep_CustSetting_StakeLevelSelect" SpName="Acc_Dep_CustSetting_StakeLevelSelect" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_Dep_CustSetting_StakeLevelGroupSelect" SpName="Acc_Dep_CustSetting_StakeLevelGroupSelect" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_Dep_CustSetting_StakeLevelUpd" SpName="Acc_Dep_CustSetting_StakeLevelUpd" DbName="DBCust.CustDB.bodbAdminNet" />
+    
+    <Function Name="Setting Type 1 - Position Taking">
+      <Setting Key="Acc_Dep_CustSetting_PositionTakingSettingSelect" SpName="Acc_Dep_CustSetting_PositionTakingSettingSelect" DbName="DBCust.CustDB.bodbAdminNet" />
+      <Setting Key="Acc_Dep_CustSetting_PositionTakingSettingUpd" SpName="Acc_Dep_CustSetting_PositionTakingSettingUpd" DbName="DBCust.CustDB.bodbAdminNet" />
+    </Function>
+
+    <Function Name="Setting Type 2 - Bet Setting with Max Per Match">
+      <Setting Key="Acc_Dep_CustSetting_BetLimitFullLineSettingSelect" SpName="Acc_Dep_CustSetting_BetLimitFullLineSettingSelect" DbName="DBCust.CustDB.bodbAdminNet" />
+      <Setting Key="Acc_Dep_CustSetting_BetLimitFullLineUpd" SpName="Acc_Dep_CustSetting_BetLimitFullLineUpd" DbName="DBCust.CustDB.bodbAdminNet" />
+    </Function>
+
+    <Function Name="Setting Type 11 - Bet Setting without Max Per Match">
+      <Setting Key="Acc_Dep_CustSetting_NewBetLimitFullLineSettingSelect" SpName="Acc_Dep_CustSetting_NewBetLimitFullLineSettingSelect_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
+      <Setting Key="Acc_Dep_CustSetting_NewBetLimitFullLineUpd" SpName="Acc_Dep_CustSetting_NewBetLimitFullLineUpd_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
+    </Function>
+
+    <Function Name="Setting Type 4 - Product Status">
+      <Setting Key="Acc_Dep_CustSetting_StatusSelect" SpName="Acc_Dep_CustSetting_StatusSelect" DbName="DBCust.CustDB.bodbAdminNet" />
+      <Setting Key="Acc_Dep_CustSetting_StatusUpd" SpName="Acc_Dep_CustSetting_StatusUpd" DbName="DBCust.CustDB.bodbAdminNet" />
+    </Function>
+
+    <Function Name="Setting Type 0 - Global Stake Level">
+      <Setting Key="Acc_Dep_CustSetting_GlobalStakeLevelSelect" SpName="Acc_Dep_CustSetting_GlobalStakeLevelSelect" DbName="DBCust.CustDB.bodbAdminNet" />
+      <Setting Key="Acc_Dep_CustSetting_GlobalStakeLevelUpdate" SpName="Acc_Dep_CustSetting_GlobalStakeLevelUpdate" DbName="DBCust.CustDB.bodbAdminNet" />
+    </Function>
+
+    <Function Name="Setting Type 7, 8 - Stake Level, Stake Group Level">
+      <Setting Key="Acc_Dep_CustSetting_StakeLevelSelect" SpName="Acc_Dep_CustSetting_StakeLevelSelect" DbName="DBCust.CustDB.bodbAdminNet" />
+      <Setting Key="Acc_Dep_CustSetting_StakeLevelGroupSelect" SpName="Acc_Dep_CustSetting_StakeLevelGroupSelect" DbName="DBCust.CustDB.bodbAdminNet" />
+      <Setting Key="Acc_Dep_CustSetting_StakeLevelUpd" SpName="Acc_Dep_CustSetting_StakeLevelUpd" DbName="DBCust.CustDB.bodbAdminNet" />
+    </Function>
   </Function>
   <Function Name="Licensee Odds Group">
     <Setting Key="Acc_Dep_LicenseeSelAgentList" SpName="Acc_Dep_LicenseeSelAgentList" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -456,7 +476,7 @@
     <Setting Key="Acc_Initial_DCS_SettingConfig_Sel" SpName="Acc_Initial_DCS_SettingConfig_Sel" DbName="DBCUST.CustDB.bodbAdminNet" />
     <Setting Key="Acc_Initial_DCS_ProductProfile_Sel" SpName="Acc_Initial_DCS_ProductProfile_Sel" DbName="DBCUST.CustDB.bodbAdminNet" />
     <Setting Key="Acc_Initial_DCS_SettingConfigDetail_Sel" SpName="Acc_Initial_DCS_SettingConfigDetail_Sel" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_Initial_DCS_SettingConfig_Ins" SpName="Acc_Initial_DCS_SettingConfig_Ins" DbName="DBCUST.CustDB.bodbAdminNet" />	
+    <Setting Key="Acc_Initial_DCS_SettingConfig_Ins" SpName="Acc_Initial_DCS_SettingConfig_Ins" DbName="DBCUST.CustDB.bodbAdminNet" />
     <Setting Key="Acc_Initial_DCS_SettingConfig_Upd" SpName="Acc_Initial_DCS_SettingConfig_Upd" DbName="DBCUST.CustDB.bodbAdminNet" />
     <Setting Key="Acc_Initial_DCS_SettingConfig_Del" SpName="Acc_Initial_DCS_SettingConfig_Del" DbName="DBCUST.CustDB.bodbAdminNet" />
     <Setting Key="Acc_Initial_DCS_ConfigStatus_Upd" SpName="Acc_Initial_DCS_ConfigStatus_Upd" DbName="DBCUST.CustDB.bodbAdminNet" />
