@@ -57,5 +57,9 @@ namespace Fanex.Tarus.BetList.Models
         public string SportName { get; set; }
 
         public string LeagueName { get; set; }
+
+        public bool IsChinaView { get; set; }
+
+        public int LeagueGroupId { get; set; }
     }
 }
