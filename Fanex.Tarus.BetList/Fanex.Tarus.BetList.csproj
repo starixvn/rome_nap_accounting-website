@@ -95,7 +95,7 @@
       <HintPath>..\packages\Fanex.BetList.AGCasino.1.1.0\lib\net40\Fanex.BetList.AGCasino.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.Allbet, Version=1.4.0.8, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Allbet.1.4.0.8-Promotion-04\lib\net40\Fanex.BetList.Allbet.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.Allbet.1.4.0.8-Promotion-05\lib\net40\Fanex.BetList.Allbet.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.BBIN, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.BBIN.1.0.0.3\lib\net40\Fanex.BetList.BBIN.dll</HintPath>
