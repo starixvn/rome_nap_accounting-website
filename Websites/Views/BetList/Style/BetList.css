@@ -654,3 +654,10 @@ span.ui-dialog-title-dialog-modal-TennisResult {
     width: 100px;
     word-break: break-word;
 }
+
+.players-choice {
+    color: #000000;
+    font-weight: bold !important;
+    word-break: break-word;
+    white-space: normal;
+}
