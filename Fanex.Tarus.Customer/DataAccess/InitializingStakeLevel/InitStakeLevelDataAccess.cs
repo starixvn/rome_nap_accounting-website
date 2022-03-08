@@ -4,6 +4,7 @@
     using Fanex.Data;
     using Fanex.Tarus.Customer.Criteria.InitializingStakeLevel;
     using Fanex.Tarus.Customer.Entities;
+    using Fanex.Tarus.Customer.Entities.InitializingStakeLevel;
     using Fanex.Tarus.Infrastructure.Helper;
 
     public interface IInitStakeLevelDataAccess
@@ -15,6 +16,8 @@
         IEnumerable<BaseModel> GetBettypes(int productId, string sportTypes);
 
         IEnumerable<BaseModel> GetCurrency(int mode);
+
+        StakeLevelResponse GetStakeLevels(StakeLevelSelCriteria criteria);
     }
 
     public class InitStakeLevelDataAccess : IInitStakeLevelDataAccess
@@ -115,6 +118,47 @@
             }
 
             return entities;
+        }
+
+        public StakeLevelResponse GetStakeLevels(StakeLevelSelCriteria criteria)
+        {
+            var stakeLevels = new List<StakeLevelModel>();
+            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                var reader = objDb.ExecuteReader(criteria.GetSpParams());
+                while (reader.Read())
+                {
+                    var stakeLevel = new StakeLevelModel
+                    {
+                        SportTypeId = DataUtils.ToInt32(reader["sporttype"]),
+                        SportType = DataUtils.ToString(reader["sportname"]),
+                        BetTypeId = DataUtils.ToInt32(reader["bettype"]),
+                        BetType = DataUtils.ToString(reader["typenamee"]),
+                        Site = DataUtils.ToString(reader["site"]),
+                        CreditCurrency = DataUtils.ToString(reader["currencycredit"]),
+                        DepositCurrency = DataUtils.ToString(reader["currencydeposit"]),
+                        NewMinBet = DataUtils.ToDecimal(reader["newminstake"]),
+                        NewMaxBet = DataUtils.ToDecimal(reader["newmaxstake"]),
+                        MinBet = DataUtils.ToDecimal(reader["curminstake"]),
+                        MaxBet = DataUtils.ToDecimal(reader["curmaxstake"]),
+                        GameGroupId = DataUtils.ToInt32(reader["gamegroupid"])
+                    };
+
+                    stakeLevels.Add(stakeLevel);
+                }
+
+                reader.Close();
+
+                var outputParams = objDb.GetOuputParams();
+
+                return new StakeLevelResponse
+                {
+                    TotalRows = DataUtils.ToInt32(outputParams["totalrows"]),
+                    PageSize = criteria.PageSize,
+                    PageIndex = criteria.PageIndex,
+                    StakeLevels = stakeLevels
+                };
+            }
         }
     }
 }

@@ -7,6 +7,7 @@
         public SportTypeSelCriteria(int productId)
         {
             ProductId = productId;
+            SportTypes = "0";
         }
 
         public int ProductId { get; set; }

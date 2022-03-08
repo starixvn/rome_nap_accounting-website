@@ -6,13 +6,19 @@
     {
         public int ProductID { get; set; }
 
+        [SpParam(SqlParamName = "pMutilSportType")]
         public string SportTypes { get; set; }
 
+        [SpParam(SqlParamName = "pMutilBetType")]
         public string BetTypes { get; set; }
 
+        [SpParam(SqlParamName = "pMutilCurrencyDeposit")]
         public string DepositCurrencies { get; set; }
 
+        [SpParam(SqlParamName = "pMutilCurrencyCredit")]
         public string CreditCurrencies { get; set; }
+
+        public int ExportData { get; set; }
 
         public int PageSize { get; set; }
 

@@ -685,7 +685,8 @@
     <Compile Include="Entities\InitializingCustomerSetting\SportModel.cs" />
     <Compile Include="Entities\InitializingCustomerSetting\ValidateResultModel.cs" />
     <Compile Include="Entities\InitializingStakeLevel\FilterModel.cs" />
-    <Compile Include="Entities\InitializingStakeLevel\GetBettypeRequest.cs" />
+    <Compile Include="Entities\InitializingStakeLevel\StakeLevelModel.cs" />
+    <Compile Include="Entities\InitializingStakeLevel\StakeLevelResponse.cs" />
     <Compile Include="Entities\JsonWithoutNullField.cs" />
     <Compile Include="Entities\LicenseeDcsSetting\BetSettingWithoutMaxPerMatchEntity.cs" />
     <Compile Include="Entities\LicenseeDcsSetting\StakeLevelEntity.cs" />
@@ -733,6 +734,8 @@
     <Compile Include="Requests\CustomerSetting\Suspend\GetSingleSuspendCustomerInfoQuery.cs" />
     <Compile Include="Requests\GetMessageLogsQuery.cs" />
     <Compile Include="Requests\InitializingCustomerSetting\GenerateConfigSettingRequest.cs" />
+    <Compile Include="Requests\InitializingStakeLevel\GetBettypeRequest.cs" />
+    <Compile Include="Requests\InitializingStakeLevel\GetStakeLevelRequest.cs" />
     <Compile Include="Requests\LicenseeOddsGroup\UpdateOddsGroupRequest.cs" />
     <Compile Include="Requests\MultipleUpdateSuperStatus\UpdatedCustomerIinfo.cs" />
     <Compile Include="Requests\MultipleUpdateSuperStatus\UpdateSupersProtectedStatusRequest.cs" />

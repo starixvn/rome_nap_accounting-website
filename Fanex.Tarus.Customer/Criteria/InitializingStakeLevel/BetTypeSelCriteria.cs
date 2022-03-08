@@ -8,6 +8,7 @@
         {
             ProductId = productId;
             SportTypes = sportTypes;
+            BetTypes = "0";
         }
 
         public int ProductId { get; set; }

@@ -2,7 +2,7 @@
 {
     using System.Web.Mvc;
     using Fanex.Tarus.Customer.Business.InitializingStakeLevel;
-    using Fanex.Tarus.Customer.Entities.InitializingStakeLevel;
+    using Fanex.Tarus.Customer.Requests.InitializingStakeLevel;
     using Fanex.Tarus.Web.Controllers;
     using Fanex.Tarus.Web.Controllers.Filters;
 
@@ -46,10 +46,23 @@
             return Json(betTypes, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpGet, AuthenticateRead]
-        public ActionResult GetStakeLevels()
+        [HttpPost, AuthenticateRead]
+        public ActionResult GetStakeLevels(GetStakeLevelRequest request)
         {
-            return Json(true, JsonRequestBehavior.AllowGet);
+            return Json(service.GetStakeLevels(request), JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost, AuthenticateRead]
+        public ActionResult ExportExcel(GetStakeLevelRequest request)
+        {
+            var excelFile = service.GetExcelFile(request);
+            Response.Clear();
+            Response.ContentType = "application/vnd.ms-excel";
+            Response.AddHeader("Content-Disposition", "attachment; filename=StakeLevel.xls");
+
+            excelFile.SaveXls(Response.OutputStream);
+
+            return new EmptyResult();
         }
 
         [HttpGet, AuthenticateRead]

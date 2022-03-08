@@ -1,1 +1,62 @@
-﻿
+﻿<div id="filterDiv" style="display: flex; width:100%;">
+    <div class="filterBox" style="border: solid 1px #7C98A4; width:100%">
+        <div class="filterContent" style="padding:0 5px;">
+            <div id="filterError"></div>
+            <table class="floatLeft">
+                <tr>
+                    <td class="w100">
+                        <label for="FilterProduct" class="edit-label">Product<span style="color: red;">*</span></label>
+                    </td>
+                    <td class="floatLeft">
+                        <select id="FilterProduct" class="setting-edit">
+                            <option value="" disabled selected>Please select</option>
+                        </select>
+                    </td>
+                    <td class="w100">
+                        <label for="FilterSportType" class="edit-label">Sport<span style="color: red;">*</span></label>
+                    </td>
+                    <td class="floatLeft">
+                        <select id="FilterSportType" class="setting-edit">
+                            <option value="" disabled selected>Please select</option>
+                        </select>
+                    </td>
+                    <td class="w100"><label for="FilterBetType" class="edit-label">Bettype<span style="color: red;">*</span></label></td>
+                    <td class="floatLeft">
+                        <select id="FilterBetType" class="setting-edit">
+                            <option value="" disabled selected>Please select</option>
+                        </select>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="w100">
+                        <label for="FilterCredit" class="edit-label">Credit Currency</label>
+                    </td>
+                    <td class="floatLeft">
+                        <select id="FilterCredit" class="setting-edit">
+                            <option value="" disabled selected>Please select</option>
+                        </select>
+                    </td>
+                    <td class="w100">
+                        <label for="FilterDeposit" class="edit-label">Deposit Currency</label>
+                    </td>
+                    <td class="floatLeft">
+                        <select id="FilterDeposit" class="setting-edit">
+                            <option value="" disabled selected>Please select</option>
+                        </select>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <input id="btnSearch" type="button" value="Search" class="btn btn-edit" onclick="Search();">
+                        <input type="button" title="Export to Excel" class="btnExcel" id="btnExport" name="btnExport" value="  " onclick="ExportExcel();">
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="mainContent" style="margin-top:10px; width: auto;">
+    <div id="errMsg"></div>
+    <div id="gridStakeLevel" class="freegrid"></div>
+</div>
