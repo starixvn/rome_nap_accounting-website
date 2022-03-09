@@ -1,14 +1,22 @@
 ﻿namespace Fanex.Tarus.Customer.Business.InitializingStakeLevel
 {
+    using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Drawing;
     using System.Linq;
+    using System.Web;
     using ExcelUtil.Spreadsheet;
+    using Fanex.Caching;
+    using Fanex.Caching.Memory;
     using Fanex.Tarus.Customer.Criteria.InitializingStakeLevel;
     using Fanex.Tarus.Customer.DataAccess.InitializingStakeLevel;
     using Fanex.Tarus.Customer.Entities;
     using Fanex.Tarus.Customer.Entities.InitializingStakeLevel;
     using Fanex.Tarus.Customer.Requests.InitializingStakeLevel;
+    using Fanex.Tarus.Infrastructure.Caching;
+    using Fanex.Tarus.Infrastructure.Extensions;
+    using NPOI.SS.UserModel;
 
     public interface IInitializingStakeLevelService
     {
@@ -21,16 +29,22 @@
         StakeLevelResponse GetStakeLevels(GetStakeLevelRequest request);
 
         ExcelFile GetExcelFile(GetStakeLevelRequest request);
+
+        ValidateStakeLevelResponse ValidateSetting(HttpPostedFileBase uploadFile);
     }
     public class InitializingStakeLevelService : IInitializingStakeLevelService
     {
         private const int CreditCurrency = 1;
         private const int DepositCurrency = 2;
+        private const string SportCacheKey = "InitCust-Sport-{0}";
+        private const string BettypeCacheKey = "InitCust-BetType-{0}";
         private readonly IInitStakeLevelDataAccess dataAccess;
+        private readonly MemoryCache _MemoryCache;
 
         public InitializingStakeLevelService()
         {
             dataAccess = new InitStakeLevelDataAccess();
+            _MemoryCache = new MemoryCache(new MemoryCacheOptions());
         }
 
         public IEnumerable<BaseModel> GetBetTypes(int productId, string sportTypes)
@@ -234,6 +248,90 @@
             #endregion Body
 
             return excelFile;
+        }
+
+        public ValidateStakeLevelResponse ValidateSetting(HttpPostedFileBase uploadFile)
+        {
+            var stakeLevels = new List<StakeLevelModel>();
+            var siteIds = new List<int>();
+            int rowCount = 1;
+            try
+            {
+                IWorkbook workbook = WorkbookFactory.Create(uploadFile.InputStream);
+                ISheet sheet = workbook.GetSheetAt(0);
+                IEnumerator rows = sheet.GetRowEnumerator();
+                rows.MoveNext();
+                while (rows.MoveNext())
+                {
+                    rowCount++;
+                    IRow row = (IRow)rows.Current;
+                    var stakeLevel = new StakeLevelModel
+                    {
+                        SportTypeId = string.IsNullOrWhiteSpace(row.GetCell(0).ToString()) ? 0 : Int32.Parse(row.GetCell(0).ToString()),
+                        BetTypeId = string.IsNullOrWhiteSpace(row.GetCell(1).ToString()) ? 0 : Int32.Parse(row.GetCell(1).ToString()),
+                        SiteId = string.IsNullOrWhiteSpace(row.GetCell(2).ToString()) ? 0 : Int32.Parse(row.GetCell(2).ToString()),
+                        CreditCurrency = HttpUtility.HtmlEncode(row.GetCell(3).ToString()),
+                        DepositCurrency = HttpUtility.HtmlEncode(row.GetCell(4).ToString()),
+                        NewMinBet = string.IsNullOrWhiteSpace(row.GetCell(5).ToString()) ? 0 : Decimal.Parse(row.GetCell(5).ToString()),
+                        NewMaxBet = string.IsNullOrWhiteSpace(row.GetCell(6).ToString()) ? 0 : Decimal.Parse(row.GetCell(6).ToString()),
+                        MinBet = string.IsNullOrWhiteSpace(row.GetCell(7).ToString()) ? 0 : Decimal.Parse(row.GetCell(7).ToString()),
+                        MaxBet = string.IsNullOrWhiteSpace(row.GetCell(8).ToString()) ? 0 : Decimal.Parse(row.GetCell(8).ToString()),
+                        GameGroupId = string.IsNullOrWhiteSpace(row.GetCell(9).ToString()) ? 0 : Int32.Parse(row.GetCell(9).ToString()),
+                    };
+
+                    stakeLevel.SportType = GetSportName(stakeLevel.SportTypeId);
+                    stakeLevel.BetType = GetBetTypeName(stakeLevel.BetTypeId);
+                    siteIds.Add(stakeLevel.SiteId);
+                    stakeLevels.Add(stakeLevel);
+                }
+
+                var sites = dataAccess.GetSites(string.Join(",", siteIds));
+                foreach (var stakeLevel in stakeLevels)
+                {
+                    stakeLevel.Site = sites.FirstOrDefault(site => site.Id == stakeLevel.SiteId)?.Name;
+                }
+
+                var criteria = new StakeLevelCheckCriteria
+                {
+                    StakeLevels = stakeLevels
+                };
+
+                return dataAccess.CheckSetting(criteria);
+             
+            }
+            catch (Exception ex)
+            {
+                var result = new Result(1, "Invalid file uploaded. Error at line: " + rowCount.ToString() + ". " + ex.Message);
+                LogExtensions.ExceptionHandler(ex);
+
+                return new ValidateStakeLevelResponse {
+                    Error = result
+                };
+            }
+        }
+
+        private string GetSportName(object sportId)
+        {
+            var key = string.Format(SportCacheKey, sportId);
+            if (!_MemoryCache.TryGet(key, out string sportName))
+            {
+                sportName = CacheRef.GetSportName(sportId);
+                _MemoryCache.Set(key, sportName, new CacheItemOptions { SlidingExpiration = TimeSpan.FromHours(1) });
+            }
+
+            return sportName;
+        }
+
+        private string GetBetTypeName(object bettypeId)
+        {
+            var key = string.Format(BettypeCacheKey, bettypeId);
+            if (!_MemoryCache.TryGet(key, out string bettypeName))
+            {
+                bettypeName = CacheRef.GetBettype(bettypeId);
+                _MemoryCache.Set(key, bettypeName, new CacheItemOptions { SlidingExpiration = TimeSpan.FromHours(1) });
+            }
+
+            return bettypeName;
         }
     }
 }

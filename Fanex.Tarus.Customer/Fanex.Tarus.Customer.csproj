@@ -481,6 +481,7 @@
     <Compile Include="Criteria\InitializingStakeLevel\BetTypeSelCriteria.cs" />
     <Compile Include="Criteria\InitializingStakeLevel\CurrencySelCriteria.cs" />
     <Compile Include="Criteria\InitializingStakeLevel\ProductSelCriteria.cs" />
+    <Compile Include="Criteria\InitializingStakeLevel\SiteSelCriteria.cs" />
     <Compile Include="Criteria\InitializingStakeLevel\SportTypeSelCriteria.cs" />
     <Compile Include="Criteria\InitializingStakeLevel\StakeLevelCheckCriteria.cs" />
     <Compile Include="Criteria\InitializingStakeLevel\StakeLevelInsCriteria.cs" />
@@ -687,6 +688,7 @@
     <Compile Include="Entities\InitializingStakeLevel\FilterModel.cs" />
     <Compile Include="Entities\InitializingStakeLevel\StakeLevelModel.cs" />
     <Compile Include="Entities\InitializingStakeLevel\StakeLevelResponse.cs" />
+    <Compile Include="Entities\InitializingStakeLevel\ValidateStakeLevelResponse.cs" />
     <Compile Include="Entities\JsonWithoutNullField.cs" />
     <Compile Include="Entities\LicenseeDcsSetting\BetSettingWithoutMaxPerMatchEntity.cs" />
     <Compile Include="Entities\LicenseeDcsSetting\StakeLevelEntity.cs" />

@@ -1,12 +1,19 @@
 ﻿var isNeedRenderBettype = false;
 var selectedProductId = null;
 var requestFilter = {};
+var form;
+var excelContent = [];
 
-function SwitchTab(id, contentId) {
+function SwitchTab(type) {
     $('#tabs').find('li').removeClass('current');
     $('div[id^="tab_content_"]').hide();
-    $('#' + id).addClass('current');
-    $('#' + contentId).show();
+    $('#tab_' + type).addClass('current');
+    $('#tab_content_' + type).show();
+    if (type === 'excel') {
+        $("#insert-setting").show();
+    } else {
+        $("#insert-setting").hide();
+    }
 }
 
 function RenderDcsMatrix() {
@@ -248,7 +255,7 @@ function ValidateRequest(request) {
 
 function GetStakeLevels(pageSize, pageIndex) {
     parent.BlockUI();
-    $("#errMsg").html("");
+    $("#filterError").html("");
     requestFilter.PageSize = pageSize;
     requestFilter.PageIndex = pageIndex;
     $.ajax({
@@ -257,13 +264,13 @@ function GetStakeLevels(pageSize, pageIndex) {
         data: requestFilter,
         success: function (rs) {
             if (rs && rs.ErrorCode !== undefined && rs.ErrorCode !== 0) {
-                showAlertMessage('errMsg', rs.ErrorMessage, 1);
+                showAlertMessage('filterError', rs.ErrorMessage, 1);
             } else {
                 RenderStakeLevels(rs);
             }
         },
         error: function (event, jqXHR, ajaxSettings) {
-            showAlertMessage('errMsg', "Internal server error.", 1);
+            showAlertMessage('filterError', "Internal server error.", 1);
         },
         complete: function () {
             try { parent.jQuery.unblockUI(); } catch (e) { }
@@ -337,46 +344,137 @@ function ExportExcel() {
 }
 
 function GetExcelFile() {
-    parent.BlockUI();
     $("#errMsg").html("");
-    $.ajax({
-        type: "POST",
-        url: "ExportExcel",
-        data: requestFilter,
-        xhr: function () {
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 2) {
-                    if (xhr.status === 200) {
-                        xhr.responseType = "blob";
-                    } else {
-                        xhr.responseType = "text";
-                    }
-                }
-            };
-            return xhr;
-        },
-        success: function (data) {
-            try { parent.jQuery.unblockUI(); } catch (e) { }
-            //Convert the Byte Data to BLOB object.
-            var blob = new Blob([data], { type: "application/octetstream" });
+    var url = window.rootUrl + "InitStakeLevel/ExportExcel?" + $.param(requestFilter);
+    var a = $("<a />");
+    a.attr("download", "StakeLevels.xls");
+    a.attr("href", url);
+    $("body").append(a);
+    a[0].click();
+    $("body").remove(a);
+}
 
-            var url = window.URL || window.webkitURL;
-            let link = url.createObjectURL(blob);
-            var a = $("<a />");
-            a.attr("download", "StakeLevels.xls");
-            a.attr("href", link);
-            $("body").append(a);
-            a[0].click();
-            $("body").remove(a);
-        },
-        error: function (event, jqXHR, ajaxSettings) {
-            showAlertMessage('errMsg', "Internal server error.", 1);
-        }
+function ValidateUploadFile() {
+    var filename = $('#uploadFile').val();
+    if (filename === '' || filename == undefined) {
+        showAlertMessage('filterError', 'Please select file to upload.', 1);
+        return false;
+    }
+
+    var extfilename = filename.substring(filename.lastIndexOf('.') + 1, filename.length).toLowerCase();
+    if (extfilename !== 'xls' && extfilename !== 'xlsx') {
+        showAlertMessage('filterError', 'Sorry, You choose invalid file extension. Please choose an Excel file (.xls or .xlsx)', 1);
+        return false;
+    }
+
+    if (GetFileSize('#uploadFile') > 1024000) {
+        showAlertMessage('filterError', "Your uploaded file's size can't be larger than 1 MB", 1);
+        return false;
+    }
+
+    $("#filterError").html("");
+    return true;
+}
+
+function GetFileSize(eName) {
+    if ($.browser.msie) {
+        return 1;//IE is not support File API, so no way for get file size.
+    }
+    else {
+        return parseFloat($(eName).get(0).files[0].size);
+    }
+}
+
+function ValidateSetting() {
+    if (!ValidateUploadFile()) {
+        return;
+    }
+
+    parent.BlockUI();
+    form.submit();
+}
+
+function InitSubmitExcelFile() {
+    form = $('#mainForm');
+    form.submit(function (e) {
+        e.preventDefault();
+        var formData = new FormData(form[0]);
+        $.ajax({
+            url: 'CheckStakeLevels',
+            type: 'POST',
+            datatype: 'json',
+            contentType: false,
+            processData: false,
+            enctype: 'multipart/form-data',
+            data: formData,
+            success: function (result) {
+                if (result.Warning && result.Warning.ErrorCode !== 0) {
+                    showAlertMessage('filterWarning', result.Warning.ErrorMessage, 1);
+                }
+                if (result.Error && result.Error.ErrorCode !== 0) {
+                    showAlertMessage('filterError', result.Error.ErrorMessage, 1);
+                } else {
+                    $("#FilterProduct").val(result.ProductId).trigger("change");
+                    excelContent = result.StakeLevels;
+                    RenderExcelGrid(result.StakeLevels);
+                }
+                
+            },
+            error: function (xhr) {
+                showAlertMessage('filterError', 'Internal Server Error.', 1);
+            },
+            complete: function () {
+                parent.jQuery.unblockUI();
+            }
+        });
     });
+}
+
+function RenderExcelGrid(stakeLevels) {
+    var bodyRows = [];
+    for (var i = 0; i < stakeLevels.length; i++) {
+        var row = { Columns: [] };
+        row.Columns.push({ Name: 'SportTypeId', Value: stakeLevels[i].SportTypeId });
+        row.Columns.push({ Name: 'SportType', Value: stakeLevels[i].SportType });
+        row.Columns.push({ Name: 'BetTypeId', Value: stakeLevels[i].BetTypeId });
+        row.Columns.push({ Name: 'BetType', Value: stakeLevels[i].BetType });
+        row.Columns.push({ Name: 'Site', Value: stakeLevels[i].Site });
+        row.Columns.push({ Name: 'CreditCurrency', Value: stakeLevels[i].CreditCurrency });
+        row.Columns.push({ Name: 'DepositCurrency', Value: stakeLevels[i].DepositCurrency });
+        row.Columns.push({ Name: 'NewMinBet', Value: stakeLevels[i].NewMinBet });
+        row.Columns.push({ Name: 'NewMaxBet', Value: stakeLevels[i].NewMaxBet });
+        row.Columns.push({ Name: 'MinBet', Value: stakeLevels[i].MinBet });
+        row.Columns.push({ Name: 'MaxBet', Value: stakeLevels[i].MaxBet });
+        row.Columns.push({ Name: 'GameGroupId', Value: stakeLevels[i].GameGroupId });
+        bodyRows.push(row);
+    }
+
+    var gridOptions =
+    {
+        columns: [
+            { HeaderText: "Sport Type ID", Width: 100, Name: "SportTypeId", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Sport Type", Width: 150, Name: "SportType", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Bet Type ID", Width: 100, Name: "BetTypeId", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Bet Type", Width: 150, Name: "BetType", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Site", Width: 100, Name: "Site", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Credit Currency", Width: 110, Name: "CreditCurrency", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Deposit Currency", Width: 110, Name: "DepositCurrency", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "New Min Bet", Width: 100, Name: "NewMinBet", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "New Max Bet", Width: 100, Name: "NewMaxBet", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Current Min Bet", Width: 100, Name: "MinBet", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Current Max Bet", Width: 100, Name: "MaxBet", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Game Group ID", Width: 100, Name: "GameGroupId", HeaderAlign: "center", CellAlign: "center" }
+        ],
+        bodyRows: bodyRows,
+        gridExpandHeight: 200,
+        showDistinctRow: false
+    };
+
+    $('#gridExcelStakeLevel').fanexGrid(gridOptions);
 }
 
 
 $(document).ready(function () {
+    InitSubmitExcelFile();
     RenderDcsMatrix();
 });

@@ -1,5 +1,7 @@
 ﻿namespace Fanex.Tarus.Customer.Controller.InitializingStakeLevel
 {
+    using System.IO;
+    using System.Web;
     using System.Web.Mvc;
     using Fanex.Tarus.Customer.Business.InitializingStakeLevel;
     using Fanex.Tarus.Customer.Requests.InitializingStakeLevel;
@@ -52,23 +54,31 @@
             return Json(service.GetStakeLevels(request), JsonRequestBehavior.AllowGet);
         }
 
-        [HttpPost, AuthenticateRead]
-        public ActionResult ExportExcel(GetStakeLevelRequest request)
+        [HttpGet, AuthenticateRead]
+        public ActionResult ExportExcel(int productId, string sportTypes, string betTypes, string creditCurrency, string depositCurrency)
         {
+            var request = new GetStakeLevelRequest
+            {
+                ProductID= productId,
+                SportTypes = sportTypes,
+                BetTypes = betTypes,
+                CreditCurrency = creditCurrency,
+                DepositCurrency = depositCurrency
+            };
+
             var excelFile = service.GetExcelFile(request);
             Response.Clear();
             Response.ContentType = "application/vnd.ms-excel";
             Response.AddHeader("Content-Disposition", "attachment; filename=StakeLevel.xls");
-
             excelFile.SaveXls(Response.OutputStream);
 
             return new EmptyResult();
         }
 
-        [HttpGet, AuthenticateRead]
-        public ActionResult CheckStakeLevels()
+        [HttpPost, AuthenticateRead]
+        public ActionResult CheckStakeLevels(HttpPostedFileBase uploadFile)
         {
-            return Json(true, JsonRequestBehavior.AllowGet);
+            return Json(service.ValidateSetting(uploadFile));
         }
 
         [HttpGet, AuthenticateRead]

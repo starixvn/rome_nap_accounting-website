@@ -17,12 +17,33 @@
 
         IEnumerable<BaseModel> GetCurrency(int mode);
 
+        IEnumerable<BaseModel> GetSites(string siteIds);
+
         StakeLevelResponse GetStakeLevels(StakeLevelSelCriteria criteria);
+
+        ValidateStakeLevelResponse CheckSetting(StakeLevelCheckCriteria criteria);
     }
 
     public class InitStakeLevelDataAccess : IInitStakeLevelDataAccess
     {
         private const string FormatDisplay = "[{0}] {1}";
+
+        public ValidateStakeLevelResponse CheckSetting(StakeLevelCheckCriteria criteria)
+        {
+            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                objDb.ExecuteReader(criteria.GetSpParams());
+                var outputParams = objDb.GetOuputParams();
+
+                return new ValidateStakeLevelResponse
+                {
+                    StakeLevels = criteria.StakeLevels,
+                    ProductId = DataUtils.ToInt32(outputParams["productid"]),
+                    Error = new Result(DataUtils.ToInt32(outputParams["errcode"]), outputParams["errcode"].ToString()),
+                    Warning = new Result(DataUtils.ToInt32(outputParams["noticode"]), outputParams["notimsg"].ToString()),
+                };
+            }
+        }
 
         public IEnumerable<BaseModel> GetBettypes(int productId, string sportTypes)
         {
@@ -87,6 +108,28 @@
                     {
                         Id = productId,
                         Name = string.Format(FormatDisplay, productId, productName)
+                    });
+                }
+
+                reader.Close();
+            }
+
+            return entities;
+        }
+
+        public IEnumerable<BaseModel> GetSites(string siteIds)
+        {
+            var criteria = new SiteSelCriteria(siteIds);
+            var entities = new List<BaseModel>();
+            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                var reader = objDb.ExecuteReader(criteria.GetSpParams());
+                while (reader.Read())
+                {
+                    entities.Add(new BaseModel
+                    {
+                        Id = DataUtils.ToInt32(reader["siteid"]),
+                        Name = DataUtils.ToString(reader["site"])
                     });
                 }
 
