@@ -291,7 +291,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                 $scope.loadData("#frmNG2", url);
                 $scope.resize("#frmNG2");
                 break;
-            case 'tabVirtualGames': url += "DCS/ViewCustomerSetting?productId=38&customerLevel=4&IsReadOnly=true&customerId=" + $scope.existedUser.userid;
+            case 'tabVirtualGames': url += "DCS/ViewCustomerSetting?productId=64&customerLevel=4&IsReadOnly=true&customerId=" + $scope.existedUser.userid;
                 $scope.loadData("#frmVirtualGames", url);
                 $scope.resize("#frmVirtualGames");
                 break;
