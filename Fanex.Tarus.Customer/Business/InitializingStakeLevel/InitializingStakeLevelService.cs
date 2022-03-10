@@ -31,6 +31,8 @@
         ExcelFile GetExcelFile(GetStakeLevelRequest request);
 
         ValidateStakeLevelResponse ValidateSetting(HttpPostedFileBase uploadFile);
+
+        Result InsertSetting(IEnumerable<StakeLevelModel> stakeLevels, int userId, string ip);
     }
     public class InitializingStakeLevelService : IInitializingStakeLevelService
     {
@@ -260,18 +262,26 @@
                 IWorkbook workbook = WorkbookFactory.Create(uploadFile.InputStream);
                 ISheet sheet = workbook.GetSheetAt(0);
                 IEnumerator rows = sheet.GetRowEnumerator();
+                var sportTypeIds = new List<int>();
+                var betTypeIds = new List<int>();
+                var creditCurrency = "";
+                var depositCurrency = "";
                 rows.MoveNext();
                 while (rows.MoveNext())
                 {
                     rowCount++;
                     IRow row = (IRow)rows.Current;
+                    if (string.IsNullOrWhiteSpace(row.GetCell(0).ToString()) || string.IsNullOrWhiteSpace(row.GetCell(1).ToString()))
+                    {
+                        continue;
+                    }
                     var stakeLevel = new StakeLevelModel
                     {
-                        SportTypeId = string.IsNullOrWhiteSpace(row.GetCell(0).ToString()) ? 0 : Int32.Parse(row.GetCell(0).ToString()),
-                        BetTypeId = string.IsNullOrWhiteSpace(row.GetCell(1).ToString()) ? 0 : Int32.Parse(row.GetCell(1).ToString()),
+                        SportTypeId = Int32.Parse(row.GetCell(0).ToString()),
+                        BetTypeId = Int32.Parse(row.GetCell(1).ToString()),
                         SiteId = string.IsNullOrWhiteSpace(row.GetCell(2).ToString()) ? 0 : Int32.Parse(row.GetCell(2).ToString()),
-                        CreditCurrency = HttpUtility.HtmlEncode(row.GetCell(3).ToString()),
-                        DepositCurrency = HttpUtility.HtmlEncode(row.GetCell(4).ToString()),
+                        CreditCurrency = HttpUtility.HtmlEncode(row.GetCell(3).ToString().Replace(" ", String.Empty)),
+                        DepositCurrency = HttpUtility.HtmlEncode(row.GetCell(4).ToString().Replace(" ", String.Empty)),
                         NewMinBet = string.IsNullOrWhiteSpace(row.GetCell(5).ToString()) ? 0 : Decimal.Parse(row.GetCell(5).ToString()),
                         NewMaxBet = string.IsNullOrWhiteSpace(row.GetCell(6).ToString()) ? 0 : Decimal.Parse(row.GetCell(6).ToString()),
                         MinBet = string.IsNullOrWhiteSpace(row.GetCell(7).ToString()) ? 0 : Decimal.Parse(row.GetCell(7).ToString()),
@@ -282,6 +292,10 @@
                     stakeLevel.SportType = GetSportName(stakeLevel.SportTypeId);
                     stakeLevel.BetType = GetBetTypeName(stakeLevel.BetTypeId);
                     siteIds.Add(stakeLevel.SiteId);
+                    if (!sportTypeIds.Contains(stakeLevel.SportTypeId)) sportTypeIds.Add(stakeLevel.SportTypeId);
+                    if (!betTypeIds.Contains(stakeLevel.BetTypeId)) betTypeIds.Add(stakeLevel.BetTypeId);
+                    if (!string.IsNullOrWhiteSpace(stakeLevel.CreditCurrency)) creditCurrency = string.Join(",", creditCurrency, stakeLevel.CreditCurrency);
+                    if (!string.IsNullOrWhiteSpace(stakeLevel.DepositCurrency)) depositCurrency = string.Join(",", depositCurrency, stakeLevel.DepositCurrency);
                     stakeLevels.Add(stakeLevel);
                 }
 
@@ -296,8 +310,13 @@
                     StakeLevels = stakeLevels
                 };
 
-                return dataAccess.CheckSetting(criteria);
-             
+                var result = dataAccess.CheckSetting(criteria);
+                result.CreditCurrencies = creditCurrency.Split(',').Distinct();
+                result.DepositCurrencies = depositCurrency.Split(',').Distinct();
+                result.SportTypeIds = sportTypeIds;
+                result.BetTypeIds = betTypeIds;
+
+                return result;
             }
             catch (Exception ex)
             {
@@ -332,6 +351,18 @@
             }
 
             return bettypeName;
+        }
+
+        public Result InsertSetting(IEnumerable<StakeLevelModel> stakeLevels, int userId, string ip)
+        {
+            var criteria = new StakeLevelInsCriteria
+            {
+                StakeLevels = stakeLevels,
+                UserID = userId,
+                IP = ip
+            };
+
+            return dataAccess.InsertSetting(criteria);
         }
     }
 }

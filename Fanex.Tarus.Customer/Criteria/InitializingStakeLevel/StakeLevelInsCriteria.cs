@@ -23,7 +23,7 @@
                 builder.Append("<ROOT>");
                 foreach (var item in StakeLevels)
                 {
-                    builder.Append("<File ");
+                    builder.Append("<BetLimit ");
                     builder.Append("SportType = \"" + item.SportTypeId + "\" ");
                     builder.Append("BetType = \"" + item.BetTypeId + "\" ");
                     builder.Append("Site = \"" + item.SiteId + "\" ");

@@ -738,6 +738,7 @@
     <Compile Include="Requests\InitializingCustomerSetting\GenerateConfigSettingRequest.cs" />
     <Compile Include="Requests\InitializingStakeLevel\GetBettypeRequest.cs" />
     <Compile Include="Requests\InitializingStakeLevel\GetStakeLevelRequest.cs" />
+    <Compile Include="Requests\InitializingStakeLevel\InsertStakeLevelRequest.cs" />
     <Compile Include="Requests\LicenseeOddsGroup\UpdateOddsGroupRequest.cs" />
     <Compile Include="Requests\MultipleUpdateSuperStatus\UpdatedCustomerIinfo.cs" />
     <Compile Include="Requests\MultipleUpdateSuperStatus\UpdateSupersProtectedStatusRequest.cs" />

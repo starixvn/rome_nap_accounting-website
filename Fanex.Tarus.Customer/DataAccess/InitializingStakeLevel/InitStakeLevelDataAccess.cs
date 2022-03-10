@@ -22,6 +22,8 @@
         StakeLevelResponse GetStakeLevels(StakeLevelSelCriteria criteria);
 
         ValidateStakeLevelResponse CheckSetting(StakeLevelCheckCriteria criteria);
+
+        Result InsertSetting(StakeLevelInsCriteria criteria);
     }
 
     public class InitStakeLevelDataAccess : IInitStakeLevelDataAccess
@@ -39,7 +41,7 @@
                 {
                     StakeLevels = criteria.StakeLevels,
                     ProductId = DataUtils.ToInt32(outputParams["productid"]),
-                    Error = new Result(DataUtils.ToInt32(outputParams["errcode"]), outputParams["errcode"].ToString()),
+                    Error = new Result(DataUtils.ToInt32(outputParams["errcode"]), outputParams["errmsg"].ToString()),
                     Warning = new Result(DataUtils.ToInt32(outputParams["noticode"]), outputParams["notimsg"].ToString()),
                 };
             }
@@ -201,6 +203,17 @@
                     PageIndex = criteria.PageIndex,
                     StakeLevels = stakeLevels
                 };
+            }
+        }
+
+        public Result InsertSetting(StakeLevelInsCriteria criteria)
+        {
+            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                objDb.ExecuteReader(criteria.GetSpParams());
+                var outputParams = objDb.GetOuputParams();
+
+                return new Result(DataUtils.ToInt32(outputParams["errcode"]), outputParams["errmsg"].ToString());
             }
         }
     }

@@ -1,9 +1,12 @@
 ﻿namespace Fanex.Tarus.Customer.Controller.InitializingStakeLevel
 {
+    using System.Collections.Generic;
     using System.IO;
     using System.Web;
     using System.Web.Mvc;
+    using Fanex.CustomerSetting.Module.Core.Web;
     using Fanex.Tarus.Customer.Business.InitializingStakeLevel;
+    using Fanex.Tarus.Customer.Entities.InitializingStakeLevel;
     using Fanex.Tarus.Customer.Requests.InitializingStakeLevel;
     using Fanex.Tarus.Web.Controllers;
     using Fanex.Tarus.Web.Controllers.Filters;
@@ -81,10 +84,10 @@
             return Json(service.ValidateSetting(uploadFile));
         }
 
-        [HttpGet, AuthenticateRead]
-        public ActionResult InsertStakeLevels()
+        [HttpPost, AuthenticateRead]
+        public ActionResult InsertStakeLevels(InsertStakeLevelRequest request)
         {
-            return Json(true, JsonRequestBehavior.AllowGet);
+            return Json(service.InsertSetting(request.StakeLevels, AppSession.AccId, HttpContext.Request.UserHostAddress));
         }
     }
 }
