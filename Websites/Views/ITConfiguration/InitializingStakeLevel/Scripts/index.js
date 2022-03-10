@@ -451,6 +451,7 @@ function RenderStakeLevels(data) {
     };
 
     $('#gridStakeLevel').fanexGrid(gridOptions);
+    $('#gridStakeLevel').show();
 }
 
 function reRenderAfterPaged(currentPageIndex, itemsPerPage) {
@@ -594,6 +595,7 @@ function RenderExcelGrid(stakeLevels) {
     };
 
     $('#gridExcelStakeLevel').fanexGrid(gridOptions);
+    $('#gridExcelStakeLevel').show();
 }
 
 function UpdateExcelFilterValue() {

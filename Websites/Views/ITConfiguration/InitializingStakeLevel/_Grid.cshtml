@@ -1,6 +1,6 @@
 ﻿<div id="errMsg"></div>
 <div id="filterDiv" style="display: flex; width:100%;">
-    <div class="filterBox" style="border: solid 1px #7C98A4; width:100%">
+    <div class="filterBox">
         <div class="filterContent" style="padding:0 5px;">
             <table class="floatLeft">
                 <tr>
@@ -46,8 +46,7 @@
                         </select>
                     </td>
                     <td></td>
-                    <td></td>
-                    <td>
+                    <td class="floatLeft">
                         <input id="btnSearch" type="button" value="Search" class="btn btn-edit" onclick="Search();">
                         <input id="btnExport" type="button" title="Export to Excel" class="btnExcel" name="btnExport" value="  " onclick="ExportExcel();">
                     </td>
@@ -57,5 +56,5 @@
     </div>
 </div>
 <div class="mainContent" style="margin-top:10px; width: auto;">
-    <div id="gridStakeLevel" class="freegrid"></div>
+    <div id="gridStakeLevel" class="freegrid" style="display: none;"></div>
 </div>

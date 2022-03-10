@@ -10,9 +10,10 @@
     background: url('../../../../App_Themes/Images/Banner/bg_head_tb.jpg') repeat-x scroll left bottom #FFFFFF;
     border: 1px solid #7C98A4;
     text-align: left;
+    width: 100%
 }
 
 .floatLeft {
     float: left;
-    padding: 10px;
+    padding: 4px;
 }

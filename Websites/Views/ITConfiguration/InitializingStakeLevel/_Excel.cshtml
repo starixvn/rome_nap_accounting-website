@@ -23,9 +23,9 @@
     </div>
 </div>
 <div style="display: flex; width:100%;">
-    <div class="filterBox" style="border: solid 1px #7C98A4; width:100%">
+    <div id="filterDivExcel" class="filterBox" style="display: none;">
         <div class="filterContent" style="padding:0 5px;">
-            <table id="filterDivExcel" class="floatLeft" style="display: none;">
+            <table class="floatLeft">
                 <tr>
                     <td class="w100">
                         <label for="FilterProductExcel" class="edit-label">Product<span style="color: red;">*</span></label>
@@ -69,8 +69,7 @@
                         </select>
                     </td>
                     <td></td>
-                    <td></td>
-                    <td>
+                    <td class="floatLeft">
                         <input id="btnSearchExcel" type="button" value="Search" class="btn btn-edit" onclick="FilterExcel();">
                         <input id="btnInsertExcel" type="button" value="Submit" class="btn btn-edit" onclick="InsertExcel();">
                     </td>
@@ -80,5 +79,5 @@
     </div>
 </div>
 <div class="mainContent" style="margin-top:10px; width: auto;">
-    <div id="gridExcelStakeLevel" class="freegrid"></div>
+    <div id="gridExcelStakeLevel" class="freegrid" style="display: none;"></div>
 </div>
