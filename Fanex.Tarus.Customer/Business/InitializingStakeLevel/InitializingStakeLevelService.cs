@@ -3,10 +3,8 @@
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Drawing;
     using System.Linq;
     using System.Web;
-    using ExcelUtil.Spreadsheet;
     using Fanex.Caching;
     using Fanex.Caching.Memory;
     using Fanex.Tarus.Customer.Criteria.InitializingStakeLevel;
@@ -16,6 +14,8 @@
     using Fanex.Tarus.Customer.Requests.InitializingStakeLevel;
     using Fanex.Tarus.Infrastructure.Caching;
     using Fanex.Tarus.Infrastructure.Extensions;
+    using NPOI.HSSF.UserModel;
+    using NPOI.HSSF.Util;
     using NPOI.SS.UserModel;
 
     public interface IInitializingStakeLevelService
@@ -28,7 +28,7 @@
 
         StakeLevelResponse GetStakeLevels(GetStakeLevelRequest request);
 
-        ExcelFile GetExcelFile(GetStakeLevelRequest request);
+        IWorkbook GetExcelFile();
 
         ValidateStakeLevelResponse ValidateSetting(HttpPostedFileBase uploadFile);
 
@@ -40,6 +40,7 @@
         private const int DepositCurrency = 2;
         private const string SportCacheKey = "InitCust-Sport-{0}";
         private const string BettypeCacheKey = "InitCust-BetType-{0}";
+        private const string _cacheGetDataCriteria = "CachedStakeLevelCriteria";
         private readonly IInitStakeLevelDataAccess dataAccess;
         private readonly MemoryCache _MemoryCache;
 
@@ -75,176 +76,95 @@
 
         public StakeLevelResponse GetStakeLevels(GetStakeLevelRequest request)
         {
-            var criteria = new StakeLevelSelCriteria
-            {
-                ProductID = request.ProductID,
-                SportTypes = request.SportTypes,
-                BetTypes = request.BetTypes,
-                CreditCurrencies = request.CreditCurrency,
-                DepositCurrencies = request.DepositCurrency,
-                ExportData = 0,
-                PageSize = request.PageSize,
-                PageIndex = request.PageIndex
-            };
+            var criteria = new StakeLevelSelCriteria(request);
 
+            HttpContext.Current.Session[_cacheGetDataCriteria] = request;
             return dataAccess.GetStakeLevels(criteria);
         }
 
-        public ExcelFile GetExcelFile(GetStakeLevelRequest request)
+        public IWorkbook GetExcelFile()
         {
-            var criteria = new StakeLevelSelCriteria
-            {
-                ProductID = request.ProductID,
-                SportTypes = request.SportTypes,
-                BetTypes = request.BetTypes,
-                CreditCurrencies = request.CreditCurrency,
-                DepositCurrencies = request.DepositCurrency,
-                ExportData = 1,
-                PageSize = request.PageSize,
-                PageIndex = request.PageIndex
-            };
+            var criteria = GetCachedCriteria();
+            criteria.ExportData = 1;
 
             var stakeLevels = dataAccess.GetStakeLevels(criteria).StakeLevels.ToList();
 
             #region ExcelTypes
 
-            ExcelFile excelFile = new ExcelFile();
-            ExcelWorksheetCollection worksheets = excelFile.Worksheets;
+            IWorkbook excelFile = new HSSFWorkbook();
             string sheetName = "StakeLevel";
-            ExcelWorksheet workSheet = worksheets.Add(sheetName);
-            int startRow = 0;
-            int startColumn = 0;
-            int currentRow = startRow;
-            int currentColumn = startColumn;
-
-            ExcelCell currentCell;
+            var workSheet = excelFile.CreateSheet(sheetName);
+            int currentRow = 0;
 
             #endregion ExcelTypes
 
-            var excelUtils = new Sunplus.Accounting.Core.Helper.ExcelGemboxUtils();
-            var headerTextStyle = excelUtils.GetStyleTitle(Color.FromArgb(181, 196, 208));
+
+            var boldFont = excelFile.CreateFont();
+            boldFont.FontName = "Tahoma";
+            boldFont.FontHeightInPoints = 8;
+            boldFont.Boldweight = (short)FontBoldWeight.Bold;
+            boldFont.Color = HSSFColor.White.Index;
 
             #region Header
 
-            // set columns width
-            int fontWidth = 30;
-            int maxColumnIndex = 9;
-            for (int i = 0; i < maxColumnIndex; i++)
+            var headerCellStyle = excelFile.CreateCellStyle();
+            headerCellStyle.Alignment = HorizontalAlignment.Center;
+            headerCellStyle.SetFont(boldFont);
+            headerCellStyle.FillForegroundColor = HSSFColor.LightBlue.Index;
+            headerCellStyle.FillPattern = FillPattern.SolidForeground;
+            headerCellStyle.BorderBottom = headerCellStyle.BorderLeft = headerCellStyle.BorderRight = headerCellStyle.BorderTop = BorderStyle.Thin;
+            headerCellStyle.BottomBorderColor = headerCellStyle.TopBorderColor = headerCellStyle.LeftBorderColor = headerCellStyle.RightBorderColor = HSSFColor.Black.Index;
+
+            var headerRow = workSheet.CreateRow(currentRow);
+            var headerValues = new string[10] { "SportType", "Bet Type", "Site", "Credit Currency", "Deposit Currency", "New Min Bet", "New Max Bet", "Current Min Bet", "Current Min Bet", "Game Group Id" };
+            for (int i = 0; i < headerValues.Length; i++)
             {
-                workSheet.Columns[startColumn + i].Width = 150 * fontWidth;
+                workSheet.SetColumnWidth(i, 20*256);
+                var currentCell = headerRow.CreateCell(i);
+                currentCell.SetCellValue(headerValues[i]);
+                currentCell.CellStyle = headerCellStyle;
             }
-
-            // excel header
-            currentCell = workSheet.Cells[currentRow, currentColumn];
-            currentCell.Value = "SportType";
-            currentCell.Style = headerTextStyle;
-            currentColumn++;
-
-            currentCell = workSheet.Cells[currentRow, currentColumn];
-            currentCell.Value = "Bet Type";
-            currentCell.Style = headerTextStyle;
-            currentColumn++;
-
-            currentCell = workSheet.Cells[currentRow, currentColumn];
-            currentCell.Value = "Credit Currency";
-            currentCell.Style = headerTextStyle;
-            currentColumn++;
-
-            currentCell = workSheet.Cells[currentRow, currentColumn];
-            currentCell.Value = "Deposit Currency";
-            currentCell.Style = headerTextStyle;
-            currentColumn++;
-
-            currentCell = workSheet.Cells[currentRow, currentColumn];
-            currentCell.Value = "New Min Bet";
-            currentCell.Style = headerTextStyle;
-            currentColumn++;
-
-            currentCell = workSheet.Cells[currentRow, currentColumn];
-            currentCell.Value = "New Max Bet";
-            currentCell.Style = headerTextStyle;
-            currentColumn++;
-
-            currentCell = workSheet.Cells[currentRow, currentColumn];
-            currentCell.Value = "Current Min Bet";
-            currentCell.Style = headerTextStyle;
-            currentColumn++;
-
-            currentCell = workSheet.Cells[currentRow, currentColumn];
-            currentCell.Value = "Current Max Bet";
-            currentCell.Style = headerTextStyle;
-            currentColumn++;
-
-            currentCell = workSheet.Cells[currentRow, currentColumn];
-            currentCell.Value = "Game Group Id";
-            currentCell.Style = headerTextStyle;
-
             #endregion Header
 
             #region Body
-            // style
-            var textStyle = excelUtils.GetStyleText(255, 255, 255, HorizontalAlignmentStyle.Center);
+            var normalFont = excelFile.CreateFont();
+            normalFont.FontName = "Tahoma";
+            normalFont.FontHeightInPoints = 8;
+            normalFont.Color = HSSFColor.Black.Index;
+
+            var cellStyle = excelFile.CreateCellStyle();
+            cellStyle.Alignment = HorizontalAlignment.Center;
+            cellStyle.SetFont(normalFont);
+            cellStyle.BorderBottom = cellStyle.BorderLeft = cellStyle.BorderRight = cellStyle.BorderTop = BorderStyle.Thin;
+            cellStyle.BottomBorderColor = cellStyle.TopBorderColor = cellStyle.LeftBorderColor = cellStyle.RightBorderColor = HSSFColor.Black.Index;
+            cellStyle.VerticalAlignment = VerticalAlignment.Top;
 
             StakeLevelModel stakeLevel = null;
             for (int i = 0; i < stakeLevels.Count; i++)
             {
                 currentRow++;
-                currentColumn = startColumn;
+                var row = workSheet.CreateRow(currentRow);
 
                 stakeLevel = stakeLevels[i];
-
-                // SportType
-                currentCell = workSheet.Cells[currentRow, currentColumn];
-                currentCell.Value = stakeLevel.SportTypeId;
-                currentCell.Style = textStyle;
-                currentColumn++;
-
-                // BetType
-                currentCell = workSheet.Cells[currentRow, currentColumn];
-                currentCell.Value = stakeLevel.BetTypeId;
-                currentCell.Style = textStyle;
-                currentColumn++;
-
-                // Credit Currency
-                currentCell = workSheet.Cells[currentRow, currentColumn];
-                currentCell.Value = stakeLevel.CreditCurrency;
-                currentCell.Style = textStyle;
-                currentColumn++;
-
-                // Deposit Currency
-                currentCell = workSheet.Cells[currentRow, currentColumn];
-                currentCell.Value = stakeLevel.DepositCurrency;
-                currentCell.Style = textStyle;
-                currentColumn++;
-
-                // New Min Bet
-                currentCell = workSheet.Cells[currentRow, currentColumn];
-                currentCell.Value = stakeLevel.NewMinBet;
-                currentCell.Style = textStyle;
-                currentColumn++;
-
-                // New Max Bet
-                currentCell = workSheet.Cells[currentRow, currentColumn];
-                currentCell.Value = stakeLevel.NewMaxBet;
-                currentCell.Style = textStyle;
-                currentColumn++;
-
-                // Current Min Bet
-                currentCell = workSheet.Cells[currentRow, currentColumn];
-                currentCell.Value = stakeLevel.MinBet;
-                currentCell.Style = textStyle;
-                currentColumn++;
-
-                // Current Max Bet
-                currentCell = workSheet.Cells[currentRow, currentColumn];
-                currentCell.Value = stakeLevel.MaxBet;
-                currentCell.Style = textStyle;
-                currentColumn++;
-
-                // Consolidated Group
-                currentCell = workSheet.Cells[currentRow, currentColumn];
-                currentCell.Value = stakeLevel.GameGroupId;
-                currentCell.Style = textStyle;
+                var rowValues = new string[10]
+                        {
+                            stakeLevel.SportTypeId.ToString(),
+                            stakeLevel.BetTypeId.ToString(),
+                            stakeLevel.Site,
+                            stakeLevel.CreditCurrency,
+                            stakeLevel.DepositCurrency,
+                            stakeLevel.NewMinBet.ToString("G29"),
+                            stakeLevel.NewMaxBet.ToString("G29"),
+                            stakeLevel.MinBet.ToString("G29"),
+                            stakeLevel.MaxBet.ToString("G29"),
+                            stakeLevel.GameGroupId.ToString()
+                        };
+                for (int j = 0; j < rowValues.Length; j++)
+                {
+                    var currentCell = row.CreateCell(j);
+                    currentCell.SetCellValue(rowValues[j]);
+                    currentCell.CellStyle = cellStyle;
+                }
             }
 
             #endregion Body
@@ -292,10 +212,26 @@
                     stakeLevel.SportType = GetSportName(stakeLevel.SportTypeId);
                     stakeLevel.BetType = GetBetTypeName(stakeLevel.BetTypeId);
                     siteIds.Add(stakeLevel.SiteId);
-                    if (!sportTypeIds.Contains(stakeLevel.SportTypeId)) sportTypeIds.Add(stakeLevel.SportTypeId);
-                    if (!betTypeIds.Contains(stakeLevel.BetTypeId)) betTypeIds.Add(stakeLevel.BetTypeId);
-                    if (!string.IsNullOrWhiteSpace(stakeLevel.CreditCurrency)) creditCurrency = string.Join(",", creditCurrency, stakeLevel.CreditCurrency);
-                    if (!string.IsNullOrWhiteSpace(stakeLevel.DepositCurrency)) depositCurrency = string.Join(",", depositCurrency, stakeLevel.DepositCurrency);
+                    if (!sportTypeIds.Contains(stakeLevel.SportTypeId))
+                    {
+                        sportTypeIds.Add(stakeLevel.SportTypeId);
+                    }
+
+                    if (!betTypeIds.Contains(stakeLevel.BetTypeId))
+                    {
+                        betTypeIds.Add(stakeLevel.BetTypeId);
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(stakeLevel.CreditCurrency))
+                    {
+                        creditCurrency = string.Join(",", creditCurrency, stakeLevel.CreditCurrency);
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(stakeLevel.DepositCurrency))
+                    {
+                        depositCurrency = string.Join(",", depositCurrency, stakeLevel.DepositCurrency);
+                    }
+
                     stakeLevels.Add(stakeLevel);
                 }
 
@@ -323,7 +259,8 @@
                 var result = new Result(1, "Invalid file uploaded. Error at line: " + rowCount.ToString() + ". " + ex.Message);
                 LogExtensions.ExceptionHandler(ex);
 
-                return new ValidateStakeLevelResponse {
+                return new ValidateStakeLevelResponse
+                {
                     Error = result
                 };
             }
@@ -363,6 +300,16 @@
             };
 
             return dataAccess.InsertSetting(criteria);
+        }
+
+        public StakeLevelSelCriteria GetCachedCriteria()
+        {
+            if (HttpContext.Current.Session[_cacheGetDataCriteria] == null || HttpContext.Current.Session[_cacheGetDataCriteria].GetType() != typeof(GetStakeLevelRequest))
+            {
+                throw new InvalidOperationException("Filter Data in Session can not be null. Must Submit before export excel.");
+            }
+
+            return new StakeLevelSelCriteria((GetStakeLevelRequest)HttpContext.Current.Session[_cacheGetDataCriteria]);
         }
     }
 }

@@ -1,13 +1,12 @@
 ﻿namespace Fanex.Tarus.Customer.Controller.InitializingStakeLevel
 {
-    using System.Collections.Generic;
     using System.IO;
     using System.Web;
     using System.Web.Mvc;
     using Fanex.CustomerSetting.Module.Core.Web;
     using Fanex.Tarus.Customer.Business.InitializingStakeLevel;
-    using Fanex.Tarus.Customer.Entities.InitializingStakeLevel;
     using Fanex.Tarus.Customer.Requests.InitializingStakeLevel;
+    using Fanex.Tarus.Infrastructure.Extensions;
     using Fanex.Tarus.Web.Controllers;
     using Fanex.Tarus.Web.Controllers.Filters;
 
@@ -58,22 +57,11 @@
         }
 
         [HttpGet, AuthenticateRead]
-        public ActionResult ExportExcel(int productId, string sportTypes, string betTypes, string creditCurrency, string depositCurrency)
+        public ActionResult ExportExcel()
         {
-            var request = new GetStakeLevelRequest
-            {
-                ProductID= productId,
-                SportTypes = sportTypes,
-                BetTypes = betTypes,
-                CreditCurrency = creditCurrency,
-                DepositCurrency = depositCurrency
-            };
-
-            var excelFile = service.GetExcelFile(request);
-            Response.Clear();
-            Response.ContentType = "application/vnd.ms-excel";
-            Response.AddHeader("Content-Disposition", "attachment; filename=StakeLevel.xls");
-            excelFile.SaveXls(Response.OutputStream);
+            var excelFile = service.GetExcelFile();
+            var fileName = "StakeLevels";
+            ExcelExtension.ResponseStreamExcel(excelFile, fileName);
 
             return new EmptyResult();
         }

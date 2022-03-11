@@ -436,7 +436,6 @@ function RenderStakeLevels(data) {
             { HeaderText: "Game Group ID", Width: 100, Name: "GameGroupId", HeaderAlign: "center", CellAlign: "center" }
         ],
         bodyRows: bodyRows,
-        gridExpandHeight: 200,
         showDistinctRow: false,
         showPager: true,
         customPager: true,
@@ -467,14 +466,7 @@ function ExportExcel() {
 }
 
 function GetExcelFile() {
-    HideError();
-    var url = window.rootUrl + "InitStakeLevel/ExportExcel?" + $.param(requestFilter);
-    var a = $("<a />");
-    a.attr("download", "StakeLevels.xls");
-    a.attr("href", url);
-    $("body").append(a);
-    a[0].click();
-    $("body").remove(a);
+    $("#exportHref")[0].click();
 }
 
 function ValidateUploadFile() {
@@ -590,7 +582,6 @@ function RenderExcelGrid(stakeLevels) {
             { HeaderText: "Game Group ID", Width: 100, Name: "GameGroupId", HeaderAlign: "center", CellAlign: "center" }
         ],
         bodyRows: bodyRows,
-        gridExpandHeight: 200,
         showDistinctRow: false
     };
 
@@ -738,4 +729,7 @@ function HideError() {
 $(document).ready(function () {
     InitSubmitExcelFile();
     RenderDcsMatrix();
+
+    var url = window.rootUrl + "InitStakeLevel/ExportExcel";
+    $("#exportHref").attr("href", url);
 });

@@ -1,9 +1,21 @@
 ﻿namespace Fanex.Tarus.Customer.Criteria.InitializingStakeLevel
 {
     using Fanex.NAP.Framework.Data;
+    using Fanex.Tarus.Customer.Requests.InitializingStakeLevel;
 
     public class StakeLevelSelCriteria : CriteriaBase
     {
+        public StakeLevelSelCriteria(GetStakeLevelRequest request)
+        {
+            ProductID = request.ProductID;
+            SportTypes = request.SportTypes;
+            BetTypes = request.BetTypes;
+            DepositCurrencies = request.DepositCurrency;
+            CreditCurrencies = request.CreditCurrency;
+            PageSize = request.PageSize;
+            PageIndex = request.PageIndex;
+            ExportData = 0;
+        }
         public int ProductID { get; set; }
 
         [SpParam(SqlParamName = "pMutilSportType")]

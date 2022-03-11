@@ -1,5 +1,8 @@
 ﻿namespace Fanex.Tarus.Customer.Requests.InitializingStakeLevel
 {
+    using System;
+
+    [Serializable]
     public class GetStakeLevelRequest
     {
         public int ProductID { get; set; }
