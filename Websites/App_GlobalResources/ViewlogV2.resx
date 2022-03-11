@@ -2218,4 +2218,7 @@ Max Keno (20+1) 2</value>
   <data name="Disable9904_4001" xml:space="preserve">
     <value>Disabled Jackpot</value>
   </data>
+  <data name="Disable176_8201" xml:space="preserve">
+    <value>Disabled FGG</value>
+  </data>
 </root>
