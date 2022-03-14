@@ -2,20 +2,7 @@
 @using Fanex.Tarus.Customer.ViewModels.LicenseeOddsGroup;
 @model IEnumerable<AgentOddsGroupEntity>
 @{
-    Layout = null;
-    List<SelectListItem> OddsGroupListItems = new List<SelectListItem>
-{
-new SelectListItem(){ Text = "a", Value = "a"},
-new SelectListItem(){ Text = "b", Value = "b"},
-new SelectListItem(){ Text = "c", Value = "c"},
-new SelectListItem(){ Text = "d", Value = "d"},
-new SelectListItem(){ Text = "e", Value = "e"},
-new SelectListItem(){ Text = "f", Value = "f"},
-new SelectListItem(){ Text = "i", Value = "i"},
-new SelectListItem(){ Text = "m", Value = "m"},
-new SelectListItem(){ Text = "q", Value = "q"},
-new SelectListItem(){ Text = "N/A", Value = null}
-};
+    Layout = null;   
     bool isFirst = true;
 }
 
@@ -63,9 +50,12 @@ new SelectListItem(){ Text = "N/A", Value = null}
                             <option value="d" @(item.OddsGroup.Equals("d") ? "selected" : string.Empty)>d</option>
                             <option value="e" @(item.OddsGroup.Equals("e") ? "selected" : string.Empty)>e</option>
                             <option value="f" @(item.OddsGroup.Equals("f") ? "selected" : string.Empty)>f</option>
+                            @if (ViewBag.IsDisplayNewOddsGroup)
+                            {
                             <option value="i" @(item.OddsGroup.Equals("i") ? "selected" : string.Empty)>i</option>
                             <option value="m" @(item.OddsGroup.Equals("m") ? "selected" : string.Empty)>m</option>
                             <option value="q" @(item.OddsGroup.Equals("q") ? "selected" : string.Empty)>q</option>
+                            }
                             <option value="" @(string.IsNullOrWhiteSpace(item.OddsGroup) ? "selected" : string.Empty)>N/A</option>
                         </select>
                     </td>
