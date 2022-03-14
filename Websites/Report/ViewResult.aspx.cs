@@ -15,8 +15,8 @@ public partial class Report_ViewResult : System.Web.UI.Page
             long betId = CastAide.AsInt64(Request.QueryString["betid"], 0);
             int sportType = CastAide.AsInt32(Request.QueryString["sporttype"], 0);
             int handicap2 = CastAide.AsInt32(Request.QueryString["handicap2"], 0);
-            
-            this.lResult.Text = new ScoreInformationService().GetResult(matchID, sportType, bettype, betId, handicap2);
+            var transdesc = Request.QueryString["transdesc"];
+            this.lResult.Text = new ScoreInformationService().GetResult(matchID, sportType, bettype, betId, handicap2, transdesc);
         }
         catch (Exception exception)
         {

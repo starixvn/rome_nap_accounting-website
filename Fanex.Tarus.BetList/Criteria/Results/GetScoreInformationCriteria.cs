@@ -25,6 +25,8 @@ namespace Fanex.Tarus.BetList.Criteria.Results
 
         public long BetId { get; set; }
 
+        public string TransDesc { get; set; }
+
         public override string GetSettingKey()
         {
             return "Acc_BetList_SelMatchResult";

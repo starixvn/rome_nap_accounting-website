@@ -24,7 +24,7 @@
     <Setting Key="Acc_AllStatement4Agent" SpName="Acc_AllStatement4Agent" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="Acc_AllStatementCompany" SpName="Acc_AllStatementCompany" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="Acc_BetList_LicenseeBonus_Detail" SpName="Acc_BetList_LicenseeBonus_Detail" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="Age_BetList_SelMatchResultParlay" SpName="Age_BetList_SelMatchResultParlay" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="Age_BetList_SelMatchResultParlay" SpName="Age_BetList_SelMatchResultParlay_xpre" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="Acc_BetsSelBetList_ByTransID" SpName="Acc_BetsSelBetList_ByTransID" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="Acc_BetList_Mem" SpName="Acc_BetList_Mem" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>

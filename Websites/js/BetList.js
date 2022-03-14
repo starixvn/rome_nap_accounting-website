@@ -1005,9 +1005,11 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
     switch (sporttype) {
         case 5: // Tennis.
             return getTennisParam();
-
+        
         case 8: // Baseball.
             return getBaseballParam();
+        case 50: // Cricket
+            return getCricketParam(matchid, bettype, sporttype, currencyId, gameId3rd);
 
         case 161: // Number Game.
             return getNumberGameParam(matchid);
@@ -1152,6 +1154,16 @@ function getTennisParam() {
 function getBaseballParam() {
     return {
         title: "Baseball"
+    };
+}
+
+function getCricketParam(matchid, bettype, sporttype, betid, transdesc) {
+    return {
+        url: "Report/ViewResult.aspx",
+        jsonParam: { matchid: matchid, bettype: bettype, betid: betid, sporttype: sporttype, transdesc: transdesc },
+        title: "Result",
+        width: 750,
+        height: 300
     };
 }
 
