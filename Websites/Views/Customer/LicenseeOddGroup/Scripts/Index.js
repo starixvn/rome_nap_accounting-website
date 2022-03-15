@@ -94,7 +94,8 @@
         resetFrom();
 
         var filterParam = {
-            custIds: $("#agentDropDown").multiSelect("getCheckedItems").join()
+            custIds: $("#agentDropDown").multiSelect("getCheckedItems").join(),
+            siteName: siteDropDown.val()
         };
 
         $.post("GetAgentOddGroups", filterParam, function (result) {

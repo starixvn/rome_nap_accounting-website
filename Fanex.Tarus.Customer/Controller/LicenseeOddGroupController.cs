@@ -8,7 +8,9 @@ using Fanex.Tarus.Infrastructure.Common;
 using Fanex.Tarus.Infrastructure.Helper;
 using Fanex.Tarus.Web.Controllers;
 using Fanex.Tarus.Web.Controllers.Filters;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -49,9 +51,11 @@ namespace Fanex.Tarus.Customer.Controller
         }
 
         [AuthenticateRead]
-        public ActionResult GetAgentOddGroups(string custids)
+        public ActionResult GetAgentOddGroups(string custids, string siteName)
         {
-            var model = _settingOddsGroupService.GetAgentOddsGroups(custids);
+            string listOfferNewOddGroupSites = ConfigurationManager.AppSettings["OfferNewOddGroupSites"].ToString();
+            ViewBag.IsDisplayNewOddsGroup = listOfferNewOddGroupSites.Split(',').ToList().FindIndex(x => x.Equals(siteName, StringComparison.OrdinalIgnoreCase)) != -1;
+            var model = _settingOddsGroupService.GetAgentOddsGroups(custids);            
             return PartialView("~/Views/Customer/LicenseeOddGroup/_OddsGroup.cshtml", model.ToList());
         }
 
