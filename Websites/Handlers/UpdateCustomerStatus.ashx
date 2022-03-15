@@ -85,12 +85,6 @@ public class UpdateCustomerStatus : BaseHandler
                  *Add new case for HR request changing status
                  */
                 //Start
-                case "disabledCS":
-                    isUpdDownline = false;
-                    if (!Boolean.TryParse(context.Request["isupddownline"] as string ?? string.Empty, out isUpdDownline))
-                        throw new AccException("Invalid isupddonwline parameters");
-                    s = "parent.changeDisplayStatus();";
-                    break;
                 case "AutoSuspend":
                     int isSuspend = (status) ? 1 : 0;
                     IBCUtils.IbcError err = Sunplus.Accounting.DataAccess.IBCDLL.Customer.UpdateCustomer.CustomerUpdAutoSuspendRpt(_custid, isSuspend, _accid);

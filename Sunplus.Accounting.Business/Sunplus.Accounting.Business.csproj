@@ -129,7 +129,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.4.1\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.4.2-CasinoDCS001\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Security, Version=1.0.1.9, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Security.1.0.1.9\lib\net40\Fanex.Tarus.Security.dll</HintPath>
@@ -333,6 +333,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
@@ -390,6 +391,7 @@
     <Compile Include="Customer\MoveCustomer.cs" />
     <Compile Include="Customer\CustomerManager\SettingTabs\EnableStatusTab\RenderLeftPanelManager.cs" />
     <Compile Include="Customer\CustomerManager\SettingTabs\EnableStatusTab\RenderLeftPanelParameter.cs" />
+    <Compile Include="ExChangeRate\CasinoAPIService.cs" />
     <Compile Include="ExChangeRate\ExChangeRateHelper.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="IHelper.cs" />

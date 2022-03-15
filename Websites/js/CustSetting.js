@@ -161,18 +161,6 @@ function changeDisable(obj, type) {
 
     var chk1 = obj.id;
 
-    if (type == "CS") {
-        if (($("#" + chk1).attr('checked') == true && $('#chkOldValueCasino').val() == '1') ||
-            ($("#" + chk1).attr('checked') == false && $('#chkOldValueCasino').val() == '0')) {
-            $("#disabledCSPop .btn:first").removeAttr("disabled");
-        } else {
-
-            $("#disabledCSPop .btn:first").attr("disabled", "disabled");
-        }
-
-        return;
-    }
-
     if (type == "NumberGame") {
         if (($("#" + chk1).attr('checked') == true && $('#chkOldValueNumberGame').val() == "1") ||
             ($("#" + chk1).attr('checked') == false && $('#chkOldValueNumberGame').val() == "0")) {
@@ -318,11 +306,6 @@ function HideClosedPop(div) {
 }
 
 function DisabeAllCheckBox() {
-    //$("#disabledNumberGamePop .btn:first").attr("disabled", "disabled");
-    //$("#disabledCSPop .btn:first").attr("disabled", "disabled");
-    //$("#disabledLCSPop .btn:first").attr("disabled", "disabled");
-    //$("#disabledVSPop .btn:first").attr("disabled", "disabled");
-    //$("#disabledGoldDeluxePop .btn:first").attr("disabled", "disabled");
     $('.Popupsetting').each(function () {
         $('.btn:first', this).attr("disabled", "disabled");
     });
