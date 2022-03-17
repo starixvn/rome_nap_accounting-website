@@ -284,7 +284,7 @@ function RenderCreditCurrency(type = '') {
     if (type === 'Excel') {
         selectIds = requestExcelFilter.CreditCurrencyIds;
     }
-    RenderCurrency(creditCurrency, "Credit" + type, selectIds);
+    RenderCurrency(creditCurrency, "Credit" + type, selectIds, true);
 }
 
 function RenderDepositCurrency(type = '') {
@@ -292,10 +292,10 @@ function RenderDepositCurrency(type = '') {
     if (type === 'Excel') {
         selectIds = requestExcelFilter.DepositCurrencyIds;
     }
-    RenderCurrency(depositCurrency, "Deposit" + type, selectIds);
+    RenderCurrency(depositCurrency, "Deposit" + type, selectIds, true);
 }
 
-function RenderCurrency(currencies, type, checkedItems) {
+function RenderCurrency(currencies, type, checkedItems, isCheckAll = false) {
     var currencyFilter = $("#Filter" + type);
     currencyFilter.empty();
     currencyFilter.removeAttr('disabled');
@@ -305,7 +305,7 @@ function RenderCurrency(currencies, type, checkedItems) {
             Id: type + currency.Id,
             Value: currency.Id,
             Text: currency.Name,
-            Checked: checkedItems.includes(currency.Id.toString()),
+            Checked: isCheckAll || checkedItems.includes(currency.Id.toString()),
             Enable: true,
             CssClass: "",
             Items: []
@@ -317,7 +317,7 @@ function RenderCurrency(currencies, type, checkedItems) {
         maxHeight: 450,
         shadow: true,
         showHeader: true,
-        isCheckAll: false,
+        isCheckAll: isCheckAll,
         showFooter: false,
         showFilter: true,
         checkAllText: "All",
