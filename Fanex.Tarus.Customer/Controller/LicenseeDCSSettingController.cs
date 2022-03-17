@@ -99,10 +99,38 @@ namespace Fanex.Tarus.Customer.Controller
             return PartialView("~/Views/Customer/LicenseeDCSSetting/_BetSetting.cshtml", model);
         }
 
+        [HttpPost, AuthenticateRead]
+        public ActionResult BetSettingWithoutMaxPerMatch(BetSettingWithoutMaxPerMatchViewModel model)
+        {
+            // Get first AgentId.
+            var agentIds = ConvertToIntArray(model.AgentIds).ToList();
+            var agentId = agentIds.Count == 1 ? agentIds[0] : 0;
+
+            var betSettings = _settingService.GetBetSettingWithoutMaxPerMatch(model.ProductId, model.SuperId, agentId);
+            model.BetSettings = betSettings;
+
+            return PartialView("~/Views/Customer/LicenseeDCSSetting/_BetSettingWithoutMaxPerMatch.cshtml", model);
+        }
+
         [HttpPost, AuthenticateHost]
         public ActionResult UpdateBetSetting(BetSettingViewModel model)
         {
             var result = _settingService.UpdateBetSetting(
+                model.SuperId,
+                model.ApplyExistedMem,
+                model.BetSettings.FirstOrDefault(),
+                ConvertToIntArray(model.AgentIds),
+                model.IsAgentOnly,
+                AppSession.AccId,
+                Utils.GetClientIP());
+
+            return Json(result, JsonRequestBehavior.DenyGet);
+        }
+
+        [HttpPost, AuthenticateHost]
+        public ActionResult UpdateBetSettingWithoutMaxPerMatch(BetSettingWithoutMaxPerMatchViewModel model)
+        {
+            var result = _settingService.UpdateBetSettingWithoutMaxPerMatch(
                 model.SuperId,
                 model.ApplyExistedMem,
                 model.BetSettings.FirstOrDefault(),

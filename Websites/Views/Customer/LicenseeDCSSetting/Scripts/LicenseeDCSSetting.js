@@ -144,6 +144,9 @@
                     case "2":
                         betSettingHandler.initialize(defaultParam, selectButton_click, getSelectedAgents);
                         break;
+                    case "11":
+                        betSettingWithoutMaxPerMatchHandler.initialize(defaultParam, selectButton_click, getSelectedAgents);
+                        break;
                     case "4":
                         statusHandler.initialize(defaultParam, selectButton_click, getSelectedAgents);
                         break;
@@ -177,6 +180,9 @@
                 break;
             case "2":
                 url = "LicenseeDcsSetting/BetSetting";
+                break;
+            case "11":
+                url = "LicenseeDcsSetting/BetSettingWithoutMaxPerMatch";
                 break;
             case "4":
                 url = "LicenseeDcsSetting/Status";

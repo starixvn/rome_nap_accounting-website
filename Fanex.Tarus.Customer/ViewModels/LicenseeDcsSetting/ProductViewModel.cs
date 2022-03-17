@@ -40,6 +40,7 @@ namespace Fanex.Tarus.Customer.ViewModels.LicenseeDcsSetting
                 case SettingType.PositionTaking:
                     return LicenseeDcsSettingLabels.PT;
                 case SettingType.BetSetting:
+                case SettingType.BetSettingWithoutMaxPerMatch:
                     return LicenseeDcsSettingLabels.BetSetting;
                 case SettingType.ProductStatus:
                     return LicenseeDcsSettingLabels.Status;

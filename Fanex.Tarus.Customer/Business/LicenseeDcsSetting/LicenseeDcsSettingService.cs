@@ -38,6 +38,10 @@ namespace Fanex.Tarus.Customer.Business.LicenseeDcsSetting
             => _settingDataAccess.GetBetSettings(
                 new GetBetSettingCriteria(productId, superId, agentId));
 
+        public IEnumerable<BetSettingWithoutMaxPerMatchEntity> GetBetSettingWithoutMaxPerMatch(int productId, int superId, int agentId)
+            => _settingDataAccess.GetBetSettingWithoutMaxPerMatch(
+                new GetBetSettingWithoutMaxPerMatchCriteria(productId, superId, agentId));
+
         public StatusEntity GetStatus(int productId, int custId)
             => _settingDataAccess.GetStatus(new GetStatusCriteria(productId, custId));
 
@@ -138,6 +142,33 @@ namespace Fanex.Tarus.Customer.Business.LicenseeDcsSetting
             foreach (var agentId in agentIds)
             {
                 result = UpdateBetSetting(superId, applyExistedMem, betSetting, agentId, isAgentOnly, userId, ip);
+
+                if (result.ErrorCode != 0)
+                {
+                    errorResults.Add(result);
+                }
+            }
+
+            return errorResults.Count == 0
+                ? new Result(0, LicenseeDcsSettingLabels.UpdateBetSettingSuccessfully)
+                : new Result(1, string.Join("<br/>", errorResults.Select(err => err.ErrorMessage)));
+        }
+
+        public Result UpdateBetSettingWithoutMaxPerMatch(
+            int superId,
+            bool applyExistedMem,
+            BetSettingWithoutMaxPerMatchEntity betSetting,
+            IEnumerable<int> agentIds,
+            bool isAgentOnly,
+            int userId,
+            string ip)
+        {
+            Result result;
+            IList<Result> errorResults = new List<Result>();
+
+            foreach (var agentId in agentIds)
+            {
+                result = UpdateBetSettingWithoutMaxPerMatch(superId, applyExistedMem, betSetting, agentId, isAgentOnly, userId, ip);
 
                 if (result.ErrorCode != 0)
                 {
@@ -255,6 +286,20 @@ namespace Fanex.Tarus.Customer.Business.LicenseeDcsSetting
             string ip)
         {
             ICriteria criteria = new UpdateBetSettingCriteria(superId, applyExistedMem, betSetting, agentId, isAgentOnly, userId, ip);
+
+            return _settingDataAccess.ExecuteNonQuery(criteria);
+        }
+
+        private Result UpdateBetSettingWithoutMaxPerMatch(
+            int superId,
+            bool applyExistedMem,
+            BetSettingWithoutMaxPerMatchEntity betSetting,
+            int agentId,
+            bool isAgentOnly,
+            int userId,
+            string ip)
+        {
+            ICriteria criteria = new UpdateBetSettingWithoutMaxPerMatchCriteria(superId, applyExistedMem, betSetting, agentId, isAgentOnly, userId, ip);
 
             return _settingDataAccess.ExecuteNonQuery(criteria);
         }
