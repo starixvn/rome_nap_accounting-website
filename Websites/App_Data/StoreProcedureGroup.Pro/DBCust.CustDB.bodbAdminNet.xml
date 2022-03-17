@@ -498,14 +498,4 @@
   <Function Name="Ex.rate">
     <Setting Key="Acc_ExchangeMultiBaseRateUpd" SpName="Acc_ExchangeMultiBaseRateUpd" DbName="DBCUST.CustDB.bodbAdminNet" />
   </Function>
-  <Function Name="Initializing Stake Level">
-    <Setting Key="Acc_InitializingStake_CurrencySel" SpName="Acc_InitializingStake_CurrencySel" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_InitializingStake_ProductSel" SpName="Acc_InitializingStake_ProductSel" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_InitializingStake_SportTypeSel" SpName="Acc_InitializingStake_SportTypeSel" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_InitializingStake_BetTypeSel" SpName="Acc_InitializingStake_BetTypeSel" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_InitializingStake_StakelevelCheck" SpName="Acc_InitializingStake_StakelevelCheck" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_InitializingStake_StakelevelSel" SpName="Acc_InitializingStake_StakelevelSel" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_InitializingStake_StakelevelIns" SpName="Acc_InitializingStake_StakelevelIns" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_InitializingStake_SiteSel" SpName="Acc_InitializingStake_SiteSel" DbName="DBCUST.CustDB.bodbAdminNet" />
-  </Function>
 </Functions>
