@@ -295,8 +295,8 @@
     </Function>
 
     <Function Name="Setting Type 11 - Bet Setting without Max Per Match">
-      <Setting Key="Acc_Dep_CustSetting_NewBetLimitFullLineSettingSelect" SpName="Acc_Dep_CustSetting_NewBetLimitFullLineSettingSelect_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
-      <Setting Key="Acc_Dep_CustSetting_NewBetLimitFullLineUpd" SpName="Acc_Dep_CustSetting_NewBetLimitFullLineUpd_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
+      <Setting Key="Acc_Dep_CustSetting_NewBetLimitFullLineSettingSelect" SpName="Acc_Dep_CustSetting_NewBetLimitFullLineSettingSelect" DbName="DBCust.CustDB.bodbAdminNet" />
+      <Setting Key="Acc_Dep_CustSetting_NewBetLimitFullLineUpd" SpName="Acc_Dep_CustSetting_NewBetLimitFullLineUpd" DbName="DBCust.CustDB.bodbAdminNet" />
     </Function>
 
     <Function Name="Setting Type 4 - Product Status">
