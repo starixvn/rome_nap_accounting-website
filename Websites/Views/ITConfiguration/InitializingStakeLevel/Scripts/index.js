@@ -558,6 +558,7 @@ function InitSubmitExcelFile() {
                 showAlertMessage('errMsgExcel', 'Internal Server Error.', 1);
             },
             complete: function () {
+                $('#mainForm')[0].reset();
                 parent.jQuery.unblockUI();
             }
         });
