@@ -423,8 +423,8 @@ function RenderStakeLevels(data) {
         row.Columns.push({ Name: 'Site', Value: data.StakeLevels[i].Site });
         row.Columns.push({ Name: 'CreditCurrency', Value: data.StakeLevels[i].CreditCurrency });
         row.Columns.push({ Name: 'DepositCurrency', Value: data.StakeLevels[i].DepositCurrency });
-        row.Columns.push({ Name: 'NewMinBet', Value: data.StakeLevels[i].NewMinBet });
-        row.Columns.push({ Name: 'NewMaxBet', Value: data.StakeLevels[i].NewMaxBet });
+        row.Columns.push({ Name: 'NewMinBet', Value: data.StakeLevels[i].NewMinBet === 0 ? "" : data.StakeLevels[i].NewMinBet });
+        row.Columns.push({ Name: 'NewMaxBet', Value: data.StakeLevels[i].NewMaxBet === 0 ? "" : data.StakeLevels[i].NewMaxBet });
         row.Columns.push({ Name: 'MinBet', Value: data.StakeLevels[i].MinBet });
         row.Columns.push({ Name: 'MaxBet', Value: data.StakeLevels[i].MaxBet });
         row.Columns.push({ Name: 'GameGroupId', Value: data.StakeLevels[i].GameGroupId });
