@@ -469,6 +469,9 @@
       <HintPath>..\packages\Fanex.Tarus.Excels.1.0.0.2\lib\net40\Fanex.Tarus.Excels.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.Tarus.ExchangeRate, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.ExchangeRate.1.0.0.7-CasinoDCS002\lib\net40\Fanex.Tarus.ExchangeRate.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.Tarus.Finance, Version=1.1.3.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Finance.1.1.3.2-CasinoDCS001\lib\net40\Fanex.Tarus.Finance.dll</HintPath>
     </Reference>

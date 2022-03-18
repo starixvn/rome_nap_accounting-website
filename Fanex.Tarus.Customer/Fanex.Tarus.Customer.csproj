@@ -390,7 +390,6 @@
     <Compile Include="Criteria\BetCreditHistory\GetBetCreditHistoryCriteria.cs" />
     <Compile Include="Criteria\BetTrade\GetBetTradeStatusCriteria.cs" />
     <Compile Include="Criteria\BetTrade\UpdateBetTradeStatusCriteria.cs" />
-    <Compile Include="Criteria\Casino\GetUnsyncedListCriteria.cs" />
     <Compile Include="Criteria\CN88\CN88UnlockCustomerCriteria.cs" />
     <Compile Include="Criteria\CN88\CN88CustomerSettingCriteria.cs" />
     <Compile Include="Criteria\CN88\HeadlinePossess\GetHeadlinePossessCriteria.cs" />

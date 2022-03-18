@@ -14,8 +14,6 @@ namespace Fanex.Tarus.Customer.Business.LicenseeSubsidiary
     internal class LicenseeSubsidiaryService : ILicenseeSubsidiaryService
     {
         private readonly ILicenseeSubsidiaryDataAccess licenseeDataAccess;
-        private const string LicenseeCasinoNo = "02";
-        private const int NapSystem = 1;
 
         public LicenseeSubsidiaryService(ILicenseeSubsidiaryDataAccess licenseeDataAccess = null)
         {
