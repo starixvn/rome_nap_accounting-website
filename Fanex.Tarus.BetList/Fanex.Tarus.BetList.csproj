@@ -120,7 +120,7 @@
       <HintPath>..\packages\Fanex.BetList.ESports.1.0.2\lib\net40\Fanex.BetList.ESports.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.FGG, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.FGG.1.0.0-beta01\lib\net40\Fanex.BetList.FGG.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.FGG.1.0.0-beta03\lib\net40\Fanex.BetList.FGG.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.GlobalGaming, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.GlobalGaming.1.0.0.7\lib\net40\Fanex.BetList.GlobalGaming.dll</HintPath>
