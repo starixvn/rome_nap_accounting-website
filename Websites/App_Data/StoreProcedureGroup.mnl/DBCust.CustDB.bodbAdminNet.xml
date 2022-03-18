@@ -499,4 +499,7 @@
   <Function Name="Ex.rate">
     <Setting Key="Acc_ExchangeMultiBaseRateUpd" SpName="Acc_ExchangeMultiBaseRateUpd" DbName="DBCUST.CustDB.bodbAdminNet" />
   </Function>
+  <Function Name="Initializing Stake Level">
+    <Setting Key="Acc_InitializingStake_StakelevelIns" SpName="Acc_InitializingStake_StakelevelIns" DbName="DBCUST.CustDB.bodbAdminNet" />
+  </Function>
 </Functions>

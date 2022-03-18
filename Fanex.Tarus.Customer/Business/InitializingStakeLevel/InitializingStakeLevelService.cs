@@ -14,6 +14,7 @@
     using Fanex.Tarus.Customer.Requests.InitializingStakeLevel;
     using Fanex.Tarus.Infrastructure.Caching;
     using Fanex.Tarus.Infrastructure.Extensions;
+    using Fanex.Tarus.Security.Services;
     using NPOI.HSSF.UserModel;
     using NPOI.HSSF.Util;
     using NPOI.SS.UserModel;
@@ -310,6 +311,16 @@
             }
 
             return new StakeLevelSelCriteria((GetStakeLevelRequest)HttpContext.Current.Session[_cacheGetDataCriteria]);
+        }
+
+        public bool CheckPermission(int accId)
+        {
+            var permissionService = new PermissionService();
+            var pageAccess = permissionService.GetPageAccess(accId);
+            var pathActionName = "InitStakeLevel/Index";
+            bool hasPermission = permissionService.GetHostPermission(pathActionName, pageAccess);
+
+            return hasPermission;
         }
     }
 }

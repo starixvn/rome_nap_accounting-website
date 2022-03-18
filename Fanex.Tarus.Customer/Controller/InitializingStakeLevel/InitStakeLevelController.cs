@@ -21,6 +21,7 @@
             service = new InitializingStakeLevelService();
         }
 
+        [AuthenticateRead]
         public ActionResult Index()
         {
             return View(_indexViewPath);
@@ -66,13 +67,13 @@
             return new EmptyResult();
         }
 
-        [HttpPost, AuthenticateRead]
+        [HttpPost, AuthenticateHost]
         public ActionResult CheckStakeLevels(HttpPostedFileBase uploadFile)
         {
             return Json(service.ValidateSetting(uploadFile));
         }
 
-        [HttpPost, AuthenticateRead]
+        [HttpPost, AuthenticateHost]
         public ActionResult InsertStakeLevels(InsertStakeLevelRequest request)
         {
             return Json(service.InsertSetting(request.StakeLevels, AppSession.AccId, HttpContext.Request.UserHostAddress));
