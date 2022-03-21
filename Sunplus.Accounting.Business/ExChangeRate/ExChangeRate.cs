@@ -33,6 +33,8 @@ namespace Sunplus.Accounting.Business.ExChangeRate
     {
         private readonly string editBaseRate_ErrMsg = "{0} - {1}:";
 
+        private readonly CasinoApiService casinoApiService = new CasinoApiService();
+
         #region GenAddContent
 
         public string GenAddContent(string FunctionName)
@@ -134,8 +136,24 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 hash.Add("code", Code.Trim());
                 hash.Add("description", Description);
                 hash.Add("multipliedby", Convert.ToInt32(MultipliedBy.Trim()));
-                var result = IBCProvider.ExChangeRate.ExchangeIns(hash);
+                int exchangeid = 0;
+                var result = IBCProvider.ExChangeRate.ExchangeIns(hash, ref exchangeid);
                 msg = result.ErrorMessage;
+                if (result.ErrorCode == 0)
+                {
+                    var response = casinoApiService.UpdateExchange(new CasinoApiRequest
+                    {
+                        Call = new List<CasinoApiCurrencyParam> {
+                            new CasinoApiCurrencyParam
+                            {
+                                ActualRate = CastAide.AsDouble(actualrate),
+                                Currency = currency.Trim(),
+                                IBCExchangeId = exchangeid,
+                                ISOCode = Code
+                            }
+                        }
+                    });
+                }
             }
             catch (Exception ex)
             {
@@ -318,15 +336,24 @@ namespace Sunplus.Accounting.Business.ExChangeRate
 
                 if (msg.Length == 0)
                 {
+                    var response = casinoApiService.UpdateExchange(new CasinoApiRequest
+                    {
+                        Call = new List<CasinoApiCurrencyParam> {
+                            new CasinoApiCurrencyParam
+                            {
+                                ActualRate = CastAide.AsDouble(actualrate),
+                                Currency = currency.Trim(),
+                                IBCExchangeId = exid,
+                                ISOCode = Code
+                            }
+                        }
+                    });
                     string tplSubject = "Exchange Rate was changed";
                     SendEmail_Template mail = new SendEmail_Template();
                     foreach (DataRow dr in Rows)
                     {
                         mail.username = AppSession.Username;
                         mail.ExchangeID = exid.ToString();
-
-                        //if (actualrate.ToString() != dr["actualrate"].ToString())
-
                         mail.BaseRate = actualrate.ToString();
                         mail.oldBaseRate = dr["actualrate"].ToString();
                         if (actualrate.ToString() != dr["actualrate"].ToString())
@@ -423,12 +450,14 @@ namespace Sunplus.Accounting.Business.ExChangeRate
             var result = new Result();
             var emailGridBody = new StringBuilder();
             var index = 1;
+            var CSRequest = new CasinoApiRequest();
             foreach (var param in updateParams.Trim(';').Split(';'))
             {
                 var paramList = param.Trim(',').Split(',');
                 var exid = int.Parse(paramList[0]);
                 var actualrate = paramList[1];
                 var currency = paramList[2];
+                var code = paramList[3];
                 var oldRate = paramList[4];
 
                 emailGridBody.Append("<tr>");
@@ -438,8 +467,16 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 emailGridBody.Append($"<td>{oldRate}</td>");
                 emailGridBody.Append($"<td>{actualrate}</td>");
                 emailGridBody.Append("</tr>");
+                CSRequest.Call.Add(new CasinoApiCurrencyParam
+                {
+                    ActualRate = CastAide.AsDouble(actualrate),
+                    Currency = currency.Trim(),
+                    IBCExchangeId = exid,
+                    ISOCode = code
+                });
             }
 
+            var response = casinoApiService.UpdateExchange(CSRequest);
             string tplSubject = "Exchange Rate was changed";
 
             SendMailExtension.AccSendMail(MailSection.HostName.Gmail, MailSection.ToMailExchangeRate,
