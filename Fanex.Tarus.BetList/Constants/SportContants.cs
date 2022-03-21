@@ -90,5 +90,6 @@
         public const int VGaming = 171;
         public const int AdvantPlay = 172;
         public const int AdvantPlayMini = 174;
+        public const int FGG = 176;
     }
 }

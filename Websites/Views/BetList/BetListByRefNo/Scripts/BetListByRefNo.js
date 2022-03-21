@@ -139,7 +139,7 @@ BetList.BetListByRefNo = (function ($) {
             return false;
         }
 
-        var productRequireBetIdAndGameId = ["12", "21", "30", "45", "46", "47", "39", "51", "59", "57", "65"];
+        var productRequireBetIdAndGameId = ["12", "21", "30", "45", "46", "47", "39", "51", "59", "57", "65", "70"];
         if (productRequireBetIdAndGameId.indexOf(selProductValue) !== -1 && $gameId.val().trim() === "" && $betId.val().trim() === "") {
             showError("Either GameID or BetID is required");
             return false;
