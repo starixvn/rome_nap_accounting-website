@@ -113,6 +113,19 @@
 
         public ActionResult BBINResult(ThirdPartyResultRequest request) => BaseResult(request, "BBINResultConfigs");
 
+        public ActionResult FGGResult(ThirdPartyResultRequest request)
+        {
+            SetProductResultTitle(request.ProductId);
+            var service = new ThirdPartyResult("FGGResultConfigs");
+            var resultRequest = new ResultRequest(request.CustId, request.TransId3rd, request.GameId3rd, request.CurrencyId, request.SiteId)
+            {
+                EndTime = request.EndTime
+            };
+
+            var result = service.GetResultGET(resultRequest);
+            return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(ProductResultTitle, result));
+        }
+
         private ActionResult BaseResult(ThirdPartyResultRequest request, string configName)
         {
             SetProductResultTitle(request.ProductId);
