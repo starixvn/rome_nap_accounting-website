@@ -542,7 +542,7 @@ function InitSubmitExcelFile() {
                     $("#gridExcelStakeLevel").hide();
                 } else {
                     if (result.Warning && result.Warning.ErrorCode !== 0) {
-                        showAlertMessage('errWarningMsgExcel', result.Warning.ErrorMessage, 1);
+                        showAlertMessage('errWarningMsgExcel', result.Warning.ErrorMessage, 2);
                     }
                     if (result.Error && result.Error.ErrorCode !== 0) {
                         showAlertMessage('errMsgExcel', result.Error.ErrorMessage, 1);
