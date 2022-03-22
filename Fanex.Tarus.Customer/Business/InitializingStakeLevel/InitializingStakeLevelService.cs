@@ -192,6 +192,11 @@
                 {
                     rowCount++;
                     IRow row = (IRow)rows.Current;
+                    if (!IsHaveDataRow(row))
+                    {
+                        continue;
+                    }
+
                     var checkRequiredFieldsResult = CheckRequiredField(row, rowCount);
                     if (checkRequiredFieldsResult != null)
                     {
@@ -205,14 +210,14 @@
                     {
                         SportTypeId = Int32.Parse(row.GetCell(0).ToString()),
                         BetTypeId = Int32.Parse(row.GetCell(1).ToString()),
-                        SiteId = string.IsNullOrWhiteSpace(row.GetCell(2).ToString()) ? 0 : Int32.Parse(row.GetCell(2).ToString()),
-                        CreditCurrency = HttpUtility.HtmlEncode(row.GetCell(3).ToString().Replace(" ", String.Empty)),
-                        DepositCurrency = HttpUtility.HtmlEncode(row.GetCell(4).ToString().Replace(" ", String.Empty)),
+                        SiteId = row.GetCell(2) == null || string.IsNullOrWhiteSpace(row.GetCell(2).ToString()) ? 0 : Int32.Parse(row.GetCell(2).ToString()),
+                        CreditCurrency = row.GetCell(3) == null ? string.Empty : HttpUtility.HtmlEncode(row.GetCell(3).ToString().Replace(" ", String.Empty)),
+                        DepositCurrency = row.GetCell(4) == null ? string.Empty : HttpUtility.HtmlEncode(row.GetCell(4).ToString().Replace(" ", String.Empty)),
                         NewMinBet = string.IsNullOrWhiteSpace(row.GetCell(5).ToString()) ? 0 : Decimal.Parse(row.GetCell(5).ToString()),
                         NewMaxBet = string.IsNullOrWhiteSpace(row.GetCell(6).ToString()) ? 0 : Decimal.Parse(row.GetCell(6).ToString()),
                         MinBet = string.IsNullOrWhiteSpace(row.GetCell(7).ToString()) ? 0 : Decimal.Parse(row.GetCell(7).ToString()),
                         MaxBet = string.IsNullOrWhiteSpace(row.GetCell(8).ToString()) ? 0 : Decimal.Parse(row.GetCell(8).ToString()),
-                        GameGroupId = string.IsNullOrWhiteSpace(row.GetCell(9).ToString()) ? 0 : Int32.Parse(row.GetCell(9).ToString()),
+                        GameGroupId = row.GetCell(9) == null || string.IsNullOrWhiteSpace(row.GetCell(9).ToString()) ? 0 : Int32.Parse(row.GetCell(9).ToString()),
                     };
 
                     stakeLevel.SportType = GetSportName(stakeLevel.SportTypeId);
@@ -272,29 +277,42 @@
             }
         }
 
+        private bool IsHaveDataRow(IRow row)
+        {
+            for (int i = 0; i <= 9; i++)
+            {
+                if (row.GetCell(i) != null && !string.IsNullOrWhiteSpace(row.GetCell(i).ToString()))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         private Result CheckRequiredField(IRow row, int rowCount)
         {
-            if (string.IsNullOrWhiteSpace(row.GetCell(0).ToString()))
+            if (row.GetCell(0) == null || string.IsNullOrWhiteSpace(row.GetCell(0).ToString()))
             {
                 return new Result(1, "Row " + rowCount.ToString() + ": The Sport Type is required field.");
             }
 
-            if (string.IsNullOrWhiteSpace(row.GetCell(1).ToString()))
+            if (row.GetCell(1) == null || string.IsNullOrWhiteSpace(row.GetCell(1).ToString()))
             {
                 return new Result(1, "Row " + rowCount.ToString() + ": The Bet Type is required field.");
             }
 
-            if (string.IsNullOrWhiteSpace(row.GetCell(3).ToString()) && string.IsNullOrWhiteSpace(row.GetCell(4).ToString()))
+            if ((row.GetCell(3) == null || string.IsNullOrWhiteSpace(row.GetCell(3).ToString()))
+                && (row.GetCell(4) == null || string.IsNullOrWhiteSpace(row.GetCell(4).ToString())))
             {
                 return new Result(1, "Row " + rowCount.ToString() + ": The Currency is required field.");
             }
 
-            if (string.IsNullOrWhiteSpace(row.GetCell(5).ToString()))
+            if (row.GetCell(5) == null || string.IsNullOrWhiteSpace(row.GetCell(5).ToString()))
             {
                 return new Result(1, "Row " + rowCount.ToString() + ": The New Min Bet is required field.");
             }
 
-            if (string.IsNullOrWhiteSpace(row.GetCell(6).ToString()))
+            if (row.GetCell(6) == null || string.IsNullOrWhiteSpace(row.GetCell(6).ToString()))
             {
                 return new Result(1, "Row " + rowCount.ToString() + ": The New Max Bet is required field.");
             }
