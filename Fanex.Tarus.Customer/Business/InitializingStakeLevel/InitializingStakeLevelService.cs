@@ -192,10 +192,15 @@
                 {
                     rowCount++;
                     IRow row = (IRow)rows.Current;
-                    if (string.IsNullOrWhiteSpace(row.GetCell(0).ToString()) || string.IsNullOrWhiteSpace(row.GetCell(1).ToString()))
+                    var checkRequiredFieldsResult = CheckRequiredField(row, rowCount);
+                    if (checkRequiredFieldsResult != null)
                     {
-                        continue;
+                        return new ValidateStakeLevelResponse
+                        {
+                            Error = checkRequiredFieldsResult
+                        };
                     }
+
                     var stakeLevel = new StakeLevelModel
                     {
                         SportTypeId = Int32.Parse(row.GetCell(0).ToString()),
@@ -257,7 +262,7 @@
             }
             catch (Exception ex)
             {
-                var result = new Result(1, "Invalid file uploaded. Error at line: " + rowCount.ToString() + ". " + ex.Message);
+                var result = new Result(1, "Invalid file uploaded. Error at row: " + rowCount.ToString() + ". " + ex.Message);
                 LogExtensions.ExceptionHandler(ex);
 
                 return new ValidateStakeLevelResponse
@@ -265,6 +270,36 @@
                     Error = result
                 };
             }
+        }
+
+        private Result CheckRequiredField(IRow row, int rowCount)
+        {
+            if (string.IsNullOrWhiteSpace(row.GetCell(0).ToString()))
+            {
+                return new Result(1, "Row " + rowCount.ToString() + ": The Sport Type is required field.");
+            }
+
+            if (string.IsNullOrWhiteSpace(row.GetCell(1).ToString()))
+            {
+                return new Result(1, "Row " + rowCount.ToString() + ": The Bet Type is required field.");
+            }
+
+            if (string.IsNullOrWhiteSpace(row.GetCell(3).ToString()) && string.IsNullOrWhiteSpace(row.GetCell(4).ToString()))
+            {
+                return new Result(1, "Row " + rowCount.ToString() + ": The Currency is required field.");
+            }
+
+            if (string.IsNullOrWhiteSpace(row.GetCell(5).ToString()))
+            {
+                return new Result(1, "Row " + rowCount.ToString() + ": The New Min Bet is required field.");
+            }
+
+            if (string.IsNullOrWhiteSpace(row.GetCell(6).ToString()))
+            {
+                return new Result(1, "Row " + rowCount.ToString() + ": The New Max Bet is required field.");
+            }
+
+            return null;
         }
 
         private string GetSportName(object sportId)
