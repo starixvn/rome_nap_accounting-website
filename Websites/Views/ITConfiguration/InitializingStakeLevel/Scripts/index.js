@@ -730,7 +730,7 @@ function InsertExcel() {
                 if (rs && rs.ErrorCode !== undefined && rs.ErrorCode !== 0) {
                     showAlertMessage('errMsgExcel', rs.ErrorMessage, 1);
                 } else {
-                    showAlertMessage('errMsgExcel', 'Insert data successfully.', 0);
+                    showAlertMessage('errMsgExcel', 'Imported successfully.', 0);
                 }
             }
         },
