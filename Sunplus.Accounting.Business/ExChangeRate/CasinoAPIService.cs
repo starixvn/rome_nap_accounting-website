@@ -21,6 +21,7 @@
         {
             if (string.IsNullOrWhiteSpace(apiUrl))
             {
+                Logger.Log.Error("Casino API Error: </br>Request: " + SerializeCasinoAPIObject(request) + "</br>Response: CasinoAPI:Url cannot be null or empty.");
                 return new CasinoApiResponse() { Result = new List<CasinoApiResult> { new CasinoApiResult { ErrorCode = "1", Description = "CasinoAPI:Url cannot be null or empty." } } };
             }
 
@@ -33,7 +34,7 @@
 
             if (!casinoApiResponse.IsSuccess)
             {
-                Logger.Log.Error("Casino API Error: </br>Request: " + SerializeCasinoAPIObject(request) + "</br>Response: " + SerializeCasinoAPIObject(responseString));
+                Logger.Log.Error("Casino API Error: </br>Request: " + SerializeCasinoAPIObject(request) + "</br>Response: " + responseString);
             }
 
             return casinoApiResponse;

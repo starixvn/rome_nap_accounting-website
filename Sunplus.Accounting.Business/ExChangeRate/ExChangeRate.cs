@@ -153,6 +153,10 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                             }
                         }
                     });
+                    if (!response.IsSuccess)
+                    {
+                        msg = response.Result[0].ErrorCode + ": " + response.Result[0].Description;
+                    }
                 }
             }
             catch (Exception ex)
@@ -348,6 +352,11 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                             }
                         }
                     });
+                    if (!response.IsSuccess)
+                    {
+                        msg = response.Result[0].ErrorCode + ": " + response.Result[0].Description;
+                    }
+
                     string tplSubject = "Exchange Rate was changed";
                     SendEmail_Template mail = new SendEmail_Template();
                     foreach (DataRow dr in Rows)
@@ -477,6 +486,11 @@ namespace Sunplus.Accounting.Business.ExChangeRate
             }
 
             var response = casinoApiService.UpdateExchange(CSRequest);
+            if (!response.IsSuccess)
+            {
+                result.ErrorCode = 1;
+                result.ErrorMessage = response.Result[0].ErrorCode + ": " + response.Result[0].Description;
+            }
             string tplSubject = "Exchange Rate was changed";
 
             SendMailExtension.AccSendMail(MailSection.HostName.Gmail, MailSection.ToMailExchangeRate,
