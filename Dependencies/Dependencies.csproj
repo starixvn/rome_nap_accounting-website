@@ -456,8 +456,8 @@
     <Reference Include="Fanex.Tarus.Business.Implement, Version=1.0.1.8, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Business.Implement.1.0.1.8\lib\net40\Fanex.Tarus.Business.Implement.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Tarus.CopySuperWinlossSetting, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.CopySuperWinlossSetting.1.0.0.1\lib\net461\Fanex.Tarus.CopySuperWinlossSetting.dll</HintPath>
+    <Reference Include="Fanex.Tarus.CopySuperWinlossSetting, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.CopySuperWinlossSetting.1.0.0.2-CasinoDCS001\lib\net461\Fanex.Tarus.CopySuperWinlossSetting.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.DataAccess.Implement, Version=1.0.1.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.DataAccess.Implement.1.0.1.2\lib\net40\Fanex.Tarus.DataAccess.Implement.dll</HintPath>
