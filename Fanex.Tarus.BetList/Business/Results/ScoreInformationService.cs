@@ -37,7 +37,7 @@ namespace Fanex.Tarus.BetList.Business.Results
         {
         }
        
-        public string GetResult(int matchId, int sportType, int betType, long betId, int handicap2)
+        public string GetResult(int matchId, int sportType, int betType, long betId, int handicap2, string transdesc)
         {
             List<Sportsbook> sportsbooks;
             if (betType == BetList.Constants.BetTypeContants.BetBuilder)
@@ -56,7 +56,8 @@ namespace Fanex.Tarus.BetList.Business.Results
                 {
                     MatchId = matchId,
                     BetType = betType,
-                    BetId = betId
+                    BetId = betId,
+                    TransDesc = transdesc
                 };
                 sportsbooks = this._scoreInformationDataAccess.GetScoreInformation(criteria, handicap2);
             }

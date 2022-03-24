@@ -14,6 +14,6 @@ namespace Fanex.Tarus.BetList.Business.Results
     /// </summary>
     public interface IScoreInformationService
     {
-        string GetResult(int matchId, int sportType, int betType, long betId, int handicap2);
+        string GetResult(int matchId, int sportType, int betType, long betId, int handicap2, string transdesc);
     }
 }
