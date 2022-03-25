@@ -506,20 +506,6 @@
                                                6);
                             break;
 
-                        case "22":
-                            _renderLeftPanelService.RenderEnableProductBoxDCS2(
-                                               row1,
-                                               productRow,
-                                               sg,
-                                               ref htmlcontent,
-                                               isManageCustomerAccess,
-                                               "Voidbridge",
-                                               renderLeftPanelParameter.IsShowVoidbridge,
-                                               renderLeftPanelParameter,
-                                               "Update Macau Games Status",
-                                               22);
-                            break;
-
                         case "23":
                             _renderLeftPanelService.RenderEnableProductBoxDCS2(
                                                row1,
