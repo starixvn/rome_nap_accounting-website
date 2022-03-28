@@ -512,7 +512,7 @@ function InsertExcel() {
         data: request,
         success: function (rs) {
             if (rs && rs.ErrorCode) {
-                showAlertMessage('errMsgExcel', result.ErrorMessage, 1);
+                showAlertMessage('errMsgExcel', rs.ErrorMessage, 1);
                 $("#gridExcelStakeLevel").hide();
             } else {
                 if (rs && rs.ErrorCode !== undefined && rs.ErrorCode !== 0) {
