@@ -12,18 +12,6 @@ var requestFilter = {
     CreditCurrencyIds: []
 };
 
-var requestExcelFilter = {
-    ProductID: '',
-    SportTypes: '',
-    SportTypesIds: [],
-    BetTypes: '',
-    BetTypeIds: [],
-    DepositCurrency: '0',
-    DepositCurrencyIds: [],
-    CreditCurrency: '0',
-    CreditCurrencyIds: []
-};
-
 var form;
 var excelContent = [];
 var creditCurrency = [];
@@ -64,25 +52,18 @@ function RenderDcsMatrix() {
     });
 }
 
-function RenderProduct(products, type = '') {
-    var productFilter = $("#FilterProduct" + type);
+function RenderProduct(products) {
+    var productFilter = $("#FilterProduct");
     productFilter.empty();
     products.forEach(function (product, _) {
         var option = "<option value=\"" + product.Id + "\">" + product.Name + "</option>";
         productFilter.append(option);
     });
     productFilter.select2({ width: "200px" });
-    if (type === '') {
-        productFilter.change(function () {
-            requestFilter.ProductID = $("#FilterProduct").val();
-            RenderSportType();
-        });
-    } else {
-        productFilter.change(function () {
-            requestExcelFilter.ProductID = $("#FilterProductExcel").val();
-            RenderSportTypeExcel();
-        });
-    }
+    productFilter.change(function () {
+        requestFilter.ProductID = $("#FilterProduct").val();
+        RenderSportType();
+    });
 
     productFilter.trigger("change");
 }
@@ -153,83 +134,11 @@ function RenderSportType() {
     });
 }
 
-function RenderSportTypeExcel() {
+function RenderBetType() {
     try { parent.BlockUI(); } catch (e) { }
-    var selectedProductId = $("#FilterProductExcel").val();
-    $.ajax({
-        type: "GET",
-        url: "GetSportTypes?productId=" + selectedProductId,
-        success: function (rs) {
-            if (typeof rs === 'string' && rs.includes("DOCTYPE")) {
-                showAlertMessage('errMsgExcel', "You are not authorized on this function", 1);
-                $("#insert-setting").hide();
-                $("#filterDivExcel").hide();
-                $("#gridExcelStakeLevel").hide();
-            } else {
-                var sportFilter = $("#FilterSportTypeExcel");
-                sportFilter.empty();
-                sportFilter.removeAttr('disabled');
-                var checkIds = requestExcelFilter.SportTypesIds;
-
-                var multiselectData = [];
-                rs.forEach(function (item) {
-                    multiselectData.push({
-                        Id: 'sportExcel' + item.Id,
-                        Value: item.Id,
-                        Text: item.Name,
-                        Checked: checkIds.includes(item.Id.toString()),
-                        Enable: true,
-                        CssClass: "",
-                        Items: []
-                    });
-                });
-
-                sportFilter.multiSelect({
-                    minWidth: 200,
-                    maxHeight: 450,
-                    shadow: true,
-                    showHeader: true,
-                    isCheckAll: false,
-                    showFooter: false,
-                    showFilter: true,
-                    checkAllText: "All",
-                    listData: multiselectData,
-                    noItemText: "Select Sport",
-                    onCheck: function () {
-                        isNeedRenderExcelBettype = true;
-                    }
-                });
-
-                $("#FilterSportTypeExcel").next('div.ui-multiselect-options').on('close', function () { return false; });
-                $("#FilterSportTypeExcel").next('div.ui-multiselect-options').off('close');
-                $("#FilterSportTypeExcel").next('div.ui-multiselect-options').on('close',
-                    function () {
-                        if (isNeedRenderExcelBettype) {
-                            isNeedRenderExcelBettype = false;
-                            RenderBetType('Excel');
-                        }
-                    });
-                RenderBetType('Excel');
-            }
-        },
-        error: function (event, jqXHR, ajaxSettings) {
-            showAlertMessage('errMsgExcel', "Internal server error.", 1);
-        },
-        complete: function () {
-            try { parent.jQuery.unblockUI(); } catch (e) { }
-        }
-    });
-}
-
-function RenderBetType(type = '') {
-    try { parent.BlockUI(); } catch (e) { }
-    var selectedSportIds = $("#FilterSportType" + type).multiSelect("getCheckedItems").join();
-    var currentFilter = requestFilter;
-    if (type === 'Excel') {
-        currentFilter = requestExcelFilter;
-    }
+    var selectedSportIds = $("#FilterSportType").multiSelect("getCheckedItems").join();
     var request = {
-        ProductId: currentFilter.ProductID,
+        ProductId: requestFilter.ProductID,
         SportTypes: selectedSportIds
     };
 
@@ -239,18 +148,11 @@ function RenderBetType(type = '') {
         data: request,
         success: function (rs) {
             if (typeof rs === 'string' && rs.includes("DOCTYPE")) {
-                if (type === "Excel") {
-                    showAlertMessage('errMsgExcel', "You are not authorized on this function", 1);
-                    $("#insert-setting").hide();
-                    $("#filterDivExcel").hide();
-                    $("#gridExcelStakeLevel").hide();
-                } else {
-                    showAlertMessage('errMsg', "You are not authorized on this function", 1);
-                    $("#filterDiv").hide();
-                    $("#gridStakeLevel").hide();
-                }
+                showAlertMessage('errMsg', "You are not authorized on this function", 1);
+                $("#filterDiv").hide();
+                $("#gridStakeLevel").hide();
             } else {
-                var bettypeFilter = $("#FilterBetType" + type);
+                var bettypeFilter = $("#FilterBetType");
                 bettypeFilter.empty();
                 bettypeFilter.removeAttr('disabled');
                 var multiselectData = [];
@@ -259,7 +161,7 @@ function RenderBetType(type = '') {
                         Id: 'bettype' + item.Id,
                         Value: item.Id,
                         Text: item.Name,
-                        Checked: currentFilter.BetTypeIds.includes(item.Id.toString()),
+                        Checked: false,
                         Enable: true,
                         CssClass: "",
                         Items: []
@@ -281,7 +183,7 @@ function RenderBetType(type = '') {
             }
         },
         error: function (event, jqXHR, ajaxSettings) {
-            showAlertMessage('errMsg' + type, "Internal server error.", 1);
+            showAlertMessage('errMsg', "Internal server error.", 1);
         },
         complete: function () {
             try { parent.jQuery.unblockUI(); } catch (e) { }
@@ -289,23 +191,15 @@ function RenderBetType(type = '') {
     });
 }
 
-function RenderCreditCurrency(type = '') {
-    var selectIds = requestFilter.CreditCurrencyIds;
-    if (type === 'Excel') {
-        selectIds = requestExcelFilter.CreditCurrencyIds;
-    }
-    RenderCurrency(creditCurrency, "Credit" + type, selectIds, type === '');
+function RenderCreditCurrency() {
+    RenderCurrency(creditCurrency, "Credit");
 }
 
-function RenderDepositCurrency(type = '') {
-    var selectIds = requestFilter.DepositCurrencyIds;
-    if (type === 'Excel') {
-        selectIds = requestExcelFilter.DepositCurrencyIds;
-    }
-    RenderCurrency(depositCurrency, "Deposit" + type, selectIds, type === '');
+function RenderDepositCurrency() {
+    RenderCurrency(depositCurrency, "Deposit");
 }
 
-function RenderCurrency(currencies, type, checkedItems, isCheckAll = false) {
+function RenderCurrency(currencies, type) {
     var currencyFilter = $("#Filter" + type);
     currencyFilter.empty();
     currencyFilter.removeAttr('disabled');
@@ -315,7 +209,7 @@ function RenderCurrency(currencies, type, checkedItems, isCheckAll = false) {
             Id: type + currency.Id,
             Value: currency.Id,
             Text: currency.Name,
-            Checked: isCheckAll || checkedItems.includes(currency.Id.toString()),
+            Checked: true,
             Enable: true,
             CssClass: "",
             Items: []
@@ -327,7 +221,7 @@ function RenderCurrency(currencies, type, checkedItems, isCheckAll = false) {
         maxHeight: 450,
         shadow: true,
         showHeader: true,
-        isCheckAll: isCheckAll,
+        isCheckAll: true,
         showFooter: false,
         showFilter: true,
         checkAllText: "All",
@@ -538,7 +432,6 @@ function InitSubmitExcelFile() {
                 if (result && result.ErrorCode) {
                     showAlertMessage('errMsgExcel', result.ErrorMessage, 1);
                     $("#insert-setting").hide();
-                    $("#filterDivExcel").hide();
                     $("#gridExcelStakeLevel").hide();
                 } else {
                     if (result.Warning && result.Warning.ErrorCode !== 0) {
@@ -547,8 +440,7 @@ function InitSubmitExcelFile() {
                     if (result.Error && result.Error.ErrorCode !== 0) {
                         showAlertMessage('errMsgExcel', result.Error.ErrorMessage, 1);
                     } else {
-                        $("#filterDivExcel").show();
-                        InitExcelFilter(result);
+                        $("#btnInsertExcel").prop('disabled', false);
                         excelContent = result.StakeLevels;
                         RenderExcelGrid(result.StakeLevels);
                     }
@@ -608,109 +500,6 @@ function RenderExcelGrid(stakeLevels) {
     $('#gridExcelStakeLevel').show();
 }
 
-function UpdateExcelFilterValue() {
-    var selectedSportIds = $("#FilterSportTypeExcel").multiSelect("getCheckedItems");
-    var selectedBetTypeIds = $("#FilterBetTypeExcel").multiSelect("getCheckedItems");
-    requestExcelFilter = {
-        ProductID: $("#FilterProductExcel").val(),
-        SportTypes: selectedSportIds.join(),
-        SportTypesIds: selectedSportIds,
-        BetTypes: selectedBetTypeIds.join(),
-        BetTypeIds: selectedBetTypeIds,
-        DepositCurrency: '0',
-        CreditCurrency: '0'
-    };
-    requestExcelFilter.DepositCurrencyIds = $("#FilterDepositExcel").multiSelect("getCheckedItems");
-    requestExcelFilter.CreditCurrencyIds = $("#FilterCreditExcel").multiSelect("getCheckedItems");
-
-    var isCheckAllDepositCurrency = $("#FilterDepositExcel").multiSelect("getUncheckItems").length === 0;
-    var isCheckAllCreditCurrency = $("#FilterCreditExcel").multiSelect("getUncheckItems").length === 0;
-    if (!isCheckAllDepositCurrency) {
-        requestExcelFilter.DepositCurrency = requestFilter.DepositCurrencyIds.join();
-    }
-
-    if (!isCheckAllCreditCurrency) {
-        requestExcelFilter.CreditCurrency = requestFilter.CreditCurrencyIds.join();
-    }
-}
-
-function ValidateExcelRequest() {
-    HideError();
-    if (requestExcelFilter.SportTypes === null || requestExcelFilter.SportTypes.length === 0) {
-        showAlertMessage("errMsgExcel", "Sport Type cannot be null.", 1);
-        return false;
-    }
-
-    if (requestExcelFilter.BetTypes === null || requestExcelFilter.BetTypes.length === 0) {
-        showAlertMessage("errMsgExcel", "Bet Type cannot be null.", 1);
-        return false;
-    }
-
-    return true;
-}
-
-function FilterExcel() {
-    UpdateExcelFilterValue();
-
-    if (ValidateExcelRequest()) {
-        FilterStakeLevels();
-    }
-}
-
-function FilterStakeLevels() {
-    var matchStakeLevel = [];
-    excelContent.forEach(function (stakeLevel) {
-        if (requestExcelFilter.SportTypesIds.includes(stakeLevel.SportTypeId.toString())
-            && requestExcelFilter.BetTypeIds.includes(stakeLevel.BetTypeId.toString())
-            && (HasMatchCurrency(stakeLevel.CreditCurrency, creditCurrency, requestExcelFilter.CreditCurrencyIds)
-                || HasMatchCurrency(stakeLevel.DepositCurrency, depositCurrency, requestExcelFilter.DepositCurrencyIds))
-        ) {
-            matchStakeLevel.push(stakeLevel);
-        }
-    });
-
-    RenderExcelGrid(matchStakeLevel);
-}
-
-function HasMatchCurrency(currencyNames, matchCurrencies, filterData) {
-    var currencies = currencyNames.trim().split(',');
-    return currencies.some(function (currency) {
-        var isMatch = matchCurrencies.some(function (matchCurrency) {
-            if (matchCurrency.Name.split(' ')[1] === currency && filterData.includes(matchCurrency.Id.toString())) {
-                return true;
-            }
-        });
-
-        if (isMatch) {
-            return true;
-        }
-    });
-}
-
-function InitExcelFilter(result) {
-    requestExcelFilter.SportTypesIds = result.SportTypeIds.map(function (item) { return item.toString(); });
-    requestExcelFilter.BetTypeIds = result.BetTypeIds.map(function (item) { return item.toString(); });
-    requestExcelFilter.CreditCurrencyIds = GetCurrencyIds(result.CreditCurrencies, creditCurrency);
-    requestExcelFilter.DepositCurrencyIds = GetCurrencyIds(result.DepositCurrencies, depositCurrency);
-    $("#FilterProductExcel").val(result.ProductId).trigger("change");
-    RenderCreditCurrency('Excel');
-    RenderDepositCurrency('Excel');
-}
-
-function GetCurrencyIds(currencyNames, listCurrencies) {
-    var matchIds = [];
-    currencyNames.forEach(function (currencyName) {
-        var matchItem = listCurrencies.find(function (item) {
-            return item.Name.split(" ")[1] === currencyName;
-        });
-        if (matchItem) {
-            matchIds.push(matchItem.Id.toString());
-        }
-    });
-
-    return matchIds;
-}
-
 function InsertExcel() {
     HideError();
     try { parent.BlockUI(); } catch (e) { }
@@ -724,7 +513,6 @@ function InsertExcel() {
         success: function (rs) {
             if (rs && rs.ErrorCode) {
                 showAlertMessage('errMsgExcel', result.ErrorMessage, 1);
-                $("#filterDivExcel").hide();
                 $("#gridExcelStakeLevel").hide();
             } else {
                 if (rs && rs.ErrorCode !== undefined && rs.ErrorCode !== 0) {

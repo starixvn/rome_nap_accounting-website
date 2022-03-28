@@ -12,6 +12,7 @@
         </div>
         <div class="floatLeft">
             <input type="button" value="Submit" class="btn" onclick="ValidateSetting()" />
+            <input id="btnInsertExcel" type="button" value="Import" class="btn btn-edit" onclick="InsertExcel();" disabled>
         </div>
     </form>
     <div style="clear: both"></div>
@@ -20,62 +21,6 @@
             @Customer_Labels.Message_ExcelFileSizeLimit
         </span>
         <a id="sampleSettingLink" class="link-download-excel-template b" href="@Url.Content("~/Views/ITConfiguration/InitializingStakeLevel/StakeLevel.xls")">@Customer_Labels.Message_DownloadTemplate</a>
-    </div>
-</div>
-<div style="display: flex; width:100%;">
-    <div id="filterDivExcel" class="filterBox" style="display: none;">
-        <div class="filterContent" style="padding:0 5px;">
-            <table class="floatLeft">
-                <tr>
-                    <td class="w100">
-                        <label for="FilterProductExcel" class="edit-label">Product<span style="color: red;">*</span></label>
-                    </td>
-                    <td class="floatLeft">
-                        <select id="FilterProductExcel" class="setting-edit">
-                            <option value="" disabled selected>Please select</option>
-                        </select>
-                    </td>
-                    <td class="w100">
-                        <label for="FilterSportTypeExcel" class="edit-label">Sport<span style="color: red;">*</span></label>
-                    </td>
-                    <td class="floatLeft">
-                        <select id="FilterSportTypeExcel" class="setting-edit">
-                            <option value="" disabled selected>Please select</option>
-                        </select>
-                    </td>
-                    <td class="w100"><label for="FilterBetTypeExcel" class="edit-label">Bettype<span style="color: red;">*</span></label></td>
-                    <td class="floatLeft">
-                        <select id="FilterBetTypeExcel" class="setting-edit">
-                            <option value="" disabled selected>Please select</option>
-                        </select>
-                    </td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td class="w100">
-                        <label for="FilterCreditExcel" class="edit-label">Credit Currency</label>
-                    </td>
-                    <td class="floatLeft">
-                        <select id="FilterCreditExcel" class="setting-edit">
-                            <option value="" disabled selected>Please select</option>
-                        </select>
-                    </td>
-                    <td class="w100">
-                        <label for="FilterDepositExcel" class="edit-label">Deposit Currency</label>
-                    </td>
-                    <td class="floatLeft">
-                        <select id="FilterDepositExcel" class="setting-edit">
-                            <option value="" disabled selected>Please select</option>
-                        </select>
-                    </td>
-                    <td></td>
-                    <td class="floatLeft">
-                        <input id="btnSearchExcel" type="button" value="Search" class="btn btn-edit" onclick="FilterExcel();">
-                        <input id="btnInsertExcel" type="button" value="Import" class="btn btn-edit" onclick="InsertExcel();">
-                    </td>
-                </tr>
-            </table>
-        </div>
     </div>
 </div>
 <div class="mainContent" style="margin-top:10px; width: auto;">
