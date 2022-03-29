@@ -53,8 +53,7 @@
                 {SportContants.Sabaclub, "Saba.games_Details"},
                 {SportContants.IonCasino, "IONLiveCasino_Details"},
                 {SportContants.GDG, "GDG_Details"},
-                {SportContants.PPLiveCasino, "PPLiveCasino_Details"},
-                {SportContants.FGG, "FGG_Details"}
+                {SportContants.PPLiveCasino, "PPLiveCasino_Details"}
             };
 
             return fileNameMapper.ContainsKey(sportType) ?
@@ -76,7 +75,8 @@
                 sportType == SportContants.WM ||
                 sportType == SportContants.GDG ||
                 sportType == SportContants.BigGame ||
-                sportType == SportContants.PPLiveCasino)
+                sportType == SportContants.PPLiveCasino ||
+                sportType == SportContants.FGG)
             {
                 return GetLiveCasinoTickets(refNo, custId, transType);
             }
