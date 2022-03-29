@@ -854,7 +854,7 @@ function showFGGBetDetails(refno, winlossDate, custId, transType) {
     var params = {
         url: "AGCasinoBetList/BetDetails",
         title: "FGG - Detailed Bet list - " + winlossDate.split(" ")[0],
-        jsonParam: { Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 239, PageSize: 500 },
+        jsonParam: { Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 176, PageSize: 500 },
         width: 1080,
         height: 600
     };

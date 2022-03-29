@@ -53,7 +53,8 @@
                 {SportContants.Sabaclub, "Saba.games_Details"},
                 {SportContants.IonCasino, "IONLiveCasino_Details"},
                 {SportContants.GDG, "GDG_Details"},
-                {SportContants.PPLiveCasino, "PPLiveCasino_Details"}
+                {SportContants.PPLiveCasino, "PPLiveCasino_Details"},
+                {SportContants.FGG, "FGG_Details"}
             };
 
             return fileNameMapper.ContainsKey(sportType) ?
