@@ -1,0 +1,19 @@
+﻿.edit-label {
+    float: right;
+}
+
+.filterBox {
+    min-height: 100%;
+    margin-top: 4px;
+    padding-top: 4px;
+    padding-bottom: 5px;
+    background: url('../../../../App_Themes/Images/Banner/bg_head_tb.jpg') repeat-x scroll left bottom #FFFFFF;
+    border: 1px solid #7C98A4;
+    text-align: left;
+    width: 100%
+}
+
+.floatLeft {
+    float: left;
+    padding: 4px;
+}

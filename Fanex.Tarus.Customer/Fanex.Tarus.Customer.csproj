@@ -340,6 +340,7 @@
     <Compile Include="Business\GoldDeluxe\GoldDeluxeService.cs" />
     <Compile Include="Business\GoldDeluxe\IGoldDeluxeService.cs" />
     <Compile Include="Business\InitializingCustomerSetting\InitializingCustomerSettingService.cs" />
+    <Compile Include="Business\InitializingStakeLevel\InitializingStakeLevelService.cs" />
     <Compile Include="Business\LicenseeDcsSetting\ILicenseeDcsSettingService.cs" />
     <Compile Include="Business\LicenseeDcsSetting\LicenseeDcsSettingService.cs" />
     <Compile Include="Business\LicenseeOddsGroup\LicenseeOddsGroupService.cs" />
@@ -389,6 +390,7 @@
     <Compile Include="Controller\Casino\SyncCasinoController.cs" />
     <Compile Include="Controller\Chatbot\ChatbotController.cs" />
     <Compile Include="Controller\CN88Customer\MoveCN88SuperController.cs" />
+    <Compile Include="Controller\InitializingStakeLevel\InitStakeLevelController.cs" />
     <Compile Include="Controller\MultipleUpdateSuperStatusController.cs" />
     <Compile Include="Controller\CopySuperSettingController.cs" />
     <Compile Include="Controller\CopyVRSettingController.cs" />
@@ -476,6 +478,14 @@
     <Compile Include="Criteria\InitializingCustomerSetting\GetConfigDetailCriteria.cs" />
     <Compile Include="Criteria\InitializingCustomerSetting\GetSettingCriteria.cs" />
     <Compile Include="Criteria\InitializingCustomerSetting\UpdateConfigStatusCriteria.cs" />
+    <Compile Include="Criteria\InitializingStakeLevel\BetTypeSelCriteria.cs" />
+    <Compile Include="Criteria\InitializingStakeLevel\CurrencySelCriteria.cs" />
+    <Compile Include="Criteria\InitializingStakeLevel\ProductSelCriteria.cs" />
+    <Compile Include="Criteria\InitializingStakeLevel\SiteSelCriteria.cs" />
+    <Compile Include="Criteria\InitializingStakeLevel\SportTypeSelCriteria.cs" />
+    <Compile Include="Criteria\InitializingStakeLevel\StakeLevelCheckCriteria.cs" />
+    <Compile Include="Criteria\InitializingStakeLevel\StakeLevelInsCriteria.cs" />
+    <Compile Include="Criteria\InitializingStakeLevel\StakeLevelSelCriteria.cs" />
     <Compile Include="Criteria\LicenseeDcsSetting\GetAgentCriteria.cs" />
     <Compile Include="Criteria\LicenseeDcsSetting\GetBetSettingWithoutMaxPerMatchCriteria.cs" />
     <Compile Include="Criteria\LicenseeDcsSetting\GetStakeLevelCriteria.cs" />
@@ -563,6 +573,7 @@
     <Compile Include="DataAccess\GoldDeluxe\GoldDeluxeRepository.cs" />
     <Compile Include="DataAccess\GoldDeluxe\IGoldDeluxeRepository.cs" />
     <Compile Include="DataAccess\InitializingCustomerSetting\InitializingCustomerSettingDataAccess.cs" />
+    <Compile Include="DataAccess\InitializingStakeLevel\InitStakeLevelDataAccess.cs" />
     <Compile Include="DataAccess\LicenseeDcsSetting\ILicenseeDcsSettingDataAccess.cs" />
     <Compile Include="DataAccess\LicenseeDcsSetting\LicenseeDcsSettingDataAccess.cs" />
     <Compile Include="DataAccess\LicenseeOddsGroup\ILicenseeOddsGroupDataAccess.cs" />
@@ -674,6 +685,10 @@
     <Compile Include="Entities\InitializingCustomerSetting\SportBetTypeBySettingModel.cs" />
     <Compile Include="Entities\InitializingCustomerSetting\SportModel.cs" />
     <Compile Include="Entities\InitializingCustomerSetting\ValidateResultModel.cs" />
+    <Compile Include="Entities\InitializingStakeLevel\FilterModel.cs" />
+    <Compile Include="Entities\InitializingStakeLevel\StakeLevelModel.cs" />
+    <Compile Include="Entities\InitializingStakeLevel\StakeLevelResponse.cs" />
+    <Compile Include="Entities\InitializingStakeLevel\ValidateStakeLevelResponse.cs" />
     <Compile Include="Entities\JsonWithoutNullField.cs" />
     <Compile Include="Entities\LicenseeDcsSetting\BetSettingWithoutMaxPerMatchEntity.cs" />
     <Compile Include="Entities\LicenseeDcsSetting\StakeLevelEntity.cs" />
@@ -721,6 +736,9 @@
     <Compile Include="Requests\CustomerSetting\Suspend\GetSingleSuspendCustomerInfoQuery.cs" />
     <Compile Include="Requests\GetMessageLogsQuery.cs" />
     <Compile Include="Requests\InitializingCustomerSetting\GenerateConfigSettingRequest.cs" />
+    <Compile Include="Requests\InitializingStakeLevel\GetBettypeRequest.cs" />
+    <Compile Include="Requests\InitializingStakeLevel\GetStakeLevelRequest.cs" />
+    <Compile Include="Requests\InitializingStakeLevel\InsertStakeLevelRequest.cs" />
     <Compile Include="Requests\LicenseeOddsGroup\UpdateOddsGroupRequest.cs" />
     <Compile Include="Requests\MultipleUpdateSuperStatus\UpdatedCustomerIinfo.cs" />
     <Compile Include="Requests\MultipleUpdateSuperStatus\UpdateSupersProtectedStatusRequest.cs" />

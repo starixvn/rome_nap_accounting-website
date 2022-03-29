@@ -1,0 +1,28 @@
+﻿@using Fanex.Tarus.Customer.Resources;
+<div id="errMsgExcel"></div>
+<div id="errWarningMsgExcel"></div>
+<div id="insert-setting" class="filterContent" style="border: solid 1px #7C98A4; width:100%;padding:0 5px;">
+    <form id="mainForm">
+        <div class="clear"></div>
+        <div class="b">&nbsp;&nbsp;&nbsp;Choose an excel file to upload (Format: *.xls, *.xlsx)</div>
+        <div class="clear"></div>
+
+        <div class="floatLeft">
+            <input id="uploadFile" name="uploadFile" type="file" style="width: 280px" accept=".xls,.xlsx" />
+        </div>
+        <div class="floatLeft">
+            <input type="button" value="Submit" class="btn" onclick="ValidateSetting()" />
+            <input id="btnInsertExcel" type="button" value="Import" class="btn btn-edit" onclick="InsertExcel();" disabled>
+        </div>
+    </form>
+    <div style="clear: both"></div>
+    <div>
+        <span class="label-filesize-limit">
+            @Customer_Labels.Message_ExcelFileSizeLimit
+        </span>
+        <a id="sampleSettingLink" class="link-download-excel-template b" href="@Url.Content("~/Views/ITConfiguration/InitializingStakeLevel/StakeLevel.xls")">@Customer_Labels.Message_DownloadTemplate</a>
+    </div>
+</div>
+<div class="mainContent" style="margin-top:10px; width: auto;">
+    <div id="gridExcelStakeLevel" class="freegrid" style="display: none;"></div>
+</div>
