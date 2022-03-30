@@ -975,6 +975,18 @@ function ViewCashOutHistory(transId, refNo, betType, originalTransId, title) {
     openResultsPopUp(cashoutParam);
 }
 
+function ViewNewCashOutHistory(transId, custId, winlostDate) {
+    var cashoutParam = {
+        url: "BetList/GetCashOutHistory",
+        title: "Cash Out History",
+        jsonParam: { transId: transId, custId: custId, winlostDate: winlostDate},
+        width: 500,
+        height: 400
+    };
+
+    openResultsPopUp(cashoutParam);
+}
+
 function ViewResult(matchid, race, bettype, sporttype, refno, username, winlostdate, refno_mixparlay, league, is_outright, betid, matchcode, betcheck, transdesc, siteId) {
     var resultParam = getResultParamBySportType(matchid, race, bettype, sporttype, refno, username, winlostdate, refno_mixparlay, league, is_outright, betid, matchcode, betcheck, transdesc, siteId);
 

@@ -1,0 +1,111 @@
+﻿@using Fanex.Tarus.BetList.Models
+@using Fanex.Tarus.BetList.Extensions
+@using Fanex.Tarus.BetList.Resources
+@using System.Linq;
+
+@model CashOutHistoryModel
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="~/js/jQuery/GridScroller/gridscroller.css" />
+    <link rel="stylesheet" type="text/css" href="~/Views/BetList/Style/BetList.css?ver=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" />
+    <title>Cash Out History</title>
+    <style>
+        .time {
+            font-size: 11px;
+        }
+
+        .display-none {
+            display: none;
+        }
+
+        .status {
+            color: #171717;
+            font-weight: normal;
+        }
+    </style>
+</head>
+<body>
+    <p>Ref No: <b> @Model.TransId</b></p>
+    <div id="originalTicket" class="freegrid display-none">
+        <div class="col_header row-headers-background scroll-y">
+            <div class="header-container">
+                <table class="grid-fixed-table col_header_content">
+                    <thead>
+                        <tr>
+                            <th><div class="table-cell height34 width150">Date/Time</div></th>
+                            <th><div class="table-cell height34 width100">Cash Out Amount</div></th>
+                            <th><div class="table-cell height34 width200">Activity</div></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+        <div class="grid-container container">
+            <div class="content-container">
+                <table id="originalBetTicketContent" class="grid-fixed-table col_header_content">
+                    <thead>
+                        <tr>
+                            <th><div class="table-cell height34 width150">Date/Time</div></th>
+                            <th><div class="table-cell height34 width100">Cash Out Amount</div></th>
+                            <th><div class="table-cell height34 width200">Activity</div></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @if (Model == null || Model.DetailHistory == null || !Model.DetailHistory.Any())
+                        {
+                            <tr>
+                                <td colspan="3" class="c">Information is not available due to network latency. Please wait a few minutes and try again.</td>
+                            </tr>
+                        }
+                        else
+                        {
+                            foreach (var item in Model.DetailHistory)
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="table-cell r width150">
+                                            @item.ChangeTimeText
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="table-cell r width100">
+                                            @item.CashoutAmount.Format(2)
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="table-cell width200">
+                                            @item.ActionName
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="~/js/jQuery/jquery.js"></script>
+    <script type="text/javascript" src="~/js/jQuery/GridScroller/jquery.gridscroller.1.0.js"></script>
+    <script type="text/javascript">
+        function initGridOpts(contentId) {
+            return {
+                tblContentId: contentId,
+                manualCopyHeader: true,
+                fullWidth: true,
+                fullHeight: false,
+                gridHeight: 300,
+                freezeWidth: 0,
+                numberFreezeCol: 0
+            };
+        }
+        $(function () {
+            var originalGridOpts = initGridOpts("originalBetTicketContent");
+            var $originalTicket = $("#originalTicket");
+            $originalTicket.initGrid(originalGridOpts).removeClass("display-none").gridScroller(originalGridOpts);
+        });
+    </script>
+</body>
+</html>
