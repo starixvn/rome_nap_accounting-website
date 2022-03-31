@@ -33,7 +33,7 @@
     {
         allowedProducts.Append("/").Append("SG");
     }
-    var productIdVirtualGames = Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdVirtualGames;
+    var productIdVirtualGames = 38;
     if (productIdVirtualGames != 0)
     {
         allowedProducts.Append("/").Append(CacheRef.GetProductName(productIdVirtualGames));
