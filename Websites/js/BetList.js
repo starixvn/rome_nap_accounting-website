@@ -849,6 +849,18 @@ function showBetDetailsOnBettransLC(sportTypeId, refno, winlossDate, custId, tra
 
     openResultsPopUp(params);
 }
+
+function showFGGBetDetails(refno, winlossDate, custId, transType) {
+    var params = {
+        url: "AGCasinoBetList/BetDetails",
+        title: "FGG - Detailed Bet list - " + winlossDate.split(" ")[0],
+        jsonParam: { Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 176, PageSize: 500 },
+        width: 1080,
+        height: 600
+    };
+
+    openResultsPopUp(params);
+}
 // -------------------- Functions whose name must name by Fanex.Toco
 function ViewRNGCasinoResult(matchId, race, betType, sportType, refNo, winlostDate, custId) {
     var params = $.param({
@@ -1118,6 +1130,9 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
         case 238:
             return getHabaneroParam(custId, transId3rd, gameId3rd, currencyId, siteId);
 
+        case 176: // FGG
+            return getFGGParam(custId, transId3rd, gameId3rd, currencyId, siteId, winlostdate);
+
         default:
             return undefined;
     }
@@ -1321,6 +1336,25 @@ function getBGParam(custId, transId3rd, gameId3rd, currencyId, siteId) {
         url: "ThirdParty/BGResult",
         title: "BG Result",
         jsonParam: { custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, currencyId: currencyId, siteId: siteId, productId: 57 },
+        width: 850,
+        height: 800
+    };
+}
+
+function getFGGParam(custId, transId3rd, gameId3rd, currencyId, siteId, endTime) {
+    return {
+        url: "ThirdParty/FGGResult",
+        title: "FGG Result",
+        jsonParam:
+        {
+            custId: custId,
+            transId3rd: transId3rd,
+            GameId3rd: gameId3rd,
+            EndTime: endTime,
+            currencyId: currencyId,
+            siteId: siteId,
+            productId: 70
+        },
         width: 850,
         height: 800
     };

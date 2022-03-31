@@ -764,7 +764,8 @@ var ViewPT = {
                 ViewPT.viewPTBasedOnKindOfCustomer(userName, 0, 0, isLive, 24);
                 break;
             case 245://Virtual Games
-                ViewPT.viewPTBasedOnKindOfCustomer(userName, 0, 0, isLive, 38);
+            case 176: // FGG
+                ViewPT.viewPTBasedOnKindOfCustomer(userName, sportId, betTypeId, isLive, 64);
                 break;
             case 200://Saba.games
                 ViewPT.viewPTBasedOnKindOfCustomer(userName, 0, 0, isLive, 42);

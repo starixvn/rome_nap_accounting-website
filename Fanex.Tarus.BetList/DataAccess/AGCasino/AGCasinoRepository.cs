@@ -65,7 +65,8 @@
                                 Currency = HasColumn(reader, "Currency") ? Converter.ToString2(reader["Currency"]) : string.Empty,
                                 CurrencyId = HasColumn(reader, "CurrencyId") ? Converter.ToInt(reader["CurrencyId"]) : 0,
                                 SiteId = HasColumn(reader, "SiteId") ? Converter.ToString2(reader["SiteId"]) : "",
-                                LeagueId = Converter.ToInt(reader["leagueid"])
+                                LeagueId = Converter.ToInt(reader["leagueid"]),
+                                EventDate = HasColumn(reader, "EventDate") ? Converter.ToDateTime(reader["EventDate"]) : (DateTime?)null,
                             },
                             ChoiceHtml = string.Empty,
                             OddHtml = string.Empty,

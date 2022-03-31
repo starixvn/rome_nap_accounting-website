@@ -269,6 +269,11 @@
         public static bool IsTableGames(int betTypeId)
             => 4901 <= betTypeId && betTypeId <= 5000;
 
+        public static bool IsFGG(int betTypeId)
+        {
+            return 8202 <= betTypeId && betTypeId <= 8299;
+        }
+
         public static int GetSportFromBetTypeId(int betTypeId)
         {
             if (5601 <= betTypeId && betTypeId <= 5699)

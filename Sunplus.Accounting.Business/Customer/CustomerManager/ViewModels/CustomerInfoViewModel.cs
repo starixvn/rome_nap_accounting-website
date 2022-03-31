@@ -202,7 +202,7 @@
                                 HideRNGLottery = Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdRNGLottery == 0 ||
                                     IsDeposit || (SearchAccountRoleId < 4 && (isHideRNGLottery || isHideUplineRNGLottery));
                                 break;
-                            case "38":
+                            case "64":
                                 bool isHideVirtualGames = Utils.ToBoolean(row["IsHidden"]);
                                 HideVirtualGames = Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdVirtualGames == 0 || isHideVirtualGames;
                                 break;

@@ -75,7 +75,8 @@
                 sportType == SportContants.WM ||
                 sportType == SportContants.GDG ||
                 sportType == SportContants.BigGame ||
-                sportType == SportContants.PPLiveCasino)
+                sportType == SportContants.PPLiveCasino ||
+                sportType == SportContants.FGG)
             {
                 return GetLiveCasinoTickets(refNo, custId, transType);
             }
