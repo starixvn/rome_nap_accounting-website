@@ -41,6 +41,8 @@ namespace Fanex.Tarus.Customer.ViewModels.LicenseeDcsSetting
                     return LicenseeDcsSettingLabels.PT;
                 case SettingType.BetSetting:
                 case SettingType.BetSettingWithoutMaxPerMatch:
+                case SettingType.BetSettingWithMaxPayoutPerMatch:
+                case SettingType.BetSettingWithMaxPerBall:
                     return LicenseeDcsSettingLabels.BetSetting;
                 case SettingType.ProductStatus:
                     return LicenseeDcsSettingLabels.Status;

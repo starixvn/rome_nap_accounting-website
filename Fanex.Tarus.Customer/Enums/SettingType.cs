@@ -11,6 +11,8 @@
         WinLossLimit = 6,
         StakeLevel = 7,
         StakeLevelGroup = 8,
-        BetSettingWithoutMaxPerMatch = 11
+        BetSettingWithMaxPayoutPerMatch = 10,
+        BetSettingWithoutMaxPerMatch = 11,
+        BetSettingWithMaxPerBall = 12
     }
 }

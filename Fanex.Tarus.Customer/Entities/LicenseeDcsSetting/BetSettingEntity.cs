@@ -2,7 +2,7 @@
 
 namespace Fanex.Tarus.Customer.Entities.LicenseeDcsSetting
 {
-    public sealed class BetSettingEntity
+    public class BetSettingEntity
     {
         public BetSettingEntity()
         {

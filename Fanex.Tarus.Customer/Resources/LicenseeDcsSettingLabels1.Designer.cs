@@ -223,6 +223,24 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Max Payout Per Match.
+        /// </summary>
+        public static string MaxPayoutPerMatch {
+            get {
+                return ResourceManager.GetString("MaxPayoutPerMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max Per Ball.
+        /// </summary>
+        public static string MaxPerBall {
+            get {
+                return ResourceManager.GetString("MaxPerBall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Max Per Match.
         /// </summary>
         public static string MaxPerMatch {

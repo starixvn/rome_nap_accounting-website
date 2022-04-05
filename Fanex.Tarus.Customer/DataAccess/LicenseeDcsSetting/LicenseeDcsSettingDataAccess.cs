@@ -126,6 +126,96 @@ namespace Fanex.Tarus.Customer.DataAccess.LicenseeDcsSetting
             return result.ToList();
         }
 
+        public IEnumerable<BetSettingWithMaxPayoutPerMatchEntity> GetBetSettingsWithMaxPayoutPerMatch(ICriteria criteria)
+        {
+            IList<BetSettingWithMaxPayoutPerMatchEntity> supers = new List<BetSettingWithMaxPayoutPerMatchEntity>();
+            IList<BetSettingWithMaxPayoutPerMatchEntity> agents = new List<BetSettingWithMaxPayoutPerMatchEntity>();
+
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    while (reader.Read())
+                    {
+                        supers.Add(GetBetSettingWithMaxPayoutPerMatch(reader));
+                    }
+
+                    if (reader.NextResult())
+                    {
+                        while (reader.Read())
+                        {
+                            agents.Add(GetBetSettingWithMaxPayoutPerMatch(reader));
+                        }
+                    }
+                }
+            }
+
+            var result = from super in supers
+                         join agent in agents
+                         on new { super.SportType, super.BetType }
+                         equals new { agent.SportType, agent.BetType }
+                         select new BetSettingWithMaxPayoutPerMatchEntity()
+                         {
+                             SportType = super.SportType,
+                             BetType = super.BetType,
+                             MinBet = agent.MinBet,
+                             SuperMinBet = super.MinBet,
+                             MaxBet = agent.MaxBet,
+                             SuperMaxBet = super.MaxBet,
+                             MaxPerMatch = agent.MaxPerMatch,
+                             SuperMaxPerMatch = super.MaxPerMatch,
+                             MaxPayoutPerMatch = agent.MaxPayoutPerMatch,
+                             SuperMaxPayoutPerMatch = super.MaxPayoutPerMatch
+                         };
+
+            return result.ToList();
+        }
+
+        public IEnumerable<BetSettingWithMaxPerBallEntity> GetBetSettingsWithMaxPerBall(ICriteria criteria)
+        {
+            IList<BetSettingWithMaxPerBallEntity> supers = new List<BetSettingWithMaxPerBallEntity>();
+            IList<BetSettingWithMaxPerBallEntity> agents = new List<BetSettingWithMaxPerBallEntity>();
+
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    while (reader.Read())
+                    {
+                        supers.Add(GetBetSettingWithMaxPerBall(reader));
+                    }
+
+                    if (reader.NextResult())
+                    {
+                        while (reader.Read())
+                        {
+                            agents.Add(GetBetSettingWithMaxPerBall(reader));
+                        }
+                    }
+                }
+            }
+
+            var result = from super in supers
+                         join agent in agents
+                         on new { super.SportType, super.BetType }
+                         equals new { agent.SportType, agent.BetType }
+                         select new BetSettingWithMaxPerBallEntity()
+                         {
+                             SportType = super.SportType,
+                             BetType = super.BetType,
+                             MinBet = agent.MinBet,
+                             SuperMinBet = super.MinBet,
+                             MaxBet = agent.MaxBet,
+                             SuperMaxBet = super.MaxBet,
+                             MaxPerMatch = agent.MaxPerMatch,
+                             SuperMaxPerMatch = super.MaxPerMatch,
+                             MaxPerBall = agent.MaxPerBall,
+                             SuperMaxPerBall = super.MaxPerBall
+                         };
+
+            return result.ToList();
+        }
+
         public StatusEntity GetStatus(ICriteria criteria)
             => ExecuteDataReader(criteria, GetStatusEntity).FirstOrDefault();
 
@@ -236,7 +326,6 @@ namespace Fanex.Tarus.Customer.DataAccess.LicenseeDcsSetting
                 IsLive = Convert.ToBoolean(reader["islive"])
             };
 
-
         private static BetSettingEntity GetBetSetting(IDataReader reader)
             => new BetSettingEntity(
                 Convert.ToInt32(reader["sporttype"]),
@@ -251,6 +340,24 @@ namespace Fanex.Tarus.Customer.DataAccess.LicenseeDcsSetting
                 Convert.ToInt32(reader["bettype"]),
                 Convert.ToDecimal(reader["minbet"]),
                 Convert.ToDecimal(reader["maxbet"]));
+
+        private static BetSettingWithMaxPayoutPerMatchEntity GetBetSettingWithMaxPayoutPerMatch(IDataReader reader)
+            => new BetSettingWithMaxPayoutPerMatchEntity(
+                Convert.ToInt32(reader["sporttype"]),
+                Convert.ToInt32(reader["bettype"]),
+                Convert.ToDecimal(reader["minbet"]),
+                Convert.ToDecimal(reader["maxbet"]),
+                Convert.ToDecimal(reader["maxpermatch"]),
+                Convert.ToDecimal(reader["maxpayoutpermatch"]));
+
+        private static BetSettingWithMaxPerBallEntity GetBetSettingWithMaxPerBall(IDataReader reader)
+            => new BetSettingWithMaxPerBallEntity(
+                Convert.ToInt32(reader["sporttype"]),
+                Convert.ToInt32(reader["bettype"]),
+                Convert.ToDecimal(reader["minbet"]),
+                Convert.ToDecimal(reader["maxbet"]),
+                Convert.ToDecimal(reader["maxpermatch"]),
+                Convert.ToDecimal(reader["maxpernumber"]));
 
         private static StatusEntity GetStatusEntity(IDataReader reader)
             => new StatusEntity(

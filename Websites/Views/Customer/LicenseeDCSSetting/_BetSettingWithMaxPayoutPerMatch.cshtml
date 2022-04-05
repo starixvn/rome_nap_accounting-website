@@ -1,0 +1,124 @@
+﻿@using Fanex.Tarus.Customer.Entities.LicenseeDcsSetting;
+@using Fanex.Tarus.Customer.Resources
+@using Fanex.Tarus.Customer.ViewModels.LicenseeDcsSetting;
+@model BetSettingWithMaxPayoutPerMatchViewModel
+@{
+    Layout = null;
+    bool oneSportTypeOnly = Model.BetSettings.Count() == 1;
+    var superOrAgentNames = Model.ShowSuperOrAgentNames();
+}
+
+<div id="update_section">
+    <label>
+        <input type="checkbox" id="apply_members_checkbox" /><span class="b">@LicenseeDcsSettingLabels.ApplyExistingMembers</span>
+    </label>
+    <table class="tblcollapse betsetting_table mT5" id="betsetting_table">
+        <thead>
+            <tr class="title">
+                <th colspan="7">@LicenseeDcsSettingLabels.BetSetting <span>(@superOrAgentNames)</span></th>
+            </tr>
+            <tr class="title_1">
+                <th>
+                    @if (!oneSportTypeOnly)
+                    {
+                        <input type="checkbox" id="allsports_checkbox" />
+                    }
+                </th>
+                <th>
+                    @LicenseeDcsSettingLabels.AllSports
+                    @if (!oneSportTypeOnly)
+                    {
+                        <span title="@LicenseeDcsSettingLabels.CopyBetSettingFrom1stRow" class="icon-copy-setting" id="copy_setting_icon" data-sporttype="@Model.BetSettings.First().SportType"></span>
+                    }
+                </th>
+                <th>
+                    @LicenseeDcsSettingLabels.Bettype
+                </th>
+                <th>@LicenseeDcsSettingLabels.MinBet</th>
+                <th>@LicenseeDcsSettingLabels.MaxBet</th>
+                <th>@LicenseeDcsSettingLabels.MaxPerMatch</th>
+                <th>@LicenseeDcsSettingLabels.MaxPayoutPerMatch</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.BetSettings)
+            {
+            <tr data-sporttype="@item.SportType" data-bettype="@item.BetType" data-sporttypename="@item.SportTypeName" data-bettypename="@item.BetTypeName">
+                <td>
+                    <input type="checkbox" class="sporttype-checkbox" data-sporttype="@item.SportType" />
+                </td>
+                <td class="l">@item.SportTypeName</td>
+                <td class="l">@item.BetTypeName</td>
+                <td class="l">
+                    <input type="text"
+                           disabled="disabled"
+                           class="numeric"
+                           data-sporttype="@item.SportType"
+                           data-oldvalue="@item.MinBet"
+                           value="@item.MinBet.ToString("N0")"
+                           id="minbet_@item.SportType">
+                    <span>@item.SuperMinBet.ToString("N0")</span>
+                </td>
+                <td class="l">
+                    <input type="text"
+                           disabled="disabled"
+                           class="numeric"
+                           data-sporttype="@item.SportType"
+                           data-oldvalue="@item.MaxBet"
+                           value="@item.MaxBet.ToString("N0")"
+                           id="maxbet_@item.SportType">
+                    <span>@item.SuperMaxBet.ToString("N0")</span>
+                </td>
+                <td class="l">
+                    <input type="text"
+                           disabled="disabled"
+                           class="numeric"
+                           data-sporttype="@item.SportType"
+                           data-oldvalue="@item.MaxPerMatch"
+                           value="@item.MaxPerMatch.ToString("N0")"
+                           id="maxpermatch_@item.SportType">
+                    <span>@item.SuperMaxPerMatch.ToString("N0")</span>
+                </td>
+                <td class="l">
+                    <input type="text"
+                           disabled="disabled"
+                           class="numeric"
+                           data-sporttype="@item.SportType"
+                           data-oldvalue="@item.MaxPayoutPerMatch"
+                           value="@item.MaxPayoutPerMatch.ToString("N0")"
+                           id="maxpayoutpermatch_@item.SportType">
+                    <span>@item.SuperMaxPayoutPerMatch.ToString("N0")</span>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+    <div class="btnNextR mT5" id="btnNext">
+        <div class="btnNextL">@LicenseeDcsSettingLabels.Next</div>
+    </div>
+</div>
+<div class="hide" id="review_section">
+    <div class="review-apply-members">@LicenseeDcsSettingLabels.ApplyExistingMembers: <span id="apply_members_span"></span></div>
+    <table class="tblcollapse reviewsetting_table mT5" id="reviewsetting_table">
+        <thead>
+            <tr class="title">
+                <td colspan="8">@LicenseeDcsSettingLabels.ReviewBetSetting <span>@Model.ProductName</span> <span>(@superOrAgentNames)</span></td>
+            </tr>
+            <tr class="title_1">
+                <th>@LicenseeDcsSettingLabels.AllSports</th>
+                <th>@LicenseeDcsSettingLabels.Bettype</th>
+                <th>@LicenseeDcsSettingLabels.MinBet</th>
+                <th>@LicenseeDcsSettingLabels.MaxBet</th>
+                <th>@LicenseeDcsSettingLabels.MaxPerMatch</th>
+                <th>@LicenseeDcsSettingLabels.MaxPayoutPerMatch</th>
+                <th>@LicenseeDcsSettingLabels.Updated</th>
+                <th>@LicenseeDcsSettingLabels.Message</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <button type="button" class="update-setting-button mT5" id="btnBetSettingUpdate">@LicenseeDcsSettingLabels.Update</button>
+    <div class="btnNextR mT5" id="btnBack">
+        <div class="btnNextL">@LicenseeDcsSettingLabels.Back</div>
+    </div>
+</div>

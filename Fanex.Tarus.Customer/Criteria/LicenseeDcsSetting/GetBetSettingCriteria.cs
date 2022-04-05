@@ -2,7 +2,7 @@
 
 namespace Fanex.Tarus.Customer.Criteria.LicenseeDcsSetting
 {
-    internal sealed class GetBetSettingCriteria : CriteriaBase
+    internal class GetBetSettingCriteria : CriteriaBase
     {
         public GetBetSettingCriteria(int productId, int superId, int agentId)
         {
