@@ -29,12 +29,15 @@
             HttpClient client = new HttpClient();
             HttpResponseMessage response = await client.PostAsync(apiUrl, content);
             var responseString = await response.Content.ReadAsStringAsync();
-            Logger.Log.Info("Casino API Response Message: " + responseString);
             var casinoApiResponse = JsonConvert.DeserializeObject<CasinoApiResponse>(responseString);
-
+            request.Auth = null; // Remove sensitive info.
             if (!casinoApiResponse.IsSuccess)
             {
                 Logger.Log.Error("Casino API Error: </br>Request: " + SerializeCasinoAPIObject(request) + "</br>Response: " + responseString);
+            }
+            else
+            {
+                Logger.Log.Info("Casino API Called: </br>Request: " + SerializeCasinoAPIObject(request) + "</br>Response: " + responseString);
             }
 
             return casinoApiResponse;
@@ -45,7 +48,8 @@
 
             JsonSerializerSettings serializeSetting = new JsonSerializerSettings
             {
-                DateFormatString = "yyyy-MM-dd hh:mm:ss.fff"
+                DateFormatString = "yyyy-MM-dd hh:mm:ss.fff",
+                
             };
 
             return JsonConvert.SerializeObject(obj, serializeSetting);

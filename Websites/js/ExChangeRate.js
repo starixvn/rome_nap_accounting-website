@@ -246,6 +246,7 @@ function ReloadExchangeRateList() {
 
 function UpdateBaseRate() {
     document.getElementById('errMsg').innerHTML = '';
+    document.getElementById('errMsg1').innerHTML = '';
     parent.BlockUI();
     var param = 'type=editbaserate';
     param += '&updateParams=';
@@ -294,6 +295,11 @@ function UpdateBaseRate() {
             if (rs.length > 0) {
                 if (rs.split('|')[0] === 'no') {
                     showAlertMessage("errMsg", rs.split('|')[1], 1);
+                }
+                else if (rs.split('|')[0] === '2') // Success udpate MBC but failed sync to CS
+                {
+                    showAlertMessage("errMsg", "The base rates have been updated successfully.", 0);
+                    showAlertMessage("errMsg1", rs.split('|')[1], 1);
                 }
                 else if (rs.split('|')[0] === '500') {
                     showAlertMessage("errMsg", rs.split('|')[1], 1);

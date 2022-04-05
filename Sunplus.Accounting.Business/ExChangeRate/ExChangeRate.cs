@@ -488,8 +488,17 @@ namespace Sunplus.Accounting.Business.ExChangeRate
             var response = casinoApiService.UpdateExchange(CSRequest);
             if (!response.IsSuccess)
             {
-                result.ErrorCode = 1;
-                result.ErrorMessage = response.Result[0].ErrorCode + ": " + response.Result[0].Description;
+                var listFailedUpdateCurrencies = new List<string>();
+                for (int i = 0; i < response.Result.Count; i++)
+                {
+                    if (!response.Result[i].ErrorCode.Equals("0"))
+                    {
+                        listFailedUpdateCurrencies.Add(CSRequest.Call[i].Currency);
+                    }
+                }
+
+                result.ErrorCode = 2;
+                result.ErrorMessage = $"Failed to sync new exchange rates in OneRNG DB: {string.Join(",", listFailedUpdateCurrencies)}";
             }
             string tplSubject = "Exchange Rate was changed";
 

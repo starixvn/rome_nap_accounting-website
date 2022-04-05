@@ -153,6 +153,9 @@ public class UpdateExRate : IHttpHandler, IRequiresSessionState
                 if (result.ErrorCode == 0)
                 {
                     context.Response.Write("ok|The base rates have been updated successfully.");
+                } if (result.ErrorCode == 2)
+                {
+                    context.Response.Write("2|" + result.ErrorMessage);
                 }
                 else
                 {
