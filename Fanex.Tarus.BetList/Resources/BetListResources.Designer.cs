@@ -394,7 +394,7 @@ namespace Fanex.Tarus.BetList.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to RNG Casino.
+        ///   Looks up a localized string similar to Saba Casino.
         /// </summary>
         public static string Product_6 {
             get {

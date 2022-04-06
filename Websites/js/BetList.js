@@ -438,7 +438,7 @@ function showNG2Details(transId, refno, custId) {
 function showRnGCasinoDetails(transId, winlossDate, custId, transType) {
     var rngCasinoParam = {
         url: "RNGCasinoBetList/BetDetails",
-        title: "RNG Casino Details",
+        title: "Saba Casino Details",
         jsonParam: { TransId: transId, TransType: transType, CustId: custId, SportType: 209,/*[208,209,210]*/ PageSize: 500 },
         width: 1080,
         height: 600
@@ -875,7 +875,7 @@ function ViewRNGCasinoResult(matchId, race, betType, sportType, refNo, winlostDa
 
     var isFw = betType >= 1011 && betType <= 1020;
 
-    var title = isFw ? "Fishing World Result" : "RNG Casino Result";
+    var title = isFw ? "Fishing World Result" : "Saba Casino Result";
 
     if (isFw === true) {
         ViewGlobalGamingResult(custId, refNo);
@@ -898,7 +898,7 @@ function ViewRNGCasinoResult(matchId, race, betType, sportType, refNo, winlostDa
 function ViewRNGCasinoBrokenGame(matchId, race, betType, sportType, refNo, winlostDate) {
     var rngCasinoBrokenGameParam = {
         url: "RNGCasinoBetList/GetHandHistory",
-        title: "RNG Casino Result",
+        title: "Saba Casino Result",
         jsonParam: {
             Refno: refNo,
             RoleId: 0,
@@ -1266,7 +1266,7 @@ function getVirtualHRAndTennisParam(matchid, sporttype) {
 function getRNGCasinoParam(custId, transId3rd, gameId3rd, currencyId, siteId) {
     return {
         url: "ThirdParty/RNGCasinoResult",
-        title: "RNG Casino Result",
+        title: "Saba Casino Result",
         jsonParam: {
             custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, currencyId: currencyId, siteId: siteId, productId: 6
         },
