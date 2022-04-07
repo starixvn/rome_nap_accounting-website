@@ -85,10 +85,17 @@ function CreateMember() {
         url: "InsertMemberToAgent",
         contentType: "application/json",
         data: JSON.stringify(request),
-        success: function () {
-            statusDiv.removeClass();
-            statusDiv.addClass("status-created");
-            statusDiv.html("Created");
+        success: function (result) {
+            if (result.IsSuccess) {
+                statusDiv.removeClass();
+                statusDiv.addClass("status-created");
+                statusDiv.html("Created");
+            } else {
+                statusDiv.removeClass();
+                statusDiv.addClass("status-failed");
+                statusDiv.html(result.ErrorMessage);
+            }
+            
         },
         error: function (err) {
             statusDiv.removeClass();
