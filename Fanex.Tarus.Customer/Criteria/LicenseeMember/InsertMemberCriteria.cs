@@ -25,7 +25,7 @@
         public string ErrMsg { get; set; }
 
         public override string GetSettingKey()
-            => "Acc_Dep_CustomerInsMember_Ag";
+            => "NewLicensee_AdNewMember";
 
         public override bool IsValid()
             => Recommend > 0 && !string.IsNullOrWhiteSpace(Username) && Creator > 0; 
