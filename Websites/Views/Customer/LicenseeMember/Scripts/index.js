@@ -17,16 +17,15 @@ function CheckExistAgent() {
     try { parent.BlockUI(); } catch (e) { };
     $.ajax({
         type: "GET",
-        url: "CheckExistAgent?username=" + username,
+        url: "CheckExistAgent?agentName=" + username,
         success: function (agentId) {
-            if (custId > 0) {
+            if (agentId > 0) {
                 GenerateMemberList(members, agentId);
             } else {
                 showAlertMessage('errMsg', "The selected account is not a valid licensee dummy agent.", 1);
             }
         },
         error: function (err) {
-            GenerateMemberList(members, 1);
             showAlertMessage('errMsg', "Internal Server Error.", 1);
         },
         complete: function () {
@@ -36,7 +35,7 @@ function CheckExistAgent() {
 }
 
 function GenerateMemberList(members, agentId) {
-    var memberList = members.split(",");
+    var memberList = members.split(",").filter(onlyUnique);
     cachedMembers = memberList;
     selectedAgentId = agentId;
     var bodyRows = [];
@@ -100,6 +99,10 @@ function CreateMember() {
             CreateMember();
         }
     });
+}
+
+function onlyUnique(value, index, self) {
+    return self.indexOf(value) === index;
 }
 
 $(document).ready(function () {

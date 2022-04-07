@@ -26,10 +26,10 @@
             return View("~/Views/Customer/LicenseeMember/Index.cshtml");
         }
 
-        [AuthenticateHost]
+        [HttpGet, AuthenticateHost]
         public ActionResult CheckExistAgent(string agentName)
         {
-            return Json(service.CheckExistAgent(agentName));
+            return Json(service.CheckExistAgent(agentName), JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost, AuthenticateHost]
