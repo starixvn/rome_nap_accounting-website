@@ -482,4 +482,7 @@
   <Function Name="Initializing Stake Level">
     <Setting Key="Acc_InitializingStake_StakelevelIns" SpName="Acc_InitializingStake_StakelevelIns" DbName="DBCUST.CustDB.bodbAdminNet" />
   </Function>
+  <Function Name="Licensee Configuration > New Licensee Member">
+    <Setting Key="Acc_Dep_CheckExistedAccount" SpName="Acc_Dep_CheckExistedAccount_UAT2" DbName="DBCUST.CustDB.bodbAdminNet" />
+  </Function>
 </Functions>

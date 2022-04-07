@@ -1,0 +1,14 @@
+﻿.status-created {
+    font-weight:bold;
+    color: green;
+}
+
+.status-failed {
+    font-weight: bold;
+    color: red;
+}
+
+.status-in-progress {
+    font-weight: bold;
+    color: black;
+}

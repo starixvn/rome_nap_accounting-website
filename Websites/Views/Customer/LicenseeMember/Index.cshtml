@@ -1,0 +1,62 @@
+﻿@using Fanex.Tarus.Customer.Resources
+@{
+    var version = Sunplus.Accounting.Core.Configurations.WebSettings.Version;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="@Url.Content("~/App_Themes/Public/common.css?v=" + version)" />
+    <link rel="stylesheet" href="@Url.Content("~/App_Themes/Public/input.css?v=" + version)" />
+    <link rel="stylesheet" href="@Url.Content("~/App_Themes/Public/Message.css?v=" + version)" />
+    <link rel="stylesheet" href="@Url.Content("~/App_Themes/Public/table.css?v=" + version)" />
+    <link rel="stylesheet" href="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Grid.css?v=" + version)" type="text/css" />
+    <link rel="stylesheet" href="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Pagination.css?v=" + version)" type="text/css" />
+    <link rel="stylesheet" href="@Url.Content("~/Views/Customer/LicenseeMember/Styles/index.css?v=" + version)">
+</head>
+<body>
+    <div class="maincontent">
+        <table border="0" cellpadding="0" cellspacing="0" class="maincontent_header">
+            <tr>
+                <td class="maincontent_headerL"></td>
+                <td class="maincontent_headerC">@LicenseeMemberLabel.PageTitle</td>
+                <td class="maincontent_headerR"></td>
+            </tr>
+        </table>
+        <div id="errMsg"></div>
+        <div class="bg_table">
+            <table border="0" class="filter_table">
+                <tr>
+                    <td class="w200">
+                        <label class="b">@LicenseeMemberLabel.Agent</label>
+                        <input type="text" class="w200" id="txtAgent" name="agent" autocomplete="off" autofocus />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="b">
+                        @LicenseeMemberLabel.MemberSeparated
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <textarea rows="10" cols="100" id="txtMemberUsernames"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button type="button" class="btn" id="btnSubmit" onclick="CheckExistAgent()">&nbsp;&nbsp;&nbsp;Submit&nbsp;&nbsp;&nbsp;</button>
+                    </td>
+                </tr>
+            </table>
+            <div id="gridMember" class="freegrid"></div>
+            <button type="button" class="btn" style="display: none;" id="btnCreate" onclick="CreateMember()">&nbsp;&nbsp;&nbsp;Create Account&nbsp;&nbsp;&nbsp;</button>
+        </div>
+    </div>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-1.8.2.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/js/common.js?v=" + version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Grid.js?v=" + version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Pagination.js?v=" + version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Views/Customer/LicenseeMember/Scripts/index.js?v=" + version)"></script>
+</body>
+</html>
