@@ -21,14 +21,17 @@
                 <th>
                     @if (!oneSportTypeOnly)
                     {
-                        <input type="checkbox" id="allsports_checkbox" />
+                        <input type="checkbox" id="allrows_checkbox" />
                     }
                 </th>
                 <th>
                     @LicenseeDcsSettingLabels.AllSports
                     @if (!oneSportTypeOnly)
                     {
-                        <span title="@LicenseeDcsSettingLabels.CopyBetSettingFrom1stRow" class="icon-copy-setting" id="copy_setting_icon" data-sporttype="@Model.BetSettings.First().SportType"></span>
+                        <span title="@LicenseeDcsSettingLabels.CopyBetSettingFrom1stRow" 
+                              class="icon-copy-setting" id="copy_setting_icon" 
+                              data-sporttype="@Model.BetSettings.First().SportType" 
+                              data-bettype="@Model.BetSettings.First().BetType"></span>
                     }
                 </th>
                 <th>
@@ -45,7 +48,7 @@
             {
             <tr data-sporttype="@item.SportType" data-bettype="@item.BetType" data-sporttypename="@item.SportTypeName" data-bettypename="@item.BetTypeName">
                 <td>
-                    <input type="checkbox" class="sporttype-checkbox" data-sporttype="@item.SportType" />
+                    <input type="checkbox" class="enable-edit-row-checkbox" data-sporttype="@item.SportType" data-bettype="@item.BetType" />
                 </td>
                 <td class="l">@item.SportTypeName</td>
                 <td class="l">@item.BetTypeName</td>
@@ -54,9 +57,10 @@
                            disabled="disabled"
                            class="numeric"
                            data-sporttype="@item.SportType"
+                           data-bettype="@item.BetType"
                            data-oldvalue="@item.MinBet"
                            value="@item.MinBet.ToString("N0")"
-                           id="minbet_@item.SportType">
+                           id="minbet_@(item.SportType + "_" + item.BetType)">
                     <span>@item.SuperMinBet.ToString("N0")</span>
                 </td>
                 <td class="l">
@@ -64,9 +68,10 @@
                            disabled="disabled"
                            class="numeric"
                            data-sporttype="@item.SportType"
+                           data-bettype="@item.BetType"
                            data-oldvalue="@item.MaxBet"
                            value="@item.MaxBet.ToString("N0")"
-                           id="maxbet_@item.SportType">
+                           id="maxbet_@(item.SportType + "_" + item.BetType)">
                     <span>@item.SuperMaxBet.ToString("N0")</span>
                 </td>
                 <td class="l">
@@ -74,9 +79,10 @@
                            disabled="disabled"
                            class="numeric"
                            data-sporttype="@item.SportType"
+                           data-bettype="@item.BetType"
                            data-oldvalue="@item.MaxPerMatch"
                            value="@item.MaxPerMatch.ToString("N0")"
-                           id="maxpermatch_@item.SportType">
+                           id="maxpermatch_@(item.SportType + "_" + item.BetType)">
                     <span>@item.SuperMaxPerMatch.ToString("N0")</span>
                 </td>
                 <td class="l">
@@ -84,9 +90,10 @@
                            disabled="disabled"
                            class="numeric"
                            data-sporttype="@item.SportType"
+                           data-bettype="@item.BetType"
                            data-oldvalue="@item.MaxPayoutPerMatch"
                            value="@item.MaxPayoutPerMatch.ToString("N0")"
-                           id="maxpayoutpermatch_@item.SportType">
+                           id="maxpayoutpermatch_@(item.SportType + "_" + item.BetType)">
                     <span>@item.SuperMaxPayoutPerMatch.ToString("N0")</span>
                 </td>
             </tr>

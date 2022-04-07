@@ -5,8 +5,8 @@
         updateSection,
         applyMembersCheckbox,
         betSettingTableRows,
-        allSportsCheckbox,
-        sportTypeCheckboxes,
+        allRowsCheckbox,
+        enableEditRowCheckboxes,
         copySettingIcon,
         nextButton,
         numericInputs,
@@ -16,20 +16,20 @@
         updateButton,
         backButton;
 
-    function enableNumericInputs(sportType) {
-        var inputs = !sportType ?
+    function enableNumericInputs(sportType, betType) {
+        var inputs = !sportType || !betType ?
             numericInputs :
-            $.grep(numericInputs, function (item, i) { return $(item).data("sporttype") === sportType; });
+            $.grep(numericInputs, function (item, i) { return $(item).data("sporttype") === sportType && $(item).data("bettype") === betType; });
 
         $.each(inputs, function () {
             common.enableElement($(this));
         });
     }
 
-    function disableNumericInputs(sportType) {
-        var inputs = !sportType ?
+    function disableNumericInputs(sportType, betType) {
+        var inputs = !sportType || !betType ?
             numericInputs :
-            $.grep(numericInputs, function (item, i) { return $(item).data("sporttype") === sportType; });
+            $.grep(numericInputs, function (item, i) { return $(item).data("sporttype") === sportType && $(item).data("bettype") === betType; });
 
         $.each(inputs, function () {
             var $this = $(this);
@@ -41,7 +41,7 @@
         });
     }
 
-    function allSportsCheckbox_change() {
+    function allRowsCheckbox_change() {
         var checked = this.checked;
 
         if (checked) {
@@ -50,29 +50,30 @@
             disableNumericInputs();
         }
 
-        sportTypeCheckboxes.each(function () {
+        enableEditRowCheckboxes.each(function () {
             this.checked = checked;
         });
     }
 
-    function sportTypeCheckbox_change() {
+    function enableEditRowCheckbox_change() {
         var sportType = $(this).data("sporttype"),
+            betType = $(this).data("bettype"),
             checked = this.checked;
 
         if (checked) {
-            enableNumericInputs(sportType);
+            enableNumericInputs(sportType, betType);
         } else {
-            disableNumericInputs(sportType);
+            disableNumericInputs(sportType, betType);
         }
 
-        for (var i = 0, max = sportTypeCheckboxes.length; i < max; i++) {
-            if (sportTypeCheckboxes[i].checked !== checked) {
-                allSportsCheckbox.prop("indeterminate", true);
+        for (var i = 0, max = enableEditRowCheckboxes.length; i < max; i++) {
+            if (enableEditRowCheckboxes[i].checked !== checked) {
+                allRowsCheckbox.prop("indeterminate", true);
                 return;
             }
         }
 
-        allSportsCheckbox
+        allRowsCheckbox
             .prop("indeterminate", false)
             .prop("checked", checked);
     }
@@ -83,19 +84,20 @@
         if (copySettingIcon.hasClass("icon-copy-setting-checked")) {
             checked = false;
             copySettingIcon.removeClass("icon-copy-setting-checked");
-            common.enableElement(allSportsCheckbox);
+            common.enableElement(allRowsCheckbox);
             disableNumericInputs();
         } else {
             checked = true;
             copySettingIcon.addClass("icon-copy-setting-checked");
             var sportType = $(this).data("sporttype");
-            copyBetSettingFrom1stRowAndDisableOthers(sportType);
-            common.disableElement(allSportsCheckbox);
+            var betType = $(this).data("bettype");
+            copyBetSettingFrom1stRowAndDisableOthers(sportType, betType);
+            common.disableElement(allRowsCheckbox);
         }
 
-        allSportsCheckbox.prop("indeterminate", false).prop("checked", checked);
+        allRowsCheckbox.prop("indeterminate", false).prop("checked", checked);
 
-        sportTypeCheckboxes.each(function () {
+        enableEditRowCheckboxes.each(function () {
             this.checked = checked;
 
             if (checked) {
@@ -106,27 +108,32 @@
         });
     }
 
-    function copyBetSettingFrom1stRowAndDisableOthers(sportType) {
-        var minBetInput = $("#minbet_" + sportType),
-            maxBetInput = $("#maxbet_" + sportType),
-            maxPerMatchInput = $("#maxpermatch_" + sportType);
+    function copyBetSettingFrom1stRowAndDisableOthers(sportType, betType) {
+        var minBetInput = $("#minbet_" + sportType + "_" + betType),
+            maxBetInput = $("#maxbet_" + sportType + "_" + betType),
+            maxPerMatchInput = $("#maxpermatch_" + sportType + "_" + betType),
+            maxPerBallInput = $("#maxperball_" + sportType + "_" + betType);
 
         common.enableElement(minBetInput);
         common.enableElement(maxBetInput);
         common.enableElement(maxPerMatchInput);
+        common.enableElement(maxPerBallInput);
 
         var minBet = minBetInput.val(),
             maxBet = maxBetInput.val(),
-            maxPerMatch = maxPerMatchInput.val();
+            maxPerMatch = maxPerMatchInput.val(),
+            maxPerBall = maxPerBallInput.val();
 
-        var tableRow = null, sportTypeRow = null;
+        var tableRow = null, sportTypeRow = null, betTypeRow = null;
 
         for (var i = 1, max = betSettingTableRows.length; i < max; i++) {
             tableRow = $(betSettingTableRows[i]);
             sportTypeRow = tableRow.data("sporttype");
-            common.disableElement(tableRow.find("#minbet_" + sportTypeRow)).val(minBet);
-            common.disableElement(tableRow.find("#maxbet_" + sportTypeRow)).val(maxBet);
-            common.disableElement(tableRow.find("#maxpermatch_" + sportTypeRow)).val(maxPerMatch);
+            betTypeRow = tableRow.data("bettype");
+            common.disableElement(tableRow.find("#minbet_" + sportTypeRow + "_" + betTypeRow)).val(minBet);
+            common.disableElement(tableRow.find("#maxbet_" + sportTypeRow + "_" + betTypeRow)).val(maxBet);
+            common.disableElement(tableRow.find("#maxpermatch_" + sportTypeRow + "_" + betTypeRow)).val(maxPerMatch);
+            common.disableElement(tableRow.find("#maxperball_" + sportTypeRow + "_" + betTypeRow)).val(maxPerBall);
         }
     }
 
@@ -149,13 +156,14 @@
     function validateBetSetting(tableRow) {
         var isValid = true,
             sportType = tableRow.data("sporttype"),
-            minBetInput = tableRow.find("#minbet_" + sportType),
+            betType = tableRow.data("bettype"),
+            minBetInput = tableRow.find("#minbet_" + sportType + "_" + betType),
             minBet = parseInt(minBetInput.val().replace(/,/g, "")),
-            maxBetInput = tableRow.find("#maxbet_" + sportType),
+            maxBetInput = tableRow.find("#maxbet_" + sportType + "_" + betType),
             maxBet = parseInt(maxBetInput.val().replace(/,/g, "")),
-            maxPerMatchInput = tableRow.find("#maxpermatch_" + sportType),
+            maxPerMatchInput = tableRow.find("#maxpermatch_" + sportType + "_" + betType),
             maxPerMatch = parseInt(maxPerMatchInput.val().replace(/,/g, "")),
-            maxPerBallInput = tableRow.find("#maxperball_" + sportType),
+            maxPerBallInput = tableRow.find("#maxperball_" + sportType + "_" + betType),
             maxPerBall = parseInt(maxPerBallInput.val().replace(/,/g, ""));
 
         minBetInput.removeClass("invalid-value");
@@ -190,10 +198,10 @@
             maxPerMatchInput.addClass("invalid-value");
         }
 
-        if (maxPerBall > maxPerMatch) {
+        if (maxPerMatch > maxPerBall) {
             isValid = false;
-            maxPerBallInput.addClass("invalid-value");
             maxPerMatchInput.addClass("invalid-value");
+            maxPerBallInput.addClass("invalid-value");
         }
 
         if (!isValid) {
@@ -354,13 +362,13 @@
         applyMembersCheckbox = updateSection.find("#apply_members_checkbox");
         betSettingTableRows = updateSection.find("#betsetting_table tbody tr");
 
-        allSportsCheckbox = updateSection.find("#allsports_checkbox")
+        allRowsCheckbox = updateSection.find("#allrows_checkbox")
             .off("change")
-            .on("change", allSportsCheckbox_change);
+            .on("change", allRowsCheckbox_change);
 
-        sportTypeCheckboxes = updateSection.find(".sporttype-checkbox")
+        enableEditRowCheckboxes = updateSection.find(".enable-edit-row-checkbox")
             .off("change")
-            .on("change", sportTypeCheckbox_change);
+            .on("change", enableEditRowCheckbox_change);
 
         copySettingIcon = updateSection.find("#copy_setting_icon")
             .off("click")
