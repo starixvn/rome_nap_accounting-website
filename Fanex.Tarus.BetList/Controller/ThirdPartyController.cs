@@ -33,14 +33,8 @@
 
         }
 
-        public ActionResult VirtualGamesResult(int productId, string gameId)
-        {
-            SetProductResultTitle(productId);
-            var service = new VirtualGamesResult();
-            var result = service.GetDetailResult(gameId, "d");
-
-            return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(ProductResultTitle, result));
-        }
+        public ActionResult VirtualGamesResult(ThirdPartyResultRequest request)
+            => BaseResult(request, "VirtualGamesResultConfigs");
 
         public ActionResult LinkedGamesResult(ThirdPartyResultRequest request) => BaseResult(request, "LinkedGamesResultConfigs");
 

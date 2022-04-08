@@ -1119,7 +1119,7 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
             return getFishingWorldParam(gameId3rd, custId);
 
         case 245: //Virtual Games
-            return getVirtualGamesParam(refno);
+            return getVirtualGamesParam(custId, transId3rd, gameId3rd, currencyId, siteId);
 
         case 247: //Spadegaming
             return getSpadegamingParam(custId, transId3rd, gameId3rd, currencyId, siteId);
@@ -1483,11 +1483,11 @@ function getSpadegamingParam(custId, transId3rd, gameId3rd, currencyId, siteId) 
     };
 }
 
-function getVirtualGamesParam(betcheck) {
+function getVirtualGamesParam(custId, transId3rd, gameId3rd, currencyId, siteId) {
     return {
         url: "ThirdParty/VirtualGamesResult",
         title: "Virtual Games Result",
-        jsonParam: { productId: 38, gameId: betcheck },
+        jsonParam: { custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, siteId: siteId, currenctyId: currencyId, productId: 38 },
         width: 945,
         height: 500
     };
