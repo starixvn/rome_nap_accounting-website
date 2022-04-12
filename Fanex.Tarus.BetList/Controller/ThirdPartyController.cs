@@ -4,7 +4,6 @@
     using CustomerSetting.Module.Core.Web.Controllers;
     using Fanex.Result.Core.ThirdParty;
     using Fanex.Result.Core.ThirdParty.Models;
-    using Fanex.Result.Core.VirtualGames;
     using Fanex.Tarus.BetList.ViewModel;
     using Infrastructure.Caching;
     using Sunplus.Accounting.DataAccess;
