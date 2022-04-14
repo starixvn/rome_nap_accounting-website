@@ -8,6 +8,7 @@
     using Fanex.BetList.Core.Factories;
     using Fanex.BetList.Core.TicketHelper;
     using Fanex.NAP.Framework.Data;
+    using Fanex.Tarus.BetList.Criteria;
     using Models;
     using System.Collections.Generic;
     using System.Linq;
@@ -15,10 +16,23 @@
     public class BetListDetailService : IBetListDetailService
     {
         private readonly IBetListDetailRepository _betListDetailRepository;
+        private readonly IDynamicRepository dynamicRepository;
         private readonly ITicketHelper ticketHelper = new TicketHelper();
-        public BetListDetailService(IBetListDetailRepository betListDetailRepository = null)
+        public BetListDetailService(IDynamicRepository dynamicRepository = null, IBetListDetailRepository betListDetailRepository = null)
         {
+            this.dynamicRepository = dynamicRepository ?? new DynamicRepository();
             _betListDetailRepository = betListDetailRepository ?? new BetListDetailRepository();
+        }
+
+        public CashOutHistoryModel GetCashOutHistory(GetCashOutHistoryCriteria criteria)
+        {
+            var history = dynamicRepository.Get<CashOutHistoryModel>(criteria);
+
+            return new CashOutHistoryModel
+            {
+                TransId = criteria.TransId,
+                CashoutExtraInfo = history != null ? history.CashoutExtraInfo : string.Empty
+            };
         }
 
         public CashOutDetails GetCashOutDetails(ICriteria criteria)
@@ -79,7 +93,7 @@
             {
                 var betListHelper = new BetListHelper();
 
-                
+
                 var factory = new BetListHTMLFactory();
                 var builder = factory.CreateBuilder();
 

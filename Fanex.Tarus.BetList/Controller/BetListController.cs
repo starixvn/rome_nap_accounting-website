@@ -378,6 +378,14 @@ namespace Fanex.Tarus.BetList.Controllers
             return View("~/Views/BetList/CashOut/Details.cshtml", cashOutDetails);
         }
 
+        [AuthorizeFunctions("ViewInfo")]
+        public ActionResult GetCashOutHistory(GetCashOutHistoryCriteria criteria)
+        {
+            var cashOutDetails = _betListDetailService.GetCashOutHistory(criteria);
+
+            return View("~/Views/BetList/CashOut/History.cshtml", cashOutDetails);
+        }
+
         [HttpGet]
         public ActionResult ViewBonusDetails(GetLicenseeBonusDetailCriteria criteria)
         {
