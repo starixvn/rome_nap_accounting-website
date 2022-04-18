@@ -36,7 +36,7 @@
             $this.removeClass("invalid-value");
             common.disableElement($this);
 
-            var oldValue = parseInt($this.data("oldvalue"));
+            var oldValue = parseFloat($this.data("oldvalue"));
             $this.val(oldValue.toLocaleString("en-US"));
         });
     }
@@ -147,13 +147,13 @@
         var isValid = true,
             sportType = tableRow.data("sporttype"),
             minBetInput = tableRow.find("#minbet_" + sportType),
-            minBet = parseInt(minBetInput.val().replace(/,/g, "")),
+            minBet = parseFloat(minBetInput.val().replace(/,/g, "")),
             maxBetInput = tableRow.find("#maxbet_" + sportType),
-            maxBet = parseInt(maxBetInput.val().replace(/,/g, "")),
-            superMinBet = parseInt(minBetInput.attr('data-super-min-bet')),
-            superMaxBet = parseInt(maxBetInput.attr('data-super-max-bet')),
-            globalMinBet = parseInt(minBetInput.attr('data-global-min-bet')),
-            globalMaxBet = parseInt(maxBetInput.attr('data-global-max-bet'));
+            maxBet = parseFloat(maxBetInput.val().replace(/,/g, "")),
+            superMinBet = parseFloat(minBetInput.attr('data-super-min-bet')),
+            superMaxBet = parseFloat(maxBetInput.attr('data-super-max-bet')),
+            globalMinBet = parseFloat(minBetInput.attr('data-global-min-bet')),
+            globalMaxBet = parseFloat(maxBetInput.attr('data-global-max-bet'));
 
         minBetInput.removeClass("invalid-value");
         maxBetInput.removeClass("invalid-value");
@@ -191,8 +191,8 @@
         if (!isValid) {
             globalValid = false;
         } else {
-            var oldMinBet = parseInt(minBetInput.data("oldvalue"));
-            var oldMaxBet = parseInt(maxBetInput.data("oldvalue"));
+            var oldMinBet = parseFloat(minBetInput.data("oldvalue"));
+            var oldMaxBet = parseFloat(maxBetInput.data("oldvalue"));
 
             return {
                 SportType: sportType,
@@ -353,7 +353,7 @@
             .on("click", nextButton_click);
 
         numericInputs = updateSection.find(".numeric");
-        numericInputs.forceNumber(copyBetSettingFrom1stRow_KeyUp);
+        numericInputs.forceNumber(copyBetSettingFrom1stRow_KeyUp, true);
 
         reviewSection = $("#review_section");
         applyMembersSpan = reviewSection.find("#apply_members_span");

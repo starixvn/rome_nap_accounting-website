@@ -55,9 +55,9 @@
                                data-oldvalue="@item.MinBet"
                                data-super-min-bet="@item.SuperMinBet"
                                data-global-min-bet="@item.GlobalMinBet"
-                               value="@item.MinBet.ToString("N0")"
+                               value="@item.MinBet.ToString("0.##")"
                                id="minbet_@item.SportType">
-                        <span>@item.SuperMinBet.ToString("N0") (>= @item.GlobalMinBet.ToString("N0"))</span>
+                        <span>@item.SuperMinBet.ToString("0.##") (>= @item.GlobalMinBet.ToString("0.##"))</span>
                     </td>
                     <td class="l">
                         <input type="text"
@@ -67,9 +67,9 @@
                                data-oldvalue="@item.MaxBet"
                                data-super-max-bet="@item.SuperMaxBet"
                                data-global-max-bet="@item.GlobalMaxBet"
-                               value="@item.MaxBet.ToString("N0")"
+                               value="@item.MaxBet.ToString("0.##")"
                                id="maxbet_@item.SportType">
-                        <span>@item.SuperMaxBet.ToString("N0") (<= @item.GlobalMaxBet.ToString("N0"))</span>
+                        <span>@item.SuperMaxBet.ToString("0.##") (<= @item.GlobalMaxBet.ToString("0.##"))</span>
                     </td>
                 </tr>
             }

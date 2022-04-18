@@ -5,11 +5,13 @@
  * @usage: $(selector).forceNumber();
  *
  */
-$.fn.forceNumber = function (keyupCallback) {
+$.fn.forceNumber = function (keyupCallback, isDecimalSupport) {
+    isDecimalSupport = isDecimalSupport || false;
     var number_0 = 48,
         number_9 = 57,
         numpad_0 = 96,
         numpad_9 = 105,
+        numpad_point = 110,
         end = 35,
         home = 36,
         leftArrow = 37,
@@ -22,7 +24,8 @@ $.fn.forceNumber = function (keyupCallback) {
         a = 65,
         c = 67,
         v = 86,
-        x = 88;
+        x = 88,
+        point = 190;
 
     function isNumeric(text) {
         var regExp = /^-?(\d+|\d+\.\d*|\d*\.\d+)$/;
@@ -41,7 +44,9 @@ $.fn.forceNumber = function (keyupCallback) {
             code === tab ||
             code === enter ||
             code === escape ||
-            code === del) {
+            code === del ||
+            (isDecimalSupport && code === numpad_point) ||
+            (isDecimalSupport && code === point)) {
             return true;
         }
         var ctrlKey = e.ctrlKey;
@@ -54,13 +59,21 @@ $.fn.forceNumber = function (keyupCallback) {
         if (text.length === 0) {
             return;
         }
+
         text = text.replace(/\,/g, "");
-        if (isNumeric(text)) {
-            var number = parseInt(text).toLocaleString("en-US");
-            this.value = number;
-            if (keyupCallback && typeof keyupCallback === "function") {
-                keyupCallback(this);
-            }
+        var isEndWithOneDot = text.slice(-1) === '.' && text.slice(-2) !== '..';
+        var isEndWithDotOrZero = text.slice(-2) == '0.' || text.slice(-2) == '.0' || text.slice(-3) == '0.0';
+        if (text.replace(/^\.+|\.+$/g, "") === "") {
+            text = "0";
+        }
+
+        var number = parseFloat(text.replace(/^\.+|\.+$/g, "")).toLocaleString("en-US", { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+        if (number !== 0 && !isEndWithDotOrZero) {
+            this.value = number + (isEndWithOneDot ? "." : "");
+        }
+
+        if (keyupCallback && typeof keyupCallback === "function") {
+            keyupCallback(this);
         }
     }
 
