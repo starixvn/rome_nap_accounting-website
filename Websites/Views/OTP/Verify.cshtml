@@ -1,0 +1,37 @@
+﻿@using Fanex.Tarus.OTP.ViewModels;
+@{
+    Layout = null;
+}
+@model VerifyViewModel
+<!DOCTYPE html>
+<html>
+<head>
+    <title>OTP</title>
+    <link href="~/Scripts/_Libs/jQuery/Styles/jquery-ui-1.9.1.custom.min.css" rel="stylesheet" />
+    <link href="~/Views/OTP/Styles/Verify.css" rel="stylesheet" />
+</head>
+<body>
+    <form action="Verify" method="post">
+        <div class="form-otp">
+            <div class="header-otp">OTP</div>
+            <div>
+                Hi @Model.UserName
+            </div>
+            <div>
+                Please enter an OTP to continue.
+            </div>
+            <div class="err-msg">@Model.ErrorMessage</div>
+            <div>
+                <input id="txtOtp" name="OTP" maxlength="6" />
+            </div>
+            <div>
+                <input id="btnSubmit" value="Submit" type="submit" />
+            </div>
+            <input type="hidden" name="CustId" value="@Model.CustId" />
+            <input type="hidden" name="UserName" value="@Model.UserName" />
+        </div>
+    </form>
+    <script src="~/Scripts/_Libs/jQuery/jquery-1.8.2.min.js"></script>
+    <script src="~/Scripts/_Libs/jQuery/jquery-ui-1.9.1.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+﻿body {
+    padding: 0;
+    margin: 0;
+    background-color: #fff;
+    font-family: "Tahoma Custom", Tahoma, Arial, Helvetica, sans-serif !important;
+    font-size: 13px;
+    color: #232428;
+    line-height: 25px;
+}
+
+input {
+    width: 100%;
+    line-height: 30px;
+    margin: 5px 0px;
+}
+
+input[type=submit] {
+    background-color:cornflowerblue;
+    color: white;
+    font-size: 15px;
+    border-width: 0px;
+}
+
+@media screen and (min-device-width: 768px) {
+    body {
+        padding-top: 10%;
+    }
+}
+
+@media screen and (min-device-width: 768px) and (orientation: portrait) {
+    body {
+        padding-top: 200px;
+    }
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.form-otp {
+    margin: auto;
+    width: 100%;
+    padding: 24px 48px 0;
+    background-color: #fff;
+}
+
+@media screen and (min-device-width: 768px) {
+    .form-otp {
+        padding: 24px 48px;
+        -webkit-box-shadow: 0px 7px 15px #b9b9b9;
+        -khtml-box-shadow: 0px 7px 15px #b9b9b9;
+        -moz-box-shadow: 0px 7px 15px #b9b9b9;
+        -ms-box-shadow: 0px 7px 15px #b9b9b9;
+        -o-box-shadow: 0px 7px 15px #b9b9b9;
+        box-shadow: 0px 7px 15px #b9b9b9;
+        width: 468px;
+        min-height: 260px;
+        border: 1px solid #c7c7c7;
+    }
+}
+
+.header-otp {
+    color: gray;
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+    line-height: 85px
+}
+
+.err-msg {
+    color:red;
+}
