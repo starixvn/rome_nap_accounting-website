@@ -7,6 +7,7 @@
     using Fanex.Result.Core.VirtualGames;
     using Fanex.Tarus.BetList.ViewModel;
     using Infrastructure.Caching;
+    using Sunplus.Accounting.DataAccess;
 
     public class ThirdPartyController : BaseController
     {
@@ -81,7 +82,19 @@
 
         public ActionResult JokerResult(ThirdPartyResultRequest request) => BaseResult(request, "JokerResultConfigs");
 
-        public ActionResult PGSoftResult(ThirdPartyResultRequest request) => BaseResult(request, "PGSoftResultConfigs");
+        public ActionResult PGSoftResult(ThirdPartyResultRequest request)
+        {
+            SetProductResultTitle(request.ProductId);
+            var service = new ThirdPartyResult("PGSoftResultConfigs");
+            var ipInfo = IBCProvider.Utils.GetIPInformation(HttpContext.Request.UserHostAddress);
+            var resultRequest = new ResultRequest(request.CustId, request.TransId3rd, request.GameId3rd, request.CurrencyId, request.SiteId)
+            {
+                Location = ipInfo != null ? ipInfo.CountryShort : string.Empty
+            };
+
+            var result = service.GetResultGET(resultRequest);
+            return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(ProductResultTitle, result));
+        }
 
         public ActionResult GDGResult(ThirdPartyResultRequest request) => BaseResult(request, "GDGResultConfigs");
 
