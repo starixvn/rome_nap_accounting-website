@@ -1488,8 +1488,8 @@ function getVirtualGamesParam(custId, transId3rd, gameId3rd, currencyId, siteId)
         url: "ThirdParty/VirtualGamesResult",
         title: "Virtual Games Result",
         jsonParam: { custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, siteId: siteId, currenctyId: currencyId, productId: 38 },
-        width: 945,
-        height: 500
+        width: 850,
+        height: 700
     };
 }
 
