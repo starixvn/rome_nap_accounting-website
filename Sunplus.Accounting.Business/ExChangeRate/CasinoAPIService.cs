@@ -13,11 +13,11 @@
     internal class CasinoApiService
     {
         private readonly string apiUrl = ConfigurationManager.AppSettings["CasinoAPI:Url"];
-
+        
         internal CasinoApiResponse UpdateExchange(CasinoApiRequest request)
             => Task.Run(() => InvokeAPI(request)).Result;
 
-        protected async Task<CasinoApiResponse> InvokeAPI(CasinoApiRequest request)
+        internal async Task<CasinoApiResponse> InvokeAPI(CasinoApiRequest request)
         {
             if (string.IsNullOrWhiteSpace(apiUrl))
             {
