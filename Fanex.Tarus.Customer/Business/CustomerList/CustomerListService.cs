@@ -129,7 +129,6 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                         superItem.IsMyanmarOdds = CastAide.AsBoolean(row["IsMyanmarOdds"]);
                         superItem.LastLoginIP = IpManagement.ReplaceVNIP(row["lastloginip"] == null ? string.Empty : row["lastloginip"].ToString());
 
-                        superItem.IsSynCasinoUpline = CastAide.AsBoolean(row.Table.Columns.Contains("synccasino") ? row["synccasino"] : false);
                         model.ListChildren.Add(superItem);
                     }
 
@@ -265,7 +264,6 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                         masterItem.DiscountMyanmarOdds = CastAide.AsDouble(row["discountMyanmarOdds"]);
 
                         masterItem.LastLoginIP = IpManagement.ReplaceVNIP(row["lastloginip"] == null ? string.Empty : row["lastloginip"].ToString());
-                        masterItem.IsSynCasinoUpline = CastAide.AsBoolean(row.Table.Columns.Contains("synccasino") ? row["synccasino"] : false);
                         model.ListChildren.Add(masterItem);
                     }
 
@@ -357,7 +355,6 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                         agentItem.IsMyanmarOdds = CastAide.AsBoolean(row["IsMyanmarOdds"]);
                         agentItem.LastLoginIP = IpManagement.ReplaceVNIP(row["lastloginip"] == null ? string.Empty : row["lastloginip"].ToString());
 
-                        agentItem.IsSynCasinoUpline = CastAide.AsBoolean(row.Table.Columns.Contains("synccasino") ? row["synccasino"] : false);
                         model.ListChildren.Add(agentItem);
                     }
 
@@ -449,7 +446,6 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                         memberItem.IsMyanmarOdds = CastAide.AsBoolean(row["IsMyanmarOdds"]);
 
                         memberItem.LastLoginIP = IpManagement.ReplaceVNIP(row["lastloginip"] == null ? string.Empty : row["lastloginip"].ToString());
-                        memberItem.IsSynCasinoUpline = CastAide.AsBoolean(row.Table.Columns.Contains("synccasino") ? row["synccasino"] : false);
                         model.ListChildren.Add(memberItem);
                     }
 

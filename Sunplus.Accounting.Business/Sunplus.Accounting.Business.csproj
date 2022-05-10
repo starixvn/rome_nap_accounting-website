@@ -65,15 +65,6 @@
       <HintPath>..\packages\WebGrease.1.0.0\lib\Antlr3.Runtime.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="CasinoLibrary, Version=2.1.0.18354, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CasinoLibrary.2.1.0.18354\lib\net40\CasinoLibrary.dll</HintPath>
-    </Reference>
-    <Reference Include="CasinoSetting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CasinoLibrary.2.1.0.18354\lib\net40\CasinoSetting.dll</HintPath>
-    </Reference>
-    <Reference Include="CasinoUtility, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CasinoLibrary.2.1.0.18354\lib\net40\CasinoUtility.dll</HintPath>
-    </Reference>
     <Reference Include="CN88.BetList.Core, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\CN88.BetList.Core.1.0.1\lib\net461\CN88.BetList.Core.dll</HintPath>
     </Reference>
@@ -101,9 +92,6 @@
     <Reference Include="Fanex.Common, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Common.1.1.0.1\lib\net40\Fanex.Common.dll</HintPath>
       <Private>True</Private>
-    </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Casino, Version=2.0.4.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.Casino.2.0.5.3\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.2.0.5\lib\net461\Fanex.CustomerSetting.Module.Core.dll</HintPath>
@@ -141,7 +129,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.4.1\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.4.2\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Security, Version=1.0.1.9, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Security.1.0.1.9\lib\net40\Fanex.Tarus.Security.dll</HintPath>
@@ -151,10 +139,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Web.Controllers, Version=1.0.1.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Web.Controller.1.0.1.5\lib\net40\Fanex.Tarus.Web.Controllers.dll</HintPath>
-    </Reference>
-    <Reference Include="HandHistoryLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CasinoLibrary.2.1.0.18354\lib\net40\HandHistoryLibrary.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.Web.Controller.1.0.1.6\lib\net40\Fanex.Tarus.Web.Controllers.dll</HintPath>
     </Reference>
     <Reference Include="IBCCrypt, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Crypt.1.1.0.0\lib\net40\IBCCrypt.dll</HintPath>
@@ -178,9 +163,6 @@
     <Reference Include="ILogger, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ILogger.1.0.0.0\lib\net40\ILogger.dll</HintPath>
       <Private>True</Private>
-    </Reference>
-    <Reference Include="log4net">
-      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="MessagePack, Version=1.7.3.7, Culture=neutral, PublicKeyToken=b4a0369545f0a1be, processorArchitecture=MSIL">
       <HintPath>..\packages\MessagePack.1.7.3.7\lib\net45\MessagePack.dll</HintPath>
@@ -224,10 +206,6 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
-    <Reference Include="NetUtility, Version=4.5.6325.30210, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NetUtility.4.5.6325.30210\lib\net40\NetUtility.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -271,17 +249,17 @@
       <HintPath>..\packages\SharedCache.WinServiceCommon.3.0.5.1\lib\net40\SharedCache.WinServiceCommon.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Sunplus.Accounting.Core, Version=2.0.4.8, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.Core.2.0.4.10\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
+    <Reference Include="Sunplus.Accounting.Core, Version=2.0.4.11, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Accounting.Core.2.0.4.11\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.3.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.3.9\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
+    <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.4\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.Entities, Version=2.0.1.8, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.Entities.2.0.1.8\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
+      <HintPath>..\packages\Sunplus.Accounting.Entities.2.0.1.9\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.Services, Version=1.0.2.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.Services.1.0.2.1\lib\net40\Sunplus.Accounting.Services.dll</HintPath>
+      <HintPath>..\packages\Sunplus.Accounting.Services.1.0.2.3\lib\net40\Sunplus.Accounting.Services.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Agent.Utilities, Version=3.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Agent.Utilities.3.0.2\lib\net461\Sunplus.Agent.Utilities.dll</HintPath>
@@ -355,6 +333,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
@@ -395,7 +374,6 @@
     <Compile Include="Customer\CustomerManager\ViewModels\SettingTabs\NG2ViewModel.cs" />
     <Compile Include="Customer\CustomerManager\ViewModels\BalanceInfoTabs\BalanceInfoViewModel.cs" />
     <Compile Include="Customer\CustomerManager\ViewModels\CustomerInfoTabs\CustInfoViewModel.cs" />
-    <Compile Include="Customer\CustomerManager\ViewModels\SettingTabs\CasinoViewModel.cs" />
     <Compile Include="Customer\CustomerManager\ViewModels\CustomerInfoViewModel.cs" />
     <Compile Include="Customer\CustomerManager\CustomerManager.cs" />
     <Compile Include="Customer\CustomerManager\ExtraCustomerInfoTabs\DirectInfoTab.cs" />
@@ -413,6 +391,7 @@
     <Compile Include="Customer\MoveCustomer.cs" />
     <Compile Include="Customer\CustomerManager\SettingTabs\EnableStatusTab\RenderLeftPanelManager.cs" />
     <Compile Include="Customer\CustomerManager\SettingTabs\EnableStatusTab\RenderLeftPanelParameter.cs" />
+    <Compile Include="ExChangeRate\CasinoAPIService.cs" />
     <Compile Include="ExChangeRate\ExChangeRateHelper.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="IHelper.cs" />
@@ -421,7 +400,6 @@
     <Compile Include="LogDisplay\NewCurrencyForLicenseeLogFormatter.cs" />
     <Compile Include="LogDisplay\NewLicenseeLogFormatter.cs" />
     <Compile Include="Logs.cs" />
-    <Compile Include="PT\ViewPT\GoldDeluxePT.cs" />
     <Compile Include="PT\ViewPT\KenoPT.cs" />
     <Compile Include="LogDisplay\ISettingManager.cs" />
     <Compile Include="LogDisplay\LogFormater.cs" />

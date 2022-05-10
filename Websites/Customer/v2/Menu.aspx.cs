@@ -29,7 +29,8 @@ public partial class Others_Menu : System.Web.UI.Page
         lottery = 28,
         sabaclub = 42,
         vgaming = 66,
-        Bitcoin = 69
+        Bitcoin = 69,
+        sabaCasino = 6
     };
 
     protected void Page_Load(object sender, EventArgs e)
@@ -37,6 +38,7 @@ public partial class Others_Menu : System.Web.UI.Page
         this.tplMenu = WebUtils.LoadTemplate("Customer/v2/MenuUpdatePT.htm");
         Boolean AllowedCS, hideVirtualSports, hideLiveCasino, hideVoidbridge, hideNG2, hideFishingWorld, hideRNGLottery, hideVirtualGames, hideSabaclub, hideVGaming;
         Boolean hideBitcoin;
+        Boolean hideSabaCasino;
         string[] queryStringParams = Request.UrlReferrer.Query.Split('&');
         string custID = queryStringParams[0].ToString();
         custID = custID.Substring(8, custID.Length - 8);
@@ -68,48 +70,37 @@ public partial class Others_Menu : System.Web.UI.Page
         hideSabaclub = !CastAide.AsBoolean(db.Outputs["allowedsabaclub"]) || !WebSettings.IsShowSabaclub;
         hideVGaming = !CastAide.AsBoolean(db.Outputs["allowedvgaming"]) || !WebSettings.IsShowVGaming;
         hideBitcoin = !CastAide.AsBoolean(db.Outputs["allowedbitcoin"]) || !WebSettings.IsShowBitcoinBetting;
+        hideSabaCasino = !CastAide.AsBoolean(db.Outputs["allowedsabacasino"]) || !WebSettings.IsShowSabaCasino;
 
         string kenoPath = string.Empty;
-        string casinoPath = string.Empty;
-        string goldDeluxePath = string.Empty;
         string creditDCSLink = string.Empty;
 
 
         if (roleid == 1)
         {
             kenoPath = Page.ResolveUrl("~/customersetting/KenoSetting/kenosetting/AgentEditMember?custId=" + custID + "&userId=" + accId);
-            casinoPath = Page.ResolveUrl("~/CustomerSetting/Casino/Member/EditMember?id=" + custID + "&uplineid=" + uplineId);
-            goldDeluxePath = Page.ResolveUrl("~/GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=" + uplineId + "&upLineLevel=2&formType=1&actorId=" + AppSession.AccId + "&custId=" + custID.ToString() + "&level=1");
             creditDCSLink = Page.ResolveUrl("~/DCS/ViewCustomerSetting?productId={0}&customerLevel=1&uplinelevel=2&customerId=" + custID);
         }
         else if (roleid == 2)
         {
             kenoPath = Page.ResolveUrl("~/customersetting/KenoSetting/kenosetting/EditAgent?custId=" + custID + "&userId=" + accId);
-            casinoPath = Page.ResolveUrl("~/CustomerSetting/Casino/Agent/EditAgent?id=" + custID + "&uplineid=" + uplineId);
-            goldDeluxePath = Page.ResolveUrl("~/GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=" + uplineId + "&upLineLevel=3&formType=1&actorId=" + AppSession.AccId + "&custId=" + custID.ToString() + "&level=2");
             creditDCSLink = Page.ResolveUrl("~/DCS/ViewCustomerSetting?productId={0}&customerLevel=2&customerId=" + custID);
         }
         else if (roleid == 3)
         {
             kenoPath = Page.ResolveUrl("~/customersetting/KenoSetting/kenosetting/EditMaster?custId=" + custID + "&userId=" + accId);
-            casinoPath = Page.ResolveUrl("~/CustomerSetting/Casino/Master/EditMaster?id=" + custID + "&uplineid=" + uplineId);
-            goldDeluxePath = Page.ResolveUrl("~/GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=" + uplineId + "&upLineLevel=4&formType=1&actorId=" + AppSession.AccId + "&custId=" + custID.ToString() + "&level=3");
             creditDCSLink = Page.ResolveUrl("~/DCS/ViewCustomerSetting?productId={0}&customerLevel=3&customerId=" + custID);
         }
         else
         {
             var exChangeId = CastAide.AsInt32(queryStringParams[4].Split('=')[1]);
             kenoPath = Page.ResolveUrl("~/customersetting/KenoSetting/kenosetting/EditSuper?custId=" + custID + "&userId=" + accId);
-            casinoPath = Page.ResolveUrl("~/CustomerSetting/Casino/Super/EditSuper?id=" + custID + "&uplineid=0");
-            goldDeluxePath = Page.ResolveUrl("~/GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=0&upLineLevel=0&formType=1&actorId=" + AppSession.AccId + "&custId=" + custID.ToString() + "&level=4");
             creditDCSLink = Page.ResolveUrl("~/DCS/ViewCustomerSetting?productId={0}&customerLevel=4&customerId=" + custID);
         }
 
         TemplateHandler.Assign(ref this.tplMenu, "{NG2}", CacheRef.GetProductName(23));
-        this.RenderSettingTab("Casino", "{urlCasino}", casinoPath, WebSettings.disableCS || !AllowedCS);
         this.RenderSettingTab("VirtualSports", "{urlVirtualSports}", string.Format(creditDCSLink, (int)products.virtualsport), hideVirtualSports);
         this.RenderSettingTab("Keno", "{urlKeno}", kenoPath, !KenoSection.Instance.ShowSetting);
-        this.RenderSettingTab("GoldDeluxe", "{urlgolddeluxe}", goldDeluxePath, !WebSettings.IsShowGoldDeluxeSettingForCredit);
         this.RenderSettingTab("sportsbook2", "{sportsbook2LinkSetting}", string.Format(creditDCSLink, (int)products.sportsbook2), !WebSettings.IsShowSportsbook2);
         this.RenderSettingTab("livecasino", "{liveCasinoLinkSetting}", string.Format(creditDCSLink, (int)products.livecasino), hideLiveCasino);
         this.RenderSettingTab("voidbridge", "{voidbridgeLinkSetting}", string.Format(creditDCSLink, (int)products.voidbridge), hideVoidbridge);
@@ -120,6 +111,7 @@ public partial class Others_Menu : System.Web.UI.Page
         this.RenderSettingTab("sabaclub", "{sabaclubLinkSetting}", string.Format(creditDCSLink, (int)products.sabaclub), hideSabaclub);
         this.RenderSettingTab("vgaming", "{vgamingLinkSetting}", string.Format(creditDCSLink, (int)products.vgaming), hideVGaming);
         this.RenderSettingTab("Bitcoin", "{BitcoinLinkSetting}", string.Format(creditDCSLink, (int)products.Bitcoin), hideBitcoin);
+        this.RenderSettingTab("SabaCasino", "{SabaCasinoLinkSetting}", string.Format(creditDCSLink, (int)products.sabaCasino), hideSabaCasino);
         this.sMenu.Text = this.tplMenu;
     }
 

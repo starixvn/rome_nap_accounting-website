@@ -119,13 +119,6 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
                 AlertMessage.ParseError(ref tempErrorCode, ref tempErrorMessage, result.ErrorCode, result.ErrorMessage);
                 result.ErrorCode = tempErrorCode.ToString();
                 result.ErrorMessage = tempErrorMessage;
-
-                if (tempErrorCode == 0)
-                {
-                    //update sync casino
-                    customer.SiteName = _customerSettingService.GetRNGSiteNameByCustId(customer.CustId);
-                    _customerSettingService.UpdateSyncCasinoAfterEditCustomer(customer, currentContext);
-                }
             }
             catch (Exception ex)
             {

@@ -16,8 +16,6 @@
     var adminUserName = AppSession.AccUserName;
 
     int IsShowCustomerSettingRenovation = 0;
-    var thirdPartyStatus = Permissions.SelStatus3rdParty(CastAide.AsInt32(Model.ParentId));
-    bool allowCS = Model.ParentId == 0 ? true : thirdPartyStatus.CasinoSync;
     if (IsPost)
     {
         IsShowCustomerSettingRenovation = WebSettings.IsShowCustomerSettingRenovation;
@@ -48,7 +46,6 @@
 
     hash.Add("IsVisibleVirtualRate", IsVisibleVirtualRate);
     hash.Add("EnableVirtualSports", EnableVirtualSports);
-    hash.Add("allowCS", allowCS);
     hash.Add("allowKeno", KenoSection.Instance.ShowSetting);
     hash.Add("isParentMyanmarOdds", isParentMyanmarOdds);
     string[] renderResult = Render(Model, hash);
@@ -107,13 +104,6 @@ string siteName = memberItem.IsMyanmarOdds ? "76666B" : string.Empty;
                 <span title="Edit" onmouseout="CustomerList.HideEditBox()" onclick="CustomerList.ShowMenuEdit('div_@memberItem.ChildID')" class="edit-button">
                 </span>
                 <ul id="div_@memberItem.ChildID" style="display:none;">
-                    @{
-                        var IsOnclickCS = !string.IsNullOrEmpty(ViewBag.synccasinoUpline) ?
-                            CastAide.AsBoolean(ViewBag.synccasinoUpline) : CastAide.AsBoolean(hash["allowCS"]);
-                        var onclickCS = (IsOnclickCS == true ? "MemberList.casino('" + memberItem.ChildID + "','" + Model.ParentId + "');" : "");
-                    }
-                    <li class="canchange" onclick="@onclickCS">Casino</li>
-
                     <li class="canchange" onclick="OpenChangePwd('@memberItem.ChildID','@memberItem.UserName');">
                         Password
                     </li>
@@ -129,13 +119,6 @@ string siteName = memberItem.IsMyanmarOdds ? "76666B" : string.Empty;
                             RNG Keno
                         </li>
                     }
-                    @if (WebSettings.IsShowGoldDeluxeSettingForCredit)
-                    {
-                        <li class="canchange" onclick="MemberList.goldDeluxeSetting('@memberItem.ChildID', '@Model.ParentId');">
-                            Gold Deluxe
-                        </li>
-                    }
-
                     @if (!memberItem.IsHideSportsbook2)
                     {
                         <li class="canchange" onclick="EditDCSByProduct('@memberItem.ChildID', 16, 'Sportsbook 2');">

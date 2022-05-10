@@ -56,17 +56,11 @@ namespace Sunplus.Accounting.Business.BootStrappers
                 .RegisterType<IServiceDailyTran, DailyTransManager>()             
                 ;
           
-            RegisterPT(container);         
         }
 
         private static void RegisterType<T1, T2>()
         {
             throw new System.NotImplementedException();
-        }
-
-        private static void RegisterPT(IUnityContainer container)
-        {
-            container.RegisterType<PT.Casino.ICasinoManager, PT.Casino.CasinoManager>();
         }
     }
 }

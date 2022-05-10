@@ -2,16 +2,12 @@
 
 using System;
 using System.Web;
-using Sunplus.Accounting.Business;
 using Sunplus.Accounting.Business.Security;
-using Sunplus.Accounting.Entities.Casino;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using IBCUtils;
-using CasinoLibrary.SBAgent;
-using CasinoLibrary.Model.UserException;
 
 public class UpdateCustomerStatus : BaseHandler
 {
@@ -39,10 +35,7 @@ public class UpdateCustomerStatus : BaseHandler
                 context.Response.Write("<script type='text/javascript'>" + StringUtils.JS_Alert(errmsg) + "</script>");
                 return;
             }
-
-            var customerRngSite = new Sunplus.Accounting.DataAccess.AdoNet.CustomerDAO().GetRNGSiteNameByCustId(_custid);
-            string lockUpdate = "";
-            CSCustomerDetail custcs = Sunplus.Accounting.DataAccess.APIClient.IBCLibProvider.Instance.GetBasicCustInfoIBC(_custid, WebSettings.SettingStatus);
+            
             switch (type)
             {
                 case "suspended":                       
@@ -60,28 +53,12 @@ public class UpdateCustomerStatus : BaseHandler
                     s = "parent.changeDisplayStatus('special','" + status + "');";
                     break;
                 case "autompt":
-                    Sunplus.Accounting.DataAccess.IBCDLL.Accounting.CustomerUpdateStatus.CustomerUpdateAutoMPT(_accid, _custid, status, context.Request.UserHostAddress);                  
-                    if (custcs.CasinoSync)
-                    {
-                        var casinoSync = new Customer();
-                        try
-                        {
-                            casinoSync.UpdateMasterDisableAutoMPT(_custid, status, context.Request.UserHostAddress, AppSession.AccId, AppSession.AccUserName, 3);
-                        }
-                        catch (ErrorException casinoEx)
-                        {
-                            Sunplus.Accounting.Core.Extensions.LogExtensions.CasinoExceptionHandler(new Exception(casinoEx.Message, casinoEx));
-                        }
-                        catch (Exception ex)
-                        {
-                            Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-                        }
-                    }
+                    Sunplus.Accounting.DataAccess.IBCDLL.Accounting.CustomerUpdateStatus.CustomerUpdateAutoMPT(_accid, _custid, status, context.Request.UserHostAddress);     
                     s = "parent.document.getElementById('AllowAutoPT').innerHTML ='" + ((status) ? "Yes" : "No") + "';";
                     s += "parent.changeDisplayStatus();";
                     break;
                 case "closed":                           
-                    Sunplus.Accounting.DataAccess.IBCDLL.Accounting.CustomerUpdateStatus.CustomerUpdateClosed(_accid, _custid, status, context.Request.UserHostAddress, custcs.RoleId);
+                    Sunplus.Accounting.DataAccess.IBCDLL.Accounting.CustomerUpdateStatus.CustomerUpdateClosed(_accid, _custid, status, context.Request.UserHostAddress);
                     if (context.Request["isClearCredit"] != null)
                     {
                         bool isClearCredit = bool.Parse(context.Request["isClearCredit"].ToString());
@@ -108,13 +85,6 @@ public class UpdateCustomerStatus : BaseHandler
                  *Add new case for HR request changing status
                  */
                 //Start
-                case "disabledCS":
-                    isUpdDownline = false;
-                    if (!Boolean.TryParse(context.Request["isupddownline"] as string ?? string.Empty, out isUpdDownline))
-                        throw new AccException("Invalid isupddonwline parameters");
-                    CasinoManager.UpdateCSStatus(_custid, true, status, !isUpdDownline, customerRngSite);
-                    s = "parent.changeDisplayStatus();";
-                    break;
                 case "AutoSuspend":
                     int isSuspend = (status) ? 1 : 0;
                     IBCUtils.IbcError err = Sunplus.Accounting.DataAccess.IBCDLL.Customer.UpdateCustomer.CustomerUpdAutoSuspendRpt(_custid, isSuspend, _accid);

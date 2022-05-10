@@ -19,7 +19,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         internaluser: false
     };
 
-    $scope.existedUser = { userid: -1, username: '', selectedSite: {}, sites: [], selectedCurrencyId: 0, selectedCurrency: '', maxCredit: '', IsSyncCasino: 0 };
+    $scope.existedUser = { userid: -1, username: '', selectedSite: {}, sites: [], selectedCurrencyId: 0, selectedCurrency: '', maxCredit: '' };
     $scope.newUser = {};
     $scope.siteName = '';
 
@@ -210,9 +210,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
     $scope.resetFrameSource = function () {
         $("#frmSportbook").attr('src', "");
         $("#frmSportbookMinPT").attr('src', "");
-        $("#frmCasino").attr('src', "");
         $("#frmVirtualSports").attr('src', "");
-        $("#frmGoldDleluxe").attr('src', "");
         $("#frmSportsbook2").attr('src', "");
         $("#frmLiveCasino").attr('src', "");
         $("#frmVoidbridge").attr('src', "");
@@ -255,17 +253,9 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                 $scope.loadData("#frmSportbookMinPT", url);
                 $scope.resize("#frmSportbookMinPT");
                 break;
-            case 'tabCasino': url += "CustomerSetting/Casino/Super/EditSuper?id=" + $scope.existedUser.userid + "&uplineid=0&groupname=true";
-                $scope.loadData("#frmCasino", url);
-                $scope.resize("#frmCasino");
-                break;
             case 'tabVirtualSports': url += "DCS/ViewCustomerSetting?productId=5&customerLevel=4&IsReadOnly=true&customerId=" + $scope.existedUser.userid;
                 $scope.loadData("#frmVirtualSports", url);
                 $scope.resize("#frmVirtualSports");
-                break;
-            case 'tabGoldDeluxe': url += "GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=0&upLineLevel=0&formType=2&actorId=" + adminId + "&custId=" + $scope.existedUser.userid + "&level=4";
-                $scope.loadData("#frmGoldDleluxe", url);
-                $scope.resize("#frmGoldDleluxe");
                 break;
             case 'tabSportsbook2': url += "DCS/ViewCustomerSetting?productId=16&customerLevel=4&IsReadOnly=true&customerId=" + $scope.existedUser.userid;
                 $scope.loadData("#frmSportsbook2", url);
@@ -307,6 +297,10 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                 $scope.loadData("#frmBitcoin", url);
                 $scope.resize("#frmBitcoin");
                 break;
+            case 'tabSabaCasino': url += "DCS/ViewCustomerSetting?productId=6&customerLevel=4&IsReadOnly=true&customerId=" + $scope.existedUser.userid;
+                $scope.loadData("#frmSabaCasino", url);
+                $scope.resize("#frmSabaCasino");
+                break;
             case 'tabGenealInformation': $("#divGeneralInformation").show();
         }
 
@@ -326,10 +320,6 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         if (!statusSports.HideSportsbook) {
             $scope.sports.push({ sportname: 'Sportsbook', sportvalue: 'tabSportsbook' });
             $scope.sports.push({ sportname: 'Sportsbook Min PT', sportvalue: 'tabSportsbookMinPT' });
-        }
-
-        if (!statusSports.HideCasino) {
-            $scope.sports.push({ sportname: 'Casino', sportvalue: 'tabCasino' });
         }
         if (!statusSports.HideVirtualSports) {
             $scope.sports.push({ sportname: 'Virtual Sports', sportvalue: 'tabVirtualSports' });
@@ -486,8 +476,6 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                 $scope.existedUser.maxCredit = (parent.level == "super" ? formatNumber('maxCredit', custInfo.Credit, true) : formatNumber('maxCredit2', custInfo.CreditMax, true));
                 $scope.existedUser.selectedCurrencyId = custInfo.CurrencyId;
                 $scope.existedUser.selectedCurrency = custInfo.Currency;
-                $scope.existedUser.syncCasino = custInfo.IsSyncCasino;
-                $scope.existedUser.disableCasino = custInfo.DisableCasino;
                 $scope.existedUser.syncNG2 = custInfo.IsSyncNG2;
                 $scope.existedUser.disableNG2 = custInfo.DisableNG2;
                 $scope.existedUser.isDirectCustomer = custInfo.IsDirectCustomer;
@@ -556,9 +544,6 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             ExistingCustId: $scope.existedUser.userid,
             Creator: $("#currentUserId").val(),
             CreatorName: adminUsername,
-            IsSyncCasino: $scope.existedUser.syncCasino == "1" ? true : false,
-
-            DisableCasino: $scope.existedUser.disableCasino,
             CustLevel: (parent.level == 'member' ? 1 : 4),
             UplineId: $scope.parentId,
             IsSyncNG2: $scope.existedUser.syncNG2 == 1 ? true : false,

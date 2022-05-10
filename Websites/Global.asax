@@ -13,15 +13,12 @@
 <%@ Import Namespace="Microsoft.Practices.Unity.Configuration" %>
 <%@ Import Namespace="Fanex.Tarus.Web.Controllers.Areas" %>
 <%@ Import Namespace="Fanex.Tarus.Web.Controllers.Filters" %>
-<%@ Import Namespace="Fanex.GoldDeluxe.CoreSetting.Mappings" %>
-<%@ Import Namespace="log4net.Config" %>
 <%@ Import Namespace="Fanex.CustomerSetting.Client40" %>
 <%@ Import Namespace="Fanex.CustomerSetting.MatrixClient" %>
 <%@ Import Namespace="Fanex.Tarus.Security.Authenticate" %>
 <%@ Import Namespace="Sunplus.Accounting.Core.Configurations" %>
 <%@ Import Namespace="Fanex.ProductStatus.Setting.Configuration" %>
 <%@ Import Namespace="Fanex.Tarus.Security.Authenticate.ProductStatus" %>
-<%@ Import Namespace="CasinoLibrary.Model.UserException" %>
 <%@ Import Namespace="Sunplus.Accounting.Core.Extensions" %>
 <%@ Import Namespace="Fanex.BetList.Core" %>
 <%@ Import Namespace="Fanex.BetList.Core.RemotingRef" %>
@@ -43,73 +40,65 @@
 
 <script RunAt="server">
 
-        void Application_Start(object sender, EventArgs e)
+    void Application_Start(object sender, EventArgs e)
+    {
+        Fanex.Tarus.ActivityTracking.Web.LoggingConfig.Init(
+            new[] { "txtPass", "txtConfirmPass", "Securitycode", "ConfirmSecurityCode", "password", "confirm", "txtPwd" },
+            getDbExceptionInfo: Fanex.Logging.Extensions.Database.DatabaseInfoGetters.GetDbExceptionInfo);
+        // Code that runs on application startup
+        BootStrapperManager.Initialize(new UnityBootStrapper());
+        //For Data Replication System
+        //Sunplus.Data.DataAbstract.BootStrappers.BootStrapperManager.Initialize(new Sunplus.Data.DataAbstract.BootStrappers.UnityBootStrapper());
+
+        var umConfig = new UMClientConfiguration().Initialize();
+
+        UMClientManager
+           .UseConfig(umConfig)
+           .UseCacheService(new UMCacheService(new CacheService()))
+           .UseRestClient(new UMRestClient(umConfig))
+           .UseHttpContext(new HttpContextHelper());
+
+
+        RegisterRouteMiscController(RouteTable.Routes);
+
+        AreaRegistration.RegisterAllAreas();
+
+        Fanex.Data.Configuration.DbSettingProviderManager.Current.Start();
+        CN88CustomerSettingRegistration.Init();
+        CustomerSettingRegistration.Init();
+        SettingMatrixRegistration.Init();
+
+        RegisterRoutes(RouteTable.Routes);
+
+        //Fanex.Logging.Extensions.Web.ExceptionHandler
+        //    .UseConfig(new Fanex.Logging.Extensions.Web.LoggingConfiguration()
+        //    .HideSensitiveInfo(GetRegexToHideSensitiveInfo())
+        //    .GetHttpHeaderInfo()
+        //    .GetHttpSessionInfo())
+        //    .UseGetDbExceptionInfo(Fanex.Logging.Extensions.Database.DatabaseInfoGetters.GetDbExceptionInfo);
+        var productStatusConfig = new ProductStatusConfiguration()
+            .UseAuthorizeService(new ProductStatusAuthorizeService())
+            .UseProductStatusActor(new ProductStatusActor())
+            .SetUnAuthorizedUrl("~/AccessDenied.aspx");
+        ProductStatusConfigurationHandler.UseConfig(productStatusConfig);
+        Fanex.RemotingRef.RefDataTypeContainer
+            .ConnectTo(new Uri(ConfigurationManager.AppSettings["Fanex.RemotingRef.Service"]))
+            .FromApplication("NAP Accounting");
+
+        BetListManager.RegisterRemotingRef(new CacheRef());
+        ResultCoreManager.RegisterRefDataHelper(new RefDataHelper());
+
+        ChatbotClientManager
+               .UseConfig(new BotClientConfigs(
+                   ConfigurationManager.AppSettings["Chatbot:BaseUrl"],
+                   ConfigurationManager.AppSettings["Chatbot:ApiKey"]))
+               .UseRestClient(new RestClientHelper());
+
+        Fanex.Caching.CacheServiceManager.Use(() => new Fanex.Caching.Redis.RedisCache(new Fanex.Caching.Redis.RedisCacheOptions
         {
-            Fanex.Tarus.ActivityTracking.Web.LoggingConfig.Init(
-                new[] { "txtPass", "txtConfirmPass", "Securitycode", "ConfirmSecurityCode", "password", "confirm", "txtPwd" },
-                getDbExceptionInfo: Fanex.Logging.Extensions.Database.DatabaseInfoGetters.GetDbExceptionInfo);
-            // Code that runs on application startup
-            BootStrapperManager.Initialize(new UnityBootStrapper());
-            //For Data Replication System
-            //Sunplus.Data.DataAbstract.BootStrappers.BootStrapperManager.Initialize(new Sunplus.Data.DataAbstract.BootStrappers.UnityBootStrapper());
+            ConnectionOptions = StackExchange.Redis.ConfigurationOptions.Parse(ConfigurationManager.AppSettings["Redis:ConnectionString"])
+        }));
 
-            var logger = new CasinoAPILogger();
-            var manager = new Sunplus.Libraries.APILogger.APILogManager(logger);
-            string pattern = "AutoInsert*|Update*|Insert*|Move*|UpdatePJExchange|Rollback*";
-            manager.Register(typeof(CasinoLibrary.SBAgent.Customer), pattern);
-            manager.Register(typeof(CasinoLibrary.SBAgent.BasicInfo), pattern);
-
-            var umConfig = new UMClientConfiguration().Initialize();
-
-           UMClientManager
-              .UseConfig(umConfig)
-              .UseCacheService(new UMCacheService(new CacheService()))
-              .UseRestClient(new UMRestClient(umConfig))
-              .UseHttpContext(new HttpContextHelper());
-
-
-            RegisterRouteMiscController(RouteTable.Routes);
-
-            AreaRegistration.RegisterAllAreas();
-
-            Fanex.Data.Configuration.DbSettingProviderManager.Current.Start();
-            CN88CustomerSettingRegistration.Init();
-            CustomerSettingRegistration.Init();
-            SettingMatrixRegistration.Init();
-
-            RegisterRoutes(RouteTable.Routes);
-
-            AutoMapperConfiguration.Configure();
-
-            //Fanex.Logging.Extensions.Web.ExceptionHandler
-            //    .UseConfig(new Fanex.Logging.Extensions.Web.LoggingConfiguration()
-            //    .HideSensitiveInfo(GetRegexToHideSensitiveInfo())
-            //    .GetHttpHeaderInfo()
-            //    .GetHttpSessionInfo())
-            //    .UseGetDbExceptionInfo(Fanex.Logging.Extensions.Database.DatabaseInfoGetters.GetDbExceptionInfo);
-            var productStatusConfig = new ProductStatusConfiguration()
-                .UseAuthorizeService(new ProductStatusAuthorizeService())
-                .UseProductStatusActor(new ProductStatusActor())
-                .SetUnAuthorizedUrl("~/AccessDenied.aspx");
-            ProductStatusConfigurationHandler.UseConfig(productStatusConfig);
-            Fanex.RemotingRef.RefDataTypeContainer
-                .ConnectTo(new Uri(ConfigurationManager.AppSettings["Fanex.RemotingRef.Service"]))
-                .FromApplication("NAP Accounting");
-
-            BetListManager.RegisterRemotingRef(new CacheRef());
-            ResultCoreManager.RegisterRefDataHelper(new RefDataHelper());
-
-            ChatbotClientManager
-                   .UseConfig(new BotClientConfigs(
-                       ConfigurationManager.AppSettings["Chatbot:BaseUrl"],
-                       ConfigurationManager.AppSettings["Chatbot:ApiKey"]))
-                   .UseRestClient(new RestClientHelper());
-
-            Fanex.Caching.CacheServiceManager.Use(() => new Fanex.Caching.Redis.RedisCache(new Fanex.Caching.Redis.RedisCacheOptions
-            {
-                ConnectionOptions = StackExchange.Redis.ConfigurationOptions.Parse(ConfigurationManager.AppSettings["Redis:ConnectionString"])
-            }));
-        
     }
 
     static void RegisterRouteMiscController(RouteCollection routes)
@@ -166,14 +155,7 @@
 
         if (ex.GetType() != typeof(HttpException))
         {
-            if (ex.GetType() == typeof(ErrorException))
-            {
-                LogExtensions.CasinoExceptionHandler(ex);
-            }
-            else
-            {
-                LogExtensions.ExceptionHandler(ex);
-            }
+            LogExtensions.ExceptionHandler(ex);
         }
         else
         {

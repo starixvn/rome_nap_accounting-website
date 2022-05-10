@@ -107,7 +107,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
             ResultSp logResult = new ResultSp();
             try
             {
-                int custId = GetCustIDByUsername(custName);
+                int custId = CustomerUtils.GetCustomerIdByUserName(custName);
                 string logType = "setting";
 
                 var param = new Hashtable();
@@ -127,7 +127,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
                 param.Add("pageindex", page > 0 ? page - 1 : 0);
                 param.Add("pagesize", pageSize);
                 DataTable data = null;
-                if (custId != -1)
+                if (custId > 0)
                 {
                     data = _logDAO.GetLogDisplay(param, logType);
                 }
@@ -180,7 +180,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
             ResultSp logResult = new ResultSp();
             try
             {
-                int custId = GetCustIDByUsername(custName);
+                int custId = CustomerUtils.GetCustomerIdByUserName(custName);
                 string logType = "status";
                 var param = new Hashtable();
                 param.Add("custid", custId);
@@ -200,7 +200,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
                 param.Add("pagesize", pageSize);
 
                 DataTable data = null;
-                if (custId != -1)
+                if (custId > 0)
                 {
                     data = _logDAO.GetLogDisplay(param, logType);
                 }
@@ -248,7 +248,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
             ResultLogin logResult = new ResultLogin();
             try
             {
-                int custId = GetCustIDByUsername(custName);
+                int custId = CustomerUtils.GetCustomerIdByUserName(custName);
                 string logType = "login";
                 var param = new Hashtable();
                 param.Add("userid", custId);
@@ -264,7 +264,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
                 param.Add("pagesize", pageSize);
 
                 DataTable data = null;
-                if (custId != -1)
+                if (custId > 0)
                 {
                     data = _logDAO.GetLogDisplay(param, logType);
                 }
@@ -315,7 +315,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
             ResultCredit logResult = new ResultCredit();
             try
             {
-                int custId = GetCustIDByUsername(custName);
+                int custId = CustomerUtils.GetCustomerIdByUserName(custName);
                 string logType = "credit";
                 var param = new Hashtable();
                 param.Add("custid", custId);
@@ -331,7 +331,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
                 param.Add("pagesize", pageSize);
 
                 DataTable data = null;
-                if (custId != -1)
+                if (custId > 0)
                 {
                     data = _logDAO.GetLogDisplay(param, logType);
                 }
@@ -964,23 +964,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
             return (result, hasAttr);
         }
 
-        private int GetCustIDByUsername(string custName)
-        {
-            int custId = 0;
-            if (!string.IsNullOrEmpty(custName))
-            {
-                CustDetail customer = CustomerUtils.GetCustomer(custName);
-                if (customer != null)
-                {
-                    custId = CastAide.AsInt32(customer.CustId, 0);
-                }
-                else
-                {
-                    custId = -1;
-                }
-            }
-            return custId;
-        }
+        private int GetCustIDByUsername(string custName) => CustomerUtils.GetCustomerIdByUserName(custName);
 
         private bool IsGoldDeluxeGameType(string fieldName, string gameTypeId)
         {

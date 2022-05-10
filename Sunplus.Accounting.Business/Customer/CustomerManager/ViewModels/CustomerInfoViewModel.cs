@@ -104,10 +104,6 @@
 
         public bool ShowSettingLinkAGCasinoDeposit => WebSettings.EnableAGCasino && IsDeposit;
 
-        public bool ShowSettingLinkGoldDeluxeCredit => WebSettings.IsShowGoldDeluxeSettingForCredit && !IsDeposit;
-
-        public bool SyncUplineGoldDeluxe => Utils.ToBoolean(customerInfoRow["IsSyncUplineGoldDeluxe"]);
-
         public bool ShowEnableCheckBoxKeno => KenoSection.Instance.Enable;
 
         public bool ShowSettingLinkKenoCredit => KenoSection.Instance.ShowSetting && !IsDeposit;
@@ -123,6 +119,8 @@
         public bool HideCheckBoxVirtualSports { get; private set; } = true;
 
         public bool LockUnsuspend => Utils.ToBoolean(customerInfoRow["LockUnsuspend"]);
+
+        public bool HideSabaCasino { get; private set; } = true;
 
         public CustomerDetail CustParent
         {
@@ -151,6 +149,10 @@
                             case "5":
                                 HideCheckBoxVirtualSports = (Utils.ToBoolean(row["IsHiddenUpline"]) && SearchAccountRoleId < 4) || !WebSettings.EnableVirtualSports;
                                 HideSettingLinkVirtualSports = (Utils.ToBoolean(row["IsHiddenUpline"]) && SearchAccountRoleId < 4) || !WebSettings.EnableVirtualSports || IsDeposit;
+                                break;
+
+                            case "6":
+                                HideSabaCasino = (Utils.ToBoolean(row["IsHidden"]) && SearchAccountRoleId < 4) || !WebSettings.IsShowSabaCasino;
                                 break;
 
                             case "16":

@@ -24,11 +24,6 @@
             var renderLeftPanelParameter = new RenderLeftPanelParameter
             {
                 IsShowKeno = customerInfoViewModel.ShowEnableCheckBoxKeno,
-                IsShowGoldDeluxeForCredit =
-                    WebSettings.EnableGoldDeluxe &&
-                    customerInfoViewModel.SyncUplineGoldDeluxe
-                    && !customerInfoViewModel.IsDeposit
-                    && !string.Equals(customerInfoViewModel.Currency, "Won", StringComparison.OrdinalIgnoreCase),
                 IsShowMacau = customerInfoViewModel.ShowMacauDeposit,
                 IsShowEnableBetTrade = customerInfoViewModel.ShowEnableBetTradeDeposit,
                 IsShowAutoSuspend = customerInfoViewModel.HasReadPermission_AutoSuspend,
@@ -51,7 +46,8 @@
                 IsShowVGaming = !customerInfoViewModel.HideVGaming,
                 IsShowSabaVirtualSports = !customerInfoViewModel.HideSabaVirtualSports,
                 IsShowBitcoin = !customerInfoViewModel.HideBitcoin,
-                IsShowCashout = !customerInfoViewModel.HideCashout
+                IsShowCashout = !customerInfoViewModel.HideCashout,
+                IsShowSabaCasino = !customerInfoViewModel.HideSabaCasino
             };
 
             htmlcontent = RenderClosedStatus(htmlcontent, customerInfoViewModel);
@@ -59,7 +55,6 @@
             htmlcontent = RenderProtectedStatus(htmlcontent, customerInfoViewModel);
             htmlcontent = RenderLimitedPerIP(htmlcontent, customerInfoViewModel);
 
-            htmlcontent = RenderGoldDeluxeForDepositControl(htmlcontent, customerInfoViewModel);
             htmlcontent = RenderStatus(htmlcontent, customerInfoViewModel);
 
             htmlcontent = RenderDangerousControl(htmlcontent, customerInfoViewModel);
@@ -106,17 +101,7 @@
             htmlcontent = RenderAutoMasterControl(htmlcontent, customerInfoViewModel);
             htmlcontent = RenderDoubleCommControl(htmlcontent, customerInfoViewModel);
             htmlcontent = RenderOutrightControl(htmlcontent, customerInfoViewModel);
-
-            htmlcontent = RenderGoldDeluxeForCreditControl(
-                htmlcontent,
-                row1,
-                customerInfoViewModel.ManageCustomerAccess,
-                renderLeftPanelParameter,
-                sg,
-                customerInfoViewModel.HasDownline);
-
             htmlcontent = RenderNumberGameControl(htmlcontent, customerInfoViewModel);
-            htmlcontent = RenderEnableCasinoControl(htmlcontent, customerInfoViewModel);
             htmlcontent = RenderSuperLiveControl(
                 htmlcontent,
                 row1,
@@ -399,17 +384,6 @@
             return htmlcontent;
         }
 
-        private string RenderGoldDeluxeForDepositControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
-        {
-            var isShowGoldDeluxeForDeposit = WebSettings.EnableGoldDeluxe && customerInfoViewModel.SearchAccountRoleId == 4 && customerInfoViewModel.IsDeposit;
-            if (!isShowGoldDeluxeForDeposit)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "GoldDeluxe");
-            }
-
-            return htmlcontent;
-        }
-
         private string RenderStatus(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
         {
             if (Functions.Settings.IsVisibleSpecial)
@@ -516,6 +490,20 @@
                                                renderLeftPanelParameter,
                                                "Update Virtual Sports Status",
                                                5);
+                            break;
+
+                        case "6":
+                            _renderLeftPanelService.RenderEnableProductBoxDCS2(
+                                               row1,
+                                               productRow,
+                                               sg,
+                                               ref htmlcontent,
+                                               isManageCustomerAccess,
+                                               "SabaCasino",
+                                               renderLeftPanelParameter.IsShowSabaCasino,
+                                               renderLeftPanelParameter,
+                                               "Update Saba Casino Status",
+                                               6);
                             break;
 
                         case "23":
@@ -654,29 +642,6 @@
             return htmlcontent;
         }
 
-        private string RenderGoldDeluxeForCreditControl(
-            string htmlcontent,
-            DataRow row1,
-            bool isManageCustomerAccess,
-            RenderLeftPanelParameter renderLeftPanelParameter,
-            SettingGroup sg,
-            bool hasDownline)
-        {
-            _renderLeftPanelService.RenderOldProductEnableBoxLikeDCS(
-                row1,
-                sg,
-                ref htmlcontent,
-                isManageCustomerAccess,
-                false,
-                hasDownline,
-                "GoldDeluxe",
-                renderLeftPanelParameter.IsShowGoldDeluxeForCredit,
-                renderLeftPanelParameter,
-                "Update Gold Deluxe Status",
-                12);
-            return htmlcontent;
-        }
-
         private string RenderAddMarkDirectAccountControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel, SettingGroup sg)
         {
             htmlcontent = _configureDirectAccountService.AddMarkDirectAccountSettingControl(new AddMarkDirectAccountSettingControlCriteria
@@ -787,25 +752,6 @@
 
             TemplateHandler.Assign(ref htmlcontent, "{suspendedControl}", suspendedControlSettingGroup.GetHTMLSettingControl());
 
-            return htmlcontent;
-        }
-
-        private string RenderEnableCasinoControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
-        {
-            TemplateHandler.Assign(ref htmlcontent, "{chkCasino}", customerInfoViewModel.DisabledRnGCasino ? 1 : 0);
-
-            var casinoSettingGroup = new SettingGroup();
-            casinoSettingGroup.Add(GetSettingControlCasino(
-                                    customerInfoViewModel.SearchAccountRoleId,
-                                    customerInfoViewModel.ManageCustomerAccess,
-                                    "disabledCS",
-                                    !customerInfoViewModel.DisabledRnGCasino,
-                                    customerInfoViewModel.SyncRnGCasino,
-                                    customerInfoViewModel.AllowEditRnGCasino,
-                                    customerInfoViewModel.Enabled,
-                                    customerInfoViewModel.DisabledRnGCasinoParent));
-
-            TemplateHandler.Assign(ref htmlcontent, "{casinoControl}", casinoSettingGroup.GetHTMLSettingControl());
             return htmlcontent;
         }
 

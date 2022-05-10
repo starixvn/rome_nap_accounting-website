@@ -65,10 +65,6 @@
     <Setting Key="Acc_CustomerUpdDisableKeno" SpName="Acc_Dep_CustomerUpdDisableKeno" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
     <Setting Key="Acc_CustomerUpdLocked" SpName="Acc_CustomerUpdLocked" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
   </Function>
-  <Function Name="RNG Casino">
-    <Setting Key="Acc_UpdCSStatus" SpName="Acc_UpdCSStatus_Cust" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_GameEnableJackpotSel" SpName="Acc_GameEnableJackpotSel" DbName="DBCust.CustDB.bodbAdminNet" />
-  </Function>
   <Function Name="Sportbook">
     <Setting Key="Acc_CustomerUpdAgent_All" SpName="Acc_CustomerUpdAgent_All" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdClosed" SpName="Acc_CustomerUpdClosed" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -231,9 +227,6 @@
       <Setting Key="Acc_CustSetting_ListSiteSel" SpName="Acc_CustSetting_ListSiteSel" DbName="DBCust.CustDB.bodbAdminNet" />
     </Function>
   </Function>
-  <Function Name="Casino Single Wallet - Member Win Limit">
-    <Setting Key="Acc_CustomerWinLimitSelEdit" SpName="Acc_CustomerWinLimitSelEdit" DbName="DBCust.CustDB.bodbAdminNet" />
-  </Function>
   <Function Name="Customer Select Site">
     <Setting Key="Acc_CustomerSelSiteByUserNameMoveSite" SpName="Acc_CustomerSelSiteByUserNameMoveSite" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
@@ -333,10 +326,6 @@
     <Setting Key="Acc_Admin_DisableGameStatusUpd" SpName="Acc_Admin_DisableGameStatusUpd" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_Admin_DisableNewProductStatusUpd" SpName="Acc_Admin_DisableNewProductStatusUpd" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustSetting_ProductProfileSelect" SpName="Acc_CustSetting_ProductProfileSelect" DbName="DBCust.CustDB.bodbAdminNet" />
-  </Function>
-  <Function Name="Sync Casino Tool">
-    <Setting Key="Acc_CustomerSelRnGStatus" SpName="Acc_CustomerSelRnGStatus" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerSelUnSyncRNG" SpName="Acc_CustomerSelUnSyncRNG" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="NAP API - Update Dangerous Customers">
     <Setting Key="Acc_CustomerSelDangerCust" SpName="Acc_CustomerSelDangerCust" DbName="DBCust.CustDB.bodbAdminNet" />

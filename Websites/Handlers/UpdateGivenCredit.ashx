@@ -2,13 +2,9 @@
 
 using System;
 using System.Web;
-using System.Web.SessionState;
-using DNAide.Core;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.DataAccess;
-using IBCUtils.DAL;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
-using IBCUtils.Web;
 using System.Text;
 using IBCUtils;
 using Sunplus.Accounting.Core.Configurations;
@@ -32,9 +28,7 @@ public class UpdateGivenCredit : BaseHandler
             if (_accid == -1) throw new AccException(IbcError.ACCESS_DENIED_MSG);
             int _custid = CustId;
             if (_custid == -1) throw new AccException(IbcError.USERNAME_UNAVAILABLE_MSG);
-
-            var custDetail = IBCProvider.IBCCustomer.GetBasicCustInfoIBC(_custid, WebSettings.SettingStatus);
-            if (custDetail.IBCCustID == 0)
+            if (_custid == 0)
             {
                 context.Response.Write("<script type='text/javascript'>alert('Invalid Customer!!');</script>");
                 return;

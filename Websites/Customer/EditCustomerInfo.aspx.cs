@@ -39,11 +39,6 @@ public partial class Customer_EditCustomerInfo : RequiredAuthorizationPage
                 DataTable tbl = ds.ResultSet.Tables[0];
                 if (tbl.Rows.Count > 0)
                 {
-                    if (WebSettings.disableCS && DNAide.Core.CastAide.AsBoolean(tbl.Rows[0]["synccasino"], false))
-                    {
-                        return AlertMessage.GetMsg(string.Format(Resources.ErrorMsg.error_LockUpdateStatus, "USER INFO"), AlertMessage.MsgType.Error);
-                    }
-
                     strHtml = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplateBySystem("Customer/EditCustomerInfo.htm");
                     string strBirthday = Calendar.GenCalendarControl("txtBirthday", "../", "trigger_from", Convert.ToDateTime(tbl.Rows[0]["birthday"]).ToString("MM/dd/yyyy"), false, false, 0, 0, "");//Phuong.Nguyen <2009-01-03>, show others day of next month
                     TemplateHandler.Assign(ref strHtml, "{vbirthday}", strBirthday);
@@ -68,7 +63,6 @@ public partial class Customer_EditCustomerInfo : RequiredAuthorizationPage
 
                     var remark = tbl.Rows[0]["remark"].ToString();
                     TemplateHandler.Assign(ref strHtml, "{vremark-Val}", remark);
-                    TemplateHandler.Assign(ref strHtml, "{hidSynCS}", tbl.Rows[0]["synccasino"].ToString());
                     TemplateHandler.Assign(ref strHtml, "{hidCur}", tbl.Rows[0]["exchangeid"].ToString());
                     if (FormatHandler.GetBool(tbl.Rows[0]["important"]))
                     {

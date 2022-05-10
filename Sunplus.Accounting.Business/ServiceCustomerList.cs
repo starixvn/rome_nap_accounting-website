@@ -85,16 +85,6 @@
                 if (!Functions.Customer.IsVisibleMaxExposure) { TemplateHandler.RemoveBlock(ref contentTpl, "maxExposure"); colinfo--; colNo--; tblWidth = tblWidth - 50; }
                 if (!Functions.Customer.IsVisibleVirtualRate) { TemplateHandler.RemoveBlock(ref contentTpl, "virtualRate"); colinfo--; colNo--; tblWidth = tblWidth - 50; }
 
-                //casino
-                if (!WebSettings.disableCS)
-                {
-                    TemplateHandler.Assign(ref contentTpl, "{lblCSHeader}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblCSHeader"));
-                }
-                else
-                {
-                    TemplateHandler.RemoveBlock(ref contentTpl, Globals.TAG_CASINO_EDIT);
-                }
-
                 TemplateHandler.Assign(ref contentTpl, "{colcom}", colComm.ToString());
                 TemplateHandler.Assign(ref contentTpl, "{colinfo}", colinfo.ToString());
                 TemplateHandler.Assign(ref contentTpl, "{isAgent}", "0");
@@ -194,10 +184,8 @@
                             TemplateHandler.Assign(ref strRow, "{uplineid}", string.Empty);
                             TemplateHandler.Assign(ref strRow2, "{uplineid}", string.Empty);
                             TemplateHandler.Assign(ref strRow, "{GroupView}", "<span class='canchange'><a href='{link}' target='_self'>View</a></span>");
-                            TemplateHandler.Assign(ref strRow, "{link}", "MasterAgentList.aspx?superId=" + dr["custid"].ToString() + "&isSynccasino=" +
-                                (dr.Table.Columns.Contains("synccasino") ? dr["synccasino"] : false));
-                            TemplateHandler.Assign(ref strRow2, "{link}", "MasterAgentList.aspx?superId=" + dr["custid"].ToString() + "&isSynccasino=" +
-                                (dr.Table.Columns.Contains("synccasino") ? dr["synccasino"] : false));
+                            TemplateHandler.Assign(ref strRow, "{link}", "MasterAgentList.aspx?superId=" + dr["custid"].ToString());
+                            TemplateHandler.Assign(ref strRow2, "{link}", "MasterAgentList.aspx?superId=" + dr["custid"].ToString());
                             TemplateHandler.Assign(ref strRow, "{exval}", maxEx.ToString());
                             TemplateHandler.Assign(ref strRow2, "{exval}", maxEx.ToString());
                             TemplateHandler.Assign(ref strRow, "{virExrate}", CustomerUtils.GetVirtualRate(dr["virtualmultiplier"]));
@@ -221,21 +209,6 @@
                             TemplateHandler.Assign(ref strRow2, "{currency}", currency);
 
                             #endregion assign template
-
-                            //casino
-                            if (!WebSettings.disableCS)
-                            {
-                                string htmlOpenCS = "onclick=\"OpenEditCS('" + dr["custid"] + "');\"";
-                                TemplateHandler.Assign(ref strRow, "{onclickCS}", htmlOpenCS);
-                                TemplateHandler.Assign(ref strRow2, "{onclickCS}", htmlOpenCS);
-                            }
-                            else
-                            {
-                                TemplateHandler.RemoveBlock(ref strRow, "casino-edit");
-                                TemplateHandler.RemoveBlock(ref strRow2, "casino-edit");
-                            }
-
-
                             if (!WebSettings.EnableVirtualSports)
                             {
                                 TemplateHandler.RemoveBlock(ref strRow, "edit-virtualSports");

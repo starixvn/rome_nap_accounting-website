@@ -14,19 +14,8 @@
 
     var adminID = AppSession.AccId;
     var adminUserName = AppSession.AccUserName;
-    bool allowCS = false;
     int IsShowCustomerSettingRenovation = 0;
     bool directMaster = (Model.ParentId == 0 ? true : false);
-
-    if (Model.ParentId == 0)
-    {
-        allowCS = true;
-    }
-    else
-    {
-        var thirdPartyStatus = Permissions.SelStatus3rdParty(CastAide.AsInt32(Model.ParentId));
-        allowCS = Model.ParentId == 0 ? true : thirdPartyStatus.CasinoSync;
-    }
     if (IsPost)
     {
         IsShowCustomerSettingRenovation = WebSettings.IsShowCustomerSettingRenovation;
@@ -65,7 +54,6 @@
     hash.Add("IsVisibleVirtualRate", IsVisibleVirtualRate);
     hash.Add("EnableVirtualSports", EnableVirtualSports);
     hash.Add("directMaster", directMaster);
-    hash.Add("allowCS", allowCS);
     hash.Add("allowKeno", KenoSection.Instance.ShowSetting);
     hash.Add("isParentMyanmarOdds", isParentMyanmarOdds);
     string[] renderResult = Render(Model, hash);
@@ -132,13 +120,6 @@ string siteName = masterItem.IsMyanmarOdds ? "76666B" : string.Empty;
                         Min Max PT
                     </li>
                     <li class="canchange" onclick="OpenEditCustInfo('@masterItem.ChildID','Master');">Info</li>
-                    @{
-                        var IsOnclickCS = !CastAide.AsBoolean(hash["directMaster"]) ? (!string.IsNullOrEmpty(ViewBag.synccasinoUpline) ?
-                        CastAide.AsBoolean(ViewBag.synccasinoUpline) : CastAide.AsBoolean(hash["allowCS"])) : masterItem.IsSynCasinoUpline;
-                        var parentCustIdTmp = Model.ParentId == 0 ? masterItem.ParentMasterDirect : Model.ParentId;
-                        var onclickCS = (IsOnclickCS == true ? "masterList.casino('" + masterItem.ChildID + "','" + parentCustIdTmp + "');" : "");
-                    }
-                    <li class="canchange" onclick="@onclickCS">Casino</li>
 
                     <li class="canchange" onclick="OpenEditTransferTime('@masterItem.ChildID',0);">
                         Transfer
@@ -157,12 +138,6 @@ string siteName = masterItem.IsMyanmarOdds ? "76666B" : string.Empty;
                     @if (CastAide.AsBoolean(hash["allowKeno"]))
                     {
                         <li class="canchange" onclick="masterList.kenoSetting('@masterItem.ChildID');">RNG Keno</li>
-                    }
-                    @if (WebSettings.IsShowGoldDeluxeSettingForCredit)
-                    {
-                        <li class="canchange" onclick="masterList.goldDeluxeSetting('@masterItem.ChildID', '@Model.ParentId');">
-                            Gold Deluxe
-                        </li>
                     }
 
                     @if (!masterItem.IsHideSportsbook2)
@@ -302,7 +277,7 @@ var bg = rowCSS(masterItem);
         </td>
         <td>
             <div class="table-cell" style="width: 50px; height: 18px;">
-                <a class="viewdownline-button " href="AgentList?masterId=@masterItem.ChildID&doubleCommMaster=@masterItem.isDoubleComm.ToString().ToLower()&isSynccasino=@masterItem.IsSynCasinoUpline.ToString().ToLower()&hideLiveCasinoUpline=@masterItem.IsHideLiveCasino.ToString().ToLower()&hideVoidbridgeUpline=@masterItem.IsHideVoidbridge.ToString().ToLower()">
+                <a class="viewdownline-button " href="AgentList?masterId=@masterItem.ChildID&doubleCommMaster=@masterItem.isDoubleComm.ToString().ToLower()&hideLiveCasinoUpline=@masterItem.IsHideLiveCasino.ToString().ToLower()&hideVoidbridgeUpline=@masterItem.IsHideVoidbridge.ToString().ToLower()">
                     View
                 </a>
             </div>

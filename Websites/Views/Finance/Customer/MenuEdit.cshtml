@@ -2,9 +2,7 @@
     <ul class="openedit">
         <li class="canchange" onclick="OpenEditMinMaxPT('${Id}','${Type}');">Min Max PT</li>
         <li class="canchange" onclick="OpenEditCustInfo('${Id}','${Type}');">Info</li>
-        {{if !DisableCS}}
-        <li class="canchange" onclick="OpenEditCS('${Id}');">Casino</li>
-        {{/if}} {{if RoleId == 4 || RoleId == 3}}
+        {{if RoleId == 4 || RoleId == 3}}
         <li class="canchange" onclick="OpenEditTransferTime('${Id}',${IsAgent});">Transfer Condition</li>
         {{else}} {{if RoleId == 2 && IsDirectMaster}}
         <li class="canchange" onclick="OpenEditTransferTime('${Id}',${IsAgent});">Transfer Condition</li>

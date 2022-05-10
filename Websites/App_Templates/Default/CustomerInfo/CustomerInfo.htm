@@ -429,7 +429,6 @@
                     <!--CN88HiddenItem-->
                     {outrightControl}
                     {numberGameControl}
-                    {casinoControl}
                     <!--AGCasinoStatus-->
                     <div class="col">
                         <span class="canchange" onclick="updateAGCasinoStatus({CustId}, {RoleId})">
@@ -638,18 +637,11 @@
                                 </a><br />
                             </span>
                             <!--/parlayMaxPayout-->
-                            <!--edit-casino-->
-                            <span class="{IsShow1}">
-                                <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{casinoLinkSetting}');">
-                                    Casino
-                                </a><br />
-                            </span>
-                            <span class="{IsHidden1}">
-                                <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{casinoLinkSetting}');">
-                                    Casino
-                                </a><br />
-                            </span>
-                            <!--/edit-casino-->
+                            <!--edit-sabacasino-->
+                            <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{SabaCasinoLinkSetting}');">
+                                Saba Casino
+                            </a><br />
+                            <!--/edit-sabacasino-->
                             <!--edit-agcasino-->
                             <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{agcasinoLinkSetting}');">
                                 AG Casino
@@ -665,11 +657,6 @@
                                 RNG Keno
                             </a><br />
                             <!--/edit-Keno-->
-                            <!--edit-GoldDeluxe-->
-                            <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{goldDeluxeLinkSetting}');">
-                                Gold Deluxe
-                            </a><br />
-                            <!--/edit-GoldDeluxe-->
                             <!--edit-sportsbook2-->
                             <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{sportsbook2LinkSetting}');">
                                 Sportsbook 2
@@ -754,11 +741,9 @@
     <input type="hidden" id="accId" name="accId" value="{AccId}" />
     <input type="hidden" id="roleId" name="roleId" value="{RoleId}" />
     <!--checkbox-oldvalue-->
-    <input type="hidden" id="chkOldValueCasino" name="chkOldValueCasino" value="{chkCasino}" />
     <input type="hidden" id="chkOldValueNumberGame" name="chkOldValueNumberGame" value="{chkNumberGame}" />
     <input type="hidden" id="chkOldValueEsport" name="chkOldValueEsport" value="{chkEsports}" />
     <input type="hidden" id="chkOldValueEnableDirectStatus" name="chkOldValueEnableDirectStatus" value="{chkEnableDirectStatus}" />
-    <input type="hidden" id="chkOldValueGoldDeluxe" name="chkOldValueGoldDeluxe" value="{chkGoldDeluxe}" />
     <input type="hidden" id="chkOldValueSuperLive" name="chkOldValueSuperLive" value="{chkSuperLive}" />
     <!--/checkbox-oldvalue-->
 </form>

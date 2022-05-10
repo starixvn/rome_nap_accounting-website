@@ -189,7 +189,8 @@
 
         public static bool IsVoidbridge(int betTypeId)
         {
-            return 4001 <= betTypeId && betTypeId <= 4100;
+            return 4001 <= betTypeId && betTypeId <= 4100 ||
+                5800 <= betTypeId && betTypeId <= 5999;
         }
 
         public static bool IsPP(int betTypeId)

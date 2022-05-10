@@ -50,9 +50,6 @@
   <Function Name="Core - Customer Info">
     <Setting Key="Acc_CustomerSelByUserName" SpName="Acc_CustomerSelByUserName" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
-  <Function Name="RNG Casino - Customer">
-    <Setting Key="Acc_SiteSel_RNGCS" SpName="Acc_SiteSel_RNGCS" DbName="DBAGE.bodb02.bodbAdminNet" />
-  </Function>
   <Function Name="Admin - SMA Management">
     <Setting Key="Acc_SiteSel_Credit" SpName="Acc_SiteSel_Credit" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
@@ -82,7 +79,6 @@
     <Setting Key="CustomerSelSuspended" SpName="Acc_CustomerSelSuspended" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CustomerSelMatchLimit" SpName="Acc_CustomerSelMatchLimit" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CustomerSelUserSearch" SpName="Acc_CustomerSelUserSearch" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="CustomerSelCasinoBonusStatus" SpName="Acc_CustomerSelCasinoBonusStatus" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Customer_AutoSuspend_GetCustomerStatus" SpName="Acc_CustomerSelAutoSuspendStatus" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="User Control">
@@ -121,10 +117,6 @@
     <Setting Key="GetBetType" SpName="Acc_MT_BetTypeSel" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="GetLiveCSPT" SpName="Acc_MT_GetLiveCSPT" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="ViewPT_Keno" SpName="Acc_MT_GetKenoPT" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="ViewPT_GoldDeluxe" SpName="Acc_MT_GetGoldDeluxePT" DbName="DBCust.CustDB.bodbAdminNet" />
-  </Function>
-  <Function Name="Progressive Bonus">
-    <Setting Key="CustomerSelCasinoBonusStatus" SpName="Acc_CustomerSelCasinoBonusStatus" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="SearchCopy">
     <Setting Key="Age_CustomerSelCheckBelonging_ByUsername" SpName="Age_CustomerSelCheckBelonging_ByUsername" DbName="DBAGE.bodb02.bodbAdminNet" />

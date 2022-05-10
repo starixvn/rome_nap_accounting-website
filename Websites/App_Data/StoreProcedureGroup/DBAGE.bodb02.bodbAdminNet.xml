@@ -49,9 +49,6 @@
   <Function Name="Core - Customer Info">
     <Setting Key="Acc_CustomerSelByUserName" SpName="Acc_CustomerSelByUserName" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
-  <Function Name="RNG Casino - Customer">
-    <Setting Key="Acc_SiteSel_RNGCS" SpName="Acc_SiteSel_RNGCS" DbName="DBAGE.bodb02.bodbAdminNet" />
-  </Function>
   <Function Name="Admin - SMA Management">
     <Setting Key="Acc_SiteSel_Credit" SpName="Acc_SiteSel_Credit" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
@@ -68,20 +65,19 @@
     <Setting Key="Acc_CustomerSelTransferOption" SpName="Acc_CustomerSelTransferOption" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Customer">
-    <Setting Key="CustomerSelStatus" SpName="Acc_CustomerSelStatus" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="CustomerSelStatus" SpName="Acc_CustomerSelStatus_UAT1" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="SelAllInfo" SpName="Acc_CustomerSelAllInfo" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="Acc_CustDirectSel" SpName="Acc_CustDirectSel" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="Acc_CustomerSelSiteByUserName" SpName="Acc_CustomerSelSiteByUserName" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CustomerSelDownLineList" SpName="Acc_CustomerSelList" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CustomerSelUserInfo" SpName="Acc_CustomerSelUserInfo" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo" DbName="DBCust.CustDB.bodbAdminNet">
+    <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo_UAT1" DbName="DBCust.CustDB.bodbAdminNet">
       <Mapping DataField="Currency" ObjectProperty="CurrencyId" />
     </Setting>
     <Setting Key="CustomerSelClearBalance" SpName="Acc_CustomerSelClearBalance" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="CustomerSelSuspended" SpName="Acc_CustomerSelSuspended" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CustomerSelMatchLimit" SpName="Acc_CustomerSelMatchLimit" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CustomerSelUserSearch" SpName="Acc_CustomerSelUserSearch" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="CustomerSelCasinoBonusStatus" SpName="Acc_CustomerSelCasinoBonusStatus" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Customer_AutoSuspend_GetCustomerStatus" SpName="Acc_CustomerSelAutoSuspendStatus" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="User Control">
@@ -95,7 +91,7 @@
     <Setting Key="Acc_CreditTermSelGroupByUsername" SpName="Acc_CreditTermSelGroupByUsername" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Helper">
-    <Setting Key="CheckAllowedShow" SpName="Acc_CheckAllowedShow" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="CheckAllowedShow" SpName="Acc_CheckAllowedShow_UAT1" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="SiteSel_Report_Licensee" SpName="Acc_ActivelicenseeSel" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="P2P Control">
@@ -118,7 +114,6 @@
     <Setting Key="GetSportType" SpName="Acc_MT_SportTypeSel" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="GetBetType" SpName="Acc_MT_BetTypeSel" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="ViewPT_Keno" SpName="Acc_MT_GetKenoPT" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="ViewPT_GoldDeluxe" SpName="Acc_MT_GetGoldDeluxePT" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Progressive Bonus">
     <Setting Key="CustomerSelCasinoBonusStatus" SpName="Acc_CustomerSelCasinoBonusStatus" DbName="DBCust.CustDB.bodbAdminNet" />

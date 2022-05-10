@@ -778,6 +778,11 @@ var ViewPT = {
             case 175: //Bitcoin Betting
                 ViewPT.viewPTBasedOnKindOfCustomer(userName, 0, 0, isLive, 69);
                 break;
+            case 208: // Saba Casino
+            case 209: // Saba Casino
+            case 210: // Saba Casino
+                ViewPT.viewPTBasedOnKindOfCustomer(userName, 0, 0, isLive, 6);
+                break;
             default:
                 ViewPT.getViewPTOldFormat(userName, sportId, betTypeId, isLive);
         }

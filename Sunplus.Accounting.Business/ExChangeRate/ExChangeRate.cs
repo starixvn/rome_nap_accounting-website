@@ -8,9 +8,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Script.Serialization;
 using System.Web.UI.HtmlControls;
-using CasinoLibrary.Model.UserException;
-using CasinoLibrary.SBAgent;
 using DNAide.Core;
 using DNAide.Data;
 using DNAide.Utils;
@@ -33,6 +32,8 @@ namespace Sunplus.Accounting.Business.ExChangeRate
     public class ExChangeRate
     {
         private readonly string editBaseRate_ErrMsg = "{0} - {1}:";
+
+        private readonly CasinoApiService casinoApiService = new CasinoApiService();
 
         #region GenAddContent
 
@@ -80,8 +81,8 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 TemplateHandler.Assign(ref exRow, "currency", CastAide.AsString(dr["currency"]));
                 TemplateHandler.Assign(ref exRow, "standardCode", CastAide.AsString(dr["currencyCode"]));
                 TemplateHandler.Assign(ref exRow, "BaseRate", CastAide.AsString(dr["actualrate"]));
-                TemplateHandler.Assign(ref exRow, "MinBet", NumberFormat.DecFormat(dr["MinBet"], 0));
-                TemplateHandler.Assign(ref exRow, "MinBetLive", NumberFormat.DecFormat(dr["MinBetLive"], 0));
+                TemplateHandler.Assign(ref exRow, "MinBet", CastAide.AsString(dr["MinBet"]));
+                TemplateHandler.Assign(ref exRow, "MinBetLive", CastAide.AsString(dr["MinBetLive"]));
                 TemplateHandler.Assign(ref exRow, "exrateId", exid);
                 TemplateHandler.Assign(ref exRow, "description", CastAide.AsString(dr["Description"]));
                 TemplateHandler.Assign(ref exRow, "OfferSite", ExChangeRateHelper.GetOfferSiteName(CastAide.AsString(dr["offersite"])));
@@ -135,25 +136,28 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 hash.Add("code", Code.Trim());
                 hash.Add("description", Description);
                 hash.Add("multipliedby", Convert.ToInt32(MultipliedBy.Trim()));
-
-                int errcode = 0;
-                string errmsg = "";
                 int exchangeid = 0;
-
-                IBCProvider.ExChangeRate.ExchangeIns(hash, ref errcode, ref errmsg, ref exchangeid);
-
-                msg = errmsg;
-                int exid = exchangeid;
-                if (msg.Length == 0)
+                var result = IBCProvider.ExChangeRate.ExchangeIns(hash, ref exchangeid);
+                msg = result.ErrorMessage;
+                if (result.ErrorCode == 0)
                 {
-                    BasicInfo info = new BasicInfo();
-                    bool isSuc = info.UpdateExchange(Globals.CASINO_GROUP1, exid, currency, CastAide.AsDouble(actualrate), Code);
+                    var response = casinoApiService.UpdateExchange(new CasinoApiRequest
+                    {
+                        Call = new List<CasinoApiCurrencyParam> {
+                            new CasinoApiCurrencyParam
+                            {
+                                ActualRate = CastAide.AsDouble(actualrate),
+                                Currency = currency.Trim(),
+                                IBCExchangeId = exchangeid,
+                                ISOCode = Code
+                            }
+                        }
+                    });
+                    if (!response.IsSuccess)
+                    {
+                        msg = response.Result[0].ErrorCode + ": " + response.Result[0].Description;
+                    }
                 }
-            }
-            catch (ErrorException casinoEx)
-            {
-                msg = casinoEx.Message;
-                LogExtensions.CasinoExceptionHandler(new Exception(casinoEx.Message, casinoEx));
             }
             catch (Exception ex)
             {
@@ -324,31 +328,41 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 hash.Add("errcode", 0);
                 hash.Add("errmsg", "");
                 hash.Add("description", Description);
+                hash.Add("code", Code.Trim());
                 hash.Add("multipliedby", Convert.ToInt32(MultipliedBy.Trim()));
 
                 DbResult rs;
                 rs = IBCProvider.ExChangeRate.ExchangeSelByID(exid);// get info to send email
                 DataRow[] Rows = rs.ResultSet.Tables[0].Select();
 
-                int errcode = 0;
-                string errmsg = "";
-
-                IBCProvider.ExChangeRate.ExchangeUpd(hash, ref errcode, ref errmsg);
-                msg = errmsg;
+                var result = IBCProvider.ExChangeRate.ExchangeUpd(hash);
+                msg = result.ErrorMessage;
 
                 if (msg.Length == 0)
                 {
-                    BasicInfo info = new BasicInfo();
-                    bool isSuc = info.UpdateExchange(Globals.CASINO_GROUP1, exid, currency, CastAide.AsDouble(actualrate), Code);
+                    var response = casinoApiService.UpdateExchange(new CasinoApiRequest
+                    {
+                        Call = new List<CasinoApiCurrencyParam> {
+                            new CasinoApiCurrencyParam
+                            {
+                                ActualRate = CastAide.AsDouble(actualrate),
+                                Currency = currency.Trim(),
+                                IBCExchangeId = exid,
+                                ISOCode = Code
+                            }
+                        }
+                    });
+                    if (!response.IsSuccess)
+                    {
+                        msg = response.Result[0].ErrorCode + ": " + response.Result[0].Description;
+                    }
+
                     string tplSubject = "Exchange Rate was changed";
                     SendEmail_Template mail = new SendEmail_Template();
                     foreach (DataRow dr in Rows)
                     {
                         mail.username = AppSession.Username;
                         mail.ExchangeID = exid.ToString();
-
-                        //if (actualrate.ToString() != dr["actualrate"].ToString())
-
                         mail.BaseRate = actualrate.ToString();
                         mail.oldBaseRate = dr["actualrate"].ToString();
                         if (actualrate.ToString() != dr["actualrate"].ToString())
@@ -367,16 +381,12 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                                                   tplSubject, mail.ToString());
                 }
             }
-            catch (ErrorException casinoEx)
-            {
-                msg = casinoEx.Message;
-                LogExtensions.CasinoExceptionHandler(new Exception(casinoEx.Message, casinoEx));
-            }
             catch (Exception ex)
             {
                 msg = ex.Message;
                 LogExtensions.ExceptionHandler(ex);
             }
+
             return msg;
         }
 
@@ -449,47 +459,53 @@ namespace Sunplus.Accounting.Business.ExChangeRate
             var result = new Result();
             var emailGridBody = new StringBuilder();
             var index = 1;
-            try
+            var CSRequest = new CasinoApiRequest();
+            foreach (var param in updateParams.Trim(';').Split(';'))
             {
-                foreach (var param in updateParams.Trim(';').Split(';'))
+                var paramList = param.Trim(',').Split(',');
+                var exid = int.Parse(paramList[0]);
+                var actualrate = paramList[1];
+                var currency = paramList[2];
+                var code = paramList[3];
+                var oldRate = paramList[4];
+
+                emailGridBody.Append("<tr>");
+                emailGridBody.Append($"<td>{index++}</td>");
+                emailGridBody.Append($"<td>{exid}</td>");
+                emailGridBody.Append($"<td>{currency}</td>");
+                emailGridBody.Append($"<td>{oldRate}</td>");
+                emailGridBody.Append($"<td>{actualrate}</td>");
+                emailGridBody.Append("</tr>");
+                CSRequest.Call.Add(new CasinoApiCurrencyParam
                 {
-                    var paramList = param.Trim(',').Split(',');
-                    var exid = int.Parse(paramList[0]);
-                    var actualrate = paramList[1];
-                    var currency = paramList[2];
-                    var code = paramList[3];
-                    var oldRate = paramList[4];
-                    var minbet = paramList[5];
-                    var minbetlive = paramList[6];
-                    BasicInfo info = new BasicInfo();
-                    bool isSuc = info.UpdateExchange(Globals.CASINO_GROUP1, exid, currency, CastAide.AsDouble(actualrate), code);
-                    emailGridBody.Append("<tr>");
-                    emailGridBody.Append($"<td>{index++}</td>");
-                    emailGridBody.Append($"<td>{exid}</td>");
-                    emailGridBody.Append($"<td>{currency}</td>");
-                    emailGridBody.Append($"<td>{oldRate}</td>");
-                    emailGridBody.Append($"<td>{actualrate}</td>");
-                    emailGridBody.Append("</tr>");
+                    ActualRate = CastAide.AsDouble(actualrate),
+                    Currency = currency.Trim(),
+                    IBCExchangeId = exid,
+                    ISOCode = code
+                });
+            }
+
+            var response = casinoApiService.UpdateExchange(CSRequest);
+            if (!response.IsSuccess)
+            {
+                var listFailedUpdateCurrencies = new List<string>();
+                for (int i = 0; i < response.Result.Count; i++)
+                {
+                    if (!response.Result[i].ErrorCode.Equals("0"))
+                    {
+                        listFailedUpdateCurrencies.Add(CSRequest.Call[i].Currency);
+                    }
                 }
 
-                string tplSubject = "Exchange Rate was changed";
+                result.ErrorCode = 2;
+                result.ErrorMessage = $"Failed to sync new exchange rates in OneRNG DB: {string.Join(",", listFailedUpdateCurrencies)}";
+            }
+            string tplSubject = "Exchange Rate was changed";
 
-                SendMailExtension.AccSendMail(MailSection.HostName.Gmail, MailSection.ToMailExchangeRate,
-                                              MailSection.CCMailExchangeRate, MailSection.BCCMailExchangeRate,
-                                              tplSubject, string.Format(Resources.ExchangeRate.UpdateMultipleExtRateSuccessCasinoEmail, emailGridBody.ToString()));
-            }
-            catch (ErrorException casinoEx)
-            {
-                result.ErrorCode = 1;
-                result.ErrorMessage = casinoEx.Message;
-                LogExtensions.CasinoExceptionHandler(new Exception(casinoEx.Message, casinoEx));
-            }
-            catch (Exception ex)
-            {
-                result.ErrorCode = 1;
-                result.ErrorMessage = ex.Message;
-                LogExtensions.ExceptionHandler(ex);
-            }
+            SendMailExtension.AccSendMail(MailSection.HostName.Gmail, MailSection.ToMailExchangeRate,
+                                          MailSection.CCMailExchangeRate, MailSection.BCCMailExchangeRate,
+                                          tplSubject, string.Format(Resources.ExchangeRate.UpdateMultipleExtRateSuccessCasinoEmail, emailGridBody.ToString()));
+
 
             return result;
         }

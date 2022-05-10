@@ -7,12 +7,6 @@
 
 namespace Fanex.Tarus.Customer.CreditCustomer.Business
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Data;
-    using System.Linq;
-    using CasinoLibrary.Model.UserException;
     using Criteria.CN88;
     using Criteria.CreditCustomer;
     using Customer.Entities.CN88;
@@ -32,8 +26,12 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
     using Sunplus.Accounting.Core.Extensions;
     using Sunplus.Accounting.Core.Helper;
     using Sunplus.Accounting.DataAccess;
-    using Sunplus.Accounting.Entities.Casino;
     using Sunplus.Accounting.Entities.Customer;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Linq;
     using static Infrastructure.Common.Enumerations;
 
     /// <summary>
@@ -135,81 +133,14 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
         {
             try
             {
-                int uplineId = currentContext.CustId;
-                CustDetail custDetail = GetUplineStatusCusdetail(uplineId);
-                CSCustomerDetail csCustomerInfo = new CSCustomerDetail();
-
-                switch (currentContext.TargetRoleId)
-                {
-                    case (int)Globals.AccountType.Master:
-                        custDetail.MasterId = custId;
-                        csCustomerInfo.RoleId = (int)Globals.AccountType.Master;
-                        break;
-                    case (int)Globals.AccountType.Agent:
-                        custDetail.AgentId = custId;
-                        csCustomerInfo.RoleId = (int)Globals.AccountType.Agent;
-                        break;
-                    case (int)Globals.AccountType.Member:
-                        csCustomerInfo.RoleId = (int)Globals.AccountType.Member;
-                        break;
-                    default:
-                        break;
-                }
-
-                csCustomerInfo.CasinoNo = Globals.CASINO_GROUP1;
-                csCustomerInfo.IBCCustID = custId;
-                csCustomerInfo.UserName = customer.UserName;
-                csCustomerInfo.UserName2 = customer.UserName;
-                csCustomerInfo.FirstName = customer.FirstName;
-                csCustomerInfo.LastName = customer.LastName;
-                csCustomerInfo.UserPwd = customer.Password;
-                csCustomerInfo.Phone = customer.Phone;
-                csCustomerInfo.MobilePhone = customer.MobilePhone;
-                csCustomerInfo.ExchangeID = custDetail.CurrencyId;
-                csCustomerInfo.Currency = custDetail.CurrencyId;
-                csCustomerInfo.CurrencyName = custDetail.CurrencyName;
-                csCustomerInfo.Fax = customer.Fax;
-
-                csCustomerInfo.Suspend = custDetail.Suspend
-                    || customer.StatusSetting.Suspended;
-                csCustomerInfo.Closed = custDetail.Closed
-                    || customer.StatusSetting.Closed;
-
-                csCustomerInfo.IsEnablePT = true;
-                csCustomerInfo.SIBCCustID = custDetail.SuperId;
-                csCustomerInfo.MIBCCustID = custDetail.MasterId;
-                csCustomerInfo.AIBCCustID = custDetail.AgentId;
-                csCustomerInfo.CasinoDisabled = custDetail.IsUplineDisableCasino;
-                csCustomerInfo.IsSyncNG2 = custDetail.IsUplineSyncNG2;
-                csCustomerInfo.DisableAutoMasterPT = !customer.StatusSetting.DisableAutoMPT;
-
+                var uplineCustStatus = IBCProvider.IBCCustomer.GetCustomerStatus(custId, WebSettings.SettingStatus);
                 var custManager = new Sunplus.Accounting.Business.Customer.CustomerService();
-                custManager.AutoInsertThridPartyAccount(csCustomerInfo, custDetail, AppSession.AccId, AppSession.Username, currentContext.IP);
+                custManager.AutoInsertThridPartyAccount(custId, customer.UserName, currentContext.TargetRoleId, currentContext.RoleId, uplineCustStatus.IsDisableNG2, uplineCustStatus.Currency, uplineCustStatus.IsSyncNG2, AppSession.AccId, currentContext.IP);
             }
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
             }
-        }
-
-        public CustDetail GetUplineStatusCusdetail(int uplineId)
-        {
-            var uplineDetail = new CSCustomerDetail();
-            uplineDetail = IBCProvider.IBCCustomer.GetBasicCustInfoIBC(uplineId, WebSettings.SettingStatus);
-
-            var customer = new CustDetail();
-            customer.SuperId = uplineDetail.SIBCCustID;
-            customer.MasterId = uplineDetail.MIBCCustID;
-            customer.AgentId = uplineDetail.AIBCCustID;
-            customer.Closed = uplineDetail.Closed;
-            customer.Suspend = uplineDetail.Suspend;
-            customer.IsUplineSyncCasino = uplineDetail.CasinoSync;
-            customer.IsUplineDisableCasino = uplineDetail.CasinoDisabled;
-            customer.CurrencyId = uplineDetail.Currency;
-            customer.CurrencyName = uplineDetail.CurrencyName;
-            customer.IsUplineSyncNG2 = uplineDetail.IsSyncNG2;
-
-            return customer;
         }
 
         /// <summary>
@@ -230,56 +161,9 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
             return Permissions.GetHostPermission(Enumerations.Functions.FinancialManagement.CreateFinanceAccount);
         }
 
-        /// <summary>
-        /// Update syncCasino Data
-        /// </summary>
-        /// <param name="customer">Information of Customer</param>
-        /// <param name="currentContext">Current Context</param>
-        /// <returns></returns>
-        public bool UpdateSyncCasinoAfterEditCustomer(ICustomer customer, IRequestContext currentContext)
-        {
-            bool success = true;
-
-            if (Permissions.IsAllowCasino() && customer.StatusSetting.SyncCasino == true)
-            {
-                try
-                {
-                    // Sync data to Casino
-                    CasinoLibrary.SBAgent.Customer csCustomer = new CasinoLibrary.SBAgent.Customer();
-                    csCustomer.SiteName = customer.SiteName;
-                    success = csCustomer.UpdateCustInfo(currentContext.TargetCustId, customer.FirstName, customer.LastName, customer.Phone, customer.MobilePhone, customer.Fax, currentContext.IP, AppSession.CustID, AppSession.Username, 3);
-                }
-                catch (ErrorException casinoEx)
-                {
-                    LogExtensions.CasinoExceptionHandler(new Exception(casinoEx.Message, casinoEx));
-                    success = false;
-                }
-                catch (Exception ex)
-                {
-                    LogExtensions.ExceptionHandler(ex);
-                    success = false;
-                }
-            }
-
-            return success;
-        }
-
         public Fanex.Tarus.Customer.Entities.Result UpdateDoubleComm(int userId, int custId, bool isDoubleComm)
         {
             return _customerSettingDataAccess.UpdateDoubleComm(userId, custId, isDoubleComm);
-        }
-
-        public string GetRNGSiteNameByCustId(int custId)
-        {
-            try
-            {
-                return _customerSettingDataAccess.GetRNGSiteNameByCustId(custId);
-            }
-            catch (Exception ex)
-            {
-                LogExtensions.ExceptionHandler(ex);
-                return null;
-            }
         }
 
         public Tarus.Customer.Entities.Result UpdateAllDayBalTransfer(int custId, bool isAllDayBalTransfer, bool isIncludedDownline, int userId, string ip)
@@ -424,7 +308,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
 
         public CustomerSetting.Module.Core.Models.Result UpdateProtectedStatus(int custId, bool isProtected, int userId, string ip)
         {
-            var result =_customerSettingDataAccess.ExecuteNonQuery(
+            var result = _customerSettingDataAccess.ExecuteNonQuery(
                 new UpdateProtectedStatusCriteria(custId, isProtected, userId, ip));
 
             if (AccCommon.IsEnabledRecheckin && result.IsSuccess && isProtected)

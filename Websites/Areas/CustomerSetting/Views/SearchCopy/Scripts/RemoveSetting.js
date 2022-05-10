@@ -43,23 +43,6 @@ PTSetting.SportType = new function () {
 
     };
 
-    var RemoveCasinoCustInfo = function () {
-        var $content = $("#frmCasino").contents();
-
-        setTimeout(function () {
-            for (var i = 0; i < 2; i++) {
-                $content.find('.tblcollapse tr:eq(0)').remove();
-            }
-            $content.find('.maincontent_box').remove();
-            //disable edit
-            $content.find('input:checkbox').attr('disabled', true);
-            $content.find('input:text').attr('disabled', true);
-            $content.find('select').attr('disabled', true);
-            $content.find('a').css('display', 'none');
-            $content.find('input:button').attr('disabled', true);
-        }, delayTime);
-    };
-
     var RemoveVirtualSportsCustInfo = function () {
         var $content = $("#frmVirtualSports").contents();
 
@@ -81,7 +64,6 @@ PTSetting.SportType = new function () {
         switch (sport) {
             case 'Sportsbook': RemoveSportBookCustInfo(); RemoveButtons('#frmSportbook'); break;
             case 'Sportsbook Min PT': RemoveSportBookMinPT(); RemoveButtons('#frmSportbookMinPT'); break;
-            case 'Casino': RemoveCasinoCustInfo(); RemoveButtons('#frmCasino'); break;
             case 'Virtual Sports': RemoveVirtualSportsCustInfo(); RemoveButtons('#frmVirtualSports'); break;
         }
     }
