@@ -153,6 +153,9 @@
     <Reference Include="Fanex.BetList.TableGames, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.TableGames.1.1.0\lib\net40\Fanex.BetList.TableGames.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.BetList.VirtualGames, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.VirtualGames.1.0.0.3\lib\net40\Fanex.BetList.VirtualGames.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.Common, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Common.1.1.0.1\lib\net40\Fanex.Common.dll</HintPath>
       <Private>True</Private>
@@ -240,9 +243,6 @@
     </Reference>
     <Reference Include="Fanex.Result.Core.ThirdParty, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.ThirdPartyResult.1.0.0.2\lib\net461\Fanex.Result.Core.ThirdParty.dll</HintPath>
-    </Reference>
-    <Reference Include="Fanex.Result.Core.VirtualGames, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core.VirtualGames.1.0.0.0\lib\net40\Fanex.Result.Core.VirtualGames.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Entities, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Entities.1.0.0.6\lib\net40\Fanex.Tarus.Entities.dll</HintPath>
