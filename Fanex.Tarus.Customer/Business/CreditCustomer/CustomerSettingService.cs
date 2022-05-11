@@ -26,6 +26,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
     using Sunplus.Accounting.Core.Extensions;
     using Sunplus.Accounting.Core.Helper;
     using Sunplus.Accounting.DataAccess;
+    using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
     using Sunplus.Accounting.Entities.Customer;
     using System;
     using System.Collections;
@@ -133,9 +134,21 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
         {
             try
             {
-                var uplineCustStatus = IBCProvider.IBCCustomer.GetCustomerStatus(custId, WebSettings.SettingStatus);
+                var uplineCustStatus = IBCProvider.IBCCustomer.GetCustomerStatus(currentContext.CustId, WebSettings.SettingStatus);
+                var custInfo = SelectCustomer.CustomerSelUserInfoRpt(custId);
+                var currencyId = Fanex.CustomerSetting.Module.Core.Utils.ToInt32(custInfo.ResultSet.Tables[0].Rows[0]["exchangeid"]);
                 var custManager = new Sunplus.Accounting.Business.Customer.CustomerService();
-                custManager.AutoInsertThridPartyAccount(custId, customer.UserName, currentContext.TargetRoleId, currentContext.RoleId, uplineCustStatus.IsDisableNG2, uplineCustStatus.Currency, uplineCustStatus.IsSyncNG2, AppSession.AccId, currentContext.IP);
+                Fanex.Logging.LogService.Info($"custId: {custId}; userName: {customer.UserName}; roleId: {currentContext.TargetRoleId}; uplineId: {currentContext.CustId}; isDisableNG2Upline: {uplineCustStatus.IsDisableNG2}; currencyId: {currencyId}; isSyncNG2Upline: {uplineCustStatus.IsSyncNG2}; userId: {AppSession.AccId}; ip: {currentContext.IP}");
+                custManager.AutoInsertThridPartyAccount(
+                    custId, 
+                    customer.UserName, 
+                    currentContext.TargetRoleId, 
+                    currentContext.CustId, 
+                    uplineCustStatus.IsDisableNG2,
+                    currencyId, 
+                    uplineCustStatus.IsSyncNG2, 
+                    AppSession.AccId, 
+                    currentContext.IP);
             }
             catch (Exception ex)
             {
