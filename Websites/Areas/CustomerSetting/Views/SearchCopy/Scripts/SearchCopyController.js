@@ -325,10 +325,6 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             $scope.sports.push({ sportname: 'Virtual Sports', sportvalue: 'tabVirtualSports' });
         }
 
-        if (!statusSports.HideGoldDeluxe) {
-            $scope.sports.push({ sportname: 'Gold Deluxe', sportvalue: 'tabGoldDeluxe' });
-        }
-
         if (!statusSports.HideSportsbook2) {
             $scope.sports.push({ sportname: 'Sportsbook 2', sportvalue: 'tabSportsbook2' });
         }

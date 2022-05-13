@@ -290,11 +290,6 @@
         showPopup(""
                 , "CustomerSetting/Casino/Agent/EditAgent?id=" + custId + "&uplineid= " + uplineId, 0, 0, 1024, 700, false, 2000, null);
     },
-    goldDeluxeSetting: function (custId, uplineId) {
-        showPopup("Gold Deluxe"
-                , "GoldDeluxeSetting/GoldDeluxe/EditSetting?uplineId=" + uplineId + "&upLineLevel=3&formType=1&actorId=" + _adminID + "&custId=" + custId + "&level=2"
-                , 0, 0, 880, 580, false, 2000, null);
-    },
   
     reCalculateGrid: function () {
         var initWidth = 1385;

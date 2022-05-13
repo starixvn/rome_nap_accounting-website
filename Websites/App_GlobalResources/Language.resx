@@ -2235,15 +2235,6 @@
   <data name="ESports" xml:space="preserve">
     <value>E-Sports</value>
   </data>
-  <data name="disableGoldDeluxe" xml:space="preserve">
-    <value>Disable Gold Deluxe</value>
-  </data>
-  <data name="enableGoldDeluxe" xml:space="preserve">
-    <value>Gold Deluxe</value>
-  </data>
-  <data name="lblDisabledGoldDeluxeUpline" xml:space="preserve">
-    <value>Gold Deluxe status has been disabled at upline</value>
-  </data>
   <data name="enableSuperLive" xml:space="preserve">
     <value>Super Live</value>
   </data>

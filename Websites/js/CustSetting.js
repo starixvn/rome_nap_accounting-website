@@ -198,21 +198,6 @@ function changeDisable(obj, type) {
         return;
     }
 
-    var productName = "GoldDeluxe";
-    if (type == productName) {
-        var oldCheckboxValue = $('#chkOldValue' + productName).val();
-        var checkbox1 = $("#" + chk1);
-        var buttonUpdate = $("#disabledGoldDeluxePop .btn:first");
-        if ((checkbox1.attr('checked') == true && oldCheckboxValue == '1') ||
-            (checkbox1.attr('checked') == false && oldCheckboxValue == '0')) {
-            buttonUpdate.removeAttr("disabled");
-        } else {
-            buttonUpdate.attr("disabled", "disabled");
-        }
-
-        return;
-    }
-
     $('#' + obj.id).parent().find('input[type="button"]').eq(0).attr('disabled', !$('#' + obj.id).is(':checked') && $('#' + obj.id + 'hdf').val() == '0')
 
 }
@@ -310,13 +295,3 @@ function DisabeAllCheckBox() {
         $('.btn:first', this).attr("disabled", "disabled");
     });
 };
-
-function ShowDisablePopGoldDeluxe(obj, hasDownline) {
-    ShowDisablePop(obj);
-    if (hasDownline) {
-        $("#" + obj.id + 'boxDL').css("display", 'inline');
-    }
-    else {
-        $("#" + obj.id + 'boxDL').css("display", 'none');
-    }
-}
