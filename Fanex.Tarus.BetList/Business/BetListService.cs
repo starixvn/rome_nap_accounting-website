@@ -1400,10 +1400,6 @@ namespace Fanex.Tarus.BetList.Business
             {
                 sportName = BetListResources.Virtual_Sports;
             }
-            else if (ReportService.IsGoldDeluxe(betTypeId))
-            {
-                sportName = BetListResources.Gold_Deluxe;
-            }
             else if (ReportService.IsAGCasino(betTypeId))
             {
                 sportName = BetListResources.AGCasino;

@@ -299,8 +299,6 @@
     <Compile Include="Business\CustomerLogin\ICustomerOTPService.cs" />
     <Compile Include="Business\ExtraPtGroup\ExtraPtService.cs" />
     <Compile Include="Business\ExtraPtGroup\IExtraPtService.cs" />
-    <Compile Include="Business\GoldDeluxe\GoldDeluxeService.cs" />
-    <Compile Include="Business\GoldDeluxe\IGoldDeluxeService.cs" />
     <Compile Include="Business\InitializingCustomerSetting\InitializingCustomerSettingService.cs" />
     <Compile Include="Business\InitializingStakeLevel\InitializingStakeLevelService.cs" />
     <Compile Include="Business\LicenseeDcsSetting\ILicenseeDcsSettingService.cs" />
@@ -371,7 +369,6 @@
     <Compile Include="Controller\ManageRobots2Controller.cs" />
     <Compile Include="Controller\EditLicensee\EditLicenseeController.cs" />
     <Compile Include="Controller\AutoSuspendController.cs" />
-    <Compile Include="Controller\GoldDeluxeController.cs" />
     <Compile Include="Controller\NewLicensee\NewLicenseeController.cs" />
     <Compile Include="Controller\NG2\SyncCustomerController.cs" />
     <Compile Include="Controller\NG2\SyncCurrencyController.cs" />
@@ -429,8 +426,6 @@
     <Compile Include="Criteria\ExtraPtGroup\GroupByProductCriteria.cs" />
     <Compile Include="Criteria\ExtraPtGroup\GroupCriteria.cs" />
     <Compile Include="Criteria\ExtraPtGroup\ProductCriteria.cs" />
-    <Compile Include="Criteria\GoldDeluxe\GetGoldDeluxeStatusCriteria.cs" />
-    <Compile Include="Criteria\GoldDeluxe\UpdateGoldDeluxeStatusCriteria.cs" />
     <Compile Include="Criteria\InitializingCustomerSetting\AddSettingConfigCriteria.cs" />
     <Compile Include="Criteria\InitializingCustomerSetting\DCSProductMatrixCriteria.cs" />
     <Compile Include="Criteria\InitializingCustomerSetting\DeleteConfigCriteria.cs" />
@@ -528,8 +523,6 @@
     <Compile Include="DataAccess\AutoSuspend\IAutoSuspendRepository.cs" />
     <Compile Include="DataAccess\ExtraPtGroup\ExtraPtRepository.cs" />
     <Compile Include="DataAccess\ExtraPtGroup\IExtraPtRepository.cs" />
-    <Compile Include="DataAccess\GoldDeluxe\GoldDeluxeRepository.cs" />
-    <Compile Include="DataAccess\GoldDeluxe\IGoldDeluxeRepository.cs" />
     <Compile Include="DataAccess\InitializingCustomerSetting\InitializingCustomerSettingDataAccess.cs" />
     <Compile Include="DataAccess\InitializingStakeLevel\InitStakeLevelDataAccess.cs" />
     <Compile Include="DataAccess\LicenseeDcsSetting\ILicenseeDcsSettingDataAccess.cs" />
@@ -632,7 +625,6 @@
     <Compile Include="Entities\ExtraPtGroup\GroupByProduct.cs" />
     <Compile Include="Entities\ExtraPtGroup\Group.cs" />
     <Compile Include="Entities\ExtraPtGroup\Product.cs" />
-    <Compile Include="Entities\GoldDeluxe\GoldDeluxeStatus.cs" />
     <Compile Include="Entities\InitializingCustomerSetting\BettypeModel.cs" />
     <Compile Include="Entities\InitializingCustomerSetting\ConfigModel.cs" />
     <Compile Include="Entities\InitializingCustomerSetting\InsertErrorModel.cs" />

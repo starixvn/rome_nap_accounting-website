@@ -324,18 +324,6 @@
   <data name="New_Virtual_Rate" xml:space="preserve">
     <value>New Virtual Rate</value>
   </data>
-  <data name="EnableGoldDeluxe" xml:space="preserve">
-    <value>Enable Gold Deluxe</value>
-  </data>
-  <data name="EnableGoldDeluxeMembers" xml:space="preserve">
-    <value>Enable Gold Deluxe for members</value>
-  </data>
-  <data name="GoldDeluxeStatusUpdatedSuccessfully" xml:space="preserve">
-    <value>Gold Deluxe status updated successfully.</value>
-  </data>
-  <data name="GoldDeluxeUpdateConfirm" xml:space="preserve">
-    <value>Are you sure you want to update Gold Deluxe status on this customer?</value>
-  </data>
   <data name="BetTradeStatusUpdatedSuccessfully" xml:space="preserve">
     <value>Bet Trade status updated successfully.</value>
   </data>

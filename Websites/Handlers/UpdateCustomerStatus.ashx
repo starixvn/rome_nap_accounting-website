@@ -131,16 +131,6 @@ public class UpdateCustomerStatus : BaseHandler
                     CustomerUpdateStatus.CustomerUpdateLimitPerIP(_accid, _custid, limitperid, context.Request.UserHostAddress, isUpdDownline);
                     s = "parent.changeDisplayStatus();";
                     break;
-                case "disabledGoldDeluxe":
-                    isUpdDownline = false;
-                    if (!Boolean.TryParse(context.Request["isupddownline"] as string ?? string.Empty, out isUpdDownline))
-                    {
-                        throw new AccException("Invalid isupddonwline parameters");
-                    }
-
-                    new CustomerUpdateStatus().CustomerUpdateDisabledGoldDeluxe(_accid, _custid, status, context.Request.UserHostAddress, !isUpdDownline);
-                    s = "parent.changeDisplayStatus();";
-                    break;
                 //End
                 default: throw new AccException("Invalid Session!");
             }

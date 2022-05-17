@@ -91,20 +91,12 @@
     <Setting Key="Acc_CreditTermSelGroupByUsername" SpName="Acc_CreditTermSelGroupByUsername" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Helper">
-    <Setting Key="CheckAllowedShow" SpName="Acc_CheckAllowedShow_UAT1" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="CheckAllowedShow" SpName="Acc_CheckAllowedShow" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="SiteSel_Report_Licensee" SpName="Acc_ActivelicenseeSel" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="P2P Control">
     <Setting Key="SelectEnableCustomer" SpName="Acc_CustomerSelCheckEnable" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerSelCheckEnable" SpName="Acc_CustomerSelCheckEnable" DbName="DBCust.CustDB.bodbAdminNet" />
-  </Function>
-  <Function Name="Gold Deluxe - GET PT Setting">
-    <Setting Key="Acc_CustomerSelEditSuperGoldDeluxe" SpName="Acc_CustomerSelEditSuperGoldDeluxe" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerSelEditMasterGoldDeluxe" SpName="Acc_CustomerSelEditMasterGoldDeluxe" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerSelEditAgentGoldDeluxe" SpName="Acc_CustomerSelEditAgentGoldDeluxe" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerSelEditMemberGoldDeluxe" SpName="Acc_CustomerSelEditMemberGoldDeluxe" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerSelMEditCustomerGoldDeluxe" SpName="Acc_CustomerSelMEditCustomerGoldDeluxe" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerSelSEditCustomerGoldDeluxe" SpName="Acc_CustomerSelSEditCustomerGoldDeluxe" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Move Account">
     <Setting Key="Acc_CustomerCheckMoveMaster" SpName="Acc_CustomerCheckMoveMaster" DbName="DBCust.CustDB.bodbAdminNet" />

@@ -277,15 +277,6 @@ namespace Fanex.Tarus.BetList.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Gold Deluxe.
-        /// </summary>
-        public static string Gold_Deluxe {
-            get {
-                return ResourceManager.GetString("Gold_Deluxe", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Lose.
         /// </summary>
         public static string Lose {

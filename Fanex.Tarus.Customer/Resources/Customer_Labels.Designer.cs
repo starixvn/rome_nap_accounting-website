@@ -394,24 +394,6 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enable Gold Deluxe.
-        /// </summary>
-        public static string EnableGoldDeluxe {
-            get {
-                return ResourceManager.GetString("EnableGoldDeluxe", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Enable Gold Deluxe for members.
-        /// </summary>
-        public static string EnableGoldDeluxeMembers {
-            get {
-                return ResourceManager.GetString("EnableGoldDeluxeMembers", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to You are not authorized on this function..
         /// </summary>
         public static string Error_NoPermission {
@@ -471,24 +453,6 @@ namespace Fanex.Tarus.Customer.Resources {
         public static string Football {
             get {
                 return ResourceManager.GetString("Football", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Gold Deluxe status updated successfully..
-        /// </summary>
-        public static string GoldDeluxeStatusUpdatedSuccessfully {
-            get {
-                return ResourceManager.GetString("GoldDeluxeStatusUpdatedSuccessfully", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to update Gold Deluxe status on this customer?.
-        /// </summary>
-        public static string GoldDeluxeUpdateConfirm {
-            get {
-                return ResourceManager.GetString("GoldDeluxeUpdateConfirm", resourceCulture);
             }
         }
         
