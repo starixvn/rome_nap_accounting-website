@@ -138,15 +138,6 @@
                 betTypeId <= BetTypeContants.MaxVirtualSportBetType;
         }
 
-        public static bool IsGoldDeluxe(int betTypeId)
-        {
-            return betTypeId == BetTypeContants.GoldDeluxeBaccarat ||
-                betTypeId == BetTypeContants.GoldDeluxeParlayBaccarat ||
-                betTypeId == BetTypeContants.GoldDeluxeRoulette ||
-                betTypeId == BetTypeContants.Sicbo ||
-                betTypeId == BetTypeContants.Bidme;
-        }
-
         public static bool IsAGCasino(int betTypeId)
         {
             return 1801 <= betTypeId && betTypeId <= 1804;

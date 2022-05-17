@@ -837,16 +837,9 @@ namespace Sunplus.Accounting.Business.LogDisplay
                     foreach (XAttribute attr in node.Attributes())
                     {
                         var fieldName = attr.Name.ToString().ToLower();
-                        var isGoldDeluxeGameType = IsGoldDeluxeGameType(fieldName, attr.Value);
-                        if (!hiddenField.Contains<string>(fieldName) || isGoldDeluxeGameType)
+                        if (!hiddenField.Contains<string>(fieldName))
                         {
                             var elm = LogFormater.FormatElement(attr, filter, null);
-                            if (isGoldDeluxeGameType)
-                            {
-                                var bettypeId = Converter.To<int>(attr.Value);
-                                elm.Val = GetBettypeName(bettypeId);
-                            }
-
                             trackingNode.Vals.Add(elm);
                         }
                     }
@@ -965,13 +958,6 @@ namespace Sunplus.Accounting.Business.LogDisplay
         }
 
         private int GetCustIDByUsername(string custName) => CustomerUtils.GetCustomerIdByUserName(custName);
-
-        private bool IsGoldDeluxeGameType(string fieldName, string gameTypeId)
-        {
-            var goldDeluxeGameType = new string[] { "1701", "1702" };
-            return string.Equals(fieldName, "gametypeid", StringComparison.OrdinalIgnoreCase) &&
-                goldDeluxeGameType.Contains(gameTypeId);
-        }
 
         private string ReplaceIgnoreCase(string input, string oldValue, string newValue)
         {

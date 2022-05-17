@@ -208,16 +208,6 @@ table.fn-rs .cl-totalgames, table.fn-rs .cl-totalpoint {
 }
 /* End Tennis Result */
 
-/* Begin Gold Deluxe Result*/
-table thead th.cl-title, table thead th.cl-title .leagueName {
-    color: #0066cc !important;
-}
-
-table.fn-rs tbody tr td ul li {
-    list-style: none;
-}
-/* End Gold Deluxe Result*/
-
 .data-header {
     font-weight: bold;
 }
