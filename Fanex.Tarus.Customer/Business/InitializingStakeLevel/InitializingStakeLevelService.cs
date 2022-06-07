@@ -117,7 +117,7 @@
             headerCellStyle.BottomBorderColor = headerCellStyle.TopBorderColor = headerCellStyle.LeftBorderColor = headerCellStyle.RightBorderColor = HSSFColor.Black.Index;
 
             var headerRow = workSheet.CreateRow(currentRow);
-            var headerValues = new string[10] { "SportType", "Bet Type", "Site", "Credit Currency", "Deposit Currency", "New Min Bet", "New Max Bet", "Current Min Bet", "Current Min Bet", "Game Group Id" };
+            var headerValues = new string[10] { "SportType", "Bet Type", "Site", "Credit Currency", "Deposit Currency", "New Min Bet", "New Max Bet", "Current Min Bet", "Current Max Bet", "Game Group Id" };
             for (int i = 0; i < headerValues.Length; i++)
             {
                 workSheet.SetColumnWidth(i, 20*256);
