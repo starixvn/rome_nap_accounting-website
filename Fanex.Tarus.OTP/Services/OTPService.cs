@@ -18,6 +18,6 @@
         }
 
         public bool Verify(int userId, string otp)
-            => userService.VerifyOtp(userId, NAPSYSTEM, otp);
+            => !string.IsNullOrWhiteSpace(otp) && userService.VerifyOtp(userId, NAPSYSTEM, otp);
     }
 }

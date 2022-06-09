@@ -24,8 +24,9 @@
             <div>
                 <input id="txtOtp" name="OTP" maxlength="6" />
             </div>
-            <div>
+            <div class="btn-row">
                 <input id="btnSubmit" value="Submit" type="submit" />
+                <a class="btn-back" href="~/PreLogIn/LogOut.ashx">Back</a>
             </div>
             <input type="hidden" name="CustId" value="@Model.CustId" />
             <input type="hidden" name="UserName" value="@Model.UserName" />

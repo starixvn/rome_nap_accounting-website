@@ -14,11 +14,26 @@ input {
     margin: 5px 0px;
 }
 
-input[type=submit] {
-    background-color:cornflowerblue;
-    color: white;
-    font-size: 15px;
-    border-width: 0px;
+    input[type=submit], .btn-back {
+        height: 2em;
+        width: 49%;
+        background-color: cornflowerblue;
+        color: white;
+        font-size: 15px;
+        border-width: 0px;
+        cursor: pointer;
+    }
+
+.btn-row {
+    display: block;
+}
+
+.btn-back {
+    float: right;
+    text-decoration: none;
+    text-align: center;
+    padding-top: 3px;
+    margin: 5px 0px;
 }
 
 @media screen and (min-device-width: 768px) {
@@ -68,5 +83,5 @@ input[type=submit] {
 }
 
 .err-msg {
-    color:red;
+    color: red;
 }
