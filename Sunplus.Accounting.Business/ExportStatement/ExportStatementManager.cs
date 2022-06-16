@@ -112,7 +112,7 @@ namespace Sunplus.Accounting.Business.ExportStatement
                 }
                 else
                 {
-                    htmlData = "<span class='error-message'>Your upload file Size must be <= 1 MB</span>";
+                    htmlData = "<span class='error-message'>Your uploaded file's size can't be larger than 1 MB</span>";
                     success = 0;
                 }
 
