@@ -79,7 +79,7 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Member(Multi-username separated by &quot;,&quot;).
+        ///   Looks up a localized string similar to Member (Multi-username separated by &quot;,&quot;).
         /// </summary>
         public static string MemberSeparated {
             get {

@@ -7,12 +7,12 @@
         public CheckExistAgentCriteria(string username)
         {
             Username = username;
-            RoldId = 2;
+            RoleId = 2;
         }
 
         public string Username { get; set; }
 
-        public int RoldId { get; set; }
+        public int RoleId { get; set; }
 
         public int CustId { get; set; }
 

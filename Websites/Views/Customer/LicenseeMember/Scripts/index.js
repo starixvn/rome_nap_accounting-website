@@ -9,20 +9,25 @@ function CheckExistAgent() {
         showAlertMessage('errMsg', "The agent is required.", 1);
         return;
     }
-    var members = $("#txtMemberUsernames").val();
-    if (members.trim().length === 0) {
-        showAlertMessage('errMsg', "Please enter Member!", 1);
-        return;
-    }
     try { parent.BlockUI(); } catch (e) { };
     $.ajax({
         type: "GET",
         url: "CheckExistAgent?agentName=" + username,
-        success: function (agentId) {
-            if (agentId > 0) {
-                GenerateMemberList(members, agentId);
+        success: function (result) {
+            if (result.ErrorMessage) {
+                showAlertMessage('errMsg', result.ErrorMessage, 1);
+                return;
+            }
+
+            if (result > 0) {
+                var members = $("#txtMemberUsernames").val();
+                if (members.trim().length === 0) {
+                    showAlertMessage('errMsg', "Please enter Member!", 1);
+                    return;
+                }
+                GenerateMemberList(members, result);
             } else {
-                showAlertMessage('errMsg', "The selected account is not a valid licensee dummy agent.", 1);
+                showAlertMessage('errMsg', "The selected account is not a valid licensee agent.", 1);
             }
         },
         error: function (err) {
@@ -130,7 +135,7 @@ $(document).ready(function () {
             }
 
             memberUsernameValue = memberUsernameValue.replace(/\s/g, ",");
-            var usernameArray = memberUsernameValue.split(",").filter(item => item.length > 0);
+            var usernameArray = memberUsernameValue.split(",").filter(item => item.length > 0).slice(0,200);
             memberUsername.val(usernameArray.join(","));
         }
     });

@@ -124,7 +124,7 @@
     <value>Agent</value>
   </data>
   <data name="MemberSeparated" xml:space="preserve">
-    <value>Member(Multi-username separated by ",")</value>
+    <value>Member (Multi-username separated by ",")</value>
   </data>
   <data name="Member" xml:space="preserve">
     <value>Member</value>
