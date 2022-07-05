@@ -153,6 +153,7 @@ namespace Fanex.Tarus.Customer.Controller
 
             if (isSelectedMultipleAgents)
             {
+                model.Status.HasDownline = true;
                 model.Status.IsDisabled = true;
                 model.Status.IsDisabledDownline = true;
             }
