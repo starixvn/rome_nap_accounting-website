@@ -198,7 +198,7 @@
             maxPerMatchInput.addClass("invalid-value");
         }
 
-        if (maxPerMatch > maxPerBall) {
+        if (maxPerBall > maxPerMatch) {
             isValid = false;
             maxPerMatchInput.addClass("invalid-value");
             maxPerBallInput.addClass("invalid-value");
