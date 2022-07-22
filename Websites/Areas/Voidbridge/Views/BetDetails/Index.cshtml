@@ -58,7 +58,7 @@
     <script type="text/javascript">
         window.rootUrl = '@Url.Content("~")';
         var totalRows = @Model.TotalRows;
-        var transId = @Request.QueryString["TransId"];
+        var transId = '@Request.QueryString["TransId"]';
         var custId = @Request.QueryString["CustId"];
         var transType = @Request.QueryString["TransType"];
         var sportType = @Request.QueryString["SportType"];

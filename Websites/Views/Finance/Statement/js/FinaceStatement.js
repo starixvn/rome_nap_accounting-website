@@ -124,7 +124,7 @@
         html = '<tr id="' + row.RefNo + '" name="' + row.RefNo + '_MainLeft"  class="' + cssClass + '"><td rowspan ="' + rowspan + '"><div class="c  table-cell" style="width:80px;' + (row.ListTrans[0].AccumTotal.search('NOT EQUAL') == -1 ? 'min-height:42px;' : 'height:56px;') + ' ">' + row.WinLossDate + '</div></td>';
         var TransHTML = '';
         if (row.IsExpand) {
-            TransHTML = '<td colspan="2"><div class="l b  table-cell" style="width:350px;' + (Helper.isExistLongWord(row.ListTrans[0].Remark) ? 'min-height:42px;display:block' : 'height:42px;') + '"><a winlostdate="' + winlossdate + '" onclick="financeStatement.getStatementDetail(true, this,' + row.RefNo + ')" class="tree-expand2"> </a>' + row.ListTrans[0].Remark + '</div></td></tr>';
+            TransHTML = '<td colspan="2"><div class="l b  table-cell" style="width:350px;' + (Helper.isExistLongWord(row.ListTrans[0].Remark) ? 'min-height:42px;display:block' : 'height:42px;') + '"><a winlostdate="' + winlossdate + '" onclick="financeStatement.getStatementDetail(true, this,\'' + row.RefNo + '\')" class="tree-expand2"> </a>' + row.ListTrans[0].Remark + '</div></td></tr>';
         }
         else {
             TransHTML = '<td colspan="2"><div class="l b table-cell " style="width:350px;' + (Helper.isExistLongWord(row.ListTrans[0].Remark) ? 'min-height:42px;display:block' : 'height:42px;') + '">' + row.ListTrans[0].Remark + '</div></td></tr>';
@@ -163,7 +163,7 @@
         var firstTran = row.ListTrans[0];
 
         if (row.IsExpand) {
-            TransHTML = '<td colspan="2"><div class="l b table-cell" style="width:350px;' + (Helper.isExistLongWord(firstTran.Remark) ? 'min-height:42px;display:block' : 'height:42px;') + '"><a winlostdate="' + winlossdate + '" onclick="financeStatement.getStatementDetail(true, this,' + row.RefNo + ')" class="tree-expand2"></a>' + firstTran.Remark + '</div></td>';
+            TransHTML = '<td colspan="2"><div class="l b table-cell" style="width:350px;' + (Helper.isExistLongWord(firstTran.Remark) ? 'min-height:42px;display:block' : 'height:42px;') + '"><a winlostdate="' + winlossdate + '" onclick="financeStatement.getStatementDetail(true, this,\'' + row.RefNo + '\')" class="tree-expand2"></a>' + firstTran.Remark + '</div></td>';
         }
         else {
             TransHTML = '<td colspan="2"><div class="l b table-cell" style="width:350px;' + (Helper.isExistLongWord(firstTran.Remark) ? 'min-height:42px;display:block' : 'height:42px;') + '">' + firstTran.Remark + '</div></td>';
@@ -202,7 +202,7 @@
                 ActionHTML = '<td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:55px;">&nbsp;</div></td><td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:55px;">&nbsp;</div></td>';
             }
             html += ActionHTML;
-            ReverseHTML = '<td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:55px;"><input id="' + row.RefNo + '" class="reversed" type="button" onclick="financeStatement.DeleteTrans(' + row.RefNo + ');" title="Reverse" value="Reverse"></div></td></tr>';
+            ReverseHTML = '<td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:55px;"><input id="' + row.RefNo + '" class="reversed" type="button" onclick="financeStatement.DeleteTrans(\'' + row.RefNo + '\');" title="Reverse" value="Reverse"></div></td></tr>';
         }
         html += ReverseHTML;
 
