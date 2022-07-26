@@ -32,14 +32,14 @@ namespace Fanex.Tarus.Customer.Controller
         public ActionResult Index()
         {
             var sites = _settingService.GetSites().ToList();
-
+         
             var supers = sites.Count == 0 ?
                 new List<BaseModel>() :
                 _settingService.GetSupers(sites[0]).ToList();
 
             var agents = supers.Count == 0 ?
                 Enumerable.Empty<BaseModel>() :
-                _settingService.GetAgents(supers[0].Id);
+                _settingService.GetAgents(supers[0].Id.ToString());
 
             var products = _settingService.GetProducts();
             var model = new FilterViewModel(sites, supers, agents, products);
@@ -52,7 +52,7 @@ namespace Fanex.Tarus.Customer.Controller
             => Json(_settingService.GetSupers(site));
 
         [HttpPost]
-        public ActionResult Agents(int superId)
+        public ActionResult Agents(string superId)
             => Json(_settingService.GetAgents(superId));
 
         [HttpPost, AuthenticateRead]

@@ -4,17 +4,17 @@ namespace Fanex.Tarus.Customer.Criteria.LicenseeDcsSetting
 {
     internal sealed class GetAgentCriteria : CriteriaBase
     {
-        public GetAgentCriteria(int superId)
+        public GetAgentCriteria(string superId)
         {
             SRecommend = superId;
         }
 
-        public int SRecommend { get; }
+        public string SRecommend { get; }
 
         public override string GetSettingKey()
             => "Acc_CustomerSelAgentListBySuper";
 
         public override bool IsValid()
-            => SRecommend > 0;
+            => SRecommend != "";
     }
 }

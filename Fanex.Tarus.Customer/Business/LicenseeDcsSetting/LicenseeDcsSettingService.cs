@@ -23,9 +23,9 @@ namespace Fanex.Tarus.Customer.Business.LicenseeDcsSetting
 
         public IEnumerable<BaseModel> GetSupers(string site)
             => _settingDataAccess.GetSupers(new GetSuperCriteria(site));
-
-        public IEnumerable<BaseModel> GetAgents(int superId)
-            => _settingDataAccess.GetAgents(new GetAgentCriteria(superId));
+        
+        public IEnumerable<BaseModel> GetAgents(string superIds)
+            => _settingDataAccess.GetAgents(new GetAgentCriteria(superIds));
 
         public IEnumerable<ProductSettingTypeEntity> GetProducts()
             => _settingDataAccess.GetProducts(new GetProductCriteria());

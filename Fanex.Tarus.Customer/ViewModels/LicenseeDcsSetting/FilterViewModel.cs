@@ -20,7 +20,8 @@ namespace Fanex.Tarus.Customer.ViewModels.LicenseeDcsSetting
 
             var jsonSetting = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
             AgentJSON = JsonConvert.SerializeObject(agents, Formatting.None, jsonSetting);
-
+            SuperJSON = JsonConvert.SerializeObject(supers, Formatting.None, jsonSetting);
+            
             var productViewModels = products
                 .GroupBy(p => new { Id = p.ProductId, Name = p.ProductName })
                 .Select(p => new ProductViewModel(p.Key.Id, p.Key.Name, p.OrderBy(o => o.SettingType)))
@@ -38,6 +39,8 @@ namespace Fanex.Tarus.Customer.ViewModels.LicenseeDcsSetting
                 Value = s.Id.ToString()
             });
 
+             var  Tests = productViewModels.First().SettingTypes.GroupBy(s=>s.Name);
+            
             ProductJSON = JsonConvert.SerializeObject(productViewModels, Formatting.None, jsonSetting);
         }
 
@@ -51,6 +54,10 @@ namespace Fanex.Tarus.Customer.ViewModels.LicenseeDcsSetting
 
         public IEnumerable<SelectListItem> Functions { get; }
 
+        public IEnumerable<int> Tests { get; }
+        
         public string ProductJSON { get; }
+        
+        public string SuperJSON { get; }
     }
 }

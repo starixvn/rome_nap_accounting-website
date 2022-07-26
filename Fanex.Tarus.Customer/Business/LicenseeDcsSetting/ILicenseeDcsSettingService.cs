@@ -10,8 +10,8 @@ namespace Fanex.Tarus.Customer.Business.LicenseeDcsSetting
         IEnumerable<string> GetSites();
 
         IEnumerable<BaseModel> GetSupers(string site);
-
-        IEnumerable<BaseModel> GetAgents(int superId);
+        
+        IEnumerable<BaseModel> GetAgents(string superIds);
 
         IEnumerable<ProductSettingTypeEntity> GetProducts();
 

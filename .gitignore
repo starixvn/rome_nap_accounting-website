@@ -51,3 +51,4 @@ CasinoLibrary.txt
 *.orig
 /Dependencies/Content/*
 /Fanex.Tarus.BetList/Content/*
+.idea

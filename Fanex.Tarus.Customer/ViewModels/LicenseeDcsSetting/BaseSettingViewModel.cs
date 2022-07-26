@@ -13,8 +13,12 @@ namespace Fanex.Tarus.Customer.ViewModels.LicenseeDcsSetting
         public string ProductName { get; set; }
 
         public int SuperId { get; set; }
+        
+        public string SuperIds { get; set; }
 
         public string SuperName { get; set; }
+        
+        public string SuperNames { get; set; }
 
         public string AgentIds { get; set; }
 
