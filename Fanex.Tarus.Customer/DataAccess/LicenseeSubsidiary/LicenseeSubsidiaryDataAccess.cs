@@ -4,6 +4,7 @@ using Fanex.Data;
 using Fanex.NAP.Framework.Data;
 using Fanex.Tarus.Customer.Entities;
 using Fanex.Tarus.Customer.Resources;
+using Fanex.Tarus.DataAccess.Implement.Customer;
 
 namespace Fanex.Tarus.Customer.DataAccess.LicenseeSubsidiary
 {
@@ -42,7 +43,7 @@ namespace Fanex.Tarus.Customer.DataAccess.LicenseeSubsidiary
             {
                 db.ExecuteNonQuery(criteria.GetSpParams());
                 var outputParams = db.GetOuputParams();
-
+                DepositCustomerAccess.InsertBalanceWhenCreateNewAgent();
                 return new SubsidiaryResult(
                     Convert.ToInt32(outputParams["errcode"]),
                     outputParams["errmsg"].ToString(),
