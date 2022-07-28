@@ -1,9 +1,9 @@
-﻿namespace Fanex.Tarus.Customer.Requests.InitializingStakeLevel
+﻿namespace Fanex.Tarus.Customer.Requests.InitializingBetLimit
 {
     using System;
 
     [Serializable]
-    public class GetStakeLevelRequest
+    public class GetBetLimitRequest
     {
         public int ProductID { get; set; }
 

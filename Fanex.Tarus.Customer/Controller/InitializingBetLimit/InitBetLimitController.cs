@@ -1,24 +1,23 @@
-﻿namespace Fanex.Tarus.Customer.Controller.InitializingStakeLevel
+﻿namespace Fanex.Tarus.Customer.Controller.InitializingBetLimit
 {
-    using System.IO;
     using System.Web;
     using System.Web.Mvc;
     using Fanex.CustomerSetting.Module.Core.Web;
-    using Fanex.Tarus.Customer.Business.InitializingStakeLevel;
-    using Fanex.Tarus.Customer.Requests.InitializingStakeLevel;
+    using Fanex.Tarus.Customer.Business.InitializingBetLimit;
+    using Fanex.Tarus.Customer.Requests.InitializingBetLimit;
     using Fanex.Tarus.Infrastructure.Extensions;
     using Fanex.Tarus.Web.Controllers;
     using Fanex.Tarus.Web.Controllers.Filters;
 
-    public class InitStakeLevelController : BaseController
+    public class InitBetLimitController : BaseController
     {
-        private readonly string _indexViewPath = "~/Views/ITConfiguration/InitializingStakeLevel/Index.cshtml";
+        private readonly string _indexViewPath = "~/Views/ITConfiguration/InitializingBetLimit/Index.cshtml";
 
-        private readonly IInitializingStakeLevelService service;
+        private readonly IInitializingBetLimitService service;
 
-        public InitStakeLevelController()
+        public InitBetLimitController()
         {
-            service = new InitializingStakeLevelService();
+            service = new InitializingBetLimitService();
         }
 
         [AuthenticateRead]
@@ -52,31 +51,31 @@
         }
 
         [HttpPost, AuthenticateRead]
-        public ActionResult GetStakeLevels(GetStakeLevelRequest request)
+        public ActionResult GetBetLimits(GetBetLimitRequest request)
         {
-            return Json(service.GetStakeLevels(request), JsonRequestBehavior.AllowGet);
+            return Json(service.GetBetLimits(request), JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet, AuthenticateRead]
         public ActionResult ExportExcel()
         {
             var excelFile = service.GetExcelFile();
-            var fileName = "StakeLevels";
+            var fileName = "GlobalBetLimit";
             ExcelExtension.ResponseStreamExcel(excelFile, fileName);
 
             return new EmptyResult();
         }
 
         [HttpPost, AuthenticateHost]
-        public ActionResult CheckStakeLevels(HttpPostedFileBase uploadFile)
+        public ActionResult CheckBetLimits(HttpPostedFileBase uploadFile)
         {
             return Json(service.ValidateSetting(uploadFile));
         }
 
         [HttpPost, AuthenticateHost]
-        public ActionResult InsertStakeLevels(InsertStakeLevelRequest request)
+        public ActionResult InsertBetLimits(InsertBetLimitRequest request)
         {
-            return Json(service.InsertSetting(request.StakeLevels, AppSession.AccId, HttpContext.Request.UserHostAddress));
+            return Json(service.InsertSetting(request.BetLimits, AppSession.AccId, HttpContext.Request.UserHostAddress));
         }
     }
 }

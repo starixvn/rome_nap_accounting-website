@@ -1,19 +1,19 @@
-﻿namespace Fanex.Tarus.Customer.Criteria.InitializingStakeLevel
+﻿namespace Fanex.Tarus.Customer.Criteria.InitializingBetLimit
 {
     using System.Collections.Generic;
     using System.Text;
     using Fanex.NAP.Framework.Data;
-    using Fanex.Tarus.Customer.Entities.InitializingStakeLevel;
+    using Fanex.Tarus.Customer.Entities.InitializingBetLimit;
 
-    public class StakeLevelInsCriteria : CriteriaBase
+    public class BetLimitInsCriteria : CriteriaBase
     {
-        public StakeLevelInsCriteria()
+        public BetLimitInsCriteria()
         {
-            StakeLevels = new List<StakeLevelModel>();
+            BetLimits = new List<BetLimitModel>();
         }
 
         [SpParam(Ignored = true)]
-        public IEnumerable<StakeLevelModel> StakeLevels { get; set; }
+        public IEnumerable<BetLimitModel> BetLimits { get; set; }
 
         public string InputData
         {
@@ -21,7 +21,7 @@
             {
                 var builder = new StringBuilder();
                 builder.Append("<ROOT>");
-                foreach (var item in StakeLevels)
+                foreach (var item in BetLimits)
                 {
                     builder.Append("<BetLimit ");
                     builder.Append("SportType = \"" + item.SportTypeId + "\" ");
@@ -31,8 +31,12 @@
                     builder.Append("DepositCurrency = \"" + item.DepositCurrency + "\" ");
                     builder.Append("NewMinBet = \"" + item.NewMinBet + "\" ");
                     builder.Append("NewMaxBet = \"" + item.NewMaxBet + "\" ");
+                    builder.Append("NewMaxPerMatch = \"" + item.NewMaxPerMatch + "\" ");
+                    builder.Append("NewMaxPerBall = \"" + item.NewMaxPerBall + "\" ");
                     builder.Append("CurMinBet = \"" + item.MinBet + "\" ");
                     builder.Append("CurMaxBet = \"" + item.MaxBet + "\" ");
+                    builder.Append("CurMaxPerMatch = \"" + item.MaxPerMatch + "\" ");
+                    builder.Append("CurMaxPerBall = \"" + item.MaxPerBall + "\" ");
                     builder.Append("GameGroupID = \"" + item.GameGroupId + "\" ");
                     builder.Append("/>");
                 }
@@ -52,6 +56,6 @@
         public string ErrMsg { get; set; }
 
         public override string GetSettingKey()
-            => "Acc_InitializingStake_StakelevelIns";
+            => "Acc_InitializingGlobal_BetLimitIns";
     }
 }

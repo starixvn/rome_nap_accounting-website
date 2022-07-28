@@ -1,4 +1,4 @@
-﻿namespace Fanex.Tarus.Customer.Criteria.InitializingStakeLevel
+﻿namespace Fanex.Tarus.Customer.Criteria.InitializingBetLimit
 {
     using Fanex.NAP.Framework.Data;
 
@@ -13,6 +13,6 @@
         public string SiteIds { get; set; }
 
         public override string GetSettingKey()
-            => "Acc_InitializingStake_SiteSel";
+            => "Acc_InitializingGlobal_SiteSel";
     }
 }

@@ -1,9 +1,9 @@
-﻿namespace Fanex.Tarus.Customer.Entities.InitializingStakeLevel
+﻿namespace Fanex.Tarus.Customer.Entities.InitializingBetLimit
 {
     using System.Collections.Generic;
-    public class ValidateStakeLevelResponse
+    public class ValidateBetLimitResponse
     {
-        public IEnumerable<StakeLevelModel> StakeLevels { get; set; }
+        public IEnumerable<BetLimitModel> BetLimits { get; set; }
 
         public int ProductId { get; set; }
 

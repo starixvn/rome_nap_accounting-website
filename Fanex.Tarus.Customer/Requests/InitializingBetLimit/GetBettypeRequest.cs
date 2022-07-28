@@ -1,4 +1,4 @@
-﻿namespace Fanex.Tarus.Customer.Requests.InitializingStakeLevel
+﻿namespace Fanex.Tarus.Customer.Requests.InitializingBetLimit
 {
     public class GetBettypeRequest
     {

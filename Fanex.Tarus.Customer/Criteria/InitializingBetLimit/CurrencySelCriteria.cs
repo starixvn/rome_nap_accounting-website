@@ -1,4 +1,4 @@
-﻿namespace Fanex.Tarus.Customer.Criteria.InitializingStakeLevel
+﻿namespace Fanex.Tarus.Customer.Criteria.InitializingBetLimit
 {
     using Fanex.NAP.Framework.Data;
 
@@ -12,6 +12,6 @@
         public int Mode { get; set; }
 
         public override string GetSettingKey()
-            => "Acc_InitializingStake_CurrencySel";
+            => "Acc_InitializingGlobal_CurrencySel";
     }
 }

@@ -1,10 +1,10 @@
-﻿namespace Fanex.Tarus.Customer.Entities.InitializingStakeLevel
+﻿namespace Fanex.Tarus.Customer.Entities.InitializingBetLimit
 {
     using System.Collections.Generic;
 
-    public class StakeLevelResponse
+    public class BetLimitResponse
     {
-        public IEnumerable<StakeLevelModel> StakeLevels { get; set; }
+        public IEnumerable<BetLimitModel> BetLimits { get; set; }
 
         public int PageSize { get; set; }
 

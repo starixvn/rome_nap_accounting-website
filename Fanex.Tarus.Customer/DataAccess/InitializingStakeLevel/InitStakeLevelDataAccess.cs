@@ -1,13 +1,13 @@
-﻿namespace Fanex.Tarus.Customer.DataAccess.InitializingStakeLevel
+﻿namespace Fanex.Tarus.Customer.DataAccess.InitializingBetLimit
 {
     using System.Collections.Generic;
     using Fanex.Data;
-    using Fanex.Tarus.Customer.Criteria.InitializingStakeLevel;
+    using Fanex.Tarus.Customer.Criteria.InitializingBetLimit;
     using Fanex.Tarus.Customer.Entities;
-    using Fanex.Tarus.Customer.Entities.InitializingStakeLevel;
+    using Fanex.Tarus.Customer.Entities.InitializingBetLimit;
     using Fanex.Tarus.Infrastructure.Helper;
 
-    public interface IInitStakeLevelDataAccess
+    public interface IInitBetLimitDataAccess
     {
         IEnumerable<BaseModel> GetProducts();
 
@@ -19,27 +19,27 @@
 
         IEnumerable<BaseModel> GetSites(string siteIds);
 
-        StakeLevelResponse GetStakeLevels(StakeLevelSelCriteria criteria);
+        BetLimitResponse GetBetLimits(BetLimitSelCriteria criteria);
 
-        ValidateStakeLevelResponse CheckSetting(StakeLevelCheckCriteria criteria);
+        ValidateBetLimitResponse CheckSetting(BetLimitCheckCriteria criteria);
 
-        Result InsertSetting(StakeLevelInsCriteria criteria);
+        Result InsertSetting(BetLimitInsCriteria criteria);
     }
 
-    public class InitStakeLevelDataAccess : IInitStakeLevelDataAccess
+    public class InitBetLimitDataAccess : IInitBetLimitDataAccess
     {
         private const string FormatDisplay = "[{0}] {1}";
 
-        public ValidateStakeLevelResponse CheckSetting(StakeLevelCheckCriteria criteria)
+        public ValidateBetLimitResponse CheckSetting(BetLimitCheckCriteria criteria)
         {
             using (var objDb = new ObjectDb(criteria.GetSettingKey()))
             {
                 objDb.ExecuteReader(criteria.GetSpParams());
                 var outputParams = objDb.GetOuputParams();
 
-                return new ValidateStakeLevelResponse
+                return new ValidateBetLimitResponse
                 {
-                    StakeLevels = criteria.StakeLevels,
+                    BetLimits = criteria.BetLimits,
                     ProductId = DataUtils.ToInt32(outputParams["productid"]),
                     Error = new Result(DataUtils.ToInt32(outputParams["errcode"]), outputParams["errmsg"].ToString()),
                     Warning = new Result(DataUtils.ToInt32(outputParams["noticode"]), outputParams["notimsg"].ToString()),
@@ -165,15 +165,15 @@
             return entities;
         }
 
-        public StakeLevelResponse GetStakeLevels(StakeLevelSelCriteria criteria)
+        public BetLimitResponse GetBetLimits(BetLimitSelCriteria criteria)
         {
-            var stakeLevels = new List<StakeLevelModel>();
+            var betLimits = new List<BetLimitModel>();
             using (var objDb = new ObjectDb(criteria.GetSettingKey()))
             {
                 var reader = objDb.ExecuteReader(criteria.GetSpParams());
                 while (reader.Read())
                 {
-                    var stakeLevel = new StakeLevelModel
+                    var betLimitModel = new BetLimitModel
                     {
                         SportTypeId = DataUtils.ToInt32(reader["sporttype"]),
                         SportType = DataUtils.ToString(reader["sportname"]),
@@ -182,31 +182,35 @@
                         Site = DataUtils.ToString(reader["site"]),
                         CreditCurrency = DataUtils.ToString(reader["currencycredit"]),
                         DepositCurrency = DataUtils.ToString(reader["currencydeposit"]),
-                        NewMinBet = DataUtils.ToDecimal(reader["newminstake"]),
-                        NewMaxBet = DataUtils.ToDecimal(reader["newmaxstake"]),
-                        MinBet = DataUtils.ToDecimal(reader["curminstake"]),
-                        MaxBet = DataUtils.ToDecimal(reader["curmaxstake"]),
+                        MinBet = DataUtils.ToDecimal(reader["curminbet"]),
+                        MaxBet = DataUtils.ToDecimal(reader["curmaxbet"]),
+                        MaxPerMatch = DataUtils.ToDecimal(reader["curmaxpermatch"]),
+                        MaxPerBall = DataUtils.ToDecimal(reader["curmaxperball"]),
+                        NewMinBet = DataUtils.ToDecimal(reader["newminbet"]),
+                        NewMaxBet = DataUtils.ToDecimal(reader["newmaxbet"]),
+                        NewMaxPerMatch = DataUtils.ToDecimal(reader["newmaxpermatch"]),
+                        NewMaxPerBall = DataUtils.ToDecimal(reader["newmaxperball"]),
                         GameGroupId = DataUtils.ToInt32(reader["gamegroupid"])
                     };
 
-                    stakeLevels.Add(stakeLevel);
+                    betLimits.Add(betLimitModel);
                 }
 
                 reader.Close();
 
                 var outputParams = objDb.GetOuputParams();
 
-                return new StakeLevelResponse
+                return new BetLimitResponse
                 {
                     TotalRows = DataUtils.ToInt32(outputParams["totalrows"]),
                     PageSize = criteria.PageSize,
                     PageIndex = criteria.PageIndex,
-                    StakeLevels = stakeLevels
+                    BetLimits = betLimits
                 };
             }
         }
 
-        public Result InsertSetting(StakeLevelInsCriteria criteria)
+        public Result InsertSetting(BetLimitInsCriteria criteria)
         {
             using (var objDb = new ObjectDb(criteria.GetSettingKey()))
             {

@@ -1,4 +1,4 @@
-﻿namespace Fanex.Tarus.Customer.Entities.InitializingStakeLevel
+﻿namespace Fanex.Tarus.Customer.Entities.InitializingBetLimit
 {
     using System.Collections.Generic;
 

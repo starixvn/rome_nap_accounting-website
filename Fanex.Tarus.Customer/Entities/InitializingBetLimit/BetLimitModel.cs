@@ -1,6 +1,6 @@
-﻿namespace Fanex.Tarus.Customer.Entities.InitializingStakeLevel
+﻿namespace Fanex.Tarus.Customer.Entities.InitializingBetLimit
 {
-    public class StakeLevelModel
+    public class BetLimitModel
     {
         public int SportTypeId { get; set; }
 
@@ -18,13 +18,21 @@
 
         public string DepositCurrency { get; set; }
 
+        public decimal MinBet { get; set; }
+
+        public decimal MaxBet { get; set; }
+
+        public decimal MaxPerMatch { get; set; }
+
+        public decimal MaxPerBall { get; set; }
+
         public decimal NewMinBet { get; set; }
 
         public decimal NewMaxBet { get; set; }
 
-        public decimal MinBet { get; set; }
+        public decimal NewMaxPerMatch { get; set; }
 
-        public decimal MaxBet { get; set; }
+        public decimal NewMaxPerBall { get; set; }
 
         public int GameGroupId { get; set; }
     }

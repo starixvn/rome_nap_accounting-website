@@ -1,4 +1,4 @@
-﻿namespace Fanex.Tarus.Customer.Criteria.InitializingStakeLevel
+﻿namespace Fanex.Tarus.Customer.Criteria.InitializingBetLimit
 {
     using Fanex.NAP.Framework.Data;
 
@@ -12,6 +12,6 @@
         public int ProductID { get; set; }
 
         public override string GetSettingKey()
-            => "Acc_InitializingStake_ProductSel";
+            => "Acc_InitializingGlobal_ProductSel";
     }
 }

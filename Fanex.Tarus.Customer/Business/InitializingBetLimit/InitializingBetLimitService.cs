@@ -1,4 +1,4 @@
-﻿namespace Fanex.Tarus.Customer.Business.InitializingStakeLevel
+﻿namespace Fanex.Tarus.Customer.Business.InitializingBetLimit
 {
     using System;
     using System.Collections;
@@ -7,11 +7,11 @@
     using System.Web;
     using Fanex.Caching;
     using Fanex.Caching.Memory;
-    using Fanex.Tarus.Customer.Criteria.InitializingStakeLevel;
-    using Fanex.Tarus.Customer.DataAccess.InitializingStakeLevel;
+    using Fanex.Tarus.Customer.Criteria.InitializingBetLimit;
+    using Fanex.Tarus.Customer.DataAccess.InitializingBetLimit;
     using Fanex.Tarus.Customer.Entities;
-    using Fanex.Tarus.Customer.Entities.InitializingStakeLevel;
-    using Fanex.Tarus.Customer.Requests.InitializingStakeLevel;
+    using Fanex.Tarus.Customer.Entities.InitializingBetLimit;
+    using Fanex.Tarus.Customer.Requests.InitializingBetLimit;
     using Fanex.Tarus.Infrastructure.Caching;
     using Fanex.Tarus.Infrastructure.Extensions;
     using Fanex.Tarus.Security.Services;
@@ -19,7 +19,7 @@
     using NPOI.HSSF.Util;
     using NPOI.SS.UserModel;
 
-    public interface IInitializingStakeLevelService
+    public interface IInitializingBetLimitService
     {
         FilterModel GetFilterData();
 
@@ -27,27 +27,27 @@
 
         IEnumerable<BaseModel> GetBetTypes(int productId, string sportTypes);
 
-        StakeLevelResponse GetStakeLevels(GetStakeLevelRequest request);
+        BetLimitResponse GetBetLimits(GetBetLimitRequest request);
 
         IWorkbook GetExcelFile();
 
-        ValidateStakeLevelResponse ValidateSetting(HttpPostedFileBase uploadFile);
+        ValidateBetLimitResponse ValidateSetting(HttpPostedFileBase uploadFile);
 
-        Result InsertSetting(IEnumerable<StakeLevelModel> stakeLevels, int userId, string ip);
+        Result InsertSetting(IEnumerable<BetLimitModel> betLimitModels, int userId, string ip);
     }
-    public class InitializingStakeLevelService : IInitializingStakeLevelService
+    public class InitializingBetLimitService : IInitializingBetLimitService
     {
         private const int CreditCurrency = 1;
         private const int DepositCurrency = 2;
         private const string SportCacheKey = "InitCust-Sport-{0}";
         private const string BettypeCacheKey = "InitCust-BetType-{0}";
-        private const string _cacheGetDataCriteria = "CachedStakeLevelCriteria";
-        private readonly IInitStakeLevelDataAccess dataAccess;
+        private const string _cacheGetDataCriteria = "CachedBetLimitCriteria";
+        private readonly IInitBetLimitDataAccess dataAccess;
         private readonly MemoryCache _MemoryCache;
 
-        public InitializingStakeLevelService()
+        public InitializingBetLimitService()
         {
-            dataAccess = new InitStakeLevelDataAccess();
+            dataAccess = new InitBetLimitDataAccess();
             _MemoryCache = new MemoryCache(new MemoryCacheOptions());
         }
 
@@ -75,12 +75,12 @@
             return dataAccess.GetSportTypes(productId);
         }
 
-        public StakeLevelResponse GetStakeLevels(GetStakeLevelRequest request)
+        public BetLimitResponse GetBetLimits(GetBetLimitRequest request)
         {
-            var criteria = new StakeLevelSelCriteria(request);
+            var criteria = new BetLimitSelCriteria(request);
 
             HttpContext.Current.Session[_cacheGetDataCriteria] = request;
-            return dataAccess.GetStakeLevels(criteria);
+            return dataAccess.GetBetLimits(criteria);
         }
 
         public IWorkbook GetExcelFile()
@@ -88,12 +88,12 @@
             var criteria = GetCachedCriteria();
             criteria.ExportData = 1;
 
-            var stakeLevels = dataAccess.GetStakeLevels(criteria).StakeLevels.ToList();
+            var betLimits = dataAccess.GetBetLimits(criteria).BetLimits.ToList();
 
             #region ExcelTypes
 
             IWorkbook excelFile = new HSSFWorkbook();
-            string sheetName = "StakeLevel";
+            string sheetName = "BetLimit";
             var workSheet = excelFile.CreateSheet(sheetName);
             int currentRow = 0;
 
@@ -140,25 +140,29 @@
             cellStyle.BottomBorderColor = cellStyle.TopBorderColor = cellStyle.LeftBorderColor = cellStyle.RightBorderColor = HSSFColor.Black.Index;
             cellStyle.VerticalAlignment = VerticalAlignment.Top;
 
-            StakeLevelModel stakeLevel = null;
-            for (int i = 0; i < stakeLevels.Count; i++)
+            BetLimitModel betLimitModel = null;
+            for (int i = 0; i < betLimits.Count; i++)
             {
                 currentRow++;
                 var row = workSheet.CreateRow(currentRow);
 
-                stakeLevel = stakeLevels[i];
-                var rowValues = new string[10]
+                betLimitModel = betLimits[i];
+                var rowValues = new string[14]
                         {
-                            stakeLevel.SportTypeId.ToString(),
-                            stakeLevel.BetTypeId.ToString(),
-                            stakeLevel.Site,
-                            stakeLevel.CreditCurrency,
-                            stakeLevel.DepositCurrency,
-                            stakeLevel.NewMinBet.ToString("G29"),
-                            stakeLevel.NewMaxBet.ToString("G29"),
-                            stakeLevel.MinBet.ToString("G29"),
-                            stakeLevel.MaxBet.ToString("G29"),
-                            stakeLevel.GameGroupId.ToString()
+                            betLimitModel.SportTypeId.ToString(),
+                            betLimitModel.BetTypeId.ToString(),
+                            betLimitModel.Site,
+                            betLimitModel.CreditCurrency,
+                            betLimitModel.DepositCurrency,
+                            betLimitModel.NewMinBet.ToString("G29"),
+                            betLimitModel.NewMaxBet.ToString("G29"),
+                            betLimitModel.NewMaxPerMatch.ToString("G29"),
+                            betLimitModel.NewMaxPerBall.ToString("G29"),
+                            betLimitModel.MinBet.ToString("G29"),
+                            betLimitModel.MaxBet.ToString("G29"),
+                            betLimitModel.MaxPerMatch.ToString("G29"),
+                            betLimitModel.MaxPerBall.ToString("G29"),
+                            betLimitModel.GameGroupId.ToString()
                         };
                 for (int j = 0; j < rowValues.Length; j++)
                 {
@@ -173,9 +177,9 @@
             return excelFile;
         }
 
-        public ValidateStakeLevelResponse ValidateSetting(HttpPostedFileBase uploadFile)
+        public ValidateBetLimitResponse ValidateSetting(HttpPostedFileBase uploadFile)
         {
-            var stakeLevels = new List<StakeLevelModel>();
+            var betLimits = new List<BetLimitModel>();
             var siteIds = new List<int>();
             int rowCount = 1;
             try
@@ -200,61 +204,65 @@
                     var checkRequiredFieldsResult = CheckRequiredField(row, rowCount);
                     if (checkRequiredFieldsResult != null)
                     {
-                        return new ValidateStakeLevelResponse
+                        return new ValidateBetLimitResponse
                         {
                             Error = checkRequiredFieldsResult
                         };
                     }
 
-                    var stakeLevel = new StakeLevelModel
+                    var betLimit = new BetLimitModel
                     {
-                        SportTypeId = Int32.Parse(row.GetCell(0).ToString()),
-                        BetTypeId = Int32.Parse(row.GetCell(1).ToString()),
-                        SiteId = row.GetCell(2) == null || string.IsNullOrWhiteSpace(row.GetCell(2).ToString()) ? 0 : Int32.Parse(row.GetCell(2).ToString()),
-                        CreditCurrency = row.GetCell(3) == null ? string.Empty : HttpUtility.HtmlEncode(row.GetCell(3).ToString().Replace(" ", String.Empty)),
-                        DepositCurrency = row.GetCell(4) == null ? string.Empty : HttpUtility.HtmlEncode(row.GetCell(4).ToString().Replace(" ", String.Empty)),
-                        NewMinBet = string.IsNullOrWhiteSpace(row.GetCell(5).ToString()) ? 0 : Decimal.Parse(row.GetCell(5).ToString()),
-                        NewMaxBet = string.IsNullOrWhiteSpace(row.GetCell(6).ToString()) ? 0 : Decimal.Parse(row.GetCell(6).ToString()),
-                        MinBet = row.GetCell(7) == null || string.IsNullOrWhiteSpace(row.GetCell(7).ToString()) ? 0 : Decimal.Parse(row.GetCell(7).ToString()),
-                        MaxBet = row.GetCell(8) == null || string.IsNullOrWhiteSpace(row.GetCell(8).ToString()) ? 0 : Decimal.Parse(row.GetCell(8).ToString()),
-                        GameGroupId = row.GetCell(9) == null || string.IsNullOrWhiteSpace(row.GetCell(9).ToString()) ? 0 : Int32.Parse(row.GetCell(9).ToString()),
+                        SportTypeId = int.Parse(row.GetCell(0).ToString()),
+                        BetTypeId = int.Parse(row.GetCell(1).ToString()),
+                        SiteId = row.GetCell(2) == null || string.IsNullOrWhiteSpace(row.GetCell(2).ToString()) ? 0 : int.Parse(row.GetCell(2).ToString()),
+                        CreditCurrency = row.GetCell(3) == null ? string.Empty : HttpUtility.HtmlEncode(row.GetCell(3).ToString().Replace(" ", string.Empty)),
+                        DepositCurrency = row.GetCell(4) == null ? string.Empty : HttpUtility.HtmlEncode(row.GetCell(4).ToString().Replace(" ", string.Empty)),
+                        NewMinBet = string.IsNullOrWhiteSpace(row.GetCell(5).ToString()) ? 0 : decimal.Parse(row.GetCell(5).ToString()),
+                        NewMaxBet = string.IsNullOrWhiteSpace(row.GetCell(6).ToString()) ? 0 : decimal.Parse(row.GetCell(6).ToString()),
+                        NewMaxPerMatch = string.IsNullOrWhiteSpace(row.GetCell(7).ToString()) ? 0 : decimal.Parse(row.GetCell(7).ToString()),
+                        NewMaxPerBall = string.IsNullOrWhiteSpace(row.GetCell(8).ToString()) ? 0 : decimal.Parse(row.GetCell(8).ToString()),
+                        MinBet = row.GetCell(9) == null || string.IsNullOrWhiteSpace(row.GetCell(9).ToString()) ? 0 : decimal.Parse(row.GetCell(9).ToString()),
+                        MaxBet = row.GetCell(10) == null || string.IsNullOrWhiteSpace(row.GetCell(10).ToString()) ? 0 : decimal.Parse(row.GetCell(10).ToString()),
+                        MaxPerMatch = row.GetCell(11) == null || string.IsNullOrWhiteSpace(row.GetCell(11).ToString()) ? 0 : decimal.Parse(row.GetCell(11).ToString()),
+                        MaxPerBall = row.GetCell(12) == null || string.IsNullOrWhiteSpace(row.GetCell(12).ToString()) ? 0 : decimal.Parse(row.GetCell(12).ToString()),
+                        GameGroupId = row.GetCell(13) == null || string.IsNullOrWhiteSpace(row.GetCell(13).ToString()) ? 0 : int.Parse(row.GetCell(13).ToString()),
                     };
 
-                    stakeLevel.SportType = GetSportName(stakeLevel.SportTypeId);
-                    stakeLevel.BetType = GetBetTypeName(stakeLevel.BetTypeId);
-                    siteIds.Add(stakeLevel.SiteId);
-                    if (!sportTypeIds.Contains(stakeLevel.SportTypeId))
+                    betLimit.SportType = GetSportName(betLimit.SportTypeId);
+                    betLimit.BetType = GetBetTypeName(betLimit.BetTypeId);
+                    siteIds.Add(betLimit.SiteId);
+                    if (!sportTypeIds.Contains(betLimit.SportTypeId))
                     {
-                        sportTypeIds.Add(stakeLevel.SportTypeId);
+                        sportTypeIds.Add(betLimit.SportTypeId);
                     }
 
-                    if (!betTypeIds.Contains(stakeLevel.BetTypeId))
+                    if (!betTypeIds.Contains(betLimit.BetTypeId))
                     {
-                        betTypeIds.Add(stakeLevel.BetTypeId);
+                        betTypeIds.Add(betLimit.BetTypeId);
                     }
 
-                    if (!string.IsNullOrWhiteSpace(stakeLevel.CreditCurrency))
+                    if (!string.IsNullOrWhiteSpace(betLimit.CreditCurrency))
                     {
-                        creditCurrency = string.Join(",", creditCurrency, stakeLevel.CreditCurrency);
+                        creditCurrency = string.Join(",", creditCurrency, betLimit.CreditCurrency);
                     }
 
-                    if (!string.IsNullOrWhiteSpace(stakeLevel.DepositCurrency))
+                    if (!string.IsNullOrWhiteSpace(betLimit.DepositCurrency))
                     {
-                        depositCurrency = string.Join(",", depositCurrency, stakeLevel.DepositCurrency);
+                        depositCurrency = string.Join(",", depositCurrency, betLimit.DepositCurrency);
                     }
 
-                    stakeLevels.Add(stakeLevel);
+                    betLimits.Add(betLimit);
                 }
 
                 var sites = dataAccess.GetSites(string.Join(",", siteIds));
-                foreach (var stakeLevel in stakeLevels)
+                foreach (var betLimit in betLimits)
                 {
-                    stakeLevel.Site = sites.FirstOrDefault(site => site.Id == stakeLevel.SiteId)?.Name;
+                    betLimit.Site = sites.FirstOrDefault(site => site.Id == betLimit.SiteId)?.Name;
                 }
 
-                var criteria = new StakeLevelCheckCriteria
+                var criteria = new BetLimitCheckCriteria
                 {
-                    StakeLevels = stakeLevels
+                    BetLimits = betLimits
                 };
 
                 var result = dataAccess.CheckSetting(criteria);
@@ -270,7 +278,7 @@
                 var result = new Result(1, "Invalid file uploaded. Error at row: " + rowCount.ToString() + ". " + ex.Message);
                 LogExtensions.ExceptionHandler(ex);
 
-                return new ValidateStakeLevelResponse
+                return new ValidateBetLimitResponse
                 {
                     Error = result
                 };
@@ -344,11 +352,11 @@
             return bettypeName;
         }
 
-        public Result InsertSetting(IEnumerable<StakeLevelModel> stakeLevels, int userId, string ip)
+        public Result InsertSetting(IEnumerable<BetLimitModel> betLimitModels, int userId, string ip)
         {
-            var criteria = new StakeLevelInsCriteria
+            var criteria = new BetLimitInsCriteria
             {
-                StakeLevels = stakeLevels,
+                BetLimits = betLimitModels,
                 UserID = userId,
                 IP = ip
             };
@@ -356,21 +364,21 @@
             return dataAccess.InsertSetting(criteria);
         }
 
-        public StakeLevelSelCriteria GetCachedCriteria()
+        public BetLimitSelCriteria GetCachedCriteria()
         {
-            if (HttpContext.Current.Session[_cacheGetDataCriteria] == null || HttpContext.Current.Session[_cacheGetDataCriteria].GetType() != typeof(GetStakeLevelRequest))
+            if (HttpContext.Current.Session[_cacheGetDataCriteria] == null || HttpContext.Current.Session[_cacheGetDataCriteria].GetType() != typeof(GetBetLimitRequest))
             {
                 throw new InvalidOperationException("Filter Data in Session can not be null. Must Submit before export excel.");
             }
 
-            return new StakeLevelSelCriteria((GetStakeLevelRequest)HttpContext.Current.Session[_cacheGetDataCriteria]);
+            return new BetLimitSelCriteria((GetBetLimitRequest)HttpContext.Current.Session[_cacheGetDataCriteria]);
         }
 
         public bool CheckPermission(int accId)
         {
             var permissionService = new PermissionService();
             var pageAccess = permissionService.GetPageAccess(accId);
-            var pathActionName = "InitStakeLevel/Index";
+            var pathActionName = "InitBetLimit/Index";
             bool hasPermission = permissionService.GetHostPermission(pathActionName, pageAccess);
 
             return hasPermission;

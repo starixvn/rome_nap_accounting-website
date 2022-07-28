@@ -1,11 +1,11 @@
-﻿namespace Fanex.Tarus.Customer.Criteria.InitializingStakeLevel
+﻿namespace Fanex.Tarus.Customer.Criteria.InitializingBetLimit
 {
     using Fanex.NAP.Framework.Data;
-    using Fanex.Tarus.Customer.Requests.InitializingStakeLevel;
+    using Fanex.Tarus.Customer.Requests.InitializingBetLimit;
 
-    public class StakeLevelSelCriteria : CriteriaBase
+    public class BetLimitSelCriteria : CriteriaBase
     {
-        public StakeLevelSelCriteria(GetStakeLevelRequest request)
+        public BetLimitSelCriteria(GetBetLimitRequest request)
         {
             ProductID = request.ProductID;
             SportTypes = request.SportTypes;
@@ -39,6 +39,6 @@
         public int TotalRows { get; set; }
 
         public override string GetSettingKey()
-            => "Acc_InitializingStake_StakelevelSel";
+            => "Acc_InitializingGlobal_BetLimitSel";
     }
 }

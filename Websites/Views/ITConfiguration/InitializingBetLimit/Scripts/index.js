@@ -110,6 +110,9 @@ function RenderSportType() {
                     noItemText: "Select Sport",
                     onCheck: function () {
                         isNeedRenderBettype = true;
+                    },
+                    onCheckAll: function () {
+                        sportFilter.val("All");
                     }
                 });
 
@@ -150,7 +153,7 @@ function RenderBetType() {
             if (typeof rs === 'string' && rs.includes("DOCTYPE")) {
                 showAlertMessage('errMsg', "You are not authorized on this function", 1);
                 $("#filterDiv").hide();
-                $("#gridStakeLevel").hide();
+                $("#gridBetLimit").hide();
             } else {
                 var bettypeFilter = $("#FilterBetType");
                 bettypeFilter.empty();
@@ -234,7 +237,7 @@ function Search() {
     UpdateFilterValue();
 
     if (ValidateRequest()) {
-        GetStakeLevels(50, 0);
+        GetBetLimits(50, 0);
     }
 }
 
@@ -279,22 +282,22 @@ function ValidateRequest() {
     return true;
 }
 
-function GetStakeLevels(pageSize, pageIndex) {
+function GetBetLimits(pageSize, pageIndex) {
     try { parent.BlockUI(); } catch (e) { }
     HideError();
     requestFilter.PageSize = pageSize;
     requestFilter.PageIndex = pageIndex;
     $.ajax({
         type: "POST",
-        url: "GetStakeLevels",
+        url: "GetBetLimits",
         data: requestFilter,
         success: function (rs) {
             if (typeof rs === 'string' && rs.includes("DOCTYPE")) {
                 showAlertMessage('errMsg', "You are not authorized on this function", 1);
                 $("#filterDiv").hide();
-                $("#gridStakeLevel").hide();
+                $("#gridBetLimit").hide();
             } else {
-                RenderStakeLevels(rs);
+                RenderBetLimits(rs);
             }
         },
         error: function (event, jqXHR, ajaxSettings) {
@@ -306,27 +309,48 @@ function GetStakeLevels(pageSize, pageIndex) {
     });
 }
 
-function RenderStakeLevels(data) {
+function RenderBetLimits(data) {
     var bodyRows = [];
-    for (var i = 0; i < data.StakeLevels.length; i++) {
+    for (var i = 0; i < data.BetLimits.length; i++) {
         var row = { Columns: [] };
-        row.Columns.push({ Name: 'SportTypeId', Value: data.StakeLevels[i].SportTypeId });
-        row.Columns.push({ Name: 'SportType', Value: data.StakeLevels[i].SportType });
-        row.Columns.push({ Name: 'BetTypeId', Value: data.StakeLevels[i].BetTypeId });
-        row.Columns.push({ Name: 'BetType', Value: data.StakeLevels[i].BetType });
-        row.Columns.push({ Name: 'Site', Value: data.StakeLevels[i].Site });
-        row.Columns.push({ Name: 'CreditCurrency', Value: data.StakeLevels[i].CreditCurrency });
-        row.Columns.push({ Name: 'DepositCurrency', Value: data.StakeLevels[i].DepositCurrency });
-        row.Columns.push({ Name: 'NewMinBet', Value: data.StakeLevels[i].NewMinBet === 0 ? "" : data.StakeLevels[i].NewMinBet });
-        row.Columns.push({ Name: 'NewMaxBet', Value: data.StakeLevels[i].NewMaxBet === 0 ? "" : data.StakeLevels[i].NewMaxBet });
-        row.Columns.push({ Name: 'MinBet', Value: data.StakeLevels[i].MinBet });
-        row.Columns.push({ Name: 'MaxBet', Value: data.StakeLevels[i].MaxBet });
-        row.Columns.push({ Name: 'GameGroupId', Value: data.StakeLevels[i].GameGroupId });
+        row.Columns.push({ Name: 'SportTypeId', Value: data.BetLimits[i].SportTypeId });
+        row.Columns.push({ Name: 'SportType', Value: data.BetLimits[i].SportType });
+        row.Columns.push({ Name: 'BetTypeId', Value: data.BetLimits[i].BetTypeId });
+        row.Columns.push({ Name: 'BetType', Value: data.BetLimits[i].BetType });
+        row.Columns.push({ Name: 'Site', Value: data.BetLimits[i].Site });
+        row.Columns.push({ Name: 'CreditCurrency', Value: data.BetLimits[i].CreditCurrency });
+        row.Columns.push({ Name: 'DepositCurrency', Value: data.BetLimits[i].DepositCurrency });
+        row.Columns.push({ Name: 'MinBet', Value: data.BetLimits[i].MinBet });
+        row.Columns.push({ Name: 'MaxBet', Value: data.BetLimits[i].MaxBet });
+        row.Columns.push({ Name: 'MaxPerMatch', Value: data.BetLimits[i].MaxPerMatch });
+        row.Columns.push({ Name: 'MaxPerBall', Value: data.BetLimits[i].MaxPerBall });
+        row.Columns.push({ Name: 'NewMinBet', Value: data.BetLimits[i].NewMinBet === 0 ? "" : data.BetLimits[i].NewMinBet });
+        row.Columns.push({ Name: 'NewMaxBet', Value: data.BetLimits[i].NewMaxBet === 0 ? "" : data.BetLimits[i].NewMaxBet });
+        row.Columns.push({ Name: 'NewMaxPerMatch', Value: data.BetLimits[i].NewMaxPerMatch === 0 ? "" : data.BetLimits[i].NewMaxPerMatch });
+        row.Columns.push({ Name: 'NewMaxPerBall', Value: data.BetLimits[i].NewMaxPerBall === 0 ? "" : data.BetLimits[i].NewMaxPerBall });
+        row.Columns.push({ Name: 'GameGroupId', Value: data.BetLimits[i].GameGroupId });
         bodyRows.push(row);
     }
 
     var gridOptions =
     {
+        customizeHeader: true,
+        groupHeaderRows: [
+            {
+                Columns: [
+                    { HeaderText: "Sport Type ID", Name: "SportTypeId", MergeRowNumber: 2 },
+                    { HeaderText: "Sport Type", Name: "SportType", MergeRowNumber: 2 },
+                    { HeaderText: "Bet Type ID", Name: "BetTypeId", MergeRowNumber: 2 },
+                    { HeaderText: "Bet Type", Name: "BetType", MergeRowNumber: 2 },
+                    { HeaderText: "Site", Name: "Site",  MergeRowNumber: 2 },
+                    { HeaderText: "Credit Currency", Name: "CreditCurrency", MergeRowNumber: 2 },
+                    { HeaderText: "Deposit Currency", Name: "DepositCurrency",  MergeRowNumber: 2 },
+                    { HeaderText: "Current Value", Name: "MinBet", MergeColNumber: 4 },
+                    { HeaderText: "New Value", Name: "NewMinBet", MergeColNumber: 4 },
+                    { HeaderText: "Game Group ID", Name: "GameGroupId", MergeRowNumber: 2 }
+                ]
+            }
+        ],
         columns: [
             { HeaderText: "Sport Type ID", Width: 100, Name: "SportTypeId", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "Sport Type", Width: 150, Name: "SportType", HeaderAlign: "center", CellAlign: "center" },
@@ -335,10 +359,14 @@ function RenderStakeLevels(data) {
             { HeaderText: "Site", Width: 100, Name: "Site", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "Credit Currency", Width: 110, Name: "CreditCurrency", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "Deposit Currency", Width: 110, Name: "DepositCurrency", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: "New Min Bet", Width: 100, Name: "NewMinBet", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: "New Max Bet", Width: 100, Name: "NewMaxBet", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: "Current Min Bet", Width: 100, Name: "MinBet", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: "Current Max Bet", Width: 100, Name: "MaxBet", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Min Bet", Width: 100, Name: "MinBet", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Max Bet", Width: 100, Name: "MaxBet", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Max Per Match", Width: 100, Name: "MaxPerMatch", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Max Per Ball", Width: 100, Name: "MaxPerBall", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Min Bet", Width: 100, Name: "NewMinBet", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Max Bet", Width: 100, Name: "NewMaxBet", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Max Per Match", Width: 100, Name: "NewMaxPerMatch", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Max Per Ball", Width: 100, Name: "NewMaxPerBall", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "Game Group ID", Width: 100, Name: "GameGroupId", HeaderAlign: "center", CellAlign: "center" }
         ],
         bodyRows: bodyRows,
@@ -355,12 +383,12 @@ function RenderStakeLevels(data) {
 
     };
 
-    $('#gridStakeLevel').fanexGrid(gridOptions);
-    $('#gridStakeLevel').show();
+    $('#gridBetLimit').fanexGrid(gridOptions);
+    $('#gridBetLimit').show();
 }
 
 function reRenderAfterPaged(currentPageIndex, itemsPerPage) {
-    GetStakeLevels(itemsPerPage, currentPageIndex);
+    GetBetLimits(itemsPerPage, currentPageIndex);
 }
 
 function ExportExcel() {
@@ -421,7 +449,7 @@ function InitSubmitExcelFile() {
         e.preventDefault();
         var formData = new FormData(form[0]);
         $.ajax({
-            url: 'CheckStakeLevels',
+            url: 'CheckBetLimits',
             type: 'POST',
             datatype: 'json',
             contentType: false,
@@ -432,7 +460,7 @@ function InitSubmitExcelFile() {
                 if (result && result.ErrorCode) {
                     showAlertMessage('errMsgExcel', result.ErrorMessage, 1);
                     $("#insert-setting").hide();
-                    $("#gridExcelStakeLevel").hide();
+                    $("#gridExcelBetLimit").hide();
                 } else {
                     if (result.Warning && result.Warning.ErrorCode !== 0) {
                         showAlertMessage('errWarningMsgExcel', result.Warning.ErrorMessage, 2);
@@ -441,8 +469,8 @@ function InitSubmitExcelFile() {
                         showAlertMessage('errMsgExcel', result.Error.ErrorMessage, 1);
                     } else {
                         $("#btnInsertExcel").prop('disabled', false);
-                        excelContent = result.StakeLevels;
-                        RenderExcelGrid(result.StakeLevels);
+                        excelContent = result.BetLimits;
+                        RenderExcelGrid(result.BetLimits);
                     }
                 }
             },
@@ -457,27 +485,48 @@ function InitSubmitExcelFile() {
     });
 }
 
-function RenderExcelGrid(stakeLevels) {
+function RenderExcelGrid(BetLimits) {
     var bodyRows = [];
-    for (var i = 0; i < stakeLevels.length; i++) {
+    for (var i = 0; i < BetLimits.length; i++) {
         var row = { Columns: [] };
-        row.Columns.push({ Name: 'SportTypeId', Value: stakeLevels[i].SportTypeId });
-        row.Columns.push({ Name: 'SportType', Value: stakeLevels[i].SportType });
-        row.Columns.push({ Name: 'BetTypeId', Value: stakeLevels[i].BetTypeId });
-        row.Columns.push({ Name: 'BetType', Value: stakeLevels[i].BetType });
-        row.Columns.push({ Name: 'Site', Value: stakeLevels[i].Site });
-        row.Columns.push({ Name: 'CreditCurrency', Value: stakeLevels[i].CreditCurrency });
-        row.Columns.push({ Name: 'DepositCurrency', Value: stakeLevels[i].DepositCurrency });
-        row.Columns.push({ Name: 'NewMinBet', Value: stakeLevels[i].NewMinBet });
-        row.Columns.push({ Name: 'NewMaxBet', Value: stakeLevels[i].NewMaxBet });
-        row.Columns.push({ Name: 'MinBet', Value: stakeLevels[i].MinBet });
-        row.Columns.push({ Name: 'MaxBet', Value: stakeLevels[i].MaxBet });
-        row.Columns.push({ Name: 'GameGroupId', Value: stakeLevels[i].GameGroupId });
+        row.Columns.push({ Name: 'SportTypeId', Value: BetLimits[i].SportTypeId });
+        row.Columns.push({ Name: 'SportType', Value: BetLimits[i].SportType });
+        row.Columns.push({ Name: 'BetTypeId', Value: BetLimits[i].BetTypeId });
+        row.Columns.push({ Name: 'BetType', Value: BetLimits[i].BetType });
+        row.Columns.push({ Name: 'Site', Value: BetLimits[i].Site });
+        row.Columns.push({ Name: 'CreditCurrency', Value: BetLimits[i].CreditCurrency });
+        row.Columns.push({ Name: 'DepositCurrency', Value: BetLimits[i].DepositCurrency });
+        row.Columns.push({ Name: 'MinBet', Value: BetLimits[i].MinBet });
+        row.Columns.push({ Name: 'MaxBet', Value: BetLimits[i].MaxBet });
+        row.Columns.push({ Name: 'MaxPerMatch', Value: data.BetLimits[i].MaxPerMatch });
+        row.Columns.push({ Name: 'MaxPerBall', Value: data.BetLimits[i].MaxPerBall });
+        row.Columns.push({ Name: 'NewMinBet', Value: BetLimits[i].NewMinBet });
+        row.Columns.push({ Name: 'NewMaxBet', Value: BetLimits[i].NewMaxBet });
+        row.Columns.push({ Name: 'NewMaxPerMatch', Value: data.BetLimits[i].NewMaxPerMatch === 0 ? "" : data.BetLimits[i].NewMaxPerMatch });
+        row.Columns.push({ Name: 'NewMaxPerBall', Value: data.BetLimits[i].NewMaxPerBall === 0 ? "" : data.BetLimits[i].NewMaxPerBall });
+        row.Columns.push({ Name: 'GameGroupId', Value: BetLimits[i].GameGroupId });
         bodyRows.push(row);
     }
 
     var gridOptions =
     {
+        customizeHeader: true,
+        groupHeaderRows: [
+            {
+                Columns: [
+                    { HeaderText: "Sport Type ID", Name: "SportTypeId", MergeRowNumber: 2 },
+                    { HeaderText: "Sport Type", Name: "SportType", MergeRowNumber: 2 },
+                    { HeaderText: "Bet Type ID", Name: "BetTypeId", MergeRowNumber: 2 },
+                    { HeaderText: "Bet Type", Name: "BetType", MergeRowNumber: 2 },
+                    { HeaderText: "Site", Name: "Site", MergeRowNumber: 2 },
+                    { HeaderText: "Credit Currency", Name: "CreditCurrency", MergeRowNumber: 2 },
+                    { HeaderText: "Deposit Currency", Name: "DepositCurrency", MergeRowNumber: 2 },
+                    { HeaderText: "Current Value", Name: "MinBet", MergeColNumber: 4 },
+                    { HeaderText: "New Value", Name: "NewMinBet", MergeColNumber: 4 },
+                    { HeaderText: "Game Group ID", Name: "GameGroupId", MergeRowNumber: 2 }
+                ]
+            }
+        ],
         columns: [
             { HeaderText: "Sport Type ID", Width: 100, Name: "SportTypeId", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "Sport Type", Width: 150, Name: "SportType", HeaderAlign: "center", CellAlign: "center" },
@@ -486,34 +535,38 @@ function RenderExcelGrid(stakeLevels) {
             { HeaderText: "Site", Width: 100, Name: "Site", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "Credit Currency", Width: 110, Name: "CreditCurrency", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "Deposit Currency", Width: 110, Name: "DepositCurrency", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: "New Min Bet", Width: 100, Name: "NewMinBet", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: "New Max Bet", Width: 100, Name: "NewMaxBet", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: "Current Min Bet", Width: 100, Name: "MinBet", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: "Current Max Bet", Width: 100, Name: "MaxBet", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Min Bet", Width: 100, Name: "MinBet", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Max Bet", Width: 100, Name: "MaxBet", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Max Per Match", Width: 100, Name: "MaxPerMatch", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Max Per Ball", Width: 100, Name: "MaxPerBall", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Min Bet", Width: 100, Name: "NewMinBet", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Max Bet", Width: 100, Name: "NewMaxBet", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Max Per Match", Width: 100, Name: "NewMaxPerMatch", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Max Per Ball", Width: 100, Name: "NewMaxPerBall", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "Game Group ID", Width: 100, Name: "GameGroupId", HeaderAlign: "center", CellAlign: "center" }
         ],
         bodyRows: bodyRows,
         showDistinctRow: false
     };
 
-    $('#gridExcelStakeLevel').fanexGrid(gridOptions);
-    $('#gridExcelStakeLevel').show();
+    $('#gridExcelBetLimit').fanexGrid(gridOptions);
+    $('#gridExcelBetLimit').show();
 }
 
 function InsertExcel() {
     HideError();
     try { parent.BlockUI(); } catch (e) { }
     var request = {
-        StakeLevels: excelContent
+        BetLimits: excelContent
     };
     $.ajax({
         type: "POST",
-        url: "InsertStakeLevels",
+        url: "InsertBetLimits",
         data: request,
         success: function (rs) {
             if (rs && rs.ErrorCode) {
                 showAlertMessage('errMsgExcel', rs.ErrorMessage, 1);
-                $("#gridExcelStakeLevel").hide();
+                $("#gridExcelBetLimit").hide();
             } else {
                 if (rs && rs.ErrorCode !== undefined && rs.ErrorCode !== 0) {
                     showAlertMessage('errMsgExcel', rs.ErrorMessage, 1);
@@ -542,6 +595,6 @@ $(document).ready(function () {
     InitSubmitExcelFile();
     RenderDcsMatrix();
 
-    var url = window.rootUrl + "InitStakeLevel/ExportExcel";
+    var url = window.rootUrl + "InitBetLimit/ExportExcel";
     $("#exportHref").attr("href", url);
 });
