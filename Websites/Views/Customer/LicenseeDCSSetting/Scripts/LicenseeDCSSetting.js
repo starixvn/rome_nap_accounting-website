@@ -45,7 +45,7 @@
             html.push(datum.Name);
             html.push("</option>");
         }
-
+       
         return element.html(html.join(""));
     }
 
@@ -71,11 +71,7 @@
             .always(common.unblockUI);
     }
 
-    /* function getAgentList(param, url) {
-         common.blockUI();
-         $.post(rootUrl + `${url}`, param, renderSelectAgentList).always(common.unblockUI);
-     }
- */
+
     function renderSelectAgentList(data) {
         var agent;
         var agents = [];
@@ -172,6 +168,7 @@
         })[0];
 
         renderDropDown(functionDropDown, setting.SettingTypes);
+        changeSuperDropDownStyle(PositionTakingAndStatusSettingTypeIds.includes(parseInt((functionDropDown.val()))));
     }
 
     function functionDropDown_change() {
@@ -194,7 +191,7 @@
 
         }
     }
-    
+
     function validateSuperAgent() {
         const {AgentNames} = getSelectedAgents();
         const unselectsAllAgent = AgentNames.length === 0;
@@ -219,7 +216,7 @@
         common.blockUI();
         const {isInvalid, message} = validateSuperAgent();
         if (isInvalid) {
-            common.showMessage(1,message);
+            common.showMessage(1, message);
             common.unblockUI();
             return;
         }
