@@ -49,6 +49,7 @@
   </Function>
   <Function Name="Core - Customer Info">
     <Setting Key="Acc_CustomerSelByUserName" SpName="Acc_CustomerSelByUserName" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_CustomerSelBalanceCashInfo" SpName="Acc_CustomerSelBalanceCashInfo" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
   </Function>
   <Function Name="Admin - SMA Management">
     <Setting Key="Acc_SiteSel_Credit" SpName="Acc_SiteSel_Credit" DbName="DBAGE.bodb02.bodbAdminNet" />
@@ -94,6 +95,7 @@
   <Function Name="Helper">
     <Setting Key="CheckAllowedShow" SpName="Acc_CheckAllowedShow" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="SiteSel_Report_Licensee" SpName="Acc_ActivelicenseeSel" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_SiteDBConfigSel" SpName="Acc_SiteDBConfigSel" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="P2P Control">   
     <Setting Key="SelectEnableCustomer" SpName="Acc_CustomerSelCheckEnable" DbName="DBCust.CustDB.bodbAdminNet" />
