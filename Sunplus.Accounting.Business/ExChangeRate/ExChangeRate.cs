@@ -442,26 +442,22 @@ namespace Sunplus.Accounting.Business.ExChangeRate
             {
                 return result;
             }
-            var allSite = ObjectDbExtensions.GetSiteDBConfigBySiteGroupId(0);
-            var trxIP = allSite.FirstOrDefault(i => i.SiteDBGroupID == 0);
+            var allSite = ObjectDbExtensions.GetAllSiteDBConfig();
+            var trxIP = allSite.FirstOrDefault(i => !i.IsSiteDB);
 
-            var trxDB = new UpdateExChangeRate(trxIP.AGIP, false);
+            var trxDB = new UpdateExChangeRate(trxIP.AGIP, trxIP.IsSiteDB);
             result = trxDB.EditBaseRate_PrepareUpdateTables();
             if (result.ErrorCode != 0) return result;
-            Task.Run(() => trxDB.EditBaseRate_UpdateExchangeTablesInBackground());
+            trxDB.EditBaseRate_UpdateExchangeTablesInBackground();
 
             if (allSite != null)
-            {
-                var tasksSiteDB = new BackgroundUpdateTask();
-                foreach (var db in allSite.Where(i => i.SiteDBGroupID != 0))
+            {   
+                foreach (var db in allSite.Where(i => i.IsSiteDB))
                 {
-                    var prepareTables = new UpdateExChangeRate(db.AGIP, true);
-                    tasksSiteDB.AddTask(new Thread(new ThreadStart(prepareTables.Update)));
+                    var prepareTables = new UpdateExChangeRate(db.AGIP, db.IsSiteDB);
+                    prepareTables.Update();
                 }
-
-                tasksSiteDB.StartTask();
             }
-
 
             return result;
         }
@@ -611,7 +607,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 var param = new Hashtable();
                 param.Add("errcode", 0);
                 param.Add("errmsg", "");
-                param.Add("IsSiteDB", IsSiteDB);
+                param.Add("issitedb", IsSiteDB);
                 IBCProvider.ExChangeRate.ExchangeMultiBaseRatePrepareUpd(param, AGIP, ref errcode, ref errmsg);
                 if (errcode != 0)
                 {
@@ -656,7 +652,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
             {
                 var param = new Hashtable();
                 param.Add("tablename", tableName);
-                param.Add("IsSiteDB", IsSiteDB);
+                param.Add("issitedb", IsSiteDB);
                 IBCProvider.ExChangeRate.ExchangeMultiBaseRateUpdateForTable(param, AGIP);
             }
             catch (Exception ex)
