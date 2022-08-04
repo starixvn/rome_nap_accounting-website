@@ -363,7 +363,6 @@
     <Compile Include="Controller\CN88Customer\MoveCN88SuperController.cs" />
     <Compile Include="Controller\InitializingBetLimit\InitBetLimitController.cs" />
     <Compile Include="Controller\InitializingCustomerSetting\InitDepSettingController.cs" />
-    <Compile Include="Controller\InitializingStakeLevel\InitStakeLevelController.cs" />
     <Compile Include="Controller\LicenseeMemberController.cs" />
     <Compile Include="Controller\MultipleUpdateSuperStatusController.cs" />
     <Compile Include="Controller\CopySuperSettingController.cs" />
@@ -441,6 +440,7 @@
     <Compile Include="Criteria\ExtraPtGroup\GroupByProductCriteria.cs" />
     <Compile Include="Criteria\ExtraPtGroup\GroupCriteria.cs" />
     <Compile Include="Criteria\ExtraPtGroup\ProductCriteria.cs" />
+    <Compile Include="Criteria\InitializingBetLimit\ProductCurrencyMatrixCriteria.cs" />
     <Compile Include="Criteria\InitializingCustomerSetting\AddSettingConfigCriteria.cs" />
     <Compile Include="Criteria\InitializingCustomerSetting\DCSProductMatrixCriteria.cs" />
     <Compile Include="Criteria\InitializingCustomerSetting\DeleteConfigCriteria.cs" />
@@ -658,6 +658,7 @@
     <Compile Include="Entities\ExtraPtGroup\GroupByProduct.cs" />
     <Compile Include="Entities\ExtraPtGroup\Group.cs" />
     <Compile Include="Entities\ExtraPtGroup\Product.cs" />
+    <Compile Include="Entities\InitializingBetLimit\ProductCurrencyModel.cs" />
     <Compile Include="Entities\InitializingCustomerSetting\BetSettingErrorModel.cs" />
     <Compile Include="Entities\InitializingCustomerSetting\BetSettingModel.cs" />
     <Compile Include="Entities\InitializingCustomerSetting\BettypeModel.cs" />
@@ -726,6 +727,7 @@
     <Compile Include="Requests\CustomerSetting\Suspend\GetMultipleSuspendCustomerInfoQuery.cs" />
     <Compile Include="Requests\CustomerSetting\Suspend\GetSingleSuspendCustomerInfoQuery.cs" />
     <Compile Include="Requests\GetMessageLogsQuery.cs" />
+    <Compile Include="Requests\InitializingBetLimit\GetProductCurrencyRequest.cs" />
     <Compile Include="Requests\InitializingCustomerSetting\GenerateConfigSettingRequest.cs" />
     <Compile Include="Requests\InitializingCustomerSetting\ValidateBetSettingRequest.cs" />
     <Compile Include="Requests\InitializingBetLimit\GetBettypeRequest.cs" />
@@ -778,7 +780,6 @@
     <Compile Include="ViewModels\CustomerSetting\Suspend\SuspendMatrixViewModel.cs" />
     <Compile Include="ViewModels\InitializingCustomerSetting\ConfigSettingViewModel.cs" />
     <Compile Include="ViewModels\InitializingCustomerSetting\InitializingCustomerSettingViewModel.cs" />
-    <Compile Include="ViewModels\InitializingStakeLevel\InitStakeLevelViewModel.cs" />
     <Compile Include="ViewModels\LicenseeDcsSetting\BetSettingWithMaxPerBallViewModel.cs" />
     <Compile Include="ViewModels\LicenseeDcsSetting\BetSettingWithMaxPayoutPerMatchViewModel.cs" />
     <Compile Include="ViewModels\LicenseeDcsSetting\BetSettingWithoutMaxPerMatchViewModel.cs" />

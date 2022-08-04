@@ -21,46 +21,6 @@ $(document).ready(function () {
     OpenProductSetting();
 });
 
-function InitTab() {
-    switch (cachedTabId) {
-        case "tab_1":
-            SearchProduct(50, 1);
-            break;
-        case "tab_2":
-            SearchSport(50, 1);
-            break;
-        case "tab_3":
-            SearchBettype(50, 1);
-            break;
-        case "tab_4":
-            SearchSBM(50, 1);
-            break;
-        case "tab_5":
-            GetGroupsAndSearchCSSBM(50, 1);
-            break;
-        case "tab_6":
-            SearchRefResource(50, 1);
-            break;
-        case "tab_7":
-            SearchCanSee();
-            break;
-        case "tab_8":
-            SearchResetWinning();
-            break;
-        case "tab_9":
-            GetInitDataAndSearchAllUMConfig();
-            break;
-        case "tab_10":
-            GetInitVendor();
-            break;
-        case "tab_11":
-            GetInitDataProduct3rd();
-            break;
-        default:
-            break;
-    }
-}
-
 function UpdateSampleUrl() {
     $("#btnUpdateExcel").addClass("hide");
     switch (cachedTabId) {

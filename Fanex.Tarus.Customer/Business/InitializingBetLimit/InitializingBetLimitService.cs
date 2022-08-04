@@ -18,6 +18,7 @@
     using NPOI.HSSF.UserModel;
     using NPOI.HSSF.Util;
     using NPOI.SS.UserModel;
+    using NPOI.SS.Util;
 
     public interface IInitializingBetLimitService
     {
@@ -34,14 +35,22 @@
         ValidateBetLimitResponse ValidateSetting(HttpPostedFileBase uploadFile);
 
         Result InsertSetting(IEnumerable<BetLimitModel> betLimitModels, int userId, string ip);
+
+        IEnumerable<BaseModel> GetAllCurrency();
+
+        IEnumerable<IEnumerable<IEnumerable<ProductCurrencyModel>>> GetProductCurrencyMatrix(GetProductCurrencyRequest request);
+
+        IWorkbook GetProductCurrencyExcelFile();
     }
     public class InitializingBetLimitService : IInitializingBetLimitService
     {
+        private const int AllCurrency = 0;
         private const int CreditCurrency = 1;
         private const int DepositCurrency = 2;
         private const string SportCacheKey = "InitCust-Sport-{0}";
         private const string BettypeCacheKey = "InitCust-BetType-{0}";
-        private const string _cacheGetDataCriteria = "CachedBetLimitCriteria";
+        private const string _cacheGetBetLimitRequest = "CachedBetLimitRequest";
+        private const string _cacheGetProductCurrencyMatrixRequest = "CachedProductCurrencyMatrix";
         private readonly IInitBetLimitDataAccess dataAccess;
         private readonly MemoryCache _MemoryCache;
 
@@ -79,13 +88,13 @@
         {
             var criteria = new BetLimitSelCriteria(request);
 
-            HttpContext.Current.Session[_cacheGetDataCriteria] = request;
+            HttpContext.Current.Session[_cacheGetBetLimitRequest] = request;
             return dataAccess.GetBetLimits(criteria);
         }
 
         public IWorkbook GetExcelFile()
         {
-            var criteria = GetCachedCriteria();
+            var criteria = GetCachedBetLimitCriteria();
             criteria.ExportData = 1;
 
             var betLimits = dataAccess.GetBetLimits(criteria).BetLimits.ToList();
@@ -117,7 +126,7 @@
             headerCellStyle.BottomBorderColor = headerCellStyle.TopBorderColor = headerCellStyle.LeftBorderColor = headerCellStyle.RightBorderColor = HSSFColor.Black.Index;
 
             var headerRow = workSheet.CreateRow(currentRow);
-            var headerValues = new string[10] { "SportType", "Bet Type", "Site", "Credit Currency", "Deposit Currency", "New Min Bet", "New Max Bet", "Current Min Bet", "Current Max Bet", "Game Group Id" };
+            var headerValues = new string[14] { "SportType", "Bet Type", "Site", "Credit Currency", "Deposit Currency", "New Min Bet", "New Max Bet", "New Max Per Match", "New Max Per Ball", "Current Min Bet", "Current Max Bet", "Current Max Per Match", "Current Max Per Ball", "Game Group Id" };
             for (int i = 0; i < headerValues.Length; i++)
             {
                 workSheet.SetColumnWidth(i, 20*256);
@@ -154,14 +163,14 @@
                             betLimitModel.Site,
                             betLimitModel.CreditCurrency,
                             betLimitModel.DepositCurrency,
-                            betLimitModel.NewMinBet.ToString("G29"),
-                            betLimitModel.NewMaxBet.ToString("G29"),
-                            betLimitModel.NewMaxPerMatch.ToString("G29"),
-                            betLimitModel.NewMaxPerBall.ToString("G29"),
-                            betLimitModel.MinBet.ToString("G29"),
-                            betLimitModel.MaxBet.ToString("G29"),
-                            betLimitModel.MaxPerMatch.ToString("G29"),
-                            betLimitModel.MaxPerBall.ToString("G29"),
+                            betLimitModel.NewMinBet == null ? string.Empty : string.Format("G29", betLimitModel.NewMinBet),
+                            betLimitModel.NewMinBet == null ? string.Empty : string.Format("G29", betLimitModel.NewMaxBet),
+                            betLimitModel.NewMinBet == null ? string.Empty : string.Format("G29", betLimitModel.NewMaxPerMatch),
+                            betLimitModel.NewMinBet == null ? string.Empty : string.Format("G29", betLimitModel.NewMaxPerBall),
+                            betLimitModel.NewMinBet == null ? string.Empty : string.Format("G29", betLimitModel.MinBet),
+                            betLimitModel.NewMinBet == null ? string.Empty : string.Format("G29", betLimitModel.MaxBet),
+                            betLimitModel.NewMinBet == null ? string.Empty : string.Format("G29", betLimitModel.MaxPerMatch),
+                            betLimitModel.NewMinBet == null ? string.Empty : string.Format("G29", betLimitModel.MaxPerBall),
                             betLimitModel.GameGroupId.ToString()
                         };
                 for (int j = 0; j < rowValues.Length; j++)
@@ -217,14 +226,14 @@
                         SiteId = row.GetCell(2) == null || string.IsNullOrWhiteSpace(row.GetCell(2).ToString()) ? 0 : int.Parse(row.GetCell(2).ToString()),
                         CreditCurrency = row.GetCell(3) == null ? string.Empty : HttpUtility.HtmlEncode(row.GetCell(3).ToString().Replace(" ", string.Empty)),
                         DepositCurrency = row.GetCell(4) == null ? string.Empty : HttpUtility.HtmlEncode(row.GetCell(4).ToString().Replace(" ", string.Empty)),
-                        NewMinBet = string.IsNullOrWhiteSpace(row.GetCell(5).ToString()) ? 0 : decimal.Parse(row.GetCell(5).ToString()),
-                        NewMaxBet = string.IsNullOrWhiteSpace(row.GetCell(6).ToString()) ? 0 : decimal.Parse(row.GetCell(6).ToString()),
-                        NewMaxPerMatch = string.IsNullOrWhiteSpace(row.GetCell(7).ToString()) ? 0 : decimal.Parse(row.GetCell(7).ToString()),
-                        NewMaxPerBall = string.IsNullOrWhiteSpace(row.GetCell(8).ToString()) ? 0 : decimal.Parse(row.GetCell(8).ToString()),
-                        MinBet = row.GetCell(9) == null || string.IsNullOrWhiteSpace(row.GetCell(9).ToString()) ? 0 : decimal.Parse(row.GetCell(9).ToString()),
-                        MaxBet = row.GetCell(10) == null || string.IsNullOrWhiteSpace(row.GetCell(10).ToString()) ? 0 : decimal.Parse(row.GetCell(10).ToString()),
-                        MaxPerMatch = row.GetCell(11) == null || string.IsNullOrWhiteSpace(row.GetCell(11).ToString()) ? 0 : decimal.Parse(row.GetCell(11).ToString()),
-                        MaxPerBall = row.GetCell(12) == null || string.IsNullOrWhiteSpace(row.GetCell(12).ToString()) ? 0 : decimal.Parse(row.GetCell(12).ToString()),
+                        NewMinBet = string.IsNullOrWhiteSpace(row.GetCell(5).ToString()) ? (decimal?)null : decimal.Parse(row.GetCell(5).ToString()),
+                        NewMaxBet = string.IsNullOrWhiteSpace(row.GetCell(6).ToString()) ? (decimal?)null : decimal.Parse(row.GetCell(6).ToString()),
+                        NewMaxPerMatch = string.IsNullOrWhiteSpace(row.GetCell(7).ToString()) ? (decimal?)null : decimal.Parse(row.GetCell(7).ToString()),
+                        NewMaxPerBall = string.IsNullOrWhiteSpace(row.GetCell(8).ToString()) ? (decimal?)null : decimal.Parse(row.GetCell(8).ToString()),
+                        MinBet = row.GetCell(9) == null || string.IsNullOrWhiteSpace(row.GetCell(9).ToString()) ? (decimal?)null : decimal.Parse(row.GetCell(9).ToString()),
+                        MaxBet = row.GetCell(10) == null || string.IsNullOrWhiteSpace(row.GetCell(10).ToString()) ? (decimal?)null : decimal.Parse(row.GetCell(10).ToString()),
+                        MaxPerMatch = row.GetCell(11) == null || string.IsNullOrWhiteSpace(row.GetCell(11).ToString()) ? (decimal?)null : decimal.Parse(row.GetCell(11).ToString()),
+                        MaxPerBall = row.GetCell(12) == null || string.IsNullOrWhiteSpace(row.GetCell(12).ToString()) ? (decimal?)null : decimal.Parse(row.GetCell(12).ToString()),
                         GameGroupId = row.GetCell(13) == null || string.IsNullOrWhiteSpace(row.GetCell(13).ToString()) ? 0 : int.Parse(row.GetCell(13).ToString()),
                     };
 
@@ -364,16 +373,6 @@
             return dataAccess.InsertSetting(criteria);
         }
 
-        public BetLimitSelCriteria GetCachedCriteria()
-        {
-            if (HttpContext.Current.Session[_cacheGetDataCriteria] == null || HttpContext.Current.Session[_cacheGetDataCriteria].GetType() != typeof(GetBetLimitRequest))
-            {
-                throw new InvalidOperationException("Filter Data in Session can not be null. Must Submit before export excel.");
-            }
-
-            return new BetLimitSelCriteria((GetBetLimitRequest)HttpContext.Current.Session[_cacheGetDataCriteria]);
-        }
-
         public bool CheckPermission(int accId)
         {
             var permissionService = new PermissionService();
@@ -382,6 +381,154 @@
             bool hasPermission = permissionService.GetHostPermission(pathActionName, pageAccess);
 
             return hasPermission;
+        }
+
+        public IEnumerable<BaseModel> GetAllCurrency()
+        {
+            return dataAccess.GetCurrency(AllCurrency);
+        }
+
+        public IEnumerable<IEnumerable<IEnumerable<ProductCurrencyModel>>> GetProductCurrencyMatrix(GetProductCurrencyRequest request)
+        {
+            HttpContext.Current.Session[_cacheGetProductCurrencyMatrixRequest] = request;
+
+            var criteria = new ProductCurrencyMatrixCriteria(request);
+
+            var result = dataAccess.GetProductCurrencyMatrix(criteria)
+                .GroupBy(item => item.ProductName)
+                .Select(item => item
+                    .GroupBy(model => model.SportName)
+                    .Select(model => model.ToList()).ToList())
+                .ToList();
+
+            return result;
+        }
+
+        private BetLimitSelCriteria GetCachedBetLimitCriteria()
+        {
+            if (HttpContext.Current.Session[_cacheGetBetLimitRequest] == null || HttpContext.Current.Session[_cacheGetBetLimitRequest].GetType() != typeof(GetBetLimitRequest))
+            {
+                throw new InvalidOperationException("Filter Data in Session can not be null. Must Submit before export excel.");
+            }
+
+            return new BetLimitSelCriteria((GetBetLimitRequest)HttpContext.Current.Session[_cacheGetBetLimitRequest]);
+        }
+
+        private ProductCurrencyMatrixCriteria GetCachedProductCurrencyMatrixCriteria()
+        {
+            if (HttpContext.Current.Session[_cacheGetProductCurrencyMatrixRequest] == null || HttpContext.Current.Session[_cacheGetProductCurrencyMatrixRequest].GetType() != typeof(GetProductCurrencyRequest))
+            {
+                throw new InvalidOperationException("Filter Data in Session can not be null. Must Submit before export excel.");
+            }
+            
+            return new ProductCurrencyMatrixCriteria((GetProductCurrencyRequest)HttpContext.Current.Session[_cacheGetProductCurrencyMatrixRequest]);
+        }
+
+        public IWorkbook GetProductCurrencyExcelFile()
+        {
+            var criteria = GetCachedProductCurrencyMatrixCriteria();
+
+            var productCurrencyMatrix = dataAccess.GetProductCurrencyMatrix(criteria).GroupBy(item => item.ProductName)
+                .Select(item => item
+                    .GroupBy(model => model.SportName)
+                    .Select(model => model.ToList()).ToList())
+                .ToList();
+                
+
+            #region ExcelTypes
+
+            IWorkbook excelFile = new HSSFWorkbook();
+            string sheetName = "Product Currency Matrix";
+            var workSheet = excelFile.CreateSheet(sheetName);
+            int currentRow = 0;
+
+            #endregion ExcelTypes
+
+
+            var boldFont = excelFile.CreateFont();
+            boldFont.FontName = "Tahoma";
+            boldFont.FontHeightInPoints = 8;
+            boldFont.Boldweight = (short)FontBoldWeight.Bold;
+            boldFont.Color = HSSFColor.White.Index;
+
+            #region Header
+
+            var headerCellStyle = excelFile.CreateCellStyle();
+            headerCellStyle.Alignment = HorizontalAlignment.Center;
+            headerCellStyle.SetFont(boldFont);
+            headerCellStyle.FillForegroundColor = HSSFColor.LightBlue.Index;
+            headerCellStyle.FillPattern = FillPattern.SolidForeground;
+            headerCellStyle.BorderBottom = headerCellStyle.BorderLeft = headerCellStyle.BorderRight = headerCellStyle.BorderTop = BorderStyle.Thin;
+            headerCellStyle.BottomBorderColor = headerCellStyle.TopBorderColor = headerCellStyle.LeftBorderColor = headerCellStyle.RightBorderColor = HSSFColor.Black.Index;
+
+            var headerRow = workSheet.CreateRow(currentRow);
+            var headerValues = new string[5] { "Product", "Sport Type", "Sport Name", "Credit Currency", "Deposit Currency"};
+            for (int i = 0; i < headerValues.Length; i++)
+            {
+                workSheet.SetColumnWidth(i, 20 * 256);
+                var currentCell = headerRow.CreateCell(i);
+                currentCell.SetCellValue(headerValues[i]);
+                currentCell.CellStyle = headerCellStyle;
+            }
+            #endregion Header
+
+            #region Body
+            var normalFont = excelFile.CreateFont();
+            normalFont.FontName = "Tahoma";
+            normalFont.FontHeightInPoints = 8;
+            normalFont.Color = HSSFColor.Black.Index;
+
+            var cellStyle = excelFile.CreateCellStyle();
+            cellStyle.Alignment = HorizontalAlignment.Center;
+            cellStyle.SetFont(normalFont);
+            cellStyle.BorderBottom = cellStyle.BorderLeft = cellStyle.BorderRight = cellStyle.BorderTop = BorderStyle.Thin;
+            cellStyle.BottomBorderColor = cellStyle.TopBorderColor = cellStyle.LeftBorderColor = cellStyle.RightBorderColor = HSSFColor.Black.Index;
+            cellStyle.VerticalAlignment = VerticalAlignment.Top;
+            
+            var productPos = 1;
+            for (int i = 0; i < productCurrencyMatrix.Count; i++)
+            {
+                var sportPos = productPos;
+                var productLength = 0;
+                
+                foreach (var sportCurrencyModel in productCurrencyMatrix[i])
+                {
+                    foreach (var productCurrencyModel in sportCurrencyModel)
+                    {
+                        currentRow++;
+                        var row = workSheet.CreateRow(currentRow);
+                        var rowValues = new string[5]
+                        {
+                            productCurrencyModel.ProductName,
+                            productCurrencyModel.SportType.ToString(),
+                            productCurrencyModel.SportName,
+                            productCurrencyModel.CurrencyCredit,
+                            productCurrencyModel.CurrencyDeposit
+                        };
+                        for (int j = 0; j < rowValues.Length; j++)
+                        {
+                            var currentCell = row.CreateCell(j);
+                            currentCell.SetCellValue(rowValues[j]);
+                            currentCell.CellStyle = cellStyle;
+                        }
+                    }
+
+                    var craSportType= new CellRangeAddress(sportPos, sportPos + sportCurrencyModel.Count - 1, 1, 1);
+                    var craSportName = new CellRangeAddress(sportPos, sportPos + sportCurrencyModel.Count - 1, 2, 2);
+                    workSheet.AddMergedRegion(craSportType);
+                    workSheet.AddMergedRegion(craSportName);
+                    productLength += sportCurrencyModel.Count;
+                    sportPos += sportCurrencyModel.Count;
+                }
+
+                var craProduct = new CellRangeAddress(productPos, productPos + productLength - 1, 0, 0);
+                workSheet.AddMergedRegion(craProduct);
+                productPos += productLength;
+            }
+
+            #endregion Body
+
+            return excelFile;
         }
     }
 }

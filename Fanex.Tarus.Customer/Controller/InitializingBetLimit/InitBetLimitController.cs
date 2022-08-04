@@ -77,5 +77,27 @@
         {
             return Json(service.InsertSetting(request.BetLimits, AppSession.AccId, HttpContext.Request.UserHostAddress));
         }
+
+        [HttpGet, AuthenticateRead]
+        public ActionResult GetAllCurrency()
+        {
+            return Json(service.GetAllCurrency(), JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost, AuthenticateRead]
+        public ActionResult GetProductCurrencyMatrix(GetProductCurrencyRequest request)
+        {
+            return Json(service.GetProductCurrencyMatrix(request), JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet, AuthenticateRead]
+        public ActionResult ExportProductCurrencyExcel()
+        {
+            var excelFile = service.GetProductCurrencyExcelFile();
+            var fileName = "Product Currency Matrix";
+            ExcelExtension.ResponseStreamExcel(excelFile, fileName);
+
+            return new EmptyResult();
+        }
     }
 }

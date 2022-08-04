@@ -26,6 +26,7 @@
                         <ul id="tabs">
                             <li id="tab_grid" class="current"><a href="javascript:SwitchTab('grid');"><span>Global Bet Limit</span></a></li>
                             <li id="tab_excel"><a href="javascript:SwitchTab('excel');"><span>Import Excel</span></a></li>
+                            <li id="tab_product_currency_matrix"><a href="javascript:SwitchTab('product_currency_matrix');"><span>Product Currency Matrix</span></a></li>
                         </ul>
                     </div>
                 </div>
@@ -36,8 +37,12 @@
             <div id="tab_content_excel" style="display: none;margin-top:38px;">
                 @Html.Partial("~/Views/ITConfiguration/InitializingBetLimit/_Excel.cshtml")
             </div>
+            <div id="tab_content_product_currency_matrix" style="display: none;margin-top:38px;">
+                @Html.Partial("~/Views/ITConfiguration/InitializingBetLimit/_ProductCurrencyMatrix.cshtml")
+            </div>
             <div style="display: none;">
                 <a id="exportHref" download="StaleLevels.xls" href=""></a>
+                <a id="exportMatrixHref" download="ProductCurrencyMatrix.xls" href=""></a>
             </div>
         </div>
     </div>

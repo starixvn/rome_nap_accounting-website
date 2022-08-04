@@ -1,28 +1,28 @@
-﻿<div id="errMsg"></div>
+﻿<div id="errMatrixMsg"></div>
 <div id="filterDiv" style="display: flex; width:100%;">
     <div class="filterBox">
         <div class="filterContent" style="padding:0 5px;">
             <table class="floatLeft">
                 <tr>
                     <td class="w100">
-                        <label for="ProductMatrix" class="edit-label">Product</label>
+                        <label for="FilterProductMatrix" class="edit-label">Product</label>
                     </td>
                     <td class="floatLeft">
-                        <select id="ProductMatrix" class="setting-edit">
+                        <select id="FilterProductMatrix" class="setting-edit">
                             <option value="" disabled selected>Please select</option>
                         </select>
                     </td>
                     <td class="w100">
-                        <label for="CurrencyMatrix" class="edit-label">Currency</label>
+                        <label for="FilterCurrency" class="edit-label">Currency</label>
                     </td>
                     <td class="floatLeft">
-                        <select id="CurrencyMatrix" class="setting-edit">
+                        <select id="FilterCurrency" class="setting-edit">
                             <option value="" disabled selected>Please select</option>
                         </select>
                     </td>
                     <td></td>
                     <td class="floatLeft">
-                        <input id="btnSearchMatrix" type="button" value="Search" class="btn btn-edit" onclick="Search();">
+                        <input id="btnSearchMatrix" type="button" value="Search" class="btn btn-edit" onclick="GetProductCurrencyMatrix();">
                         <input id="btnExportMatrix" type="button" title="Export to Excel" class="btnExcel" name="btnExportMatrix" value="  " onclick="ExportMatrixExcel();">
                     </td>
                 </tr>

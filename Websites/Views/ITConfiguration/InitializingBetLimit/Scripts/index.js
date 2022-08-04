@@ -16,6 +16,8 @@ var form;
 var excelContent = [];
 var creditCurrency = [];
 var depositCurrency = [];
+var isRenderedCurrencyMatrix = false;
+var products = [];
 
 function SwitchTab(type) {
     isNeedRenderBettype = false;
@@ -24,6 +26,9 @@ function SwitchTab(type) {
     $('div[id^="tab_content_"]').hide();
     $('#tab_' + type).addClass('current');
     $('#tab_content_' + type).show();
+    if (type === "product_currency_matrix" && isRenderedCurrencyMatrix === false) {
+        RenderAllCurrency();
+    }
 }
 
 function RenderDcsMatrix() {
@@ -35,8 +40,9 @@ function RenderDcsMatrix() {
             if (rs && rs.ErrorCode !== undefined && rs.ErrorCode !== 0) {
                 showAlertMessage('errMsg', rs.ErrorMessage, 1);
             } else {
-                RenderProduct(rs.Products);
-                RenderProduct(rs.Products, 'Excel');
+                products = rs.Products;
+                RenderProduct();
+                RenderProductMatrix();
                 creditCurrency = rs.CreditCurrencies;
                 depositCurrency = rs.DepositCurrencies;
                 RenderCreditCurrency();
@@ -52,7 +58,7 @@ function RenderDcsMatrix() {
     });
 }
 
-function RenderProduct(products) {
+function RenderProduct() {
     var productFilter = $("#FilterProduct");
     productFilter.empty();
     products.forEach(function (product, _) {
@@ -66,6 +72,36 @@ function RenderProduct(products) {
     });
 
     productFilter.trigger("change");
+}
+
+function RenderProductMatrix() {
+    var productFilter = $("#FilterProductMatrix");
+    productFilter.empty();
+    var multiselectData = [];
+    products.forEach(function (item) {
+        multiselectData.push({
+            Id: 'productMatrix' + item.Id,
+            Value: item.Id,
+            Text: item.Name,
+            Checked: true,
+            Enable: true,
+            CssClass: "",
+            Items: []
+        });
+    });
+
+    productFilter.multiSelect({
+        minWidth: 200,
+        maxHeight: 450,
+        shadow: true,
+        showHeader: true,
+        isCheckAll: true,
+        showFooter: false,
+        showFilter: true,
+        checkAllText: "All",
+        listData: multiselectData,
+        noItemText: "Select Product"
+    });
 }
 
 function RenderSportType() {
@@ -202,6 +238,29 @@ function RenderDepositCurrency() {
     RenderCurrency(depositCurrency, "Deposit");
 }
 
+function RenderAllCurrency() {
+    try { parent.BlockUI(); } catch (e) { }
+    $.ajax({
+        type: "GET",
+        url: "GetAllCurrency",
+        success: function (rs) {
+            if (typeof rs === 'string' && rs.includes("DOCTYPE")) {
+                showAlertMessage('errMatrixMsg', "You are not authorized on this function", 1);
+                $("#gridProductCurrencyMatrix").hide();
+            } else {
+                isRenderedCurrencyMatrix = true;
+                RenderCurrency(rs, "Currency");
+            }
+        },
+        error: function (event, jqXHR, ajaxSettings) {
+            showAlertMessage('errMatrixMsg', "Internal server error.", 1);
+        },
+        complete: function () {
+            try { parent.jQuery.unblockUI(); } catch (e) { }
+        }
+    });
+}
+
 function RenderCurrency(currencies, type) {
     var currencyFilter = $("#Filter" + type);
     currencyFilter.empty();
@@ -320,14 +379,14 @@ function RenderBetLimits(data) {
         row.Columns.push({ Name: 'Site', Value: data.BetLimits[i].Site });
         row.Columns.push({ Name: 'CreditCurrency', Value: data.BetLimits[i].CreditCurrency });
         row.Columns.push({ Name: 'DepositCurrency', Value: data.BetLimits[i].DepositCurrency });
-        row.Columns.push({ Name: 'MinBet', Value: data.BetLimits[i].MinBet });
-        row.Columns.push({ Name: 'MaxBet', Value: data.BetLimits[i].MaxBet });
-        row.Columns.push({ Name: 'MaxPerMatch', Value: data.BetLimits[i].MaxPerMatch });
-        row.Columns.push({ Name: 'MaxPerBall', Value: data.BetLimits[i].MaxPerBall });
-        row.Columns.push({ Name: 'NewMinBet', Value: data.BetLimits[i].NewMinBet === 0 ? "" : data.BetLimits[i].NewMinBet });
-        row.Columns.push({ Name: 'NewMaxBet', Value: data.BetLimits[i].NewMaxBet === 0 ? "" : data.BetLimits[i].NewMaxBet });
-        row.Columns.push({ Name: 'NewMaxPerMatch', Value: data.BetLimits[i].NewMaxPerMatch === 0 ? "" : data.BetLimits[i].NewMaxPerMatch });
-        row.Columns.push({ Name: 'NewMaxPerBall', Value: data.BetLimits[i].NewMaxPerBall === 0 ? "" : data.BetLimits[i].NewMaxPerBall });
+        row.Columns.push({ Name: 'MinBet', Value: data.BetLimits[i].MinBet === null ? "" : data.BetLimits[i].MinBet });
+        row.Columns.push({ Name: 'MaxBet', Value: data.BetLimits[i].MaxBet === null ? "" : data.BetLimits[i].MaxBet });
+        row.Columns.push({ Name: 'MaxPerMatch', Value: data.BetLimits[i].MaxPerMatch === null ? "" : data.BetLimits[i].MaxPerMatch });
+        row.Columns.push({ Name: 'MaxPerBall', Value: data.BetLimits[i].MaxPerBall === null ? "" : data.BetLimits[i].MaxPerBall });
+        row.Columns.push({ Name: 'NewMinBet', Value: data.BetLimits[i].NewMinBet === null ? "" : data.BetLimits[i].NewMinBet });
+        row.Columns.push({ Name: 'NewMaxBet', Value: data.BetLimits[i].NewMaxBet === null ? "" : data.BetLimits[i].NewMaxBet });
+        row.Columns.push({ Name: 'NewMaxPerMatch', Value: data.BetLimits[i].NewMaxPerMatch === null ? "" : data.BetLimits[i].NewMaxPerMatch });
+        row.Columns.push({ Name: 'NewMaxPerBall', Value: data.BetLimits[i].NewMaxPerBall === null ? "" : data.BetLimits[i].NewMaxPerBall });
         row.Columns.push({ Name: 'GameGroupId', Value: data.BetLimits[i].GameGroupId });
         bodyRows.push(row);
     }
@@ -496,14 +555,14 @@ function RenderExcelGrid(BetLimits) {
         row.Columns.push({ Name: 'Site', Value: BetLimits[i].Site });
         row.Columns.push({ Name: 'CreditCurrency', Value: BetLimits[i].CreditCurrency });
         row.Columns.push({ Name: 'DepositCurrency', Value: BetLimits[i].DepositCurrency });
-        row.Columns.push({ Name: 'MinBet', Value: BetLimits[i].MinBet });
-        row.Columns.push({ Name: 'MaxBet', Value: BetLimits[i].MaxBet });
-        row.Columns.push({ Name: 'MaxPerMatch', Value: data.BetLimits[i].MaxPerMatch });
-        row.Columns.push({ Name: 'MaxPerBall', Value: data.BetLimits[i].MaxPerBall });
-        row.Columns.push({ Name: 'NewMinBet', Value: BetLimits[i].NewMinBet });
-        row.Columns.push({ Name: 'NewMaxBet', Value: BetLimits[i].NewMaxBet });
-        row.Columns.push({ Name: 'NewMaxPerMatch', Value: data.BetLimits[i].NewMaxPerMatch === 0 ? "" : data.BetLimits[i].NewMaxPerMatch });
-        row.Columns.push({ Name: 'NewMaxPerBall', Value: data.BetLimits[i].NewMaxPerBall === 0 ? "" : data.BetLimits[i].NewMaxPerBall });
+        row.Columns.push({ Name: 'MinBet', Value: BetLimits[i].MinBet === null ? "" : BetLimits[i].MinBet });
+        row.Columns.push({ Name: 'MaxBet', Value: BetLimits[i].MaxBet === null ? "" : BetLimits[i].MaxBet});
+        row.Columns.push({ Name: 'MaxPerMatch', Value: BetLimits[i].MaxPerMatch === null ? "" : BetLimits[i].MaxPerMatch});
+        row.Columns.push({ Name: 'MaxPerBall', Value: BetLimits[i].MaxPerBall === null ? "" : BetLimits[i].MaxPerBall});
+        row.Columns.push({ Name: 'NewMinBet', Value: BetLimits[i].NewMinBet === null ? "" : BetLimits[i].NewMinBet});
+        row.Columns.push({ Name: 'NewMaxBet', Value: BetLimits[i].NewMaxBet === null ? "" : BetLimits[i].NewMaxBet});
+        row.Columns.push({ Name: 'NewMaxPerMatch', Value: BetLimits[i].NewMaxPerMatch === null ? "" : BetLimits[i].NewMaxPerMatch });
+        row.Columns.push({ Name: 'NewMaxPerBall', Value: BetLimits[i].NewMaxPerBall === null ? "" : BetLimits[i].NewMaxPerBall });
         row.Columns.push({ Name: 'GameGroupId', Value: BetLimits[i].GameGroupId });
         bodyRows.push(row);
     }
@@ -588,13 +647,107 @@ function HideError() {
     $("#errMsg").html("");
     $("#errMsgExcel").html("");
     $("#errWarningMsgExcel").html("");
+    $("#errMatrixMsg").html("");
 }
 
+function GetProductCurrencyMatrix() {
+    var request = {
+        ProductIds: $("#FilterProductMatrix").multiSelect("getCheckedItems").join(),
+        Currencies: $("#FilterCurrency").multiSelect("getCheckedItems").join()
+    };
+    if (request.ProductIds === "") {
+        showAlertMessage('errMatrixMsg', "Product cannot be Null.", 1);
+        return;
+    }
+
+    if (request.Currencies === "") {
+        showAlertMessage('errMatrixMsg', "Currency cannot be Null.", 1);
+        return;
+    }
+
+    try { parent.BlockUI(); } catch (e) { }
+    HideError();
+    $.ajax({
+        type: "POST",
+        url: "GetProductCurrencyMatrix",
+        data: request,
+        success: function (rs) {
+            if (typeof rs === 'string' && rs.includes("DOCTYPE")) {
+                showAlertMessage('errMatrixMsg', "You are not authorized on this function", 1);
+                $("#gridProductCurrencyMatrix").hide();
+            } else {
+                RenderProductCurrencyMatrix(rs);
+            }
+        },
+        error: function (event, jqXHR, ajaxSettings) {
+            showAlertMessage('errMatrixMsg', "Internal server error.", 1);
+        },
+        complete: function () {
+            try { parent.jQuery.unblockUI(); } catch (e) { }
+        }
+    });
+}
+
+function RenderProductCurrencyMatrix(data) {
+    var bodyRows = [];
+    for (var productPos = 0; productPos < data.length; productPos++) {
+        var productRowSpan = 0;
+        var productNamePos = bodyRows.length;
+        var sportList = data[productPos];
+        for (var sportPos = 0; sportPos < sportList.length; sportPos++) {
+            var itemList = sportList[sportPos];
+            productRowSpan += itemList.length;
+            var row = { Columns: [] };
+            if (sportPos === 0) {
+                row.Columns.push({ Name: 'Product', Value: itemList[0].ProductName, MergeRowNumber: 1 });
+            }
+            row.Columns.push({ Name: 'SportTypeId', Value: itemList[0].SportType, MergeRowNumber: itemList.length });
+            row.Columns.push({ Name: 'SportType', Value: itemList[0].SportName, MergeRowNumber: itemList.length });
+            row.Columns.push({ Name: 'Credit', Value: itemList[0].CurrencyCredit });
+            row.Columns.push({ Name: 'Deposit', Value: itemList[0].CurrencyDeposit });
+            bodyRows.push(row);
+            for (var i = 1; i < itemList.length; i++) {
+                row = { Columns: [] };
+                row.Columns.push({ Name: 'Credit', Value: itemList[i].CurrencyCredit });
+                row.Columns.push({ Name: 'Deposit', Value: itemList[i].CurrencyDeposit });
+                bodyRows.push(row);
+            }
+        }
+
+        bodyRows[productNamePos].Columns[0].MergeRowNumber = productRowSpan;
+    }
+
+
+    var gridOptions =
+    {
+        columns: [
+            { HeaderText: "Product", Width: 100, Name: "Product", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Sport Type ID", Width: 150, Name: "SportTypeId", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Sport Type", Width: 100, Name: "SportType", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Credit Currency", Width: 150, Name: "Credit", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Deposit Currency", Width: 100, Name: "Deposit", HeaderAlign: "center", CellAlign: "center" }
+        ],
+        bodyRows: bodyRows,
+        showDistinctRow: false
+    };
+
+    $("#gridProductCurrencyMatrix").fanexGrid(gridOptions);
+    $('#gridProductCurrencyMatrix').show();
+}
+
+
+function ExportMatrixExcel() {
+    UpdateFilterValue();
+
+    $("#exportMatrixHref")[0].click();
+}
 
 $(document).ready(function () {
     InitSubmitExcelFile();
     RenderDcsMatrix();
 
-    var url = window.rootUrl + "InitBetLimit/ExportExcel";
-    $("#exportHref").attr("href", url);
+    var urlBetLimit = window.rootUrl + "InitBetLimit/ExportExcel";
+    $("#exportHref").attr("href", urlBetLimit);
+    var urlProductMatrix = window.rootUrl + "InitBetLimit/ExportProductCurrencyExcel";
+    $("#exportMatrixHref").attr("href", urlProductMatrix);
 });

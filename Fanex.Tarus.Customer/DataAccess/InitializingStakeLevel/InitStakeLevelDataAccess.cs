@@ -1,5 +1,6 @@
 ﻿namespace Fanex.Tarus.Customer.DataAccess.InitializingBetLimit
 {
+    using System;
     using System.Collections.Generic;
     using Fanex.Data;
     using Fanex.Tarus.Customer.Criteria.InitializingBetLimit;
@@ -24,6 +25,8 @@
         ValidateBetLimitResponse CheckSetting(BetLimitCheckCriteria criteria);
 
         Result InsertSetting(BetLimitInsCriteria criteria);
+
+        IEnumerable<ProductCurrencyModel> GetProductCurrencyMatrix(ProductCurrencyMatrixCriteria criteria);
     }
 
     public class InitBetLimitDataAccess : IInitBetLimitDataAccess
@@ -182,14 +185,14 @@
                         Site = DataUtils.ToString(reader["site"]),
                         CreditCurrency = DataUtils.ToString(reader["currencycredit"]),
                         DepositCurrency = DataUtils.ToString(reader["currencydeposit"]),
-                        MinBet = DataUtils.ToDecimal(reader["curminbet"]),
-                        MaxBet = DataUtils.ToDecimal(reader["curmaxbet"]),
-                        MaxPerMatch = DataUtils.ToDecimal(reader["curmaxpermatch"]),
-                        MaxPerBall = DataUtils.ToDecimal(reader["curmaxperball"]),
-                        NewMinBet = DataUtils.ToDecimal(reader["newminbet"]),
-                        NewMaxBet = DataUtils.ToDecimal(reader["newmaxbet"]),
-                        NewMaxPerMatch = DataUtils.ToDecimal(reader["newmaxpermatch"]),
-                        NewMaxPerBall = DataUtils.ToDecimal(reader["newmaxperball"]),
+                        MinBet = Convert.IsDBNull(reader["curminbet"]) ? (decimal?)null : DataUtils.ToDecimal(reader["curminbet"]),
+                        MaxBet = Convert.IsDBNull(reader["curmaxbet"]) ? (decimal?)null : DataUtils.ToDecimal(reader["curmaxbet"]),
+                        MaxPerMatch = Convert.IsDBNull(reader["curmaxpermatch"]) ? (decimal?)null : DataUtils.ToDecimal(reader["curmaxpermatch"]),
+                        MaxPerBall = Convert.IsDBNull(reader["curmaxperball"]) ? (decimal?)null : DataUtils.ToDecimal(reader["curmaxperball"]),
+                        NewMinBet = Convert.IsDBNull(reader["newminbet"]) ? (decimal?)null : DataUtils.ToDecimal(reader["newminbet"]),
+                        NewMaxBet = Convert.IsDBNull(reader["newmaxbet"]) ? (decimal?)null : DataUtils.ToDecimal(reader["newmaxbet"]),
+                        NewMaxPerMatch = Convert.IsDBNull(reader["newmaxpermatch"]) ? (decimal?)null : DataUtils.ToDecimal(reader["newmaxpermatch"]),
+                        NewMaxPerBall = Convert.IsDBNull(reader["newmaxperball"]) ? (decimal?)null : DataUtils.ToDecimal(reader["newmaxperball"]),
                         GameGroupId = DataUtils.ToInt32(reader["gamegroupid"])
                     };
 
@@ -219,6 +222,30 @@
 
                 return new Result(DataUtils.ToInt32(outputParams["errcode"]), outputParams["errmsg"].ToString());
             }
+        }
+
+        public IEnumerable<ProductCurrencyModel> GetProductCurrencyMatrix(ProductCurrencyMatrixCriteria criteria)
+        {
+            var entities = new List<ProductCurrencyModel>();
+            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                var reader = objDb.ExecuteReader(criteria.GetSpParams());
+                while (reader.Read())
+                {
+                    entities.Add(new ProductCurrencyModel
+                    {
+                        ProductName = DataUtils.ToString(reader["productname"]),
+                        SportType = DataUtils.ToInt32(reader["sporttype"]),
+                        SportName = DataUtils.ToString(reader["sportname"]),
+                        CurrencyCredit = DataUtils.ToString(reader["currencycredit"]),
+                        CurrencyDeposit = DataUtils.ToString(reader["currencydeposit"])
+                    });
+                }
+
+                reader.Close();
+            }
+
+            return entities;
         }
     }
 }
