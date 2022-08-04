@@ -6,6 +6,7 @@
         functionDropDown = $("#functionDropDown");
     var isMultipleSuperDropDownOpen = false;
     var styleSupperDD = "single";
+    var agentsExtraInfo = [];
     const PositionTakingAndStatusSettingTypeIds = [1, 18, 4, 11, 13];
 
     function getSelectedAgents() {
@@ -14,7 +15,8 @@
 
         return {
             AgentIds: agentIds.join(","),
-            AgentNames: agentNames.join(", ")
+            AgentNames: agentNames.join(", "),
+            AgentsExtraInfo: agentsExtraInfo
         };
     }
 
@@ -45,7 +47,7 @@
             html.push(datum.Name);
             html.push("</option>");
         }
-       
+
         return element.html(html.join(""));
     }
 
@@ -75,7 +77,7 @@
     function renderSelectAgentList(data) {
         var agent;
         var agents = [];
-
+        agentsExtraInfo = data;
         for (var i = 0, max = data.length; i < max; i++) {
             agent = data[i];
             agents.push({
@@ -85,7 +87,7 @@
                 Checked: true,
                 Enable: true,
                 CssClass: "",
-                Items: []
+                Items: [],
             });
         }
 
@@ -236,6 +238,7 @@
                 ProductName: productDropDown.find("option:selected").text(),
                 SuperId: superDropDown.val(),
                 SuperName: superDropDown.find("option:selected").text(),
+
                 ...getSelectedSupers()
             };
 

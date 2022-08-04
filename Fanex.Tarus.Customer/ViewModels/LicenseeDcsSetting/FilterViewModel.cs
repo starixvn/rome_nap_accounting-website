@@ -38,8 +38,7 @@ namespace Fanex.Tarus.Customer.ViewModels.LicenseeDcsSetting
                 Text = s.Name,
                 Value = s.Id.ToString()
             });
-
-             var  Tests = productViewModels.First().SettingTypes.GroupBy(s=>s.Name);
+            
             
             ProductJSON = JsonConvert.SerializeObject(productViewModels, Formatting.None, jsonSetting);
         }
@@ -53,8 +52,6 @@ namespace Fanex.Tarus.Customer.ViewModels.LicenseeDcsSetting
         public IEnumerable<SelectListItem> Products { get; }
 
         public IEnumerable<SelectListItem> Functions { get; }
-
-        public IEnumerable<int> Tests { get; }
         
         public string ProductJSON { get; }
         

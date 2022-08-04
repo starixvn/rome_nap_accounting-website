@@ -11,8 +11,8 @@ namespace Fanex.Tarus.Customer.Business.LicenseeDcsSetting
 
         IEnumerable<BaseModel> GetSupers(string site);
         
-        IEnumerable<BaseModel> GetAgents(string superIds);
-
+        IEnumerable<BaseModelExtra> GetAgents(string superIds);
+        
         IEnumerable<ProductSettingTypeEntity> GetProducts();
 
         List<PTEntity> GetPositionTaking(int productId, int superId);
@@ -31,9 +31,9 @@ namespace Fanex.Tarus.Customer.Business.LicenseeDcsSetting
 
         Result UpdatePositionTaking(
             int productId,
-            int superId,
             List<PTEntity> superPT,
             IEnumerable<int> agentIds,
+            List<AgentsExtraInfo> agentsExtraInfo,
             bool isAgentOnly,
             int userId,
             string ip);
@@ -75,5 +75,6 @@ namespace Fanex.Tarus.Customer.Business.LicenseeDcsSetting
             bool isAgentOnly,
             int userId,
             string ip);
+        
     }
 }

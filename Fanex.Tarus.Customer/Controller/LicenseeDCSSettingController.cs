@@ -38,7 +38,7 @@ namespace Fanex.Tarus.Customer.Controller
                 _settingService.GetSupers(sites[0]).ToList();
 
             var agents = supers.Count == 0 ?
-                Enumerable.Empty<BaseModel>() :
+                Enumerable.Empty<BaseModelExtra>() :
                 _settingService.GetAgents(supers[0].Id.ToString());
 
             var products = _settingService.GetProducts();
@@ -76,9 +76,9 @@ namespace Fanex.Tarus.Customer.Controller
         {
             var result = _settingService.UpdatePositionTaking(
                 model.ProductId,
-                model.SuperId,
                 model.SuperPT,
                 ConvertToIntArray(model.AgentIds),
+                model.AgentsExtraInfo,
                 model.IsAgentOnly,
                 AppSession.AccId,
                 Utils.GetClientIP());

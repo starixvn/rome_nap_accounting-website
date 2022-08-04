@@ -29,5 +29,7 @@ namespace Fanex.Tarus.Customer.ViewModels.LicenseeDcsSetting
                 yield return new SelectListItem { Text = value, Value = value, Selected = pt == i };
             }
         }
+        
+        public List<AgentsExtraInfo> AgentsExtraInfo { get; set; }
     }
 }

@@ -12,8 +12,8 @@ namespace Fanex.Tarus.Customer.DataAccess.LicenseeDcsSetting
 
         IEnumerable<BaseModel> GetSupers(ICriteria criteria);
 
-        IEnumerable<BaseModel> GetAgents(ICriteria criteria);
-
+        IEnumerable<BaseModelExtra> GetAgents(ICriteria criteria);
+        
         IEnumerable<ProductSettingTypeEntity> GetProducts(ICriteria criteria);
 
         List<PTEntity> GetPositionTaking(ICriteria criteria);

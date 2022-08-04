@@ -641,6 +641,8 @@
     <Compile Include="Entities\InitializingStakeLevel\StakeLevelResponse.cs" />
     <Compile Include="Entities\InitializingStakeLevel\ValidateStakeLevelResponse.cs" />
     <Compile Include="Entities\JsonWithoutNullField.cs" />
+    <Compile Include="Entities\LicenseeDcsSetting\AgentsExtraInfo.cs" />
+    <Compile Include="Entities\LicenseeDcsSetting\BaseModelExtra.cs" />
     <Compile Include="Entities\LicenseeDcsSetting\BetSettingWithoutMaxPerMatchEntity.cs" />
     <Compile Include="Entities\LicenseeDcsSetting\StakeLevelEntity.cs" />
     <Compile Include="Entities\LicenseeDcsSetting\StakeLevelGroupEntity.cs" />

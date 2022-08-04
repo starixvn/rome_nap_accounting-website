@@ -19,7 +19,7 @@ namespace Fanex.Tarus.Customer.DataAccess.LicenseeDcsSetting
         public IEnumerable<BaseModel> GetSupers(ICriteria criteria)
             => ExecuteDataReader(criteria, GetSuper);
 
-        public IEnumerable<BaseModel> GetAgents(ICriteria criteria)
+        public IEnumerable<BaseModelExtra> GetAgents(ICriteria criteria)
             => ExecuteDataReader(criteria, GetAgent);
 
         public IEnumerable<ProductSettingTypeEntity> GetProducts(ICriteria criteria)
@@ -204,7 +204,7 @@ namespace Fanex.Tarus.Customer.DataAccess.LicenseeDcsSetting
                 Name = reader["username"].ToString()
             };
 
-        private static BaseModel GetAgent(IDataReader reader)
+        private static BaseModelExtra GetAgent(IDataReader reader)
         {
             var agent = GetSuper(reader);
 
@@ -213,7 +213,12 @@ namespace Fanex.Tarus.Customer.DataAccess.LicenseeDcsSetting
                 agent.Name += " (sub)";
             }
 
-            return agent;
+            return new BaseModelExtra
+            {
+                Id = agent.Id,
+                Name = agent.Name,
+                SuperId = reader["srecommend"].ToString()
+            };
         }
 
         private static ProductSettingTypeEntity GetProductSettingType(IDataReader reader)
