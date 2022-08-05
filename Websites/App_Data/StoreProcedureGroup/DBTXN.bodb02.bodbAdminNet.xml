@@ -11,7 +11,7 @@
     <Setting Key="Acc_BettransInsTransferAllMembers" SpName="Acc_BettransInsTransferAllMembers" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
     <Setting Key="Acc_ClearBalanceAllDownlines" SpName="Acc_ClearBalanceAllDownlines" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
     <Setting Key="Acc_DailyTxn_UpdChecker" SpName="Acc_DailyTxn_UpdChecker" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_BettransDelTransaction" SpName="Acc_BettransDelTransaction" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_BettransDelTransaction" SpName="Acc_BettransDelTransaction_xtest" DbName="DBTXN.bodb02.bodbAdminNet" />
     <Setting Key="Acc_BettransInsCrossTransfer" SpName="Acc_BettransInsCrossTransfer" DbName="DBTXN.bodb02.bodbAdminNet" />
     <Setting Key="SiteDB_Acc_BettransInsCrossTransfer" SpName="SiteDB_Acc_BettransInsCrossTransfer_xtest" DbName="DBTXN.bodb02.bodbAdminNet" />
     <Setting Key="Acc_BettransInsTransfer" SpName="Acc_BettransInsTransfer_xtest" DbName="DBTXN.bodb02.bodbAdminNet" />
