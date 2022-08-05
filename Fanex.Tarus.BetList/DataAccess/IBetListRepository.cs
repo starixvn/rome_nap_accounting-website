@@ -12,6 +12,8 @@
 
     public interface IBetListRepository
     {
+        IList<S> Fetch<S>(dynamic criteria, bool isSiteDB, string AGIP, Func<DataRow, S> mapObjectFunction, ref List<ITicketData> outputList) where S : class;
+
         IList<S> FetchMemberWinLoss<S>(ICriteria criteria, Func<DataRow, S> mapObjectFunction, ref List<ITicketData> outputList) where S : class;
 
         IList<TicketDetail> Fetch(dynamic criteria, CurrencyContants baseCurrency);
@@ -31,5 +33,7 @@
         string GetSiteNameByCustId(ICriteria criteria);
 
         int MapPlayerIdToCustId(MapPlayerId3rdToCustIdCriteria criteria);
+
+        IEnumerable<SiteModel> GetAllSites();
     }
 }

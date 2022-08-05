@@ -24,13 +24,14 @@ namespace Fanex.Tarus.BetList.Controller
     using Sunplus.Accounting.Core.Helper;
     using SmartPunterFilter = AuthenticationFilter.AuthenticateSmartPunterAction;
     using Fanex.Tarus.BetList.Resources;
+    using Fanex.Tarus.BetList.ViewModel;
 
     public class TarusBetListController : Controller
     {
         private readonly IBetListService _betListService;
         private readonly ISmartPunterService _smartPunterService;
         private string _smartPunterFunctionName = "SmartPunter";
-
+        
         public TarusBetListController()
         {
             this._betListService = new BetListService();
@@ -45,9 +46,10 @@ namespace Fanex.Tarus.BetList.Controller
         [SmartPunterFilter(SmartPunterFilter.AuthenticationType.Read)]
         public ActionResult BetListByRefNo_Main()
         {
-            BalanceUp balanceUp = ReportService.BalanceUp;
-            ViewBag.BalanceUpDay = balanceUp.BalanceUpDay;
-            return View("~/Views/BetList/BetListByRefNo/Index.cshtml");
+            var sites = _betListService.GetAllSites();
+            var viewModel = new BetListByRefNoViewModel(sites);
+
+            return View("~/Views/BetList/BetListByRefNo/Index.cshtml", viewModel);
         }
 
 

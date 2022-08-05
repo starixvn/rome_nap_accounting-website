@@ -20,6 +20,7 @@
     using Fanex.Tarus.BetList.Criteria;
     using Fanex.Tarus.BetList.DataAccess;
     using Fanex.Tarus.BetList.Models;
+    using Fanex.Tarus.BetList.Param;
 
     [ApiAuthorization]
     public class BetListApiController : Controller
@@ -33,17 +34,12 @@
             _betBuilderService = new BetBuilderService(new BetBuilderRepository());
         }
 
-        public ActionResult GetBetListByRefNo(string refNo)
+        public ActionResult GetBetListByRefNo(BetListByRefNoParam param)
         {
-            if (refNo != null && BetListHelper.IsNumeric(refNo.Trim()))
+            if (param != null && BetListHelper.IsNumeric(param.RefNo.Trim()))
             {
-                var result = _betListService.GetBetListByRefNo(new BetListByRefNoCriteria
-                {
-                    UserId = Converter.To<int>(ConfigurationManager.AppSettings["BetListApi_UserId"]),
-                    RefNo = Converter.To<long>(refNo),
-                    MoveBetsDay = ReportService.BalanceUp.MoveBetsDay,
-                    BalanceUpDay = ReportService.BalanceUp.BalanceUpDay
-                });
+                param.UserId = Converter.To<int>(ConfigurationManager.AppSettings["BetListApi_UserId"]);
+                var result = _betListService.GetBetListByRefNo(param);
 
                 var firstTicket = result.FirstOrDefault();
                 if (firstTicket != null)

@@ -14,10 +14,19 @@ BetList.BetListByRefNo = (function ($) {
     };
 
     var $searchTypes;
-    var $searchByRefNo, $refNo, $refNoInfoMsg;
+    var $searchByRefNo, $refNo, $selSite, $refNoInfoMsg;
     var $searchByProduct, $selectedProduct, $playerId, $username, $gameId, $betId, $fromdate, $toDate, $productInputs,
         $playerId3rd;
     var $submit;
+    
+    function OpenNoteMessage() {
+        $('#noteMessage').dialog({
+            title: 'Info',
+            modal: true,
+            width: 800,
+            height: 150,
+        });
+    }
 
     function getData(params, url) {
         $.ajax({
@@ -107,12 +116,14 @@ BetList.BetListByRefNo = (function ($) {
 
     function selectSearchByRef() {
         $refNo.removeAttr("disabled");
+        $selSite.removeAttr("disabled");
         $refNoInfoMsg.show();
         $productInputs.attr("disabled", "disabled");
     };
 
     function selectSearchByProduct() {
         $refNo.attr("disabled", "disabled");
+        $selSite.attr("disabled", "disabled");
         $refNoInfoMsg.hide();
         $productInputs.removeAttr("disabled");
 
@@ -166,7 +177,9 @@ BetList.BetListByRefNo = (function ($) {
         } catch (e) { }
         getData(
             {
-                refno: $refNo.val().trim(),
+                RefNo: $refNo.val().trim(),
+                Site: $selSite.val(),
+                SiteDBGroupId: $selSite.find(":selected").attr("data-sitedbgroupid"),
                 language: $("#languageCodeHidden").val()
             },
             window.rootUrl + "BetList/GetBetListByRefNo");
@@ -214,6 +227,7 @@ BetList.BetListByRefNo = (function ($) {
 
         $searchByRefNo = $("#rdByRef");
         $refNo = $("#txtRefNo");
+        $selSite = $("#selSite");
         $refNoInfoMsg = $("#ref-no-info-msg");
 
         $searchByProduct = $("#rdByProduct");
@@ -251,6 +265,10 @@ BetList.BetListByRefNo = (function ($) {
 
         $submit.click(function () {
             getBetList();
+        });
+        
+        $("#iNoteMessageInfo").click(function () {
+            OpenNoteMessage();
         });
     };
 

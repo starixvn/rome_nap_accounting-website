@@ -10,6 +10,7 @@ namespace Fanex.Tarus.BetList.Controllers
     using Fanex.Common;
     using Fanex.Tarus.BetList.Constants;
     using Fanex.Tarus.BetList.Criteria;
+    using Fanex.Tarus.BetList.Param;
     using Models;
     using Security.Constants;
     using Security.Services;
@@ -61,30 +62,20 @@ namespace Fanex.Tarus.BetList.Controllers
         /// <returns>The bet list by reference no.</returns>
         [AuthorizeFunctions("BetListByIP")]
         [SmartPunterFilter(SmartPunterFilter.AuthenticationType.Read, SmartPunterActionId.ViewBetListByRefNo)]
-        public ActionResult GetBetListByRefNo(string refno, string language = Language.Default)
+        public ActionResult GetBetListByRefNo(BetListByRefNoParam param)
         {
             IList<TicketDetail> result = new List<TicketDetail>();
             var permissions = MangeAccountInfoPermissionBuilder.MapToPermissionParameter(AppSession.AccId, PolicyConst.Read).ToList();
 
-            if (permissions.Count > 0)
+            if (permissions.Count > 0 && BetListHelper.IsNumeric(param.RefNo.Trim()))
             {
-                BalanceUp balanceUp = ReportService.BalanceUp;
-
-                if (BetListHelper.IsNumeric(refno.Trim()))
-                {
-                    SetCulture(language);
-                    result = _betListService.GetBetListByRefNo(new BetListByRefNoCriteria
-                    {
-                        UserId = AppSession.AccId,
-                        RefNo = Converter.To<long>(refno),
-                        MoveBetsDay = balanceUp.MoveBetsDay,
-                        BalanceUpDay = balanceUp.BalanceUpDay,
-                        Permission = string.Join(",", permissions)
-                    });
-                }
+                SetCulture(param.Language);
+                param.Permission = string.Join(",", permissions);
+                param.UserId = AppSession.AccId;
+                result = _betListService.GetBetListByRefNo(param);
             }
 
-            ViewBag.Languages = new LanguageViewModel(language);
+            ViewBag.Languages = new LanguageViewModel(param.Language);
             ViewBag.ResultTitle = CreateResultTitle(result);
             Hashtable paramHastable = new Hashtable();
             int custId = result.Count == 0 ? 0 : Converter.To<int>(result[0].Ticket.CustId);
@@ -94,7 +85,7 @@ namespace Fanex.Tarus.BetList.Controllers
 
             return PartialView("~/Views/BetList/BetListByRefNo/_BetListByRefNo.cshtml", result);
         }
-        
+
         /// <summary>
         /// Gets the bet list by reference no.
         /// </summary>

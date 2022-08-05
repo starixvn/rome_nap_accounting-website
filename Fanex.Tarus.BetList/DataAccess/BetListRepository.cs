@@ -15,9 +15,32 @@
     using Fanex.NAP.Framework.Data;
     using Models;
     using Resources;
+    using Sunplus.Accounting.Core.Extensions;
 
     public class BetListRepository : IBetListRepository
     {
+        public IEnumerable<SiteModel> GetAllSites()
+        {
+            using (ObjectDb objDB = new ObjectDb("CustomerSetting_SiteSel"))
+            {
+                using (var reader = objDB.ExecuteReader())
+                {
+                    if (reader != null)
+                    {
+                        while (reader.Read())
+                        {
+                            yield return new SiteModel
+                            {
+                                Id = Convert.ToInt32(reader["siteid"].ToString()),
+                                Name = reader["site"].ToString(),
+                                IsDeposit = bool.Parse(reader["islicensee"].ToString()),
+                                SiteDBGroupId = Convert.ToInt32(reader["SiteDBGroupId"].ToString())
+                            };
+                        }
+                    }
+                }
+            }
+        }
         /// <summary>
         /// Fetches the member win loss.
         /// </summary>
@@ -246,6 +269,46 @@
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
                 DataSet dataSet = db.ExecuteDataSet(criteria);
+                if (dataSet != null
+                    && dataSet.Tables.Count > 0)
+                {
+                    DataTable currentTable = dataSet.Tables[0];
+                    foreach (DataRow row in currentTable.Rows)
+                    {
+                        listData.Add(mapObjectFunction(row));
+                    }
+
+                    if (dataSet.Tables.Count > 1)
+                    {
+                        DataTable secondTable = dataSet.Tables[1];
+                        foreach (DataRow row in secondTable.Rows)
+                        {
+                            outputList.Add(new TicketData
+                            {
+                                RefNo = Converter.ToString2(row["refno"]),
+                                BetTypeId = Converter.To<int>(row["bettype"]),
+                                Status = Converter.ToString2(row["status"]),
+                                Odds = Converter.To<decimal>(row["odds"]),
+                                Stake = Converter.To<decimal>(row["stake"]),
+                                BetTeam = Converter.ToString2(row["betteam"]),
+                                TransDesc = Converter.ToString2(row["TransDesc"])
+                            });
+                        }
+                    }
+                }
+            }
+
+            return listData;
+        }
+
+        public IList<S> Fetch<S>(dynamic criteria, bool isSiteDB, string AGIP, Func<DataRow, S> mapObjectFunction, ref List<ITicketData> outputList) where S : class
+        {
+            IList<S> listData = new List<S>();
+
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                Hashtable param = criteria.GetSpParams();
+                DataSet dataSet = isSiteDB ? db.ExecuteDataSetScaleoutDB(param, AGIP) : db.ExecuteDataSet(param);
                 if (dataSet != null
                     && dataSet.Tables.Count > 0)
                 {
