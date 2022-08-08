@@ -1,7 +1,9 @@
 ﻿@using System.Collections.Generic;
 @using Fanex.Tarus.Infrastructure.Extensions;
-@model IEnumerable<SelectListItem>
-
+@model List<SelectListItem>
+@{ 
+    Model.Insert(0, new SelectListItem { Text="Select site group", Value="-1" });
+}
 <link href="~/Views/Admin/SiteManagement/Styles/AddSite.css" rel="stylesheet" type="text/css" />
 <div class="main">
     <div class="maincontent">

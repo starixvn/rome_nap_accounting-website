@@ -36,6 +36,12 @@
             return;
         }
 
+        if (param.SiteDBGroupID === "-1") {
+            showAlertMessage("err-message", "Please select Site Group!!!", 1);
+            this.$errorMessage.removeClass("hide");
+            return;
+        }
+
         parent.BlockUI();
         $.ajax({
             type: "POST",

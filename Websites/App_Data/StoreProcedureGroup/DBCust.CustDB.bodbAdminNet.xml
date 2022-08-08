@@ -244,7 +244,7 @@
   </Function>
   <Function Name="Admin - Site manabement">
     <Setting Key="NAP_Admin_VerifySiteName" SpName="NAP_Admin_VerifySiteName" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_Admin_AddNewSite" SpName="NAP_Admin_AddNewSite" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_Admin_AddNewSite" SpName="NAP_Admin_AddNewSite_uat4" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="External - Admin">
     <Setting Key="Acc_GroupExtraPT_GroupByProduct_Upd" SpName="Acc_GroupExtraPT_GroupByProduct_Upd" DbName="DBCust.CustDB.bodbAdminNet" />
