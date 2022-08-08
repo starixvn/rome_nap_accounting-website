@@ -665,6 +665,17 @@ function GetProductCurrencyMatrix() {
         return;
     }
 
+
+    var isCheckAllProduct = $("#FilterProductMatrix").multiSelect("getUncheckItems").length === 0;
+    var isCheckAllCurrency = $("#FilterCurrency").multiSelect("getUncheckItems").length === 0;
+    if (isCheckAllProduct) {
+        request.ProductIds = "0";
+    }
+
+    if (isCheckAllCurrency) {
+        request.Currencies = "0";
+    }
+
     try { parent.BlockUI(); } catch (e) { }
     HideError();
     $.ajax({
