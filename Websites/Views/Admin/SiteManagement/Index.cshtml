@@ -1,4 +1,8 @@
-﻿<link href="~/Views/Admin/SiteManagement/Styles/AddSite.css" rel="stylesheet" type="text/css" />
+﻿@using System.Collections.Generic;
+@using Fanex.Tarus.Infrastructure.Extensions;
+@model IEnumerable<SelectListItem>
+
+<link href="~/Views/Admin/SiteManagement/Styles/AddSite.css" rel="stylesheet" type="text/css" />
 <div class="main">
     <div class="maincontent">
         <table border="0" cellpadding="0px" cellspacing="0px" class="maincontent_header">
@@ -38,9 +42,17 @@
                         <input id="txt-site-name" type="text" placeholder="Enter new site name" maxlength="50" />
                     </td>
                     <td>
+                        <div class="b lbl-site-name">
+                            Site DB Group
+                        </div>
+                    </td>
+                    <td>
+                        @Html.DropDownList("sel-site-db-group", Model, new { style = "width:180px" })
+                    </td>
+                    <td>
                         <input id="btn-add" type="button" class="btn" value="Add" name="btn-add" />
                     </td>
-            </table>
+</table>
         </div>
     </div>
 </div>

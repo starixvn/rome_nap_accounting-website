@@ -3,6 +3,7 @@
 
     var $rdoTypes;
     var $txtSiteName;
+    var $selSiteDBGroup;
     var $errorMessage;
 
     this.init = function () {
@@ -12,6 +13,7 @@
     this.cacheElements = function () {
         this.$rdoTypes = $(".rdo-type");
         this.$txtSiteName = $("#txt-site-name");
+        this.$selSiteDBGroup = $("#sel-site-db-group");
         this.$errorMessage = $("#err-message");
     };
     this.registerEvents = function () {
@@ -24,7 +26,8 @@
 
         var param = {
             Type: $(".rdo-type:checked").val(),
-            SiteName: $.trim(this.$txtSiteName.val())
+            SiteName: $.trim(this.$txtSiteName.val()),
+            SiteDBGroupID: this.$selSiteDBGroup.val()
         };
 
         if (param.SiteName === "") {
