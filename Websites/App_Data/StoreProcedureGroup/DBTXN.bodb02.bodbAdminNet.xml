@@ -4,8 +4,14 @@
     <Setting Key="Acc_CustomerSelForexAccount" SpName="Acc_CustomerSelForexAccount" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Transfer">
-    <Setting Key="Acc_FinanceCrossTransferMulUpd" SpName="Acc_FinanceCrossTransferMulUpd" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
-    <Setting Key="Acc_FinanceTransferMulUpd" SpName="Acc_FinanceTransferMulUpd" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
+    <Setting Key="Acc_FinanceCrossTransferMulUpd" SpName="Acc_FinanceCrossTransferMulUpd_xtest" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
+    <Setting Key="Acc_FinanceCrossTransferBettransIns" SpName="Acc_FinanceCrossTransferBettransIns_xtest" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
+    <Setting Key="SiteDB_Acc_FinanceCrossTransferBettransIns" SpName="SiteDB_Acc_FinanceCrossTransferBettransIns_xtest" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
+    <Setting Key="Acc_FinanceCrossTransferMulUpd_WrtieLog" SpName="Acc_FinanceCrossTransferMulUpd_WrtieLog_xtest" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
+    <Setting Key="Acc_FinanceTransferMulUpd" SpName="Acc_FinanceTransferMulUpd_xtest" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
+    <Setting Key="Acc_FinanceTransferBettransIns" SpName="Acc_FinanceTransferBettransIns_xtest" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
+    <Setting Key="SiteDB_Acc_FinanceTransferBettransIns" SpName="SiteDB_Acc_FinanceTransferBettransIns_xtest" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
+    <Setting Key="Acc_FinanceTransferMulUpd_WrtieLog" SpName="Acc_FinanceTransferMulUpd_WrtieLog_xtest" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
     <Setting Key="Acc_BettransInsTransaction" SpName="Acc_BettransInsTransaction_xtest" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
     <Setting Key="Acc_CustomerInsClearBalance" SpName="Acc_CustomerInsClearBalance" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
     <Setting Key="Acc_BettransInsTransferAllMembers" SpName="Acc_BettransInsTransferAllMembers" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
@@ -16,7 +22,7 @@
     <Setting Key="SiteDB_Acc_BettransInsCrossTransfer" SpName="SiteDB_Acc_BettransInsCrossTransfer_xtest" DbName="DBTXN.bodb02.bodbAdminNet" />
     <Setting Key="Acc_BettransInsTransfer" SpName="Acc_BettransInsTransfer_xtest" DbName="DBTXN.bodb02.bodbAdminNet" />
     <Setting Key="SiteDB_Acc_BettransInsTransfer" SpName="SiteDB_Acc_BettransInsTransfer_xtest" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="SiteDB_Acc_balance_revert" SpName="SiteDB_Acc_balance_revert_xtest" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="SiteDB_Acc_Transfer_Rollback" SpName="SiteDB_Acc_Transfer_Rollback_xtest" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Reset Winning">
     <Setting Key="Acc_ResetWinning_Ins" SpName="Acc_ResetWinning_Ins" DbName="DBTXN.bodb02.bodbAdminNet" />
