@@ -35,7 +35,7 @@
                                 </div>
                             </th>
                             <th>
-                                <div class="width120 height34 table-cell">
+                                <div class="width150 height34 table-cell">
                                     Trans.Time
                                 </div>
                             </th>
@@ -172,7 +172,7 @@
     <script type="text/javascript">
         window.rootUrl = '@Url.Content("~")';
         var totalRows = @Model.TotalRows;
-        var refno = @Request.QueryString["Refno"];
+        var refno = '@Request.QueryString["Refno"]';
         var custId = @Request.QueryString["CustId"];
         var transType = @Request.QueryString["TransType"];
         var sportType = @Request.QueryString["SportType"];

@@ -67,7 +67,7 @@
                             var highlightClass = (Request["originalTransId"] == "1" || Request["TransId"] == Model.TicketDetail.Ticket.TransId.ToString()) ? "event" : string.Empty;
                             <tr>
                                 <td class="@highlightClass">
-                                    <div class="table-cell c b width120">
+                                    <div class="table-cell c b width150">
                                         @Html.Raw(Model.TicketDetail.TransDateHtml)
                                     </div>
                                 </td>

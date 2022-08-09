@@ -210,7 +210,7 @@
     <script type="text/javascript" src="~/Areas/RNGCasino/Views/BetDetails/Scripts/JackpotDetails.js?ver=@WebSettings.Version"></script>
     <script type="text/javascript">
         window.rootUrl = '@Url.Content("~")';
-        var transId = @Request.QueryString["TransId"];
+        var transId = '@Request.QueryString["TransId"]';
         var custId = @Request.QueryString["CustId"];
         var betType = @Request.QueryString["BetType"];
         var title = '@Request.QueryString["Title"]';
