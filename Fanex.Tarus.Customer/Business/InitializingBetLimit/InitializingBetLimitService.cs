@@ -171,7 +171,7 @@
                             betLimitModel.NewMinBet == null ? string.Empty : string.Format("G29", betLimitModel.MaxBet),
                             betLimitModel.NewMinBet == null ? string.Empty : string.Format("G29", betLimitModel.MaxPerMatch),
                             betLimitModel.NewMinBet == null ? string.Empty : string.Format("G29", betLimitModel.MaxPerBall),
-                            betLimitModel.GameGroupId.ToString()
+                            betLimitModel.GameGroupId == null ? string.Empty : betLimitModel.GameGroupId.ToString()
                         };
                 for (int j = 0; j < rowValues.Length; j++)
                 {
@@ -234,7 +234,7 @@
                         MaxBet = row.GetCell(10) == null || string.IsNullOrWhiteSpace(row.GetCell(10).ToString()) ? (decimal?)null : decimal.Parse(row.GetCell(10).ToString()),
                         MaxPerMatch = row.GetCell(11) == null || string.IsNullOrWhiteSpace(row.GetCell(11).ToString()) ? (decimal?)null : decimal.Parse(row.GetCell(11).ToString()),
                         MaxPerBall = row.GetCell(12) == null || string.IsNullOrWhiteSpace(row.GetCell(12).ToString()) ? (decimal?)null : decimal.Parse(row.GetCell(12).ToString()),
-                        GameGroupId = row.GetCell(13) == null || string.IsNullOrWhiteSpace(row.GetCell(13).ToString()) ? 0 : int.Parse(row.GetCell(13).ToString()),
+                        GameGroupId = row.GetCell(13) == null || string.IsNullOrWhiteSpace(row.GetCell(13).ToString()) ? (int?)null : int.Parse(row.GetCell(13).ToString()),
                     };
 
                     betLimit.SportType = GetSportName(betLimit.SportTypeId);

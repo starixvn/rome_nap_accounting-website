@@ -193,7 +193,7 @@
                         NewMaxBet = Convert.IsDBNull(reader["newmaxbet"]) ? (decimal?)null : DataUtils.ToDecimal(reader["newmaxbet"]),
                         NewMaxPerMatch = Convert.IsDBNull(reader["newmaxpermatch"]) ? (decimal?)null : DataUtils.ToDecimal(reader["newmaxpermatch"]),
                         NewMaxPerBall = Convert.IsDBNull(reader["newmaxperball"]) ? (decimal?)null : DataUtils.ToDecimal(reader["newmaxperball"]),
-                        GameGroupId = DataUtils.ToInt32(reader["gamegroupid"])
+                        GameGroupId = Convert.IsDBNull(reader["gamegroupid"]) ? (int?)null : DataUtils.ToInt32(reader["gamegroupid"])
                     };
 
                     betLimits.Add(betLimitModel);

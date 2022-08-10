@@ -387,7 +387,7 @@ function RenderBetLimits(data) {
         row.Columns.push({ Name: 'NewMaxBet', Value: data.BetLimits[i].NewMaxBet === null ? "" : data.BetLimits[i].NewMaxBet });
         row.Columns.push({ Name: 'NewMaxPerMatch', Value: data.BetLimits[i].NewMaxPerMatch === null ? "" : data.BetLimits[i].NewMaxPerMatch });
         row.Columns.push({ Name: 'NewMaxPerBall', Value: data.BetLimits[i].NewMaxPerBall === null ? "" : data.BetLimits[i].NewMaxPerBall });
-        row.Columns.push({ Name: 'GameGroupId', Value: data.BetLimits[i].GameGroupId });
+        row.Columns.push({ Name: 'GameGroupId', Value: data.BetLimits[i].GameGroupId === null ? "" : data.BetLimits[i].GameGroupId });
         bodyRows.push(row);
     }
 
@@ -563,7 +563,7 @@ function RenderExcelGrid(BetLimits) {
         row.Columns.push({ Name: 'NewMaxBet', Value: BetLimits[i].NewMaxBet === null ? "" : BetLimits[i].NewMaxBet});
         row.Columns.push({ Name: 'NewMaxPerMatch', Value: BetLimits[i].NewMaxPerMatch === null ? "" : BetLimits[i].NewMaxPerMatch });
         row.Columns.push({ Name: 'NewMaxPerBall', Value: BetLimits[i].NewMaxPerBall === null ? "" : BetLimits[i].NewMaxPerBall });
-        row.Columns.push({ Name: 'GameGroupId', Value: BetLimits[i].GameGroupId });
+        row.Columns.push({ Name: 'GameGroupId', Value: BetLimits[i].GameGroupId === null ? "" : BetLimits[i].GameGroupId });
         bodyRows.push(row);
     }
 

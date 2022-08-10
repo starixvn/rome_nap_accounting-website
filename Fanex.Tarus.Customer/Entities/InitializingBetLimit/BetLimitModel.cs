@@ -34,6 +34,6 @@
 
         public decimal? NewMaxPerBall { get; set; }
 
-        public int GameGroupId { get; set; }
+        public int? GameGroupId { get; set; }
     }
 }
