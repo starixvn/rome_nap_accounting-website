@@ -7,9 +7,7 @@ namespace Fanex.Tarus.Customer.ViewModels.LicenseeDcsSetting
 {
     public sealed class PTViewModel : BaseSettingViewModel
     {
-        private readonly int[] ListporductSupportFourDecimal = new int[] { 16 };
-
-        public PTViewModel()
+         public PTViewModel()
         {
             SuperPT = new List<PTEntity>();
         }
@@ -22,7 +20,7 @@ namespace Fanex.Tarus.Customer.ViewModels.LicenseeDcsSetting
         {
             string value;
 
-            decimal step = ListporductSupportFourDecimal.Contains(ProductId) ? 0.0005M : 0.005M;
+            decimal step = 0.0005M;
 
             for (decimal i = 1; i >= 0; i -= step)
             {
@@ -31,5 +29,7 @@ namespace Fanex.Tarus.Customer.ViewModels.LicenseeDcsSetting
                 yield return new SelectListItem { Text = value, Value = value, Selected = pt == i };
             }
         }
+        
+        public List<AgentsExtraInfo> AgentsExtraInfo { get; set; }
     }
 }

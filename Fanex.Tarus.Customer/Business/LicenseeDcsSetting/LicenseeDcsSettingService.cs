@@ -23,9 +23,9 @@ namespace Fanex.Tarus.Customer.Business.LicenseeDcsSetting
 
         public IEnumerable<BaseModel> GetSupers(string site)
             => _settingDataAccess.GetSupers(new GetSuperCriteria(site));
-
-        public IEnumerable<BaseModel> GetAgents(int superId)
-            => _settingDataAccess.GetAgents(new GetAgentCriteria(superId));
+        
+        public IEnumerable<BaseModelExtra> GetAgents(string superIds)
+            => _settingDataAccess.GetAgents(new GetAgentCriteria(superIds));
 
         public IEnumerable<ProductSettingTypeEntity> GetProducts()
             => _settingDataAccess.GetProducts(new GetProductCriteria());
@@ -102,18 +102,19 @@ namespace Fanex.Tarus.Customer.Business.LicenseeDcsSetting
 
         public Result UpdatePositionTaking(
             int productId,
-            int superId,
             List<PTEntity> superPT,
             IEnumerable<int> agentIds,
+            List<AgentsExtraInfo> agentsExtraInfo,
             bool isAgentOnly,
             int userId,
             string ip)
         {
             Result result;
             IList<Result> errorResults = new List<Result>();
-
+            
             foreach (var agentId in agentIds)
             {
+                var superId = agentsExtraInfo.Find(e => e.Id == agentId).SuperID;
                 result = UpdatePositionTaking(productId, superId, superPT, agentId, isAgentOnly, userId, ip);
 
                 if (result.ErrorCode != 0)

@@ -51,6 +51,7 @@
             .on("click", function () {
                 var isAgentOnly = $("#agentOnlyCheckbox").is(":checked");
                 var selectedAgentIds = getSelectedAgents().AgentIds;
+                var agentsExtraInfo= getSelectedAgents().AgentsExtraInfo;
                 var pts = [];
                 var rows = $(".ptrow_js");
                 rows.each(function (index, option) {
@@ -68,7 +69,8 @@
                         });
                     }
                 });
-                var formData = JSON.stringify($.extend({ 'SuperPT': pts, 'AgentIds': selectedAgentIds, 'IsAgentOnly': isAgentOnly }, defaultParam));
+                
+                var formData = JSON.stringify($.extend({ 'SuperPT': pts, 'AgentIds': selectedAgentIds, 'IsAgentOnly': isAgentOnly ,'AgentsExtraInfo':agentsExtraInfo}, defaultParam));
                 updateButton_click(formData);
             });
 

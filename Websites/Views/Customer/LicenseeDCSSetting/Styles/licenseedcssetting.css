@@ -1,7 +1,7 @@
 ﻿.halfwidth { width: 50%; }
 .mT10 { margin-top: 10px; }
 .maincontent { width: 995px; }
-.filter_table td { padding: 4px 10px; }
+.filter_table td { padding: 4px 5px; }
 .checkbox_div { display: inline-block; position: relative; text-align: left;}
 .checkbox_div label { position: absolute; left: 22px; }
 .tblcollapse .title_1 th,
