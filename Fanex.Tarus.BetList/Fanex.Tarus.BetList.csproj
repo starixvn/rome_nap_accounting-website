@@ -178,8 +178,8 @@
     <Reference Include="Fanex.Logging.Extensions.Web, Version=1.0.6.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Logging.Extensions.Web.1.0.6\lib\net40\Fanex.Logging.Extensions.Web.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Module.RNGCasino, Version=2.0.1.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Module.RNGCasino.2.0.1.5\lib\net461\Fanex.Module.RNGCasino.dll</HintPath>
+    <Reference Include="Fanex.Module.RNGCasino, Version=2.0.1.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Module.RNGCasino.2.0.1.6-beta-02\lib\net461\Fanex.Module.RNGCasino.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.NAP.Framework, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
@@ -356,7 +356,7 @@
       <HintPath>..\packages\Sunplus.Accounting.Core.2.0.4.14-ScaleoutDB018\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.4.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.4.2-ScaleoutDB012\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
+      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.4.2-ScaleoutDB013\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.Entities, Version=2.0.1.8, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Accounting.Entities.2.0.1.9\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
@@ -513,8 +513,11 @@
     <Compile Include="Core\SessionManager.cs" />
     <Compile Include="Criteria\BetBuilder\GetResultBetBuilderDetailCriteria.cs" />
     <Compile Include="Criteria\BetListBetTradeDetailCriteria.cs" />
+    <Compile Include="Criteria\GetAGCasinoBetDetailsInSiteDBCriteria.cs" />
+    <Compile Include="Criteria\SiteDB_MixParlayDetailCriteria.cs" />
+    <Compile Include="Criteria\SiteDB_BetListByCustInfoByRefnoCriteria.cs" />
     <Compile Include="Criteria\BetListByCustInfoByRefnoCriteria.cs" />
-    <Compile Include="Criteria\BetListByCustInfoByRefnoU3Criteria.cs" />
+    <Compile Include="Criteria\SiteDB_BetListByCustInfoCriteria.cs" />
     <Compile Include="Criteria\BetListByCustInfoCriteria.cs" />
     <Compile Include="Criteria\BetListByCustInfoCriteria_Old.cs" />
     <Compile Include="Criteria\BetListByIP_OthersCriteria.cs" />
@@ -522,7 +525,7 @@
     <Compile Include="Criteria\BetListByIP_UsernameCriteria.cs" />
     <Compile Include="Criteria\BetListByProductCriteria.cs" />
     <Compile Include="Criteria\BetListByRefNoAdvancedCriteria.cs" />
-    <Compile Include="Criteria\BetListByRefNo_OldCriteria.cs" />
+    <Compile Include="Criteria\SiteDB_BetListByRefNoCriteria.cs" />
     <Compile Include="Criteria\BetListByRefNoCriteria.cs" />
     <Compile Include="Criteria\BetListGetSiteIdByCustIdCriteria.cs" />
     <Compile Include="Criteria\BetListStatement.cs" />

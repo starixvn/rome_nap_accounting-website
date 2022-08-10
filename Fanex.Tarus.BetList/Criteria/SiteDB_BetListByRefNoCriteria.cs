@@ -1,9 +1,10 @@
 ﻿namespace Fanex.Tarus.BetList.Criteria
 {
+    using Fanex.Tarus.BetList.Param;
+    using NAP.Framework.Data;
     using System;
-    using Fanex.NAP.Framework.Data;
 
-    public class BetListByRefNoOldCriteria : CriteriaBase
+    public class SiteDBBetListByRefNoCriteria : CriteriaBase
     {
         public int UserId { get; set; }
 
@@ -15,11 +16,9 @@
 
         public string Site { get; set; }
 
-        public DateTime BalanceUpDay { get; set; }
-
         public override string GetSettingKey()
-            => "Acc_BetList_SelByRefNo_Old";
-        
+            => "SiteDB_Acc_BetList_SelByRefNo";
+
         public override bool IsValid()
             => RefNo > 0 && !string.IsNullOrEmpty(Site);
     }

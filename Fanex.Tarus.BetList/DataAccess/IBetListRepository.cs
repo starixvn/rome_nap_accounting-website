@@ -12,7 +12,7 @@
 
     public interface IBetListRepository
     {
-        IList<S> Fetch<S>(dynamic criteria, bool isSiteDB, string AGIP, Func<DataRow, S> mapObjectFunction, ref List<ITicketData> outputList) where S : class;
+        IList<S> Fetch<S>(dynamic criteria, string AGIP, Func<DataRow, S> mapObjectFunction, ref List<ITicketData> outputList) where S : class;
 
         IList<S> FetchMemberWinLoss<S>(ICriteria criteria, Func<DataRow, S> mapObjectFunction, ref List<ITicketData> outputList) where S : class;
 
@@ -22,9 +22,13 @@
 
         IList<S> Fetch<S>(dynamic criteria, Func<DataRow, S> mapObjectFunction) where S : class;
 
+        IList<S> Fetch<S>(dynamic criteria, string AGIP, Func<DataRow, S> mapObjectFunction) where S : class;
+
         IList<S> Fetch<S>(dynamic criteria, Func<DataRow, S> mapObjectFunction, ref List<ITicketData> outputList) where S : class;
 
         KeyValuePair<dynamic, IList<S>> FetchWithOutputs<S>(dynamic criteria, Func<DataRow, S> mapObjectFunction, ref List<ITicketData> outputList) where S : class;
+
+        KeyValuePair<dynamic, IList<S>> FetchWithOutputs<S>(dynamic criteria, string AGIP, Func<DataRow, S> mapObjectFunction, ref List<ITicketData> outputList) where S : class;
 
         SystemParlayModel FetchSystemParlay(BetListSystemParlayByRefnoCriteria criteria);
 

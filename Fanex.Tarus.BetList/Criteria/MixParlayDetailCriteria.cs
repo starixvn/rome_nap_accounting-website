@@ -15,9 +15,8 @@
         [SpParam(SqlParamName = "custid")]
         public int CustId { get; set; }
 
-        public string GetSettingKey()
-        {
-            return "BetList_MixParlayBetsSel";
-        }
+        public bool ExcludeBettrans { get; set; }
+
+        public string GetSettingKey() => "BetList_MixParlayBetsSel";
     }
 }

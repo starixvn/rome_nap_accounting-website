@@ -59,7 +59,7 @@
                     {
                         var partern = $"<a id=\"hidden0\" [^>]*>(.+?)</a>";
                         var mainTicket = Regex.Match(choiceMainTicket, partern);
-                        if(mainTicket.Success)
+                        if (mainTicket.Success)
                         {
                             choiceHtml.Append(mainTicket.Value);
                         }
@@ -102,14 +102,7 @@
 
         private ParlayTicket GetMixParlayDetail(long transId, string refNo, decimal? hdp1, decimal? hdp2, string betCheck, string betTeam, long custId)
         {
-            var result = _betListService.GetMixParlayTickets(
-                new MixParlayDetailCriteria
-                {
-                    TransId = transId,
-                    RefNo = Converter.To<long>(refNo),
-                    CustId = (int)custId
-                });
-
+            var result = _betListService.GetMixParlayTickets(transId, Converter.To<long>(refNo), (int)custId);
             var combinationTypeComboNames = string.IsNullOrEmpty(betCheck) ?
                 string.Empty :
                 _betListService.GetCombinationTypeComboNames(betTeam, betCheck, hdp1.Value, hdp2.Value, result);

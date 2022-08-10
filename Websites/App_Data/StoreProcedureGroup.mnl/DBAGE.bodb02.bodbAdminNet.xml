@@ -36,9 +36,9 @@
     <Setting Key="SelMatchResultNumberGame" SpName="Age_BetList_SelMatchResultNumberGame" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="BetList_CustInfo_SystemParlay" SpName="Acc_BetlistCombinationParlay_ByTransID" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="BetList_MixParlayBetsSel" SpName="Acc_BetsSelBetCheckM_All" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="SiteDB_Acc_BetList_SelParlayDetail" SpName="SiteDB_Acc_BetList_SelParlayDetail" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="BetList_SelByRefNo" SpName="Acc_BetList_SelByRefNo" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="SiteDB_Acc_BetList_SelByRefNo" SpName="SiteDB_Acc_BetList_SelByRefNo" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_BetList_SelByRefNo_Old" SpName="Acc_BetList_SelByRefNo_Old" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="BetList_SelByProduct" SpName="Acc_BetList_SelByProduct" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="All_BetList_MatchResultGDSel" SpName="All_BetList_MatchResultGDSel" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="Acc_BetList_Match3rdResultSel" SpName="Acc_BetList_Match3rdResultSel" DbName="DBAGE.bodb02.bodbAdminNet" />
@@ -125,6 +125,34 @@
     <Setting Key="Acc_CustSetting_ProductNamesSelect" SpName="Acc_CustSetting_ProductNamesSelect" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
   </Function>
   <Function Name="RNG Betlist Detail">
+    <Setting Key="SiteDB_Acc_BetList_RNG_Detail" SpName="SiteDB_Acc_BetList_RNG_Detail" DbName="DBACC.bodb02.bodbAdminNet" Plain="0">
+      <Mapping DataField="transid" ObjectProperty="TransId" />
+      <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
+      <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
+      <Mapping DataField="transdate" ObjectProperty="TransDate" />
+      <Mapping DataField="winlostdate" ObjectProperty="WinlostDate" />
+      <Mapping DataField="status" ObjectProperty="Status" />
+      <Mapping DataField="statusid" ObjectProperty="StatusId" />
+      <Mapping DataField="odds" ObjectProperty="Odds" />
+      <Mapping DataField="stake" ObjectProperty="Stake" />
+      <Mapping DataField="actual_stake" ObjectProperty="ActualStake" />
+      <Mapping DataField="WinLost" ObjectProperty="WinLost" />
+      <Mapping DataField="ip" ObjectProperty="IP" />
+      <Mapping DataField="transdesc" ObjectProperty="TransDesc" />
+      <Mapping DataField="commission" ObjectProperty="PlayerComm" />
+      <Mapping DataField="awinlost" ObjectProperty="AgentWinlost" />
+      <Mapping DataField="apositiontaking" ObjectProperty="AgentPositionTaking" />
+      <Mapping DataField="comm" ObjectProperty="Comm" />
+      <Mapping DataField="discount" ObjectProperty="AgentDiscount" />
+      <Mapping DataField="mwinlost" ObjectProperty="MasterWinlost" />
+      <Mapping DataField="mpositiontaking" ObjectProperty="MasterPositionTaking" />
+      <Mapping DataField="acomm" ObjectProperty="AgentComm" />
+      <Mapping DataField="adiscount" ObjectProperty="MasterDiscount" />
+      <Mapping DataField="swinlost" ObjectProperty="SuperWinlost" />
+      <Mapping DataField="spositiontaking" ObjectProperty="SuperPositionTaking" />
+      <Mapping DataField="scomm" ObjectProperty="SuperComm" />
+      <Mapping DataField="sdiscount" ObjectProperty="SuperDiscount" />
+    </Setting>
     <Setting Key="Acc_BetList_RNG_Detail" SpName="Acc_BetList_RNG_Detail" DbName="DBACC.bodb02.bodbAdminNet" Plain="0">
       <Mapping DataField="transid" ObjectProperty="TransId" />
       <Mapping DataField="SportType" ObjectProperty="SportTypeId" />

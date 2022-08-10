@@ -2,7 +2,7 @@
 {
     using System;
     using Fanex.NAP.Framework.Data;
-    
+
     public class BetListByCustInfoByRefnoCriteria : CriteriaBase
     {
         public bool IsCN88 { get; set; }
@@ -15,14 +15,11 @@
 
         public DateTime BalanceUpDay { get; set; }
 
-        public override string GetSettingKey()
-        {
-            return "Acc_BetsSelBetList_ByTransID";
-        }
+        public bool ExcludeBettrans { get; set; }
 
-        public override bool IsValid()
-        {
-            return true;
-        }
+        public override string GetSettingKey()
+            => "Acc_BetsSelBetList_ByTransID";
+
+        public override bool IsValid() => true;
     }
 }

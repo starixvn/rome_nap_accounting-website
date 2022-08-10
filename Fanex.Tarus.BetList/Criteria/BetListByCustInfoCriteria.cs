@@ -29,6 +29,8 @@
 
         public string ErrMsg { get; set; }
 
+        public bool ExcludeBettrans { get; set; }
+
         public override string GetSettingKey()
             => "Acc_BetList_Mem";
 

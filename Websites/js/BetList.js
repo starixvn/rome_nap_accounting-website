@@ -473,7 +473,7 @@ function ViewBettradeDetails(transId, refNo) {
 
 function showVoidBridgeDetails(transId, winlossDate, custId, transType) {
     var voidbridgeParam = {
-        url: "VoidbridgeBetList/BetDetails",
+        url: "RNGCasinoBetList/BetDetails",
         title: "Macau Games Details",
         jsonParam: { TransId: transId, TransType: transType, CustId: custId, SportType: 212, PageSize: 500 },
         width: 1110,
@@ -486,7 +486,7 @@ function showVoidBridgeDetails(transId, winlossDate, custId, transType) {
 
 function showPPDetails(transId, winlossDate, custId, transType) {
     var voidbridgeParam = {
-        url: "VoidbridgeBetList/BetDetails",
+        url: "RNGCasinoBetList/BetDetails",
         title: "PP Details",
         jsonParam: { TransId: transId, TransType: transType, CustId: custId, SportType: 248, PageSize: 500 },
         width: 1110,
@@ -499,7 +499,7 @@ function showPPDetails(transId, winlossDate, custId, transType) {
 
 function showSGDetails(transId, winlossDate, custId, transType) {
     var voidbridgeParam = {
-        url: "VoidbridgeBetList/BetDetails",
+        url: "RNGCasinoBetList/BetDetails",
         title: "Spadegaming Details",
         jsonParam: { TransId: transId, TransType: transType, CustId: custId, SportType: 247, PageSize: 500 },
         width: 1110,
@@ -512,7 +512,7 @@ function showSGDetails(transId, winlossDate, custId, transType) {
 
 function showPGSoftDetails(transId, winlossDate, custId, transType) {
     var voidbridgeParam = {
-        url: "VoidbridgeBetList/BetDetails",
+        url: "RNGCasinoBetList/BetDetails",
         title: "PG Soft Details",
         jsonParam: { TransId: transId, TransType: transType, CustId: custId, SportType: 232, PageSize: 500 },
         width: 1110,
@@ -526,7 +526,7 @@ function showPGSoftDetails(transId, winlossDate, custId, transType) {
 
 function showVideoPokerGameDetails(transId, winlossDate, custId, transType) {
     var voidbridgeParam = {
-        url: "VoidbridgeBetList/BetDetails",
+        url: "RNGCasinoBetList/BetDetails",
         title: "Arcadia Gaming - Detail Tickets - " + winlossDate.split(" ")[0],
         jsonParam: { TransId: transId, TransType: transType, CustId: custId, SportType: 165, PageSize: 500 },
         width: 1110,

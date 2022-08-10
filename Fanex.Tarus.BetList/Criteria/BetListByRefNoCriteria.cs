@@ -12,17 +12,18 @@
 
         public DateTime MoveBetsDay { get; set; }
 
+        public DateTime BalanceUpDay { get; set; }
+
         public string Permission { get; set; }
 
         public string Site { get; set; }
 
-        [SpParam(Ignored = true)]
-        public int SiteDBGroupId { get; set; }
+        public bool ExcludeBettrans { get; set; }
 
         public override string GetSettingKey()
-            => SiteDBGroupId == 0 ? "BetList_SelByRefNo" : "SiteDB_Acc_BetList_SelByRefNo";
+            => "BetList_SelByRefNo";
 
         public override bool IsValid()
-            => RefNo > 0 && !string.IsNullOrEmpty(Site);
+            => RefNo > 0 && UserId > 0;
     }
 }

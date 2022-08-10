@@ -40,13 +40,7 @@ namespace Fanex.Tarus.BetList.Controllers
         public ActionResult GetMixParlayDetail(long transId, long refNo, decimal? hdp1, decimal? hdp2, string betCheck, string betTeam, int custId, string language = Language.Default)
         {
             SetCulture(language);
-            var result = _betListService.GetMixParlayTickets(
-                new MixParlayDetailCriteria
-                {
-                    TransId = transId,
-                    RefNo = refNo,
-                    CustId = custId
-                });
+            var result = _betListService.GetMixParlayTickets(transId, refNo, custId);
 
             ViewBag.CombinationTypeComboNames = string.IsNullOrEmpty(betCheck) ?
                 string.Empty :

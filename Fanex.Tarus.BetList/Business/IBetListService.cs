@@ -10,7 +10,7 @@
     {
         IEnumerable<SiteModel> GetAllSites();
 
-        IList<TicketDetail> GetMixParlayTickets(MixParlayDetailCriteria mixParlayDetailCriteria);
+        IList<TicketDetail> GetMixParlayTickets(long transId, long refNo, int custId);
 
         IList<TicketDetail> GetBetListByRefNo(BetListByRefNoParam param);
 
