@@ -3,7 +3,7 @@
   <Function Name="Customer - Third Party">
     <Setting Key="Acc_CustomerUpdDisableSuperLive" SpName="Acc_CustomerUpdDisableSuperLive" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
     <Setting Key="Acc_3rdProductSelSuperStatus" SpName="Acc_3rdProductSelSuperStatus" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
-    <Setting Key="Acc_3rdProductUpdSuperStatus" SpName="Acc_3rdProductUpdSuperStatus" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_3rdProductUpdSuperStatus" SpName="Acc_3rdProductUpdSuperStatus_UAT4" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
     <Setting Key="Customer_ViewPT_DepositPT" SpName="Acc_MT_GetDepositPT" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
     <Setting Key="Customer_ThirdParty_GetCustomerSetting" SpName="Acc_Dep_CustomerSelSetting" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
     <Setting Key="Customer_ThirdParty_UpdateCustomerSetting" SpName="Acc_Dep_CustomerUpdSetting" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
@@ -38,11 +38,11 @@
     </Function>
   </Function>
   <Function Name="Helper">
-    <Setting Key="Age_LoginAdminVerifyTicket" SpName="Age_LoginAdminVerifyTicket" DbName="DBCust.CustDB.bodbAdminNet" />      
+    <Setting Key="Age_LoginAdminVerifyTicket" SpName="Age_LoginAdminVerifyTicket" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Customer - Setting">
     <Setting Key="Acc_CustOverrideUpd" SpName="Acc_custoverrideUpd" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerInsMember_Ag" SpName="Acc_CustomerInsMember_Ag" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerInsMember_Ag" SpName="Acc_CustomerInsMember_Ag_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CustomerSetting_InsertSuper" SpName="Acc_CustomerInsMember_Com" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerInsMember_MAg" SpName="Acc_CustomerInsMember_MAg" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerInsMember_SAg" SpName="Acc_CustomerInsMember_SAg" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -100,7 +100,7 @@
     <Setting Key="Acc_CustomerUpdMatchLimit" SpName="Acc_CustomerUpdMatchLimit" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdSelectedBetting" SpName="Acc_CustomerUpdSelectedBetting" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdUserGroup" SpName="Acc_CustomerUserGroupWrapper_Upd" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdUserName" SpName="Acc_CustomerUpdUserName" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerUpdUserName" SpName="Acc_CustomerUpdUserName_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerList_SuspendInfoSel" SpName="Acc_CustomerList_SuspendInfoSel" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_Customer_SuspendInfoSel" SpName="Acc_Customer_SuspendInfoSel" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_Customer_SuspendInfoDetailSel" SpName="Acc_Customer_SuspendInfoDetailSel" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -120,10 +120,10 @@
     <Setting Key="DBA_ResetSecurityCode_Agent" SpName="Acc_CustomerUpdSecurityCode" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Customer - New Licensee">
-    <Setting Key="NewLicensee_AdNewMember" SpName="Acc_Dep_CustomerInsMember_Ag" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NewLicensee_AdNewSuper" SpName="Acc_Dep_CustomerInsMember_Com" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NewLicensee_AdNewAgent" SpName="Acc_Dep_CustomerInsMember_MAg" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NewLicensee_AdNewMaster" SpName="Acc_Dep_CustomerInsMember_SAg" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NewLicensee_AdNewMember" SpName="Acc_Dep_CustomerInsMember_Ag_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NewLicensee_AdNewSuper" SpName="Acc_Dep_CustomerInsMember_Com_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NewLicensee_AdNewAgent" SpName="Acc_Dep_CustomerInsMember_MAg_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NewLicensee_AdNewMaster" SpName="Acc_Dep_CustomerInsMember_SAg_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="DepositCust_UpdateMemberSetting" SpName="Acc_Dep_CustomerUpdMember_Ag" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="DepositCust_UpdateSuperSetting" SpName="Acc_Dep_CustomerUpdMember_Com" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="DepositCust_UpdateAgentSetting" SpName="Acc_Dep_CustomerUpdMember_MAg" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -244,7 +244,7 @@
   </Function>
   <Function Name="Admin - Site manabement">
     <Setting Key="NAP_Admin_VerifySiteName" SpName="NAP_Admin_VerifySiteName" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_Admin_AddNewSite" SpName="NAP_Admin_AddNewSite_uat4" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_Admin_AddNewSite" SpName="NAP_Admin_AddNewSite_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="External - Admin">
     <Setting Key="Acc_GroupExtraPT_GroupByProduct_Upd" SpName="Acc_GroupExtraPT_GroupByProduct_Upd" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -265,17 +265,14 @@
     <Setting Key="NAP_LM_LicenseeSuperList" SpName="NAP_LM_LicenseeSuperList" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerSelAgentListBySuper" SpName="Acc_CustomerSelAgentListBySuper" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_Dep_SelDCSProduct" SpName="Acc_Dep_SelDCSProduct" DbName="DBCust.CustDB.bodbAdminNet" />
-    
     <Function Name="Setting Type 1 - Position Taking">
       <Setting Key="Acc_Dep_CustSetting_PositionTakingSettingSelect" SpName="Acc_Dep_CustSetting_PositionTakingSettingSelect" DbName="DBCust.CustDB.bodbAdminNet" />
       <Setting Key="Acc_Dep_CustSetting_PositionTakingSettingUpd" SpName="Acc_Dep_CustSetting_PositionTakingSettingUpd" DbName="DBCust.CustDB.bodbAdminNet" />
     </Function>
-
     <Function Name="Setting Type 2 - Bet Setting with Max Per Match">
       <Setting Key="Acc_Dep_CustSetting_BetLimitFullLineSettingSelect" SpName="Acc_Dep_CustSetting_BetLimitFullLineSettingSelect" DbName="DBCust.CustDB.bodbAdminNet" />
       <Setting Key="Acc_Dep_CustSetting_BetLimitFullLineUpd" SpName="Acc_Dep_CustSetting_BetLimitFullLineUpd" DbName="DBCust.CustDB.bodbAdminNet" />
     </Function>
-
     <Function Name="Setting Type 10 - Bet Setting with Max Payout Per Match -- Setting Type 12 - Bet Setting with Max Per Ball">
       <Setting Key="Acc_Dep_CustSetting_Game_BetLimitFullLineSettingSelect" SpName="Acc_Dep_CustSetting_Game_BetLimitFullLineSettingSelect" DbName="DBCust.CustDB.bodbAdminNet" />
       <Setting Key="Acc_Dep_CustSetting_Game_BetLimitFullLineUpd" SpName="Acc_Dep_CustSetting_Game_BetLimitFullLineUpd" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -285,17 +282,14 @@
       <Setting Key="Acc_Dep_CustSetting_NewBetLimitFullLineSettingSelect" SpName="Acc_Dep_CustSetting_NewBetLimitFullLineSettingSelect" DbName="DBCust.CustDB.bodbAdminNet" />
       <Setting Key="Acc_Dep_CustSetting_NewBetLimitFullLineUpd" SpName="Acc_Dep_CustSetting_NewBetLimitFullLineUpd" DbName="DBCust.CustDB.bodbAdminNet" />
     </Function>
-
     <Function Name="Setting Type 4 - Product Status">
       <Setting Key="Acc_Dep_CustSetting_StatusSelect" SpName="Acc_Dep_CustSetting_StatusSelect" DbName="DBCust.CustDB.bodbAdminNet" />
       <Setting Key="Acc_Dep_CustSetting_StatusUpd" SpName="Acc_Dep_CustSetting_StatusUpd" DbName="DBCust.CustDB.bodbAdminNet" />
     </Function>
-
     <Function Name="Setting Type 0 - Global Stake Level">
       <Setting Key="Acc_Dep_CustSetting_GlobalStakeLevelSelect" SpName="Acc_Dep_CustSetting_GlobalStakeLevelSelect" DbName="DBCust.CustDB.bodbAdminNet" />
       <Setting Key="Acc_Dep_CustSetting_GlobalStakeLevelUpdate" SpName="Acc_Dep_CustSetting_GlobalStakeLevelUpdate" DbName="DBCust.CustDB.bodbAdminNet" />
     </Function>
-
     <Function Name="Setting Type 7, 8 - Stake Level, Stake Group Level">
       <Setting Key="Acc_Dep_CustSetting_StakeLevelSelect" SpName="Acc_Dep_CustSetting_StakeLevelSelect" DbName="DBCust.CustDB.bodbAdminNet" />
       <Setting Key="Acc_Dep_CustSetting_StakeLevelGroupSelect" SpName="Acc_Dep_CustSetting_StakeLevelGroupSelect" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -353,7 +347,7 @@
   </Function>
   <Function Name="Create Licensee Subsidiary">
     <Setting Key="Acc_Dep_CustomerGenLicenseeSubUsername" SpName="Acc_Dep_CustomerGenLicenseeSubUsername" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_Dep_CustomerInsLicenseeSubsidiary" SpName="Acc_Dep_CustomerInsLicenseeSubsidiary" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_Dep_CustomerInsLicenseeSubsidiary" SpName="Acc_Dep_CustomerInsLicenseeSubsidiary_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="CN88">
     <Setting Key="CS_CustomerStatusUpd" SpName="CS_CustomerStatusUpd" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -484,5 +478,8 @@
   </Function>
   <Function Name="Licensee Configuration > New Licensee Member">
     <Setting Key="Acc_Dep_CheckExistedAccount" SpName="Acc_Dep_CheckExistedAccount" DbName="DBCUST.CustDB.bodbAdminNet" />
+  </Function>
+  <Function Name="Helper">
+    <Setting Key="DBCUST_Acc_SiteDBConfigSel" SpName="Acc_SiteDBConfigSel_xtest" DbName="DBCUST.CustDB.bodbAdminNet" />
   </Function>
 </Functions>

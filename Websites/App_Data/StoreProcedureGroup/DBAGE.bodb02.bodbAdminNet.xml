@@ -33,11 +33,11 @@
     <Setting Key="Acc_BetList_SelMatchResult2" SpName="Acc_BetList_SelMatchResult2" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="Acc_BetList_HRSelMatchResult2" SpName="Acc_BetList_HRSelMatchResult2" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="SelMatchResultNumberGame" SpName="Age_BetList_SelMatchResultNumberGame" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="BetList_CustInfo_SystemParlay" SpName="Acc_BetlistCombinationParlay_ByTransID" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="BetList_MixParlayBetsSel" SpName="Acc_BetsSelBetCheckM_All" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="SiteDB_Acc_BetList_SelParlayDetail" SpName="SiteDB_Acc_BetList_SelParlayDetail" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="BetList_SelByRefNo" SpName="Acc_BetList_SelByRefNo_uat1" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="SiteDB_Acc_BetList_SelByRefNo" SpName="SiteDB_Acc_BetList_SelByRefNo_uat1" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="BetList_CustInfo_SystemParlay" SpName="Acc_BetlistCombinationParlay_ByTransID_UAT1" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="BetList_MixParlayBetsSel" SpName="Acc_BetsSelBetCheckM_All_UAT1" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="SiteDB_Acc_BetList_SelParlayDetail" SpName="SiteDB_Acc_BetList_SelParlayDetail_UAT1" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="BetList_SelByRefNo" SpName="Acc_BetList_SelByRefNo_UAT1" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="SiteDB_Acc_BetList_SelByRefNo" SpName="SiteDB_Acc_BetList_SelByRefNo_UAT1" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="BetList_SelByProduct" SpName="Acc_BetList_SelByProduct" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="All_BetList_MatchResultGDSel" SpName="All_BetList_MatchResultGDSel" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="Acc_BetList_Match3rdResultSel" SpName="Acc_BetList_Match3rdResultSel" DbName="DBAGE.bodb02.bodbAdminNet" />
@@ -53,7 +53,7 @@
     <Setting Key="Acc_CustomerSelBalanceCashInfo" SpName="Acc_CustomerSelBalanceCashInfo_xtest" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
   </Function>
   <Function Name="Admin - SMA Management">
-    <Setting Key="Acc_SiteSel_Credit" SpName="Acc_SiteSel_Credit" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_SiteSel_Credit" SpName="Acc_SiteSel_Credit_xtest" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Admin - Headline/External Group Mapping">
     <Setting Key="Acc_CurrencyList_Sel" SpName="Acc_CurrencyList_Sel" DbName="DBAGE.bodb02.bodbAdminNet" />
@@ -126,7 +126,7 @@
     <Setting Key="Acc_CustSetting_ProductNamesSelect" SpName="Acc_CustSetting_ProductNamesSelect" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
   </Function>
   <Function Name="RNG Betlist Detail">
-    <Setting Key="SiteDB_Acc_BetList_RNG_Detail" SpName="SiteDB_Acc_BetList_RNG_Detail" DbName="DBACC.bodb02.bodbAdminNet" Plain="0">
+    <Setting Key="SiteDB_Acc_BetList_RNG_Detail" SpName="SiteDB_Acc_BetList_RNG_Detail_UAT1" DbName="DBACC.bodb02.bodbAdminNet" Plain="0">
       <Mapping DataField="transid" ObjectProperty="TransId" />
       <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
       <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
@@ -154,7 +154,7 @@
       <Mapping DataField="scomm" ObjectProperty="SuperComm" />
       <Mapping DataField="sdiscount" ObjectProperty="SuperDiscount" />
     </Setting>
-    <Setting Key="Acc_BetList_RNG_Detail" SpName="Acc_BetList_RNG_Detail" DbName="DBACC.bodb02.bodbAdminNet" Plain="0">
+    <Setting Key="Acc_BetList_RNG_Detail" SpName="Acc_BetList_RNG_Detail_UAT1" DbName="DBACC.bodb02.bodbAdminNet" Plain="0">
       <Mapping DataField="transid" ObjectProperty="TransId" />
       <Mapping DataField="SportType" ObjectProperty="SportTypeId" />
       <Mapping DataField="BetType" ObjectProperty="BetTypeId" />
@@ -185,7 +185,7 @@
     <Setting Key="Acc_Result_GetSiteInfo_Mem" SpName="Acc_Result_GetSiteInfo_Mem" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
   </Function>
   <Function Name="AG Casino">
-    <Setting Key="BetList_AGCasino_BetDetails" SpName="Acc_BetList_LC_Detail" DbName="DBACC.bodb02.bodbAdminNet" Plain="0" />
+    <Setting Key="BetList_AGCasino_BetDetails" SpName="Acc_BetList_LC_Detail_UAT1" DbName="DBACC.bodb02.bodbAdminNet" Plain="0" />
     <Setting Key="Acc_BetList_G_Detail" SpName="Acc_BetList_G_Detail" DbName="DBACC.bodb02.bodbAdminNet" Plain="0" />
   </Function>
   <Function Name="Bet List - Result">
