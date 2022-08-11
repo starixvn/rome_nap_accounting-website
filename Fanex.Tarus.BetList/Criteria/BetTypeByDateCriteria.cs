@@ -28,6 +28,8 @@
 
         public DateTime BalanceUpDay { get; set; }
 
+        public bool ExcludeBettrans { get; set; }
+
         public override string GetSettingKey()
         {
             return _settingKey;

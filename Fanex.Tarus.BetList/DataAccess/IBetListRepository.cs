@@ -12,6 +12,10 @@
 
     public interface IBetListRepository
     {
+        IList<BetType> GetBetTypeByDate(BetTypeByDateCriteria criteria);
+
+        IList<BetType> GetBetTypeByDate(BetTypeByDateInSiteDBCriteria criteria, string AGIP);
+
         IList<S> Fetch<S>(dynamic criteria, string AGIP, Func<DataRow, S> mapObjectFunction, ref List<ITicketData> outputList) where S : class;
 
         IList<S> FetchMemberWinLoss<S>(ICriteria criteria, Func<DataRow, S> mapObjectFunction, ref List<ITicketData> outputList) where S : class;

@@ -19,6 +19,54 @@
 
     public class BetListRepository : IBetListRepository
     {
+        public IList<BetType> GetBetTypeByDate(BetTypeByDateCriteria criteria)
+        {
+            var betTypeList = new List<BetType>();
+
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                DataSet dataSet = db.ExecuteDataSet(criteria);
+                if (dataSet != null &&
+                    dataSet.Tables.Count > 0)
+                {
+                    foreach (DataRow r in dataSet.Tables[0].Rows)
+                    {
+                        betTypeList.Add(new BetType
+                        {
+                            BetTypeID = Converter.To<int>(r["typeid"]),
+                            BetTypeName = r["typenamee"].ToString()
+                        });
+                    }
+                }
+            }
+
+            return betTypeList;
+        }
+
+        public IList<BetType> GetBetTypeByDate(BetTypeByDateInSiteDBCriteria criteria, string AGIP)
+        {
+            var betTypeList = new List<BetType>();
+
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                DataSet dataSet = db.ExecuteDataSetScaleoutDB(criteria.GetSpParams(), AGIP);
+                if (dataSet != null &&
+                    dataSet.Tables.Count > 0)
+                {
+                    foreach (DataRow r in dataSet.Tables[0].Rows)
+                    {
+                        betTypeList.Add(new BetType
+                        {
+                            BetTypeID = Converter.To<int>(r["typeid"]),
+                            BetTypeName = r["typenamee"].ToString()
+                        });
+                    }
+                }
+            }
+
+            return betTypeList;
+        }
+
         public IEnumerable<SiteModel> GetAllSites()
         {
             using (ObjectDb objDB = new ObjectDb("CustomerSetting_SiteSel"))

@@ -513,6 +513,7 @@
     <Compile Include="Core\SessionManager.cs" />
     <Compile Include="Criteria\BetBuilder\GetResultBetBuilderDetailCriteria.cs" />
     <Compile Include="Criteria\BetListBetTradeDetailCriteria.cs" />
+    <Compile Include="Criteria\BetTypeByDateInSiteDBCriteria.cs" />
     <Compile Include="Criteria\GetAGCasinoBetDetailsInSiteDBCriteria.cs" />
     <Compile Include="Criteria\SiteDB_MixParlayDetailCriteria.cs" />
     <Compile Include="Criteria\SiteDB_BetListByCustInfoByRefnoCriteria.cs" />

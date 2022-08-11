@@ -349,54 +349,39 @@ namespace Fanex.Tarus.BetList.Business
             });
         }
 
-        /// <summary>
-        /// Gets bet types by date after change date range.
-        /// </summary>
-        /// <param name="criteria">The criteria.</param>
-        /// <returns>Bet types by date after change date range.</returns>
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
-        public IList<BetType> GetBetTypeByDate(BetTypeByDateCriteria criteria)
+        public IList<BetType> GetBetTypeByDate(BetTypeByDateCriteria mainCriteria)
         {
-            bool isLimitForU3 = (AppSession.IsU3Account && !AppSession.IsU3SpecialAccount)
-            || (AppSession.IsU3SpecialAccount && !IsU3SpecialCustomers(criteria.CustId));
-
-            if (isLimitForU3)
+            var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(mainCriteria.CustId);
+            if (siteDB != null)
             {
-                criteria.SetSettingKeyForU3();
-            }
-
-            IList<BetType> betTypeList = new List<BetType>();
-
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
-            {
-                DataSet dataSet = db.ExecuteDataSet(criteria);
-                if (dataSet != null &&
-                    dataSet.Tables.Count > 0)
+                IList<BetType> siteDBTickets = new List<BetType>();
+                if (siteDB.IsSiteDB)
                 {
-                    foreach (DataRow r in dataSet.Tables[0].Rows)
+                    var siteDBCriteria = new BetTypeByDateInSiteDBCriteria
                     {
-                        string betTypeNameTmp = r["typenamee"].ToString();
-                        int betTypeIdTmp = Converter.To<int>(r["typeid"]);
-                        betTypeNameTmp += GetSportNameSuffixByBetType(betTypeIdTmp);
-                        betTypeList.Add(new BetType
-                        {
-                            BetTypeID = betTypeIdTmp,
-                            BetTypeName = betTypeNameTmp
-                        });
-                    }
+                        CustId = mainCriteria.CustId,
+                        FromDate = mainCriteria.FromDate,
+                        ToDate = mainCriteria.ToDate
+                    };
+                    siteDBTickets = _betListRepository.GetBetTypeByDate(siteDBCriteria, siteDB.AGIP);
                 }
-            }
 
-            var all = new BetType
-            {
-                BetTypeName = BetListResources.All,
-                BetTypeID = 0
-            };
+                var mainDBTickets = _betListRepository.GetBetTypeByDate(mainCriteria);
+                var tickets = siteDBTickets.Concat(mainDBTickets);
+                foreach (var ticket in tickets)
+                {
+                    ticket.BetTypeName += GetSportNameSuffixByBetType(ticket.BetTypeID);
+                }
 
-            betTypeList.Insert(0, all);
-            if (betTypeList != null)
-            {
-                return betTypeList;
+                if (tickets.Any())
+                {
+                    tickets.ToList().Insert(0, new BetType
+                    {
+                        BetTypeName = BetListResources.All,
+                        BetTypeID = 0
+                    });
+                    return tickets.ToList();
+                }
             }
 
             return new List<BetType>();
