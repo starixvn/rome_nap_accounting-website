@@ -9,11 +9,6 @@
 };
 var cachedVendor = [];
 
-function GetInitVendor() {
-    RenderSportTypes();
-    RenderFilterBettype();
-}
-
 function SearchVendor(pageindex, pagesize) {
     parent.BlockUI();
     filterVDData.VendorId = $('#txtVendorID').val();
@@ -307,3 +302,8 @@ function RenderBettypeOptions(bettypes) {
         width: '200px'
     });
 }
+
+$(document).ready(function(){
+    RenderSportTypes();
+    RenderFilterBettype();
+});

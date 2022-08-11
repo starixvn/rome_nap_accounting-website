@@ -163,14 +163,14 @@
                             betLimitModel.Site,
                             betLimitModel.CreditCurrency,
                             betLimitModel.DepositCurrency,
-                            betLimitModel.NewMinBet == null ? string.Empty : string.Format("G29", betLimitModel.NewMinBet),
-                            betLimitModel.NewMinBet == null ? string.Empty : string.Format("G29", betLimitModel.NewMaxBet),
-                            betLimitModel.NewMinBet == null ? string.Empty : string.Format("G29", betLimitModel.NewMaxPerMatch),
-                            betLimitModel.NewMinBet == null ? string.Empty : string.Format("G29", betLimitModel.NewMaxPerBall),
-                            betLimitModel.NewMinBet == null ? string.Empty : string.Format("G29", betLimitModel.MinBet),
-                            betLimitModel.NewMinBet == null ? string.Empty : string.Format("G29", betLimitModel.MaxBet),
-                            betLimitModel.NewMinBet == null ? string.Empty : string.Format("G29", betLimitModel.MaxPerMatch),
-                            betLimitModel.NewMinBet == null ? string.Empty : string.Format("G29", betLimitModel.MaxPerBall),
+                            betLimitModel.NewMinBet == null ? string.Empty : betLimitModel.NewMinBet?.ToString("G29"),
+                            betLimitModel.NewMinBet == null ? string.Empty : betLimitModel.NewMaxBet?.ToString("G29"),
+                            betLimitModel.NewMinBet == null ? string.Empty : betLimitModel.NewMaxPerMatch?.ToString("G29"),
+                            betLimitModel.NewMinBet == null ? string.Empty : betLimitModel.NewMaxPerBall?.ToString("G29"),
+                            betLimitModel.NewMinBet == null ? string.Empty : betLimitModel.MinBet?.ToString("G29"),
+                            betLimitModel.NewMinBet == null ? string.Empty : betLimitModel.MaxBet?.ToString("G29"),
+                            betLimitModel.NewMinBet == null ? string.Empty : betLimitModel.MaxPerMatch?.ToString("G29"),
+                            betLimitModel.NewMinBet == null ? string.Empty : betLimitModel.MaxPerBall?.ToString("G29"),
                             betLimitModel.GameGroupId == null ? string.Empty : betLimitModel.GameGroupId.ToString()
                         };
                 for (int j = 0; j < rowValues.Length; j++)

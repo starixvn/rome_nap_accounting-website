@@ -284,7 +284,7 @@ function RenderMultiSelect(id, checkAll = true) {
 
 
     $('#' + id).multiSelect({
-        minWidth: 255,
+        minWidth: 252,
         maxHeight: 450,
         shadow: true,
         showHeader: true,

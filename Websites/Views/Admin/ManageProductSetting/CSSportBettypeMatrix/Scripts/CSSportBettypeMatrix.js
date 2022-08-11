@@ -262,11 +262,14 @@ function RenderBetTypeGroups(betTypeGroupId) {
 
 $(document).ready(function () {
     RenderMultiSelect('ddlCSSBMProductId');
-    $("#CSSBMProductId").select2();
-    $("#CSSBMRefTable").select2();
-    $("#CSSBMEventType").select2();
+    $("#ddlCSSBMRefTable").select2({ width: "155px" });
+    $("#ddlCSSBMEventType").select2({ width: "155px" });
     $("#CSSBMProductId").change(function () {
         var productId = $('#CSSBMProductId').val();
         RenderSportTypeGroups(productId);
     });
+
+    $("#CSSBMProductId").select2({ width: "182px" });
+    $("#CSSBMEventType").select2({ width: "182px" });
+    $("#CSSBMRefTable").select2({ width: "182px" });
 });

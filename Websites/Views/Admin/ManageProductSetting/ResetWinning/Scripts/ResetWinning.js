@@ -548,4 +548,8 @@ function DeleteDWLListExtraPT(index) {
 
 $(document).ready(function () {
     UpdateResetWinningSampleUrl();
+    $("#txtDWLListIsDeleted").select2({ width: "138px" });
+    $("#txtDWLListExtraIsDisabled").select2({ width: "138px" });
+    $("#txtDWLListExtraTestIsDisabled").select2({ width: "138px" });
+    $("#txtDWLListTestIsDeleted").select2({ width: "138px" });
 });

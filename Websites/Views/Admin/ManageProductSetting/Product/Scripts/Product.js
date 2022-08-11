@@ -180,3 +180,9 @@ function SetupCalendar() {
     });
     cal.selection.set(selectionDate);
 }
+
+$(document).ready(function () {
+    $("#GroupType").select2({ width: "184px" });
+    $("#CasinoType").select2({ width: "184px" });
+    $("#BalanceType").select2({ width: "184px" });
+});

@@ -121,7 +121,7 @@ function EditSBM(index) {
         title: 'Edit Sport Bettype Matrix',
         modal: true,
         width: 606,
-        height: 'auto',
+        height: 'auto'
     });
 }
 
@@ -207,7 +207,7 @@ function RenderMultiSelect(id) {
 
 
     $('#' + id).multiSelect({
-        minWidth: 255,
+        minWidth: 252,
         maxHeight: 450,
         shadow: true,
         showHeader: true,
@@ -222,7 +222,10 @@ function RenderMultiSelect(id) {
 
 $(document).ready(function () {
     RenderMultiSelect('ddlSBMProductId');
-    $("#SBMProductId").select2();
-    $("#SBMEventType").select2();
-    $("#SBMRefTable").select2();
+    $("#ddlSBMEventType").select2({ width: "155px" });
+    $("#ddlSBMRefTable").select2({ width: "155px" });
+
+    $("#SBMProductId").select2({ width: "182px" });
+    $("#SBMEventType").select2({ width: "182px" });
+    $("#SBMRefTable").select2({ width: "182px" });
 });
