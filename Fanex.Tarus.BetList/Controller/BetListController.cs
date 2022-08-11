@@ -61,7 +61,7 @@ namespace Fanex.Tarus.BetList.Controllers
             IList<TicketDetail> result = new List<TicketDetail>();
             var permissions = MangeAccountInfoPermissionBuilder.MapToPermissionParameter(AppSession.AccId, PolicyConst.Read).ToList();
 
-            if (permissions.Count > 0 && BetListHelper.IsNumeric(param.RefNo.Trim()))
+            if (permissions.Count > 0 && !string.IsNullOrEmpty(param.RefNo) && BetListHelper.IsNumeric(param.RefNo.Trim()))
             {
                 SetCulture(param.Language);
                 param.Permission = string.Join(",", permissions);

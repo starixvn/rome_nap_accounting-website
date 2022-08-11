@@ -253,7 +253,7 @@ namespace Fanex.Tarus.BetList.Business
 
                 var mainCriteria = new BetListByRefNoCriteria
                 {
-                    UserId = AppSession.AccId,
+                    UserId = param.UserId,
                     RefNo = Converter.To<long>(param.RefNo),
                     MoveBetsDay = ReportService.BalanceUp.MoveBetsDay,
                     BalanceUpDay = ReportService.BalanceUp.BalanceUpDay,

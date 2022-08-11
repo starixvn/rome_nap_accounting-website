@@ -36,7 +36,7 @@
 
         public ActionResult GetBetListByRefNo(BetListByRefNoParam param)
         {
-            if (param != null && BetListHelper.IsNumeric(param.RefNo.Trim()))
+            if (param != null && !string.IsNullOrEmpty(param.RefNo) && BetListHelper.IsNumeric(param.RefNo.Trim()))
             {
                 param.UserId = Converter.To<int>(ConfigurationManager.AppSettings["BetListApi_UserId"]);
                 var result = _betListService.GetBetListByRefNo(param);
