@@ -451,11 +451,15 @@ namespace Sunplus.Accounting.Business.ExChangeRate
             trxDB.EditBaseRate_UpdateExchangeTablesInBackground();
 
             if (allSite != null)
-            {   
+            {
                 foreach (var db in allSite.Where(i => i.IsSiteDB))
                 {
                     var prepareTables = new UpdateExChangeRate(db.AGIP, db.IsSiteDB);
-                    prepareTables.Update();
+                    result = prepareTables.Update();
+                    if (result.ErrorCode != 0)
+                    {
+                        return result;
+                    }
                 }
             }
 
@@ -589,13 +593,15 @@ namespace Sunplus.Accounting.Business.ExChangeRate
 
         public bool IsSiteDB { get; }
 
-        public void Update()
+        public Result Update()
         {
             var result = EditBaseRate_PrepareUpdateTables();
-            if (result.ErrorCode != 0)
+            if (result.ErrorCode == 0)
             {
                 EditBaseRate_UpdateExchangeTablesInBackground();
             }
+
+            return result;
         }
 
         public Result EditBaseRate_PrepareUpdateTables()
