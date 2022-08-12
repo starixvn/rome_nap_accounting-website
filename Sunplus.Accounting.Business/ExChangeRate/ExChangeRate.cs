@@ -642,13 +642,17 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 LogService.Info($"[Edit Base Rate] - 1st time - Updated table: {tableName} - AGIP: {AGIP}");
             }
 
-            Thread.Sleep(5000);
-            foreach (string tableName in listTableNames)
+            if(!IsSiteDB)
             {
-                LogService.Info($"[Edit Base Rate] - 2nd time - Updating table : {tableName} - AGIP: {AGIP}");
-                this.EditBaseRate_UpdateExchangeTable(tableName);
-                LogService.Info($"[Edit Base Rate] - 2nd time - Updated table: {tableName} - AGIP: {AGIP}");
+                Thread.Sleep(5000);
+                foreach (string tableName in listTableNames)
+                {
+                    LogService.Info($"[Edit Base Rate] - 2nd time - Updating table : {tableName} - AGIP: {AGIP}");
+                    this.EditBaseRate_UpdateExchangeTable(tableName);
+                    LogService.Info($"[Edit Base Rate] - 2nd time - Updated table: {tableName} - AGIP: {AGIP}");
+                }
             }
+            
             LogService.Info($"[Edit Base Rate] - End update Tables - AGIP: {AGIP}");
         }
 
