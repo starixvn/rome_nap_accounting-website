@@ -41,6 +41,8 @@
     <Setting Key="Acc_ExchangeRateSelHistory" SpName="Acc_ExchangeRateSelHistory" DbName="DBTXN.bodb02.bodbAdminNet" />
     <Setting Key="Acc_ChangeRate_Prepare_Upd" SpName="Acc_ChangeRate_Prepare_Upd" DbName="DBTXN.bodb02.bodbAdminNet" />
     <Setting Key="Acc_ChangeRate_Main_Upd" SpName="Acc_ChangeRate_Main_Upd" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="SiteDB1_Acc_ChangeRate_Prepare_Upd" SpName="Acc_ChangeRate_Prepare_Upd_xtest" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="SiteDB1_Acc_ChangeRate_Main_Upd" SpName="Acc_ChangeRate_Main_Upd_xtest" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="CN88">
     <Setting Key="CS_Member_TotalBetStake_Sel" SpName="CS_Member_TotalBetStake_Sel" DbName="DBTXN.BODB02.bodbAdminNet"  Plain="0" />
