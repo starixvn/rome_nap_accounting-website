@@ -12,6 +12,7 @@ public partial class TestScaleoutDB : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+    
         if (this.IsPostBack)
         {
             int creditCustid = 1176070;
