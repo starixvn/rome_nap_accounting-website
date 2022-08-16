@@ -357,7 +357,8 @@ namespace Fanex.Tarus.BetList.Business
             if (siteDB != null)
             {
                 IList<BetType> siteDBTickets = new List<BetType>();
-                if (siteDB.IsSiteDB)
+                IList<BetType> mainDBTickets = new List<BetType>();
+                if (siteDB.IsSiteDB && mainCriteria.ToDate > ReportService.BalanceUp.MoveBetsDay)
                 {
                     var siteDBCriteria = new BetTypeByDateInSiteDBCriteria
                     {
@@ -368,7 +369,13 @@ namespace Fanex.Tarus.BetList.Business
                     siteDBTickets = _betListRepository.GetBetTypeByDate(siteDBCriteria, siteDB.AGIP);
                 }
 
-                var mainDBTickets = _betListRepository.GetBetTypeByDate(mainCriteria);
+                if (!siteDB.IsSiteDB ||
+                    (siteDB.IsSiteDB && mainCriteria.FromDate <= ReportService.BalanceUp.MoveBetsDay))
+                {
+                    mainCriteria.ExcludeBettrans = siteDB.IsSiteDB;
+                    mainDBTickets = _betListRepository.GetBetTypeByDate(mainCriteria);
+                }
+
                 var tickets = siteDBTickets.Concat(mainDBTickets);
                 foreach (var ticket in tickets)
                 {
@@ -404,7 +411,8 @@ namespace Fanex.Tarus.BetList.Business
             {
                 var ticketData = new List<ITicketData>();
                 var siteDBTickets = new KeyValuePair<dynamic, IList<TicketDetail>>(null, new List<TicketDetail>());
-                if (siteDB.IsSiteDB)
+                var mainTickets = new KeyValuePair<dynamic, IList<TicketDetail>>(null, new List<TicketDetail>());
+                if (siteDB.IsSiteDB && toDate > ReportService.BalanceUp.MoveBetsDay)
                 {
                     var siteDBCriteria = new SiteDBBetListByCustInfoCriteria
                     {
@@ -424,26 +432,29 @@ namespace Fanex.Tarus.BetList.Business
                         return string.Format(BetListResources.BetlistMaxTotalRowMessageError, siteDBTickets.Key.maxTotalRow, ReportService.BetlistMaxTotalRow);
                     }
                 }
-
-                var mainCriteria = new BetListByCustInfoCriteria
+                if (!siteDB.IsSiteDB ||
+                    (siteDB.IsSiteDB && fromDate <= ReportService.BalanceUp.MoveBetsDay))
                 {
-                    CustId = custId,
-                    FromDate = fromDate,
-                    ToDate = toDate,
-                    BetType = betType,
-                    MoveBetsDay = ReportService.BalanceUp.MoveBetsDay,
-                    BalanceUpDay = ReportService.BalanceUp.BalanceUpDay,
-                    StatusIdList = statusIds,
-                    ErrCode = 0,
-                    ErrMsg = string.Empty,
-                    MaxTotalRow = ReportService.BetlistMaxTotalRow,
-                    ExcludeBettrans = siteDB.IsSiteDB
-                };
-                var mainTickets = _betListRepository.FetchWithOutputs<TicketDetail>(mainCriteria, mapTicketObjectFunction, ref ticketData);
-                if (mainTickets.Key.errCode != 0)
-                {
-                    return string.Format(BetListResources.BetlistMaxTotalRowMessageError, mainTickets.Key.maxTotalRow, ReportService.BetlistMaxTotalRow);
-                }
+                    var mainCriteria = new BetListByCustInfoCriteria
+                    {
+                        CustId = custId,
+                        FromDate = fromDate,
+                        ToDate = toDate,
+                        BetType = betType,
+                        MoveBetsDay = ReportService.BalanceUp.MoveBetsDay,
+                        BalanceUpDay = ReportService.BalanceUp.BalanceUpDay,
+                        StatusIdList = statusIds,
+                        ErrCode = 0,
+                        ErrMsg = string.Empty,
+                        MaxTotalRow = ReportService.BetlistMaxTotalRow,
+                        ExcludeBettrans = siteDB.IsSiteDB
+                    };
+                    mainTickets = _betListRepository.FetchWithOutputs<TicketDetail>(mainCriteria, mapTicketObjectFunction, ref ticketData);
+                    if (mainTickets.Key.errCode != 0)
+                    {
+                        return string.Format(BetListResources.BetlistMaxTotalRowMessageError, mainTickets.Key.maxTotalRow, ReportService.BetlistMaxTotalRow);
+                    }
+                }                
 
                 var tickets = siteDBTickets.Value.Concat(mainTickets.Value).OrderBy(x => x.Ticket.TransDate).ToList();
                 quantity = tickets.Count;
