@@ -36,12 +36,9 @@ public partial class BetList_CombinationMPDetail : RequiredAuthorizationPage
         var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(custid);
         if (siteDB != null)
         {
-            if (siteDB.IsSiteDB)
-            {
-                ds = siteDB.IsSiteDB ?
-                    Betlist.SiteDB_BetList_SelDetailCombinationMP(custid, refno, transid, betid, movebetday, balanceupday, ref outStanding) :
-                    Betlist.BetList_SelDetailCombinationMP(custid, refno, transid, betid, movebetday, balanceupday, ref outStanding);
-            }
+            ds = siteDB.IsSiteDB ?
+                Betlist.SiteDB_BetList_SelDetailCombinationMP(custid, refno, transid, betid, movebetday, balanceupday, ref outStanding) :
+                Betlist.BetList_SelDetailCombinationMP(custid, refno, transid, betid, movebetday, balanceupday, ref outStanding);
         }
 
         if (ds != null && ds.Tables.Count != 2)
