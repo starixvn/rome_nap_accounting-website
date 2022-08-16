@@ -164,13 +164,13 @@
                             betLimitModel.CreditCurrency,
                             betLimitModel.DepositCurrency,
                             betLimitModel.NewMinBet == null ? string.Empty : betLimitModel.NewMinBet?.ToString("G29"),
-                            betLimitModel.NewMinBet == null ? string.Empty : betLimitModel.NewMaxBet?.ToString("G29"),
-                            betLimitModel.NewMinBet == null ? string.Empty : betLimitModel.NewMaxPerMatch?.ToString("G29"),
-                            betLimitModel.NewMinBet == null ? string.Empty : betLimitModel.NewMaxPerBall?.ToString("G29"),
-                            betLimitModel.NewMinBet == null ? string.Empty : betLimitModel.MinBet?.ToString("G29"),
-                            betLimitModel.NewMinBet == null ? string.Empty : betLimitModel.MaxBet?.ToString("G29"),
-                            betLimitModel.NewMinBet == null ? string.Empty : betLimitModel.MaxPerMatch?.ToString("G29"),
-                            betLimitModel.NewMinBet == null ? string.Empty : betLimitModel.MaxPerBall?.ToString("G29"),
+                            betLimitModel.NewMaxBet == null ? string.Empty : betLimitModel.NewMaxBet?.ToString("G29"),
+                            betLimitModel.NewMaxPerMatch == null ? string.Empty : betLimitModel.NewMaxPerMatch?.ToString("G29"),
+                            betLimitModel.NewMaxPerBall == null ? string.Empty : betLimitModel.NewMaxPerBall?.ToString("G29"),
+                            betLimitModel.MinBet == null ? string.Empty : betLimitModel.MinBet?.ToString("G29"),
+                            betLimitModel.MaxBet == null ? string.Empty : betLimitModel.MaxBet?.ToString("G29"),
+                            betLimitModel.MaxPerMatch == null ? string.Empty : betLimitModel.MaxPerMatch?.ToString("G29"),
+                            betLimitModel.MaxPerBall == null ? string.Empty : betLimitModel.MaxPerBall?.ToString("G29"),
                             betLimitModel.GameGroupId == null ? string.Empty : betLimitModel.GameGroupId.ToString()
                         };
                 for (int j = 0; j < rowValues.Length; j++)
