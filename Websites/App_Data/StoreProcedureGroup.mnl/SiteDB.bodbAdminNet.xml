@@ -3,4 +3,9 @@
   <Function Name="Statement">   
     <Setting Key="SiteDB1_Statement_Report_GetList" SpName="SiteDB_Acc_StatementSel_xtest" DbName="DBACC.bodb02.bodbAdminNet" Plain="0" />   
   </Function>
+  <Function Name="Ex.rate">
+    <Setting Key="SiteDB1_Acc_ChangeRate_Prepare_Upd" SpName="Acc_ChangeRate_Prepare_Upd" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="SiteDB1_Acc_ChangeRate_Main_Upd" SpName="Acc_ChangeRate_Main_Upd" DbName="DBTXN.bodb02.bodbAdminNet" />
+  </Function>
+
 </Functions>

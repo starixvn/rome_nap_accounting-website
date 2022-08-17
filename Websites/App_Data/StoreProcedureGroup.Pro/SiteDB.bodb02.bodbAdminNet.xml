@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Functions SiteId="104" SiteName="NAP - Accounting">
-  <Function Name="Ex.rate">
-    <Setting Key="SiteDB1_Acc_ChangeRate_Prepare_Upd" SpName="Acc_ChangeRate_Prepare_Upd_xtest" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="SiteDB1_Acc_ChangeRate_Main_Upd" SpName="Acc_ChangeRate_Main_Upd_xtest" DbName="DBTXN.bodb02.bodbAdminNet" />
-  </Function>
-</Functions>
