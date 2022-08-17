@@ -105,19 +105,19 @@ namespace Fanex.Tarus.BetList.Business
                 WinlostDate = r.Table.Columns.Contains("winlostdate") ? Convert.ToDateTime(r["winlostdate"]) : DateTime.MinValue,
                 TransDesc = r.Table.Columns.Contains("transdesc") ? Converter.ToString2(r["transdesc"]) : string.Empty,
 
-                BetCheck = r.Table.Columns.Contains("betcheck") ? Convert.ToString(r["betcheck"]) : string.Empty,
-                OddsSpread = r.Table.Columns.Contains("OddsSpread") ? Convert.ToDecimal(r["OddsSpread"]) : 0,
+                BetCheck = r.Table.Columns.Contains("betcheck") ? Converter.ToString2(r["betcheck"]) : string.Empty,
+                OddsSpread = r.Table.Columns.Contains("OddsSpread") ? Converter.ToDecimal(r["OddsSpread"]) : 0,
 
-                OriginalBetType = r.Table.Columns.Contains("OriginalBetType") ? Convert.ToInt32(r["OriginalBetType"]) : 0,
-                BetdaqId = r.Table.Columns.Contains("BetdaqId") ? Convert.ToInt64(r["BetdaqId"]) : DefaultBetdaqId,
+                OriginalBetType = r.Table.Columns.Contains("OriginalBetType") ? Converter.To<int>(r["OriginalBetType"]) : 0,
+                BetdaqId = r.Table.Columns.Contains("BetdaqId") ? Converter.To<long>(r["BetdaqId"]) : DefaultBetdaqId,
                 ExtraInfo = r.Table.Columns.Contains("ExtraInfo") ? Converter.ToString2(r["ExtraInfo"]) : string.Empty,
 
                 Currency = r.Table.Columns.Contains("Currency") ? Converter.ToString2(r["Currency"]) : string.Empty,
                 CurrencyId = r.Table.Columns.Contains("CurrencyId") ? Converter.ToInt(r["CurrencyId"]) : 0,
 
-                WalletType = r.Table.Columns.Contains("wallettype") ? Convert.ToByte(r["wallettype"]) : (byte)0,
-                RefCode = r.Table.Columns.Contains("refcode") ? Convert.ToInt64(r["refcode"]) : 0,
-                SettlementStatus = r.Table.Columns.Contains("SettlementStatus") ? Convert.ToByte(r["SettlementStatus"]) : (byte)0,
+                WalletType = r.Table.Columns.Contains("wallettype") ? Converter.To<byte>(r["wallettype"]) : (byte)0,
+                RefCode = r.Table.Columns.Contains("refcode") ? Converter.To<long>(r["refcode"]) : 0,
+                SettlementStatus = r.Table.Columns.Contains("SettlementStatus") ? Converter.To<byte>(r["SettlementStatus"]) : (byte)0,
                 SiteId = r.Table.Columns.Contains("SiteId") ? Converter.ToString2(r["SiteId"]) : ""
             },
             ChoiceHtml = string.Empty,
