@@ -5,30 +5,11 @@
         productDropDown = $("#productDropDown"),
         functionDropDown = $("#functionDropDown");
     var isMultipleSuperDropDownOpen = false;
-    var styleSupperDD = "single";
     var agentsExtraInfo = [];
-    const PositionTakingAndStatusSettingTypeIds = [1, 18, 4, 11, 13];
 
-    function getSelectedAgents() {
-        var agentIds = $("#agentDropDown").multiSelect("getCheckedItems");
-        var agentNames = agentIds.length > 0 ? $("#agentDropDown").multiSelect("getCheckedItemsByText") : [];
-
-        return {
-            AgentIds: agentIds.join(","),
-            AgentNames: agentNames.join(", "),
-            AgentsExtraInfo: agentsExtraInfo
-        };
-    }
-
-    function getSelectedSupers() {
-        var superIds = $("#superMultipleDropDown").multiSelect("getCheckedItems");
-        var superNames = superIds.length > 0 ? $("#superMultipleDropDown").multiSelect("getCheckedItemsByText") : [];
-
-        return {
-            SuperIds: superIds.join(","),
-            SuperNames: superNames.join(", ")
-        };
-    }
+    const pipe = (...fns) => {
+        return fns.reduce((f, g) => (x) => g(f(x)));
+    };
 
     function resetFrom() {
         common.hideMessage();
@@ -51,30 +32,51 @@
         return element.html(html.join(""));
     }
 
+    function getSelectedAgents() {
+        var agentIds = $("#agentDropDown").multiSelect("getCheckedItems");
+        var agentNames = agentIds.length > 0 ? $("#agentDropDown").multiSelect("getCheckedItemsByText") : [];
+
+        return {
+            AgentIds: agentIds.join(","),
+            AgentNames: agentNames.join(", "),
+            AgentsExtraInfo: agentsExtraInfo
+        };
+    }
+
+    function getSelectedSupers() {
+        var superIds = $("#superMultipleDropDown").multiSelect("getCheckedItems");
+        var superNames = superIds.length > 0 ? $("#superMultipleDropDown").multiSelect("getCheckedItemsByText") : [];
+
+        return {
+            SuperIds: superIds.join(","),
+            SuperId: superIds.join(","),
+            SuperNames: superNames.join(", "),
+            SuperName: superNames.join(", ")
+        };
+    }
+
     function getSuperList(siteName, successCallback) {
         common.blockUI();
         $.post(
             rootUrl + "LicenseeDcsSetting/Supers",
             {site: siteName},
             function (data) {
-                renderDropDown(superDropDown, data);
                 renderSelectSuperList(data)
-                addMultipleSuperDropDownEvents();
                 successCallback(data);
             }).always(common.unblockUI);
     }
 
-    function getAgentList(superId) {
+    function getAgentList(superId, isCheckAllAgent = false) {
         common.blockUI();
         $.post(
             rootUrl + `LicenseeDcsSetting/Agents`,
             {superId: superId},
-            renderSelectAgentList)
+            (data) => renderSelectAgentList(data, isCheckAllAgent))
             .always(common.unblockUI);
     }
 
 
-    function renderSelectAgentList(data) {
+    function renderSelectAgentList(data, isChecked = false) {
         var agent;
         var agents = [];
         agentsExtraInfo = data;
@@ -84,7 +86,7 @@
                 Id: "agentDropDown" + agent.Id,
                 Value: agent.Id,
                 Text: agent.Name,
-                Checked: true,
+                Checked: isChecked,
                 Enable: true,
                 CssClass: "",
                 Items: [],
@@ -96,7 +98,7 @@
             maxHeight: 450,
             shadow: true,
             showHeader: true,
-            isCheckAll: true,
+            isCheckAll: isChecked,
             showFooter: false,
             checkAllText: "All",
             listData: agents,
@@ -106,7 +108,7 @@
         });
     }
 
-    function renderSelectSuperList(data) {
+    function renderSelectSuperList(data, isChecked = false) {
         var superUserName;
         var superUserNames = [];
 
@@ -116,7 +118,7 @@
                 Id: "superDropDown" + superUserName.Id,
                 Value: superUserName.Id,
                 Text: superUserName.Name,
-                Checked: true,
+                Checked: isChecked,
                 Enable: true,
                 CssClass: "",
                 Items: []
@@ -128,37 +130,30 @@
             maxHeight: 450,
             shadow: true,
             showHeader: true,
-            isCheckAll: true,
+            isCheckAll: isChecked,
             showFooter: false,
             checkAllText: "All",
             listData: superUserNames,
             noItemText: "No Super found.",
             showFilter: true,
         });
+        addMultipleSuperDropDownEvents();
     }
 
 
     function siteDropDown_change() {
         resetFrom();
         getSuperList(this.value, function (data) {
-            if (styleSupperDD === "single") {
-                superDownDown_change();
-            } else {
-                superMultipleDownDown_change();
-
-            }
+            superMultipleDownDown_change();
         });
-    }
-
-    function superDownDown_change() {
-        resetFrom();
-        getAgentList(superDropDown.val().toString());
     }
 
     function superMultipleDownDown_change() {
         resetFrom();
         const superIds = $("#superMultipleDropDown").multiSelect("getCheckedItems").join(",");
-        getAgentList(superIds);
+        console.log("superIds", superIds)
+        getAgentList(superIds, true);
+
     }
 
     function productDropDown_change() {
@@ -170,63 +165,65 @@
         })[0];
 
         renderDropDown(functionDropDown, setting.SettingTypes);
-        changeSuperDropDownStyle(PositionTakingAndStatusSettingTypeIds.includes(parseInt((functionDropDown.val()))));
     }
+    
 
-    function functionDropDown_change() {
-        resetFrom();
-        var functionId = parseInt(this.value);
-        changeSuperDropDownStyle(PositionTakingAndStatusSettingTypeIds.includes(functionId));
-    }
-
-    function changeSuperDropDownStyle(isMultipleSelectionsSuper) {
-        if (isMultipleSelectionsSuper) {
-            styleSupperDD = "multi";
-            superMultipleDownDown_change();
-            $(".singleSuperSelection").hide();
-            $(".multipleSuperSelections").show();
-        } else {
-            styleSupperDD = "single";
-            superDownDown_change();
-            $(".singleSuperSelection").show();
-            $(".multipleSuperSelections").hide();
-
-        }
-    }
-
-    function validateSuperAgent() {
-        const {AgentNames} = getSelectedAgents();
-        const unselectsAllAgent = AgentNames.length === 0;
+    function validateSuper(warningMessage = "") {
+        if (warningMessage !== "") return warningMessage;
 
         const {SuperNames} = getSelectedSupers();
         const unselectsAllSuper = SuperNames.length === 0;
 
-        let warningMessage = "";
-        if (unselectsAllAgent) {
-            warningMessage += "Super Username is required. ";
+        warningMessage += unselectsAllSuper ? "Super Username is required." : "";
+        return warningMessage
+
+    }
+
+    function validateAgent(warningMessage = "") {
+        if (warningMessage !== "") return warningMessage;
+
+        const {AgentNames} = getSelectedAgents();
+        const unselectsAllSuper = AgentNames.length === 0;
+
+        warningMessage += unselectsAllSuper ? "Agent Username is required." : "";
+        return warningMessage
+
+    }
+
+    function validateNumberOfSuper(warningMessage = "") {
+        if (warningMessage !== "") return warningMessage;
+
+        const functionId = functionDropDown.val();
+        const superIds = $("#superMultipleDropDown").multiSelect("getCheckedItems");
+        let message = "";
+        if (["2", "11"].includes(functionId)) {
+            message = "Please select only 1 Super when updating the Bet Setting.";
         }
-        if (unselectsAllSuper) {
-            warningMessage += "Agent Username is required.";
+        if (["7", "8", "17"].includes(functionId)) {
+            message = "Please select only 1 Super when updating the Bet Limit.";
         }
-        return {
-            isInvalid: warningMessage !== "",
-            message: warningMessage
-        };
+        if (["0"].includes(functionId)) {
+            message = "Please select only 1 Super when updating the Global Bet Limit.";
+        }
+
+        warningMessage += superIds.length !== 1 ? message : "";
+
+        return warningMessage;
     }
 
     function selectButton_click() {
         common.blockUI();
-        const {isInvalid, message} = validateSuperAgent();
-        if (isInvalid) {
-            common.showMessage(1, message);
-            common.unblockUI();
-            return;
-        }
-        resetFrom();
-
         var functionId = functionDropDown.val(),
             functionUrl = getFunctionUrl(functionId);
 
+        const validate = pipe(validateSuper, validateAgent, validateNumberOfSuper);
+        const message = validate();
+        if (message) {
+            common.showMessage(1, message);
+            common.unblockUI();
+            return false;
+        }
+        resetFrom();
         if (functionUrl.length === 0) {
             common.showNotImplementedMessage();
             common.unblockUI();
@@ -236,9 +233,6 @@
                 Site: siteDropDown.val(),
                 ProductId: productDropDown.val(),
                 ProductName: productDropDown.find("option:selected").text(),
-                SuperId: superDropDown.val(),
-                SuperName: superDropDown.find("option:selected").text(),
-
                 ...getSelectedSupers()
             };
 
@@ -332,14 +326,12 @@
     }
 
     function initialize() {
-        renderSelectAgentList(agentJSON);
         renderSelectSuperList(superJSON);
+        renderSelectAgentList([]);
         siteDropDown.change(siteDropDown_change).select2();
-        superDropDown.change(superDownDown_change).select2();
         productDropDown.change(productDropDown_change).select2();
-        functionDropDown.change(functionDropDown_change).select2({minimumResultsForSearch: Infinity});
+        functionDropDown.select2({minimumResultsForSearch: Infinity});
         $("#selectButton").click(selectButton_click);
-        changeSuperDropDownStyle(PositionTakingAndStatusSettingTypeIds.includes(parseInt((functionDropDown.val()))));
     }
 
     initialize();

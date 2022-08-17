@@ -61,16 +61,14 @@
                 oldMinLabel = minLabelInput.data("oldvalue"),
                 oldMaxLabel = maxLabelInput.data("oldvalue");
             // Note: MinLabel and MaxLabel cannot use operator !==
-            if (minStake !== oldMinStake || maxStake !== oldMaxStake || minLabelValue != oldMinLabel || maxLabelValue != oldMaxLabel) {
-                return {
-                    GameTypeId: tableRow.data("gametypeid"),
-                    StakeLevelId: tableRow.data("stakelevelid"),
-                    MinStake: minStake,
-                    MaxStake: maxStake,
-                    MinLabel: minLabelValue,
-                    MaxLabel: maxLabelValue
-                };
-            }
+            return {
+                GameTypeId: tableRow.data("gametypeid"),
+                StakeLevelId: tableRow.data("stakelevelid"),
+                MinStake: minStake,
+                MaxStake: maxStake,
+                MinLabel: minLabelValue,
+                MaxLabel: maxLabelValue
+            };    
         }
     }
 
@@ -121,10 +119,8 @@
 
         if (!globalValid) {
             common.unblockUI();
-        } else if (globalStakeLevels.length === 0) {
-            common.showNoChangeMessage();
-            common.unblockUI();
-        } else {
+        } 
+        else {
             $.ajax({
                 type: "POST",
                 url: rootUrl + "LicenseeDcsSetting/UpdateGlobalStakeLevel",

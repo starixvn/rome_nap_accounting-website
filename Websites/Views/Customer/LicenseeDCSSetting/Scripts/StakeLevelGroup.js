@@ -110,12 +110,7 @@
             .off("submit")
             .on("submit", function (e) {
                 e.preventDefault();
-
-                if (stakeLevelGroupForm.serialize() === originalValue) {
-                    common.showNoChangeMessage();
-                } else {
-                    updateForm_submit(defaultParam, reloadFunction, getSelectedAgents);
-                }
+                updateForm_submit(defaultParam, reloadFunction, getSelectedAgents);
             });
 
         originalValue = stakeLevelGroupForm.serialize();
