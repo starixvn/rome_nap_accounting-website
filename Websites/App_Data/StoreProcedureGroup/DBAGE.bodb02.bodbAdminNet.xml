@@ -10,6 +10,7 @@
   </Function>
   <Function Name="BetList">
     <Setting Key="BetListByDayAll" SpName="Acc_BetListByDayAll" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="SiteDB_Acc_BetList_Statement" SpName="SiteDB_Acc_BetList_Statement_UAT1" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Customer - Smart punter">
     <Setting Key="Acc_CustomerSelCheckSmartPunter" SpName="Acc_CustomerSelCheckSmartPunter" DbName="DBCust.CustDB.bodbAdminNet" />

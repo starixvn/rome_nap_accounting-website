@@ -941,19 +941,6 @@ namespace Fanex.Tarus.BetList.Business
             return new List<TicketDetail>();
         }
 
-        /// <summary>
-        /// Gets the bet list statement.
-        /// </summary>
-        /// <param name="custId">The customer identifier.</param>
-        /// <param name="transType">Type of the trans.</param>
-        /// <param name="fromDate">From date.</param>
-        /// <param name="quality">The quality.</param>
-        /// <param name="totalComm">The total commission.</param>
-        /// <param name="totalWinLoss">The total win loss.</param>
-        /// <returns>The bet list statement.</returns>
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
-            "SP2101:MethodMustNotContainMoreLinesThan",
-            Justification = "Reviewed. Suppression is OK here.")]
         public IList<TicketDetail> GetBetListStatement(
             int custId,
             int transType,
@@ -962,36 +949,39 @@ namespace Fanex.Tarus.BetList.Business
             ref decimal totalComm,
             ref decimal totalWinLoss)
         {
-            try
+            var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(custId);
+            if (siteDB != null)
             {
                 List<ITicketData> outputLiveCasino = new List<ITicketData>();
                 IList<TicketDetail> betDetails = new List<TicketDetail>();
-                BetListHelper betListHelper = new BetListHelper();
-                DataSet dataSet = new DataSet();
+                var betListHelper = new BetListHelper();
+                var dataSet = new DataSet();
 
                 var criteria = new BetListStatement
                 {
                     CustId = custId,
                     TransType = transType,
                     FromDate = fromDate,
-                    MoveBetsDay = ReportUtils.BalanceUp.MoveBetsDay
+                    MoveBetsDay = ReportUtils.BalanceUp.MoveBetsDay,
+                    IsSiteDB = siteDB.IsSiteDB
                 };
 
                 using (var db = new ObjectDb(criteria.GetSettingKey()))
                 {
-                    dataSet = db.ExecuteDataSet(criteria);
+                    dataSet = siteDB.IsSiteDB ? db.ExecuteDataSetScaleoutDB(criteria.GetSpParams(), siteDB.AGIP) :
+                        db.ExecuteDataSet(criteria);
                 }
 
                 if (dataSet != null &&
                     dataSet.Tables.Count >= 2)
                 {
-                    DataTable ticketDetailTable = dataSet.Tables[0];
-                    DataTable ticketEventTable = dataSet.Tables[1];
+                    var ticketDetailTable = dataSet.Tables[0];
+                    var ticketEventTable = dataSet.Tables[1];
                     foreach (DataRow r in ticketDetailTable.Rows)
                     {
-                        decimal commTmp = Converter.ToDecimal(r["commission"]);
-                        decimal winlostTmp = Converter.ToDecimal(r["winlost"]);
-                        string status = Converter.ToString2(r["status"]).ToLower();
+                        var commTmp = Converter.ToDecimal(r["commission"]);
+                        var winlostTmp = Converter.ToDecimal(r["winlost"]);
+                        var status = Converter.ToString2(r["status"]).ToLower();
 
                         if (status != "running" &&
                             status != "waiting" &&
@@ -1003,7 +993,7 @@ namespace Fanex.Tarus.BetList.Business
                             totalWinLoss += winlostTmp;
                         }
 
-                        TicketDetail ticketDetailTmp = new TicketDetail
+                        var ticketDetailTmp = new TicketDetail
                         {
                             Ticket = new Ticket
                             {
@@ -1118,13 +1108,11 @@ namespace Fanex.Tarus.BetList.Business
 
                 if (betDetails != null)
                 {
-                    SessionManager.Set<IList<TicketDetail>>(BetListConstants.BetListByStatementSessionKey, betDetails);
-
-                    BetListHTMLFactory factory = new BetListHTMLFactory();
-                    BetListHTMLBuilder builder = factory.CreateBuilder();
+                    var factory = new BetListHTMLFactory();
+                    var builder = factory.CreateBuilder();
                     GetCachePropertyById funcGetOddsTypeName = ticketHelper.GetOddsTypeNameById;
 
-                    foreach (TicketDetail betDetail in betDetails)
+                    foreach (var betDetail in betDetails)
                     {
                         ticketHelper.IsShowOddsWithChoice = IsShowOddsWithChoice(betDetail.Ticket.BetTypeId);
 
@@ -1138,10 +1126,7 @@ namespace Fanex.Tarus.BetList.Business
                     return betDetails;
                 }
             }
-            catch (Exception ex)
-            {
-                LoggingHandler.Log(ex);
-            }
+
 
             return new List<TicketDetail>();
         }
