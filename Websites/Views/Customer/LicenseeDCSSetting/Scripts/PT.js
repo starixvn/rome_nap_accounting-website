@@ -36,6 +36,7 @@
             },
             complete: function () {
                 common.unblockUI();
+                common.enableElement(updateButton);
             }
         });
     }
@@ -58,16 +59,13 @@
                     var sportType = $(option).attr("data-sporttype");
                     var bettype = $(option).attr("data-bettype");
                     var isLive = $(option).attr("data-islive");
-                    var pt_old = $(option).attr("data-pt");
                     var pt_new = $("#ptDropDown_" + bettype + "_" + sportType).val();
-                    if (pt_old !== pt_new) {
-                        pts.push({
-                            SportType: sportType,
-                            BetType: bettype,
-                            AgentPT: pt_new,
-                            IsLive: isLive
-                        });
-                    }
+                    pts.push({
+                        SportType: sportType,
+                        BetType: bettype,
+                        AgentPT: pt_new,
+                        IsLive: isLive
+                    });
                 });
                 
                 var formData = JSON.stringify($.extend({ 'SuperPT': pts, 'AgentIds': selectedAgentIds, 'IsAgentOnly': isAgentOnly ,'AgentsExtraInfo':agentsExtraInfo}, defaultParam));
