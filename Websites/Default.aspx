@@ -60,7 +60,7 @@
                             <%=accUsername%></span>
                     </div>
                     <div id="Search_box">
-                        <input name="txtuserName" value="" onkeypress="return KeyPress(event);" class="form_top autocomp"
+                        <input name="txtuserName" value="" onkeypress="return KeyPress(event);" class="form_top autocomp" maxlength="50"
                             type="text" id="txtuserName" value="" autocomplete="off" placeholder="Id, Username or Nickname" />
                         <input class="btn" id="btnSendMsg" onclick="submitSearch();" type="button" value="Search"
                             name="btnSendMsg" />
