@@ -11,6 +11,8 @@
 
         public DateTime MoveBetsDay { get; set; }
 
+        public DateTime BalanceUpDay { get; set; }
+
         public override string GetSettingKey()
             => "SiteDB_Acc_BetList_SelByRefNo_Mem";
 
