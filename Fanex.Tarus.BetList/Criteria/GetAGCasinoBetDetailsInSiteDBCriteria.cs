@@ -26,6 +26,8 @@
 
         public DateTime MoveBetsDay => ReportUtils.BalanceUp.MoveBetsDay;
 
+        public DateTime BalanceUpDay => ReportUtils.BalanceUp.BalanceUpDay;
+
         public override string GetSettingKey()
         {
             return "SiteDB_Acc_BetList_LC_Detail";
