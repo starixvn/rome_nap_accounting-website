@@ -1,8 +1,9 @@
 ﻿namespace Fanex.Tarus.BetList.Criteria
 {
+    using System;
     using Fanex.NAP.Framework.Data;
 
-    public class SiteDBMixParlayDetailCriteria
+    public class SiteDBMixParlayDetailCriteria : CriteriaBase
     {
         public bool IsCN88 { get; set; }
 
@@ -14,6 +15,10 @@
 
         [SpParam(SqlParamName = "custid")]
         public int CustId { get; set; }
+
+        public DateTime MoveBetsDay { get; set; }
+
+        public DateTime BalanceUpDay { get; set; }
 
         public string GetSettingKey()
             => "SiteDB_Acc_BetList_SelParlayDetail";

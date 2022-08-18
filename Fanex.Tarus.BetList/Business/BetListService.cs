@@ -151,7 +151,9 @@ namespace Fanex.Tarus.BetList.Business
                     {
                         CustId = custId,
                         RefNo = refNo,
-                        TransId = transId
+                        TransId = transId,
+                        MoveBetsDay = ReportService.BalanceUp.MoveBetsDay,
+                        BalanceUpDay = ReportService.BalanceUp.BalanceUpDay
                     };
                     siteDBTickets = _betListRepository.Fetch<TicketDetail>(siteDBCriteria, siteDB.AGIP, mapTicketObjectFunction);
                 }
