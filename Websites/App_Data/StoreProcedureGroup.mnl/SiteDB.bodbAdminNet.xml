@@ -1,11 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Functions SiteId="104" SiteName="NAP - Accounting">  
   <Function Name="Statement">   
-    <Setting Key="SiteDB1_Statement_Report_GetList" SpName="SiteDB_Acc_StatementSel_xtest" DbName="DBACC.bodb02.bodbAdminNet" Plain="0" />   
+    <Setting Key="SiteDB1_Statement_Report_GetList" SpName="SiteDB_Acc_StatementSel" DbName="DBACC.bodb02.bodbAdminNet" Plain="0" />   
   </Function>
   <Function Name="Ex.rate">
     <Setting Key="SiteDB1_Acc_ChangeRate_Prepare_Upd" SpName="Acc_ChangeRate_Prepare_Upd" DbName="DBTXN.bodb02.bodbAdminNet" />
     <Setting Key="SiteDB1_Acc_ChangeRate_Main_Upd" SpName="Acc_ChangeRate_Main_Upd" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
-
+  <Function Name="Transfer">
+    <Setting Key="SiteDB1_Acc_BettransInsTransfer" SpName="Acc_BettransInsTransfer" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="SiteDB1_SiteDB_Acc_BettransInsTransfer" SpName="SiteDB_Acc_BettransInsTransfer" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="SiteDB1_Acc_BettransInsCrossTransfer" SpName="Acc_BettransInsCrossTransfer" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="SiteDB1_SiteDB_Acc_BettransInsCrossTransfer" SpName="SiteDB_Acc_BettransInsCrossTransfer" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="SiteDB1_Acc_BettransDelTransaction" SpName="Acc_BettransDelTransaction" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="SiteDB1_Acc_FinanceTransferBettransIns" SpName="Acc_FinanceTransferBettransIns" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
+    <Setting Key="SiteDB1_SiteDB_Acc_FinanceTransferBettransIns" SpName="SiteDB_Acc_FinanceTransferBettransIns" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
+    <Setting Key="SiteDB1_Acc_FinanceCrossTransferBettransIns" SpName="Acc_FinanceCrossTransferBettransIns" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
+    <Setting Key="SiteDB1_SiteDB_Acc_FinanceCrossTransferBettransIns" SpName="SiteDB_Acc_FinanceCrossTransferBettransIns" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
+    <Setting Key="SiteDB1_SiteDB_Acc_Transfer_Rollback" SpName="SiteDB_Acc_Transfer_Rollback" DbName="DBTXN.bodb02.bodbAdminNet" />
+  </Function>
 </Functions>
