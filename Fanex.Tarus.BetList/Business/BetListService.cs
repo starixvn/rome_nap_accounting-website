@@ -969,7 +969,7 @@ namespace Fanex.Tarus.BetList.Business
                 using (var db = new ObjectDb(criteria.GetSettingKey()))
                 {
                     dataSet = siteDB.IsSiteDB ? db.ExecuteDataSetScaleoutDB(criteria.GetSpParams(), siteDB.AGIP) :
-                        db.ExecuteDataSet(criteria);
+                        db.ExecuteDataSet(criteria.GetSpParams());
                 }
 
                 if (dataSet != null &&
