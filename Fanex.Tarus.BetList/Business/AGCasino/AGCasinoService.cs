@@ -34,7 +34,7 @@
             var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(criteria.CustId);
             if (siteDB != null)
             {
-                if(siteDB.IsSiteDB)
+                if (siteDB.IsSiteDB && criteria.WinLossDate > ReportService.BalanceUp.MoveBetsDay)
                 {
                     var siteDBCriteria = new GetAGCasinoBetDetailsInSiteDBCriteria
                     {
@@ -51,10 +51,11 @@
                     criteria.TotalRows = siteDBCriteria.TotalRows;
                 }
 
-                if(!tickets.Any())
+                if (!siteDB.IsSiteDB ||
+                    (siteDB.IsSiteDB && criteria.WinLossDate <= ReportService.BalanceUp.MoveBetsDay))
                 {
                     criteria.ExcludeBettrans = siteDB.IsSiteDB;
-                    tickets = _agCasinoRepository.BetDetails(criteria).ToList();                    
+                    tickets = _agCasinoRepository.BetDetails(criteria).ToList();
                 }
 
                 var ticketHelper = new TicketHelper();
