@@ -234,14 +234,13 @@ namespace Fanex.Tarus.BetList.Business
 
         public IList<TicketDetail> GetBetListByRefNo(BetListByRefNoParam param)
         {
-            IList<TicketDetail> betDetails = new List<TicketDetail>();
+            IList<TicketDetail> tickets = new List<TicketDetail>();
             List<ITicketData> outputLiveCasino = new List<ITicketData>();
             var betListHelper = new BetListHelper();
             var allSite = ObjectDbExtensions.GetAllSiteDBConfig();
             var siteDB = allSite.FirstOrDefault(i => i.SiteDBGroupID == param.SiteDBGroupId);
             if (siteDB != null)
             {
-                var siteDBTickets = new List<TicketDetail>();
                 if (siteDB.IsSiteDB)
                 {
                     var siteDBCriteria = new SiteDBBetListByRefNoCriteria
@@ -252,28 +251,31 @@ namespace Fanex.Tarus.BetList.Business
                         Permission = param.Permission,
                         Site = param.Site
                     };
-                    siteDBTickets = _betListRepository.Fetch<TicketDetail>(siteDBCriteria, siteDB.AGIP, mapTicketObjectFunction, ref outputLiveCasino).ToList();
+                    tickets = _betListRepository.Fetch<TicketDetail>(siteDBCriteria, siteDB.AGIP, mapTicketObjectFunction, ref outputLiveCasino).ToList();
                 }
 
-                var mainCriteria = new BetListByRefNoCriteria
+                if (!tickets.Any())
                 {
-                    UserId = param.UserId,
-                    RefNo = Converter.To<long>(param.RefNo),
-                    MoveBetsDay = ReportService.BalanceUp.MoveBetsDay,
-                    BalanceUpDay = ReportService.BalanceUp.BalanceUpDay,
-                    Permission = param.Permission,
-                    Site = param.Site,
-                    ExcludeBettrans = siteDB.IsSiteDB
-                };
-                var mainDBTickets = _betListRepository.Fetch<TicketDetail>(mainCriteria, mapTicketObjectFunction, ref outputLiveCasino);
-                betDetails = siteDBTickets.Concat(mainDBTickets).ToList();
+                    var mainCriteria = new BetListByRefNoCriteria
+                    {
+                        UserId = param.UserId,
+                        RefNo = Converter.To<long>(param.RefNo),
+                        MoveBetsDay = ReportService.BalanceUp.MoveBetsDay,
+                        BalanceUpDay = ReportService.BalanceUp.BalanceUpDay,
+                        Permission = param.Permission,
+                        Site = param.Site,
+                        ExcludeBettrans = siteDB.IsSiteDB
+                    };
+                    tickets = _betListRepository.Fetch<TicketDetail>(mainCriteria, mapTicketObjectFunction, ref outputLiveCasino);
+                }
+
             }
 
             var factory = new BetListHTMLFactory();
             var builder = factory.CreateBuilder();
             GetCachePropertyById funcGetOddsTypeName = ticketHelper.GetOddsTypeNameById;
 
-            foreach (var betDetail in betDetails)
+            foreach (var betDetail in tickets)
             {
                 ticketHelper.IsShowOddsWithChoice = IsShowOddsWithChoice(betDetail.Ticket.BetTypeId);
 
@@ -286,7 +288,7 @@ namespace Fanex.Tarus.BetList.Business
                 RemoveSabaWord(betDetail);
             }
 
-            return betDetails;
+            return tickets;
         }
 
         private void RemoveSabaWord(TicketDetail ticket)
@@ -506,32 +508,35 @@ namespace Fanex.Tarus.BetList.Business
                     tickets = _betListRepository.Fetch<TicketDetail>(siteDBCriteria, siteDB.AGIP, mapTicketObjectFunction, ref outputLiveCasino);
                 }
 
-                var mainCriteria = new BetListByCustInfoByRefnoCriteria()
+                if (!tickets.Any())
                 {
-                    RefNo = transactionId,
-                    CustId = customerId,
-                    MoveBetsDay = ReportService.BalanceUp.MoveBetsDay,
-                    BalanceUpDay = ReportService.BalanceUp.BalanceUpDay,
-                    ExcludeBettrans = siteDB.IsSiteDB
-                };
+                    var mainCriteria = new BetListByCustInfoByRefnoCriteria()
+                    {
+                        RefNo = transactionId,
+                        CustId = customerId,
+                        MoveBetsDay = ReportService.BalanceUp.MoveBetsDay,
+                        BalanceUpDay = ReportService.BalanceUp.BalanceUpDay,
+                        ExcludeBettrans = siteDB.IsSiteDB
+                    };
+                    tickets = _betListRepository.Fetch<TicketDetail>(mainCriteria, mapTicketObjectFunction, ref outputLiveCasino);
+                }
 
-                var allTickets = tickets.Concat(_betListRepository.Fetch<TicketDetail>(mainCriteria, mapTicketObjectFunction, ref outputLiveCasino));
                 var factory = new BetListHTMLFactory();
                 var builder = factory.CreateBuilder();
                 GetCachePropertyById funcGetOddsTypeName = ticketHelper.GetOddsTypeNameById;
                 var betListHelper = new BetListHelper();
-                foreach (var betDetail in allTickets)
+                foreach (var ticket in tickets)
                 {
-                    ticketHelper.IsShowOddsWithChoice = IsShowOddsWithChoice(betDetail.Ticket.BetTypeId);
+                    ticketHelper.IsShowOddsWithChoice = IsShowOddsWithChoice(ticket.Ticket.BetTypeId);
 
-                    betDetail.TransDateHtml = builder.BuildTrans(betDetail.Ticket);
-                    betDetail.ChoiceHtml = builder.BuildChoice(betDetail.Ticket, ticketHelper, outputLiveCasino, false);
-                    betDetail.StakeHtml = BetListExtension.BuildStake(betDetail, ref builder, ticketHelper);
-                    betDetail.OddHtml = builder.BuildOdds(betDetail.Ticket, outputLiveCasino, funcGetOddsTypeName);
-                    betDetail.StatusHtml = betListHelper.BuildStatus(betDetail.Ticket, ticketHelper, outputLiveCasino, factory, builder);
+                    ticket.TransDateHtml = builder.BuildTrans(ticket.Ticket);
+                    ticket.ChoiceHtml = builder.BuildChoice(ticket.Ticket, ticketHelper, outputLiveCasino, false);
+                    ticket.StakeHtml = BetListExtension.BuildStake(ticket, ref builder, ticketHelper);
+                    ticket.OddHtml = builder.BuildOdds(ticket.Ticket, outputLiveCasino, funcGetOddsTypeName);
+                    ticket.StatusHtml = betListHelper.BuildStatus(ticket.Ticket, ticketHelper, outputLiveCasino, factory, builder);
                 }
 
-                return new KeyValuePair<string, IList<TicketDetail>>(string.Empty, allTickets.ToList());
+                return new KeyValuePair<string, IList<TicketDetail>>(string.Empty, tickets);
             }
 
             return new KeyValuePair<string, IList<TicketDetail>>(string.Empty, new List<TicketDetail>());

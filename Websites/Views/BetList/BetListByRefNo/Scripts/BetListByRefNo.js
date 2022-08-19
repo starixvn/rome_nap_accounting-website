@@ -43,7 +43,7 @@ BetList.BetListByRefNo = (function ($) {
                     $('#choice_left a:first').replaceWith(divReplace);
                 }
 
-                $("a:[id^='hidden']").each(function () {
+                $("a[id*='hidden']").each(function () {
                     this.click();
                     $(this).removeAttr("href");
                 });
@@ -283,6 +283,8 @@ BetList.BetListByRefNo = (function ($) {
         $("#iNoteMessageInfo").click(function () {
             OpenNoteMessage();
         });
+
+        $selSite.select2();
     };
 
     return {
