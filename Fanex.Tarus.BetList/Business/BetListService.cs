@@ -544,90 +544,85 @@ namespace Fanex.Tarus.BetList.Business
 
         public SystemParlayModel GetBetListByCustInfo_SystemParLayTab(string transId, int custId)
         {
-            try
+            var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(custId);
+            var systemParlayCriteria = new BetListSystemParlayByRefnoCriteria
             {
-                var systemParlayCriteria = new BetListSystemParlayByRefnoCriteria
+                IsSiteDB = siteDB != null && siteDB.IsSiteDB,
+                CustomerId = custId,
+                TransactionId = transId,
+                MoveBetDay = ReportService.BalanceUp.MoveBetsDay,
+                BalanceUpDay = ReportService.BalanceUp.BalanceUpDay
+            };
+
+            var outputLiveCasino = new List<ITicketData>();
+            var systempParlayModel = _betListRepository.FetchSystemParlay(systemParlayCriteria);
+
+            var betListHelper = new BetListHelper();
+            if (systempParlayModel.TicketsDetailList != null &&
+                systempParlayModel.TicketsDetailList.Count > 0)
+            {
+                var factory = new BetListHTMLFactory();
+                var builder = factory.CreateBuilder();
+                GetCachePropertyById funcGetOddsTypeName = ticketHelper.GetOddsTypeNameById;
+
+                foreach (TicketDetail betDetail in systempParlayModel.TicketsDetailList)
                 {
-                    CustomerId = custId,
-                    TransactionId = transId,
-                    MoveBetDay = ReportService.BalanceUp.MoveBetsDay,
-                    BalanceUpDay = ReportService.BalanceUp.BalanceUpDay
-                };
+                    ticketHelper.IsShowOddsWithChoice = IsShowOddsWithChoice(betDetail.Ticket.BetTypeId);
 
-                List<ITicketData> outputLiveCasino = new List<ITicketData>();
-                SystemParlayModel systempParlayModel = _betListRepository.FetchSystemParlay(systemParlayCriteria);
-
-                BetListHelper betListHelper = new BetListHelper();
-                if (systempParlayModel.TicketsDetailList != null &&
-                    systempParlayModel.TicketsDetailList.Count > 0)
-                {
-                    BetListHTMLFactory factory = new BetListHTMLFactory();
-                    BetListHTMLBuilder builder = factory.CreateBuilder();
-                    GetCachePropertyById funcGetOddsTypeName = ticketHelper.GetOddsTypeNameById;
-
-                    foreach (TicketDetail betDetail in systempParlayModel.TicketsDetailList)
+                    betDetail.TransDateHtml = builder.BuildTrans(betDetail.Ticket);
+                    betDetail.ChoiceHtml = builder.BuildChoice(betDetail.Ticket, ticketHelper, outputLiveCasino, false);
+                    betDetail.StakeHtml = BetListExtension.BuildStake(betDetail, ref builder, ticketHelper);
+                    betDetail.OddHtml = builder.BuildOdds(betDetail.Ticket, outputLiveCasino, funcGetOddsTypeName);
+                    betDetail.StatusHtml = betListHelper.BuildStatus(betDetail.Ticket, ticketHelper, outputLiveCasino, factory, builder);
+                    if (betDetail.StatusHtml.Contains("Void")
+                        || betDetail.StatusHtml.Contains("Abnormal Bet"))
                     {
-                        ticketHelper.IsShowOddsWithChoice = IsShowOddsWithChoice(betDetail.Ticket.BetTypeId);
-
-                        betDetail.TransDateHtml = builder.BuildTrans(betDetail.Ticket);
-                        betDetail.ChoiceHtml = builder.BuildChoice(betDetail.Ticket, ticketHelper, outputLiveCasino, false);
-                        betDetail.StakeHtml = BetListExtension.BuildStake(betDetail, ref builder, ticketHelper);
-                        betDetail.OddHtml = builder.BuildOdds(betDetail.Ticket, outputLiveCasino, funcGetOddsTypeName);
-                        betDetail.StatusHtml = betListHelper.BuildStatus(betDetail.Ticket, ticketHelper, outputLiveCasino, factory, builder);
-                        if (betDetail.StatusHtml.Contains("Void")
-                            || betDetail.StatusHtml.Contains("Abnormal Bet"))
-                        {
-                            systempParlayModel.HideCombinationDetail = true;
-                        }
+                        systempParlayModel.HideCombinationDetail = true;
                     }
-
-                    if (systempParlayModel.SystemParlayChoice != null)
-                    {
-                        // Combo Parlay.
-                        var firstTicketDetail = systempParlayModel.TicketsDetailList[0];
-                        ITicket firstTicket = firstTicketDetail.Ticket;
-                        if (!string.IsNullOrEmpty(firstTicket.BetCheck))
-                        {
-                            var combinationTypeComboNames = GetCombinationTypeComboNames(
-                                firstTicket.BetTeam,
-                                firstTicket.BetCheck,
-                                firstTicket.Handicap1,
-                                firstTicket.Handicap2,
-                                systempParlayModel.SystemParlayChoice);
-
-                            firstTicketDetail.ChoiceHtml += string.Format(
-                                "<div class=\"hide\" id=\"combinationTypeComboNames\">{0}</div><div class=\"line\"></div>",
-                                combinationTypeComboNames
-                            );
-                        }
-
-                        BetListHTMLFactory factoryParlayDetaily = new BetListHTMLFactory();
-                        BetListHTMLBuilder builderParlayDetail = factoryParlayDetaily.CreateBuilder();
-                        int totalItem = systempParlayModel.SystemParlayChoice.Count;
-                        ticketHelper.IsShowOddsWithChoice = true;
-                        foreach (TicketDetail betDetail in systempParlayModel.SystemParlayChoice)
-                        {
-                            totalItem--;
-
-                            betDetail.TransDateHtml = builderParlayDetail.BuildTrans(betDetail.Ticket);
-                            betDetail.ChoiceHtml =
-                                "<div class='ticketList'>"
-                                    + builder.BuildChoice(betDetail.Ticket, ticketHelper, null, false)
-                                    + builder.BuildTransEventDateAndStatusResult(betDetail.Ticket, null)
-                                + (totalItem > 0 ? "</div>" + "<div class=\"line\"></div>" : "</div>");
-
-                            firstTicketDetail.ChoiceHtml += betDetail.ChoiceHtml;
-                        }
-                    }
-
-                    systempParlayModel.SystemParlayDetail.EventList = systempParlayModel.SystemParlayDetail.EventList.OrderBy(i => SystemParlayConstants.GetStatusOrderId(i.Status)).ToList();
-
-                    return systempParlayModel;
                 }
-            }
-            catch (Exception ex)
-            {
-                LoggingHandler.Log(ex);
+
+                if (systempParlayModel.SystemParlayChoice != null)
+                {
+                    // Combo Parlay.
+                    var firstTicketDetail = systempParlayModel.TicketsDetailList[0];
+                    ITicket firstTicket = firstTicketDetail.Ticket;
+                    if (!string.IsNullOrEmpty(firstTicket.BetCheck))
+                    {
+                        var combinationTypeComboNames = GetCombinationTypeComboNames(
+                            firstTicket.BetTeam,
+                            firstTicket.BetCheck,
+                            firstTicket.Handicap1,
+                            firstTicket.Handicap2,
+                            systempParlayModel.SystemParlayChoice);
+
+                        firstTicketDetail.ChoiceHtml += string.Format(
+                            "<div class=\"hide\" id=\"combinationTypeComboNames\">{0}</div><div class=\"line\"></div>",
+                            combinationTypeComboNames
+                        );
+                    }
+
+                    var factoryParlayDetaily = new BetListHTMLFactory();
+                    var builderParlayDetail = factoryParlayDetaily.CreateBuilder();
+                    int totalItem = systempParlayModel.SystemParlayChoice.Count;
+                    ticketHelper.IsShowOddsWithChoice = true;
+                    foreach (TicketDetail betDetail in systempParlayModel.SystemParlayChoice)
+                    {
+                        totalItem--;
+
+                        betDetail.TransDateHtml = builderParlayDetail.BuildTrans(betDetail.Ticket);
+                        betDetail.ChoiceHtml =
+                            "<div class='ticketList'>"
+                                + builder.BuildChoice(betDetail.Ticket, ticketHelper, null, false)
+                                + builder.BuildTransEventDateAndStatusResult(betDetail.Ticket, null)
+                            + (totalItem > 0 ? "</div>" + "<div class=\"line\"></div>" : "</div>");
+
+                        firstTicketDetail.ChoiceHtml += betDetail.ChoiceHtml;
+                    }
+                }
+
+                systempParlayModel.SystemParlayDetail.EventList = systempParlayModel.SystemParlayDetail.EventList.OrderBy(i => SystemParlayConstants.GetStatusOrderId(i.Status)).ToList();
+
+                return systempParlayModel;
             }
 
             return new SystemParlayModel();

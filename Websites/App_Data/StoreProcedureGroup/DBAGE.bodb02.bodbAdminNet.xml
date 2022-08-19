@@ -35,6 +35,7 @@
     <Setting Key="Acc_BetList_HRSelMatchResult2" SpName="Acc_BetList_HRSelMatchResult2" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="SelMatchResultNumberGame" SpName="Age_BetList_SelMatchResultNumberGame" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="BetList_CustInfo_SystemParlay" SpName="Acc_BetlistCombinationParlay_ByTransID_UAT1" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="SiteDB_Acc_BetList_Parlay_SelByRefNo" SpName="SiteDB_Acc_BetList_Parlay_SelByRefNo_UAT1" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="BetList_MixParlayBetsSel" SpName="Acc_BetsSelBetCheckM_All_UAT1" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="SiteDB_Acc_BetList_SelParlayDetail" SpName="SiteDB_Acc_BetList_SelParlayDetail_UAT1" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="BetList_SelByRefNo" SpName="Acc_BetList_SelByRefNo_UAT1" DbName="DBACC.bodb02.bodbAdminNet" />
