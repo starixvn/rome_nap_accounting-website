@@ -31,11 +31,9 @@
         public IEnumerable<TicketDetail> BetDetails(GetAGCasinoBetDetailsCriteria criteria)
         {
             var tickets = new List<TicketDetail>();
-            var siteDBRow = 0;
             var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(criteria.CustId);
             if (siteDB != null)
             {
-                var siteDBTickets = new List<TicketDetail>();
                 if(siteDB.IsSiteDB)
                 {
                     var siteDBCriteria = new GetAGCasinoBetDetailsInSiteDBCriteria
@@ -49,13 +47,15 @@
                         TransType = criteria.TransType,
                         WinLossDate = criteria.WinLossDate
                     };
-                    siteDBTickets = _agCasinoRepository.BetDetails(siteDBCriteria, siteDB.AGIP).ToList();
-                    siteDBRow = siteDBCriteria.TotalRows;
+                    tickets = _agCasinoRepository.BetDetails(siteDBCriteria, siteDB.AGIP).ToList();
+                    criteria.TotalRows = siteDBCriteria.TotalRows;
                 }
-                criteria.ExcludeBettrans = siteDB.IsSiteDB;
-                var mainDBTickets = _agCasinoRepository.BetDetails(criteria);
-                tickets = siteDBTickets.Concat(mainDBTickets).ToList();
-                criteria.TotalRows += siteDBRow;
+
+                if(!tickets.Any())
+                {
+                    criteria.ExcludeBettrans = siteDB.IsSiteDB;
+                    tickets = _agCasinoRepository.BetDetails(criteria).ToList();                    
+                }
 
                 var ticketHelper = new TicketHelper();
                 var factory = new BetListHTMLFactory();
