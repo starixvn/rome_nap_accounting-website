@@ -515,6 +515,7 @@
     <Compile Include="Criteria\BetListBetTradeDetailCriteria.cs" />
     <Compile Include="Criteria\BetTypeByDateInSiteDBCriteria.cs" />
     <Compile Include="Criteria\GetAGCasinoBetDetailsInSiteDBCriteria.cs" />
+    <Compile Include="Criteria\GetCashOutHistoryInSiteDBCriteria.cs" />
     <Compile Include="Criteria\SiteDB_MixParlayDetailCriteria.cs" />
     <Compile Include="Criteria\SiteDB_BetListByCustInfoByRefnoCriteria.cs" />
     <Compile Include="Criteria\BetListByCustInfoByRefnoCriteria.cs" />

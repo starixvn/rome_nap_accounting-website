@@ -3,13 +3,34 @@
     using Fanex.BetList.Core.Entities;
     using Fanex.Data;
     using Fanex.NAP.Framework.Data;
+    using Fanex.Tarus.BetList.Criteria;
     using Fanex.Tarus.BetList.Models;
     using System;
     using System.Collections.Generic;
     using System.Data;
+    using Sunplus.Accounting.Core.Extensions;
 
     public class BetListDetailRepository : IBetListDetailRepository
     {
+        public CashOutHistoryModel GetCashOutHistory(GetCashOutHistoryInSiteDBCriteria criteria, int custId)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = db.ExecuteReaderScaleoutDB(criteria.GetSpParams(), custId ))
+                {
+                    if (reader.Read())
+                    {
+                        return new CashOutHistoryModel
+                        {
+                            TransId = Convert.ToInt64(reader["transid"]),
+                            CashoutExtraInfo = Convert.ToString(reader["CashoutExtraInfo"])
+                        };
+                    }
+                }
+            }
+
+            return new CashOutHistoryModel();
+        }
         public CashOutDetails GetCashOutDetails(ICriteria criteria)
         {
             TicketDetail ticketDetail = null;
