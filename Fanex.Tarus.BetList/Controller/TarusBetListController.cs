@@ -124,7 +124,7 @@ namespace Fanex.Tarus.BetList.Controller
             return View("~/Views/BetList/BetListByIP/Index.cshtml");
         }
 
-        public ActionResult ExportBetDetails(int sportType, long refNo, int custId, byte transType)
+        public ActionResult ExportBetDetails(int sportType, long refNo, int custId, byte transType, DateTime winlostDate)
         {
             IBetDetailsExporter exporter = new BetDetailsExporter();
             string fileName = exporter.GetFileNameWithoutExtension(sportType);
@@ -134,7 +134,7 @@ namespace Fanex.Tarus.BetList.Controller
             response.ContentType = "application/vnd.ms-excel";
             response.AddHeader("Content-Disposition", string.Format("attachment; filename={0}.xls", fileName));
 
-            var ticketDetails = exporter.GetTicketDetails(sportType, refNo, custId, transType);
+            var ticketDetails = exporter.GetTicketDetails(sportType, refNo, custId, transType, winlostDate);
             exporter.Export(ticketDetails, response.OutputStream, sportType);
 
             return new EmptyResult();

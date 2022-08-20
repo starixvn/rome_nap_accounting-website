@@ -8,6 +8,7 @@
     using Fanex.BetList.Core.TicketHelper;
     using Fanex.Module.RNGCasino.Criteria;
     using Fanex.Module.RNGCasino.Repositories;
+    using Fanex.Module.RNGCasino.Services;
     using Fanex.RemotingRef;
     using Fanex.Tarus.BetList.Criteria;
     using Fanex.Tarus.BetList.DataAccess;
@@ -21,6 +22,7 @@
     using Sunplus.Accounting.Business;
     using Sunplus.Accounting.Core.Common;
     using Sunplus.Accounting.Core.Configurations;
+    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
@@ -65,7 +67,8 @@
             int sportType,
             long refNo,
             int custId,
-            byte transType)
+            byte transType,
+            DateTime winlostDate)
         {
             if (sportType == SportContants.AllBet ||
                 sportType == SportContants.SaGaming ||
@@ -78,24 +81,14 @@
                 sportType == SportContants.PPLiveCasino ||
                 sportType == SportContants.FGG)
             {
-                return GetLiveCasinoTickets(refNo, custId, transType);
+                return GetLiveCasinoTickets(refNo, custId, transType, winlostDate);
             }
 
             if (sportType == SportContants.BBin)
             {
                 return GetBBinTickets(refNo, custId, transType);
             }
-
-            if (sportType == SportContants.Voidbridge ||
-                sportType == SportContants.PP ||
-                sportType == SportContants.CardClub ||
-                sportType == SportContants.Spadegaming ||
-                sportType == SportContants.PGSoft ||
-                sportType == SportContants.RNGWar)
-            {
-                return GetMacauGamesTickets(refNo, custId, transType);
-            }
-
+          
             if (sportType == SportContants.FishingWorld ||
                 sportType == SportContants.RNG_RNGGame ||
                 sportType == SportContants.RNG_MiniGame ||
@@ -107,9 +100,15 @@
                 sportType == SportContants.CG ||
                 sportType == SportContants.VGaming ||
                 sportType == SportContants.AdvantPlay ||
-                sportType == SportContants.AdvantPlayMini)
+                sportType == SportContants.AdvantPlayMini||
+                sportType == SportContants.Voidbridge ||
+                sportType == SportContants.PP ||
+                sportType == SportContants.CardClub ||
+                sportType == SportContants.Spadegaming ||
+                sportType == SportContants.PGSoft ||
+                sportType == SportContants.RNGWar)
             {
-                return GetRNGCasinoOrFishingWorldTickets(refNo, custId, transType);
+                return GetRNGCasinoOrFishingWorldTickets(refNo, custId, transType, winlostDate);
             }
 
             return Enumerable.Empty<TicketDetail>();
@@ -238,8 +237,7 @@
         }
 
         #region Get Data functions
-
-        private static IEnumerable<TicketDetail> GetLiveCasinoTickets(long refNo, int custId, byte transType)
+        private static IEnumerable<TicketDetail> GetLiveCasinoTickets(long refNo, int custId, byte transType, DateTime winlostDate)
         {
             var criteria = new GetAGCasinoBetDetailsCriteria
             {
@@ -247,12 +245,13 @@
                 CustId = custId,
                 TransType = transType,
                 PageIndex = 1,
-                PageSize = int.MaxValue
+                PageSize = int.MaxValue,
+                WinLossDate = winlostDate
             };
 
-            IAGCasinoRepository repository = new AGCasinoRepository();
+            var service = new AGCasinoService();
 
-            return repository.BetDetails(criteria);
+            return service.BetDetails(criteria);
         }
 
         private static IEnumerable<TicketDetail> GetBBinTickets(long refNo, int custId, byte transType)
@@ -271,40 +270,22 @@
             return repository.BetDetails(criteria);
         }
 
-        private static IEnumerable<TicketDetail> GetMacauGamesTickets(long refNo, int custId, byte transType)
+
+        private static IEnumerable<TicketDetail> GetRNGCasinoOrFishingWorldTickets(long refNo, int custId, byte transType, DateTime winlostDate)
         {
-            var criteria = new GetVoidbridgeBetDetailsCriteria
-            {
-                TransId = refNo,
-                CustId = custId,
-                TransType = transType,
-                PageIndex = 1,
-                PageSize = int.MaxValue
-            };
-
-            IVoidbridgeRepository repository = new VoidbridgeRepository();
-
-            return repository.BetDetails(criteria).Select(t => new TicketDetail { Ticket = t });
-        }
-
-        private static IEnumerable<TicketDetail> GetRNGCasinoOrFishingWorldTickets(long refNo, int custId, byte transType)
-        {
-#pragma warning disable CS0612 // Type or member is obsolete
             var criteria = new GetRNGCasinoBetDetailsCriteria
-#pragma warning restore CS0612 // Type or member is obsolete
             {
                 TransId = refNo,
                 CustId = custId,
                 TransType = transType,
                 PageIndex = 1,
-                PageSize = int.MaxValue
+                PageSize = int.MaxValue,
+                WinLossDate = winlostDate
             };
 
-#pragma warning disable CS0612 // Type or member is obsolete
-            IRNGCasinoRepository repository = new RNGCasinoRepository();
-#pragma warning restore CS0612 // Type or member is obsolete
+            var service = new RNGCasinoService();
 
-            return repository.BetDetails(criteria).Select(t => new TicketDetail { Ticket = t });
+            return service.BetDetails(criteria).Select(t => new TicketDetail { Ticket = t.Ticket });
         }
 
         #endregion Get Data functions
