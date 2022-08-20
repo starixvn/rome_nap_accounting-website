@@ -471,6 +471,7 @@ namespace Fanex.Tarus.BetList.Business
                     GetCachePropertyById funcGetOddsTypeName = ticketHelper.GetOddsTypeNameById;
 
                     var from = pageSize * (pageIndex - 1);
+                    var newTickets = new List<TicketDetail>();
                     foreach (var betDetail in tickets.Skip(from).Take(pageSize))
                     {
                         ticketHelper.IsShowOddsWithChoice = IsShowOddsWithChoice(betDetail.Ticket.BetTypeId);
@@ -480,9 +481,11 @@ namespace Fanex.Tarus.BetList.Business
                         betDetail.StakeHtml = BetListExtension.BuildStake(betDetail, ref builder, ticketHelper);
                         betDetail.OddHtml = builder.BuildOdds(betDetail.Ticket, ticketData, funcGetOddsTypeName);
                         betDetail.StatusHtml = betlistHelper.BuildStatus(betDetail.Ticket, ticketHelper, ticketData, factory, builder);
+                        newTickets.Add(betDetail);
+
                     }
 
-                    return new KeyValuePair<string, IList<TicketDetail>>(string.Empty, tickets);
+                    return new KeyValuePair<string, IList<TicketDetail>>(string.Empty, newTickets);
                 }
             }
 
