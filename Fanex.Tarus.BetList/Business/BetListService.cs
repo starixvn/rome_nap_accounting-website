@@ -168,7 +168,7 @@ namespace Fanex.Tarus.BetList.Business
                 };
 
                 var mainTickets = _betListRepository.Fetch<TicketDetail>(mainCriteria, mapTicketObjectFunction);
-                var tickets = siteDBTickets.Concat(mainTickets).ToList();
+                var tickets = siteDBTickets.Concat(mainTickets).Distinct().ToList();
                 var factory = new BetListHTMLFactory();
                 var builder = factory.CreateBuilder();
                 ticketHelper.IsShowOddsWithChoice = true;
