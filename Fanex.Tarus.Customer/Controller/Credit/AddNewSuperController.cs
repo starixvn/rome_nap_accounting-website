@@ -2,9 +2,13 @@
 namespace Fanex.Tarus.Customer.Credit.Controllers
 {
     using Fanex.PTEngine.BusinessObjects;
+    using Fanex.Tarus.Admin.Business.CustomerDateLimit;
+    using Fanex.Tarus.Admin.Criteria.CustomerDateLimit;
+    using Fanex.Tarus.Customer.Business.AutoTransferAll;
     using Fanex.Tarus.Customer.CreditCustomer.Business;
     using Fanex.Tarus.Customer.CreditCustomer.Entities;
     using Fanex.Tarus.Customer.CreditCustomer.Requests;
+    using Fanex.Tarus.Customer.Criteria.AutoTransferAll;
     using Fanex.Tarus.Customer.Criteria.CreditCustomer;
     using Fanex.Tarus.Web.Controllers.Filters;
     using Module.NG2.Entities;
@@ -19,13 +23,19 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
 
     public class AddNewSuperController : CustomerSettingBaseController
     {
-        public AddNewSuperController(ICustomerSettingService customerSettingService)
+        private readonly IAutoTransferAllService _autoTransferAllService;
+
+        private readonly ICustomerDateLimitService _customerDateLimitService;
+
+        public AddNewSuperController(ICustomerSettingService customerSettingService, IAutoTransferAllService autoTransferAllService, ICustomerDateLimitService customerDateLimitService)
             : base(customerSettingService)
         {
+            _autoTransferAllService = autoTransferAllService ?? new AutoTransferAllService();
+            _customerDateLimitService = customerDateLimitService ?? new CustomerDateLimitService();
         }
 
         public AddNewSuperController()
-            : base()
+            : this(null, null, null)
         {
         }
 
@@ -58,9 +68,9 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
         /// <returns></returns>
         [AuthenticateRead]
         public ActionResult SearchCopyAddNewSuperPage()
-        {            
+        {
             return View("~/Views/Customer/CreditCustomer/SearchCopyAddNewSuper.cshtml");
-        }        
+        }
 
         /// <summary>
         /// Get Customer
@@ -137,8 +147,14 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
                 currentContext.SystemId = SystemId;
 
                 result = _customerService.AddNewSuper(customer, currentContext, out superId);
+
+                if (superId > 0 && result.ErrorCode == "0" && IsNeedToUpdateAutoTransferAndDateLimit(customer.SiteName, customer.CurrencyId))
+                {
+                    result = UpdateDefaultValueAutoTransferAndDateLimitForSpecialSiteSuper(superId, customer.UserName);
+                }
+
                 // DedirectToEditPage
-                if (result.ErrorCode == "0")
+                if (string.IsNullOrWhiteSpace(result.ErrorCode) || result.ErrorCode == "0")
                 {
                     string strUrl = "Customer/V2/UpdatePT.aspx?custid=" + superId + "&insert=true&roleid=4&uplineid=0&exchangeId=" + currency;
                     result.ErrorMessage = strUrl;
@@ -209,5 +225,45 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
                 syncService.AutoInsertAccount(custId, username, (RoleId)roleId, uplineId, disabledUpline, SiteId.NAP, currencyId, userId, SystemId);
             }
         }
+
+        private PTEngine.BusinessObjects.Result UpdateDefaultValueAutoTransferAndDateLimitForSpecialSiteSuper(int superId, string UserName)
+        {
+            var result = new PTEngine.BusinessObjects.Result();
+            var updateTransferResult = _autoTransferAllService.InsertAgentsFromPopup(new InsertAgentsFromPopupCriteria
+            {
+                UserName = UserName,
+                IP = System.Web.HttpContext.Current.Request.UserHostAddress,
+                TransferType = 2,
+                UserID = AppSession.AccId
+            });
+
+            if (updateTransferResult.ErrorCode != 0)
+            {
+                result.ErrorCode = updateTransferResult.ErrorCode.ToString();
+                result.ErrorMessage = updateTransferResult.ErrorMessage;
+            }
+
+            if (updateTransferResult.ErrorCode == 0)
+            {
+                var udpateDateLimitResult = _customerDateLimitService.Update(new UpdateCustomerDateLimitCriteria
+                {
+                    CustIds = superId.ToString(),
+                    UserNames = UserName,
+                    Choice = 2,
+                    LimitDays = 33,
+                    UserId = AppSession.AccId
+                });
+
+                if (udpateDateLimitResult.ErrorCode != 0)
+                {
+                    result.ErrorCode = udpateDateLimitResult.ErrorCode.ToString();
+                    result.ErrorMessage = udpateDateLimitResult.ErrorMessage;
+                }
+            }
+
+            return result;
+        }
+
+        private bool IsNeedToUpdateAutoTransferAndDateLimit(string siteName, int currencyId) => siteName.Equals("789y") && currencyId != 20;
     }
 }
