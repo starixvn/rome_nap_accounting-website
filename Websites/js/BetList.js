@@ -768,12 +768,12 @@ function ShowBonusDetails(refCode, transId) {
     parent.OpenNextPopup("TransactionDetails", url, 'Transaction Details', 1010, 480, true, false, window, 0, null, null);
 }
 
-function showProgressiveJackpotWonDetails(transId, custId, betType) {
+function showProgressiveJackpotWonDetails(transId, custId, betType, winlostdate) {
     var title = "Progressive Jackpot Won Details";
     var param = {
         url: "RNGCasinoBetList/JackpotDetails",
         title: title,
-        jsonParam: { TransId: transId, CustId: custId, BetType: betType, Title: title },
+        jsonParam: { TransId: transId, CustId: custId, BetType: betType, WinLostDate: winlostdate, Title: title },
         width: 1110,
         height: 600
     };
@@ -781,12 +781,12 @@ function showProgressiveJackpotWonDetails(transId, custId, betType) {
     openResultsPopUp(param);
 }
 
-function showPPJackpotWonDetails(transId, custId, betType) {
+function showPPJackpotWonDetails(transId, custId, betType, winlostdate) {
     var title = "PP Jackpot Won Details";
     var param = {
         url: "RNGCasinoBetList/JackpotDetails",
         title: title,
-        jsonParam: { TransId: transId, CustId: custId, BetType: betType, Title: title },
+        jsonParam: { TransId: transId, CustId: custId, BetType: betType, WinLostDate: winlostdate, Title: title },
         width: 1110,
         height: 600
     };
@@ -794,12 +794,12 @@ function showPPJackpotWonDetails(transId, custId, betType) {
     openResultsPopUp(param);
 }
 
-function showSGJackpotWonDetails(transId, custId, betType) {
+function showSGJackpotWonDetails(transId, custId, betType, winlostdate) {
     var title = "Spadegaming Jackpot Won Details";
     var param = {
         url: "RNGCasinoBetList/JackpotDetails",
         title: title,
-        jsonParam: { TransId: transId, CustId: custId, BetType: betType, Title: title },
+        jsonParam: { TransId: transId, CustId: custId, BetType: betType, WinLostDate: winlostdate, Title: title },
         width: 1110,
         height: 600
     };
@@ -807,12 +807,12 @@ function showSGJackpotWonDetails(transId, custId, betType) {
     openResultsPopUp(param);
 }
 
-function showVGamingJackpotWonDetails(transId, custId, betType) {
+function showVGamingJackpotWonDetails(transId, custId, betType, winlostdate) {
     var title = "Vgaming Jackpot Won Details";
     var param = {
         url: "RNGCasinoBetList/JackpotDetails",
         title: title,
-        jsonParam: { TransId: transId, CustId: custId, BetType: betType, Title: title },
+        jsonParam: { TransId: transId, CustId: custId, BetType: betType, WinLostDate: winlostdate, Title: title },
         width: 1110,
         height: 600
     };
@@ -820,12 +820,12 @@ function showVGamingJackpotWonDetails(transId, custId, betType) {
     openResultsPopUp(param);
 }
 
-function showSabaClubJackpotWonDetails(transId, custId, betType) {
+function showSabaClubJackpotWonDetails(transId, custId, betType, winlostdate) {
     var title = "Saba.games Jackpot Won Details";
     var param = {
         url: "RNGCasinoBetList/JackpotDetails",
         title: title,
-        jsonParam: { TransId: transId, CustId: custId, BetType: betType, Title: title },
+        jsonParam: { TransId: transId, CustId: custId, BetType: betType, WinLostDate: winlostdate, Title: title },
         width: 1110,
         height: 600
     };

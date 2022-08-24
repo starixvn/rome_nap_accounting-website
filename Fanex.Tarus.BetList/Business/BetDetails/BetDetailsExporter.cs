@@ -114,20 +114,19 @@
             return Enumerable.Empty<TicketDetail>();
         }
 
-        public IEnumerable<TicketDetail> GetJackpotDetails(long transId, int custId, int betType)
+        public IEnumerable<TicketDetail> GetJackpotDetails(long transId, int custId, int betType, DateTime winlostDate)
         {
             var criteria = new GetJackpotDetailsCriteria
             {
                 TransId = transId,
                 CustId = custId,
-                BetType = betType
+                BetType = betType,
+                WinLostDate = winlostDate
             };
 
-#pragma warning disable CS0612 // Type or member is obsolete
-            var repository = new RNGCasinoRepository();
-#pragma warning restore CS0612 // Type or member is obsolete
+            var service = new RNGCasinoService();
 
-            return repository.JackpotDetails(criteria).Select(t => new TicketDetail { Ticket = t });
+            return service.JackpotDetails(criteria).Select(t => new TicketDetail { Ticket = t.Ticket });
         }
 
         public void Export(IEnumerable<TicketDetail> ticketDetails, Stream stream, int sportType)
