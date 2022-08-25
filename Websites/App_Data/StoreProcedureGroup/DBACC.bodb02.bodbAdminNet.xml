@@ -47,6 +47,7 @@
     <Setting Key="Acc_AllStatement_SelCheckUsersList" SpName="Acc_AllStatement_SelCheckUsersList" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="Acc_AllStatement_UsersList" SpName="Acc_AllStatement_UsersList" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="Acc_CustomerSelByRefno" SpName="Acc_CustomerSelByRefno_xtest" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_SiteDBGroupIDSelByRefnos" SpName="Acc_SiteDBGroupIDSelByRefnos_xtest" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Report">
     <Setting Key="Acc_AllStatementCompanyDetail" SpName="Acc_AllStatementCompanyDetail" DbName="DBACC.bodb02.bodbAdminNet" />

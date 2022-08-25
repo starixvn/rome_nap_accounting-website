@@ -19,5 +19,6 @@
     <Setting Key="SiteDB1_Acc_FinanceCrossTransferBettransIns" SpName="Acc_FinanceCrossTransferBettransIns" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
     <Setting Key="SiteDB1_SiteDB_Acc_FinanceCrossTransferBettransIns" SpName="SiteDB_Acc_FinanceCrossTransferBettransIns" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
     <Setting Key="SiteDB1_SiteDB_Acc_Transfer_Rollback" SpName="SiteDB_Acc_Transfer_Rollback" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="SiteDB1_Acc_DailyTxn_UpdChecker" SpName="Acc_DailyTxn_UpdChecker" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
 </Functions>
