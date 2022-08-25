@@ -277,8 +277,8 @@
     </Function>
 
     <Function Name="Setting Type 10 - Bet Setting with Max Payout Per Match -- Setting Type 12 - Bet Setting with Max Per Ball">
-      <Setting Key="Acc_Dep_CustSetting_Game_BetLimitFullLineSettingSelect" SpName="Acc_Dep_CustSetting_Game_BetLimitFullLineSettingSelect_UAT2" DbName="DBCust.CustDB.bodbAdminNet" />
-      <Setting Key="Acc_Dep_CustSetting_Game_BetLimitFullLineUpd" SpName="Acc_Dep_CustSetting_Game_BetLimitFullLineUpd_UAT2" DbName="DBCust.CustDB.bodbAdminNet" />
+      <Setting Key="Acc_Dep_CustSetting_Game_BetLimitFullLineSettingSelect" SpName="Acc_Dep_CustSetting_Game_BetLimitFullLineSettingSelect" DbName="DBCust.CustDB.bodbAdminNet" />
+      <Setting Key="Acc_Dep_CustSetting_Game_BetLimitFullLineUpd" SpName="Acc_Dep_CustSetting_Game_BetLimitFullLineUpd" DbName="DBCust.CustDB.bodbAdminNet" />
     </Function>
 
     <Function Name="Setting Type 11 - Bet Setting without Max Per Match">
@@ -483,6 +483,6 @@
     <Setting Key="Acc_InitializingStake_StakelevelIns" SpName="Acc_InitializingStake_StakelevelIns" DbName="DBCUST.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Licensee Configuration > New Licensee Member">
-    <Setting Key="Acc_Dep_CheckExistedAccount" SpName="Acc_Dep_CheckExistedAccount_UAT2" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_Dep_CheckExistedAccount" SpName="Acc_Dep_CheckExistedAccount" DbName="DBCUST.CustDB.bodbAdminNet" />
   </Function>
 </Functions>
