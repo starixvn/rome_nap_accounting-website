@@ -338,7 +338,7 @@
 
         private string RenderKenoControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
         {
-            if (!customerInfoViewModel.ShowEnableCheckBoxKeno)
+            if (!customerInfoViewModel.ShowEnableCheckBoxKeno || customerInfoViewModel.IsDeposit)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "EnableKeno");
             }
@@ -757,21 +757,30 @@
 
         private string RenderNumberGameControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
         {
-            var numberGameSettingGroup = new SettingGroup();
+            if (customerInfoViewModel.IsDeposit)
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "chkNumberGame");
+                TemplateHandler.Assign(ref htmlcontent, "{numberGameControl}", string.Empty);
+            }
+            else
+            {
+                var numberGameSettingGroup = new SettingGroup();
 
-            numberGameSettingGroup.Add(
-                GetSettingControlNumberGame(
-                    customerInfoViewModel.SearchAccountRoleId,
-                    customerInfoViewModel.CustParent.IsDisabledNumberGame,
-                    customerInfoViewModel.ManageCustomerAccess,
-                    "disabledNumberGame",
-                    !customerInfoViewModel.DisabledNumberGame,
-                    !customerInfoViewModel.DisabledDownlinesNumberGame,
-                    customerInfoViewModel.Enabled,
-                    customerInfoViewModel.IsDeposit));
+                numberGameSettingGroup.Add(
+                    GetSettingControlNumberGame(
+                        customerInfoViewModel.SearchAccountRoleId,
+                        customerInfoViewModel.CustParent.IsDisabledNumberGame,
+                        customerInfoViewModel.ManageCustomerAccess,
+                        "disabledNumberGame",
+                        !customerInfoViewModel.DisabledNumberGame,
+                        !customerInfoViewModel.DisabledDownlinesNumberGame,
+                        customerInfoViewModel.Enabled,
+                        customerInfoViewModel.IsDeposit));
 
-            TemplateHandler.Assign(ref htmlcontent, "{chkNumberGame}", customerInfoViewModel.DisabledNumberGame ? 1 : 0);
-            TemplateHandler.Assign(ref htmlcontent, "{numberGameControl}", numberGameSettingGroup.GetHTMLSettingControl());
+                TemplateHandler.Assign(ref htmlcontent, "{chkNumberGame}", customerInfoViewModel.DisabledNumberGame ? 1 : 0);
+                TemplateHandler.Assign(ref htmlcontent, "{numberGameControl}", numberGameSettingGroup.GetHTMLSettingControl());
+            }
+
             return htmlcontent;
         }
 
