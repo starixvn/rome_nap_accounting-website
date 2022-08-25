@@ -112,6 +112,32 @@ namespace Fanex.Tarus.Customer.Controller
             return PartialView("~/Views/Customer/LicenseeDCSSetting/_BetSettingWithoutMaxPerMatch.cshtml", model);
         }
 
+        [HttpPost, AuthenticateRead]
+        public ActionResult BetSettingWithMaxPayoutPerMatch(BetSettingWithMaxPayoutPerMatchViewModel model)
+        {
+            // Get first AgentId.
+            var agentIds = ConvertToIntArray(model.AgentIds).ToList();
+            var agentId = agentIds.Count == 1 ? agentIds[0] : 0;
+
+            var betSettings = _settingService.GetBetSettingsWithMaxPayoutPerMatch(model.ProductId, model.SuperId, agentId);
+            model.BetSettings = betSettings;
+
+            return PartialView("~/Views/Customer/LicenseeDCSSetting/_BetSettingWithMaxPayoutPerMatch.cshtml", model);
+        }
+
+        [HttpPost, AuthenticateRead]
+        public ActionResult BetSettingWithMaxPerBall(BetSettingWithMaxPerBallViewModel model)
+        {
+            // Get first AgentId.
+            var agentIds = ConvertToIntArray(model.AgentIds).ToList();
+            var agentId = agentIds.Count == 1 ? agentIds[0] : 0;
+
+            var betSettings = _settingService.GetBetSettingsWithMaxPerBall(model.ProductId, model.SuperId, agentId);
+            model.BetSettings = betSettings;
+
+            return PartialView("~/Views/Customer/LicenseeDCSSetting/_BetSettingWithMaxPerBall.cshtml", model);
+        }
+
         [HttpPost, AuthenticateHost]
         public ActionResult UpdateBetSetting(BetSettingViewModel model)
         {
@@ -131,6 +157,36 @@ namespace Fanex.Tarus.Customer.Controller
         public ActionResult UpdateBetSettingWithoutMaxPerMatch(BetSettingWithoutMaxPerMatchViewModel model)
         {
             var result = _settingService.UpdateBetSettingWithoutMaxPerMatch(
+                model.SuperId,
+                model.ApplyExistedMem,
+                model.BetSettings.FirstOrDefault(),
+                ConvertToIntArray(model.AgentIds),
+                model.IsAgentOnly,
+                AppSession.AccId,
+                Utils.GetClientIP());
+
+            return Json(result, JsonRequestBehavior.DenyGet);
+        }
+
+        [HttpPost, AuthenticateHost]
+        public ActionResult UpdateBetSettingWithMaxPayoutPerMatch(BetSettingWithMaxPayoutPerMatchViewModel model)
+        {
+            var result = _settingService.UpdateBetSettingWithMaxPayoutPerMatch(
+                model.SuperId,
+                model.ApplyExistedMem,
+                model.BetSettings.FirstOrDefault(),
+                ConvertToIntArray(model.AgentIds),
+                model.IsAgentOnly,
+                AppSession.AccId,
+                Utils.GetClientIP());
+
+            return Json(result, JsonRequestBehavior.DenyGet);
+        }
+
+        [HttpPost, AuthenticateHost]
+        public ActionResult UpdateBetSettingWithMaxPerBall(BetSettingWithMaxPerBallViewModel model)
+        {
+            var result = _settingService.UpdateBetSettingWithMaxPerBall(
                 model.SuperId,
                 model.ApplyExistedMem,
                 model.BetSettings.FirstOrDefault(),

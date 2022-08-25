@@ -171,319 +171,324 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                 else if (data.ResultSet.Tables.Count > 0)
                 {
                     var drCustInfo = data.ResultSet.Tables[0].Rows[0];
-                    var roleId = CastAide.AsInt32(drCustInfo["roleid"], 1);
-                    var rComm = data.ResultSet.Tables[2].Rows[0];
-
-                    result.Comm = new List<Commission>();
                     result.CustomerInfo = GetCustomerRelation(data);
 
-                    var groupA = new AllowViewSport()
+                    if(data.ResultSet.Tables.Count > 2)
                     {
-                        Status = true,
-                        Name = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "GroupA")
-                    };
+                        var rComm = data.ResultSet.Tables[2].Rows[0];
+                        var roleId = CastAide.AsInt32(drCustInfo["roleid"], 1);
 
-                    var groupB = new AllowViewSport()
-                    {
-                        Status = true,
-                        Name = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "GroupB")
-                    };
+                        result.Comm = new List<Commission>();
 
-                    var groupC = new AllowViewSport()
-                    {
-                        Status = true,
-                        Name = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "GroupC")
-                    };
-
-                    var groupD = new AllowViewSport()
-                    {
-                        Status = true,
-                        Name = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "GroupD")
-                    };
-                    var
-                        other = new AllowViewSport()
+                        var groupA = new AllowViewSport()
                         {
                             Status = true,
-                            Name = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblOther")
+                            Name = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "GroupA")
                         };
 
-                    var gameComm = new AllowViewSport()
-                    {
-                        Status = true,
-                        Name = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblGameComm")
-                    };
-
-                    var onexTwo = new AllowViewSport()
-                    {
-                        Status = !WebSettings.Disable1x2Comm,
-                        Name = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lbl1x2")
-                    };
-                    var myanmarOdds = new AllowViewSport()
-                    {
-                        Status = true,
-                        Name =
-                            ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "MyanmarOdds")
-                    };
-                    if (roleId <= (int)Role.Super)
-                    {
-                        var superCom = new Commission()
+                        var groupB = new AllowViewSport()
                         {
-                            RoleName = Role.Super.ToString(),
-                            GroupA = new AllowViewSport()
-                            {
-                                Status = groupA.Status,
-                                Name = groupA.Name,
-                                Comm =
-                                                               NumberFormat.DecFormat(
-                                                                   rComm[string.Format(_comGroupA, 4)],
-                                                                   4)
-                            },
-                            GroupB = new AllowViewSport()
-                            {
-                                Status = !CastAide.AsBoolean(rComm["IsMyanmarOdds"]),
-                                Name = groupB.Name,
-                                Comm =
-                                                               NumberFormat.DecFormat(
-                                                                   rComm[string.Format(_comGroupB, 4)],
-                                                                   4)
-                            },
-                            GroupC = new AllowViewSport()
-                            {
-                                Status = !CastAide.AsBoolean(rComm["IsMyanmarOdds"]),
-                                Name = groupC.Name,
-                                Comm =
-                                                               NumberFormat.DecFormat(
-                                                                   rComm[string.Format(_comGroupC, 4)],
-                                                                   4)
-                            },
-                            GroupD = new AllowViewSport()
-                            {
-                                Status = !CastAide.AsBoolean(rComm["IsMyanmarOdds"]),
-                                Name = groupD.Name,
-                                Comm =
-                                                               NumberFormat.DecFormat(
-                                                                   rComm[string.Format(_comGroupD, 4)],
-                                                                   4)
-                            },
-                            Other = new AllowViewSport()
-                            {
-                                Status = other.Status,
-                                Name = other.Name,
-                                Comm =
-                                                               NumberFormat.DecFormat(
-                                                                   rComm[string.Format(_comOther, 4)], 4)
-                            },
-                            OneXTwo = new AllowViewSport()
-                            {
-                                Status = onexTwo.Status,
-                                Name = onexTwo.Name,
-                                Comm =
-                                                               NumberFormat.DecFormat(rComm[string.Format(_com1x2, 4)],
-                                                                                      4)
-                            },
-                            MyanmarOdds = new AllowViewSport()
-                            {
-                                Status = CastAide.AsBoolean(rComm["IsMyanmarOdds"]),
-                                Name = myanmarOdds.Name,
-                                Comm = NumberFormat.DecFormat(rComm["MyanmarOddsComm_4"], 4)
-                            },
-                            GameComm = new AllowViewSport()
-                            {
-                                Status = gameComm.Status,
-                                Name = gameComm.Name,
-                                Comm = NumberFormat.DecFormat(rComm[string.Format(_comGameComm, 4)], 4)
-                            }
+                            Status = true,
+                            Name = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "GroupB")
                         };
-                        result.Comm.Add(superCom);
-                    }
 
-                    if (roleId <= (int)Role.Master)
-                    {
-                        var masterCom = new Commission()
+                        var groupC = new AllowViewSport()
                         {
-                            RoleName = Role.Master.ToString(),
-                            GroupA = new AllowViewSport()
-                            {
-                                Status = groupA.Status,
-                                Name = groupA.Name,
-                                Comm =
-                                                                NumberFormat.DecFormat(
-                                                                    rComm[string.Format(_comGroupA, 3)], 4)
-                            },
-                            GroupB = new AllowViewSport()
-                            {
-                                Status = !CastAide.AsBoolean(rComm["IsMyanmarOdds"]),
-                                Name = groupB.Name,
-                                Comm =
-                                                                NumberFormat.DecFormat(
-                                                                    rComm[string.Format(_comGroupB, 3)], 4)
-                            },
-                            GroupC = new AllowViewSport()
-                            {
-                                Status = !CastAide.AsBoolean(rComm["IsMyanmarOdds"]),
-                                Name = groupC.Name,
-                                Comm =
-                                                                NumberFormat.DecFormat(
-                                                                    rComm[string.Format(_comGroupC, 3)], 4)
-                            },
-                            GroupD = new AllowViewSport()
-                            {
-                                Status = !CastAide.AsBoolean(rComm["IsMyanmarOdds"]),
-                                Name = groupD.Name,
-                                Comm =
-                                                                NumberFormat.DecFormat(
-                                                                    rComm[string.Format(_comGroupD, 3)], 4)
-                            },
-                            Other = new AllowViewSport()
-                            {
-                                Status = other.Status,
-                                Name = other.Name,
-                                Comm =
-                                                                NumberFormat.DecFormat(rComm[string.Format(_comOther, 3)],
-                                                                                       4)
-                            },
-                            OneXTwo = new AllowViewSport()
-                            {
-                                Status = onexTwo.Status,
-                                Name = onexTwo.Name,
-                                Comm =
-                                                                NumberFormat.DecFormat(rComm[string.Format(_com1x2, 3)], 4)
-                            },
-                            MyanmarOdds = new AllowViewSport()
-                            {
-                                Status = CastAide.AsBoolean(rComm["IsMyanmarOdds"]),
-                                Name = myanmarOdds.Name,
-                                Comm = NumberFormat.DecFormat(rComm["MyanmarOddsComm_3"], 4)
-                            },
-                            GameComm = new AllowViewSport()
-                            {
-                                Status = gameComm.Status,
-                                Name = gameComm.Name,
-                                Comm = NumberFormat.DecFormat(rComm[string.Format(_comGameComm, 3)], 4)
-                            }
+                            Status = true,
+                            Name = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "GroupC")
                         };
-                        result.Comm.Add(masterCom);
-                    }
 
-                    if (roleId <= (int)Role.Agent)
-                    {
-                        var agentCom = new Commission()
+                        var groupD = new AllowViewSport()
                         {
-                            RoleName = Role.Agent.ToString(),
-                            GroupA = new AllowViewSport()
-                            {
-                                Status = groupA.Status,
-                                Name = groupA.Name,
-                                Comm = NumberFormat.DecFormat(rComm[string.Format(_comGroupA, 2)], 4)
-                            },
-                            GroupB = new AllowViewSport()
-                            {
-                                Status = !CastAide.AsBoolean(rComm["IsMyanmarOdds"]),
-                                Name = groupB.Name,
-                                Comm = NumberFormat.DecFormat(rComm[string.Format(_comGroupB, 2)], 4)
-                            },
-                            GroupC = new AllowViewSport()
-                            {
-                                Status = !CastAide.AsBoolean(rComm["IsMyanmarOdds"]),
-                                Name = groupC.Name,
-                                Comm = NumberFormat.DecFormat(rComm[string.Format(_comGroupC, 2)],
-                                                                                      4)
-                            },
-                            GroupD = new AllowViewSport()
-                            {
-                                Status = !CastAide.AsBoolean(rComm["IsMyanmarOdds"]),
-                                Name = groupD.Name,
-                                Comm = NumberFormat.DecFormat(rComm[string.Format(_comGroupD, 2)],
-                                                                                      4)
-                            },
-                            Other = new AllowViewSport()
-                            {
-                                Status = other.Status,
-                                Name = other.Name,
-                                Comm = NumberFormat.DecFormat(rComm[string.Format(_comOther, 2)], 4)
-                            },
-                            OneXTwo = new AllowViewSport()
-                            {
-                                Status = onexTwo.Status,
-                                Name = onexTwo.Name,
-                                Comm = NumberFormat.DecFormat(rComm[string.Format(_com1x2, 2)], 4)
-                            },
-                            MyanmarOdds = new AllowViewSport()
-                            {
-                                Status = CastAide.AsBoolean(rComm["IsMyanmarOdds"]),
-                                Name = myanmarOdds.Name,
-                                Comm = NumberFormat.DecFormat(rComm["MyanmarOddsComm_2"], 4)
-                            },
-                            GameComm = new AllowViewSport()
-                            {
-                                Status = gameComm.Status,
-                                Name = gameComm.Name,
-                                Comm = NumberFormat.DecFormat(rComm[string.Format(_comGameComm, 2)], 4)
-                            }
+                            Status = true,
+                            Name = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "GroupD")
                         };
-                        result.Comm.Add(agentCom);
-                    }
+                        var
+                            other = new AllowViewSport()
+                            {
+                                Status = true,
+                                Name = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblOther")
+                            };
 
-                    if (roleId == (int)Role.Member)
-                    {
-                        var group = rComm["ugroup"].ToString().ToLower();
-                        if (group != "") group = group.Substring(group.Length - 1, 1);
-                        var memberComm = NumberFormat.DecFormat(rComm["comm"], 4);
-
-                        var memberCom = new Commission()
+                        var gameComm = new AllowViewSport()
                         {
-                            RoleName = Role.Member.ToString(),
-                            GroupA = new AllowViewSport()
-                            {
-                                Status = groupA.Status,
-                                Name = groupA.Name,
-                                Comm = group.Equals("a") ? memberComm : string.Empty
-                            },
-                            GroupB = new AllowViewSport()
-                            {
-                                Status = groupB.Status,
-                                Name = groupB.Name,
-                                Comm = group.Equals("b") ? memberComm : string.Empty
-                            },
-                            GroupC = new AllowViewSport()
-                            {
-                                Status = groupC.Status,
-                                Name = groupC.Name,
-                                Comm = group.Equals("c") ? memberComm : string.Empty
-                            },
-                            GroupD = new AllowViewSport()
-                            {
-                                Status = groupD.Status,
-                                Name = groupD.Name,
-                                Comm = group.Equals("d") ? memberComm : string.Empty
-                            },
-                            Other = new AllowViewSport()
-                            {
-                                Status = other.Status,
-                                Name = other.Name,
-                                Comm = NumberFormat.DecFormat(rComm["othercomm"], 4)
-                            },
-                            OneXTwo = new AllowViewSport()
-                            {
-                                Status = onexTwo.Status,
-                                Name = onexTwo.Name,
-                                Comm = NumberFormat.DecFormat(rComm["comm_5"], 4)
-                            },
-                            MyanmarOdds = new AllowViewSport()
-                            {
-                                Status = CastAide.AsBoolean(rComm["IsMyanmarOdds"]),
-                                Name = myanmarOdds.Name,
-                                Comm = NumberFormat.DecFormat(rComm["MyanmarOddsComm_1"], 4)
-                            },
-                            GameComm = new AllowViewSport()
-                            {
-                                Status = gameComm.Status,
-                                Name = gameComm.Name,
-                                Comm = NumberFormat.DecFormat(rComm["v161_comm_81"], 4)
-                            }
+                            Status = true,
+                            Name = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblGameComm")
                         };
-                        result.Comm.Add(memberCom);
+
+                        var onexTwo = new AllowViewSport()
+                        {
+                            Status = !WebSettings.Disable1x2Comm,
+                            Name = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lbl1x2")
+                        };
+                        var myanmarOdds = new AllowViewSport()
+                        {
+                            Status = true,
+                            Name =
+                                ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "MyanmarOdds")
+                        };
+                        if (roleId <= (int)Role.Super)
+                        {
+                            var superCom = new Commission()
+                            {
+                                RoleName = Role.Super.ToString(),
+                                GroupA = new AllowViewSport()
+                                {
+                                    Status = groupA.Status,
+                                    Name = groupA.Name,
+                                    Comm =
+                                                                   NumberFormat.DecFormat(
+                                                                       rComm[string.Format(_comGroupA, 4)],
+                                                                       4)
+                                },
+                                GroupB = new AllowViewSport()
+                                {
+                                    Status = !CastAide.AsBoolean(rComm["IsMyanmarOdds"]),
+                                    Name = groupB.Name,
+                                    Comm =
+                                                                   NumberFormat.DecFormat(
+                                                                       rComm[string.Format(_comGroupB, 4)],
+                                                                       4)
+                                },
+                                GroupC = new AllowViewSport()
+                                {
+                                    Status = !CastAide.AsBoolean(rComm["IsMyanmarOdds"]),
+                                    Name = groupC.Name,
+                                    Comm =
+                                                                   NumberFormat.DecFormat(
+                                                                       rComm[string.Format(_comGroupC, 4)],
+                                                                       4)
+                                },
+                                GroupD = new AllowViewSport()
+                                {
+                                    Status = !CastAide.AsBoolean(rComm["IsMyanmarOdds"]),
+                                    Name = groupD.Name,
+                                    Comm =
+                                                                   NumberFormat.DecFormat(
+                                                                       rComm[string.Format(_comGroupD, 4)],
+                                                                       4)
+                                },
+                                Other = new AllowViewSport()
+                                {
+                                    Status = other.Status,
+                                    Name = other.Name,
+                                    Comm =
+                                                                   NumberFormat.DecFormat(
+                                                                       rComm[string.Format(_comOther, 4)], 4)
+                                },
+                                OneXTwo = new AllowViewSport()
+                                {
+                                    Status = onexTwo.Status,
+                                    Name = onexTwo.Name,
+                                    Comm =
+                                                                   NumberFormat.DecFormat(rComm[string.Format(_com1x2, 4)],
+                                                                                          4)
+                                },
+                                MyanmarOdds = new AllowViewSport()
+                                {
+                                    Status = CastAide.AsBoolean(rComm["IsMyanmarOdds"]),
+                                    Name = myanmarOdds.Name,
+                                    Comm = NumberFormat.DecFormat(rComm["MyanmarOddsComm_4"], 4)
+                                },
+                                GameComm = new AllowViewSport()
+                                {
+                                    Status = gameComm.Status,
+                                    Name = gameComm.Name,
+                                    Comm = NumberFormat.DecFormat(rComm[string.Format(_comGameComm, 4)], 4)
+                                }
+                            };
+                            result.Comm.Add(superCom);
+                        }
+
+                        if (roleId <= (int)Role.Master)
+                        {
+                            var masterCom = new Commission()
+                            {
+                                RoleName = Role.Master.ToString(),
+                                GroupA = new AllowViewSport()
+                                {
+                                    Status = groupA.Status,
+                                    Name = groupA.Name,
+                                    Comm =
+                                                                    NumberFormat.DecFormat(
+                                                                        rComm[string.Format(_comGroupA, 3)], 4)
+                                },
+                                GroupB = new AllowViewSport()
+                                {
+                                    Status = !CastAide.AsBoolean(rComm["IsMyanmarOdds"]),
+                                    Name = groupB.Name,
+                                    Comm =
+                                                                    NumberFormat.DecFormat(
+                                                                        rComm[string.Format(_comGroupB, 3)], 4)
+                                },
+                                GroupC = new AllowViewSport()
+                                {
+                                    Status = !CastAide.AsBoolean(rComm["IsMyanmarOdds"]),
+                                    Name = groupC.Name,
+                                    Comm =
+                                                                    NumberFormat.DecFormat(
+                                                                        rComm[string.Format(_comGroupC, 3)], 4)
+                                },
+                                GroupD = new AllowViewSport()
+                                {
+                                    Status = !CastAide.AsBoolean(rComm["IsMyanmarOdds"]),
+                                    Name = groupD.Name,
+                                    Comm =
+                                                                    NumberFormat.DecFormat(
+                                                                        rComm[string.Format(_comGroupD, 3)], 4)
+                                },
+                                Other = new AllowViewSport()
+                                {
+                                    Status = other.Status,
+                                    Name = other.Name,
+                                    Comm =
+                                                                    NumberFormat.DecFormat(rComm[string.Format(_comOther, 3)],
+                                                                                           4)
+                                },
+                                OneXTwo = new AllowViewSport()
+                                {
+                                    Status = onexTwo.Status,
+                                    Name = onexTwo.Name,
+                                    Comm =
+                                                                    NumberFormat.DecFormat(rComm[string.Format(_com1x2, 3)], 4)
+                                },
+                                MyanmarOdds = new AllowViewSport()
+                                {
+                                    Status = CastAide.AsBoolean(rComm["IsMyanmarOdds"]),
+                                    Name = myanmarOdds.Name,
+                                    Comm = NumberFormat.DecFormat(rComm["MyanmarOddsComm_3"], 4)
+                                },
+                                GameComm = new AllowViewSport()
+                                {
+                                    Status = gameComm.Status,
+                                    Name = gameComm.Name,
+                                    Comm = NumberFormat.DecFormat(rComm[string.Format(_comGameComm, 3)], 4)
+                                }
+                            };
+                            result.Comm.Add(masterCom);
+                        }
+
+                        if (roleId <= (int)Role.Agent)
+                        {
+                            var agentCom = new Commission()
+                            {
+                                RoleName = Role.Agent.ToString(),
+                                GroupA = new AllowViewSport()
+                                {
+                                    Status = groupA.Status,
+                                    Name = groupA.Name,
+                                    Comm = NumberFormat.DecFormat(rComm[string.Format(_comGroupA, 2)], 4)
+                                },
+                                GroupB = new AllowViewSport()
+                                {
+                                    Status = !CastAide.AsBoolean(rComm["IsMyanmarOdds"]),
+                                    Name = groupB.Name,
+                                    Comm = NumberFormat.DecFormat(rComm[string.Format(_comGroupB, 2)], 4)
+                                },
+                                GroupC = new AllowViewSport()
+                                {
+                                    Status = !CastAide.AsBoolean(rComm["IsMyanmarOdds"]),
+                                    Name = groupC.Name,
+                                    Comm = NumberFormat.DecFormat(rComm[string.Format(_comGroupC, 2)],
+                                                                                          4)
+                                },
+                                GroupD = new AllowViewSport()
+                                {
+                                    Status = !CastAide.AsBoolean(rComm["IsMyanmarOdds"]),
+                                    Name = groupD.Name,
+                                    Comm = NumberFormat.DecFormat(rComm[string.Format(_comGroupD, 2)],
+                                                                                          4)
+                                },
+                                Other = new AllowViewSport()
+                                {
+                                    Status = other.Status,
+                                    Name = other.Name,
+                                    Comm = NumberFormat.DecFormat(rComm[string.Format(_comOther, 2)], 4)
+                                },
+                                OneXTwo = new AllowViewSport()
+                                {
+                                    Status = onexTwo.Status,
+                                    Name = onexTwo.Name,
+                                    Comm = NumberFormat.DecFormat(rComm[string.Format(_com1x2, 2)], 4)
+                                },
+                                MyanmarOdds = new AllowViewSport()
+                                {
+                                    Status = CastAide.AsBoolean(rComm["IsMyanmarOdds"]),
+                                    Name = myanmarOdds.Name,
+                                    Comm = NumberFormat.DecFormat(rComm["MyanmarOddsComm_2"], 4)
+                                },
+                                GameComm = new AllowViewSport()
+                                {
+                                    Status = gameComm.Status,
+                                    Name = gameComm.Name,
+                                    Comm = NumberFormat.DecFormat(rComm[string.Format(_comGameComm, 2)], 4)
+                                }
+                            };
+                            result.Comm.Add(agentCom);
+                        }
+
+                        if (roleId == (int)Role.Member)
+                        {
+                            var group = rComm["ugroup"].ToString().ToLower();
+                            if (group != "") group = group.Substring(group.Length - 1, 1);
+                            var memberComm = NumberFormat.DecFormat(rComm["comm"], 4);
+
+                            var memberCom = new Commission()
+                            {
+                                RoleName = Role.Member.ToString(),
+                                GroupA = new AllowViewSport()
+                                {
+                                    Status = groupA.Status,
+                                    Name = groupA.Name,
+                                    Comm = group.Equals("a") ? memberComm : string.Empty
+                                },
+                                GroupB = new AllowViewSport()
+                                {
+                                    Status = groupB.Status,
+                                    Name = groupB.Name,
+                                    Comm = group.Equals("b") ? memberComm : string.Empty
+                                },
+                                GroupC = new AllowViewSport()
+                                {
+                                    Status = groupC.Status,
+                                    Name = groupC.Name,
+                                    Comm = group.Equals("c") ? memberComm : string.Empty
+                                },
+                                GroupD = new AllowViewSport()
+                                {
+                                    Status = groupD.Status,
+                                    Name = groupD.Name,
+                                    Comm = group.Equals("d") ? memberComm : string.Empty
+                                },
+                                Other = new AllowViewSport()
+                                {
+                                    Status = other.Status,
+                                    Name = other.Name,
+                                    Comm = NumberFormat.DecFormat(rComm["othercomm"], 4)
+                                },
+                                OneXTwo = new AllowViewSport()
+                                {
+                                    Status = onexTwo.Status,
+                                    Name = onexTwo.Name,
+                                    Comm = NumberFormat.DecFormat(rComm["comm_5"], 4)
+                                },
+                                MyanmarOdds = new AllowViewSport()
+                                {
+                                    Status = CastAide.AsBoolean(rComm["IsMyanmarOdds"]),
+                                    Name = myanmarOdds.Name,
+                                    Comm = NumberFormat.DecFormat(rComm["MyanmarOddsComm_1"], 4)
+                                },
+                                GameComm = new AllowViewSport()
+                                {
+                                    Status = gameComm.Status,
+                                    Name = gameComm.Name,
+                                    Comm = NumberFormat.DecFormat(rComm["v161_comm_81"], 4)
+                                }
+                            };
+                            result.Comm.Add(memberCom);
+                        }
                     }
+                    
                 }
                 else
                 {

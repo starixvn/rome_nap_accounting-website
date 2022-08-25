@@ -21,6 +21,10 @@ namespace Fanex.Tarus.Customer.Business.LicenseeDcsSetting
 
         IEnumerable<BetSettingWithoutMaxPerMatchEntity> GetBetSettingWithoutMaxPerMatch(int productId, int superId, int agentId);
 
+        IEnumerable<BetSettingWithMaxPayoutPerMatchEntity> GetBetSettingsWithMaxPayoutPerMatch(int productId, int superId, int agentId);
+
+        IEnumerable<BetSettingWithMaxPerBallEntity> GetBetSettingsWithMaxPerBall(int productId, int superId, int agentId);
+
         StatusEntity GetStatus(int productId, int custId);
 
         IEnumerable<GameTypeGlobalStakeLevel> GetGameTypeGlobalStakeLevels(int productId, int superId);
@@ -51,6 +55,24 @@ namespace Fanex.Tarus.Customer.Business.LicenseeDcsSetting
             int superId,
             bool applyExistedMem,
             BetSettingWithoutMaxPerMatchEntity betSetting,
+            IEnumerable<int> agentIds,
+            bool isAgentOnly,
+            int userId,
+            string ip);
+
+        Result UpdateBetSettingWithMaxPayoutPerMatch(
+            int superId,
+            bool applyExistedMem,
+            BetSettingWithMaxPayoutPerMatchEntity betSetting,
+            IEnumerable<int> agentIds,
+            bool isAgentOnly,
+            int userId,
+            string ip);
+
+        Result UpdateBetSettingWithMaxPerBall(
+            int superId,
+            bool applyExistedMem,
+            BetSettingWithMaxPerBallEntity betSetting,
             IEnumerable<int> agentIds,
             bool isAgentOnly,
             int userId,

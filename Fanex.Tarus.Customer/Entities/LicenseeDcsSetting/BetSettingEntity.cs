@@ -1,9 +1,15 @@
-﻿using Fanex.Tarus.Infrastructure.Caching;
-
-namespace Fanex.Tarus.Customer.Entities.LicenseeDcsSetting
+﻿namespace Fanex.Tarus.Customer.Entities.LicenseeDcsSetting
 {
-    public sealed class BetSettingEntity
+    using Fanex.Tarus.Infrastructure.Caching;
+    using Sunplus.Accounting.Core;
+    using Sunplus.Accounting.Core.Extensions;
+
+    public class BetSettingEntity
     {
+        private const int MixParlayBettypeId = 9;
+        private const int SoccerSporttypeId = 1;
+        private const int OthersSporttypeId = 99;
+
         public BetSettingEntity()
         {
         }
@@ -23,6 +29,18 @@ namespace Fanex.Tarus.Customer.Entities.LicenseeDcsSetting
         {
             get
             {
+                if (BetType == Sunplus.Accounting.Core.Constant.BetType.MixParlay
+                    && SportType == Sunplus.Accounting.Core.Constant.Sport.Soccer)
+                {
+                    return ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "SoccerParlay");
+                }
+
+                if (BetType == Sunplus.Accounting.Core.Constant.BetType.MixParlay
+                    && SportType == Sunplus.Accounting.Core.Constant.Sport.OtherSports)
+                {
+                    return ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblMixedSports");
+                }
+
                 var sportName = CacheRef.GetSportName(SportType);
                 return string.IsNullOrWhiteSpace(sportName) ? SportType.ToString() : sportName;
             }

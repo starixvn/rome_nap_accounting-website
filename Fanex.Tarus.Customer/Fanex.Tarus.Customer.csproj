@@ -303,6 +303,8 @@
     <Compile Include="Business\InitializingStakeLevel\InitializingStakeLevelService.cs" />
     <Compile Include="Business\LicenseeDcsSetting\ILicenseeDcsSettingService.cs" />
     <Compile Include="Business\LicenseeDcsSetting\LicenseeDcsSettingService.cs" />
+    <Compile Include="Business\LicenseeMember\ILicenseeMemberService.cs" />
+    <Compile Include="Business\LicenseeMember\LicenseeMemberService.cs" />
     <Compile Include="Business\LicenseeOddsGroup\LicenseeOddsGroupService.cs" />
     <Compile Include="Business\LicenseeSubsidiary\ILicenseeSubsidiaryService.cs" />
     <Compile Include="Business\LicenseeSubsidiary\LicenseeSubsidiaryService.cs" />
@@ -350,6 +352,7 @@
     <Compile Include="Controller\Chatbot\ChatbotController.cs" />
     <Compile Include="Controller\CN88Customer\MoveCN88SuperController.cs" />
     <Compile Include="Controller\InitializingStakeLevel\InitStakeLevelController.cs" />
+    <Compile Include="Controller\LicenseeMemberController.cs" />
     <Compile Include="Controller\MultipleUpdateSuperStatusController.cs" />
     <Compile Include="Controller\CopySuperSettingController.cs" />
     <Compile Include="Controller\CopyVRSettingController.cs" />
@@ -442,6 +445,8 @@
     <Compile Include="Criteria\InitializingStakeLevel\StakeLevelInsCriteria.cs" />
     <Compile Include="Criteria\InitializingStakeLevel\StakeLevelSelCriteria.cs" />
     <Compile Include="Criteria\LicenseeDcsSetting\GetAgentCriteria.cs" />
+    <Compile Include="Criteria\LicenseeDcsSetting\GetBetSettingWithMaxPerBallCriteria.cs" />
+    <Compile Include="Criteria\LicenseeDcsSetting\GetBetSettingWithMaxPayoutPerMatchCriteria.cs" />
     <Compile Include="Criteria\LicenseeDcsSetting\GetBetSettingWithoutMaxPerMatchCriteria.cs" />
     <Compile Include="Criteria\LicenseeDcsSetting\GetStakeLevelCriteria.cs" />
     <Compile Include="Criteria\LicenseeDcsSetting\GetBetSettingCriteria.cs" />
@@ -453,12 +458,16 @@
     <Compile Include="Criteria\LicenseeDcsSetting\GetStatusCriteria.cs" />
     <Compile Include="Criteria\LicenseeDcsSetting\GetSuperCriteria.cs" />
     <Compile Include="Criteria\LicenseeDcsSetting\NonQueryCriteria.cs" />
+    <Compile Include="Criteria\LicenseeDcsSetting\UpdateBetSettingWithMaxPerBallCriteria.cs" />
+    <Compile Include="Criteria\LicenseeDcsSetting\UpdateBetSettingWithMaxPayoutPerMatchCriteria.cs" />
     <Compile Include="Criteria\LicenseeDcsSetting\UpdateBetSettingWithoutMaxPerMatchCriteria.cs" />
     <Compile Include="Criteria\LicenseeDcsSetting\UpdateBetSettingCriteria.cs" />
     <Compile Include="Criteria\LicenseeDcsSetting\UpdateGlobalStakeLevelCriteria.cs" />
     <Compile Include="Criteria\LicenseeDcsSetting\UpdatePositionTakingCriteria.cs" />
     <Compile Include="Criteria\LicenseeDcsSetting\UpdateStakeLevelCriteria.cs" />
     <Compile Include="Criteria\LicenseeDcsSetting\UpdateStatusCriteria.cs" />
+    <Compile Include="Criteria\LicenseeMember\CheckExistAgentCriteria.cs" />
+    <Compile Include="Criteria\LicenseeMember\InsertMemberCriteria.cs" />
     <Compile Include="Criteria\LicenseeOddsGroup\GetAgentListCriteria.cs" />
     <Compile Include="Criteria\LicenseeOddsGroup\GetAgentOddsGroupCriteria.cs" />
     <Compile Include="Criteria\LicenseeOddsGroup\UpdateOddsGroupCriteria.cs" />
@@ -527,6 +536,8 @@
     <Compile Include="DataAccess\InitializingStakeLevel\InitStakeLevelDataAccess.cs" />
     <Compile Include="DataAccess\LicenseeDcsSetting\ILicenseeDcsSettingDataAccess.cs" />
     <Compile Include="DataAccess\LicenseeDcsSetting\LicenseeDcsSettingDataAccess.cs" />
+    <Compile Include="DataAccess\LicenseeMember\ILicenseeMemberDataAccess.cs" />
+    <Compile Include="DataAccess\LicenseeMember\LicenseeMemberDataAccess.cs" />
     <Compile Include="DataAccess\LicenseeOddsGroup\ILicenseeOddsGroupDataAccess.cs" />
     <Compile Include="DataAccess\LicenseeOddsGroup\LicenseeOddsGroupDataAccess.cs" />
     <Compile Include="DataAccess\LicenseeSubsidiary\ILicenseeSubsidiaryDataAccess.cs" />
@@ -643,6 +654,8 @@
     <Compile Include="Entities\JsonWithoutNullField.cs" />
     <Compile Include="Entities\LicenseeDcsSetting\AgentsExtraInfo.cs" />
     <Compile Include="Entities\LicenseeDcsSetting\BaseModelExtra.cs" />
+    <Compile Include="Entities\LicenseeDcsSetting\BetSettingEntityWithMaxPerBall.cs" />
+    <Compile Include="Entities\LicenseeDcsSetting\BetSettingEntityWithMaxPayoutPerMatch.cs" />
     <Compile Include="Entities\LicenseeDcsSetting\BetSettingWithoutMaxPerMatchEntity.cs" />
     <Compile Include="Entities\LicenseeDcsSetting\StakeLevelEntity.cs" />
     <Compile Include="Entities\LicenseeDcsSetting\StakeLevelGroupEntity.cs" />
@@ -692,6 +705,7 @@
     <Compile Include="Requests\InitializingStakeLevel\GetBettypeRequest.cs" />
     <Compile Include="Requests\InitializingStakeLevel\GetStakeLevelRequest.cs" />
     <Compile Include="Requests\InitializingStakeLevel\InsertStakeLevelRequest.cs" />
+    <Compile Include="Requests\LicenseeMember\InsertMemberRequest.cs" />
     <Compile Include="Requests\LicenseeOddsGroup\UpdateOddsGroupRequest.cs" />
     <Compile Include="Requests\MultipleUpdateSuperStatus\UpdatedCustomerIinfo.cs" />
     <Compile Include="Requests\MultipleUpdateSuperStatus\UpdateSupersProtectedStatusRequest.cs" />
@@ -709,6 +723,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Customer_Labels.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\LicenseeMemberLabel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LicenseeMemberLabel.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\LicenseeOddsGroup.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -733,6 +752,8 @@
     <Compile Include="ViewModels\CustomerSetting\Suspend\SuspendMatrixViewModel.cs" />
     <Compile Include="ViewModels\InitializingCustomerSetting\ConfigSettingViewModel.cs" />
     <Compile Include="ViewModels\InitializingCustomerSetting\InitializingCustomerSettingViewModel.cs" />
+    <Compile Include="ViewModels\LicenseeDcsSetting\BetSettingWithMaxPerBallViewModel.cs" />
+    <Compile Include="ViewModels\LicenseeDcsSetting\BetSettingWithMaxPayoutPerMatchViewModel.cs" />
     <Compile Include="ViewModels\LicenseeDcsSetting\BetSettingWithoutMaxPerMatchViewModel.cs" />
     <Compile Include="ViewModels\LicenseeDcsSetting\StakeLevelViewModel.cs" />
     <Compile Include="Entities\LicenseeDcsSetting\BetSettingEntity.cs" />
@@ -809,6 +830,10 @@
     <EmbeddedResource Include="Resources\LicenseeDcsSettingLabels.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>LicenseeDcsSettingLabels1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\LicenseeMemberLabel.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>LicenseeMemberLabel.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\LicenseeOddsGroup.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

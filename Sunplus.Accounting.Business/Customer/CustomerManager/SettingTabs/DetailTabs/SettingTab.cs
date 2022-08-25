@@ -148,6 +148,11 @@
 
         private string RemoveSettingBlock(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
         {
+            if (customerInfoViewModel.IsDeposit)
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "addNew-Deposite");
+            }
+
             if (customerInfoViewModel.HideSettingLinkVirtualSports)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-VirtualSport");

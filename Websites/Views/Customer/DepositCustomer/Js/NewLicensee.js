@@ -14,10 +14,6 @@ newLic.init = function () {
     $("#btnResetUsenName").click(function () {
         newLic.ResetUsenName();
     });
-
-    if (window.kenoSettingsManager) {
-        window.kenoSettingsManager.initPage();
-    }
 };
 
 newLic.verifyData = function () {
@@ -107,106 +103,6 @@ newLic.verifyData = function () {
 
     return true;
 };
-
-newLic.assignSportbookSettingAndPT = function (params) {
-    for (var i = 0; i < window.sports.length; ++i) {
-        var bettypes = window.sports[i].Bettype;
-        var id = window.sports[i].Id;
-        params.push({
-            Name: "minbetv" + id
-            , Value: $("#" + "minbetv" + id).getNumberValue()
-        });
-
-        params.push({
-            Name: "maxbetv" + id
-            , Value: $("#" + "maxbetv" + id).getNumberValue()
-        });
-
-        params.push({
-            Name: "maxpermatchv" + id
-            , Value: $("#" + "maxpermatchv" + id).getNumberValue()
-        });
-
-        if (id.toString().toLowerCase() == "99mp") {
-            continue;
-        }
-        //sportbook position taking
-        if (bettypes.length > 0) {
-            for (var l = 0; l < bettypes.length; l++) {
-                params.push({
-                    Name: "v" + id + "spositiontaking_" + bettypes[l]
-                    , Value: $("#selSBPT").val()
-                });
-                params.push({
-                    Name: "v" + id + "mpositiontaking_" + bettypes[l]
-                    , Value: $("#selSBPT").val()
-                });
-                params.push({
-                    Name: "v" + id + "apositiontaking_" + bettypes[l]
-                    , Value: $("#selSBPT").val()
-                });
-                if (id == "1") {
-                    params.push({
-                        Name: "v" + id + "slivepositiontaking_" + bettypes[l]
-                        , Value: $("#selSBPT").val()
-                    });
-                    params.push({
-                        Name: "v" + id + "mlivepositiontaking_" + bettypes[l]
-                        , Value: $("#selSBPT").val()
-                    });
-                    params.push({
-                        Name: "v" + id + "alivepositiontaking_" + bettypes[l]
-                        , Value: $("#selSBPT").val()
-                    });
-                }
-            }
-        }
-    }
-};
-
-newLic.assignNumberGameSetting = function (params) {
-    params.push({
-        Name: "minbetv161"
-        , Value: $("#minbetv161").getNumberValue()
-    });
-    params.push({
-        Name: "maxbetv161"
-        , Value: $("#maxbetv161").getNumberValue()
-    });
-    params.push({
-        Name: "maxpermatchv161"
-        , Value: $("#maxpermatchv161").getNumberValue()
-    });
-    params.push({
-        Name: "maxperballv161"
-        , Value: $("#maxperballv161").getNumberValue()
-    });
-};
-
-newLic.assignNumberGamePT = function (params) {
-    var id = 161;
-    var arr = ["s", "m", "a"];
-    for (var i = 0; i < arr.length; i++) {
-        var type = arr[i];
-
-        var bettypes = window.arrNumberGameBettypes;
-
-        for (var j = 0; j < bettypes.length; j++) {
-            params.push({
-                Name: "v" + id + type + "positiontaking_" + bettypes[j]
-                , Value: $("#selNGPT").val()
-            });
-        }
-
-        for (var k = 0; k < bettypes.length; k++) {
-            params.push({
-                Name: "v" + id + type + "livepositiontaking_" + bettypes[k]
-                , Value: $("#selNGPT").val()
-            });
-        }
-    }
-};
-
 newLic.getPostParam = function () {
     var params = [];
     params.push({
@@ -221,30 +117,6 @@ newLic.getPostParam = function () {
         Name: "currency"
         , Value: $("#selCurrency").val()
     });
-
-    //sportbook bet setting, postion taking
-    this.assignSportbookSettingAndPT(params);
-
-    //numbergame bet setting
-    this.assignNumberGameSetting(params);
-
-    //numbergame position taking
-    this.assignNumberGamePT(params);
-
-    //enable number game
-    params.push({
-        Name: "DisableNumber"
-        , Value: !$("#cbxEnableNumberGame").is(":checked")
-    });
-
-    ////virtual sports
-    //if (typeof vsSuperSetting != 'undefined') {
-    //    vsSuperSetting.assignVirtualSportsSettings(params);
-    //}
-
-    if (window.kenoSettingsManager) {
-        window.kenoSettingsManager.getSettings(params);
-    }
 
     return {
         postParam: {

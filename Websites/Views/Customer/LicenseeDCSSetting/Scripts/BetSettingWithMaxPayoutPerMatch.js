@@ -1,0 +1,398 @@
+﻿var betSettingWithMaxPayoutPerMatchHandler = (function ($, common, rootUrl) {
+    "use strict";
+    var globalValid,
+        globalBetSettings,
+        updateSection,
+        applyMembersCheckbox,
+        betSettingTableRows,
+        allRowsCheckbox,
+        enableEditRowCheckboxes,
+        copySettingIcon,
+        nextButton,
+        numericInputs,
+        reviewSection,
+        applyMembersSpan,
+        reviewSettingTable,
+        updateButton,
+        backButton;
+
+    function enableNumericInputs(sportType, betType) {
+        var inputs = !sportType || !betType ?
+            numericInputs :
+            $.grep(numericInputs, function (item, i) { return $(item).data("sporttype") === sportType && $(item).data("bettype") === betType; });
+
+        $.each(inputs, function () {
+            common.enableElement($(this));
+        });
+    }
+
+    function disableNumericInputs(sportType, betType) {
+        var inputs = !sportType || !betType ?
+            numericInputs :
+            $.grep(numericInputs, function (item, i) { return $(item).data("sporttype") === sportType && $(item).data("bettype") === betType; });
+
+        $.each(inputs, function () {
+            var $this = $(this);
+            $this.removeClass("invalid-value");
+            common.disableElement($this);
+
+            var oldValue = parseInt($this.data("oldvalue"));
+            $this.val(oldValue.toLocaleString("en-US"));
+        });
+    }
+
+    function allRowsCheckbox_change() {
+        var checked = this.checked;
+
+        if (checked) {
+            enableNumericInputs();
+        } else {
+            disableNumericInputs();
+        }
+
+        enableEditRowCheckboxes.each(function () {
+            this.checked = checked;
+        });
+    }
+
+    function enableEditRowCheckbox_change() {
+        var sportType = $(this).data("sporttype"),
+            betType = $(this).data("bettype"),
+            checked = this.checked;
+
+        if (checked) {
+            enableNumericInputs(sportType, betType);
+        } else {
+            disableNumericInputs(sportType, betType);
+        }
+
+        for (var i = 0, max = enableEditRowCheckboxes.length; i < max; i++) {
+            if (enableEditRowCheckboxes[i].checked !== checked) {
+                allRowsCheckbox.prop("indeterminate", true);
+                return;
+            }
+        }
+
+        allRowsCheckbox
+            .prop("indeterminate", false)
+            .prop("checked", checked);
+    }
+
+    function copySettingIcon_click() {
+        var checked;
+
+        if (copySettingIcon.hasClass("icon-copy-setting-checked")) {
+            checked = false;
+            copySettingIcon.removeClass("icon-copy-setting-checked");
+            common.enableElement(allRowsCheckbox);
+            disableNumericInputs();
+        } else {
+            checked = true;
+            copySettingIcon.addClass("icon-copy-setting-checked");
+            var sportType = $(this).data("sporttype");
+            var betType = $(this).data("bettype");
+            copyBetSettingFrom1stRowAndDisableOthers(sportType, betType);
+            common.disableElement(allRowsCheckbox);
+        }
+
+        allRowsCheckbox.prop("indeterminate", false).prop("checked", checked);
+
+        enableEditRowCheckboxes.each(function () {
+            this.checked = checked;
+
+            if (checked) {
+                common.disableElement($(this));
+            } else {
+                common.enableElement($(this));
+            }
+        });
+    }
+
+    function copyBetSettingFrom1stRowAndDisableOthers(sportType, betType) {
+        var minBetInput = $("#minbet_" + sportType + "_" + betType),
+            maxBetInput = $("#maxbet_" + sportType + "_" + betType),
+            maxPerMatchInput = $("#maxpermatch_" + sportType + "_" + betType),
+            maxPayoutPerMatchInput = $("#maxpayoutpermatch_" + sportType + "_" + betType);
+
+        common.enableElement(minBetInput);
+        common.enableElement(maxBetInput);
+        common.enableElement(maxPerMatchInput);
+        common.enableElement(maxPayoutPerMatchInput);
+
+        var minBet = minBetInput.val(),
+            maxBet = maxBetInput.val(),
+            maxPerMatch = maxPerMatchInput.val(),
+            maxPayoutPerMatch = maxPayoutPerMatchInput.val();
+
+        var tableRow = null, sportTypeRow = null, betTypeRow = null;
+
+        for (var i = 1, max = betSettingTableRows.length; i < max; i++) {
+            tableRow = $(betSettingTableRows[i]);
+            sportTypeRow = tableRow.data("sporttype");
+            betTypeRow = tableRow.data("bettype");
+            common.disableElement(tableRow.find("#minbet_" + sportTypeRow + "_" + betTypeRow)).val(minBet);
+            common.disableElement(tableRow.find("#maxbet_" + sportTypeRow + "_" + betTypeRow)).val(maxBet);
+            common.disableElement(tableRow.find("#maxpermatch_" + sportTypeRow + "_" + betTypeRow)).val(maxPerMatch);
+            common.disableElement(tableRow.find("#maxpayoutpermatch_" + sportTypeRow + "_" + betTypeRow)).val(maxPayoutPerMatch);
+        }
+    }
+
+    function copyBetSettingFrom1stRow_KeyUp(input) {
+        var checked = copySettingIcon.hasClass("icon-copy-setting-checked");
+
+        if (checked) {
+            var number = input.value;
+            var id = input.id;
+            var idSubName = id.substring(0, id.indexOf("_"));
+
+            numericInputs.each(function () {
+                if ($(this).is(":disabled") && this.id.indexOf(idSubName) >= 0) {
+                    this.value = number;
+                }
+            });
+        }
+    }
+
+    function validateBetSetting(tableRow) {
+        var isValid = true,
+            sportType = tableRow.data("sporttype"),
+            betType = tableRow.data("bettype"),
+            minBetInput = tableRow.find("#minbet_" + sportType + "_" + betType),
+            minBet = parseInt(minBetInput.val().replace(/,/g, "")),
+            maxBetInput = tableRow.find("#maxbet_" + sportType + "_" + betType),
+            maxBet = parseInt(maxBetInput.val().replace(/,/g, "")),
+            maxPerMatchInput = tableRow.find("#maxpermatch_" + sportType + "_" + betType),
+            maxPerMatch = parseInt(maxPerMatchInput.val().replace(/,/g, "")),
+            maxPayoutPerMatchInput = tableRow.find("#maxpayoutpermatch_" + sportType + "_" + betType),
+            maxPayoutPerMatch = parseInt(maxPayoutPerMatchInput.val().replace(/,/g, ""));
+
+        minBetInput.removeClass("invalid-value");
+        maxBetInput.removeClass("invalid-value");
+        maxPerMatchInput.removeClass("invalid-value");
+        maxPayoutPerMatchInput.removeClass("invalid-value");
+
+        if (!$.isNumeric(minBet)) {
+            isValid = false;
+            minBetInput.addClass("invalid-value");
+        }
+
+        if (!$.isNumeric(maxBet)) {
+            isValid = false;
+            maxBetInput.addClass("invalid-value");
+        }
+
+        if (!$.isNumeric(maxPerMatch)) {
+            isValid = false;
+            maxPerMatchInput.addClass("invalid-value");
+        }
+
+        if (minBet > maxBet) {
+            isValid = false;
+            minBetInput.addClass("invalid-value");
+            maxBetInput.addClass("invalid-value");
+        }
+
+        if (maxBet > maxPerMatch) {
+            isValid = false;
+            maxBetInput.addClass("invalid-value");
+            maxPerMatchInput.addClass("invalid-value");
+        }
+
+        if (maxPerMatch > maxPayoutPerMatch) {
+            isValid = false;
+            maxPerMatchInput.addClass("invalid-value");
+            maxPayoutPerMatchInput.addClass("invalid-value");
+        }
+
+        if (!isValid) {
+            globalValid = false;
+        } else {
+            var oldMinBet = parseInt(minBetInput.data("oldvalue"));
+            var oldMaxBet = parseInt(maxBetInput.data("oldvalue"));
+            var oldMaxPerMatch = parseInt(maxPerMatchInput.data("oldvalue"));
+            var oldMaxPayoutPerMatch = parseInt(maxPayoutPerMatchInput.data("oldvalue"));
+
+            return {
+                SportType: sportType,
+                SportTypeName: tableRow.data("sporttypename"),
+                BetType: tableRow.data("bettype"),
+                BetTypeName: tableRow.data("bettypename"),
+                MinBet: minBet,
+                MaxBet: maxBet,
+                MaxPerMatch: maxPerMatch,
+                MaxPayoutPerMatch: maxPayoutPerMatch,
+                Updated: minBet !== oldMinBet || maxBet !== oldMaxBet || maxPerMatch !== oldMaxPerMatch || maxPayoutPerMatch !== oldMaxPayoutPerMatch
+            };
+        }
+    }
+
+    function getBetSettings() {
+        var setting = null, betSettings = [];
+
+        for (var i = 0, max = betSettingTableRows.length; i < max; i++) {
+            setting = validateBetSetting($(betSettingTableRows[i]));
+
+            if (setting) {
+                betSettings.push(setting);
+            }
+        }
+
+        return betSettings;
+    }
+
+    function showReviewForm(betSettings) {
+        var setting, html = [];
+
+        for (var i = 0, max = betSettings.length; i < max; i++) {
+            setting = betSettings[i];
+            html.push("<tr>");
+            html.push('<td class="l">');
+            html.push(setting.SportTypeName);
+            html.push("</td>");
+            html.push('<td class="l">');
+            html.push(setting.BetTypeName);
+            html.push("</td>");
+            html.push('<td class="r">');
+            html.push(setting.MinBet.toLocaleString("en-US"));
+            html.push("</td>");
+            html.push('<td class="r">');
+            html.push(setting.MaxBet.toLocaleString("en-US"));
+            html.push("</td>");
+            html.push('<td class="r">');
+            html.push(setting.MaxPerMatch.toLocaleString("en-US"));
+            html.push("</td>");
+            html.push('<td class="r">');
+            html.push(setting.MaxPayoutPerMatch.toLocaleString("en-US"));
+            html.push("</td>");
+            html.push("<td>");
+            html.push(setting.Updated ? "X" : "");
+            html.push("</td>");
+            html.push('<td class="l"><div id="message_');
+            html.push(setting.SportType + '_' + setting.BetType);
+            html.push('"></div></td>');
+            html.push("</tr>");
+        }
+
+        reviewSettingTable.html(html.join(""));
+        applyMembersSpan.text(applyMembersCheckbox.is(":checked") ? "Yes" : "No");
+        updateSection.addClass("hide");
+        reviewSection.removeClass("hide");
+    }
+
+    function nextButton_click() {
+        common.blockUI();
+        common.hideMessage();
+
+        globalValid = true;
+        globalBetSettings = getBetSettings();
+
+        if (globalValid) {
+            var updatedArray = $.grep(globalBetSettings, function (item, i) {
+                return item.Updated;
+            });
+
+            if (updatedArray.length === 0) {
+                common.showNoChangeMessage();
+            } else {
+                showReviewForm(globalBetSettings);
+            }
+        }
+
+        common.unblockUI();
+    }
+
+    function updateButton_click(defaultParam, getSelectedAgents) {
+        if (!globalBetSettings || globalBetSettings.length === 0) {
+            return;
+        }
+
+        var updatedArray = $.grep(globalBetSettings, function (item, i) {
+            return item.Updated;
+        });
+
+        if (updatedArray.length === 0) {
+            return;
+        }
+
+        var applyExistedMem = applyMembersCheckbox.is(":checked");
+
+        if (!applyExistedMem && !confirm("Apply existing members: No. Are you sure you want to continue?")) {
+            return;
+        }
+
+        common.disableElement(updateButton);
+        var updateUrl = rootUrl + "LicenseeDcsSetting/UpdateBetSettingWithMaxPayoutPerMatch";
+        var isAgentOnly = $("#agentOnlyCheckbox").is(":checked");
+        var selectedAgentIds = getSelectedAgents().AgentIds;
+
+        $.each(updatedArray, function (i, item) {
+            var messageDiv = $('#message_' + item.SportType + '_' + item.BetType);
+            messageDiv.html('<span class="btnRefresh"></span> Updating ...');
+
+            $.ajax({
+                type: "POST",
+                url: updateUrl,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify($.extend({ ApplyExistedMem: applyExistedMem, BetSettings: [item], AgentIds: selectedAgentIds, IsAgentOnly: isAgentOnly }, defaultParam)),
+                success: function (data) {
+                    messageDiv.removeClass().html(data.ErrorMessage);
+                    messageDiv.addClass(data.ErrorCode === 0 ? "msgcorrect" : "msgerror");
+                },
+                error: function (jqxhr) {
+                    messageDiv.removeClass().html(jqxhr.statusText).addClass("msgerror");
+                }
+            });
+        });
+    }
+
+    function btnBack_click(reloadFunction) {
+        if (updateButton.is(":disabled")) {
+            reloadFunction();
+        } else {
+            updateSection.removeClass("hide");
+            reviewSection.addClass("hide");
+        }
+    }
+
+    function initialize(defaultParam, reloadFunction, getSelectedAgents) {
+        globalValid = true;
+        globalBetSettings = null;
+        updateSection = $("#update_section");
+        applyMembersCheckbox = updateSection.find("#apply_members_checkbox");
+        betSettingTableRows = updateSection.find("#betsetting_table tbody tr");
+
+        allRowsCheckbox = updateSection.find("#allrows_checkbox")
+            .off("change")
+            .on("change", allRowsCheckbox_change);
+
+        enableEditRowCheckboxes = updateSection.find(".enable-edit-row-checkbox")
+            .off("change")
+            .on("change", enableEditRowCheckbox_change);
+
+        copySettingIcon = updateSection.find("#copy_setting_icon")
+            .off("click")
+            .on("click", copySettingIcon_click);
+
+        nextButton = updateSection.find("#btnNext")
+            .off("click")
+            .on("click", nextButton_click);
+
+        numericInputs = updateSection.find(".numeric");
+        numericInputs.forceNumber(copyBetSettingFrom1stRow_KeyUp);
+
+        reviewSection = $("#review_section");
+        applyMembersSpan = reviewSection.find("#apply_members_span");
+        reviewSettingTable = reviewSection.find("#reviewsetting_table tbody");
+
+        updateButton = reviewSection.find("#btnBetSettingUpdate")
+            .off("click")
+            .on("click", function () { updateButton_click(defaultParam, getSelectedAgents); });
+
+        backButton = reviewSection.find("#btnBack")
+            .off("click")
+            .on("click", function () { btnBack_click(reloadFunction); });
+    }
+
+    return { initialize: initialize };
+})(jQuery, common, rootUrl);

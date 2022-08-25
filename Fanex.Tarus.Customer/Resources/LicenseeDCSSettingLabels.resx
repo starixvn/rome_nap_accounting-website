@@ -246,4 +246,10 @@
   <data name="StakeLevel" xml:space="preserve">
     <value>Stake Level</value>
   </data>
+  <data name="MaxPayoutPerMatch" xml:space="preserve">
+    <value>Max Payout Per Match</value>
+  </data>
+  <data name="MaxPerBall" xml:space="preserve">
+    <value>Max Per Ball</value>
+  </data>
 </root>

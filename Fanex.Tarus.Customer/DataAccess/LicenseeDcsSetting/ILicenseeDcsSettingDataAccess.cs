@@ -22,6 +22,10 @@ namespace Fanex.Tarus.Customer.DataAccess.LicenseeDcsSetting
 
         IEnumerable<BetSettingWithoutMaxPerMatchEntity> GetBetSettingWithoutMaxPerMatch(ICriteria criteria);
 
+        IEnumerable<BetSettingWithMaxPayoutPerMatchEntity> GetBetSettingsWithMaxPayoutPerMatch(ICriteria criteria);
+
+        IEnumerable<BetSettingWithMaxPerBallEntity> GetBetSettingsWithMaxPerBall(ICriteria criteria);
+
         StatusEntity GetStatus(ICriteria criteria);
 
         IEnumerable<GlobalStakeLevelEntity> GetGlobalStakeLevels(ICriteria criteria);

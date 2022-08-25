@@ -42,6 +42,14 @@ namespace Fanex.Tarus.Customer.Business.LicenseeDcsSetting
             => _settingDataAccess.GetBetSettingWithoutMaxPerMatch(
                 new GetBetSettingWithoutMaxPerMatchCriteria(productId, superId, agentId));
 
+        public IEnumerable<BetSettingWithMaxPayoutPerMatchEntity> GetBetSettingsWithMaxPayoutPerMatch(int productId, int superId, int agentId)
+            => _settingDataAccess.GetBetSettingsWithMaxPayoutPerMatch(
+                new GetBetSettingWithMaxPayoutPerMatchCriteria(productId, superId, agentId));
+
+        public IEnumerable<BetSettingWithMaxPerBallEntity> GetBetSettingsWithMaxPerBall(int productId, int superId, int agentId)
+            => _settingDataAccess.GetBetSettingsWithMaxPerBall(
+                new GetBetSettingWithMaxPerBallCriteria(productId, superId, agentId));
+
         public StatusEntity GetStatus(int productId, int custId)
             => _settingDataAccess.GetStatus(new GetStatusCriteria(productId, custId));
 
@@ -182,6 +190,60 @@ namespace Fanex.Tarus.Customer.Business.LicenseeDcsSetting
                 : new Result(1, string.Join("<br/>", errorResults.Select(err => err.ErrorMessage)));
         }
 
+        public Result UpdateBetSettingWithMaxPayoutPerMatch(
+            int superId,
+            bool applyExistedMem,
+            BetSettingWithMaxPayoutPerMatchEntity betSetting,
+            IEnumerable<int> agentIds,
+            bool isAgentOnly,
+            int userId,
+            string ip)
+        {
+            Result result;
+            IList<Result> errorResults = new List<Result>();
+
+            foreach (var agentId in agentIds)
+            {
+                result = UpdateBetSettingWithMaxPayoutPerMatch(superId, applyExistedMem, betSetting, agentId, isAgentOnly, userId, ip);
+
+                if (result.ErrorCode != 0)
+                {
+                    errorResults.Add(result);
+                }
+            }
+
+            return errorResults.Count == 0
+                ? new Result(0, LicenseeDcsSettingLabels.UpdateBetSettingSuccessfully)
+                : new Result(1, string.Join("<br/>", errorResults.Select(err => err.ErrorMessage)));
+        }
+
+        public Result UpdateBetSettingWithMaxPerBall(
+            int superId,
+            bool applyExistedMem,
+            BetSettingWithMaxPerBallEntity betSetting,
+            IEnumerable<int> agentIds,
+            bool isAgentOnly,
+            int userId,
+            string ip)
+        {
+            Result result;
+            IList<Result> errorResults = new List<Result>();
+
+            foreach (var agentId in agentIds)
+            {
+                result = UpdateBetSettingWithMaxPerBall(superId, applyExistedMem, betSetting, agentId, isAgentOnly, userId, ip);
+
+                if (result.ErrorCode != 0)
+                {
+                    errorResults.Add(result);
+                }
+            }
+
+            return errorResults.Count == 0
+                ? new Result(0, LicenseeDcsSettingLabels.UpdateBetSettingSuccessfully)
+                : new Result(1, string.Join("<br/>", errorResults.Select(err => err.ErrorMessage)));
+        }
+
         public Result UpdateStatus(
             int productId,
             int superId,
@@ -301,6 +363,34 @@ namespace Fanex.Tarus.Customer.Business.LicenseeDcsSetting
             string ip)
         {
             ICriteria criteria = new UpdateBetSettingWithoutMaxPerMatchCriteria(superId, applyExistedMem, betSetting, agentId, isAgentOnly, userId, ip);
+
+            return _settingDataAccess.ExecuteNonQuery(criteria);
+        }
+
+        private Result UpdateBetSettingWithMaxPayoutPerMatch(
+            int superId,
+            bool applyExistedMem,
+            BetSettingWithMaxPayoutPerMatchEntity betSetting,
+            int agentId,
+            bool isAgentOnly,
+            int userId,
+            string ip)
+        {
+            ICriteria criteria = new UpdateBetSettingWithMaxPayoutPerMatchCriteria(superId, applyExistedMem, betSetting, agentId, isAgentOnly, userId, ip);
+
+            return _settingDataAccess.ExecuteNonQuery(criteria);
+        }
+
+        private Result UpdateBetSettingWithMaxPerBall(
+            int superId,
+            bool applyExistedMem,
+            BetSettingWithMaxPerBallEntity betSetting,
+            int agentId,
+            bool isAgentOnly,
+            int userId,
+            string ip)
+        {
+            ICriteria criteria = new UpdateBetSettingWithMaxPerBallCriteria(superId, applyExistedMem, betSetting, agentId, isAgentOnly, userId, ip);
 
             return _settingDataAccess.ExecuteNonQuery(criteria);
         }
