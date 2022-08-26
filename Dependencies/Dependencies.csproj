@@ -215,6 +215,9 @@
     <Reference Include="Fanex.BetList.SAGaming, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.SAGaming.1.0.0.4\lib\net40\Fanex.BetList.SAGaming.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.BetList.SealEntertainment, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.SealEntertainment.1.0.0-seal-01\lib\net40\Fanex.BetList.SealEntertainment.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.BetList.SexyGaming, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.SexyGaming.1.0.0.3\lib\net40\Fanex.BetList.SexyGaming.dll</HintPath>
     </Reference>

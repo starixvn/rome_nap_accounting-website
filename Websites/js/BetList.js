@@ -861,6 +861,18 @@ function showFGGBetDetails(refno, winlossDate, custId, transType) {
 
     openResultsPopUp(params);
 }
+
+function showSealEntertainmentBetDetails(transId, winlossDate, custId, transType) {
+    var param = {
+        url: "RNGCasinoBetList/BetDetails",
+        title: "Seal Entertainment - Detailed Bet list - " + winlossDate.split(" ")[0],
+        jsonParam: { TransId: transId, TransType: transType, CustId: custId, SportType: 172, PageSize: 500 },
+        width: 1110,
+        height: 600
+    };
+
+    openResultsPopUp(param);
+}
 // -------------------- Functions whose name must name by Fanex.Toco
 function ViewRNGCasinoResult(matchId, race, betType, sportType, refNo, winlostDate, custId) {
     var params = $.param({
