@@ -23,6 +23,7 @@
     <Setting Key="Acc_BettransInsTransfer" SpName="Acc_BettransInsTransfer" DbName="DBTXN.bodb02.bodbAdminNet" />
     <Setting Key="SiteDB_Acc_BettransInsTransfer" SpName="SiteDB_Acc_BettransInsTransfer" DbName="DBTXN.bodb02.bodbAdminNet" />
     <Setting Key="SiteDB_Acc_Transfer_Rollback" SpName="SiteDB_Acc_Transfer_Rollback" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="SiteDB_Acc_ReverseTransfer_Rollback" SpName="SiteDB_Acc_ReverseTransfer_Rollback" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Reset Winning">
     <Setting Key="Acc_ResetWinning_Ins" SpName="Acc_ResetWinning_Ins" DbName="DBTXN.bodb02.bodbAdminNet" />
