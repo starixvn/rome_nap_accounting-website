@@ -81,7 +81,7 @@ function CreateMember() {
         Recommend: selectedAgentId,
         Username: member
     };
-    var statusDiv = $("#status" + member);
+    var statusDiv = $(document.getElementById("status" + member));
     statusDiv.removeClass();
     statusDiv.addClass("status-in-progress");
     statusDiv.html("In progress...");
