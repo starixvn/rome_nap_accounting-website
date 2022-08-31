@@ -126,8 +126,8 @@
     <Reference Include="Fanex.BetList.NumberGame, Version=1.7.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.NumberGame.1.7.0.2\lib\net40\Fanex.BetList.NumberGame.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.PP, Version=1.4.0.7, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.PP.1.4.0.7\lib\net40\Fanex.BetList.PP.dll</HintPath>
+    <Reference Include="Fanex.BetList.PP, Version=1.4.0.9, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.PP.1.4.0.9\lib\net40\Fanex.BetList.PP.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.PragmaticLiveCasino, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.PragmaticLiveCasino.1.0.0.4\lib\net40\Fanex.BetList.PragmaticLiveCasino.dll</HintPath>
