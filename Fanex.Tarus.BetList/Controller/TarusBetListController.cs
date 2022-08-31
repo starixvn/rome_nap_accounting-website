@@ -31,7 +31,7 @@ namespace Fanex.Tarus.BetList.Controller
         private readonly IBetListService _betListService;
         private readonly ISmartPunterService _smartPunterService;
         private string _smartPunterFunctionName = "SmartPunter";
-        
+
         public TarusBetListController()
         {
             this._betListService = new BetListService();
@@ -139,6 +139,9 @@ namespace Fanex.Tarus.BetList.Controller
 
             return new EmptyResult();
         }
+
+        public ActionResult ExportBBINBetDetails(int sportType, long refNo, int custId, byte transType)
+           => ExportBetDetails(sportType, refNo, custId, transType, DateTime.Now);
 
         public ActionResult ExportJackpotDetails(long transId, int custId, int betType, DateTime winlostdate, string title)
         {

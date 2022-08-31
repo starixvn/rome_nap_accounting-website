@@ -87,7 +87,7 @@
 		        custId: formData.custId,
 		        transType: formData.transType
 		    };
-		    var url = window.rootUrl + "TarusBetList/ExportBetDetails?" + $.param(exportData);
+		    var url = window.rootUrl + "TarusBetList/ExportBBINBetDetails?" + $.param(exportData);
 		    $("#frmExportExcel").attr("src", url);
 		});
 	};
