@@ -865,8 +865,8 @@ function showFGGBetDetails(refno, winlossDate, custId, transType) {
 function showSealEntertainmentBetDetails(transId, winlossDate, custId, transType) {
     var param = {
         url: "RNGCasinoBetList/BetDetails",
-        title: "Seal Entertainment - Detailed Bet list - " + winlossDate.split(" ")[0],
-        jsonParam: { TransId: transId, TransType: transType, CustId: custId, SportType: 172, PageSize: 500 },
+        title: "SEAL Entertainment - Detailed Bet list - " + winlossDate.split(" ")[0],
+        jsonParam: { TransId: transId, TransType: transType, CustId: custId, SportType: 156, PageSize: 500 },
         width: 1110,
         height: 600
     };
