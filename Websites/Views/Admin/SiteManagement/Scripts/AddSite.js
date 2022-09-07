@@ -36,6 +36,12 @@
             return;
         }
 
+        if (param.SiteName.length > 10) {
+            showAlertMessage("err-message", "The max length of the Site Name is 10 characters. Please enter again.", 1);
+            this.$errorMessage.removeClass("hide");
+            return;
+        }
+
         if (param.SiteDBGroupID === "-1") {
             showAlertMessage("err-message", "Please select Site Group!!!", 1);
             this.$errorMessage.removeClass("hide");
