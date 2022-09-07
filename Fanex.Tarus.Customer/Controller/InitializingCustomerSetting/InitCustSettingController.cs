@@ -8,105 +8,139 @@ using Fanex.Tarus.Web.Controllers.Filters;
 
 namespace Fanex.Tarus.Customer.Controller.InitializingCustomerSetting
 {
+    [RoutePrefix("InitCustSetting")]
     public class InitCustSettingController : BaseController
     {
+        private readonly string CreditType = "credit";
         private readonly string _indexViewPath = "~/Views/ITConfiguration/InitializingCustomerSetting/Index.cshtml";
-        private readonly string _viewConfigPath = "~/Views/ITConfiguration/InitializingCustomerSetting/_ViewConfig.cshtml";
-        private readonly string _configPath = "~/Views/ITConfiguration/InitializingCustomerSetting/_ConfigDetail.cshtml";
-        private readonly string _addEditPath = "~/Views/ITConfiguration/InitializingCustomerSetting/_AddEditConfig.cshtml";
-        private readonly IInitializingCustomerSettingService service;
+        private readonly string _viewConfigCreditPath = "~/Views/ITConfiguration/InitializingCustomerSetting/Credit/_ViewConfig.cshtml";
+        private readonly string _addEditCreditPath = "~/Views/ITConfiguration/InitializingCustomerSetting/Credit/_AddEditConfig.cshtml";
+        private readonly string _configCreditPath = "~/Views/ITConfiguration/InitializingCustomerSetting/Credit/_ConfigDetail.cshtml";
+        private readonly string _addEditDepositPath = "~/Views/ITConfiguration/InitializingCustomerSetting/Deposit/_AddEditConfig.cshtml";
+        private readonly string _configDepositPath = "~/Views/ITConfiguration/InitializingCustomerSetting/Deposit/_ConfigDetail.cshtml";
+        private readonly string _viewConfigDepositPath = "~/Views/ITConfiguration/InitializingCustomerSetting/Deposit/_ViewConfig.cshtml";
+        private readonly IInitializingCustomerSettingService creditService;
+        private readonly IInitializingCustomerSettingService depositService;
 
         public InitCustSettingController()
         {
-            service = new InitializingCustomerSettingService();
+            creditService = new InitializingCustomerSettingService();
         }
 
+        [HttpGet]
         public ActionResult Index()
         {
             return View(_indexViewPath);
         }
 
+
         [HttpGet, AuthenticateRead]
-        public ActionResult GetSetting()
+        public ActionResult GetSetting(string type)
+            => Json(IsCredit(type) ? creditService.GetSetting() : depositService.GetSetting(), JsonRequestBehavior.AllowGet);
+
+        [HttpPost, AuthenticateHost, Route("{type}/DeleteSetting")]
+        public ActionResult DeleteSetting(string type, int configId)
         {
-            return Json(service.GetSetting(), JsonRequestBehavior.AllowGet);
+            var result = IsCredit(type)
+                ? creditService.DeleteConfigSetting(configId, AppSession.AccId, HttpContext.Request.UserHostAddress)
+                : depositService.DeleteConfigSetting(configId, AppSession.AccId, HttpContext.Request.UserHostAddress);
+
+            return Json(result);
         }
 
         [HttpPost, AuthenticateHost]
-        public ActionResult DeleteSetting(int configId)
+        public ActionResult AbortSetting(string type, int configId)
         {
-            return Json(service.DeleteConfigSetting(configId, AppSession.AccId, HttpContext.Request.UserHostAddress));
-        }
+            var result = IsCredit(type)
+                   ? creditService.AbortConfigSetting(configId, AppSession.AccId, HttpContext.Request.UserHostAddress)
+                   : depositService.AbortConfigSetting(configId, AppSession.AccId, HttpContext.Request.UserHostAddress);
 
-        [HttpPost, AuthenticateHost]
-        public ActionResult AbortSetting(int configId)
-        {
-            return Json(service.AbortConfigSetting(configId, AppSession.AccId, HttpContext.Request.UserHostAddress));
-        }
-
-        [HttpGet, AuthenticateHost]
-        public ActionResult GetProductSportBettype()
-        {
-            return PartialView(_addEditPath, service.GetProductSportBettype());
+            return Json(result);
         }
 
         [HttpGet, AuthenticateHost]
-        public ActionResult GetConfigDetail(int configId)
+        public ActionResult GetProductSportBettype(string type)
         {
-            var viewModel = service.GetConfigDetail(configId);
+            var path = IsCredit(type) ? _addEditCreditPath : _addEditDepositPath;
+            return PartialView(path, creditService.GetProductSportBettype());
+        }
+
+        [HttpGet, AuthenticateHost]
+        public ActionResult GetConfigDetail(string type, int configId)
+        {
+            var viewModel = IsCredit(type) ? creditService.GetConfigDetail(configId) : depositService.GetConfigDetail(configId);
             if (viewModel.Error != null)
             {
                 return Json(viewModel.Error, JsonRequestBehavior.AllowGet);
             }
 
-            return PartialView(_addEditPath, viewModel);
+            var path = IsCredit(type) ? _addEditCreditPath : _addEditDepositPath;
+
+            return PartialView(path, viewModel);
         }
 
 
         [HttpPost, AuthenticateHost]
-        public ActionResult GenerateConfigSetting(GenerateConfigSettingRequest request)
+        public ActionResult GenerateConfigSetting(string type, GenerateConfigSettingRequest request)
         {
-            return PartialView(_configPath, service.GenerateConfigSetting(request));
-        }
+            var viewModel = IsCredit(type) ? creditService.GenerateConfigSetting(request) : depositService.GenerateConfigSetting(request);
+            var path = IsCredit(type) ? _configCreditPath : _configDepositPath;
 
-        [HttpPost, AuthenticateHost]
-        [ValidateInput(false)]
-        public ActionResult ValidateAddConfigSetting(ConfigModel request)
-        {
-            return Json(service.ValidateAddConfigSetting(request, HttpContext.Request.UserHostAddress));
+            return PartialView(path, viewModel);
         }
 
         [HttpPost, AuthenticateHost]
         [ValidateInput(false)]
-        public ActionResult AddConfigSetting(ConfigModel request)
+        public ActionResult ValidateAddConfigSetting(string type, ConfigModel request)
         {
-            return Json(service.AddConfigSetting(request, HttpContext.Request.UserHostAddress));
+            var result = IsCredit(type)
+                ? creditService.ValidateAddConfigSetting(request, HttpContext.Request.UserHostAddress)
+                : depositService.ValidateAddConfigSetting(request, HttpContext.Request.UserHostAddress);
+
+            return Json(result);
+        }
+
+        [HttpPost, AuthenticateHost]
+        [ValidateInput(false)]
+        public ActionResult AddConfigSetting(string type, ConfigModel request)
+        {
+            var result = IsCredit(type)
+                   ? creditService.AddConfigSetting(request, HttpContext.Request.UserHostAddress)
+                   : depositService.AddConfigSetting(request, HttpContext.Request.UserHostAddress);
+
+            return Json(result);
         }
 
         [HttpPost, AuthenticateHost]
         [ValidateInput(false)]
         public ActionResult ValidateUpdateConfigSetting(ConfigModel request)
         {
-            return Json(service.ValidateUpdateConfigSetting(request, HttpContext.Request.UserHostAddress));
+            return Json(creditService.ValidateUpdateConfigSetting(request, HttpContext.Request.UserHostAddress));
         }
 
         [HttpPost, AuthenticateHost]
         [ValidateInput(false)]
         public ActionResult UpdateConfigSetting(ConfigModel request)
         {
-            return Json(service.UpdateConfigSetting(request, HttpContext.Request.UserHostAddress));
+            return Json(creditService.UpdateConfigSetting(request, HttpContext.Request.UserHostAddress));
         }
 
         [HttpGet, AuthenticateRead]
-        public ActionResult ViewConfigDetail(int configId)
+        public ActionResult ViewConfigDetail(string type, int configId)
         {
-            var viewModel = service.GetConfigDetail(configId);
+            var viewModel = IsCredit(type)
+                ? creditService.GetConfigDetail(configId)
+                : depositService.GetConfigDetail(configId);
             if (viewModel.Error != null)
             {
                 return Json(viewModel.Error, JsonRequestBehavior.AllowGet);
             }
 
-            return PartialView(_viewConfigPath, viewModel);
+            var path = IsCredit(type) ? _viewConfigCreditPath : _viewConfigDepositPath;
+
+            return PartialView(path, viewModel);
         }
+
+        private bool IsCredit(string type) => type.ToLowerInvariant() == CreditType;
     }
 }
