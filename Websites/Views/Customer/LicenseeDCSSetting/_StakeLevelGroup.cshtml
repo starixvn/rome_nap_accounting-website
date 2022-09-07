@@ -1,6 +1,7 @@
 ﻿@using Fanex.Tarus.Customer.Entities.LicenseeDcsSetting;
 @using Fanex.Tarus.Customer.Resources
 @using Fanex.Tarus.Customer.ViewModels.LicenseeDcsSetting;
+@using System.Linq;
 @model StakeLevelViewModel
 @{
     Layout = null;
@@ -45,9 +46,17 @@
                 {
                     <tr @(index++ < MaxShowBetType ? string.Empty : "class=hide")>
                         <td class="l stakelevel-bettype">@group.BetTypeName</td>
-                        @foreach (var item in group.StakeLevels)
-                        {
-                            <td class="l">@item.StakeLevelName</td>
+                        @foreach (var item in headerStakeLevels)
+                        {                          
+                            var stakeLevel = group.StakeLevels.FirstOrDefault(stake => stake.StakeLevelId == item.StakeLevelId);
+                            if (stakeLevel != null)
+                            {
+                                <td class="l">@stakeLevel.StakeLevelName</td>
+                            }
+                            else
+                            {
+                                <td class="l"></td>
+                            }
                         }
                     </tr>
                 }
