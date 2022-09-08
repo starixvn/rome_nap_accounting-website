@@ -111,7 +111,7 @@
       <HintPath>..\packages\Fanex.Tarus.CopySuperWinlossSetting.1.0.0.2\lib\net461\Fanex.Tarus.CopySuperWinlossSetting.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.DataAccess.Implement, Version=1.0.1.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.DataAccess.Implement.1.0.1.6-ScaleoutDB010\lib\net40\Fanex.Tarus.DataAccess.Implement.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.DataAccess.Implement.1.0.1.6-ScaleoutDB011\lib\net40\Fanex.Tarus.DataAccess.Implement.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.4.3, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.4.3-ScaleoutDB015\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
