@@ -54,7 +54,7 @@
                 {
                     dataSet = siteDB.IsSiteDB ?
                         db.ExecuteDataSetScaleoutDB(criteria.GetSpParams(), siteDB.AGIP) :
-                        db.ExecuteDataSet(criteria);
+                        db.ExecuteDataSet(criteria.GetSpParams());
                 }
 
                 if (dataSet != null &&
