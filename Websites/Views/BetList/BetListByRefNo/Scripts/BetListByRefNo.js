@@ -169,17 +169,7 @@ BetList.BetListByRefNo = (function ($) {
         }
 
         return true;
-    };
-
-    function validateSearchByRefNo() {
-        var selProductValue = $selSite.val();
-        if (selProductValue === "-1") {
-            showError("Site is required");
-            return false;
-        }
-
-        return true;
-    };
+    };    
 
     function searchByRef() {
         try {
@@ -222,11 +212,8 @@ BetList.BetListByRefNo = (function ($) {
 
     function getBetList() {
         if ($searchByRefNo.attr("checked")) {
-            if (validateSearchByRefNo() === true){
                 clearError();
                 searchByRef();
-            }            
-            
         } else if ($searchByProduct.attr("checked")) {
             if (validateSearchByProduct() === true) {
                 clearError();
