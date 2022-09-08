@@ -9,6 +9,14 @@
 
 namespace Fanex.Tarus.BetList.Business
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.Data;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
+    using System.Text;
+    using System.Text.RegularExpressions;
     using Constants;
     using Core;
     using Criteria;
@@ -22,19 +30,10 @@ namespace Fanex.Tarus.BetList.Business
     using Fanex.CustomerSetting.Module.Core;
     using Fanex.Data;
     using Fanex.Tarus.BetList.Param;
-    using Fanex.Tarus.Infrastructure.Common;
     using Models;
     using Resources;
     using Sunplus.Accounting.Core.Extensions;
     using Sunplus.Accounting.DataAccess.Report;
-    using System;
-    using System.Collections.Generic;
-    using System.Configuration;
-    using System.Data;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Linq;
-    using System.Text;
-    using System.Text.RegularExpressions;
 
     /// <summary>
     /// TODO: Update summary.
@@ -1117,7 +1116,7 @@ namespace Fanex.Tarus.BetList.Business
                     var factory = new BetListHTMLFactory();
                     var builder = factory.CreateBuilder();
                     GetCachePropertyById funcGetOddsTypeName = ticketHelper.GetOddsTypeNameById;
-
+                    SessionManager.Set<IList<TicketDetail>>(BetListConstants.BetListByStatementSessionKey, betDetails);
                     foreach (var betDetail in betDetails)
                     {
                         ticketHelper.IsShowOddsWithChoice = IsShowOddsWithChoice(betDetail.Ticket.BetTypeId);
