@@ -659,9 +659,6 @@ $(document).ready(function () {
         var settingType = $('#UMSettingType').val();
         cachedSelectSettingType = cachedSelectSportSetting.Settings.find(element => element.SettingType === settingType);
     });
-    SetupUMCalendar('UMShowTime');
-    SetupUMCalendar('UMEndTime');
-    SetupUMCalendar('UMBeginTime');
 
     $("#UMUsername").off("change").on("change", function () {
         var usernames = $("#UMUsername");
@@ -693,6 +690,7 @@ $(document).ready(function () {
 });
 
 function SetupUMCalendar(divId) {
+    $('#' + divId).datetimepicker("destroy");
     $('#' + divId).datetimepicker({
         format: 'm/d/Y H:i:00',
         step: 5

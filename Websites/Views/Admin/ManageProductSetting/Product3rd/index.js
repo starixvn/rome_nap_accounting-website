@@ -191,6 +191,8 @@ function DeleteProduct3rd(index) {
 }
 
 $(document).ready(function () {
+
+    $('#Upd3rdDate').datetimepicker("destroy");
     $('#Upd3rdDate').datetimepicker({
         format: 'm/d/Y'
     });
