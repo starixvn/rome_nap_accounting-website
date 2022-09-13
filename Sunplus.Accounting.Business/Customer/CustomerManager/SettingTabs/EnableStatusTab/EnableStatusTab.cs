@@ -330,7 +330,7 @@
                     customerInfoViewModel.UserName,
                     customerInfoViewModel.SearchAccountRoleId,
                     22,
-                    "Update Macau Games Status"));
+                    "Update RNG Slot Status"));
             }
 
             return htmlcontent;
