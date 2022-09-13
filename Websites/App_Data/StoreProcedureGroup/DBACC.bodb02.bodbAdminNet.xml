@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Functions SiteId="104" SiteName="NAP - Accounting">
   <Function Name="ResetWinning">
-    <Setting Key="Balance_ResetWinning_BeforeMoveBetDay" SpName="Acc_ResetWinning_SelByDate14_xtest" DbName="DBACC.bodb02.bodbAdminNet" TimeOut="0" />
-    <Setting Key="Balance_ResetWinning" SpName="Task_ResetWinning_Non3rdParty_xtest" DbName="DBACC.bodb02.bodbAdminNet" TimeOut="0" />
-    <Setting Key="Balance_ResetWinning_ExtraPT" SpName="Task_ResetWinning_ExtraPT_xtest" DbName="DBACC.bodb02.bodbAdminNet" TimeOut="0" />
+    <Setting Key="Balance_ResetWinning_BeforeMoveBetDay" SpName="Acc_ResetWinning_SelByDate14" DbName="DBACC.bodb02.bodbAdminNet" TimeOut="0" />
+    <Setting Key="Balance_ResetWinning" SpName="Task_ResetWinning_Non3rdParty" DbName="DBACC.bodb02.bodbAdminNet" TimeOut="0" />
+    <Setting Key="Balance_ResetWinning_ExtraPT" SpName="Task_ResetWinning_ExtraPT" DbName="DBACC.bodb02.bodbAdminNet" TimeOut="0" />
   </Function>
   <Function Name="Finance Module">
     <Setting Key="Acc_StatementFinance" SpName="Acc_StatementFinance" DbName="DBACC.bodb02.bodbAdminNet" />
@@ -46,8 +46,8 @@
     <Setting Key="AgentStatement" SpName="Rpt_AgentStatement" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="Acc_AllStatement_SelCheckUsersList" SpName="Acc_AllStatement_SelCheckUsersList" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="Acc_AllStatement_UsersList" SpName="Acc_AllStatement_UsersList" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_CustomerSelByRefno" SpName="Acc_CustomerSelByRefno_xtest" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_SiteDBGroupIDSelByRefnos" SpName="Acc_SiteDBGroupIDSelByRefnos_xtest" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_CustomerSelByRefno" SpName="Acc_CustomerSelByRefno" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_SiteDBGroupIDSelByRefnos" SpName="Acc_SiteDBGroupIDSelByRefnos" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Report">
     <Setting Key="Acc_AllStatementCompanyDetail" SpName="Acc_AllStatementCompanyDetail" DbName="DBACC.bodb02.bodbAdminNet" />

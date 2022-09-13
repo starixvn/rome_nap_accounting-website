@@ -488,6 +488,6 @@
     <Setting Key="Acc_Dep_CheckExistedAccount" SpName="Acc_Dep_CheckExistedAccount" DbName="DBCUST.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Helper">
-    <Setting Key="DBCUST_Acc_SiteDBConfigSel" SpName="Acc_SiteDBConfigSel_xtest" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="DBCUST_Acc_SiteDBConfigSel" SpName="Acc_SiteDBConfigSel" DbName="DBCUST.CustDB.bodbAdminNet" />
   </Function>
 </Functions>

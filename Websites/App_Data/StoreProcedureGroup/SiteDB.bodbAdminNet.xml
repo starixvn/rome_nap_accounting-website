@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Functions SiteId="104" SiteName="NAP - Accounting">  
   <Function Name="Statement">   
-    <Setting Key="SiteDB1_Statement_Report_GetList" SpName="SiteDB_Acc_StatementSel_xtest" DbName="DBACC.bodb02.bodbAdminNet" Plain="0" />
+    <Setting Key="SiteDB1_Statement_Report_GetList" SpName="SiteDB_Acc_StatementSel" DbName="DBACC.bodb02.bodbAdminNet" Plain="0" />
     <Setting Key="SiteDB1_Statement_Report_TransferDetails" SpName="SiteDB_Acc_StatementSelTransfer" DbName="DBACC.bodb02.bodbAdminNet" Plain="0" />
   </Function>
   <Function Name="Ex.rate">
