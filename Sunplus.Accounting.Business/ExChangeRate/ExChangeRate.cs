@@ -438,31 +438,20 @@ namespace Sunplus.Accounting.Business.ExChangeRate
         public Result EditBaseRate_UpdateBaseRate(string updateParams)
         {
             var result = this.EditBaseRate_UpdateMultipleBaseRate(updateParams);
-            if (result.ErrorCode != 0)
-            {
-                return result;
-            }
-            var allSite = ObjectDbExtensions.GetAllSiteDBConfig();
-            var trxDB = allSite.FirstOrDefault(i => !i.IsSiteDB);
-
-            var updateTrxDB = new UpdateExChangeRate(trxDB.AGIP, trxDB.IsSiteDB, trxDB.SiteDBGroupID);
-            result = updateTrxDB.EditBaseRate_PrepareUpdateTables();
             if (result.ErrorCode != 0) return result;
 
             Task.Run(() =>
             {
-                updateTrxDB.EditBaseRate_UpdateExchangeTablesInBackground();
-
-                if (allSite != null)
+                var allSite = ObjectDbExtensions.GetAllSiteDBConfig();
+                var tasksSiteDB = new BackgroundUpdateTask();
+                foreach (var db in allSite)
                 {
-                    foreach (var db in allSite.Where(i => i.IsSiteDB))
-                    {
-                        var prepareTables = new UpdateExChangeRate(db.AGIP, db.IsSiteDB, db.SiteDBGroupID);
-                        result = prepareTables.Update();                        
-                    }
+                    var prepareTables = new UpdateExChangeRate(db.AGIP, db.IsSiteDB, db.SiteDBGroupID);
+                    tasksSiteDB.AddTask(new Thread(new ThreadStart(prepareTables.Update)));
                 }
+
+                tasksSiteDB.StartTask();
             });
-            
 
             return result;
         }
@@ -563,7 +552,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
             return exchangeXML.ToString();
         }
     }
-   
+
     public class UpdateExChangeRate
     {
         public UpdateExChangeRate(string dbIP, bool isSiteDB, int siteDBGroupId)
@@ -579,15 +568,10 @@ namespace Sunplus.Accounting.Business.ExChangeRate
 
         public bool IsSiteDB { get; }
 
-        public Result Update()
+        public void Update()
         {
-            var result = EditBaseRate_PrepareUpdateTables();
-            if (result.ErrorCode == 0)
-            {
-                EditBaseRate_UpdateExchangeTablesInBackground();
-            }
-
-            return result;
+            EditBaseRate_PrepareUpdateTables();
+            EditBaseRate_UpdateExchangeTablesInBackground();
         }
 
         public Result EditBaseRate_PrepareUpdateTables()
@@ -628,7 +612,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 LogService.Info($"[Edit Base Rate] - 1st time - Updated table: {tableName} - AGIP: {AGIP}");
             }
 
-            if(!IsSiteDB)
+            if (!IsSiteDB)
             {
                 Thread.Sleep(5000);
                 foreach (string tableName in listTableNames)
@@ -638,7 +622,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                     LogService.Info($"[Edit Base Rate] - 2nd time - Updated table: {tableName} - AGIP: {AGIP}");
                 }
             }
-            
+
             LogService.Info($"[Edit Base Rate] - End update Tables - AGIP: {AGIP}");
         }
 
@@ -657,6 +641,24 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 LogExtensions.ExceptionHandler(ex);
                 // Rethrow to terminate process.
                 throw ex;
+            }
+        }
+    }
+
+    public class BackgroundUpdateTask
+    {
+        private List<Thread> tasks = new List<Thread>();
+
+        public void AddTask(Thread task)
+        {
+            tasks.Add(task);
+        }
+
+        public void StartTask()
+        {
+            foreach (var task in tasks)
+            {
+                task.Start();
             }
         }
     }
