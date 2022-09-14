@@ -37,6 +37,7 @@ var JackpotDetailsManager = function () {
             transId: transId,
             custId: custId,
             betType: betType,
+            winlostdate: winlostdate,
             title: title
         };
 
@@ -49,6 +50,7 @@ var JackpotDetailsManager = function () {
                 transId: formData.transId,
                 custId: formData.custId,
                 betType: formData.betType,
+                winlostdate: formData.winlostdate,
                 title: formData.title
             };
             var url = window.rootUrl + "TarusBetList/ExportJackpotDetails?" + $.param(exportData);

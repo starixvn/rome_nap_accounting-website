@@ -8,7 +8,7 @@
     {
         public long TransId { get; set; }
 
-        public long CustId { get; set; }
+        public int CustId { get; set; }
 
         public DateTime WinlostDate { get; set; }
 

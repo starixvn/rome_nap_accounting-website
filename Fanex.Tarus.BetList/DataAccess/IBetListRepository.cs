@@ -12,6 +12,12 @@
 
     public interface IBetListRepository
     {
+        IList<BetType> GetBetTypeByDate(BetTypeByDateCriteria criteria);
+
+        IList<BetType> GetBetTypeByDate(BetTypeByDateInSiteDBCriteria criteria, string AGIP);
+
+        IList<S> Fetch<S>(dynamic criteria, string AGIP, Func<DataRow, S> mapObjectFunction, ref List<ITicketData> outputList) where S : class;
+
         IList<S> FetchMemberWinLoss<S>(ICriteria criteria, Func<DataRow, S> mapObjectFunction, ref List<ITicketData> outputList) where S : class;
 
         IList<TicketDetail> Fetch(dynamic criteria, CurrencyContants baseCurrency);
@@ -20,9 +26,13 @@
 
         IList<S> Fetch<S>(dynamic criteria, Func<DataRow, S> mapObjectFunction) where S : class;
 
+        IList<S> Fetch<S>(dynamic criteria, string AGIP, Func<DataRow, S> mapObjectFunction) where S : class;
+
         IList<S> Fetch<S>(dynamic criteria, Func<DataRow, S> mapObjectFunction, ref List<ITicketData> outputList) where S : class;
 
         KeyValuePair<dynamic, IList<S>> FetchWithOutputs<S>(dynamic criteria, Func<DataRow, S> mapObjectFunction, ref List<ITicketData> outputList) where S : class;
+
+        KeyValuePair<dynamic, IList<S>> FetchWithOutputs<S>(dynamic criteria, string AGIP, Func<DataRow, S> mapObjectFunction, ref List<ITicketData> outputList) where S : class;
 
         SystemParlayModel FetchSystemParlay(BetListSystemParlayByRefnoCriteria criteria);
 
@@ -31,5 +41,7 @@
         string GetSiteNameByCustId(ICriteria criteria);
 
         int MapPlayerIdToCustId(MapPlayerId3rdToCustIdCriteria criteria);
+
+        IEnumerable<SiteModel> GetAllSites();
     }
 }

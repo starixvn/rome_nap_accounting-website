@@ -383,7 +383,7 @@
     },
     DeleteTrans: function (refno) {
         financeStatement.VerifyParams.RefNo = refno;
-        if (confirm("Do you want to delete the transaction with Ref.No: " + refno + "?")) {
+        if (confirm("Please make sure you see all transactions before trying to reverse.\nDo you want to delete the transaction with Ref.No: " + refno + "?")) {
             if (confirm("To double check, do you want to delete the transaction with Ref.No: " + refno + "?")) {
                 try { parent.BlockUI(); } catch (e) { }
                 $.ajax({

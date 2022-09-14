@@ -1,4 +1,4 @@
-<%@ WebHandler Language="C#" Class="UpdateMoveCust" %>
+<%@ WebHandler Language="C#" Class="UpdateMoveSite" %>
 
 using System;
 using System.Web;
@@ -7,7 +7,7 @@ using DNAide.Core;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.DataAccess;
 
-public class UpdateMoveCust : IHttpHandler,IRequiresSessionState {
+public class UpdateMoveSite : IHttpHandler,IRequiresSessionState {
     
     public void ProcessRequest (HttpContext context) {
         context.Response.ContentType = "text/html";

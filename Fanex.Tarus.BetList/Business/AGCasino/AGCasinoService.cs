@@ -1,5 +1,7 @@
 ﻿namespace Fanex.Tarus.BetList.Business
 {
+    using System.Collections.Generic;
+    using System.Linq;
     using Constants;
     using Core;
     using Extensions;
@@ -10,7 +12,7 @@
     using Fanex.Tarus.BetList.Criteria;
     using Fanex.Tarus.BetList.DataAccess;
     using Models;
-    using System.Collections.Generic;
+    using Sunplus.Accounting.Core.Extensions;
 
     public class AGCasinoService : IBBinService
     {
@@ -28,17 +30,42 @@
 
         public IEnumerable<TicketDetail> BetDetails(GetAGCasinoBetDetailsCriteria criteria)
         {
-            var detailsTickets = _agCasinoRepository.BetDetails(criteria);
-            if (detailsTickets != null)
+            var tickets = new List<TicketDetail>();
+            var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(criteria.CustId);
+            if (siteDB != null)
             {
-                ITicketHelper ticketHelper = new TicketHelper();
-                BetListHTMLFactory factory = new BetListHTMLFactory();
-                BetListHTMLBuilder builder = factory.CreateBuilder();
-                BetListHelper betListHelper = new BetListHelper();
+                if (siteDB.IsSiteDB && criteria.WinLossDate > ReportService.BalanceUp.MoveBetsDay)
+                {
+                    var siteDBCriteria = new GetAGCasinoBetDetailsInSiteDBCriteria
+                    {
+                        CustId = criteria.CustId,
+                        PageIndex = criteria.PageIndex,
+                        PageSize = criteria.PageSize,
+                        Refno = criteria.Refno,
+                        TotalRows = criteria.TotalRows,
+                        TransID = criteria.TransID,
+                        TransType = criteria.TransType,
+                        WinLossDate = criteria.WinLossDate
+                    };
+                    tickets = _agCasinoRepository.BetDetails(siteDBCriteria, siteDB.AGIP).ToList();
+                    criteria.TotalRows = siteDBCriteria.TotalRows;
+                }
+
+                if (!siteDB.IsSiteDB ||
+                    (siteDB.IsSiteDB && criteria.WinLossDate <= ReportService.BalanceUp.MoveBetsDay))
+                {
+                    criteria.ExcludeBettrans = siteDB.IsSiteDB;
+                    tickets = _agCasinoRepository.BetDetails(criteria).ToList();
+                }
+
+                var ticketHelper = new TicketHelper();
+                var factory = new BetListHTMLFactory();
+                var builder = factory.CreateBuilder();
+                var betListHelper = new BetListHelper();
                 GetCachePropertyById funcGetOddsTypeName = ticketHelper.GetOddsTypeNameById;
 
                 List<ITicketData> outputLiveCasino = new List<ITicketData>();
-                foreach (TicketDetail betDetail in detailsTickets)
+                foreach (TicketDetail betDetail in tickets)
                 {
                     ticketHelper.IsShowOddsWithChoice = this.IsShowOddsWithChoice(betDetail.Ticket.BetTypeId);
                     betDetail.TransDateHtml = builder.BuildTrans(betDetail.Ticket);
@@ -49,7 +76,7 @@
                 }
             }
 
-            return detailsTickets;
+            return tickets;
         }
 
         public IEnumerable<TicketDetail> BetDetails(GetBBinBetDetailsCriteria criteria)

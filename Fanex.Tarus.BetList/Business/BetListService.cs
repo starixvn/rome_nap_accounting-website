@@ -9,6 +9,14 @@
 
 namespace Fanex.Tarus.BetList.Business
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.Data;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
+    using System.Text;
+    using System.Text.RegularExpressions;
     using Constants;
     using Core;
     using Criteria;
@@ -21,18 +29,11 @@ namespace Fanex.Tarus.BetList.Business
     using Fanex.Common;
     using Fanex.CustomerSetting.Module.Core;
     using Fanex.Data;
-    using Fanex.Tarus.Infrastructure.Common;
+    using Fanex.Tarus.BetList.Param;
     using Models;
     using Resources;
+    using Sunplus.Accounting.Core.Extensions;
     using Sunplus.Accounting.DataAccess.Report;
-    using System;
-    using System.Collections.Generic;
-    using System.Configuration;
-    using System.Data;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Linq;
-    using System.Text;
-    using System.Text.RegularExpressions;
 
     /// <summary>
     /// TODO: Update summary.
@@ -45,84 +46,144 @@ namespace Fanex.Tarus.BetList.Business
         private const int DefaultBetdaqId = -1;
         private readonly List<int> SabaclubProductIdList = new List<int> { 42, 66 };
 
+        private readonly Func<DataRow, TicketDetail> mapTicketObjectFunction = r => new TicketDetail
+        {
+            Ticket = new Ticket
+            {
+                ActualStake = r.Table.Columns.Contains("actual_stake") ? Converter.To<decimal>(r["actual_stake"]) : 0,
+
+                AgentWinlost = r.Table.Columns.Contains("actual_stake") ? Converter.ToDecimal(r["awinlost"]) : 0,
+                AgentPositionTaking = r.Table.Columns.Contains("apositiontaking") ? Converter.ToDecimal(r["apositiontaking"]) : 0,
+                Comm = r.Table.Columns.Contains("comm") ? Converter.ToDecimal(r["comm"]) : 0,
+                AgentDiscount = r.Table.Columns.Contains("discount") ? Converter.ToDecimal(r["discount"]) : 0,
+
+                AwayId = r.Table.Columns.Contains("awayid") ? Converter.To<long>(r["awayid"]) : 0,
+                BetId = r.Table.Columns.Contains("betid") ? Converter.To<long>(r["betid"]) : 0,
+                BetTeam = r.Table.Columns.Contains("betteam") ? Converter.ToString2(r["betteam"]) : string.Empty,
+                BetTypeId = r.Table.Columns.Contains("bettype") ? Converter.To<int>(r["bettype"]) : 0,
+                CommStatus = r.Table.Columns.Contains("comstatus") ? Converter.To<string>(r["comstatus"]) : string.Empty,
+                CustId = r.Table.Columns.Contains("custid") ? Converter.To<long>(r["custid"]) : 0,
+                Handicap1 = r.Table.Columns.Contains("hdp1") ? Converter.ToDecimal(r["hdp1"]) : 0,
+                Handicap2 = r.Table.Columns.Contains("hdp2") ? Converter.ToDecimal(r["hdp2"]) : 0,
+                HomeId = r.Table.Columns.Contains("homeid") ? Converter.To<long>(r["homeid"]) : 0,
+                EventDate = r.Table.Columns.Contains("eventdate") ? Converter.ToDateTime(r["eventdate"]) : DateTime.Now,
+                IP = r.Table.Columns.Contains("ip") ? Converter.ToString2(r["ip"]) : string.Empty,
+                IsLive = r.Table.Columns.Contains("liveindicator") ? Converter.ToBool(r["liveindicator"]) : false,
+                IsNeutral = r.Table.Columns.Contains("isNeutral") ? Converter.ToBool(r["isNeutral"]) : false,
+                LeagueId = r.Table.Columns.Contains("leagueid") ? Converter.To<int>(r["leagueid"]) : 0,
+                LiveHomeScore = r.Table.Columns.Contains("livehomescore") ? Converter.To<int>(r["livehomescore"]) : 0,
+                LiveAwayScore = r.Table.Columns.Contains("liveawayscore") ? Converter.To<int>(r["liveawayscore"]) : 0,
+
+                MasterWinlost = r.Table.Columns.Contains("mwinlost") ? Converter.ToDecimal(r["mwinlost"]) : 0,
+                MasterPositionTaking = r.Table.Columns.Contains("mpositiontaking") ? Converter.ToDecimal(r["mpositiontaking"]) : 0,
+                AgentComm = r.Table.Columns.Contains("acomm") ? Converter.ToDecimal(r["acomm"]) : 0,
+                MasterDiscount = r.Table.Columns.Contains("adiscount") ? Converter.ToDecimal(r["adiscount"]) : 0,
+
+                MasterOdds = r.Table.Columns.Contains("modds") ? Converter.ToDecimal(r["modds"]) : 0,
+                MatchCode = r.Table.Columns.Contains("matchcode") ? Converter.ToString2(r["matchcode"]) : string.Empty,
+                MatchId = r.Table.Columns.Contains("matchid") ? Converter.To<int>(r["matchid"]) : 0,
+                Odds = r.Table.Columns.Contains("odds") ? Converter.ToDecimal(r["odds"]) : 0,
+                OddsType = r.Table.Columns.Contains("OddsType") ? Converter.ToString2(r["OddsType"]) : string.Empty,
+                PlayerComm = r.Table.Columns.Contains("commission") ? Converter.ToDecimal(r["commission"]) : 0,
+                Race = r.Table.Columns.Contains("race") ? Converter.ToString2(r["race"]) : string.Empty,
+                RefNo = r.Table.Columns.Contains("refno") ? Converter.ToString2(r["refno"]) : string.Empty,
+                ShowTime = r.Table.Columns.Contains("showtime") ? Converter.ToString2(r["showtime"]) : string.Empty,
+                SportTypeId = r.Table.Columns.Contains("sporttype") ? Converter.To<int>(r["sporttype"]) : 0,
+                Stake = r.Table.Columns.Contains("stake") ? Converter.To<decimal>(r["stake"]) : 0,
+                Status = r.Table.Columns.Contains("status") ? Converter.ToString2(r["status"]) : string.Empty,
+
+                SuperWinlost = r.Table.Columns.Contains("swinlost") ? Converter.ToDecimal(r["swinlost"]) : 0,
+                SuperPositionTaking = r.Table.Columns.Contains("spositiontaking") ? Converter.ToDecimal(r["spositiontaking"]) : 0,
+                SuperComm = r.Table.Columns.Contains("scomm") ? Converter.ToDecimal(r["scomm"]) : 0,
+                SuperDiscount = r.Table.Columns.Contains("sdiscount") ? Converter.ToDecimal(r["sdiscount"]) : 0,
+
+                TransDate = r.Table.Columns.Contains("transdate") ? Converter.ToDateTime(r["transdate"]) : DateTime.MinValue,
+                TransId = r.Table.Columns.Contains("transid") ? Converter.To<long>(r["transid"]) : 0,
+                UserName = r.Table.Columns.Contains("username") ? Converter.ToString2(r["username"]) : string.Empty,
+                Winlost = r.Table.Columns.Contains("winlost") ? Converter.ToDecimal(r["winlost"]) : 0,
+                WinlostDate = r.Table.Columns.Contains("winlostdate") ? Convert.ToDateTime(r["winlostdate"]) : DateTime.MinValue,
+                TransDesc = r.Table.Columns.Contains("transdesc") ? Converter.ToString2(r["transdesc"]) : string.Empty,
+
+                BetCheck = r.Table.Columns.Contains("betcheck") ? Converter.ToString2(r["betcheck"]) : string.Empty,
+                OddsSpread = r.Table.Columns.Contains("OddsSpread") ? Converter.ToDecimal(r["OddsSpread"]) : 0,
+
+                OriginalBetType = r.Table.Columns.Contains("OriginalBetType") ? Converter.To<int>(r["OriginalBetType"]) : 0,
+                BetdaqId = r.Table.Columns.Contains("BetdaqId") ? Converter.To<long>(r["BetdaqId"]) : DefaultBetdaqId,
+                ExtraInfo = r.Table.Columns.Contains("ExtraInfo") ? Converter.ToString2(r["ExtraInfo"]) : string.Empty,
+
+                Currency = r.Table.Columns.Contains("Currency") ? Converter.ToString2(r["Currency"]) : string.Empty,
+                CurrencyId = r.Table.Columns.Contains("CurrencyId") ? Converter.ToInt(r["CurrencyId"]) : 0,
+
+                WalletType = r.Table.Columns.Contains("wallettype") ? Converter.To<byte>(r["wallettype"]) : (byte)0,
+                RefCode = r.Table.Columns.Contains("refcode") ? Converter.To<long>(r["refcode"]) : 0,
+                SettlementStatus = r.Table.Columns.Contains("SettlementStatus") ? Converter.To<byte>(r["SettlementStatus"]) : (byte)0,
+                SiteId = r.Table.Columns.Contains("SiteId") ? Converter.ToString2(r["SiteId"]) : ""
+            },
+            ChoiceHtml = string.Empty,
+            OddHtml = string.Empty,
+            StakeHtml = string.Empty,
+            IsShowOtExRate = r.Table.Columns.Contains("isShowOTExRate") ? Converter.To<bool>(r["isShowOTExRate"]) : false,
+            VirtualRate = r.Table.Columns.Contains("virtualrate") ? Converter.ToDecimal(r["virtualrate"]) : 0,
+            AgentPositionTaking2 = r.Table.Columns.Contains("apositiontaking2") ? Converter.ToDecimal(r["apositiontaking2"]) : 0,
+            MasterPositionTaking2 = r.Table.Columns.Contains("mpositiontaking2") ? Converter.ToDecimal(r["mpositiontaking2"]) : 0,
+            SuperPositionTaking2 = r.Table.Columns.Contains("spositiontaking2") ? Converter.ToDecimal(r["spositiontaking2"]) : 0,
+            IsChinaView = r.Table.Columns.Contains("IsChinaView") && Converter.ToBool(r["IsChinaView"]),
+            LeagueGroupId = r.Table.Columns.Contains("LeagueGroupId") ? Converter.ToInt(r["LeagueGroupId"]) : 0,
+        };
         public BetListService()
         {
             _betListRepository = new BetListRepository();
         }
 
-        /// <summary>
-        /// Get Detail Mix Parlay ticket.
-        /// </summary>
-        /// <param name="criteria">The criteria.</param>
-        /// <returns>Detail Mix Parlay ticket.</returns>
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
-            "SP2101:MethodMustNotContainMoreLinesThan",
-            Justification = "Reviewed. Suppression is OK here.")]
-        public IList<TicketDetail> GetMixParlayTickets(MixParlayDetailCriteria criteria)
+        public IEnumerable<SiteModel> GetAllSites()
+            => _betListRepository.GetAllSites();
+
+        public IList<TicketDetail> GetMixParlayTickets(long transId, long refNo, int custId)
         {
-            Func<DataRow, TicketDetail> mapTicketObjectFunction = r => new TicketDetail
+            var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(custId);
+            if (siteDB != null)
             {
-                Ticket = new Ticket
+                IList<TicketDetail> siteDBTickets = new List<TicketDetail>();
+                if (siteDB.IsSiteDB)
                 {
-                    SportTypeId = Converter.ToInt(r["Sporttype"]),
-                    TransId = Converter.To<long>(r["TransID"]),
-                    BetTypeId = Converter.ToInt(r["Bettype"]),
-                    Stake = Converter.ToDecimal(r["Stake"]),
-                    Currency = Converter.ToString2(r["Currency"]),
-                    Handicap1 = Converter.ToDecimal(r["hdp1"]),
-                    Handicap2 = Converter.ToDecimal(r["hdp2"]),
-                    Odds = Converter.ToDecimal(r["Odds"]),
-                    BetTeam = Converter.ToString2(r["Betteam"]),
-                    IsLive = Converter.ToBool(r["Liveindicator"]),
-                    LiveHomeScore = Converter.ToInt(r["Livehomescore"]),
-                    LiveAwayScore = Converter.ToInt(r["Liveawayscore"]),
-                    LeagueId = Converter.ToInt(r["LeagueID"]),
-                    MatchId = Converter.ToInt(r["MatchID"]),
-                    MatchCode = Converter.ToString2(r["MatchCode"]),
-                    HomeId = Converter.To<long>(r["HomeID"]),
-                    AwayId = Converter.To<long>(r["AwayID"]),
-                    IsNeutral = Converter.ToBool(r["isNeutral"]),
-                    BetCheck = Converter.ToString2(r["BetCheck"]),
-                    TransDesc = Converter.ToString2(r["transdesc"]),
-                    ShowTime = Converter.ToString2(r["showtime"]),
-                    EventDate = Converter.ToDateTime(r["eventdate"]),
-                    Status = Converter.ToString2(r["status"]),
-                    SettlementStatus = r.Table.Columns.Contains("SettlementStatus") ? Convert.ToByte(r["SettlementStatus"]) : (byte)0,
-                    TransDate = Converter.ToDateTime(r["TransDate"])
-                },
-                ChoiceHtml = string.Empty,
-                OddHtml = string.Empty,
-                StakeHtml = string.Empty,
-                IsChinaView = r.Table.Columns.Contains("IsChinaView") && Converter.ToBool(r["IsChinaView"]),
-                LeagueGroupId = r.Table.Columns.Contains("LeagueGroupId") ? Converter.ToInt(r["LeagueGroupId"]) : 0
-            };
-
-            try
-            {
-                IList<TicketDetail> betDetails = _betListRepository.Fetch<TicketDetail>(criteria, mapTicketObjectFunction);
-                if (betDetails != null)
-                {
-                    BetListHTMLFactory factory = new BetListHTMLFactory();
-                    BetListHTMLBuilder builder = factory.CreateBuilder();
-                    ticketHelper.IsShowOddsWithChoice = true;
-                    var totalItem = betDetails.Count;
-                    foreach (TicketDetail betDetail in betDetails)
+                    var siteDBCriteria = new SiteDBMixParlayDetailCriteria
                     {
-                        totalItem--;
-                        betDetail.ChoiceHtml =
-                            "<div class='ticketList'>"
-                                + builder.BuildChoice(betDetail.Ticket, ticketHelper, null, false)
-                                + builder.BuildTransEventDateAndStatusResult(betDetail.Ticket, null)
-                            + (totalItem > 0 ? "</div>" + "<div class=\"line\"></div>" : "</div>");
-                        RemoveSabaWord(betDetail);
-                    }
-
-                    return betDetails;
+                        CustId = custId,
+                        RefNo = refNo,
+                        TransId = transId,
+                        MoveBetsDay = ReportService.BalanceUp.MoveBetsDay,
+                        BalanceUpDay = ReportService.BalanceUp.BalanceUpDay
+                    };
+                    siteDBTickets = _betListRepository.Fetch<TicketDetail>(siteDBCriteria, siteDB.AGIP, mapTicketObjectFunction);
                 }
-            }
-            catch (Exception ex)
-            {
-                LoggingHandler.Log(ex);
+                var mainCriteria = new MixParlayDetailCriteria
+                {
+                    CustId = custId,
+                    RefNo = refNo,
+                    TransId = transId,
+                    ExcludeBettrans = siteDB.IsSiteDB,
+                    MoveBetsDay = ReportService.BalanceUp.MoveBetsDay,
+                    BalanceUpDay = ReportService.BalanceUp.BalanceUpDay
+                };
+
+                var mainTickets = _betListRepository.Fetch<TicketDetail>(mainCriteria, mapTicketObjectFunction);
+                var tickets = siteDBTickets.Concat(mainTickets).Distinct().ToList();
+                var factory = new BetListHTMLFactory();
+                var builder = factory.CreateBuilder();
+                ticketHelper.IsShowOddsWithChoice = true;
+                var totalItem = tickets.Count;
+                foreach (TicketDetail betDetail in tickets)
+                {
+                    totalItem--;
+                    betDetail.ChoiceHtml =
+                        "<div class='ticketList'>"
+                            + builder.BuildChoice(betDetail.Ticket, ticketHelper, null, false)
+                            + builder.BuildTransEventDateAndStatusResult(betDetail.Ticket, null)
+                        + (totalItem > 0 ? "</div>" + "<div class=\"line\"></div>" : "</div>");
+                    RemoveSabaWord(betDetail);
+                }
+
+                return tickets;
             }
 
             return new List<TicketDetail>();
@@ -136,91 +197,6 @@ namespace Fanex.Tarus.BetList.Business
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         private IList<TicketDetail> GetBetListBy(dynamic criteria)
         {
-            Func<DataRow, TicketDetail> mapTicketObjectFunction = r => new TicketDetail
-            {
-                Ticket = new Ticket
-                {
-                    ActualStake = Converter.To<decimal>(r["actual_stake"]),
-
-                    AgentWinlost = Converter.ToDecimal(r["awinlost"]),
-                    AgentPositionTaking = Converter.ToDecimal(r["apositiontaking"]),
-                    Comm = Converter.ToDecimal(r["comm"]),
-                    AgentDiscount = Converter.ToDecimal(r["discount"]),
-
-                    AwayId = Converter.To<long>(r["awayid"]),
-                    BetId = Converter.To<long>(r["betid"]),
-                    BetTeam = Converter.ToString2(r["betteam"]),
-                    BetTypeId = Converter.To<int>(r["bettype"]),
-                    CommStatus = Converter.To<string>(r["comstatus"]),
-                    CustId = Converter.To<long>(r["custid"]),
-                    Handicap1 = Converter.ToDecimal(r["hdp1"]),
-                    Handicap2 = Converter.ToDecimal(r["hdp2"]),
-                    HomeId = Converter.To<long>(r["homeid"]),
-                    EventDate = r.Table.Columns.Contains("eventdate") ? Converter.ToDateTime(r["eventdate"]) : DateTime.Now,
-                    IP = Converter.ToString2(r["ip"]),
-                    IsLive = Converter.ToBool(r["liveindicator"]),
-                    IsNeutral = r.Table.Columns.Contains("isNeutral") ? Converter.ToBool(r["isNeutral"]) : false,
-                    LeagueId = Converter.To<int>(r["leagueid"]),
-                    LiveHomeScore = Converter.To<int>(r["livehomescore"]),
-                    LiveAwayScore = Converter.To<int>(r["liveawayscore"]),
-
-                    MasterWinlost = Converter.ToDecimal(r["mwinlost"]),
-                    MasterPositionTaking = Converter.ToDecimal(r["mpositiontaking"]),
-                    AgentComm = Converter.ToDecimal(r["acomm"]),
-                    MasterDiscount = Converter.ToDecimal(r["adiscount"]),
-
-                    MasterOdds = r.Table.Columns.Contains("modds") ? Converter.ToDecimal(r["modds"]) : 0,
-                    MatchCode = Converter.ToString2(r["matchcode"]),
-                    MatchId = Converter.To<int>(r["matchid"]),
-                    Odds = Converter.ToDecimal(r["odds"]),
-                    OddsType = Converter.ToString2(r["OddsType"]),
-                    PlayerComm = Converter.ToDecimal(r["commission"]),
-                    Race = r.Table.Columns.Contains("race") ? Converter.ToString2(r["race"]) : string.Empty,
-                    RefNo = Converter.ToString2(r["refno"]),
-                    ShowTime = r.Table.Columns.Contains("showtime") ? Converter.ToString2(r["showtime"]) : string.Empty,
-                    SportTypeId = Converter.To<int>(r["sporttype"]),
-                    Stake = Converter.To<decimal>(r["stake"]),
-                    Status = Converter.ToString2(r["status"]),
-
-                    SuperWinlost = Converter.ToDecimal(r["swinlost"]),
-                    SuperPositionTaking = Converter.ToDecimal(r["spositiontaking"]),
-                    SuperComm = Converter.ToDecimal(r["scomm"]),
-                    SuperDiscount = Converter.ToDecimal(r["sdiscount"]),
-
-                    TransDate = Converter.ToDateTime(r["transdate"]),
-                    TransId = Converter.To<long>(r["transid"]),
-                    UserName = r.Table.Columns.Contains("username") ? Converter.ToString2(r["username"]) : string.Empty,
-                    Winlost = Converter.ToDecimal(r["winlost"]),
-                    WinlostDate = Convert.ToDateTime(r["winlostdate"]),
-                    TransDesc = Converter.ToString2(r["transdesc"]),
-
-                    BetCheck = Convert.ToString(r["betcheck"]),
-                    OddsSpread = Convert.ToDecimal(r["OddsSpread"]),
-
-                    OriginalBetType = r.Table.Columns.Contains("OriginalBetType") ? Convert.ToInt32(r["OriginalBetType"]) : 0,
-                    BetdaqId = r.Table.Columns.Contains("BetdaqId") ? Convert.ToInt64(r["BetdaqId"]) : DefaultBetdaqId,
-                    ExtraInfo = r.Table.Columns.Contains("ExtraInfo") ? Converter.ToString2(r["ExtraInfo"]) : string.Empty,
-
-                    Currency = r.Table.Columns.Contains("Currency") ? Converter.ToString2(r["Currency"]) : string.Empty,
-                    CurrencyId = r.Table.Columns.Contains("CurrencyId") ? Converter.ToInt(r["CurrencyId"]) : 0,
-
-                    WalletType = r.Table.Columns.Contains("wallettype") ? Convert.ToByte(r["wallettype"]) : (byte)0,
-                    RefCode = r.Table.Columns.Contains("refcode") ? Convert.ToInt64(r["refcode"]) : 0,
-                    SettlementStatus = r.Table.Columns.Contains("SettlementStatus") ? Convert.ToByte(r["SettlementStatus"]) : (byte)0,
-                    SiteId = r.Table.Columns.Contains("SiteId") ? Converter.ToString2(r["SiteId"]) : ""
-                },
-                ChoiceHtml = string.Empty,
-                OddHtml = string.Empty,
-                StakeHtml = string.Empty,
-                IsShowOtExRate = r.Table.Columns.Contains("isShowOTExRate") ? Converter.To<bool>(r["isShowOTExRate"]) : false,
-                VirtualRate = r.Table.Columns.Contains("virtualrate") ? Converter.ToDecimal(r["virtualrate"]) : 0,
-                AgentPositionTaking2 = r.Table.Columns.Contains("apositiontaking2") ? Converter.ToDecimal(r["apositiontaking2"]) : 0,
-                MasterPositionTaking2 = r.Table.Columns.Contains("mpositiontaking2") ? Converter.ToDecimal(r["mpositiontaking2"]) : 0,
-                SuperPositionTaking2 = r.Table.Columns.Contains("spositiontaking2") ? Converter.ToDecimal(r["spositiontaking2"]) : 0,
-                IsChinaView = r.Table.Columns.Contains("IsChinaView") && Converter.ToBool(r["IsChinaView"]),
-                LeagueGroupId = r.Table.Columns.Contains("LeagueGroupId") ? Converter.ToInt(r["LeagueGroupId"]) : 0,
-            };
-
             try
             {
                 List<ITicketData> outputLiveCasino = new List<ITicketData>();
@@ -255,14 +231,62 @@ namespace Fanex.Tarus.BetList.Business
             return new List<TicketDetail>();
         }
 
-        public IList<TicketDetail> GetBetListByRefNo(BetListByRefNoCriteria betListByRefNoCriteria)
+        public IList<TicketDetail> GetBetListByRefNo(BetListByRefNoParam param)
         {
-            var tickets = GetBetListBy(betListByRefNoCriteria);
-            foreach (TicketDetail ticket in tickets)
+            IList<TicketDetail> tickets = new List<TicketDetail>();
+            List<ITicketData> outputLiveCasino = new List<ITicketData>();
+            var betListHelper = new BetListHelper();
+            var allSite = ObjectDbExtensions.GetAllSiteDBConfig();
+            var siteDB = allSite.FirstOrDefault(i => i.SiteDBGroupID == param.SiteDBGroupId);
+            if (siteDB != null)
             {
-                RemoveSabaWord(ticket);
+                if (siteDB.IsSiteDB)
+                {
+                    var siteDBCriteria = new SiteDBBetListByRefNoCriteria
+                    {
+                        UserId = param.UserId,
+                        RefNo = Converter.To<long>(param.RefNo),
+                        MoveBetsDay = ReportService.BalanceUp.MoveBetsDay,
+                        Permission = param.Permission,
+                        Site = param.Site
+                    };
+                    tickets = _betListRepository.Fetch<TicketDetail>(siteDBCriteria, siteDB.AGIP, mapTicketObjectFunction, ref outputLiveCasino).ToList();
+                }
+
+                if (!tickets.Any())
+                {
+                    var mainCriteria = new BetListByRefNoCriteria
+                    {
+                        UserId = param.UserId,
+                        RefNo = Converter.To<long>(param.RefNo),
+                        MoveBetsDay = ReportService.BalanceUp.MoveBetsDay,
+                        BalanceUpDay = ReportService.BalanceUp.BalanceUpDay,
+                        Permission = param.Permission,
+                        Site = param.Site,
+                        ExcludeBettrans = siteDB.IsSiteDB
+                    };
+                    tickets = _betListRepository.Fetch<TicketDetail>(mainCriteria, mapTicketObjectFunction, ref outputLiveCasino);
+                }
 
             }
+
+            var factory = new BetListHTMLFactory();
+            var builder = factory.CreateBuilder();
+            GetCachePropertyById funcGetOddsTypeName = ticketHelper.GetOddsTypeNameById;
+
+            foreach (var betDetail in tickets)
+            {
+                ticketHelper.IsShowOddsWithChoice = IsShowOddsWithChoice(betDetail.Ticket.BetTypeId);
+
+                betDetail.TransDateHtml = builder.BuildTrans(betDetail.Ticket);
+                betDetail.ChoiceHtml = builder.BuildChoice(betDetail.Ticket, ticketHelper, outputLiveCasino, false);
+                betDetail.StakeHtml = BetListExtension.BuildStake(betDetail, ref builder, ticketHelper);
+                betDetail.OddHtml = builder.BuildOdds(betDetail.Ticket, outputLiveCasino, funcGetOddsTypeName);
+                betDetail.StatusHtml = betListHelper.BuildStatus(betDetail.Ticket, ticketHelper, outputLiveCasino, factory, builder);
+
+                RemoveSabaWord(betDetail);
+            }
+
             return tickets;
         }
 
@@ -330,54 +354,46 @@ namespace Fanex.Tarus.BetList.Business
             });
         }
 
-        /// <summary>
-        /// Gets bet types by date after change date range.
-        /// </summary>
-        /// <param name="criteria">The criteria.</param>
-        /// <returns>Bet types by date after change date range.</returns>
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
-        public IList<BetType> GetBetTypeByDate(BetTypeByDateCriteria criteria)
+        public IList<BetType> GetBetTypeByDate(BetTypeByDateCriteria mainCriteria)
         {
-            bool isLimitForU3 = (AppSession.IsU3Account && !AppSession.IsU3SpecialAccount)
-            || (AppSession.IsU3SpecialAccount && !IsU3SpecialCustomers(criteria.CustId));
-
-            if (isLimitForU3)
+            var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(mainCriteria.CustId);
+            if (siteDB != null)
             {
-                criteria.SetSettingKeyForU3();
-            }
-
-            IList<BetType> betTypeList = new List<BetType>();
-
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
-            {
-                DataSet dataSet = db.ExecuteDataSet(criteria);
-                if (dataSet != null &&
-                    dataSet.Tables.Count > 0)
+                IList<BetType> siteDBTickets = new List<BetType>();
+                IList<BetType> mainDBTickets = new List<BetType>();
+                if (siteDB.IsSiteDB && mainCriteria.ToDate > ReportService.BalanceUp.MoveBetsDay)
                 {
-                    foreach (DataRow r in dataSet.Tables[0].Rows)
+                    var siteDBCriteria = new BetTypeByDateInSiteDBCriteria
                     {
-                        string betTypeNameTmp = r["typenamee"].ToString();
-                        int betTypeIdTmp = Converter.To<int>(r["typeid"]);
-                        betTypeNameTmp += GetSportNameSuffixByBetType(betTypeIdTmp);
-                        betTypeList.Add(new BetType
-                        {
-                            BetTypeID = betTypeIdTmp,
-                            BetTypeName = betTypeNameTmp
-                        });
-                    }
+                        CustId = mainCriteria.CustId,
+                        FromDate = mainCriteria.FromDate,
+                        ToDate = mainCriteria.ToDate
+                    };
+                    siteDBTickets = _betListRepository.GetBetTypeByDate(siteDBCriteria, siteDB.AGIP);
                 }
-            }
 
-            var all = new BetType
-            {
-                BetTypeName = BetListResources.All,
-                BetTypeID = 0
-            };
+                if (!siteDB.IsSiteDB ||
+                    (siteDB.IsSiteDB && mainCriteria.FromDate <= ReportService.BalanceUp.MoveBetsDay))
+                {
+                    mainCriteria.ExcludeBettrans = siteDB.IsSiteDB;
+                    mainDBTickets = _betListRepository.GetBetTypeByDate(mainCriteria);
+                }
 
-            betTypeList.Insert(0, all);
-            if (betTypeList != null)
-            {
-                return betTypeList;
+                var tickets = siteDBTickets.Concat(mainDBTickets).ToList();
+                foreach (var ticket in tickets)
+                {
+                    ticket.BetTypeName += GetSportNameSuffixByBetType(ticket.BetTypeID);
+                }
+
+                if (tickets.Any())
+                {
+                    tickets.Insert(0, new BetType
+                    {
+                        BetTypeName = BetListResources.All,
+                        BetTypeID = 0
+                    });
+                    return tickets;
+                }
             }
 
             return new List<BetType>();
@@ -393,378 +409,222 @@ namespace Fanex.Tarus.BetList.Business
             int pageIndex,
             ref int quantity)
         {
-            Func<DataRow, TicketDetail> mapTicketObjectFunction = r => new TicketDetail
+            var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(custId);
+            if (siteDB != null)
             {
-                Ticket = new Ticket
+                var ticketData = new List<ITicketData>();
+                var siteDBTickets = new KeyValuePair<dynamic, IList<TicketDetail>>(null, new List<TicketDetail>());
+                var mainTickets = new KeyValuePair<dynamic, IList<TicketDetail>>(null, new List<TicketDetail>());
+                if (siteDB.IsSiteDB && toDate > ReportService.BalanceUp.MoveBetsDay)
                 {
-                    ActualStake = Converter.To<decimal>(r["actual_stake"]),
-                    AgentWinlost = Converter.ToDecimal(r["awinlost"]),
-                    AgentPositionTaking = Converter.ToDecimal(r["apositiontaking"]),
-                    Comm = Converter.ToDecimal(r["comm"]),
-                    AgentDiscount = Converter.ToDecimal(r["discount"]),
-
-                    AwayId = Converter.To<long>(r["awayid"]),
-                    BetId = Converter.To<long>(r["betid"]),
-                    BetTeam = Converter.ToString2(r["betteam"]),
-                    BetTypeId = Converter.To<int>(r["bettype"]),
-                    CommStatus = Converter.To<string>(r["comstatus"]),
-                    CustId = Converter.To<long>(r["custid"]),
-                    Handicap1 = Converter.ToDecimal(r["hdp1"]),
-                    Handicap2 = Converter.ToDecimal(r["hdp2"]),
-                    HomeId = Converter.To<long>(r["homeid"]),
-                    EventDate = Converter.ToDateTime(r["eventdate"]),
-                    IP = Converter.ToString2(r["ip"]),
-                    IsLive = Converter.ToBool(r["liveindicator"]),
-                    IsNeutral = Converter.ToBool(r["isNeutral"]),
-                    LeagueId = Converter.To<int>(r["leagueid"]),
-                    LiveHomeScore = Converter.To<int>(r["livehomescore"]),
-                    LiveAwayScore = Converter.To<int>(r["liveawayscore"]),
-
-                    MasterWinlost = Converter.ToDecimal(r["mwinlost"]),
-                    MasterPositionTaking = Converter.ToDecimal(r["mpositiontaking"]),
-                    AgentComm = Converter.ToDecimal(r["acomm"]),
-                    MasterDiscount = Converter.ToDecimal(r["adiscount"]),
-
-                    MasterOdds = Converter.ToDecimal(r["modds"]),
-                    MatchCode = Converter.ToString2(r["matchcode"]),
-                    MatchId = Converter.To<int>(r["matchid"]),
-                    Odds = Converter.ToDecimal(r["odds"]),
-                    OddsType = Converter.ToString2(r["OddsType"]),
-                    PlayerComm = Converter.ToDecimal(r["commission"]),
-                    Race = Converter.ToString2(r["race"]),
-                    RefNo = Converter.ToString2(r["refno"]),
-                    ShowTime = Converter.ToString2(r["showtime"]),
-                    SportTypeId = Converter.To<int>(r["sporttype"]),
-                    Stake = Converter.To<decimal>(r["stake"]),
-                    Status = Converter.ToString2(r["status"]),
-
-                    SuperWinlost = Converter.ToDecimal(r["swinlost"]),
-                    SuperPositionTaking = Converter.ToDecimal(r["spositiontaking"]),
-                    SuperComm = Converter.ToDecimal(r["scomm"]),
-                    SuperDiscount = Converter.ToDecimal(r["sdiscount"]),
-
-                    TransDate = Converter.ToDateTime(r["transdate"]),
-                    TransId = Converter.To<long>(r["transid"]),
-                    Winlost = Converter.ToDecimal(r["winlost"]),
-                    WinlostDate = Convert.ToDateTime(r["winlostdate"]),
-                    TransDesc = Converter.ToString2(r["transdesc"]),
-
-                    BetCheck = Convert.ToString(r["betcheck"]),
-                    OddsSpread = Convert.ToDecimal(r["OddsSpread"]),
-
-                    OriginalBetType = Converter.ToInt(r["OriginalBetType"]),
-                    BetdaqId = Convert.ToInt64(r["BetdaqId"]),
-                    ExtraInfo = Converter.ToString2(r["ExtraInfo"]),
-
-                    Currency = Converter.ToString2(r["Currency"]),
-                    CurrencyId = r.Table.Columns.Contains("CurrencyId") ? Converter.To<int>(r["CurrencyId"]) : 0,
-
-                    WalletType = r.Table.Columns.Contains("wallettype") ? Converter.To<byte>(r["wallettype"]) : (byte)0,
-                    RefCode = r.Table.Columns.Contains("refcode") ? Converter.To<long>(r["refcode"]) : 0,
-                    SettlementStatus = r.Table.Columns.Contains("SettlementStatus") ? Convert.ToByte(r["SettlementStatus"]) : (byte)0,
-                    SiteId = r.Table.Columns.Contains("SiteId") ? Converter.ToString2(r["SiteId"]) : ""
-                },
-                ChoiceHtml = string.Empty,
-                OddHtml = string.Empty,
-                StakeHtml = string.Empty,
-                BetFrom = r["betfrom"].ToString(),
-            };
-
-            var criteria = new BetListByCustInfoCriteria
-            {
-                CustId = custId,
-                FromDate = fromDate,
-                ToDate = toDate,
-                BetType = betType,
-                MoveBetsDay = ReportService.BalanceUp.MoveBetsDay,
-                BalanceUpDay = ReportService.BalanceUp.BalanceUpDay,
-                StatusIdList = statusIds,
-                ErrCode = 0,
-                ErrMsg = string.Empty,
-                MaxTotalRow = ReportService.BetlistMaxTotalRow
-            };
-
-            var ticketData = new List<ITicketData>();
-            var betData = _betListRepository.FetchWithOutputs<TicketDetail>(criteria, mapTicketObjectFunction, ref ticketData);
-            var betDetails = betData.Value.OrderBy(x => x.Ticket.TransDate).ToList();
-
-            quantity = betDetails.Count;
-            var betlistHelper = new BetListHelper();
-
-            if (pageIndex > 0 && betData.Key.errCode == 0)
-            {
-                var factory = new BetListHTMLFactory();
-                var builder = factory.CreateBuilder();
-                GetCachePropertyById funcGetOddsTypeName = ticketHelper.GetOddsTypeNameById;
-
-                var from = pageSize * (pageIndex - 1);
-                var newTicket = new List<TicketDetail>();
-                foreach (var betDetail in betDetails.Skip(from).Take(pageSize))
+                    var siteDBCriteria = new SiteDBBetListByCustInfoCriteria
+                    {
+                        CustId = custId,
+                        FromDate = fromDate,
+                        ToDate = toDate,
+                        BetType = betType,
+                        MoveBetsDay = ReportService.BalanceUp.MoveBetsDay,
+                        StatusIdList = statusIds,
+                        ErrCode = 0,
+                        ErrMsg = string.Empty,
+                        MaxTotalRow = ReportService.BetlistMaxTotalRow
+                    };
+                    siteDBTickets = _betListRepository.FetchWithOutputs<TicketDetail>(siteDBCriteria, siteDB.AGIP, mapTicketObjectFunction, ref ticketData);
+                    if (siteDBTickets.Key.errCode != 0)
+                    {
+                        return string.Format(BetListResources.BetlistMaxTotalRowMessageError, siteDBTickets.Key.maxTotalRow, ReportService.BetlistMaxTotalRow);
+                    }
+                }
+                if (!siteDB.IsSiteDB ||
+                    (siteDB.IsSiteDB && fromDate <= ReportService.BalanceUp.MoveBetsDay))
                 {
-                    ticketHelper.IsShowOddsWithChoice = IsShowOddsWithChoice(betDetail.Ticket.BetTypeId);
-
-                    betDetail.TransDateHtml = builder.BuildTrans(betDetail.Ticket);
-                    betDetail.ChoiceHtml = builder.BuildChoice(betDetail.Ticket, ticketHelper, ticketData, false);
-                    betDetail.StakeHtml = BetListExtension.BuildStake(betDetail, ref builder, ticketHelper);
-                    betDetail.OddHtml = builder.BuildOdds(betDetail.Ticket, ticketData, funcGetOddsTypeName);
-                    betDetail.StatusHtml = betlistHelper.BuildStatus(betDetail.Ticket, ticketHelper, ticketData, factory, builder);
-
-                    newTicket.Add(betDetail);
+                    var mainCriteria = new BetListByCustInfoCriteria
+                    {
+                        CustId = custId,
+                        FromDate = fromDate,
+                        ToDate = toDate,
+                        BetType = betType,
+                        MoveBetsDay = ReportService.BalanceUp.MoveBetsDay,
+                        BalanceUpDay = ReportService.BalanceUp.BalanceUpDay,
+                        StatusIdList = statusIds,
+                        ErrCode = 0,
+                        ErrMsg = string.Empty,
+                        MaxTotalRow = ReportService.BetlistMaxTotalRow,
+                        ExcludeBettrans = siteDB.IsSiteDB
+                    };
+                    mainTickets = _betListRepository.FetchWithOutputs<TicketDetail>(mainCriteria, mapTicketObjectFunction, ref ticketData);
+                    if (mainTickets.Key.errCode != 0)
+                    {
+                        return string.Format(BetListResources.BetlistMaxTotalRowMessageError, mainTickets.Key.maxTotalRow, ReportService.BetlistMaxTotalRow);
+                    }
                 }
 
-                return new KeyValuePair<string, IList<TicketDetail>>(string.Empty, newTicket);
-            }
+                var tickets = siteDBTickets.Value.Concat(mainTickets.Value).OrderBy(x => x.Ticket.TransDate).ToList();
+                quantity = tickets.Count;
 
-            return new KeyValuePair<string, IList<TicketDetail>>(betData.Key.errCode != 0 ?
-                string.Format(BetListResources.BetlistMaxTotalRowMessageError, betData.Key.maxTotalRow, ReportService.BetlistMaxTotalRow) :
-                string.Empty, new List<TicketDetail>());
-        }
-
-        /// <summary>
-        /// Get bet list data for Customer info bet list by ref no - bet list tab.
-        /// </summary>
-        /// <param name="transactionId">The transaction identifier.</param>
-        /// <param name="customerId">The customer identifier.</param>
-        /// <returns>
-        /// Bet list data for Customer info bet list by ref no - bet list tab.
-        /// </returns>
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
-            "SP2101:MethodMustNotContainMoreLinesThan",
-            Justification = "Reviewed. Suppression is OK here.")]
-        public KeyValuePair<string, IList<TicketDetail>> GetBetListByCustInfo_Refno(string transactionId, int customerId)
-        {
-            var criteria = new BetListByCustInfoByRefnoCriteria()
-            {
-                RefNo = transactionId,
-                CustId = customerId,
-                MoveBetsDay = ReportService.BalanceUp.MoveBetsDay,
-                BalanceUpDay = ReportService.BalanceUp.BalanceUpDay
-            };
-
-            var criteriaForU3 = new BetListByCustInfoByRefnoU3Criteria()
-            {
-                TransId = transactionId,
-                CustId = customerId
-            };
-
-            Func<DataRow, TicketDetail> mapTicketObjectFunction = r => new TicketDetail
-            {
-                Ticket = new Ticket
+                var betlistHelper = new BetListHelper();
+                if (pageIndex > 0)
                 {
-                    ActualStake = Converter.To<decimal>(r["actual_stake"]),
-                    AgentWinlost = Converter.ToDecimal(r["awinlost"]),
-                    AgentPositionTaking = Converter.ToDecimal(r["apositiontaking"]),
-                    Comm = Converter.ToDecimal(r["comm"]),
-                    AgentDiscount = Converter.ToDecimal(r["discount"]),
-
-                    AwayId = Converter.To<long>(r["awayid"]),
-                    BetId = Converter.To<long>(r["betid"]),
-                    BetTeam = Converter.ToString2(r["betteam"]),
-                    BetTypeId = Converter.To<int>(r["bettype"]),
-                    CommStatus = Converter.To<string>(r["comstatus"]),
-                    CustId = Converter.To<long>(r["custid"]),
-                    Handicap1 = Converter.ToDecimal(r["hdp1"]),
-                    Handicap2 = Converter.ToDecimal(r["hdp2"]),
-                    HomeId = Converter.To<long>(r["homeid"]),
-                    EventDate = Converter.ToDateTime(r["eventdate"]),
-                    IP = Converter.ToString2(r["ip"]),
-                    IsLive = Converter.ToBool(r["liveindicator"]),
-                    IsNeutral = Converter.ToBool(r["isNeutral"]),
-                    LeagueId = Converter.To<int>(r["leagueid"]),
-                    LiveHomeScore = Converter.To<int>(r["livehomescore"]),
-                    LiveAwayScore = Converter.To<int>(r["liveawayscore"]),
-
-                    MasterWinlost = Converter.ToDecimal(r["mwinlost"]),
-                    MasterPositionTaking = Converter.ToDecimal(r["mpositiontaking"]),
-                    AgentComm = Converter.ToDecimal(r["acomm"]),
-                    MasterDiscount = Converter.ToDecimal(r["adiscount"]),
-
-                    MasterOdds = Converter.ToDecimal(r["modds"]),
-                    MatchCode = Converter.ToString2(r["matchcode"]),
-                    MatchId = Converter.To<int>(r["matchid"]),
-                    Odds = Converter.ToDecimal(r["odds"]),
-                    OddsType = Converter.ToString2(r["OddsType"]),
-                    PlayerComm = Converter.ToDecimal(r["commission"]),
-                    Race = Converter.ToString2(r["race"]),
-                    RefNo = Converter.ToString2(r["refno"]),
-                    ShowTime = Converter.ToString2(r["showtime"]),
-                    SportTypeId = Converter.To<int>(r["sporttype"]),
-                    Stake = Converter.To<decimal>(r["stake"]),
-                    Status = Converter.ToString2(r["status"]),
-
-                    SuperWinlost = Converter.ToDecimal(r["swinlost"]),
-                    SuperPositionTaking = Converter.ToDecimal(r["spositiontaking"]),
-                    SuperComm = Converter.ToDecimal(r["scomm"]),
-                    SuperDiscount = Converter.ToDecimal(r["sdiscount"]),
-
-                    TransDate = Converter.ToDateTime(r["transdate"]),
-                    TransId = Converter.To<long>(r["transid"]),
-                    Winlost = Converter.ToDecimal(r["winlost"]),
-                    WinlostDate = Convert.ToDateTime(r["winlostdate"]),
-                    TransDesc = Converter.ToString2(r["transdesc"]),
-
-                    BetCheck = Convert.ToString(r["betcheck"]),
-                    OddsSpread = Convert.ToDecimal(r["OddsSpread"]),
-
-                    OriginalBetType = Convert.ToInt32(r["OriginalBetType"]),
-                    BetdaqId = Convert.ToInt64(r["BetdaqId"]),
-                    ExtraInfo = Converter.ToString2(r["ExtraInfo"]),
-
-                    Currency = Converter.ToString2(r["Currency"]),
-
-                    WalletType = Convert.ToByte(r["wallettype"]),
-                    RefCode = Convert.ToInt64(r["refcode"]),
-                    SettlementStatus = Convert.ToByte(r["SettlementStatus"]),
-                    CurrencyId = r.Table.Columns.Contains("CurrencyId") ? Convert.ToInt32(r["CurrencyId"]) : 0,
-                    SiteId = r.Table.Columns.Contains("SiteId") ? Converter.ToString2(r["SiteId"]) : ""
-                },
-                ChoiceHtml = string.Empty,
-                OddHtml = string.Empty,
-                StakeHtml = string.Empty,
-                IsShowOtExRate = Converter.To<bool>(r["isShowOTExRate"]),
-                VirtualRate = Converter.ToDecimal(r["virtualrate"]),
-                AgentPositionTaking2 = Converter.ToDecimal(r["apositiontaking2"]),
-                MasterPositionTaking2 = Converter.ToDecimal(r["mpositiontaking2"]),
-                SuperPositionTaking2 = Converter.ToDecimal(r["spositiontaking2"]),
-                BetFrom = r["betfrom"].ToString(),
-                AllowDelete = Converter.To<bool>(r["allowdelete"])
-            };
-
-            try
-            {
-                List<ITicketData> outputLiveCasino = new List<ITicketData>();
-                bool isLimitForU3 = (AppSession.IsU3Account && !AppSession.IsU3SpecialAccount) ||
-                    (AppSession.IsU3SpecialAccount && !IsU3SpecialCustomers(customerId));
-
-                IList<TicketDetail> betDetails = isLimitForU3 ?
-                    _betListRepository.Fetch<TicketDetail>(criteriaForU3, mapTicketObjectFunction, ref outputLiveCasino) :
-                    _betListRepository.Fetch<TicketDetail>(criteria, mapTicketObjectFunction, ref outputLiveCasino);
-
-                BetListHelper betListHelper = new BetListHelper();
-
-                if (betDetails != null)
-                {
-                    BetListHTMLFactory factory = new BetListHTMLFactory();
-                    BetListHTMLBuilder builder = factory.CreateBuilder();
+                    var factory = new BetListHTMLFactory();
+                    var builder = factory.CreateBuilder();
                     GetCachePropertyById funcGetOddsTypeName = ticketHelper.GetOddsTypeNameById;
 
-                    foreach (TicketDetail betDetail in betDetails)
+                    var from = pageSize * (pageIndex - 1);
+                    var newTickets = new List<TicketDetail>();
+                    foreach (var betDetail in tickets.Skip(from).Take(pageSize))
                     {
                         ticketHelper.IsShowOddsWithChoice = IsShowOddsWithChoice(betDetail.Ticket.BetTypeId);
 
                         betDetail.TransDateHtml = builder.BuildTrans(betDetail.Ticket);
-                        betDetail.ChoiceHtml = builder.BuildChoice(betDetail.Ticket, ticketHelper, outputLiveCasino, false);
+                        betDetail.ChoiceHtml = builder.BuildChoice(betDetail.Ticket, ticketHelper, ticketData, false);
                         betDetail.StakeHtml = BetListExtension.BuildStake(betDetail, ref builder, ticketHelper);
-                        betDetail.OddHtml = builder.BuildOdds(betDetail.Ticket, outputLiveCasino, funcGetOddsTypeName);
-                        betDetail.StatusHtml = betListHelper.BuildStatus(betDetail.Ticket, ticketHelper, outputLiveCasino, factory, builder);
+                        betDetail.OddHtml = builder.BuildOdds(betDetail.Ticket, ticketData, funcGetOddsTypeName);
+                        betDetail.StatusHtml = betlistHelper.BuildStatus(betDetail.Ticket, ticketHelper, ticketData, factory, builder);
+                        newTickets.Add(betDetail);
+
                     }
 
-                    return new KeyValuePair<string, IList<TicketDetail>>(string.Empty, betDetails);
+                    return new KeyValuePair<string, IList<TicketDetail>>(string.Empty, newTickets);
                 }
-            }
-            catch (Exception ex)
-            {
-                LoggingHandler.Log(ex);
             }
 
             return new KeyValuePair<string, IList<TicketDetail>>(string.Empty, new List<TicketDetail>());
         }
 
-        /// <summary>
-        /// Get bet list data for Customer info bet list by ref no - system parlay tab.
-        /// </summary>
-        /// <param name="transId">The transaction ID.</param>
-        /// <param name="custId">The customer ID.</param>
-        /// <returns>Bet list data for Customer info bet list by ref no - system parlay tab.</returns>
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
-            "SP2101:MethodMustNotContainMoreLinesThan",
-            Justification = "Reviewed. Suppression is OK here.")]
+        public KeyValuePair<string, IList<TicketDetail>> GetBetListByCustInfo_Refno(string transactionId, int customerId)
+        {
+            var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(customerId);
+            if (siteDB != null)
+            {
+                IList<TicketDetail> tickets = new List<TicketDetail>();
+                List<ITicketData> outputLiveCasino = new List<ITicketData>();
+                if (siteDB.IsSiteDB)
+                {
+                    var siteDBCriteria = new SiteDBBetListByCustInfoByRefnoCriteria()
+                    {
+                        RefNo = transactionId,
+                        CustId = customerId,
+                        MoveBetsDay = ReportService.BalanceUp.MoveBetsDay,
+                        BalanceUpDay = ReportService.BalanceUp.BalanceUpDay
+                    };
+                    tickets = _betListRepository.Fetch<TicketDetail>(siteDBCriteria, siteDB.AGIP, mapTicketObjectFunction, ref outputLiveCasino);
+                }
+
+                if (!tickets.Any())
+                {
+                    var mainCriteria = new BetListByCustInfoByRefnoCriteria()
+                    {
+                        RefNo = transactionId,
+                        CustId = customerId,
+                        MoveBetsDay = ReportService.BalanceUp.MoveBetsDay,
+                        BalanceUpDay = ReportService.BalanceUp.BalanceUpDay,
+                        ExcludeBettrans = siteDB.IsSiteDB
+                    };
+                    tickets = _betListRepository.Fetch<TicketDetail>(mainCriteria, mapTicketObjectFunction, ref outputLiveCasino);
+                }
+
+                var factory = new BetListHTMLFactory();
+                var builder = factory.CreateBuilder();
+                GetCachePropertyById funcGetOddsTypeName = ticketHelper.GetOddsTypeNameById;
+                var betListHelper = new BetListHelper();
+                foreach (var ticket in tickets)
+                {
+                    ticketHelper.IsShowOddsWithChoice = IsShowOddsWithChoice(ticket.Ticket.BetTypeId);
+
+                    ticket.TransDateHtml = builder.BuildTrans(ticket.Ticket);
+                    ticket.ChoiceHtml = builder.BuildChoice(ticket.Ticket, ticketHelper, outputLiveCasino, false);
+                    ticket.StakeHtml = BetListExtension.BuildStake(ticket, ref builder, ticketHelper);
+                    ticket.OddHtml = builder.BuildOdds(ticket.Ticket, outputLiveCasino, funcGetOddsTypeName);
+                    ticket.StatusHtml = betListHelper.BuildStatus(ticket.Ticket, ticketHelper, outputLiveCasino, factory, builder);
+                }
+
+                return new KeyValuePair<string, IList<TicketDetail>>(string.Empty, tickets);
+            }
+
+            return new KeyValuePair<string, IList<TicketDetail>>(string.Empty, new List<TicketDetail>());
+        }
+
         public SystemParlayModel GetBetListByCustInfo_SystemParLayTab(string transId, int custId)
         {
-            try
+            var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(custId);
+            var systemParlayCriteria = new BetListSystemParlayByRefnoCriteria
             {
-                BetListSystemParlayByRefnoCriteria systemParlayCriteria = new BetListSystemParlayByRefnoCriteria
+                IsSiteDB = siteDB != null && siteDB.IsSiteDB,
+                CustomerId = custId,
+                TransactionId = transId,
+                MoveBetDay = ReportService.BalanceUp.MoveBetsDay,
+                BalanceUpDay = ReportService.BalanceUp.BalanceUpDay
+            };
+
+            var outputLiveCasino = new List<ITicketData>();
+            var systempParlayModel = _betListRepository.FetchSystemParlay(systemParlayCriteria);
+
+            var betListHelper = new BetListHelper();
+            if (systempParlayModel.TicketsDetailList != null &&
+                systempParlayModel.TicketsDetailList.Count > 0)
+            {
+                var factory = new BetListHTMLFactory();
+                var builder = factory.CreateBuilder();
+                GetCachePropertyById funcGetOddsTypeName = ticketHelper.GetOddsTypeNameById;
+
+                foreach (TicketDetail betDetail in systempParlayModel.TicketsDetailList)
                 {
-                    CustomerId = custId,
-                    TransactionId = transId,
-                    MoveBetDay = ReportService.BalanceUp.MoveBetsDay,
-                    BalanceUpDay = ReportService.BalanceUp.BalanceUpDay
-                };
+                    ticketHelper.IsShowOddsWithChoice = IsShowOddsWithChoice(betDetail.Ticket.BetTypeId);
 
-                List<ITicketData> outputLiveCasino = new List<ITicketData>();
-                SystemParlayModel systempParlayModel = _betListRepository.FetchSystemParlay(systemParlayCriteria);
-
-                BetListHelper betListHelper = new BetListHelper();
-                if (systempParlayModel.TicketsDetailList != null &&
-                    systempParlayModel.TicketsDetailList.Count > 0)
-                {
-                    BetListHTMLFactory factory = new BetListHTMLFactory();
-                    BetListHTMLBuilder builder = factory.CreateBuilder();
-                    GetCachePropertyById funcGetOddsTypeName = ticketHelper.GetOddsTypeNameById;
-
-                    foreach (TicketDetail betDetail in systempParlayModel.TicketsDetailList)
+                    betDetail.TransDateHtml = builder.BuildTrans(betDetail.Ticket);
+                    betDetail.ChoiceHtml = builder.BuildChoice(betDetail.Ticket, ticketHelper, outputLiveCasino, false);
+                    betDetail.StakeHtml = BetListExtension.BuildStake(betDetail, ref builder, ticketHelper);
+                    betDetail.OddHtml = builder.BuildOdds(betDetail.Ticket, outputLiveCasino, funcGetOddsTypeName);
+                    betDetail.StatusHtml = betListHelper.BuildStatus(betDetail.Ticket, ticketHelper, outputLiveCasino, factory, builder);
+                    if (betDetail.StatusHtml.Contains("Void")
+                        || betDetail.StatusHtml.Contains("Abnormal Bet"))
                     {
-                        ticketHelper.IsShowOddsWithChoice = IsShowOddsWithChoice(betDetail.Ticket.BetTypeId);
-
-                        betDetail.TransDateHtml = builder.BuildTrans(betDetail.Ticket);
-                        betDetail.ChoiceHtml = builder.BuildChoice(betDetail.Ticket, ticketHelper, outputLiveCasino, false);
-                        betDetail.StakeHtml = BetListExtension.BuildStake(betDetail, ref builder, ticketHelper);
-                        betDetail.OddHtml = builder.BuildOdds(betDetail.Ticket, outputLiveCasino, funcGetOddsTypeName);
-                        betDetail.StatusHtml = betListHelper.BuildStatus(betDetail.Ticket, ticketHelper, outputLiveCasino, factory, builder);
-                        if (betDetail.StatusHtml.Contains("Void")
-                            || betDetail.StatusHtml.Contains("Abnormal Bet"))
-                        {
-                            systempParlayModel.HideCombinationDetail = true;
-                        }
+                        systempParlayModel.HideCombinationDetail = true;
                     }
-
-                    if (systempParlayModel.SystemParlayChoice != null)
-                    {
-                        // Combo Parlay.
-                        var firstTicketDetail = systempParlayModel.TicketsDetailList[0];
-                        ITicket firstTicket = firstTicketDetail.Ticket;
-                        if (!string.IsNullOrEmpty(firstTicket.BetCheck))
-                        {
-                            var combinationTypeComboNames = GetCombinationTypeComboNames(
-                                firstTicket.BetTeam,
-                                firstTicket.BetCheck,
-                                firstTicket.Handicap1,
-                                firstTicket.Handicap2,
-                                systempParlayModel.SystemParlayChoice);
-
-                            firstTicketDetail.ChoiceHtml += string.Format(
-                                "<div class=\"hide\" id=\"combinationTypeComboNames\">{0}</div><div class=\"line\"></div>",
-                                combinationTypeComboNames
-                            );
-                        }
-
-                        BetListHTMLFactory factoryParlayDetaily = new BetListHTMLFactory();
-                        BetListHTMLBuilder builderParlayDetail = factoryParlayDetaily.CreateBuilder();
-                        int totalItem = systempParlayModel.SystemParlayChoice.Count;
-                        ticketHelper.IsShowOddsWithChoice = true;
-                        foreach (TicketDetail betDetail in systempParlayModel.SystemParlayChoice)
-                        {
-                            totalItem--;
-
-                            betDetail.TransDateHtml = builderParlayDetail.BuildTrans(betDetail.Ticket);
-                            betDetail.ChoiceHtml =
-                                "<div class='ticketList'>"
-                                    + builder.BuildChoice(betDetail.Ticket, ticketHelper, null, false)
-                                    + builder.BuildTransEventDateAndStatusResult(betDetail.Ticket, null)
-                                + (totalItem > 0 ? "</div>" + "<div class=\"line\"></div>" : "</div>");
-
-                            firstTicketDetail.ChoiceHtml += betDetail.ChoiceHtml;
-                        }
-                    }
-
-                    systempParlayModel.SystemParlayDetail.EventList = systempParlayModel.SystemParlayDetail.EventList.OrderBy(i => SystemParlayConstants.GetStatusOrderId(i.Status)).ToList();
-
-                    return systempParlayModel;
                 }
-            }
-            catch (Exception ex)
-            {
-                LoggingHandler.Log(ex);
+
+                if (systempParlayModel.SystemParlayChoice != null)
+                {
+                    // Combo Parlay.
+                    var firstTicketDetail = systempParlayModel.TicketsDetailList[0];
+                    ITicket firstTicket = firstTicketDetail.Ticket;
+                    if (!string.IsNullOrEmpty(firstTicket.BetCheck))
+                    {
+                        var combinationTypeComboNames = GetCombinationTypeComboNames(
+                            firstTicket.BetTeam,
+                            firstTicket.BetCheck,
+                            firstTicket.Handicap1,
+                            firstTicket.Handicap2,
+                            systempParlayModel.SystemParlayChoice);
+
+                        firstTicketDetail.ChoiceHtml += string.Format(
+                            "<div class=\"hide\" id=\"combinationTypeComboNames\">{0}</div><div class=\"line\"></div>",
+                            combinationTypeComboNames
+                        );
+                    }
+
+                    var factoryParlayDetaily = new BetListHTMLFactory();
+                    var builderParlayDetail = factoryParlayDetaily.CreateBuilder();
+                    int totalItem = systempParlayModel.SystemParlayChoice.Count;
+                    ticketHelper.IsShowOddsWithChoice = true;
+                    foreach (TicketDetail betDetail in systempParlayModel.SystemParlayChoice)
+                    {
+                        totalItem--;
+
+                        betDetail.TransDateHtml = builderParlayDetail.BuildTrans(betDetail.Ticket);
+                        betDetail.ChoiceHtml =
+                            "<div class='ticketList'>"
+                                + builder.BuildChoice(betDetail.Ticket, ticketHelper, null, false)
+                                + builder.BuildTransEventDateAndStatusResult(betDetail.Ticket, null)
+                            + (totalItem > 0 ? "</div>" + "<div class=\"line\"></div>" : "</div>");
+
+                        firstTicketDetail.ChoiceHtml += betDetail.ChoiceHtml;
+                    }
+                }
+
+                systempParlayModel.SystemParlayDetail.EventList = systempParlayModel.SystemParlayDetail.EventList.OrderBy(i => SystemParlayConstants.GetStatusOrderId(i.Status)).ToList();
+
+                return systempParlayModel;
             }
 
             return new SystemParlayModel();
@@ -1086,19 +946,6 @@ namespace Fanex.Tarus.BetList.Business
             return new List<TicketDetail>();
         }
 
-        /// <summary>
-        /// Gets the bet list statement.
-        /// </summary>
-        /// <param name="custId">The customer identifier.</param>
-        /// <param name="transType">Type of the trans.</param>
-        /// <param name="fromDate">From date.</param>
-        /// <param name="quality">The quality.</param>
-        /// <param name="totalComm">The total commission.</param>
-        /// <param name="totalWinLoss">The total win loss.</param>
-        /// <returns>The bet list statement.</returns>
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
-            "SP2101:MethodMustNotContainMoreLinesThan",
-            Justification = "Reviewed. Suppression is OK here.")]
         public IList<TicketDetail> GetBetListStatement(
             int custId,
             int transType,
@@ -1107,36 +954,39 @@ namespace Fanex.Tarus.BetList.Business
             ref decimal totalComm,
             ref decimal totalWinLoss)
         {
-            try
+            var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(custId);
+            if (siteDB != null)
             {
                 List<ITicketData> outputLiveCasino = new List<ITicketData>();
                 IList<TicketDetail> betDetails = new List<TicketDetail>();
-                BetListHelper betListHelper = new BetListHelper();
-                DataSet dataSet = new DataSet();
+                var betListHelper = new BetListHelper();
+                var dataSet = new DataSet();
 
                 var criteria = new BetListStatement
                 {
                     CustId = custId,
                     TransType = transType,
                     FromDate = fromDate,
-                    MoveBetsDay = ReportUtils.BalanceUp.MoveBetsDay
+                    MoveBetsDay = ReportUtils.BalanceUp.MoveBetsDay,
+                    IsSiteDB = siteDB.IsSiteDB
                 };
 
                 using (var db = new ObjectDb(criteria.GetSettingKey()))
                 {
-                    dataSet = db.ExecuteDataSet(criteria);
+                    dataSet = siteDB.IsSiteDB ? db.ExecuteDataSetScaleoutDB(criteria.GetSpParams(), siteDB.AGIP) :
+                        db.ExecuteDataSet(criteria.GetSpParams());
                 }
 
                 if (dataSet != null &&
                     dataSet.Tables.Count >= 2)
                 {
-                    DataTable ticketDetailTable = dataSet.Tables[0];
-                    DataTable ticketEventTable = dataSet.Tables[1];
+                    var ticketDetailTable = dataSet.Tables[0];
+                    var ticketEventTable = dataSet.Tables[1];
                     foreach (DataRow r in ticketDetailTable.Rows)
                     {
-                        decimal commTmp = Converter.ToDecimal(r["commission"]);
-                        decimal winlostTmp = Converter.ToDecimal(r["winlost"]);
-                        string status = Converter.ToString2(r["status"]).ToLower();
+                        var commTmp = Converter.ToDecimal(r["commission"]);
+                        var winlostTmp = Converter.ToDecimal(r["winlost"]);
+                        var status = Converter.ToString2(r["status"]).ToLower();
 
                         if (status != "running" &&
                             status != "waiting" &&
@@ -1148,7 +998,7 @@ namespace Fanex.Tarus.BetList.Business
                             totalWinLoss += winlostTmp;
                         }
 
-                        TicketDetail ticketDetailTmp = new TicketDetail
+                        var ticketDetailTmp = new TicketDetail
                         {
                             Ticket = new Ticket
                             {
@@ -1263,13 +1113,11 @@ namespace Fanex.Tarus.BetList.Business
 
                 if (betDetails != null)
                 {
-                    SessionManager.Set<IList<TicketDetail>>(BetListConstants.BetListByStatementSessionKey, betDetails);
-
-                    BetListHTMLFactory factory = new BetListHTMLFactory();
-                    BetListHTMLBuilder builder = factory.CreateBuilder();
+                    var factory = new BetListHTMLFactory();
+                    var builder = factory.CreateBuilder();
                     GetCachePropertyById funcGetOddsTypeName = ticketHelper.GetOddsTypeNameById;
-
-                    foreach (TicketDetail betDetail in betDetails)
+                    SessionManager.Set<IList<TicketDetail>>(BetListConstants.BetListByStatementSessionKey, betDetails);
+                    foreach (var betDetail in betDetails)
                     {
                         ticketHelper.IsShowOddsWithChoice = IsShowOddsWithChoice(betDetail.Ticket.BetTypeId);
 
@@ -1283,10 +1131,7 @@ namespace Fanex.Tarus.BetList.Business
                     return betDetails;
                 }
             }
-            catch (Exception ex)
-            {
-                LoggingHandler.Log(ex);
-            }
+
 
             return new List<TicketDetail>();
         }

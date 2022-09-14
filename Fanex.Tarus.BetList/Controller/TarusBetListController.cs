@@ -24,6 +24,7 @@ namespace Fanex.Tarus.BetList.Controller
     using Sunplus.Accounting.Core.Helper;
     using SmartPunterFilter = AuthenticationFilter.AuthenticateSmartPunterAction;
     using Fanex.Tarus.BetList.Resources;
+    using Fanex.Tarus.BetList.ViewModel;
 
     public class TarusBetListController : Controller
     {
@@ -45,9 +46,10 @@ namespace Fanex.Tarus.BetList.Controller
         [SmartPunterFilter(SmartPunterFilter.AuthenticationType.Read)]
         public ActionResult BetListByRefNo_Main()
         {
-            BalanceUp balanceUp = ReportService.BalanceUp;
-            ViewBag.BalanceUpDay = balanceUp.BalanceUpDay;
-            return View("~/Views/BetList/BetListByRefNo/Index.cshtml");
+            var sites = _betListService.GetAllSites();
+            var viewModel = new BetListByRefNoViewModel(sites);
+
+            return View("~/Views/BetList/BetListByRefNo/Index.cshtml", viewModel);
         }
 
 
@@ -122,7 +124,7 @@ namespace Fanex.Tarus.BetList.Controller
             return View("~/Views/BetList/BetListByIP/Index.cshtml");
         }
 
-        public ActionResult ExportBetDetails(int sportType, long refNo, int custId, byte transType)
+        public ActionResult ExportBetDetails(int sportType, long refNo, int custId, byte transType, DateTime winlostDate)
         {
             IBetDetailsExporter exporter = new BetDetailsExporter();
             string fileName = exporter.GetFileNameWithoutExtension(sportType);
@@ -132,13 +134,16 @@ namespace Fanex.Tarus.BetList.Controller
             response.ContentType = "application/vnd.ms-excel";
             response.AddHeader("Content-Disposition", string.Format("attachment; filename={0}.xls", fileName));
 
-            var ticketDetails = exporter.GetTicketDetails(sportType, refNo, custId, transType);
+            var ticketDetails = exporter.GetTicketDetails(sportType, refNo, custId, transType, winlostDate);
             exporter.Export(ticketDetails, response.OutputStream, sportType);
 
             return new EmptyResult();
         }
 
-        public ActionResult ExportJackpotDetails(long transId, int custId, int betType, string title)
+        public ActionResult ExportBBINBetDetails(int sportType, long refNo, int custId, byte transType)
+           => ExportBetDetails(sportType, refNo, custId, transType, DateTime.Now);
+
+        public ActionResult ExportJackpotDetails(long transId, int custId, int betType, DateTime winlostdate, string title)
         {
             IBetDetailsExporter exporter = new BetDetailsExporter();
 
@@ -147,7 +152,7 @@ namespace Fanex.Tarus.BetList.Controller
             response.ContentType = "application/vnd.ms-excel";
             response.AddHeader("Content-Disposition", string.Format("attachment; filename={0}.xls", title.Replace(" ", string.Empty)));
 
-            var ticketDetails = exporter.GetJackpotDetails(transId, custId, betType);
+            var ticketDetails = exporter.GetJackpotDetails(transId, custId, betType, winlostdate);
             exporter.Export(ticketDetails, response.OutputStream, SportContants.RNG_RNGGame);
 
             return new EmptyResult();

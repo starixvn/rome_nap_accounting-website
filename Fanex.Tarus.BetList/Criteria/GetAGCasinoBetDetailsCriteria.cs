@@ -28,6 +28,8 @@
 
         public DateTime BalanceUpDay => ReportUtils.BalanceUp.BalanceUpDay;
 
+        public bool ExcludeBettrans { get; set; }
+
         public override string GetSettingKey()
         {
             return "BetList_AGCasino_BetDetails";

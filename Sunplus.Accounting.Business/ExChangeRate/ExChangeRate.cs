@@ -442,14 +442,27 @@ namespace Sunplus.Accounting.Business.ExChangeRate
             {
                 return result;
             }
+            var allSite = ObjectDbExtensions.GetAllSiteDBConfig();
+            var trxDB = allSite.FirstOrDefault(i => !i.IsSiteDB);
 
-            result = this.EditBaseRate_PrepareUpdateTables();
-            if (result.ErrorCode != 0)
+            var updateTrxDB = new UpdateExChangeRate(trxDB.AGIP, trxDB.IsSiteDB, trxDB.SiteDBGroupID);
+            result = updateTrxDB.EditBaseRate_PrepareUpdateTables();
+            if (result.ErrorCode != 0) return result;
+
+            Task.Run(() =>
             {
-                return result;
-            }
+                updateTrxDB.EditBaseRate_UpdateExchangeTablesInBackground();
 
-            Task.Run(() => EditBaseRate_UpdateExchangeTablesInBackground());
+                if (allSite != null)
+                {
+                    foreach (var db in allSite.Where(i => i.IsSiteDB))
+                    {
+                        var prepareTables = new UpdateExChangeRate(db.AGIP, db.IsSiteDB, db.SiteDBGroupID);
+                        result = prepareTables.Update();                        
+                    }
+                }
+            });
+            
 
             return result;
         }
@@ -529,59 +542,6 @@ namespace Sunplus.Accounting.Business.ExChangeRate
             return new Result();
         }
 
-        private Result EditBaseRate_PrepareUpdateTables()
-        {
-            int errcode = 0;
-            string errmsg = "";
-            var param = new Hashtable();
-            param.Add("errcode", 0);
-            param.Add("errmsg", "");
-            IBCProvider.ExChangeRate.ExchangeMultiBaseRatePrepareUpd(param, ref errcode, ref errmsg);
-            if (errcode != 0)
-            {
-                return new Result { ErrorCode = errcode, ErrorMessage = errmsg };
-            }
-
-            return new Result();
-        }
-
-        private void EditBaseRate_UpdateExchangeTablesInBackground()
-        {
-            LogService.Info("[Edit Base Rate] - Start update Tables");
-            string[] listTableNames = new string[] { "bettransRnG", "bettransLC", "translog", "bettrans", "Transfer_Coll", "bettransG", "Transfer" };
-            foreach (string tableName in listTableNames)
-            {
-                LogService.Info($"[Edit Base Rate] - 1st time - Updating table : {tableName}");
-                this.EditBaseRate_UpdateExchangeTable(tableName);
-                LogService.Info($"[Edit Base Rate] - 1st time - Updated table: {tableName}");
-            }
-
-            Thread.Sleep(5000);
-            foreach (string tableName in listTableNames)
-            {
-                LogService.Info($"[Edit Base Rate] - 2nd time - Updating table : {tableName}");
-                this.EditBaseRate_UpdateExchangeTable(tableName);
-                LogService.Info($"[Edit Base Rate] - 2nd time - Updated table: {tableName}");
-            }
-            LogService.Info("[Edit Base Rate] - End update Tables");
-        }
-
-        private void EditBaseRate_UpdateExchangeTable(string tableName)
-        {
-            try
-            {
-                var param = new Hashtable();
-                param.Add("tablename", tableName);
-                IBCProvider.ExChangeRate.ExchangeMultiBaseRateUpdateForTable(param);
-            }
-            catch (Exception ex)
-            {
-                // Must use try catch here to handle exception inside parallel task, because this exception is not handled by global.asax
-                LogExtensions.ExceptionHandler(ex);
-                // Rethrow to terminate process.
-                throw ex;
-            }
-        }
         #endregion Update Base Rate
 
         private string changeColor(string value)
@@ -601,6 +561,103 @@ namespace Sunplus.Accounting.Business.ExChangeRate
 
             exchangeXML.Append("</root>");
             return exchangeXML.ToString();
+        }
+    }
+   
+    public class UpdateExChangeRate
+    {
+        public UpdateExChangeRate(string dbIP, bool isSiteDB, int siteDBGroupId)
+        {
+            AGIP = dbIP;
+            IsSiteDB = isSiteDB;
+            SiteDBGroupId = siteDBGroupId;
+        }
+
+        public int SiteDBGroupId { get; }
+
+        public string AGIP { get; }
+
+        public bool IsSiteDB { get; }
+
+        public Result Update()
+        {
+            var result = EditBaseRate_PrepareUpdateTables();
+            if (result.ErrorCode == 0)
+            {
+                EditBaseRate_UpdateExchangeTablesInBackground();
+            }
+
+            return result;
+        }
+
+        public Result EditBaseRate_PrepareUpdateTables()
+        {
+            try
+            {
+                int errcode = 0;
+                string errmsg = "";
+                var param = new Hashtable();
+                param.Add("errcode", 0);
+                param.Add("errmsg", "");
+                param.Add("issitedb", IsSiteDB);
+                IBCProvider.ExChangeRate.ExchangeMultiBaseRatePrepareUpd(param, SiteDBGroupId, AGIP, ref errcode, ref errmsg);
+                if (errcode != 0)
+                {
+                    return new Result { ErrorCode = errcode, ErrorMessage = errmsg };
+                }
+
+                return new Result();
+            }
+            catch (Exception ex)
+            {
+                // Must use try catch here to handle exception inside parallel task, because this exception is not handled by global.asax
+                LogExtensions.ExceptionHandler(ex);
+                // Rethrow to terminate process.
+                throw ex;
+            }
+        }
+
+        public void EditBaseRate_UpdateExchangeTablesInBackground()
+        {
+            LogService.Info($"[Edit Base Rate] - Start update Tables - AGIP: {AGIP}");
+            string[] listTableNames = new string[] { "bettransRnG", "bettransLC", "translog", "bettrans", "Transfer_Coll", "bettransG", "Transfer" };
+            foreach (string tableName in listTableNames)
+            {
+                LogService.Info($"[Edit Base Rate] - 1st time - Updating table : {tableName} - AGIP: {AGIP}");
+                this.EditBaseRate_UpdateExchangeTable(tableName);
+                LogService.Info($"[Edit Base Rate] - 1st time - Updated table: {tableName} - AGIP: {AGIP}");
+            }
+
+            if(!IsSiteDB)
+            {
+                Thread.Sleep(5000);
+                foreach (string tableName in listTableNames)
+                {
+                    LogService.Info($"[Edit Base Rate] - 2nd time - Updating table : {tableName} - AGIP: {AGIP}");
+                    this.EditBaseRate_UpdateExchangeTable(tableName);
+                    LogService.Info($"[Edit Base Rate] - 2nd time - Updated table: {tableName} - AGIP: {AGIP}");
+                }
+            }
+            
+            LogService.Info($"[Edit Base Rate] - End update Tables - AGIP: {AGIP}");
+        }
+
+        private void EditBaseRate_UpdateExchangeTable(string tableName)
+        {
+            try
+            {
+                var param = new Hashtable();
+                param.Add("tablename", tableName);
+                param.Add("issitedb", IsSiteDB);
+                IBCProvider.ExChangeRate.ExchangeMultiBaseRateUpdateForTable(param, SiteDBGroupId, AGIP);
+            }
+            catch (Exception ex)
+            {
+                // Must use try catch here to handle exception inside parallel task, because this exception is not handled by global.asax
+                LogExtensions.ExceptionHandler(ex);
+                // Rethrow to terminate process.
+                throw ex;
+            }
         }
     }
 }

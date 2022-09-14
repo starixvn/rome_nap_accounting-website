@@ -10,17 +10,19 @@ using Sunplus.Accounting.Business.BootStrappers;
 using Sunplus.Accounting.Business;
 using System.Text;
 using DNAide.Core;
+using Fanex.Tarus.Finance.Business.Transaction;
 
 public class UpdateCrossCurrencyTransfer : IHttpHandler, System.Web.SessionState.IRequiresSessionState
 {
 
     public void ProcessRequest(HttpContext context)
     {
+        var accId = AppSession.AccId;
         context.Response.ContentType = "text/html";
         IUserService userService = CommonBootStrapper.Locator.GetInstance<IUserService>();
         if (string.IsNullOrEmpty(context.Request.QueryString["delTemp"]) || context.Request.QueryString["delTemp"].Trim() == "true")
         {
-            userService.DelDataTmpExcel(AppSession.AccId);
+            userService.DelDataTmpExcel(accId);
             return;
         }
 
@@ -33,20 +35,20 @@ public class UpdateCrossCurrencyTransfer : IHttpHandler, System.Web.SessionState
             context.Response.Write(BuildResult("Invalid information", string.Empty));
             return;
         }
-        DataSet dbr = null;
+
+        IFinanceCrossTransferService transferService = new FinanceCrossTransferService();
+
         try
         {
-            var errorInfo = new System.Collections.Hashtable();
-            dbr = userService.UpdFinanceCrossTransferMul(AppSession.AccId, fileName, CastAide.AsInt32(fileSize, 0), context.Request.UserHostAddress, forexName, ref errorInfo);
-
-            if (dbr == null | CastAide.AsInt32(errorInfo["errcode"]) != 0)
+            var result = transferService.UpdateCrossMultiple(accId, fileName, CastAide.AsInt32(fileSize, 0), context.Request.UserHostAddress, forexName);
+            if (result.IsFailure)
             {
-                context.Response.Write(BuildResult(errorInfo["errmsg"].ToString(), string.Empty));
+                context.Response.Write(BuildResult(result.ErrorMessage, string.Empty));
                 return;
             }
 
-            userService.DelDataTmpExcel(AppSession.AccId);
-            context.Response.Write(BuildResult(string.Empty, RenderContent(dbr.Tables[0], dbr.Tables[1])));
+            userService.DelDataTmpExcel(accId);
+            context.Response.Write(BuildResult(string.Empty, RenderContent(result.Failure, result.Success)));
         }
         catch (Exception ex)
         {

@@ -2,6 +2,7 @@
 {
     using Fanex.BetList.Core.Entities;
     using Fanex.NAP.Framework.Data;
+    using Fanex.Tarus.BetList.Criteria;
     using Fanex.Tarus.BetList.Models;
     using System.Collections.Generic;
 
@@ -10,5 +11,7 @@
         CashOutDetails GetCashOutDetails(ICriteria criteria);
         
         IEnumerable<ITicket> GetLicenseeBonusDetails(ICriteria criteria);
+
+        CashOutHistoryModel GetCashOutHistory(GetCashOutHistoryInSiteDBCriteria criteria, int custId);
     }
 }

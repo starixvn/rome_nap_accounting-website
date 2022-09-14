@@ -3,6 +3,7 @@
 
     var $rdoTypes;
     var $txtSiteName;
+    var $selSiteDBGroup;
     var $errorMessage;
 
     this.init = function () {
@@ -12,6 +13,7 @@
     this.cacheElements = function () {
         this.$rdoTypes = $(".rdo-type");
         this.$txtSiteName = $("#txt-site-name");
+        this.$selSiteDBGroup = $("#sel-site-db-group");
         this.$errorMessage = $("#err-message");
     };
     this.registerEvents = function () {
@@ -24,11 +26,24 @@
 
         var param = {
             Type: $(".rdo-type:checked").val(),
-            SiteName: $.trim(this.$txtSiteName.val())
+            SiteName: $.trim(this.$txtSiteName.val()),
+            SiteDBGroupID: this.$selSiteDBGroup.val()
         };
 
         if (param.SiteName === "") {
             showAlertMessage("err-message", "Please input site name!!!", 1);
+            this.$errorMessage.removeClass("hide");
+            return;
+        }
+
+        if (param.SiteName.length > 10) {
+            showAlertMessage("err-message", "The max length of the Site Name is 10 characters. Please enter again.", 1);
+            this.$errorMessage.removeClass("hide");
+            return;
+        }
+
+        if (param.SiteDBGroupID === "-1") {
+            showAlertMessage("err-message", "Please select Site Group!!!", 1);
             this.$errorMessage.removeClass("hide");
             return;
         }

@@ -10,6 +10,7 @@
     using Fanex.NAP.Framework.Data;
     using Fanex.Tarus.BetList.Criteria;
     using Models;
+    using Sunplus.Accounting.Core.Extensions;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -26,7 +27,26 @@
 
         public CashOutHistoryModel GetCashOutHistory(GetCashOutHistoryCriteria criteria)
         {
-            var history = dynamicRepository.Get<CashOutHistoryModel>(criteria);
+            var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(criteria.CustId);
+            var history = new CashOutHistoryModel();
+            if (siteDB != null)
+            {
+                if (siteDB.IsSiteDB && criteria.WinlostDate > ReportService.BalanceUp.MoveBetsDay)
+                {
+                    var siteDBCriteria = new GetCashOutHistoryInSiteDBCriteria
+                    {
+                        CustId = criteria.CustId,
+                        TransId = criteria.TransId
+                    };
+                    history = _betListDetailRepository.GetCashOutHistory(siteDBCriteria, criteria.CustId);
+                }
+
+                if (!siteDB.IsSiteDB ||
+                    (siteDB.IsSiteDB && criteria.WinlostDate <= ReportService.BalanceUp.MoveBetsDay))
+                {
+                    history = dynamicRepository.Get<CashOutHistoryModel>(criteria);
+                }
+            }
 
             return new CashOutHistoryModel
             {

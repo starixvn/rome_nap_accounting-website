@@ -6,7 +6,6 @@ using System.Text;
 using System.Web;
 using System.Web.SessionState;
 using DNAide.Web;
-using DNAide.Data;
 using DNAide.Core;
 using DNAide.Utils;
 using Sunplus.Accounting.Business;
@@ -15,12 +14,10 @@ using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Web;
-
-
+using Fanex.Tarus.Finance.Business.Transaction;
 
 public class UpdateFinanceTransferMul : IHttpHandler, IRequiresSessionState
 {
-
     public void ProcessRequest(HttpContext context)
     {
         context.Response.ContentType = "text/html";
@@ -28,30 +25,29 @@ public class UpdateFinanceTransferMul : IHttpHandler, IRequiresSessionState
         try
         {
             //Get Data here
-
             if (!Permissions.GetHostPermission<Enumerations.Functions.FinancialManagement>(Enumerations.Functions.FinancialManagement.AutomateFinanceTransfer))
             {
                 context.Response.Write(AlertMessage.GetMsg("You are not authorized on this function.", AlertMessage.MsgType.Error));
                 return;
             }
 
+            var accId = AppSession.AccId;
             IUserService userService = CommonBootStrapper.Locator.GetInstance<IUserService>();
 
             if (CastAide.AsString(context.Request["bolUnLoadPage"]) == "0")
             {
-                int Index = CastAide.AsInt32(context.Request["Index"]);
-                var updateError = new System.Collections.Hashtable();
-                var dbr = userService.UpdFinanceTransferMul(AppSession.AccId, context.Request["Filename"], CastAide.AsInt32(context.Request["Filesize"], 0), context.Request.UserHostAddress, ref updateError);
-                if (dbr == null | CastAide.AsInt32(updateError["errcode"]) != 0)
+                IFinanceTransferService transferService = new FinanceTransferService();
+                var result = transferService.UpdateMultiple(accId, context.Request["Filename"], CastAide.AsInt32(context.Request["Filesize"], 0), context.Request.UserHostAddress);
+                if (result.IsFailure)
                 {
-                    context.Response.Write(AlertMessage.GetMsg(updateError["errmsg"].ToString(), AlertMessage.MsgType.Error));
+                    context.Response.Write(AlertMessage.GetMsg(result.ErrorMessage, AlertMessage.MsgType.Error));
                     return;
                 }
 
-                userService.DelDataTmpExcel(AppSession.AccId);//Delete temp data in table Acc_CustFinanceTransfer
+                userService.DelDataTmpExcel(accId);//Delete temp data in table Acc_CustFinanceTransfer
 
-                DataTable dtbFail = dbr.Tables[0];
-                DataTable dtbSucc = dbr.Tables[1];
+                DataTable dtbFail = result.Failure;
+                DataTable dtbSucc = result.Success;
                 //Render html table success and fail
                 string strFail = dtbFail.Rows.Count > 0 ? AlertMessage.GetMsg("Failed transactions", AlertMessage.MsgType.Error) + GenHTML(dtbFail, "add-customer-bggray", true) + "<br />" : string.Empty;
                 string strSucc = dtbSucc.Rows.Count > 0 ? AlertMessage.GetMsg("Successful transactions", AlertMessage.MsgType.Success) + GenHTML(dtbSucc, string.Empty, false) : string.Empty;
@@ -60,7 +56,9 @@ public class UpdateFinanceTransferMul : IHttpHandler, IRequiresSessionState
                 context.Response.Write(strFail + strSucc);
             }
             else
-                userService.DelDataTmpExcel(AppSession.AccId);
+            {
+                userService.DelDataTmpExcel(accId);
+            }
         }
         catch (Exception ex)
         {
@@ -131,6 +129,4 @@ public class UpdateFinanceTransferMul : IHttpHandler, IRequiresSessionState
 
         return result;
     }
-
-
 }

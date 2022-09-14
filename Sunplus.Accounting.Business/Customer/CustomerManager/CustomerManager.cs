@@ -136,15 +136,14 @@
                         return arrcontent;
                     }
 
-                    if (ds != null && tableCount >= 5)
+                    if (ds != null && tableCount >= 4)
                     {
                         DataRow customerInfoRow = ds.ResultSet.Tables[0].Rows[0];
+                        var searchAccountId = ConverterCommon.ToInt(customerInfoRow["custid"]);
                         DataRow lineInfoRow = ds.ResultSet.Tables[1].Rows[0];
-                        DataRow cashRow = ds.ResultSet.Tables[2].Rows[0];
-                        DataRow downlineStatusInfoRow = ds.ResultSet.Tables[3].Rows[0];
-                        DataTable dynamicSettingtable = ds.ResultSet.Tables[4];
-                        DataRow memberCN88CreditRow = tableCount == 7 ? ds.ResultSet.Tables[5].Rows[0] : null;
-                        DataRow memberCN88BetStakeRow = tableCount == 7 ? ds.ResultSet.Tables[6].Rows[0] : null;
+                        DataRow cashRow = _customerDAO.GetCustomerCashInfo(searchAccountId).Rows[0];
+                        DataRow downlineStatusInfoRow = ds.ResultSet.Tables[2].Rows[0];
+                        DataTable dynamicSettingtable = ds.ResultSet.Tables[3];
 
                         var roleId = ConverterCommon.ToInt(customerInfoRow["roleid"]);
                         decimal memberOutstandingMBC = 0;
@@ -158,10 +157,8 @@
                             !AppSettings.IsCN88SiteName(
                                 ConverterCommon.ToString2(customerInfoRow["membersite"])) &&
                                 !IsInternalUser)
-                        {
-                            var searchAccountId = ConverterCommon.ToInt(customerInfoRow["custid"]);
+                        {                          
                             memberOutstandingMBC = _customerDAO.GetMemberOustandingMBC(searchAccountId);
-
                             var memberMBCBalanceModel = _customerDAO.GetMemberMBCBalanceModel(searchAccountId);
                             memberBalanceMBC = memberMBCBalanceModel.Balance;
                             memberNetPositionMBC = memberMBCBalanceModel.NetPosition;
@@ -174,8 +171,8 @@
                             cashRow, 
                             downlineStatusInfoRow, 
                             dynamicSettingtable,
-                            memberCN88CreditRow,
-                            memberCN88BetStakeRow,
+                            null,
+                            null,
                             memberOutstandingMBC,
                             memberBalanceMBC,
                             memberNetPositionMBC,

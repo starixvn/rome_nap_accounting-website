@@ -7,6 +7,9 @@
     public interface IAGCasinoRepository
     {
         IEnumerable<TicketDetail> BetDetails(GetAGCasinoBetDetailsCriteria criteria);
+
+        IEnumerable<TicketDetail> BetDetails(GetAGCasinoBetDetailsInSiteDBCriteria criteria, string AGIP);
+
         IEnumerable<TicketDetail> BetDetails(GetBBinBetDetailsCriteria criteria);        
     }
 }

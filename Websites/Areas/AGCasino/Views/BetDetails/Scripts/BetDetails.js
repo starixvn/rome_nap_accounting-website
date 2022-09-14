@@ -66,7 +66,8 @@
 			custId: custId,
 			transType: transType,
 			pageIndex: 0,
-			pageSize: pageSize
+			pageSize: pageSize,
+            winlostDate: winlostDate
 		};
 
         gridContainer = $("#betlist-details");
@@ -85,7 +86,8 @@
 		        sportType: sportType,
 		        refNo: formData.refno,
 		        custId: formData.custId,
-		        transType: formData.transType
+		        transType: formData.transType,
+                winlostDate: formData.winlostDate
 		    };
 		    var url = window.rootUrl + "TarusBetList/ExportBetDetails?" + $.param(exportData);
 		    $("#frmExportExcel").attr("src", url);

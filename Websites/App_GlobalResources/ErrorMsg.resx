@@ -146,16 +146,7 @@
   </data>
   <data name="ClosedAccount" xml:space="preserve">
     <value>Your account was closed. Please contact your supervisor.</value>
-  </data>
-  <data name="error_MoveCust_Accounting" xml:space="preserve">
-    <value>Error from Accounting: {0}</value>
-  </data>
-  <data name="error_MoveCust_Successfully" xml:space="preserve">
-    <value>Move {0} successfully.</value>
-  </data>
-  <data name="error_MoveCust_UnSuccessfully" xml:space="preserve">
-    <value>Move {0} unsuccessfully.</value>
-  </data>
+  </data> 
   <data name="DenyLoginAccount" xml:space="preserve">
     <value>You are not allowed to access this site.</value>
   </data>

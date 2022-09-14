@@ -1,5 +1,6 @@
 ﻿namespace Fanex.Tarus.BetList.Business.BetDetails
 {
+    using System;
     using System.Collections.Generic;
     using System.IO;
     using Models;
@@ -8,9 +9,9 @@
     {
         string GetFileNameWithoutExtension(int sportType);
 
-        IEnumerable<TicketDetail> GetTicketDetails(int sportType, long refNo, int custId, byte transType);
+        IEnumerable<TicketDetail> GetTicketDetails(int sportType, long refNo, int custId, byte transType, DateTime winlostDate);
 
-        IEnumerable<TicketDetail> GetJackpotDetails(long transId, int custId, int betType);
+        IEnumerable<TicketDetail> GetJackpotDetails(long transId, int custId, int betType, DateTime winlostDate);
 
         void Export(IEnumerable<TicketDetail> ticketDetails, Stream stream, int sportType);
     }

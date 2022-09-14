@@ -2,15 +2,17 @@
 {
     using Fanex.Tarus.BetList.Criteria;
     using Fanex.Tarus.BetList.Models;
+    using Fanex.Tarus.BetList.Param;
     using System;
     using System.Collections.Generic;
 
     public interface IBetListService
     {
+        IEnumerable<SiteModel> GetAllSites();
 
-        IList<TicketDetail> GetMixParlayTickets(MixParlayDetailCriteria mixParlayDetailCriteria);
+        IList<TicketDetail> GetMixParlayTickets(long transId, long refNo, int custId);
 
-        IList<TicketDetail> GetBetListByRefNo(BetListByRefNoCriteria betListByRefNoCriteria);
+        IList<TicketDetail> GetBetListByRefNo(BetListByRefNoParam param);
 
         IList<TicketDetail> GetBetListBetTradeDetails(BetListBetTradeDetailCriteria criteria);
 

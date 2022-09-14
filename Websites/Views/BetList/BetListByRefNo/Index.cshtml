@@ -2,8 +2,10 @@
 @using Sunplus.Accounting.Core.Common;
 @using Sunplus.Accounting.Core.Configurations;
 @using System.Configuration;
-
+@using Fanex.Tarus.BetList.ViewModel;
 @using Fanex.Tarus.Infrastructure.Caching;
+
+@model  BetListByRefNoViewModel
 @{
     var hasNG2Permission = Permissions.HasPermission(Enumerations.Functions.AccessSpecialSites);
     var ng2Text = hasNG2Permission ? "/" + Fanex.Tarus.Infrastructure.Caching.CacheRef.GetProductName(23) : string.Empty;
@@ -63,6 +65,7 @@
     <link rel="stylesheet" type="text/css" href="~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css" />
     <link rel="stylesheet" type="text/css" href="~/js/jQuery/GridScroller/gridscroller.css" />
     <link rel="stylesheet" type="text/css" href="~/Views/BetList/Style/BetList.css?ver=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" />
+    <link rel="stylesheet" href="~/js/select2/select2.min.css" />
     <style type="text/css">
         .filterContent table {
             line-height: 20px;
@@ -70,6 +73,10 @@
 
             .filterContent table td {
                 text-align: right;
+            }
+
+            .filterContent table span {
+                text-align: left;
             }
 
         .filterContent .label {
@@ -84,14 +91,14 @@
         .filterContent input[type="text"], .filterContent select {
             box-sizing: border-box;
             width: 100% !important;
-            height: 18px;
+            height: 24px;
         }
 
         .text-left {
             text-align: left !important;
         }
 
-        .search-by-ref input[type='text']:disabled, .search-by-product input[type="text"]:disabled, .search-by-product select:disabled {
+        .search-by-ref input[type='text']:disabled, .search-by-ref select:disabled, .search-by-product input[type="text"]:disabled, .search-by-product select:disabled {
             background-color: #D9D9D9;
         }
     </style>
@@ -132,16 +139,28 @@
                             <td>
                                 <input type="text" id="txtRefNo" />
                             </td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td class="text-left" colspan="8">
-                                <div id="ref-no-info-msg" class="info-msg">
-                                    @allowedProducts.ToString() tickets with win loss dates from @ViewBag.BalanceUpDay.ToShortDateString() are supported.
-                                    For Allbet/SA Gaming/AE Sexy/IBCBet Live Casino/BBIN/WM/GDG/BG/PP Live Casino/FGG, the search result includes the related tickets with the same GameID.<br />
-                                    For Sportsbook, the search result includes the related Bonus/Cash tickets.
-                                </div>
+                            <td>
+                                <label class="label" for="rdByRef">Site</label>
                             </td>
+                            <td>                                
+                                <select id="selSite">
+                                    <option value="" selected>Please select...</option>
+                                    <optgroup label="Credit">
+                                        @foreach (var site in Model.CreditSites)
+                                        {
+                                            <option value="@site.Name" data-sitedbgroupid="@site.SiteDBGroupId">@site.Name</option>
+                                        }
+                                    </optgroup>
+                                    <optgroup label="Deposit">
+                                        @foreach (var site in Model.DepositSites)
+                                        {
+                                            <option value="@site.Name" data-sitedbgroupid="@site.SiteDBGroupId">@site.Name</option>
+                                        }
+                                    </optgroup>
+                                </select>
+                                
+                            </td>
+                            <td><span style="float: left;" id="iNoteMessageInfo" class="note-info-message" title=""></span></td>
                         </tr>
                         <tr class="search-by-product">
                             <td>
@@ -232,7 +251,7 @@
                                 <label class="label">Event Date From </label>
                             </td>
                             <td>
-                                <input id="txtfromdate" class="txtdate" type="text" data-balance-up-day="@ViewBag.BalanceUpDay" />
+                                <input id="txtfromdate" class="txtdate" type="text" data-balance-up-day="@Model.BalanceUpDay" />
                             </td>
                             <td>
                                 <label class="label">To</label>
@@ -262,16 +281,23 @@
     </div>
     <div id="Popup" style="display: none">
     </div>
+    <form id="noteMessage" style="display:none;">
+        @allowedProducts.ToString() tickets with win loss dates from @Model.BalanceUpDay.ToShortDateString() are supported.
+        For Allbet/SA Gaming/AE Sexy/IBCBet Live Casino/BBIN/WM/GDG/BG/PP Live Casino/FGG, the search result includes the related tickets with the same GameID.<br />
+        For Sportsbook, the search result includes the related Bonus/Cash tickets.
+    </form>
     <script type="text/javascript">
         window.rootUrl = '@Url.Content("~")';
-        head.js("@Url.Content("~/js/jQuery/jquery.js")",
+        head.js("@Url.Content("~/Scripts/_Libs/jQuery/jquery-1.8.2.min.js")",
+                "@Url.Content("~/Scripts/_Libs/jQuery/jquery-ui-1.9.1.min.js")",
                 "@Url.Content("~/js/json2.js")",
                 "@Url.Content("~/js/jQuery/GridScroller/jquery.gridscroller.1.0.js?ver=1")",
-                "@Url.Content("~/js/jQuery/UI/jquery-ui-1.8.10.custom.min.js")",
                 "@Url.Content("~/js/IBCWnd/IBCWnd.js")",
                 "@Url.Content("~/js/jQuery/jquery.blockUI.1.33.js")",
                 "@Url.Content("~/js/BlockUI.js")",
                 "@Url.Content("~/js/dialogbox.js")",
+                "@Url.Content("~/js/select2/select2.min.js")",
+                "@Url.Content("~/js/MultipleSelect/jquery.multiselect.min.js")",
                 "@Url.Content("~/js/common.js")",
                 "@Url.Content("~/js/BetList.js?v=")@WebSettings.Version",
                 "@Url.Content("~/Areas/AGCasino/Views/BetDetails/Scripts/BetDetails.js?v=")@WebSettings.Version",

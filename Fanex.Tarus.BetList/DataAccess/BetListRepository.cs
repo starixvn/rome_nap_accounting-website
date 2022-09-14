@@ -15,9 +15,80 @@
     using Fanex.NAP.Framework.Data;
     using Models;
     using Resources;
+    using Sunplus.Accounting.Core.Extensions;
 
     public class BetListRepository : IBetListRepository
     {
+        public IList<BetType> GetBetTypeByDate(BetTypeByDateCriteria criteria)
+        {
+            var betTypeList = new List<BetType>();
+
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                DataSet dataSet = db.ExecuteDataSet(criteria);
+                if (dataSet != null &&
+                    dataSet.Tables.Count > 0)
+                {
+                    foreach (DataRow r in dataSet.Tables[0].Rows)
+                    {
+                        betTypeList.Add(new BetType
+                        {
+                            BetTypeID = Converter.To<int>(r["typeid"]),
+                            BetTypeName = r["typenamee"].ToString()
+                        });
+                    }
+                }
+            }
+
+            return betTypeList;
+        }
+
+        public IList<BetType> GetBetTypeByDate(BetTypeByDateInSiteDBCriteria criteria, string AGIP)
+        {
+            var betTypeList = new List<BetType>();
+
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                DataSet dataSet = db.ExecuteDataSetScaleoutDB(criteria.GetSpParams(), AGIP);
+                if (dataSet != null &&
+                    dataSet.Tables.Count > 0)
+                {
+                    foreach (DataRow r in dataSet.Tables[0].Rows)
+                    {
+                        betTypeList.Add(new BetType
+                        {
+                            BetTypeID = Converter.To<int>(r["typeid"]),
+                            BetTypeName = r["typenamee"].ToString()
+                        });
+                    }
+                }
+            }
+
+            return betTypeList;
+        }
+
+        public IEnumerable<SiteModel> GetAllSites()
+        {
+            using (ObjectDb objDB = new ObjectDb("CustomerSetting_SiteSel"))
+            {
+                using (var reader = objDB.ExecuteReader())
+                {
+                    if (reader != null)
+                    {
+                        while (reader.Read())
+                        {
+                            yield return new SiteModel
+                            {
+                                Id = Convert.ToInt32(reader["siteid"].ToString()),
+                                Name = reader["site"].ToString(),
+                                IsDeposit = bool.Parse(reader["islicensee"].ToString()),
+                                SiteDBGroupId = Convert.ToInt32(reader["SiteDBGroupId"].ToString())
+                            };
+                        }
+                    }
+                }
+            }
+        }
         /// <summary>
         /// Fetches the member win loss.
         /// </summary>
@@ -231,6 +302,28 @@
             return listData;
         }
 
+        public IList<S> Fetch<S>(dynamic criteria, string AGIP, Func<DataRow, S> mapObjectFunction) where S : class
+        {
+            IList<S> listData = new List<S>();
+
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                Hashtable hash = criteria.GetSpParams();
+                DataSet dataSet = db.ExecuteDataSetScaleoutDB(hash, AGIP);
+                if (dataSet != null
+                    && dataSet.Tables.Count > 0)
+                {
+                    DataTable currentTable = dataSet.Tables[0];
+                    foreach (DataRow row in currentTable.Rows)
+                    {
+                        listData.Add(mapObjectFunction(row));
+                    }
+                }
+            }
+
+            return listData;
+        }
+
         /// <summary>
         /// Fetches the specified data.
         /// </summary>
@@ -246,6 +339,46 @@
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
                 DataSet dataSet = db.ExecuteDataSet(criteria);
+                if (dataSet != null
+                    && dataSet.Tables.Count > 0)
+                {
+                    DataTable currentTable = dataSet.Tables[0];
+                    foreach (DataRow row in currentTable.Rows)
+                    {
+                        listData.Add(mapObjectFunction(row));
+                    }
+
+                    if (dataSet.Tables.Count > 1)
+                    {
+                        DataTable secondTable = dataSet.Tables[1];
+                        foreach (DataRow row in secondTable.Rows)
+                        {
+                            outputList.Add(new TicketData
+                            {
+                                RefNo = Converter.ToString2(row["refno"]),
+                                BetTypeId = Converter.To<int>(row["bettype"]),
+                                Status = Converter.ToString2(row["status"]),
+                                Odds = Converter.To<decimal>(row["odds"]),
+                                Stake = Converter.To<decimal>(row["stake"]),
+                                BetTeam = Converter.ToString2(row["betteam"]),
+                                TransDesc = Converter.ToString2(row["TransDesc"])
+                            });
+                        }
+                    }
+                }
+            }
+
+            return listData;
+        }
+
+        public IList<S> Fetch<S>(dynamic criteria, string AGIP, Func<DataRow, S> mapObjectFunction, ref List<ITicketData> outputList) where S : class
+        {
+            IList<S> listData = new List<S>();
+
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                Hashtable param = criteria.GetSpParams();
+                DataSet dataSet = db.ExecuteDataSetScaleoutDB(param, AGIP);
                 if (dataSet != null
                     && dataSet.Tables.Count > 0)
                 {
@@ -321,25 +454,60 @@
             return new KeyValuePair<dynamic, IList<S>>(new { errCode, maxTotalRow }, listData);
         }
 
-        /// <summary>
-        /// Fetches the system parlay.
-        /// </summary>
-        /// <param name="criteria">The criteria.</param>
-        /// <returns>The system parlay.</returns>
-        [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules",
-            "SP2101:MethodMustNotContainMoreLinesThan",
-            Justification = "Reviewed. Suppression is OK here.")]
-        public SystemParlayModel FetchSystemParlay(BetListSystemParlayByRefnoCriteria criteria)
+        public KeyValuePair<dynamic, IList<S>> FetchWithOutputs<S>(dynamic criteria, string AGIP, Func<DataRow, S> mapObjectFunction, ref List<ITicketData> outputList) where S : class
         {
-            SystemParlayModel systemParlayModel = new SystemParlayModel();
+            IList<S> listData = new List<S>();
+            int errCode = 0, maxTotalRow = 0;
 
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                DataSet dataSet = db.ExecuteDataSet(criteria.GetSpParams());
+                Hashtable param = criteria.GetSpParams();
+                DataSet dataSet = db.ExecuteDataSetScaleoutDB(param, AGIP);
+                if (dataSet != null
+                    && dataSet.Tables.Count > 0)
+                {
+                    DataTable currentTable = dataSet.Tables[0];
+                    foreach (DataRow row in currentTable.Rows)
+                    {
+                        listData.Add(mapObjectFunction(row));
+                    }
+
+                    if (dataSet.Tables.Count > 1)
+                    {
+                        DataTable secondTable = dataSet.Tables[1];
+                        foreach (DataRow row in secondTable.Rows)
+                        {
+                            outputList.Add(new TicketData
+                            {
+                                RefNo = Converter.ToString2(row["refno"]),
+                                BetTypeId = Converter.To<int>(row["bettype"]),
+                                Status = Converter.ToString2(row["status"]),
+                                Odds = Converter.To<decimal>(row["odds"]),
+                                Stake = Converter.To<decimal>(row["stake"]),
+                                BetTeam = Converter.ToString2(row["betteam"]),
+                                TransDesc = Converter.ToString2(row["TransDesc"])
+                            });
+                        }
+                    }
+                }
+
+                errCode = (int)db.GetOuputParams()["errcode"];
+                maxTotalRow = (int)db.GetOuputParams()["maxtotalrow"];
+            }
+
+            return new KeyValuePair<dynamic, IList<S>>(new { errCode, maxTotalRow }, listData);
+        }
+
+        public SystemParlayModel FetchSystemParlay(BetListSystemParlayByRefnoCriteria criteria)
+        {
+            var systemParlayModel = new SystemParlayModel();
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                var dataSet = db.ExecuteDataSetScaleoutDB(criteria.GetSpParams(), criteria.CustomerId);
                 if (dataSet != null &&
                     dataSet.Tables.Count > 0)
                 {
-                    DataTable ticketDetailTable = dataSet.Tables[0];
+                    var ticketDetailTable = dataSet.Tables[0];
                     foreach (DataRow r in ticketDetailTable.Rows)
                     {
                         systemParlayModel.TicketsDetailList.Add(new TicketDetail
@@ -385,7 +553,7 @@
                         });
                     }
 
-                    DataTable choiceTable = dataSet.Tables[1];
+                    var choiceTable = dataSet.Tables[1];
                     foreach (DataRow r in choiceTable.Rows)
                     {
                         systemParlayModel.SystemParlayChoice.Add(new TicketDetail
@@ -425,7 +593,7 @@
                         });
                     }
 
-                    DataTable eventTable = dataSet.Tables[2];
+                    var eventTable = dataSet.Tables[2];
 
                     var showAlternateLink = eventTable.Rows.Count > SystemParlayDetail.MaxMatchRowsToShow;
                     if (showAlternateLink)
@@ -434,12 +602,11 @@
                     }
                     else
                     {
-                        DataTable matchTable = dataSet.Tables[3];
-                        List<Event> eventList = new List<Event>();
+                        var matchTable = dataSet.Tables[3];
                         foreach (DataRow r in eventTable.Rows)
                         {
-                            int serial = Converter.To<int>(r["serial"]);
-                            List<Match> matchList = new List<Match>();
+                            var serial = Converter.To<int>(r["serial"]);
+                            var matchList = new List<Match>();
                             foreach (DataRow row in matchTable.Rows)
                             {
                                 if (serial == Converter.To<int>(row["serial"]))

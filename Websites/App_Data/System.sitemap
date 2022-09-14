@@ -13,7 +13,6 @@
     <siteMapNode url="" title="ViewPT"  description="ViewPT" roles="accounting" />
     <siteMapNode url="" title="ViewLog"  description="ViewLog" roles="accounting" />
     <siteMapNode url="" title="EditUserName"  description="EditUserName" roles="accounting" />
-    <siteMapNode url="" title="MoveCustomer"  description="MoveCustomer" roles="accounting" />
     <siteMapNode url="" title="ChangeUserGroup"  description="ChangeUserGroup" roles="accounting" />
     <siteMapNode url="" title="SuspendCustList"  description="SuspendCustList" roles="accounting" />
     <siteMapNode url="" title="ClearCredit"  description="ClearCredit" roles="accounting" />

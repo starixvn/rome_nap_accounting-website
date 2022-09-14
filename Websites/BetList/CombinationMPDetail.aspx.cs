@@ -10,6 +10,7 @@ using DNAide.Web;
 using Fanex.BetList.Core.Utils;
 using Fanex.Tarus.BetList.Constants;
 using Sunplus.Accounting.Core.Cache;
+using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using Sunplus.Accounting.DataAccess.Report;
@@ -31,7 +32,15 @@ public partial class BetList_CombinationMPDetail : RequiredAuthorizationPage
     private string GenCombinationMP(int custid, string refno, string transid, string betid, DateTime movebetday, DateTime balanceupday)
     {
         double outStanding = 0;
-        var ds = Betlist.BetList_SelDetailCombinationMP(custid, refno, transid, betid, movebetday, balanceupday, ref outStanding);
+        DataSet ds = null;
+        var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(custid);
+        if (siteDB != null)
+        {
+            ds = siteDB.IsSiteDB ?
+                Betlist.SiteDB_BetList_SelDetailCombinationMP(custid, refno, transid, betid, movebetday, balanceupday, ref outStanding) :
+                Betlist.BetList_SelDetailCombinationMP(custid, refno, transid, betid, movebetday, balanceupday, ref outStanding);
+        }
+
         if (ds != null && ds.Tables.Count != 2)
         {
             return WebUtils.LoadTemplate("BetList\\CombinationMP\\noinfo.htm");

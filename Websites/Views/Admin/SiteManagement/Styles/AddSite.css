@@ -1,7 +1,4 @@
-﻿.maincontent_box {
-    width: 542px;
-}
-
+﻿
     .maincontent_box table td {
         text-align: left;
     }
@@ -12,5 +9,5 @@
 }
 
 #txt-site-name {
-    width: 200px;
+    width: 100px;
 }

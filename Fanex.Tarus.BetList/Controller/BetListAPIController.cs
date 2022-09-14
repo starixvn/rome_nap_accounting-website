@@ -20,6 +20,7 @@
     using Fanex.Tarus.BetList.Criteria;
     using Fanex.Tarus.BetList.DataAccess;
     using Fanex.Tarus.BetList.Models;
+    using Fanex.Tarus.BetList.Param;
 
     [ApiAuthorization]
     public class BetListApiController : Controller
@@ -33,17 +34,12 @@
             _betBuilderService = new BetBuilderService(new BetBuilderRepository());
         }
 
-        public ActionResult GetBetListByRefNo(string refNo)
+        public ActionResult GetBetListByRefNo(BetListByRefNoParam param)
         {
-            if (refNo != null && BetListHelper.IsNumeric(refNo.Trim()))
+            if (param != null && !string.IsNullOrEmpty(param.RefNo) && BetListHelper.IsNumeric(param.RefNo.Trim()))
             {
-                var result = _betListService.GetBetListByRefNo(new BetListByRefNoCriteria
-                {
-                    UserId = Converter.To<int>(ConfigurationManager.AppSettings["BetListApi_UserId"]),
-                    RefNo = Converter.To<long>(refNo),
-                    MoveBetsDay = ReportService.BalanceUp.MoveBetsDay,
-                    BalanceUpDay = ReportService.BalanceUp.BalanceUpDay
-                });
+                param.UserId = Converter.To<int>(ConfigurationManager.AppSettings["BetListApi_UserId"]);
+                var result = _betListService.GetBetListByRefNo(param);
 
                 var firstTicket = result.FirstOrDefault();
                 if (firstTicket != null)
@@ -63,7 +59,7 @@
                     {
                         var partern = $"<a id=\"hidden0\" [^>]*>(.+?)</a>";
                         var mainTicket = Regex.Match(choiceMainTicket, partern);
-                        if(mainTicket.Success)
+                        if (mainTicket.Success)
                         {
                             choiceHtml.Append(mainTicket.Value);
                         }
@@ -106,14 +102,7 @@
 
         private ParlayTicket GetMixParlayDetail(long transId, string refNo, decimal? hdp1, decimal? hdp2, string betCheck, string betTeam, long custId)
         {
-            var result = _betListService.GetMixParlayTickets(
-                new MixParlayDetailCriteria
-                {
-                    TransId = transId,
-                    RefNo = Converter.To<long>(refNo),
-                    CustId = (int)custId
-                });
-
+            var result = _betListService.GetMixParlayTickets(transId, Converter.To<long>(refNo), (int)custId);
             var combinationTypeComboNames = string.IsNullOrEmpty(betCheck) ?
                 string.Empty :
                 _betListService.GetCombinationTypeComboNames(betTeam, betCheck, hdp1.Value, hdp2.Value, result);
