@@ -26,6 +26,8 @@
 
         public decimal? MaxPerBall { get; set; }
 
+        public decimal? MaxGameStake { get; set; }
+
         public decimal? NewMinBet { get; set; }
 
         public decimal? NewMaxBet { get; set; }
@@ -33,6 +35,8 @@
         public decimal? NewMaxPerMatch { get; set; }
 
         public decimal? NewMaxPerBall { get; set; }
+
+        public decimal? NewMaxGameStake { get; set; }
 
         public int? GameGroupId { get; set; }
     }

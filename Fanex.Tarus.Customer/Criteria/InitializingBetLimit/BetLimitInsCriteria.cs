@@ -33,10 +33,12 @@
                     builder.Append("NewMaxBet = \"" + item.NewMaxBet + "\" ");
                     builder.Append("NewMaxPerMatch = \"" + item.NewMaxPerMatch + "\" ");
                     builder.Append("NewMaxPerBall = \"" + item.NewMaxPerBall + "\" ");
+                    builder.Append("NewMaxGameStake = \"" + item.NewMaxGameStake + "\" ");
                     builder.Append("CurMinBet = \"" + item.MinBet + "\" ");
                     builder.Append("CurMaxBet = \"" + item.MaxBet + "\" ");
                     builder.Append("CurMaxPerMatch = \"" + item.MaxPerMatch + "\" ");
                     builder.Append("CurMaxPerBall = \"" + item.MaxPerBall + "\" ");
+                    builder.Append("CurMaxGameStake = \"" + item.MaxGameStake + "\" ");
                     builder.Append("GameGroupID = \"" + item.GameGroupId + "\" ");
                     builder.Append("/>");
                 }

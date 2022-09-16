@@ -189,10 +189,12 @@
                         MaxBet = Convert.IsDBNull(reader["curmaxbet"]) ? (decimal?)null : DataUtils.ToDecimal(reader["curmaxbet"]),
                         MaxPerMatch = Convert.IsDBNull(reader["curmaxpermatch"]) ? (decimal?)null : DataUtils.ToDecimal(reader["curmaxpermatch"]),
                         MaxPerBall = Convert.IsDBNull(reader["curmaxperball"]) ? (decimal?)null : DataUtils.ToDecimal(reader["curmaxperball"]),
+                        MaxGameStake = Convert.IsDBNull(reader["curmaxgamestake"]) ? (decimal?)null : DataUtils.ToDecimal(reader["curmaxgamestake"]),
                         NewMinBet = Convert.IsDBNull(reader["newminbet"]) ? (decimal?)null : DataUtils.ToDecimal(reader["newminbet"]),
                         NewMaxBet = Convert.IsDBNull(reader["newmaxbet"]) ? (decimal?)null : DataUtils.ToDecimal(reader["newmaxbet"]),
                         NewMaxPerMatch = Convert.IsDBNull(reader["newmaxpermatch"]) ? (decimal?)null : DataUtils.ToDecimal(reader["newmaxpermatch"]),
                         NewMaxPerBall = Convert.IsDBNull(reader["newmaxperball"]) ? (decimal?)null : DataUtils.ToDecimal(reader["newmaxperball"]),
+                        NewMaxGameStake = Convert.IsDBNull(reader["newmaxgamestake"]) ? (decimal?)null : DataUtils.ToDecimal(reader["newmaxgamestake"]),
                         GameGroupId = Convert.IsDBNull(reader["gamegroupid"]) ? (int?)null : DataUtils.ToInt32(reader["gamegroupid"])
                     };
 

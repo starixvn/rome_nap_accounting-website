@@ -555,7 +555,7 @@
     <Compile Include="DataAccess\ExtraPtGroup\IExtraPtRepository.cs" />
     <Compile Include="DataAccess\InitializingCustomerSetting\InitializingCustomerSettingDataAccess.cs" />
     <Compile Include="DataAccess\InitializingCustomerSetting\InittializingDepositSettingDataAccess.cs" />
-    <Compile Include="DataAccess\InitializingStakeLevel\InitStakeLevelDataAccess.cs" />
+    <Compile Include="DataAccess\InitializingBetLimit\InitBetLimitDataAccess.cs" />
     <Compile Include="DataAccess\LicenseeDcsSetting\ILicenseeDcsSettingDataAccess.cs" />
     <Compile Include="DataAccess\LicenseeDcsSetting\LicenseeDcsSettingDataAccess.cs" />
     <Compile Include="DataAccess\LicenseeMember\ILicenseeMemberDataAccess.cs" />

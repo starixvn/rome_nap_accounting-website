@@ -383,6 +383,7 @@ function RenderBetLimits(data) {
         row.Columns.push({ Name: 'MaxBet', Value: data.BetLimits[i].MaxBet === null ? "" : data.BetLimits[i].MaxBet });
         row.Columns.push({ Name: 'MaxPerMatch', Value: data.BetLimits[i].MaxPerMatch === null ? "" : data.BetLimits[i].MaxPerMatch });
         row.Columns.push({ Name: 'MaxPerBall', Value: data.BetLimits[i].MaxPerBall === null ? "" : data.BetLimits[i].MaxPerBall });
+        row.Columns.push({ Name: 'MaxGameStake', Value: data.BetLimits[i].MaxGameStake === null ? "" : data.BetLimits[i].MaxGameStake });
         row.Columns.push({ Name: 'GameGroupId', Value: data.BetLimits[i].GameGroupId === null ? "" : data.BetLimits[i].GameGroupId });
         bodyRows.push(row);
     }
@@ -400,7 +401,7 @@ function RenderBetLimits(data) {
                     { HeaderText: "Site", Name: "Site",  MergeRowNumber: 2 },
                     { HeaderText: "Credit Currency", Name: "CreditCurrency", MergeRowNumber: 2 },
                     { HeaderText: "Deposit Currency", Name: "DepositCurrency",  MergeRowNumber: 2 },
-                    { HeaderText: "Current Value", Name: "MinBet", MergeColNumber: 4 },
+                    { HeaderText: "Current Value", Name: "MinBet", MergeColNumber: 5 },
                     { HeaderText: "Game Group ID", Name: "GameGroupId", MergeRowNumber: 2 }
                 ]
             }
@@ -417,6 +418,7 @@ function RenderBetLimits(data) {
             { HeaderText: "Max Bet", Width: 100, Name: "MaxBet", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "Max Per Match", Width: 100, Name: "MaxPerMatch", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "Max Per Ball", Width: 100, Name: "MaxPerBall", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Max Game Stake", Width: 100, Name: "MaxGameStake", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "Game Group ID", Width: 100, Name: "GameGroupId", HeaderAlign: "center", CellAlign: "center" }
         ],
         bodyRows: bodyRows,
@@ -549,11 +551,13 @@ function RenderExcelGrid(BetLimits) {
         row.Columns.push({ Name: 'MinBet', Value: BetLimits[i].MinBet === null ? "" : BetLimits[i].MinBet });
         row.Columns.push({ Name: 'MaxBet', Value: BetLimits[i].MaxBet === null ? "" : BetLimits[i].MaxBet});
         row.Columns.push({ Name: 'MaxPerMatch', Value: BetLimits[i].MaxPerMatch === null ? "" : BetLimits[i].MaxPerMatch});
-        row.Columns.push({ Name: 'MaxPerBall', Value: BetLimits[i].MaxPerBall === null ? "" : BetLimits[i].MaxPerBall});
+        row.Columns.push({ Name: 'MaxPerBall', Value: BetLimits[i].MaxPerBall === null ? "" : BetLimits[i].MaxPerBall });
+        row.Columns.push({ Name: 'MaxGameStake', Value: BetLimits[i].MaxGameStake === null ? "" : BetLimits[i].MaxGameStake });
         row.Columns.push({ Name: 'NewMinBet', Value: BetLimits[i].NewMinBet === null ? "" : BetLimits[i].NewMinBet});
         row.Columns.push({ Name: 'NewMaxBet', Value: BetLimits[i].NewMaxBet === null ? "" : BetLimits[i].NewMaxBet});
         row.Columns.push({ Name: 'NewMaxPerMatch', Value: BetLimits[i].NewMaxPerMatch === null ? "" : BetLimits[i].NewMaxPerMatch });
         row.Columns.push({ Name: 'NewMaxPerBall', Value: BetLimits[i].NewMaxPerBall === null ? "" : BetLimits[i].NewMaxPerBall });
+        row.Columns.push({ Name: 'NewMaxGameStake', Value: BetLimits[i].NewMaxGameStake === null ? "" : BetLimits[i].NewMaxGameStake });
         row.Columns.push({ Name: 'GameGroupId', Value: BetLimits[i].GameGroupId === null ? "" : BetLimits[i].GameGroupId });
         bodyRows.push(row);
     }
@@ -571,8 +575,8 @@ function RenderExcelGrid(BetLimits) {
                     { HeaderText: "Site", Name: "Site", MergeRowNumber: 2 },
                     { HeaderText: "Credit Currency", Name: "CreditCurrency", MergeRowNumber: 2 },
                     { HeaderText: "Deposit Currency", Name: "DepositCurrency", MergeRowNumber: 2 },
-                    { HeaderText: "Current Value", Name: "MinBet", MergeColNumber: 4 },
-                    { HeaderText: "New Value", Name: "NewMinBet", MergeColNumber: 4 },
+                    { HeaderText: "Current Value", Name: "MinBet", MergeColNumber: 5 },
+                    { HeaderText: "New Value", Name: "NewMinBet", MergeColNumber: 5 },
                     { HeaderText: "Game Group ID", Name: "GameGroupId", MergeRowNumber: 2 }
                 ]
             }
@@ -589,10 +593,12 @@ function RenderExcelGrid(BetLimits) {
             { HeaderText: "Max Bet", Width: 100, Name: "MaxBet", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "Max Per Match", Width: 100, Name: "MaxPerMatch", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "Max Per Ball", Width: 100, Name: "MaxPerBall", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Max Game Stake", Width: 100, Name: "MaxGameStake", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "Min Bet", Width: 100, Name: "NewMinBet", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "Max Bet", Width: 100, Name: "NewMaxBet", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "Max Per Match", Width: 100, Name: "NewMaxPerMatch", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "Max Per Ball", Width: 100, Name: "NewMaxPerBall", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "New Max Game Stake", Width: 100, Name: "NewMaxGameStake", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "Game Group ID", Width: 100, Name: "GameGroupId", HeaderAlign: "center", CellAlign: "center" }
         ],
         bodyRows: bodyRows,
