@@ -151,7 +151,6 @@
     function superMultipleDownDown_change() {
         resetFrom();
         const superIds = $("#superMultipleDropDown").multiSelect("getCheckedItems").join(",");
-        console.log("superIds", superIds)
         getAgentList(superIds, true);
 
     }
@@ -196,10 +195,10 @@
         const functionId = functionDropDown.val();
         const superIds = $("#superMultipleDropDown").multiSelect("getCheckedItems");
         let message = "";
-        if (["2", "11"].includes(functionId)) {
+        if (["2","10","11","12"].includes(functionId)) {
             message = "Please select only 1 Super when updating the Bet Setting.";
         }
-        if (["7", "8", "17"].includes(functionId)) {
+        if (["7","8"].includes(functionId)) {
             message = "Please select only 1 Super when updating the Bet Limit.";
         }
         if (["0"].includes(functionId)) {
