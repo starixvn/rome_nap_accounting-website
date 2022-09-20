@@ -541,7 +541,9 @@
     <Compile Include="DataAccess\AutoSuspend\IAutoSuspendRepository.cs" />
     <Compile Include="DataAccess\ExtraPtGroup\ExtraPtRepository.cs" />
     <Compile Include="DataAccess\ExtraPtGroup\IExtraPtRepository.cs" />
-    <Compile Include="DataAccess\InitializingCustomerSetting\InitializingCustomerSettingDataAccess.cs" />
+    <Compile Include="DataAccess\InitializingCustomerSetting\BaseDataAccess.cs" />
+    <Compile Include="DataAccess\InitializingCustomerSetting\InitializingCreditSettingDataAccess.cs" />
+    <Compile Include="DataAccess\InitializingCustomerSetting\InittializingDepositSettingDataAccess.cs" />
     <Compile Include="DataAccess\InitializingStakeLevel\InitStakeLevelDataAccess.cs" />
     <Compile Include="DataAccess\LicenseeDcsSetting\ILicenseeDcsSettingDataAccess.cs" />
     <Compile Include="DataAccess\LicenseeDcsSetting\LicenseeDcsSettingDataAccess.cs" />

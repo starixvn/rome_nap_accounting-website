@@ -36,7 +36,7 @@
     }
     public class InitializingCustomerSettingService : IInitializingCustomerSettingService
     {
-        private readonly IInitializingCustomerSettingDataAccess dataAccess;
+        private readonly IInitializingCreditSettingDataAccess dataAccess;
 
         private const string FormatDisplay = "[{0}] {1}";
         private const string ErrorMessage = "Row {0}: {1}";
@@ -44,7 +44,7 @@
 
         public InitializingCustomerSettingService()
         {
-            dataAccess = new InitializingCustomerSettingDataAccess();
+            dataAccess = new InitializingCreditSettingDataAccess();
         }
 
         public Result AbortConfigSetting(int configId, int userId, string ip)
