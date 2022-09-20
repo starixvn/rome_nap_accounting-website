@@ -432,7 +432,9 @@ namespace Fanex.Tarus.BetList.Business
                     siteDBTickets = _betListRepository.FetchWithOutputs<TicketDetail>(siteDBCriteria, siteDB.AGIP, mapTicketObjectFunction, ref ticketData);
                     if (siteDBTickets.Key.errCode != 0)
                     {
-                        return string.Format(BetListResources.BetlistMaxTotalRowMessageError, siteDBTickets.Key.maxTotalRow, ReportService.BetlistMaxTotalRow);
+                        return new KeyValuePair<string, IList<TicketDetail>>(
+                            string.Format(BetListResources.BetlistMaxTotalRowMessageError, siteDBTickets.Key.maxTotalRow, ReportService.BetlistMaxTotalRow),
+                            new List<TicketDetail>());
                     }
                 }
                 if (!siteDB.IsSiteDB ||
@@ -455,7 +457,9 @@ namespace Fanex.Tarus.BetList.Business
                     mainTickets = _betListRepository.FetchWithOutputs<TicketDetail>(mainCriteria, mapTicketObjectFunction, ref ticketData);
                     if (mainTickets.Key.errCode != 0)
                     {
-                        return string.Format(BetListResources.BetlistMaxTotalRowMessageError, mainTickets.Key.maxTotalRow, ReportService.BetlistMaxTotalRow);
+                        return new KeyValuePair<string, IList<TicketDetail>>(
+                            string.Format(BetListResources.BetlistMaxTotalRowMessageError, mainTickets.Key.maxTotalRow, ReportService.BetlistMaxTotalRow),
+                            new List<TicketDetail>());
                     }
                 }
 
