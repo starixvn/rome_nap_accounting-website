@@ -119,6 +119,19 @@
 
         public ActionResult BBINResult(ThirdPartyResultRequest request) => BaseResult(request, "BBINResultConfigs");
 
+        public ActionResult MGRNGCasinoResult(ThirdPartyResultRequest request) //=> BaseResult(request, "MGResultConfigs");
+        {
+            SetProductResultTitle(request.ProductId);
+            var service = new ThirdPartyResult("MGResultConfigs");
+            var resultRequest = new ResultRequest(request.CustId, request.TransId3rd, request.GameId3rd, request.CurrencyId, request.SiteId)
+            {
+                BetTypeId = request.BetTypeId
+            };
+            var result = service.GetResultGET(resultRequest);
+
+            return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(ProductResultTitle, result));
+        }
+
         public ActionResult FGGResult(ThirdPartyResultRequest request)
         {
             SetProductResultTitle(request.ProductId);

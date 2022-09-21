@@ -247,8 +247,8 @@
     <Reference Include="Fanex.Result.Core.Sportsbook, Version=1.2.8.7, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core-Sportsbook.1.2.8.7\lib\net40\Fanex.Result.Core.Sportsbook.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Result.Core.ThirdParty, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core.ThirdPartyResult.1.0.0.2\lib\net461\Fanex.Result.Core.ThirdParty.dll</HintPath>
+    <Reference Include="Fanex.Result.Core.ThirdParty, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Result.Core.ThirdPartyResult.1.0.0.3-beta-03\lib\net461\Fanex.Result.Core.ThirdParty.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Entities, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Entities.1.0.0.6\lib\net40\Fanex.Tarus.Entities.dll</HintPath>
