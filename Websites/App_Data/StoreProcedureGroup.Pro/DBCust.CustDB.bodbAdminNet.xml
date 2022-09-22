@@ -3,7 +3,7 @@
   <Function Name="Customer - Third Party">
     <Setting Key="Acc_CustomerUpdDisableSuperLive" SpName="Acc_CustomerUpdDisableSuperLive" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
     <Setting Key="Acc_3rdProductSelSuperStatus" SpName="Acc_3rdProductSelSuperStatus" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
-    <Setting Key="Acc_3rdProductUpdSuperStatus" SpName="Acc_3rdProductUpdSuperStatus_UAT4" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_3rdProductUpdSuperStatus" SpName="Acc_3rdProductUpdSuperStatus" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
     <Setting Key="Customer_ViewPT_DepositPT" SpName="Acc_MT_GetDepositPT" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
     <Setting Key="Customer_ThirdParty_GetCustomerSetting" SpName="Acc_Dep_CustomerSelSetting" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
     <Setting Key="Customer_ThirdParty_UpdateCustomerSetting" SpName="Acc_Dep_CustomerUpdSetting" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
@@ -120,10 +120,10 @@
     <Setting Key="DBA_ResetSecurityCode_Agent" SpName="Acc_CustomerUpdSecurityCode" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Customer - New Licensee">
-    <Setting Key="NewLicensee_AdNewMember" SpName="Acc_Dep_CustomerInsMember_Ag_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NewLicensee_AdNewSuper" SpName="Acc_Dep_CustomerInsMember_Com_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NewLicensee_AdNewAgent" SpName="Acc_Dep_CustomerInsMember_MAg_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NewLicensee_AdNewMaster" SpName="Acc_Dep_CustomerInsMember_SAg_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NewLicensee_AdNewMember" SpName="Acc_Dep_CustomerInsMember_Ag" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NewLicensee_AdNewSuper" SpName="Acc_Dep_CustomerInsMember_Com" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NewLicensee_AdNewAgent" SpName="Acc_Dep_CustomerInsMember_MAg" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NewLicensee_AdNewMaster" SpName="Acc_Dep_CustomerInsMember_SAg" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="DepositCust_UpdateMemberSetting" SpName="Acc_Dep_CustomerUpdMember_Ag" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="DepositCust_UpdateSuperSetting" SpName="Acc_Dep_CustomerUpdMember_Com" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="DepositCust_UpdateAgentSetting" SpName="Acc_Dep_CustomerUpdMember_MAg" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -354,7 +354,7 @@
   </Function>
   <Function Name="Create Licensee Subsidiary">
     <Setting Key="Acc_Dep_CustomerGenLicenseeSubUsername" SpName="Acc_Dep_CustomerGenLicenseeSubUsername" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_Dep_CustomerInsLicenseeSubsidiary" SpName="Acc_Dep_CustomerInsLicenseeSubsidiary_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_Dep_CustomerInsLicenseeSubsidiary" SpName="Acc_Dep_CustomerInsLicenseeSubsidiary" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="CN88">
     <Setting Key="CS_CustomerStatusUpd" SpName="CS_CustomerStatusUpd" DbName="DBCust.CustDB.bodbAdminNet" />
