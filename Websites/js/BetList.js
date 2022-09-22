@@ -866,7 +866,7 @@ function showSealEntertainmentBetDetails(transId, winlossDate, custId, transType
     var param = {
         url: "RNGCasinoBetList/BetDetails",
         title: "SEAL Entertainment - Detailed Bet list - " + winlossDate.split(" ")[0],
-        jsonParam: { TransId: transId, TransType: transType, CustId: custId, SportType: 156, PageSize: 500 },
+        jsonParam: { TransId: transId, WinLossDate: winlossDate, TransType: transType, CustId: custId, SportType: 156, PageSize: 500 },
         width: 1110,
         height: 600
     };
