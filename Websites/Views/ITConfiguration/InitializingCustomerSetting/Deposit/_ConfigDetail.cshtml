@@ -44,6 +44,51 @@
         <tr class="setting-row row-header">
             <td class="setting-col col-header text-center" colspan="8">@groups.FirstOrDefault().SettingName - @groups.Key</td>
         </tr>
+        <!--Bet Setting-->
+        if (groups.FirstOrDefault().SettingName == "Bet Setting")
+        {
+            var firstBetSetting = groups.FirstOrDefault();
+            <tr class="setting-row row-item text-center">
+                <td class="setting-col col-item td-row" rowspan="2">@firstBetSetting.Id</td>
+                <td class="setting-col col-item td-sport" rowspan="2">[@firstBetSetting.SportType] @firstBetSetting.SportName</td>
+                <td class="setting-col col-item td-sport" rowspan="2">[@firstBetSetting.BetType] @firstBetSetting.BetTypeName</td>
+                <td class="setting-col col-item td-copy" rowspan="2">
+                    <div class="div-ckb">
+                        <input id="@("ckbDefault" + firstBetSetting.SettingId)" class="edit-input ckb ckb-default" type="checkbox" @firstBetSetting.CheckBoxDefault data-pos=@firstBetSetting.SettingId />
+                        <span>Default</span>
+                    </div>
+                </td>
+                <td class="setting-col col-item td-setting" rowspan="2" colspan="@groups.length">
+                    <form id="mainForm">
+                        <div class="floatLeft">
+                            <input id="@("uploadFile" )" name="uploadFile" type="file" style="width: 280px" accept=".xls,.xlsx" />
+                        </div>
+                        <div class="floatLeft">
+                            <input type="button" value="Submit" class="btn" onclick="ValidateSetting()" />
+                            <input id="btnInsertExcel" type="button" value="Import" class="btn btn-edit" onclick="InsertExcel();" disabled>
+                        </div>
+                    </form>
+                </td>
+                <td class="setting-col col-item td-setting" rowspan="2" colspan="@groups.length"></td>
+            </tr>
+
+            for (int i = 1; i < groups.length; i++)
+            {
+                <tr class="setting-row row-item text-center">
+                    <td class="setting-col col-item td-row" rowspan="2">@groups[i].Id</td>
+                    <td class="setting-col col-item td-sport" rowspan="2">[@groups[i].SportType] @groups[i].SportName</td>
+                    <td class="setting-col col-item td-sport" rowspan="2">[@groups[i].BetType] @groups[i].BetTypeName</td>
+                    <td class="setting-col col-item td-copy" rowspan="2">
+                        <div class="div-ckb">
+                            <input id="@("ckbDefault" + groups[i].SettingId)" class="edit-input ckb ckb-default" type="checkbox" @groups[i].CheckBoxDefault data-pos=@groups[i].SettingId />
+                            <span>Default</span>
+                        </div>
+                    </td>
+                </tr>
+            }
+        }
+
+        <!--Others Setting-->
         foreach (var setting in groups)
         {
 
@@ -124,51 +169,6 @@
                 </tr>
                 <tr class="setting-row row-item">
                     <td class="setting-col col-item" colspan="4"><textarea class="edit-input input-headline" cols="75" data-pos=@setting.SettingId>@setting.SpecialRequirement</textarea></td>
-                </tr>
-            }
-            else if (setting.SettingName == "Bet Setting")
-            {
-                <!-- Bet Setting -->
-                <tr class="setting-row row-item text-center">
-                    <td class="setting-col col-item td-row" rowspan="2">@setting.Id</td>
-                    <td class="setting-col col-item td-sport" rowspan="2">[@setting.SportType] @setting.SportName</td>
-                    <td class="setting-col col-item td-sport" rowspan="2">[@setting.BetType] @setting.BetTypeName</td>
-                    <td class="setting-col col-item td-copy" rowspan="2">
-                        <div class="div-ckb">
-                            <input id="@("ckbCopy" + setting.SettingId)" class="edit-input ckb ckb-copy" type="checkbox" @setting.CheckBoxCopy data-pos=@setting.SettingId />
-                            <span>Copy From</span>
-                        </div>
-                    </td>
-                    <td class="setting-col col-item td-setting">Sport Type</td>
-                    <td class="setting-col col-item td-setting">Bet Type</td>
-                    <td class="setting-col col-item td-setting"></td>
-                    <td class="setting-col col-item td-setting"></td>
-                </tr>
-                <tr class="setting-row row-item text-center">
-                    <td class="setting-col col-item td-setting">
-                        @Html.DropDownList(setting.TargetSportType,
-                            setting.SportTypeOptions,
-                            new
-                            {
-                                @class = "edit-input sel-sport-copy input-copy-" + setting.SettingId,
-                                @data_target_settingtype = setting.SettingName.Replace(" ", string.Empty).ToLowerInvariant(),
-                                @data_target_bettype = setting.TargetBetType,
-                                @data_pos = setting.SettingId,
-                                @disabled = setting.DisableCopy
-                            })
-                    </td>
-                    <td class="setting-col col-item td-setting">
-                        @Html.DropDownList(setting.TargetBetType,
-                        setting.BetTypeOptions,
-                        new
-                        {
-                            @class = "edit-input sel-bettype-copy input-copy-" + setting.SettingId,
-                            @data_pos = setting.SettingId,
-                            @disabled = setting.DisableCopy
-                        })
-                    </td>
-                    <td class="setting-col col-item td-setting"></td>
-                    <td class="setting-col col-item td-setting"></td>
                 </tr>
             }
             else if (setting.SettingName == "Commission")
@@ -337,45 +337,24 @@
             {
                 <!-- Position Taking -->
                 <tr class="setting-row row-item text-center">
-                    <td class="setting-col col-item td-row" rowspan="2">@setting.Id</td>
-                    <td class="setting-col col-item td-sport" rowspan="2">[@setting.SportType] @setting.SportName</td>
-                    <td class="setting-col col-item td-sport" rowspan="2">[@setting.BetType] @setting.BetTypeName</td>
-                    <td class="setting-col col-item td-copy" rowspan="2">
+                    <td class="setting-col col-item td-row">@setting.Id</td>
+                    <td class="setting-col col-item td-sport">[@setting.SportType] @setting.SportName</td>
+                    <td class="setting-col col-item td-sport">[@setting.BetType] @setting.BetTypeName</td>
+                    <td class="setting-col col-item td-copy">
                         <div class="div-ckb">
-                            <input id="@("ckbCopy" + setting.SettingId)" class="edit-input ckb ckb-copy" type="checkbox" @setting.CheckBoxCopy data-pos=@setting.SettingId />
-                            <span>Copy From</span>
+                            <input id="@("ckbDefault" + setting.SettingId)" class="edit-input ckb ckb-default" type="checkbox" @setting.CheckBoxDefault data-pos=@setting.SettingId />
+                            <span>Default</span>
                         </div>
                     </td>
-                    <td class="setting-col col-item td-setting">Sport Type</td>
-                    <td class="setting-col col-item td-setting">Bet Type</td>
-                    <td class="setting-col col-item td-setting"></td>
-                    <td class="setting-col col-item td-setting"></td>
-                </tr>
-                <tr class="setting-row row-item text-center">
-                    <td class="setting-col col-item td-setting">
-                        @Html.DropDownList(setting.TargetSportType,
-                            setting.SportTypeOptions,
-                            new
+                    <td class="setting-col col-item td-setting" colspan="2">
+                        <select class="@("edit-input sel-position-taking input-default-" + setting.SettingId)" data-pos=@setting.SettingId @setting.DisableDefault>
+                            @for(float i = 0; i <= 1; i= i + 0.0005f)
                             {
-                                @class = "edit-input sel-sport-copy input-copy-" + setting.SettingId,
-                                @data_target_settingtype = setting.SettingName.Replace(" ", string.Empty).ToLowerInvariant(),
-                                @data_target_bettype = setting.TargetBetType,
-                                @data_pos = setting.SettingId,
-                                @disabled = setting.DisableCopy
-                            })
+                                <option value="@i">@i</option>
+                            }
+                        </select>
                     </td>
-                    <td class="setting-col col-item td-setting">
-                        @Html.DropDownList(setting.TargetBetType,
-                        setting.BetTypeOptions,
-                        new
-                        {
-                            @class = "edit-input sel-bettype-copy input-copy-" + setting.SettingId,
-                            @data_pos = setting.SettingId,
-                            @disabled = setting.DisableCopy
-                        })
-                    </td>
-                    <td class="setting-col col-item td-setting"></td>
-                    <td class="setting-col col-item td-setting"></td>
+                    <td class="setting-col col-item td-setting" colspan="2"></td>
                 </tr>
             }
             else if (setting.SettingName == "Stake Level")

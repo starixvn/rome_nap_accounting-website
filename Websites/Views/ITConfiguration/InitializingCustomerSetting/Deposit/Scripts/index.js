@@ -11,7 +11,7 @@ function GetSetting() {
     parent.BlockUI();
     $.ajax({
         type: "GET",
-        url: "GetSetting?type=credit",
+        url: "GetSetting?type=deposit",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (rs) {
@@ -155,6 +155,10 @@ function RenderAction(status, configId) {
     return '<a href="javascript:void(0);" alt = "View" style = "cursor: pointer" onclick = "ViewConfig(' + configId + ')" >[View]</a>';
 }
 
+function RenderBetSetting(configId) {
+    return '<a href="javascript:void(0);" alt = "View" style = "cursor: pointer" onclick = "ViewBetSetting(' + configId + ')" >[View]</a>';
+}
+
 function GetStartTimeClass(starttime) {
     if (starttime && !IsFutureTime(starttime)) {
         return "previous-time";
@@ -184,6 +188,7 @@ function RenderSettings() {
         row.Columns.push({ Name: 'BetType', TdClass: startTimeClass, Value: RenderBettypes(i) });
         row.Columns.push({ Name: 'Site', TdClass: startTimeClass, Value: RenderSite(i) });
         row.Columns.push({ Name: 'Currency', TdClass: startTimeClass, Value: RenderCurrency(i) });
+        row.Columns.push({ Name: 'BetSetting', TdClass: startTimeClass, Value: RenderBetSetting(setting.ConfigId) });
         row.Columns.push({ Name: 'Status', TdClass: startTimeClass, Value: RenderStatus(setting.Status) });
         row.Columns.push({ Name: 'Steps', TdClass: startTimeClass, Value: RenderStep(setting, steps) });
         row.Columns.push({ Name: 'StartTime', TdClass: startTimeClass, Value: setting.StartTime });
@@ -203,6 +208,7 @@ function RenderSettings() {
             { HeaderText: "Bet Type", Width: 100, Name: "BetType", HeaderAlign: "center", CellAlign: "left" },
             { HeaderText: "Site", Width: 90, Name: "Site", HeaderAlign: "center", CellAlign: "left" },
             { HeaderText: "Currency", Width: 90, Name: "Currency", HeaderAlign: "center", CellAlign: "left" },
+            { HeaderText: "Bet Setting", Width: 20, Name: "BetSetting", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "Status", Width: 50, Name: "Status", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "Steps", Width: 250, Name: "Steps", HeaderAlign: "center", CellAlign: "left" },
             { HeaderText: "Start Time (GMT-4)", Width: 65, Name: "StartTime", HeaderAlign: "center", CellAlign: "center" },
@@ -223,7 +229,7 @@ function RenderDcsMatrix() {
     parent.BlockUI();
     $.ajax({
         type: "GET",
-        url: "GetProductSportBettype?type=credit",
+        url: "GetProductSportBettype?type=deposit",
         success: function (rs) {
             if (rs && rs.ErrorCode !== undefined && rs.ErrorCode !== 0) {
                 showAlertMessage('errMsg', rs.ErrorMessage, 1);
@@ -291,6 +297,11 @@ function ViewConfig(configId) {
     GetViewConfigDetail(configId);
 }
 
+function ViewBetSetting(configId) {
+    $("#popupContainer").html("");
+    GetViewBetSetting(configId);
+}
+
 function OpenAddConfig() {
     isAddConfig = true;
     selectedConfig = null;
@@ -307,7 +318,7 @@ function GetConfigDetail(configId, isDialogOpened = false) {
     parent.BlockUI();
     $.ajax({
         type: "GET",
-        url: "GetConfigDetail?type=credit&configId=" + configId,
+        url: "GetConfigDetail?type=deposit&configId=" + configId,
         success: function (rs) {
             if (rs && rs.ErrorCode !== undefined && rs.ErrorCode !== 0) {
                 showAlertMessage('errMsg', rs.ErrorMessage, 1);
@@ -343,7 +354,7 @@ function GetViewConfigDetail(configId) {
     parent.BlockUI();
     $.ajax({
         type: "GET",
-        url: "ViewConfigDetail?type=credit&configId=" + configId,
+        url: "ViewConfigDetail?type=deposit&configId=" + configId,
         contentType: "application/json; charset=utf-8",
         success: function (rs) {
             if (rs && rs.ErrorCode !== undefined && rs.ErrorCode !== 0) {
@@ -359,6 +370,34 @@ function GetViewConfigDetail(configId) {
 
                 RenderSelectView();
                 RenderViewConfigDetail();
+            }
+        },
+        error: function (event, jqXHR, ajaxSettings) {
+            showAlertMessage('editErrMsg', "Internal server error.", 1);
+        },
+        complete: function () {
+            try { parent.jQuery.unblockUI(); } catch (e) { }
+        }
+    });
+}
+function GetViewBetSetting(configId) {
+    $("#errMsg").html("");
+    parent.BlockUI();
+    $.ajax({
+        type: "GET",
+        url: "ViewBetSetting?configId=" + configId,
+        contentType: "application/json; charset=utf-8",
+        success: function (rs) {
+            if (rs && rs.ErrorCode !== undefined && rs.ErrorCode !== 0) {
+                showAlertMessage('errMsg', rs.ErrorMessage, 1);
+            } else {
+                $("#popupContainer").html(rs);
+                $('#popupContainer').dialog({
+                    title: 'Bet Setting ' + configId,
+                    modal: true,
+                    width: '1100',
+                    height: '600'
+                });
             }
         },
         error: function (event, jqXHR, ajaxSettings) {
@@ -701,6 +740,15 @@ function RenderEventEdit() {
     $(".input-status-member").each(function () {
         $(this).on('click', ChangeMemberStatus);
     });
+
+    $(".sel-position-taking").each(function () {
+        var pos = $(this).data("pos");
+        var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
+        $(this).select2({ width: "100%", disabled: !selectedConfig.ConfigDetail.Settings[position].IsDefault });
+        $(this).change(function () {
+            selectedConfig.ConfigDetail.Settings[position].PositionTaking = $(this).val();
+        });
+    });
 }
 
 function RenderCommMaster(pos, position) {
@@ -1006,7 +1054,7 @@ function RenderNewConfig() {
     selectedConfig = null;
     $.ajax({
         type: "POST",
-        url: "GenerateConfigSetting?type=credit",
+        url: "GenerateConfigSetting?type=deposit",
         data: request,
         success: function (rs) {
             $("#grid-information").html(rs);
@@ -1074,7 +1122,7 @@ function ValidateUpdateConfigModel() {
     parent.BlockUI();
     $.ajax({
         type: "POST",
-        url: "ValidateUpdateConfigSetting?type=credit",
+        url: "ValidateUpdateConfigSetting?type=deposit",
         data: selectedConfig.ConfigDetail,
         success: function (rs) {
             if (rs.IsWarning) {
@@ -1106,7 +1154,7 @@ function UpdateConfigModel() {
     parent.BlockUI();
     $.ajax({
         type: "POST",
-        url: "UpdateConfigSetting?type=credit",
+        url: "UpdateConfigSetting?type=deposit",
         dataType: 'json',
         data: selectedConfig.ConfigDetail,
         success: function (rs) {
@@ -1138,7 +1186,7 @@ function ValidateNewConfigModel() {
     parent.BlockUI();
     $.ajax({
         type: "POST",
-        url: "ValidateAddConfigSetting?type=credit",
+        url: "ValidateAddConfigSetting?type=deposit",
         dataType: 'json',
         data: selectedConfig.ConfigDetail,
         success: function (rs) {
@@ -1173,7 +1221,7 @@ function AddConfigModel() {
     parent.BlockUI();
     $.ajax({
         type: "POST",
-        url: "AddConfigSetting?type=credit",
+        url: "AddConfigSetting?type=deposit",
         dataType: 'json',
         data: selectedConfig.ConfigDetail,
         success: function (rs) {
@@ -1211,7 +1259,7 @@ function AbortConfig(configId) {
         parent.BlockUI();
         $.ajax({
             type: "POST",
-            url: "AbortSetting?type=credit",
+            url: "AbortSetting?type=deposit",
             dataType: 'json',
             data: { ConfigId: configId },
             success: function (rs) {
@@ -1238,7 +1286,7 @@ function DeleteConfig(configId) {
         parent.BlockUI();
         $.ajax({
             type: "POST",
-            url: "DeleteSetting?type=credit",
+            url: "DeleteSetting?type=deposit",
             dataType: 'json',
             data: { ConfigId: configId },
             success: function (rs) {

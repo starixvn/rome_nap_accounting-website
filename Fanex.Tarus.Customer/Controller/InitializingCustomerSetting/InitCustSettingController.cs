@@ -13,18 +13,21 @@ namespace Fanex.Tarus.Customer.Controller.InitializingCustomerSetting
     {
         private readonly string CreditType = "credit";
         private readonly string _indexViewPath = "~/Views/ITConfiguration/InitializingCustomerSetting/Index.cshtml";
+        private readonly string _creditViewPath = "~/Views/ITConfiguration/InitializingCustomerSetting/Credit/Index.cshtml";
+        private readonly string _depositViewPath = "~/Views/ITConfiguration/InitializingCustomerSetting/Deposit/Index.cshtml";
         private readonly string _viewConfigCreditPath = "~/Views/ITConfiguration/InitializingCustomerSetting/Credit/_ViewConfig.cshtml";
         private readonly string _addEditCreditPath = "~/Views/ITConfiguration/InitializingCustomerSetting/Credit/_AddEditConfig.cshtml";
         private readonly string _configCreditPath = "~/Views/ITConfiguration/InitializingCustomerSetting/Credit/_ConfigDetail.cshtml";
         private readonly string _addEditDepositPath = "~/Views/ITConfiguration/InitializingCustomerSetting/Deposit/_AddEditConfig.cshtml";
         private readonly string _configDepositPath = "~/Views/ITConfiguration/InitializingCustomerSetting/Deposit/_ConfigDetail.cshtml";
         private readonly string _viewConfigDepositPath = "~/Views/ITConfiguration/InitializingCustomerSetting/Deposit/_ViewConfig.cshtml";
-        private readonly IInitializingCustomerSettingService creditService;
-        private readonly IInitializingCustomerSettingService depositService;
+        private readonly IInitializingCreditSettingService creditService;
+        private readonly IInitializingDepositSettingService depositService;
 
         public InitCustSettingController()
         {
-            creditService = new InitializingCustomerSettingService();
+            creditService = new InitializingCreditSettingService();
+            depositService = new InitializingDepositSettingService();
         }
 
         [HttpGet]
@@ -33,6 +36,17 @@ namespace Fanex.Tarus.Customer.Controller.InitializingCustomerSetting
             return View(_indexViewPath);
         }
 
+        [HttpGet]
+        public ActionResult Credit()
+        {
+            return PartialView(_creditViewPath);
+        }
+
+        [HttpGet]
+        public ActionResult Deposit()
+        {
+            return PartialView(_depositViewPath);
+        }
 
         [HttpGet, AuthenticateRead]
         public ActionResult GetSetting(string type)

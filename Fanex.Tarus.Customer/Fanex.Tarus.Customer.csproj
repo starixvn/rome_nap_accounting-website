@@ -308,7 +308,9 @@
     <Compile Include="Business\CustomerLogin\ICustomerOTPService.cs" />
     <Compile Include="Business\ExtraPtGroup\ExtraPtService.cs" />
     <Compile Include="Business\ExtraPtGroup\IExtraPtService.cs" />
-    <Compile Include="Business\InitializingCustomerSetting\InitializingCustomerSettingService.cs" />
+    <Compile Include="Business\InitializingCustomerSetting\BaseCustomerSettingService.cs" />
+    <Compile Include="Business\InitializingCustomerSetting\InitializingCreditSettingService.cs" />
+    <Compile Include="Business\InitializingCustomerSetting\InitializingDepositSettingService.cs" />
     <Compile Include="Business\InitializingStakeLevel\InitializingStakeLevelService.cs" />
     <Compile Include="Business\LicenseeDcsSetting\ILicenseeDcsSettingService.cs" />
     <Compile Include="Business\LicenseeDcsSetting\LicenseeDcsSettingService.cs" />

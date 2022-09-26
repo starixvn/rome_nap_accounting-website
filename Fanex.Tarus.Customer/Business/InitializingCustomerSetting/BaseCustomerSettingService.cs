@@ -1,18 +1,19 @@
-﻿namespace Fanex.Tarus.Customer.Business.InitializingCustomerSetting
+﻿
+namespace Fanex.Tarus.Customer.Business.InitializingCustomerSetting
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text.RegularExpressions;
-    using System.Web;
-    using System.Web.Mvc;
-    using Fanex.Tarus.Customer.Criteria.InitializingCustomerSetting;
-    using Fanex.Tarus.Customer.DataAccess.InitializingCustomerSetting;
+    using Fanex.Tarus.Customer.ViewModels.InitializingCustomerSetting;
     using Fanex.Tarus.Customer.Entities;
     using Fanex.Tarus.Customer.Entities.InitializingCustomerSetting;
     using Fanex.Tarus.Customer.Requests.InitializingCustomerSetting;
-    using Fanex.Tarus.Customer.ViewModels.InitializingCustomerSetting;
+    using Fanex.Tarus.Customer.DataAccess.InitializingCustomerSetting;
+    using Fanex.Tarus.Customer.Criteria.InitializingCustomerSetting;
+    using System.Linq;
+    using System.Web.Mvc;
+    using System.Collections.Generic;
+    using System.Text.RegularExpressions;
+    using System.Web;
 
-    public interface IInitializingCustomerSettingService
+    public interface IBaseCustomerSettingService
     {
         InitializingCustomerSettingViewModel GetSetting();
 
@@ -34,17 +35,19 @@
 
         IEnumerable<InsertErrorModel> UpdateConfigSetting(ConfigModel request, string ip);
     }
-    public class InitializingCustomerSettingService : IInitializingCustomerSettingService
+
+
+    public class BaseCustomerSettingService : IBaseCustomerSettingService
     {
-        private readonly IInitializingCreditSettingDataAccess dataAccess;
+        protected readonly IBaseDataAccess dataAccess;
 
         private const string FormatDisplay = "[{0}] {1}";
         private const string ErrorMessage = "Row {0}: {1}";
         private const string HeadlineRegex = @"^[0-9a-zA-Z\s~,.?:;!|@#$%&*\(\)\{\}+-]+$";
-
-        public InitializingCustomerSettingService()
+        
+        public BaseCustomerSettingService(IBaseDataAccess dataAccess)
         {
-            dataAccess = new InitializingCreditSettingDataAccess();
+            this.dataAccess = dataAccess ?? new BaseDataAccess();
         }
 
         public Result AbortConfigSetting(int configId, int userId, string ip)
