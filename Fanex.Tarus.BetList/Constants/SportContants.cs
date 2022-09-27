@@ -90,5 +90,6 @@
         public const int AdvantPlay = 172;
         public const int AdvantPlayMini = 174;
         public const int FGG = 176;
+        public const int SealEntertainment = 156;
     }
 }

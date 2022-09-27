@@ -1335,6 +1335,10 @@ namespace Fanex.Tarus.BetList.Business
             {
                 sportName = ticketHelper.GetSportNameById(SportContants.FGG);
             }
+            else if (ReportService.IsSealEntertainment(betTypeId))
+            {
+                sportName = ticketHelper.GetSportNameById(SportContants.SealEntertainment);
+            }
 
             else
             {

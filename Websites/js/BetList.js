@@ -861,6 +861,18 @@ function showFGGBetDetails(refno, winlossDate, custId, transType) {
 
     openResultsPopUp(params);
 }
+
+function showSealEntertainmentBetDetails(transId, winlossDate, custId, transType) {
+    var param = {
+        url: "RNGCasinoBetList/BetDetails",
+        title: "SEAL Entertainment - Detailed Bet list - " + winlossDate.split(" ")[0],
+        jsonParam: { TransId: transId, WinLossDate: winlossDate, TransType: transType, CustId: custId, SportType: 156, PageSize: 500 },
+        width: 1110,
+        height: 600
+    };
+
+    openResultsPopUp(param);
+}
 // -------------------- Functions whose name must name by Fanex.Toco
 function ViewRNGCasinoResult(matchId, race, betType, sportType, refNo, winlostDate, custId) {
     var params = $.param({
@@ -1035,6 +1047,9 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
         case 50: // Cricket
             return getCricketParam(matchid, bettype, sporttype, currencyId, gameId3rd);
 
+        case 156:
+            return getSEALParam(bettype, custId, transId3rd, currencyId, siteId);
+
         case 161: // Number Game.
             return getNumberGameParam(matchid);
 
@@ -1144,7 +1159,6 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
 
         case 176: // FGG
             return getFGGParam(custId, transId3rd, gameId3rd, currencyId, siteId, winlostdate);
-
         default:
             return undefined;
     }
@@ -1424,6 +1438,16 @@ function getCardClubParam(bettype, custId, transId3rd, gameId3rd, currencyId, si
         url: "ThirdParty/CardClubResult",
         title: "Arcadia Gaming Result",
         jsonParam: { BetTypeId: bettype, custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, siteId: siteId, currenctyId: currencyId, productId: 34 },
+        width: 850,
+        height: 800
+    };
+}
+
+function getSEALParam(bettype, custId, transId3rd, currencyId, siteId) {
+    return {
+        url: "ThirdParty/SEALResult",
+        title: "SEAL Entertainment Result",
+        jsonParam: { BetTypeId: bettype, custId: custId, transId3rd: transId3rd, siteId: siteId, currenctyId: currencyId, productId: 72 },
         width: 850,
         height: 800
     };

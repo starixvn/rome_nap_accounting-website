@@ -266,6 +266,11 @@
             return 8202 <= betTypeId && betTypeId <= 8299;
         }
 
+        public static bool IsSealEntertainment(int betTypeId)
+        {
+            return 8900 <= betTypeId && betTypeId <= 8999;
+        }
+
         public static int GetSportFromBetTypeId(int betTypeId)
         {
             if (5601 <= betTypeId && betTypeId <= 5699)
