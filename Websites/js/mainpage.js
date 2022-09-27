@@ -5,7 +5,7 @@ function trimSpace(str) {
 function submitSearch(username) {
     txtusername = $('#txtuserName');
     if (username == null || username == "") {
-        username = encodeURIComponent(escape(jQuery.trim(txtusername.val())));
+        username = encodeURIComponent(jQuery.trim(txtusername.val()));
 
         if (username != "") {
             $('#leftPanel').attr({ src: 'CustInfo.aspx?username=' + username });

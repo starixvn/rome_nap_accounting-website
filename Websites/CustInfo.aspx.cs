@@ -22,7 +22,7 @@ public partial class CustInfo : PageBase
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        username = System.Web.HttpUtility.UrlDecode(Request.QueryString["username"]);
+        username = System.Web.HttpUtility.HtmlEncode(Request.QueryString["username"]);
 
         if (string.IsNullOrEmpty(username))
         {
