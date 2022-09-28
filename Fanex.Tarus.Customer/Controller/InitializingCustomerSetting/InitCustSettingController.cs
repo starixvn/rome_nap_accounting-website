@@ -1,8 +1,11 @@
-﻿using System.Web.Mvc;
+﻿using System.Web;
+using System.Web.Mvc;
+using Fanex.CustomerSetting.Module.Core.Web;
 using Fanex.Tarus.Customer.Business.InitializingCustomerSetting;
+using Fanex.Tarus.Customer.Criteria.InitializingCustomerSetting.Credit;
+using Fanex.Tarus.Customer.Criteria.InitializingCustomerSetting.Deposit;
 using Fanex.Tarus.Customer.Entities.InitializingCustomerSetting;
 using Fanex.Tarus.Customer.Requests.InitializingCustomerSetting;
-using Fanex.Tarus.Infrastructure.Common;
 using Fanex.Tarus.Web.Controllers;
 using Fanex.Tarus.Web.Controllers.Filters;
 
@@ -82,7 +85,9 @@ namespace Fanex.Tarus.Customer.Controller.InitializingCustomerSetting
         [HttpGet, AuthenticateHost]
         public ActionResult GetConfigDetail(string type, int configId)
         {
-            var viewModel = IsCredit(type) ? creditService.GetConfigDetail(configId) : depositService.GetConfigDetail(configId);
+            var viewModel = IsCredit(type)
+                ? creditService.GetConfigDetail(new GetConfigDetailCriteria(configId))
+                : depositService.GetConfigDetail(new GetDepositConfigDetailCriteria(configId));
             if (viewModel.Error != null)
             {
                 return Json(viewModel.Error, JsonRequestBehavior.AllowGet);
@@ -127,24 +132,32 @@ namespace Fanex.Tarus.Customer.Controller.InitializingCustomerSetting
 
         [HttpPost, AuthenticateHost]
         [ValidateInput(false)]
-        public ActionResult ValidateUpdateConfigSetting(ConfigModel request)
+        public ActionResult ValidateUpdateConfigSetting(string type, ConfigModel request)
         {
-            return Json(creditService.ValidateUpdateConfigSetting(request, HttpContext.Request.UserHostAddress));
+            var result = IsCredit(type)
+                ? creditService.ValidateUpdateConfigSetting(request, HttpContext.Request.UserHostAddress)
+                : depositService.ValidateUpdateConfigSetting(request, HttpContext.Request.UserHostAddress);
+
+            return Json(result);
         }
 
         [HttpPost, AuthenticateHost]
         [ValidateInput(false)]
-        public ActionResult UpdateConfigSetting(ConfigModel request)
+        public ActionResult UpdateConfigSetting(string type, ConfigModel request)
         {
-            return Json(creditService.UpdateConfigSetting(request, HttpContext.Request.UserHostAddress));
+            var result = IsCredit(type)
+                  ? creditService.UpdateConfigSetting(request, HttpContext.Request.UserHostAddress)
+                  : depositService.UpdateConfigSetting(request, HttpContext.Request.UserHostAddress);
+
+            return Json(result);
         }
 
         [HttpGet, AuthenticateRead]
         public ActionResult ViewConfigDetail(string type, int configId)
         {
             var viewModel = IsCredit(type)
-                ? creditService.GetConfigDetail(configId)
-                : depositService.GetConfigDetail(configId);
+                ? creditService.GetConfigDetail(new GetConfigDetailCriteria(configId))
+                : depositService.GetConfigDetail(new GetDepositConfigDetailCriteria(configId));
             if (viewModel.Error != null)
             {
                 return Json(viewModel.Error, JsonRequestBehavior.AllowGet);
@@ -153,6 +166,23 @@ namespace Fanex.Tarus.Customer.Controller.InitializingCustomerSetting
             var path = IsCredit(type) ? _viewConfigCreditPath : _viewConfigDepositPath;
 
             return PartialView(path, viewModel);
+        }
+
+        [HttpPost, AuthenticateHost]
+        [ValidateInput(false)]
+        public ActionResult ParseBetSetting(int settingType, HttpPostedFileBase uploadFile)
+        {
+            var result = depositService.ParseBetSetting(uploadFile, settingType);
+
+            return Json(result);
+        }
+
+        [HttpGet, AuthenticateRead]
+        public ActionResult ViewBetSetting(int configId)
+        {
+            var result = depositService.GetBetSettings(configId);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         private bool IsCredit(string type) => type.ToLowerInvariant() == CreditType;

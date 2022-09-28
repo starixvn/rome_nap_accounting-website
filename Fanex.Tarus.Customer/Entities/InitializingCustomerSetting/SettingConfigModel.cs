@@ -40,6 +40,8 @@
 
         public string Remark { get; set; }
 
+        public bool IsExistBetSetting { get; set; }
+
         public SettingConfigModel()
         {
             SportTypeIdList = new List<int>();

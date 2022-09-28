@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web;
-using Fanex.NAP.Framework.Data;
-using Fanex.Tarus.Customer.Entities.InitializingCustomerSetting;
-
-namespace Fanex.Tarus.Customer.Criteria.InitializingCustomerSetting
+﻿namespace Fanex.Tarus.Customer.Criteria.InitializingCustomerSetting.Credit
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Web;
+    using Fanex.NAP.Framework.Data;
+    using Fanex.Tarus.Customer.Entities.InitializingCustomerSetting;
+    
     public class AddSettingConfigCriteria : CriteriaBase
     {
         public int ProductID { get; set; }
@@ -40,7 +40,7 @@ namespace Fanex.Tarus.Customer.Criteria.InitializingCustomerSetting
         public override string GetSettingKey()
             => "Acc_Initial_DCS_SettingConfig_Ins";
 
-        private string BuildXmlConfig(List<SettingInforModel> settings)
+        protected virtual string BuildXmlConfig(List<SettingInforModel> settings)
         {
             var xmlConfig = new StringBuilder();
             xmlConfig.Append("<ROOT>");

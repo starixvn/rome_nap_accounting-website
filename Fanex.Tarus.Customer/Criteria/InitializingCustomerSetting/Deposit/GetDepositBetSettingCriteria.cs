@@ -1,10 +1,10 @@
-﻿namespace Fanex.Tarus.Customer.Criteria.InitializingCustomerSetting
+﻿namespace Fanex.Tarus.Customer.Criteria.InitializingCustomerSetting.Deposit
 {
     using Fanex.NAP.Framework.Data;
-
-    public class GetConfigDetailCriteria : CriteriaBase
+    
+    public class GetDepositBetSettingCriteria : CriteriaBase
     {
-        public GetConfigDetailCriteria(int configId)
+        public GetDepositBetSettingCriteria(int configId)
         {
             ConfigId = configId;
         }
@@ -12,7 +12,7 @@
         public int ConfigId { get; set; }
 
         public override string GetSettingKey()
-            => "Acc_Initial_DCS_SettingConfigDetail_Sel";
+            => "Acc_Dep_Initial_DCS_BetSetting_Sel";
 
         public override bool IsValid()
             => ConfigId > 0;

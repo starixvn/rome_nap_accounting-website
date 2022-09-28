@@ -7,6 +7,7 @@ var isAddConfig = false;
 var isNeedRenderBettype = false;
 var isLoadCachedFilter = false;
 let headlineRegex = /^[0-9a-zA-Z\s\\r\\n~.,?:;!|@#$%&*\(\)\{\}+-\\"]+$/;
+var betSettingBySettingType = {};
 function GetSetting() {
     parent.BlockUI();
     $.ajax({
@@ -188,7 +189,7 @@ function RenderSettings() {
         row.Columns.push({ Name: 'BetType', TdClass: startTimeClass, Value: RenderBettypes(i) });
         row.Columns.push({ Name: 'Site', TdClass: startTimeClass, Value: RenderSite(i) });
         row.Columns.push({ Name: 'Currency', TdClass: startTimeClass, Value: RenderCurrency(i) });
-        row.Columns.push({ Name: 'BetSetting', TdClass: startTimeClass, Value: RenderBetSetting(setting.ConfigId) });
+        row.Columns.push({ Name: 'BetSetting', TdClass: startTimeClass, Value: setting.IsExistBetSetting ? RenderBetSetting(setting.ConfigId) : ""});
         row.Columns.push({ Name: 'Status', TdClass: startTimeClass, Value: RenderStatus(setting.Status) });
         row.Columns.push({ Name: 'Steps', TdClass: startTimeClass, Value: RenderStep(setting, steps) });
         row.Columns.push({ Name: 'StartTime', TdClass: startTimeClass, Value: setting.StartTime });
@@ -208,8 +209,8 @@ function RenderSettings() {
             { HeaderText: "Bet Type", Width: 100, Name: "BetType", HeaderAlign: "center", CellAlign: "left" },
             { HeaderText: "Site", Width: 90, Name: "Site", HeaderAlign: "center", CellAlign: "left" },
             { HeaderText: "Currency", Width: 90, Name: "Currency", HeaderAlign: "center", CellAlign: "left" },
-            { HeaderText: "Bet Setting", Width: 20, Name: "BetSetting", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: "Status", Width: 50, Name: "Status", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Bet Setting", Width: 100, Name: "BetSetting", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Status", Width: 80, Name: "Status", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "Steps", Width: 250, Name: "Steps", HeaderAlign: "center", CellAlign: "left" },
             { HeaderText: "Start Time (GMT-4)", Width: 65, Name: "StartTime", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "End Time (GMT-4)", Width: 65, Name: "EndTime", HeaderAlign: "center", CellAlign: "center" },
@@ -289,6 +290,7 @@ function EditConfig(configId) {
     isAddConfig = false;
     $("#errMsg").html("");
     $("#popupContainer").html("");
+    betSettingBySettingType = {};
     GetConfigDetail(configId);
 }
 
@@ -307,6 +309,7 @@ function OpenAddConfig() {
     selectedConfig = null;
     selectedProduct = null;
     selectedSports = [];
+    betSettingBySettingType = {};
     $("#errMsg").html("");
     $("#popupContainer").html("");
     RenderDcsMatrix();
@@ -380,6 +383,7 @@ function GetViewConfigDetail(configId) {
         }
     });
 }
+
 function GetViewBetSetting(configId) {
     $("#errMsg").html("");
     parent.BlockUI();
@@ -388,17 +392,14 @@ function GetViewBetSetting(configId) {
         url: "ViewBetSetting?configId=" + configId,
         contentType: "application/json; charset=utf-8",
         success: function (rs) {
-            if (rs && rs.ErrorCode !== undefined && rs.ErrorCode !== 0) {
-                showAlertMessage('errMsg', rs.ErrorMessage, 1);
-            } else {
-                $("#popupContainer").html(rs);
-                $('#popupContainer').dialog({
-                    title: 'Bet Setting ' + configId,
-                    modal: true,
-                    width: '1100',
-                    height: '600'
-                });
-            }
+            $("#popupContainer").html();
+            BuildBetSettingGrid(rs);
+            $('#popupContainer').dialog({
+                title: 'Bet Setting - File Upload',
+                modal: true,
+                width: 'auto',
+                height: 400
+            });
         },
         error: function (event, jqXHR, ajaxSettings) {
             showAlertMessage('editErrMsg', "Internal server error.", 1);
@@ -407,6 +408,47 @@ function GetViewBetSetting(configId) {
             try { parent.jQuery.unblockUI(); } catch (e) { }
         }
     });
+}
+
+function BuildBetSettingGrid(betSettings){
+    var bodyRows = [];
+    var $table = $('<table>').addClass('freegrid');
+    var $th = $('<tr>').append(
+        $('<th>').text('Sport Type'),
+        $('<th>').text('Bet Type'),
+        $('<th>').text('Currency Code'),
+        $('<th>').text('Currency Name'),
+        $('<th>').text('Min Bet'),
+        $('<th>').text('Max Bet'),
+        $('<th>').text('Max per Match'),
+        $('<th>').text('Max per Number'),
+        $('<th>').text('Max Payout per Match')
+    );
+    $table.append($th);
+    if (betSettings.length === 0) {
+        $table.append($('<tr>').append(
+            $('<td>').attr('colspan', 3).text('No data information.')
+        ));
+    }
+
+    for (var i = 0; i < betSettings.length; i++) {
+        var setting = betSettings[i];
+        var $tr = $('<tr>').append(
+            $('<td>').text(setting.SportTypeId),
+            $('<td>').text(setting.BetTypeId),
+            $('<td>').text(setting.CurrencyCode),
+            $('<td>').text(setting.CurrencyName),
+            $('<td>').text(setting.MinBet),
+            $('<td>').text(setting.MaxBet),
+            $('<td>').text(setting.MaxPerMatch),
+            $('<td>').text(setting.MaxPerNumber),
+            $('<td>').text(setting.MaxPayoutPerMatch)
+        );
+
+        $table.append($tr);
+    }
+
+    $('#popupContainer').append($table);
 }
 
 function RenderEditConfigDetail() {
@@ -484,8 +526,7 @@ function RenderCurrencySelection(enableInput) {
             });
         });
     }
-
-    currencySelect.multiSelect({
+    var option = {
         minWidth: 140,
         maxHeight: 250,
         shadow: true,
@@ -497,6 +538,19 @@ function RenderCurrencySelection(enableInput) {
         checkAllText: "[0] All currencies",
         listData: multiselectData,
         noItemText: "Select Currencies"
+    };
+
+    currencySelect.multiSelect(option);
+    $('#EditCurrencySelect').next('div.ui-multiselect-options').find('input.ui-multiselect-widget-header-filter').on('change', function () {
+        var filterValue = $('#EditCurrencySelect').next('div.ui-multiselect-options').find('input.ui-multiselect-widget-header-filter').val().replaceAll(/\s/g, '').toLowerCase();
+        var selectedCurrency = filterValue.split(',');
+        option.listData.forEach(function (cur) {
+            var curOption = cur.Text.split(" ")[1].toLowerCase();
+            $('#' + cur.Id).prop('checked', selectedCurrency.indexOf(curOption) >= 0);
+        });
+
+        $('#EditCurrencySelect').next('div.ui-multiselect-options').find('input.ui-multiselect-widget-header-filter').val('').keyup();;
+        $('#EditCurrencySelect').trigger('change');
     });
 }
 
@@ -514,6 +568,14 @@ function RenderSelectView() {
     $(".sel-bettype-copy").each(function () {
         $(this).select2({ width: "100%" });
     });
+    $(".sel-position-taking").each(function () {
+        var pos = $(this).data("pos");
+        var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
+        var pt = selectedConfig.ConfigDetail.Settings[position].DefaultValueSuper;
+        $(this).val(parseFloat(pt)).change();
+        $(this).select2({ width: "100%" });
+    });
+
     $(".input-com-super").each(function () {
         var pos = $(this).data("pos");
         var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
@@ -521,6 +583,7 @@ function RenderSelectView() {
         $(this).val(parseFloat(comm)).change();
         $(this).select2({ width: "100%", disabled: true });
     });
+
     $(".input-com-master").each(function () {
         var pos = $(this).data("pos");
         var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
@@ -542,52 +605,10 @@ function RenderSelectView() {
         $(this).val(parseFloat(comm)).change();
         $(this).select2({ width: "100%", disabled: true });
     });
+
 }
 
 function RenderEventEdit() {
-    $(".max-winloss").each(function () {
-        var pos = $(this).data("pos");
-        var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
-        if (!isNaN(selectedConfig.ConfigDetail.Settings[position].DefaultValueSuper)) {
-            $(this).val(parseInt(selectedConfig.ConfigDetail.Settings[position].DefaultValueSuper).toString());
-        }
-
-        $(this).change(function () {
-            selectedConfig.ConfigDetail.Settings[position].DefaultValueSuper = $(this).val();
-        });
-    });
-
-    $(".sel-sport-copy").each(function () {
-        var pos = $(this).data("pos");
-        var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
-        var settingtype = $(this).data("target-settingtype");
-        var targetBettype = $(this).data("target-bettype");
-        var editsetting = selectedConfig && selectedConfig.SportBettypeBySettings.find(element => element.SettingName.replace(/ /g, '').toLowerCase() === settingtype);
-        $(this).change(function () {
-            selectedConfig.ConfigDetail.Settings[position].CopyFromSportType = $(this).val();
-            var bettypeSel = $("#" + targetBettype);
-            bettypeSel.empty();
-            var selectSportId = $(this).val();
-            var editSport = editsetting && editsetting.Sports.find(element => element.SportId.toString() === selectSportId.toString());
-            if (editSport) {
-                editSport.Bettypes.forEach(function (bt) {
-                    bettypeSel.append(new Option(bt.BettypeName, bt.BettypeId));
-                });
-                selectedConfig.ConfigDetail.Settings[position].CopyFromBetType = editSport.Bettypes[0].BettypeId;
-            }
-            $(bettypeSel).select2({ width: "100%"});
-        });
-        $(this).select2({ width: "100%", disabled: !selectedConfig.ConfigDetail.Settings[position].IsCopy });
-    });
-
-    $(".sel-bettype-copy").each(function () {
-        var pos = $(this).data("pos");
-        var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
-        $(this).select2({ width: "100%", disabled: !selectedConfig.ConfigDetail.Settings[position].IsCopy });
-        $(this).change(function () {
-            selectedConfig.ConfigDetail.Settings[position].CopyFromBetType = $(this).val();
-        });
-    });
 
     SetupCalendar("EditStartTime");
     $("#EditStartTime").val(selectedConfig.ConfigDetail.Config.StartTime).trigger("change");
@@ -656,77 +677,6 @@ function RenderEventEdit() {
             $("#ckbAutoReset" + pos).prop("checked", selectedConfig.ConfigDetail.Settings[position].SpecialRequirement === "1");
         });
     }); 
-    $(".input-headline").each(function () {
-        $(this).off("change").on("change", function () {
-            var usernames = $(this);
-            var usernamesValue = $.trim(usernames.val());
-            if (usernamesValue.length > 0) {
-                if (usernamesValue.indexOf("\n") >= 0) {
-                    usernamesValue = usernamesValue.replace(/\n/g, " ");
-                }
-
-                if (usernamesValue.indexOf("\r") >= 0) {
-                    usernamesValue = usernamesValue.replace(/\r/g, " ");
-                }
-
-                if (usernamesValue.indexOf("\t") >= 0) {
-                    usernamesValue = usernamesValue.replace(/\t/g, " ");
-                }
-
-                usernamesValue = usernamesValue.replace(/\s/g, ",");
-                var usernamesArray = usernamesValue.split(",").filter(item => item.length > 0);
-                usernames.val(usernamesArray.join(","));
-            }
-
-            var el = this;
-            setTimeout(function () {
-                el.style.cssText = 'height:auto; padding:0';
-                el.style.cssText = 'height:' + el.scrollHeight + 'px';
-            }, 0);
-
-            var pos = $(this).data("pos");
-            var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
-            selectedConfig.ConfigDetail.Settings[position].SpecialRequirement = $(this).val().encodeHtml();
-        });
-    });
-    $(".input-com-member").each(function () {
-        var pos = $(this).data("pos");
-        var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
-        $(this).change(function () {
-            selectedConfig.ConfigDetail.Settings[position].DefaultValueMember = $(this).val();
-        });
-    });
-
-    $(".input-com-agent").each(function () {
-        var pos = $(this).data("pos");
-        var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
-        $(this).change(function () {
-            selectedConfig.ConfigDetail.Settings[position].DefaultValueAgent = $(this).val();
-            RenderCommMember(pos, position);
-        });
-    });
-
-    $(".input-com-master").each(function () {
-        var pos = $(this).data("pos");
-        var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
-        $(this).change(function () {
-            selectedConfig.ConfigDetail.Settings[position].DefaultValueMaster = $(this).val();
-            RenderCommAgent(pos, position);
-        });
-    });
-
-    $(".input-com-super").each(function () {
-        var pos = $(this).data("pos");
-        var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
-        var comm = selectedConfig.ConfigDetail.Settings[position].DefaultValueSuper;
-        $(this).select2({ width: "100%", disabled: !selectedConfig.ConfigDetail.Settings[position].IsDefault });
-        $(this).val(parseFloat(comm)).change();
-        $(this).change(function () {
-            selectedConfig.ConfigDetail.Settings[position].DefaultValueSuper = $(this).val();
-            RenderCommMaster(pos, position);
-        });
-        RenderCommMaster(pos, position);
-    });
 
     $(".input-status-super").each(function () {
         $(this).on('click', ChangeSuperStatus);
@@ -745,64 +695,76 @@ function RenderEventEdit() {
         var pos = $(this).data("pos");
         var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
         $(this).select2({ width: "100%", disabled: !selectedConfig.ConfigDetail.Settings[position].IsDefault });
+        $(this).val(parseFloat(selectedConfig.ConfigDetail.Settings[position].DefaultValueSuper)).trigger("change");
         $(this).change(function () {
-            selectedConfig.ConfigDetail.Settings[position].PositionTaking = $(this).val();
+            selectedConfig.ConfigDetail.Settings[position].DefaultValueSuper = $(this).val();
         });
     });
-}
 
-function RenderCommMaster(pos, position) {
-    var selDiv = $("#input-com-master-" + pos);
-    var options = selectedConfig.ConfigDetail.Settings[position].CommissionOptions;
-    selDiv.empty();
-    if (options) {
-        var currentValue = parseFloat(selectedConfig.ConfigDetail.Settings[position].DefaultValueMaster);
-        var maxValue = parseFloat(selectedConfig.ConfigDetail.Settings[position].DefaultValueSuper);
-        if (currentValue > maxValue) selectedConfig.ConfigDetail.Settings[position].DefaultValueMaster = selectedConfig.ConfigDetail.Settings[position].DefaultValueSuper;
-        options.forEach(function (opt) {
-            if (parseFloat(opt.Value) <= maxValue) {
-                selDiv.append(new Option(opt.Text, opt.Value));
+    $(".input-file-bet-setting").each(function () {
+        var settingType = $(this).data("setting-type");
+        var errBetSettingDiv = 'err-bet-setting-' + settingType;
+        $(this).prop("disabled", true);
+        $(".group-bet-setting-" + settingType).each(function () {
+            if ($(this).is(":checked")) {
+                $("#uploadFile-" + settingType).prop("disabled", false);
             }
         });
-    }
-    selDiv.select2({ width: "100%", disabled: !selectedConfig.ConfigDetail.Settings[position].IsDefault });
-    selDiv.val(parseFloat(selectedConfig.ConfigDetail.Settings[position].DefaultValueMaster)).change();
-}
 
-function RenderCommAgent(pos, position) {
-    var selDiv = $("#input-com-agent-" + pos);
-    var options = selectedConfig.ConfigDetail.Settings[position].CommissionOptions;
-    selDiv.empty();
-    if (options) {
-        var currentValue = parseFloat(selectedConfig.ConfigDetail.Settings[position].DefaultValueAgent);
-        var maxValue = parseFloat(selectedConfig.ConfigDetail.Settings[position].DefaultValueMaster);
-        if (currentValue > maxValue) selectedConfig.ConfigDetail.Settings[position].DefaultValueAgent = selectedConfig.ConfigDetail.Settings[position].DefaultValueMaster;
-        options.forEach(function (opt) {
-            if (parseFloat(opt.Value) <= maxValue) {
-                selDiv.append(new Option(opt.Text, opt.Value));
+        $(this).change(function () {
+            hideAlertMessage(errBetSettingDiv);
+            var fileData = $("#uploadFile-" + settingType)[0].files[0];
+            var data = new FormData();
+            data.append("uploadFile", fileData);
+            if (!ValidateUploadFile("#uploadFile-" + settingType, errBetSettingDiv)) {
+                return;
             }
+            var filePath = $("#uploadFile-" + settingType).val();
+            var fileName = filePath.substring(filePath.lastIndexOf('\\') + 1, filePath.length);
+            $("#uploadFile-" + settingType).val("");
+            $.ajax({
+                type: "POST",
+                url: "ParseBetSetting?settingType=" + settingType,
+                data: data,
+                processData: false,
+                enctype: "multipart/form-data",
+                contentType: false,
+                success: function (result) {
+                    if (result.ErrorMessage !== "") {
+                        showAlertMessage(errBetSettingDiv, result.ErrorMessage, 1);
+                    } else {
+                        showAlertMessage(errBetSettingDiv, fileName + " is selected.", 0);
+                        betSettingBySettingType[settingType] = result.BetSettings;
+                    }
+                }
+            });
         });
-    }
-    selDiv.select2({ width: "100%", disabled: !selectedConfig.ConfigDetail.Settings[position].IsDefault });
-    selDiv.val(parseFloat(selectedConfig.ConfigDetail.Settings[position].DefaultValueAgent)).change();
-}
+    });
+    $(".ckb-default-bet-setting").each(function () {
+        console.log(this);
+        $(this).change(function () {
+            var pos = $(this).data("pos");
+            var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
+            var isDefault = $(this).prop('checked');
+            selectedConfig.ConfigDetail.Settings[position].IsDefault = isDefault;
+            console.log(selectedConfig.ConfigDetail.Settings[position].IsDefault);
+            var settingType = selectedConfig.ConfigDetail.Settings[position].SettingType;
+            var errBetSettingDiv = 'err-bet-setting-' + settingType;
+            betSettingBySettingType[settingType] = [];
+            hideAlertMessage(errBetSettingDiv);
+            if (isDefault) {
+                $("#uploadFile-" + settingType).prop("disabled", false);
+            } else {
+                $("#uploadFile-" + settingType).prop("disabled", true);
+                $(".group-bet-setting-" + settingType).each(function () {
+                    if ($(this).is(":checked")) {
+                        $("#uploadFile-" + settingType).prop("disabled", false);
+                    }
+                });
+            }
 
-function RenderCommMember(pos, position) {
-    var selDiv = $("#input-com-member-" + pos);
-    var options = selectedConfig.ConfigDetail.Settings[position].CommissionOptions;
-    selDiv.empty();
-    if (options) {
-        var currentValue = parseFloat(selectedConfig.ConfigDetail.Settings[position].DefaultValueMember);
-        var maxValue = parseFloat(selectedConfig.ConfigDetail.Settings[position].DefaultValueAgent);
-        if (currentValue > maxValue) selectedConfig.ConfigDetail.Settings[position].DefaultValueMember = selectedConfig.ConfigDetail.Settings[position].DefaultValueAgent;
-        options.forEach(function (opt) {
-            if (parseFloat(opt.Value) <= maxValue) {
-                selDiv.append(new Option(opt.Text, opt.Value));
-            }
         });
-    }
-    selDiv.select2({ width: "100%", disabled: !selectedConfig.ConfigDetail.Settings[position].IsDefault });
-    selDiv.val(parseFloat(selectedConfig.ConfigDetail.Settings[position].DefaultValueMember)).change();
+    });
 }
 
 function ChangeSuperStatus() {
@@ -1075,6 +1037,12 @@ function RenderNewConfig() {
 }
 
 function ValidateBeforeAddUpdate() {
+    var settingTypesKeys = Object.getOwnPropertyNames(betSettingBySettingType);
+    selectedConfig.ConfigDetail.BetSettings = [];
+    settingTypesKeys.forEach(function (key) {
+        selectedConfig.ConfigDetail.BetSettings.push(...betSettingBySettingType[key]);
+    });
+    
     selectedConfig.ConfigDetail.Config.Remark = $("#EditRemark").val().encodeHtml();
     if (selectedConfig.ConfigDetail.Config.Remark && selectedConfig.ConfigDetail.Config.Remark !== "" && !headlineRegex.test(selectedConfig.ConfigDetail.Config.Remark)) {
         showAlertMessage('editErrMsg', "Invalid Remark.", 1);
@@ -1195,9 +1163,11 @@ function ValidateNewConfigModel() {
                     AddConfigModel();
                 }
             } else {
-                if (rs && rs.Errors.length > 0) {
+                if (rs.Errors && rs.Errors.length > 0) {
                     ShowAddEditError(rs.Errors);
                     $("#popupContainer").scrollTop(0);
+                } else if (rs.BetSettingErrorMessage !== null && rs.BetSettingErrorMessage !== "") {
+                    showAlertMessage('err-bet-setting-' + rs.SettingType, rs.BetSettingErrorMessage, 1);
                 } else {
                     $('#popupContainer').html("");
                     $('#popupContainer').dialog('close');
@@ -1245,6 +1215,24 @@ function AddConfigModel() {
 }
 
 function ShowAddEditError(result) {
+    if (result[0].SettingType > 0) {
+        var betSettingGroup = {};
+        result.forEach(function (err) {
+            if (betSettingGroup[err.SettingType] == null || betSettingGroup[err.SettingType] == undefined) {
+                betSettingGroup[err.SettingType] = "";
+            }
+
+            betSettingGroup[err.SettingType] = betSettingGroup[err.SettingType] + err.ErrorMsg + "</br>";
+        });
+
+        var settingTypesKeys = Object.getOwnPropertyNames(betSettingGroup);
+        settingTypesKeys.forEach(function (key) {
+            showAlertMessage('err-bet-setting-' + key, betSettingGroup[key], 1);
+        });
+
+        return;
+    }
+
     var message = "";
     result.forEach(function (err) {
         message = message + err.ErrorMsg + "</br>";
@@ -1304,6 +1292,36 @@ function DeleteConfig(configId) {
                 try { parent.jQuery.unblockUI(); } catch (e) { }
             }
         });
+    }
+}
+
+function ValidateUploadFile(fileId, errDiv) {
+    var filename = $(fileId).val();
+    if (filename === '' || filename == undefined) {
+        showAlertMessage(errDiv, 'Please select file to upload.', 1);
+        return false;
+    }
+
+    var extfilename = filename.substring(filename.lastIndexOf('.') + 1, filename.length).toLowerCase();
+    if (extfilename !== 'xls' && extfilename !== 'xlsx') {
+        showAlertMessage(errDiv, 'Sorry, You choose invalid file extension. Please choose an Excel file (.xls or .xlsx)', 1);
+        return false;
+    }
+
+    if (GetFileSize(fileId) > 1024000) {
+        showAlertMessage(errDiv, "Your uploaded file's size can't be larger than 1 MB", 1);
+        return false;
+    }
+    
+    return true;
+}
+
+function GetFileSize(eName) {
+    if ($.browser.msie) {
+        return 1;//IE is not support File API, so no way for get file size.
+    }
+    else {
+        return parseFloat($(eName).get(0).files[0].size);
     }
 }
 
