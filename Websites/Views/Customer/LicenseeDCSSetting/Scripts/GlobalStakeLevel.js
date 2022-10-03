@@ -1,7 +1,8 @@
 ﻿var globalStakeLevelHandler = (function ($, common, rootUrl) {
     "use strict";
     var globalValid,
-        globalStakeLevelTable;
+        globalStakeLevelTable,
+        updateButton;
 
     function validateGlobalStakeLevel(tableRow) {
         var isValid = true,
@@ -113,12 +114,13 @@
     function updateButton_click(defaultParam, reloadFunction) {
         common.blockUI();
         common.hideMessage();
-
+        common.disableElement(updateButton);
         globalValid = true;
         var globalStakeLevels = getGlobalStakeLevels();
 
         if (!globalValid) {
             common.unblockUI();
+            common.enableElement(updateButton);
         } 
         else {
             $.ajax({
@@ -131,6 +133,8 @@
                     common.showMessage(data.ErrorCode, data.ErrorMessage);
                     if (data.ErrorCode === 0) {
                         setTimeout(reloadFunction, 3000);
+                    } else {
+                        common.enableElement(updateButton);
                     }
                 },
                 error: common.showInternalServerError,
@@ -148,7 +152,7 @@
                 .on("click", addButton_click);
         });
 
-        $("#btnUpdateGlobalStakeLevel")
+        updateButton = $("#btnUpdateGlobalStakeLevel")
             .off("click")
             .on("click", function () { updateButton_click(defaultParam, reloadFunction); });
 
