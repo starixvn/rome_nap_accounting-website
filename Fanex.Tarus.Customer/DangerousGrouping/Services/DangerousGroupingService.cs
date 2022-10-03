@@ -61,9 +61,9 @@ namespace Fanex.Tarus.Customer.DangerousGrouping.Services
         public Result ValdiateUsernames(ValidateUsernamesRequest request, int userId, string userHostAddress)
         {
             var usernamesCount = request.Usernames.Split(',').Length;
-            if (usernamesCount > 100)
+            if (usernamesCount > 1000)
             {
-                return new Result(-1, "Maximum number of accounts is 100.");
+                return new Result(-1, "Maximum number of accounts is 1000.");
             }
             var criteria = new ValidateCustomerNamesCriteria
             {

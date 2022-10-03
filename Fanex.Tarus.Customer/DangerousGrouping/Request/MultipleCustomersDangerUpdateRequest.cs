@@ -11,7 +11,5 @@ namespace Fanex.Tarus.Customer.DangerousGrouping.Request
         public DangerType DangerType { get; set; }
 
         public int DangerLevel { get; set; }
-
-        public bool IsBA { get; set; }
     }
 }

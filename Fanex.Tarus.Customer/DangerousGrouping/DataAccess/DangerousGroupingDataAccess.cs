@@ -12,7 +12,6 @@ namespace Fanex.Tarus.Customer.DangerousGrouping.DataAccess
 {
     public class DangerousGroupingDataAccess
     {
-        private readonly DangerDetail BADanger = new DangerDetail(0, "BA", "#000000");
         private readonly IDangerousGroupingHelper helper;
 
         public DangerousGroupingDataAccess()
@@ -41,18 +40,17 @@ namespace Fanex.Tarus.Customer.DangerousGrouping.DataAccess
                     };
                     if(reader.Read())
                     {
-                        var isBA = bool.Parse(reader["IsBA"].ToString());
+                        
                         var originDangerLevel = int.Parse(reader["danger"].ToString());
                         customerDangerResult.CustomerDanger = new CustomerDanger
                         {
                             Username = criteria.Username,
-                            OriginDanger = (originDangerLevel == 0 && isBA || originDangerLevel == 100) ? BADanger : helper.GetDangerDetailFromValue(originDangerLevel),
+                            OriginDanger = helper.GetDangerDetailFromValue(originDangerLevel),
                             ABIDanger = helper.GetDangerDetailFromValue(int.Parse(reader["danger2"].ToString())),
                             OtherSportDanger = helper.GetDangerDetailFromValue(int.Parse(reader["danger3"].ToString())),
                             BasketballDanger = helper.GetDangerDetailFromValue(int.Parse(reader["danger4"].ToString())),
                             ESportsDanger = helper.GetDangerDetailFromValue(int.Parse(reader["danger5"].ToString())),
-                            IsMember = int.Parse(reader["roleid"].ToString()) == (int)Role.Member,
-                            IsBA = isBA
+                            IsMember = int.Parse(reader["roleid"].ToString()) == (int)Role.Member
                         };
                     }
 
