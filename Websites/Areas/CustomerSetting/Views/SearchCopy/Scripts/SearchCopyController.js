@@ -264,7 +264,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                 $scope.loadData("#frmLiveCasino", url);
                 $scope.resize("#frmLiveCasino");
                 break;
-            case 'tabVoidbridge': url += "DCS/ViewCustomerSetting?productId=22&customerLevel=4&IsReadOnly=true&customerId=" + $scope.existedUser.userid;
+            case 'tabVoidbridge': url += "DCS/ViewCustomerSetting?productId=53&customerLevel=4&IsReadOnly=true&customerId=" + $scope.existedUser.userid;
                 $scope.loadData("#frmVoidbridge", url);
                 $scope.resize("#frmVoidbridge");
                 break;

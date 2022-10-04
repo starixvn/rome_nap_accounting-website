@@ -329,7 +329,7 @@
                     customerInfoViewModel.CustId,
                     customerInfoViewModel.UserName,
                     customerInfoViewModel.SearchAccountRoleId,
-                    22,
+                    53,
                     "Update RNG Slot Status"));
             }
 

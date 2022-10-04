@@ -23,7 +23,7 @@ public partial class Others_Menu : System.Web.UI.Page
         virtualsport = 5,
         sportsbook2 = 16,
         livecasino = 41,
-        voidbridge = 22,
+        voidbridge = 53,
         ng2 = 23,
         fishingworld = 24,
         lottery = 28,
