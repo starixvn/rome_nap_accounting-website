@@ -7,7 +7,7 @@
 .tblcollapse .title_1 th,
 .tblcollapse .title_1 td { background-color: #cadceb; font-weight: bold; }
 .tblcollapse th, .tblcollapse td { padding: 5px 2px; }
-.betsetting_table .numeric,
+.betsetting_table .numeric { height: 18px; line-height: 18px; text-align: right; width: 50%; }
 .globalStakeLevel_table .numeric { height: 18px; line-height: 18px; text-align: right; width: 70%; }
 .betsetting_table .invalid-value,
 .globalStakeLevel_table .invalid-value { background-color: #ff7700; color: #fff; }
