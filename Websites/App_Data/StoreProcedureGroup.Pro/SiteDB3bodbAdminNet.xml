@@ -22,4 +22,9 @@
     <Setting Key="SiteDB3_Acc_DailyTxn_UpdChecker" SpName="Acc_DailyTxn_UpdChecker" DbName="DBTXN.bodb02.bodbAdminNet" />
     <Setting Key="SiteDB3_SiteDB_Acc_ReverseTransfer_Rollback" SpName="SiteDB_Acc_ReverseTransfer_Rollback" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
+  <Function Name="Left Panel - BalanceInfo">
+    <Setting Key="SiteDB3_Acc_CustomerSelBalanceCashInfo" SpName="Acc_CustomerSelBalanceCashInfo" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
+    <Setting Key="SiteDB3_Acc_OutstandingMemberSel" SpName="Acc_OutstandingMemberSel" DbName="DBBOF.bodb02.bodbAdminNet" Plain="0" />
+    <Setting Key="SiteDB3_Acc_BalanceMemberSel" SpName="Acc_BalanceMemberSel" DbName="DBTXN.BODB02.bodbAdminNet" Plain="0" />
+  </Function>
 </Functions>
