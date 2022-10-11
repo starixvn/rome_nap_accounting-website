@@ -78,8 +78,10 @@ namespace Fanex.Tarus.Customer.Controller.InitializingCustomerSetting
         [HttpGet, AuthenticateHost]
         public ActionResult GetProductSportBettype(string type)
         {
+            var productMatrix = IsCredit(type) ? creditService.GetProductSportBettype() : depositService.GetProductSportBettype();
             var path = IsCredit(type) ? _addEditCreditPath : _addEditDepositPath;
-            return PartialView(path, creditService.GetProductSportBettype());
+
+            return PartialView(path, productMatrix);
         }
 
         [HttpGet, AuthenticateHost]
