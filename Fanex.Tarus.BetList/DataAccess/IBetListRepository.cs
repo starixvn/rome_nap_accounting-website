@@ -42,6 +42,6 @@
 
         int MapPlayerIdToCustId(MapPlayerId3rdToCustIdCriteria criteria);
 
-        IEnumerable<SiteModel> GetAllSites();
+        int GetSiteGroupIdByRefNo(GetSiteGroupIdByRefNoCriteria criteria);
     }
 }

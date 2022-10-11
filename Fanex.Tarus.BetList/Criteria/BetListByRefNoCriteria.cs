@@ -8,7 +8,7 @@
     {
         public int UserId { get; set; }
 
-        public long RefNo { get; set; }
+        public string RefNo { get; set; }
 
         public DateTime MoveBetsDay { get; set; }
 
@@ -16,14 +16,12 @@
 
         public string Permission { get; set; }
 
-        public string Site { get; set; }
-
         public bool ExcludeBettrans { get; set; }
 
         public override string GetSettingKey()
             => "BetList_SelByRefNo";
 
         public override bool IsValid()
-            => RefNo > 0 && UserId > 0;
+            => !string.IsNullOrEmpty(RefNo) && UserId > 0;
     }
 }

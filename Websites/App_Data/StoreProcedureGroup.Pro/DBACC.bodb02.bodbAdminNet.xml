@@ -15,6 +15,7 @@
     <Setting Key="SelDailyAllTxn" SpName="Acc_RptStatementDaily" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Betlist">
+    <Setting Key="Acc_BetList_SelSiteDBByRefNo" SpName="Acc_BetList_SelSiteDBByRefNo" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="Acc_BetList_SelBettype" SpName="Acc_BetList_SelBettype" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="SiteDB_Acc_BetList_SelBettype" SpName="SiteDB_Acc_BetList_SelBettype" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="Acc_BetlistCombinationParlay_Details" SpName="Acc_BetlistCombinationParlay_Details" DbName="DBACC.bodb02.bodbAdminNet" />

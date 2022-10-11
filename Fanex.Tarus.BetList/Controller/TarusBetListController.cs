@@ -46,8 +46,7 @@ namespace Fanex.Tarus.BetList.Controller
         [SmartPunterFilter(SmartPunterFilter.AuthenticationType.Read)]
         public ActionResult BetListByRefNo_Main()
         {
-            var sites = _betListService.GetAllSites();
-            var viewModel = new BetListByRefNoViewModel(sites);
+            var viewModel = new BetListByRefNoViewModel();
 
             return View("~/Views/BetList/BetListByRefNo/Index.cshtml", viewModel);
         }
