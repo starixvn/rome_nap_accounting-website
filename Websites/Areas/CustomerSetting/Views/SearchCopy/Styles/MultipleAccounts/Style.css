@@ -47,3 +47,7 @@
     overflow: auto;
     color: #ff5411;
 }
+.sourceUserName {
+    font-size: 18px;
+    font-weight: bold;
+}

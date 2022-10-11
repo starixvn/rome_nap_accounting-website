@@ -304,7 +304,7 @@ $.fn.forceNumber = function () {
             var usernames = validateUsernames();
             if (usernames) {
                 var formData = validateOthers(usernames.length);
-                if (formData) {
+                if (formData && confirm("Please REVIEW the Source " + (vm.isSuper? "Super ": "Member ") + vm.userName + "(" + vm.existingCustId +") once again.")) {
                     hideMessage();
                     disableFormData(true);
                     showDataOnProgressTable(usernames);
