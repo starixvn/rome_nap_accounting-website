@@ -188,7 +188,7 @@
       <HintPath>..\packages\Fanex.BetList.MetricGaming.1.1.0\lib\net40\Fanex.BetList.MetricGaming.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.MGRNGCasino, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.MGRNGCasino.1.0.0-Microgaming-02\lib\net40\Fanex.BetList.MGRNGCasino.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.MGRNGCasino.1.0.0\lib\net40\Fanex.BetList.MGRNGCasino.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.NG2, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.NG2.1.0.4\lib\net40\Fanex.BetList.NG2.dll</HintPath>
@@ -437,7 +437,7 @@
       <HintPath>..\packages\Fanex.Result.Core-Sportsbook.1.2.8.7\lib\net40\Fanex.Result.Core.Sportsbook.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Result.Core.ThirdParty, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core.ThirdPartyResult.1.0.0.3-beta-03\lib\net461\Fanex.Result.Core.ThirdParty.dll</HintPath>
+      <HintPath>..\packages\Fanex.Result.Core.ThirdPartyResult.1.0.0.3\lib\net461\Fanex.Result.Core.ThirdParty.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Result.Core.VGaming, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.VGaming.1.0.0\lib\net40\Fanex.Result.Core.VGaming.dll</HintPath>
