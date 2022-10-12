@@ -232,16 +232,11 @@ function RenderDcsMatrix() {
         type: "GET",
         url: "GetProductSportBettype?type=deposit",
         success: function (rs) {
+            console.log("render");
             if (rs && rs.ErrorCode !== undefined && rs.ErrorCode !== 0) {
                 showAlertMessage('errMsg', rs.ErrorMessage, 1);
             } else {
                 $("#popupContainer").html(rs);
-                $('#popupContainer').dialog({
-                    title: 'Add Config',
-                    modal: true,
-                    width: '1100',
-                    height: '600'
-                });
             }
         },
         error: function (event, jqXHR, ajaxSettings) {
@@ -250,6 +245,12 @@ function RenderDcsMatrix() {
         complete: function () {
             try { parent.jQuery.unblockUI(); } catch (e) { }
 
+            $('#popupContainer').dialog({
+                title: 'Add Config',
+                modal: true,
+                width: '1100',
+                height: '600'
+            });
             $("#editErrMsg").html("");
             $("#btn-add").addClass("hidden");
             $("#btn-edit").addClass("hidden");
@@ -440,9 +441,9 @@ function BuildBetSettingGrid(betSettings){
             $('<td>').text(setting.CurrencyName),
             $('<td>').text(setting.MinBet),
             $('<td>').text(setting.MaxBet),
-            $('<td>').text(setting.MaxPerMatch),
-            $('<td>').text(setting.MaxPerNumber),
-            $('<td>').text(setting.MaxPayoutPerMatch)
+            $('<td>').text(setting.MaxPerMatch == null ? "" : setting.MaxPerMatch),
+            $('<td>').text(setting.MaxPerNumber == null ? "" : setting.MaxPerNumber),
+            $('<td>').text(setting.MaxPayoutPerMatch == null ? "" : setting.MaxPayoutPerMatch)
         );
 
         $table.append($tr);
@@ -741,26 +742,28 @@ function RenderEventEdit() {
         });
     });
     $(".ckb-default-bet-setting").each(function () {
-        console.log(this);
         $(this).change(function () {
             var pos = $(this).data("pos");
             var position = selectedConfig.ConfigDetail.Settings.findIndex(x => x.SettingId === pos);
             var isDefault = $(this).prop('checked');
             selectedConfig.ConfigDetail.Settings[position].IsDefault = isDefault;
-            console.log(selectedConfig.ConfigDetail.Settings[position].IsDefault);
             var settingType = selectedConfig.ConfigDetail.Settings[position].SettingType;
             var errBetSettingDiv = 'err-bet-setting-' + settingType;
-            betSettingBySettingType[settingType] = [];
-            hideAlertMessage(errBetSettingDiv);
             if (isDefault) {
                 $("#uploadFile-" + settingType).prop("disabled", false);
             } else {
-                $("#uploadFile-" + settingType).prop("disabled", true);
+                var isDisabled = true;
                 $(".group-bet-setting-" + settingType).each(function () {
                     if ($(this).is(":checked")) {
-                        $("#uploadFile-" + settingType).prop("disabled", false);
+                        isDisabled = false;
                     }
                 });
+                $("#uploadFile-" + settingType).prop("disabled", isDisabled);
+                if (isDisabled) {
+                    betSettingBySettingType[settingType] = [];
+                    hideAlertMessage(errBetSettingDiv);
+                }
+                
             }
 
         });
@@ -1332,4 +1335,5 @@ String.prototype.encodeHtml = function () {
 
 $(document).ready(function () {
     GetSetting();
+    console.log("get setting");
 });

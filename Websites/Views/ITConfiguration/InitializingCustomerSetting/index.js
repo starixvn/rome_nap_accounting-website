@@ -2,6 +2,7 @@
     $('#tabs').find('li').removeClass('current');
     $('#tab_' + type).addClass('current');
     GetPartialView(type);
+    $('#popupContainer').dialog('destroy').remove();
 }
 
 function GetPartialView(requestUrl) {

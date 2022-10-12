@@ -86,6 +86,7 @@ namespace Fanex.Tarus.Customer.Business.InitializingCustomerSetting
 
         public override IEnumerable<InsertErrorModel> UpdateConfigSetting(ConfigModel request, string ip)
         {
+            request.BetSettings = CombineInputAndCurrentBetSetting(request).ToList();
             var criteria = new EditDepositSettingConfigCriteria(request, ip)
             {
                 IsConfirmed = true
@@ -104,6 +105,7 @@ namespace Fanex.Tarus.Customer.Business.InitializingCustomerSetting
 
         public override ValidateResultModel ValidateUpdateConfigSetting(ConfigModel request, string ip)
         {
+            request.BetSettings = CombineInputAndCurrentBetSetting(request).ToList();
             var criteria = new EditDepositSettingConfigCriteria(request, ip);
 
             return ProcessValidateSetting(criteria, request);
@@ -196,7 +198,8 @@ namespace Fanex.Tarus.Customer.Business.InitializingCustomerSetting
                 .Where(cur => request.Config.CurrencyIdList.Contains(cur.Id))
                 .Select(cur => cur.Name).ToList();
 
-            var groupSettingBySettingType = request.Settings.Where(setting => setting.SettingName == SettingInforModel.BetSetting).GroupBy(setting => setting.SettingType).ToDictionary(group => group.Key, group => group.ToList());
+            var groupSettingBySettingType = request.Settings.Where(setting => setting.SettingName == SettingInforModel.BetSetting && setting.IsDefault)
+                                                            .GroupBy(setting => setting.SettingType).ToDictionary(group => group.Key, group => group.ToList());
 
             foreach (var betSetting in request.BetSettings)
             {
@@ -440,6 +443,34 @@ namespace Fanex.Tarus.Customer.Business.InitializingCustomerSetting
             }
 
             return string.Empty;
+        }
+
+        private IEnumerable<BetSettingModel> CombineInputAndCurrentBetSetting(ConfigModel request)
+        {
+            var curBetSetting = GetBetSettings(request.Config.ConfigId);
+            var betSettings = request.Settings.Where(st => st.SettingName == SettingInforModel.BetSetting);
+            var isDefaultBetSetting = betSettings.Where(st => st.IsDefault).ToList();
+            curBetSetting = curBetSetting.Where(st => isDefaultBetSetting.Exists(betSetting => betSetting.SettingType == st.SettingType && betSetting.SportType == st.SportTypeId && betSetting.BetType == st.BetTypeId));
+            if (request.BetSettings != null && request.BetSettings.Count > 0)
+            {
+                var groupCurBetSetting = curBetSetting.GroupBy(setting => setting.SettingType).ToDictionary(gr => gr.Key, gr => gr.ToList());
+                var inputBetSetting = request.BetSettings.GroupBy(setting => setting.SettingType);
+
+                foreach (var group in inputBetSetting)
+                {
+                    if (groupCurBetSetting.ContainsKey(group.Key))
+                    {
+                        groupCurBetSetting[group.Key] = group.ToList();
+                    } else
+                    {
+                        groupCurBetSetting.Add(group.Key, group.ToList());
+                    }
+                }
+
+                return groupCurBetSetting.SelectMany(st => st.Value);
+            }
+
+            return curBetSetting;
         }
     }
 }

@@ -55,7 +55,8 @@
             for (int i = 0; i < settings.Count; i++)
             {
                 var setting = settings[i];
-                if (!setting.IsCopy && !setting.IsDefault && setting.SettingName != SettingInforModel.BetSetting)
+                if (!setting.IsCopy && !setting.IsDefault && setting.SettingName != SettingInforModel.BetSetting
+                    || setting.SettingName == SettingInforModel.BetSetting && !setting.IsDefault)
                 {
                     continue;
                 }
