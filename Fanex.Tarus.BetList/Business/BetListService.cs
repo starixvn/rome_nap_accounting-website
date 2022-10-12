@@ -221,17 +221,20 @@
             IList<TicketDetail> tickets = new List<TicketDetail>();
             List<ITicketData> outputLiveCasino = new List<ITicketData>();
             var betListHelper = new BetListHelper();
-            var siteDB = GetSiteGroupByRefno(param.RefNo);
-            if (siteDB.IsSiteDB)
+            var allSite = ObjectDbExtensions.GetAllSiteDBConfig();
+            foreach (var siteDB in allSite.Where(i => i.IsSiteDB))
             {
-                var siteDBCriteria = new SiteDBBetListByRefNoCriteria
+                if (!tickets.Any())
                 {
-                    UserId = param.UserId,
-                    RefNo = param.RefNo,
-                    MoveBetsDay = ReportService.BalanceUp.MoveBetsDay,
-                    Permission = param.Permission
-                };
-                tickets = _betListRepository.Fetch<TicketDetail>(siteDBCriteria, siteDB.AGIP, mapTicketObjectFunction, ref outputLiveCasino).ToList();
+                    var siteDBCriteria = new SiteDBBetListByRefNoCriteria
+                    {
+                        UserId = param.UserId,
+                        RefNo = param.RefNo,
+                        MoveBetsDay = ReportService.BalanceUp.MoveBetsDay,
+                        Permission = param.Permission
+                    };
+                    tickets = _betListRepository.Fetch<TicketDetail>(siteDBCriteria, siteDB.AGIP, mapTicketObjectFunction, ref outputLiveCasino).ToList();
+                }
             }
 
             if (!tickets.Any())
@@ -243,11 +246,10 @@
                     MoveBetsDay = ReportService.BalanceUp.MoveBetsDay,
                     BalanceUpDay = ReportService.BalanceUp.BalanceUpDay,
                     Permission = param.Permission,
-                    ExcludeBettrans = siteDB.IsSiteDB
+                    ExcludeBettrans = false
                 };
                 tickets = _betListRepository.Fetch<TicketDetail>(mainCriteria, mapTicketObjectFunction, ref outputLiveCasino);
             }
-
 
             var factory = new BetListHTMLFactory();
             var builder = factory.CreateBuilder();
@@ -1335,25 +1337,6 @@
         private string GetProductName(int productId)
         {
             return ticketHelper.GetResourceData("Product", productId.ToString());
-        }
-
-        private SiteDB GetSiteGroupByRefno(string refno)
-        {
-            var allSite = ObjectDbExtensions.GetAllSiteDBConfig();
-            var siteGroupId = 0;
-            var refNoOrTransId = new List<bool> { false, true };
-            foreach (var value in refNoOrTransId)
-            {
-                var criteria = new GetSiteGroupIdByRefNoCriteria(refno, value);
-                siteGroupId = _betListRepository.GetSiteGroupIdByRefNo(criteria);
-                var isExistedSiteGroupId = allSite.Any(i => i.SiteDBGroupID == siteGroupId);
-                if (isExistedSiteGroupId)
-                {
-                    return allSite.FirstOrDefault(i => i.SiteDBGroupID == siteGroupId);
-                }
-            }
-
-            return new SiteDB { SiteDBGroupID = siteGroupId };
         }
     }
 }

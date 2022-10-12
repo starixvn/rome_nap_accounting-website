@@ -19,16 +19,6 @@
 
     public class BetListRepository : IBetListRepository
     {
-        public int GetSiteGroupIdByRefNo(GetSiteGroupIdByRefNoCriteria criteria)
-        {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
-            {
-                db.ExecuteDataSet(criteria.GetSpParams());
-
-                return (int)db.GetOuputParams()["sitedbgroupid"];
-            }
-        }
-
         public IList<BetType> GetBetTypeByDate(BetTypeByDateCriteria criteria)
         {
             var betTypeList = new List<BetType>();
