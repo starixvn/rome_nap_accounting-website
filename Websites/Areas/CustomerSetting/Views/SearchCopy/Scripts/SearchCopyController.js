@@ -149,7 +149,6 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                 message.hideAlertMessage("errorMsg");
                 var multipleUrl = toUrl("super/multipleaccounts")
                     + "?custId=" + $scope.existedUser.userid
-                    + "&custName=" + $scope.existedUser.username
                     + "&parentId=" + $scope.parentId;
                 var currentLocation = window.location;
                 window.open(currentLocation.protocol + "//" + currentLocation.host + multipleUrl, "_blank");
@@ -524,76 +523,73 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
     };
 
     $scope.copyExistingUser = function () {
-        var code = document.getElementById('code').value;
-        var param = {
-            UserName: $scope.newUser.username,
-            Userpwd: $scope.newUser.password.encrypt(code),
-            FirstName: $scope.newUser.firstname,
-            LastName: $scope.newUser.lastname,
-            Phone: $scope.newUser.phone,
-            MobilePhone: $scope.newUser.mobilephone,
-            Site: $scope.existedUser.selectedSite ? ($scope.existedUser.selectedSite.SiteName || "") : "",
-            Fax: $scope.newUser.fax,
-            Credit: (parent.level == 'member' ? $scope.existedUser.credit.replace(/,/g, '') : $scope.existedUser.maxCredit.replace(/,/g, '')),
-            IsInternal: $scope.newUser.internaluser,
-            CurrencyId: parseInt($scope.existedUser.selectedCurrencyId),
-            ExistingCustId: $scope.existedUser.userid,
-            Creator: $("#currentUserId").val(),
-            CreatorName: adminUsername,
-            CustLevel: (parent.level == 'member' ? 1 : 4),
-            UplineId: $scope.parentId,
-            IsSyncNG2: $scope.existedUser.syncNG2 == 1 ? true : false,
-            DisableNG2: $scope.existedUser.disableNG2 == 1 ? true : false,
-            code: code
-        };
+        if (confirm("Please REVIEW the Source " + (parent.level == 'member' ? "Member " : "Super ") + $scope.existedUser.username + "(" + $scope.existedUser.userid + ") once again.")) {
+            var code = document.getElementById('code').value;
+            var param = {
+                UserName: $scope.newUser.username,
+                Userpwd: $scope.newUser.password.encrypt(code),
+                FirstName: $scope.newUser.firstname,
+                LastName: $scope.newUser.lastname,
+                Phone: $scope.newUser.phone,
+                MobilePhone: $scope.newUser.mobilephone,
+                Site: $scope.existedUser.selectedSite ? ($scope.existedUser.selectedSite.SiteName || "") : "",
+                Fax: $scope.newUser.fax,
+                Credit: (parent.level == 'member' ? $scope.existedUser.credit.replace(/,/g, '') : $scope.existedUser.maxCredit.replace(/,/g, '')),
+                IsInternal: $scope.newUser.internaluser,
+                CurrencyId: parseInt($scope.existedUser.selectedCurrencyId),
+                ExistingCustId: $scope.existedUser.userid,
+                Creator: $("#currentUserId").val(),
+                CreatorName: adminUsername,
+                CustLevel: (parent.level == 'member' ? 1 : 4),
+                UplineId: $scope.parentId,
+                IsSyncNG2: $scope.existedUser.syncNG2 == 1 ? true : false,
+                DisableNG2: $scope.existedUser.disableNG2 == 1 ? true : false,
+                code: code
+            };
 
-        message.hideAlertMessage("errorMsg");
+            message.hideAlertMessage("errorMsg");
 
-        try { parent.BlockUI(); } catch (e) { }
-        try { parent.parent.BlockUI(); } catch (e) { }
-        try { parent.parent.parent.BlockUI(); } catch (e) { }
-        //$("body").addClass("wait");        
+            try { parent.BlockUI(); } catch (e) { }
+            try { parent.parent.BlockUI(); } catch (e) { }
+            try { parent.parent.parent.BlockUI(); } catch (e) { }
+            //$("body").addClass("wait");        
 
-        $.ajax({
-            type: "POST",
-            url: toUrl("Super/CopyExistingSuper"),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            data: JSON.stringify(param),
-            success: function (result) {
-                if (result != null) {
-                    var msg = result.Message != undefined ? result.Message : msg;
-                    msg = result.errorMessage != undefined ? result.errorMessage : msg;
-                    msg = result.ErrorMessage != undefined ? result.ErrorMessage : msg;
-                    message.showAlertMessage("errorMsg", msg, 3);
-                    $("#errorMsg").width("700");
-
-                    if (result.IsSuccessful && $scope.existedUser.isDirectCustomer) {
-                        alert('Please fulfill the Extra Information via the Information tab on the left panel');
+            $.ajax({
+                type: "POST",
+                url: toUrl("Super/CopyExistingSuper"),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(param),
+                success: function (result) {
+                    if (result != null) {
+                        var msg = result.Message != undefined ? result.Message : msg;
+                        msg = result.errorMessage != undefined ? result.errorMessage : msg;
+                        msg = result.ErrorMessage != undefined ? result.ErrorMessage : msg;
+                        message.showAlertMessage("errorMsg", msg, 3);
+                        $("#errorMsg").width("700");
+                    }
+                    else {
+                        message.showAlertMessage("errorMsg", "Error for copying existing user !", 1);
+                        $("#errorMsg").width("700");
                     }
 
-                }
-                else {
-                    message.showAlertMessage("errorMsg", "Error for copying existing user !", 1);
+                    try { parent.jQuery.unblockUI() } catch (e) { }
+                    try { parent.parent.jQuery.unblockUI(); } catch (e) { }
+                    try { parent.parent.parent.jQuery.unblockUI(); } catch (e) { }
+                    //$('body').removeClass('wait');
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    var errorMessage = xhr.status === 403
+                        ? $.parseJSON(xhr.responseText).ErrorMessage
+                        : "Error for copying existing user !"
+                    message.showAlertMessage("errorMsg", errorMessage, 1);
                     $("#errorMsg").width("700");
+                    try { parent.jQuery.unblockUI() } catch (e) { }
+                    try { parent.parent.jQuery.unblockUI(); } catch (e) { }
+                    try { parent.parent.parent.jQuery.unblockUI(); } catch (e) { }
                 }
-
-                try { parent.jQuery.unblockUI() } catch (e) { }
-                try { parent.parent.jQuery.unblockUI(); } catch (e) { }
-                try { parent.parent.parent.jQuery.unblockUI(); } catch (e) { }
-                //$('body').removeClass('wait');
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                var errorMessage = xhr.status === 403
-                    ? $.parseJSON(xhr.responseText).ErrorMessage
-                    : "Error for copying existing user !"
-                message.showAlertMessage("errorMsg", errorMessage, 1);
-                $("#errorMsg").width("700");
-                try { parent.jQuery.unblockUI() } catch (e) { }
-                try { parent.parent.jQuery.unblockUI(); } catch (e) { }
-                try { parent.parent.parent.jQuery.unblockUI(); } catch (e) { }
-            }
-        });
+            });
+        }
     };
 
     /* start */

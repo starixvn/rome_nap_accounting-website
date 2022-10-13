@@ -68,11 +68,6 @@
     <asp:Literal ID="sMenu" runat="server"></asp:Literal>
 
     <script type="text/javascript">
-        if (isDirectCustomer)
-        {
-            alert('Please fulfill the Extra Information via the Information tab on the left panel');
-        }
-
         $(document).ready(function () {
             $('#menu-pt-after-insert-customer').find('li').eq(0).find('a').click();
         });
