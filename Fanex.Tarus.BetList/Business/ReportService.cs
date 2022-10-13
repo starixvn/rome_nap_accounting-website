@@ -270,6 +270,11 @@
         {
             return 8900 <= betTypeId && betTypeId <= 8999;
         }
+        
+        public static bool IsMGRNG(int betTypeId)
+        {
+            return 8400 <= betTypeId && betTypeId <= 8699;
+        }
 
         public static int GetSportFromBetTypeId(int betTypeId)
         {

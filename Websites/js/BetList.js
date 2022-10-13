@@ -440,7 +440,7 @@ function showRnGCasinoDetails(transId, winlossDate, custId, transType) {
         url: "RNGCasinoBetList/BetDetails",
         title: "Saba Casino Details",
         jsonParam: { TransId: transId, WinLossDate: winlossDate, TransType: transType, CustId: custId, SportType: 209,/*[208,209,210]*/ PageSize: 500 },
-        width: 1110,
+        width: 1170,
         height: 600
     };
 
@@ -452,7 +452,7 @@ function showRNGWARBetDetails(transId, winlossDate, custId, transType) {
         url: "RNGCasinoBetList/BetDetails",
         title: "Funky Games - Detailed Bet list -" + winlossDate.split(" ")[0],
         jsonParam: { TransId: transId, WinLossDate: winlossDate, TransType: transType, CustId: custId, SportType: 224, PageSize: 500 },
-        width: 1110,
+        width: 1170,
         height: 600
     };
 
@@ -476,7 +476,7 @@ function showVoidBridgeDetails(transId, winlossDate, custId, transType) {
         url: "RNGCasinoBetList/BetDetails",
         title: "Macau Games Details",
         jsonParam: { TransId: transId, WinLossDate: winlossDate, TransType: transType, CustId: custId, SportType: 212, PageSize: 500 },
-        width: 1110,
+        width: 1170,
         height: 600,
         resizable: false
     };
@@ -489,7 +489,7 @@ function showPPDetails(transId, winlossDate, custId, transType) {
         url: "RNGCasinoBetList/BetDetails",
         title: "PP Details",
         jsonParam: { TransId: transId, WinLossDate: winlossDate, TransType: transType, CustId: custId, SportType: 248, PageSize: 500 },
-        width: 1110,
+        width: 1170,
         height: 600,
         resizable: false
     };
@@ -502,7 +502,7 @@ function showSGDetails(transId, winlossDate, custId, transType) {
         url: "RNGCasinoBetList/BetDetails",
         title: "Spadegaming Details",
         jsonParam: { TransId: transId, WinLossDate: winlossDate, TransType: transType, CustId: custId, SportType: 247, PageSize: 500 },
-        width: 1110,
+        width: 1170,
         height: 600,
         resizable: false
     };
@@ -515,7 +515,7 @@ function showPGSoftDetails(transId, winlossDate, custId, transType) {
         url: "RNGCasinoBetList/BetDetails",
         title: "PG Soft Details",
         jsonParam: { TransId: transId, WinLossDate: winlossDate, TransType: transType, CustId: custId, SportType: 232, PageSize: 500 },
-        width: 1110,
+        width: 1170,
         height: 600,
         resizable: false
     };
@@ -529,7 +529,7 @@ function showVideoPokerGameDetails(transId, winlossDate, custId, transType) {
         url: "RNGCasinoBetList/BetDetails",
         title: "Arcadia Gaming - Detail Tickets - " + winlossDate.split(" ")[0],
         jsonParam: { TransId: transId, WinLossDate: winlossDate, TransType: transType, CustId: custId, SportType: 165, PageSize: 500 },
-        width: 1110,
+        width: 1170,
         height: 600,
         resizable: false
     };
@@ -555,7 +555,7 @@ function showGlobalGaming(transId, winlossDate, custId, transType) {
         url: "RNGCasinoBetList/BetDetails",
         title: "Fishing World Details",
         jsonParam: { TransId: transId, WinLossDate: winlossDate, TransType: transType, CustId: custId, SportType: 219, PageSize: 500 },
-        width: 1110,
+        width: 1170,
         height: 600
     };
 
@@ -579,7 +579,7 @@ function showCGBetDetails(transId, winlossDate, custId, transType) {
         url: "RNGCasinoBetList/BetDetails",
         title: "CG - Detailed Bet list - " + winlossDate.split(" ")[0],
         jsonParam: { TransId: transId, WinLossDate: winlossDate, TransType: transType, CustId: custId, SportType: 167, PageSize: 500 },
-        width: 1110,
+        width: 1170,
         height: 600
     };
 
@@ -591,7 +591,7 @@ function showAdvantPlayBetDetails(transId, winlossDate, custId, transType) {
         url: "RNGCasinoBetList/BetDetails",
         title: "AdvantPlay - Detailed Bet list - " + winlossDate.split(" ")[0],
         jsonParam: { TransId: transId, WinLossDate: winlossDate, TransType: transType, CustId: custId, SportType: 172, PageSize: 500 },
-        width: 1110,
+        width: 1170,
         height: 600
     };
 
@@ -603,7 +603,7 @@ function showAdvantPlayMiniBetDetails(transId, winlossDate, custId, transType) {
         url: "RNGCasinoBetList/BetDetails",
         title: "AdvantPlay Mini - Detailed Bet list - " + winlossDate.split(" ")[0],
         jsonParam: { TransId: transId, WinLossDate: winlossDate, TransType: transType, CustId: custId, SportType: 174, PageSize: 500 },
-        width: 1110,
+        width: 1170,
         height: 600
     };
 
@@ -615,7 +615,7 @@ function showMaxGameBetDetails(transId, winlossDate, custId, transType) {
         url: "RNGCasinoBetList/BetDetails",
         title: "MaxGame - Detailed Bet list - " + winlossDate.split(" ")[0],
         jsonParam: { TransId: transId, WinLossDate: winlossDate, TransType: transType, CustId: custId, SportType: 237, PageSize: 500 },
-        width: 1110,
+        width: 1170,
         height: 600
     };
 
@@ -627,7 +627,7 @@ function showJokerBetDetails(transId, winlossDate, custId, transType) {
         url: "RNGCasinoBetList/BetDetails",
         title: "Joker - Detailed Bet list - " + winlossDate.split(" ")[0],
         jsonParam: { TransId: transId, WinLossDate: winlossDate, TransType: transType, CustId: custId, SportType: 234, PageSize: 500 },
-        width: 1030,
+        width: 1170,
         height: 600
     };
 
@@ -639,7 +639,7 @@ function showHabaneroBetDetails(transId, winlossDate, custId, transType) {
         url: "RNGCasinoBetList/BetDetails",
         title: "Habanero - Detailed Bet list - " + winlossDate.split(" ")[0],
         jsonParam: { TransId: transId, WinLossDate: winlossDate, TransType: transType, CustId: custId, SportType: 238, PageSize: 500 },
-        width: 1110,
+        width: 1170,
         height: 600
     };
 
@@ -732,7 +732,7 @@ function showSabaClubDetails(refno, winlossDate, custId, transType) {
         url: "RNGCasinoBetList/BetDetails",
         title: "Saba.games Details",
         jsonParam: { TransId: refno, Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 200, PageSize: 500 },
-        width: 1110,
+        width: 1170,
         height: 600
     };
 
@@ -744,7 +744,7 @@ function showVGamingDetails(refno, winlossDate, custId, transType) {
         url: "RNGCasinoBetList/BetDetails",
         title: "Vgaming Details",
         jsonParam: { TransId: refno, Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 171, PageSize: 500 },
-        width: 1110,
+        width: 1170,
         height: 600
     };
 
@@ -867,7 +867,19 @@ function showSealEntertainmentBetDetails(transId, winlossDate, custId, transType
         url: "RNGCasinoBetList/BetDetails",
         title: "SEAL Entertainment - Detailed Bet list - " + winlossDate.split(" ")[0],
         jsonParam: { TransId: transId, WinLossDate: winlossDate, TransType: transType, CustId: custId, SportType: 156, PageSize: 500 },
-        width: 1110,
+        width: 1170,
+        height: 600
+    };
+
+    openResultsPopUp(param);
+}
+    
+ function showMGRNGCasinoBetDetails(transId, winlossDate, custId, transType) {
+    var param = {
+        url: "RNGCasinoBetList/BetDetails",
+        title: "MG-RNG - Detailed Bet list - " + winlossDate.split(" ")[0],
+        jsonParam: { TransId: transId, WinLossDate: winlossDate, TransType: transType, CustId: custId, SportType: 155, PageSize: 500 },
+        width: 1170,
         height: 600
     };
 
@@ -1049,6 +1061,9 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
 
         case 156:
             return getSEALParam(bettype, custId, transId3rd, currencyId, siteId);
+            
+        case 155:
+            return getMGParam(custId, transId3rd, gameId3rd, currencyId, bettype, siteId);
 
         case 161: // Number Game.
             return getNumberGameParam(matchid);
@@ -1407,7 +1422,7 @@ function getCGParam(custId, transId3rd, gameId3rd, currencyId, siteId) {
     return {
         url: "ThirdParty/CGResult",
         title: "CG Result",
-        jsonParam: { custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, productId: 62, siteId: siteId, currenctyId: currencyId },
+        jsonParam: { custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, productId: 62, siteId: siteId, currencyId: currencyId },
         width: 850,
         height: 800
     };
@@ -1417,7 +1432,7 @@ function getAdvantPlayParam(custId, transId3rd, gameId3rd, currencyId, siteId) {
     return {
         url: "ThirdParty/AdvantPlayResult",
         title: "AdvantPlay Result",
-        jsonParam: { custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, productId: 67, siteId: siteId, currenctyId: currencyId },
+        jsonParam: { custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, productId: 67, siteId: siteId, currencyId: currencyId },
         width: 850,
         height: 800
     };
@@ -1427,7 +1442,17 @@ function getAdvantPlayMiniParam(custId, transId3rd, gameId3rd, currencyId, siteI
     return {
         url: "ThirdParty/AdvantPlayMiniResult",
         title: "AdvantPlay Mini Result",
-        jsonParam: { custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, siteId: siteId, currenctyId: currencyId, productId: 68},
+        jsonParam: { custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, siteId: siteId, currencyId: currencyId, productId: 68},
+        width: 850,
+        height: 800
+    };
+}
+
+function getMGParam(custId, transId3rd, gameId3rd, currencyId, betType, siteId) {
+    return {
+        url: "ThirdParty/MGRNGCasinoResult",
+        title: "MG-RNG Result",
+        jsonParam: { custId: custId, transId3rd: transId3rd, siteId: siteId, gameId3rd: gameId3rd, currencyId: currencyId, BetTypeId: betType, productId: 73 },
         width: 850,
         height: 800
     };
@@ -1437,7 +1462,7 @@ function getCardClubParam(bettype, custId, transId3rd, gameId3rd, currencyId, si
     return {
         url: "ThirdParty/CardClubResult",
         title: "Arcadia Gaming Result",
-        jsonParam: { BetTypeId: bettype, custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, siteId: siteId, currenctyId: currencyId, productId: 34 },
+        jsonParam: { BetTypeId: bettype, custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, siteId: siteId, currencyId: currencyId, productId: 34 },
         width: 850,
         height: 800
     };
@@ -1481,7 +1506,7 @@ function getMacauGamesParam(custId, transId3rd, gameId3rd, currencyId, siteId) {
     return {
         url: "ThirdParty/VoidbridgeResult",
         title: "Macau Games Result",
-        jsonParam: { custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, siteId: siteId, currenctyId: currencyId, productId: 22},
+        jsonParam: { custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, siteId: siteId, currencyId: currencyId, productId: 22},
         width: 945,
         height: 500
     };
@@ -1491,7 +1516,7 @@ function getIONCasinoParam(custId, transId3rd, gameId3rd, currencyId, siteId) {
     return {
         url: "ThirdParty/IONResult",
         title: "ION Result",
-        jsonParam: { custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, siteId: siteId, currenctyId: currencyId, productId: 52 },
+        jsonParam: { custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, siteId: siteId, currencyId: currencyId, productId: 52 },
         width: 945,
         height: 500
     };
@@ -1501,7 +1526,7 @@ function getSpadegamingParam(custId, transId3rd, gameId3rd, currencyId, siteId) 
     return {
         url: "ThirdParty/SpadegamingResult",
         title: "Spadegaming Result",
-        jsonParam: { custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, siteId: siteId, currenctyId: currencyId, productId: 36},
+        jsonParam: { custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, siteId: siteId, currencyId: currencyId, productId: 36},
         width: 945,
         height: 500
     };
@@ -1511,7 +1536,7 @@ function getVirtualGamesParam(custId, transId3rd, gameId3rd, currencyId, siteId)
     return {
         url: "ThirdParty/VirtualGamesResult",
         title: "Virtual Games Result",
-        jsonParam: { custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, siteId: siteId, currenctyId: currencyId, productId: 38 },
+        jsonParam: { custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, siteId: siteId, currencyId: currencyId, productId: 38 },
         width: 850,
         height: 700
     };
