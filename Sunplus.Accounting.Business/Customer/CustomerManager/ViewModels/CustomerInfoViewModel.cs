@@ -166,7 +166,7 @@
                                 //SyncLiveCasinoUpline = Utils.ToBoolean(row["IsSyncedUpline"]);
                                 break;
 
-                            case "22":
+                            case "53":
                                 SyncVoidbridge = Utils.ToBoolean(row["IsSync"]);
                                 HideVoidbridgeUpline = Utils.ToBoolean(row["IsHiddenUpline"]) && SearchAccountRoleId < 4;
                                 SyncVoidbridgeUpline = Utils.ToBoolean(row["IsSyncedUpline"]);
