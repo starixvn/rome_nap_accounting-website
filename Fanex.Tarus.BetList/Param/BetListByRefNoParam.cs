@@ -11,10 +11,6 @@
 
         public string RefNo { get; set; }
 
-        public string Site { get; set; }
-
-        public int SiteDBGroupId { get; set; }
-
         public string Language { get; set; }
 
         public string Permission { get; set; }       

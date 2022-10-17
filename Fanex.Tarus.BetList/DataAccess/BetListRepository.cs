@@ -67,28 +67,6 @@
             return betTypeList;
         }
 
-        public IEnumerable<SiteModel> GetAllSites()
-        {
-            using (ObjectDb objDB = new ObjectDb("CustomerSetting_SiteSel"))
-            {
-                using (var reader = objDB.ExecuteReader())
-                {
-                    if (reader != null)
-                    {
-                        while (reader.Read())
-                        {
-                            yield return new SiteModel
-                            {
-                                Id = Convert.ToInt32(reader["siteid"].ToString()),
-                                Name = reader["site"].ToString(),
-                                IsDeposit = bool.Parse(reader["islicensee"].ToString()),
-                                SiteDBGroupId = Convert.ToInt32(reader["SiteDBGroupId"].ToString())
-                            };
-                        }
-                    }
-                }
-            }
-        }
         /// <summary>
         /// Fetches the member win loss.
         /// </summary>

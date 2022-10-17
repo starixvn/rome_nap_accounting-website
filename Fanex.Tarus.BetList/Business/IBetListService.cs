@@ -8,8 +8,6 @@
 
     public interface IBetListService
     {
-        IEnumerable<SiteModel> GetAllSites();
-
         IList<TicketDetail> GetMixParlayTickets(long transId, long refNo, int custId);
 
         IList<TicketDetail> GetBetListByRefNo(BetListByRefNoParam param);

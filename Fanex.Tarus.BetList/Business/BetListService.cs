@@ -1,13 +1,4 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="BetListService.cs" company="Nexcel Solutions Vietnam">
-// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Ricky.Nguyen" date="2012.12.10">Created</change>
-// </history>
-
-namespace Fanex.Tarus.BetList.Business
+﻿namespace Fanex.Tarus.BetList.Business
 {
     using System;
     using System.Collections.Generic;
@@ -35,9 +26,6 @@ namespace Fanex.Tarus.BetList.Business
     using Sunplus.Accounting.Core.Extensions;
     using Sunplus.Accounting.DataAccess.Report;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class BetListService : IBetListService
     {
         public const string BetListSessionKey = "Fanex.BetList.Accounting.WinLossByLicensee";
@@ -134,9 +122,6 @@ namespace Fanex.Tarus.BetList.Business
         {
             _betListRepository = new BetListRepository();
         }
-
-        public IEnumerable<SiteModel> GetAllSites()
-            => _betListRepository.GetAllSites();
 
         public IList<TicketDetail> GetMixParlayTickets(long transId, long refNo, int custId)
         {
@@ -237,37 +222,33 @@ namespace Fanex.Tarus.BetList.Business
             List<ITicketData> outputLiveCasino = new List<ITicketData>();
             var betListHelper = new BetListHelper();
             var allSite = ObjectDbExtensions.GetAllSiteDBConfig();
-            var siteDB = allSite.FirstOrDefault(i => i.SiteDBGroupID == param.SiteDBGroupId);
-            if (siteDB != null)
+            foreach (var siteDB in allSite.Where(i => i.IsSiteDB))
             {
-                if (siteDB.IsSiteDB)
+                if (!tickets.Any())
                 {
                     var siteDBCriteria = new SiteDBBetListByRefNoCriteria
                     {
                         UserId = param.UserId,
-                        RefNo = Converter.To<long>(param.RefNo),
+                        RefNo = param.RefNo,
                         MoveBetsDay = ReportService.BalanceUp.MoveBetsDay,
-                        Permission = param.Permission,
-                        Site = param.Site
+                        Permission = param.Permission
                     };
                     tickets = _betListRepository.Fetch<TicketDetail>(siteDBCriteria, siteDB.AGIP, mapTicketObjectFunction, ref outputLiveCasino).ToList();
                 }
+            }
 
-                if (!tickets.Any())
+            if (!tickets.Any())
+            {
+                var mainCriteria = new BetListByRefNoCriteria
                 {
-                    var mainCriteria = new BetListByRefNoCriteria
-                    {
-                        UserId = param.UserId,
-                        RefNo = Converter.To<long>(param.RefNo),
-                        MoveBetsDay = ReportService.BalanceUp.MoveBetsDay,
-                        BalanceUpDay = ReportService.BalanceUp.BalanceUpDay,
-                        Permission = param.Permission,
-                        Site = param.Site,
-                        ExcludeBettrans = siteDB.IsSiteDB
-                    };
-                    tickets = _betListRepository.Fetch<TicketDetail>(mainCriteria, mapTicketObjectFunction, ref outputLiveCasino);
-                }
-
+                    UserId = param.UserId,
+                    RefNo = param.RefNo,
+                    MoveBetsDay = ReportService.BalanceUp.MoveBetsDay,
+                    BalanceUpDay = ReportService.BalanceUp.BalanceUpDay,
+                    Permission = param.Permission,
+                    ExcludeBettrans = false
+                };
+                tickets = _betListRepository.Fetch<TicketDetail>(mainCriteria, mapTicketObjectFunction, ref outputLiveCasino);
             }
 
             var factory = new BetListHTMLFactory();
