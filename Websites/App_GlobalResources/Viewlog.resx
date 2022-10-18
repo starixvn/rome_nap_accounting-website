@@ -3348,4 +3348,10 @@
   <data name="disable208_2101" xml:space="preserve">
     <value>Disabled Saba Casino</value>
   </data>
+  <data name="Disable9903_1" xml:space="preserve">
+    <value>Disabled Jackpot</value>
+  </data>
+  <data name="Disable9906_4001" xml:space="preserve">
+    <value>Disabled RNG Slot</value>
+  </data>
 </root>
