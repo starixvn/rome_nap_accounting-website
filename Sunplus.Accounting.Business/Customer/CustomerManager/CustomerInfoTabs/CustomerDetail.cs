@@ -108,6 +108,17 @@
                 {
                     TemplateHandler.RemoveBlock(ref htmlcontent, "exchangeId");
                 }
+
+                if (customerInfoViewModel.CustomerClass.Equals("-"))
+                {
+                    TemplateHandler.RemoveBlock(ref htmlcontent, "haveCustomerClass");
+                }
+                else
+                {
+                    TemplateHandler.RemoveBlock(ref htmlcontent, "noCustomerClass");
+                    TemplateHandler.Assign(ref htmlcontent, "{CustomerClass}", customerInfoViewModel.CustomerClass);
+                    TemplateHandler.Assign(ref htmlcontent, "{linkCustomerClass}", "napsso/cts?custid=" + customerInfoViewModel.CustId);
+                }
             }
 
             string shortUserName = customerInfoViewModel.UserName.Length < 20 ? customerInfoViewModel.UserName : customerInfoViewModel.UserName.Substring(0, 20) + "...";
