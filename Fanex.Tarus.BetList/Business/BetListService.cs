@@ -118,6 +118,43 @@
             IsChinaView = r.Table.Columns.Contains("IsChinaView") && Converter.ToBool(r["IsChinaView"]),
             LeagueGroupId = r.Table.Columns.Contains("LeagueGroupId") ? Converter.ToInt(r["LeagueGroupId"]) : 0,
         };
+
+        private readonly Func<DataRow, TicketDetail> mapTicketObjectFunctionForMixParlay = r => new TicketDetail
+        {
+            Ticket = new Ticket
+            {
+                SportTypeId = Converter.ToInt(r["Sporttype"]),
+                TransId = Converter.To<long>(r["TransID"]),
+                BetTypeId = Converter.ToInt(r["Bettype"]),
+                Stake = Converter.ToDecimal(r["Stake"]),
+                Currency = Converter.ToString2(r["Currency"]),
+                Handicap1 = Converter.ToDecimal(r["hdp1"]),
+                Handicap2 = Converter.ToDecimal(r["hdp2"]),
+                Odds = Converter.ToDecimal(r["Odds"]),
+                BetTeam = Converter.ToString2(r["Betteam"]),
+                IsLive = Converter.ToBool(r["Liveindicator"]),
+                LiveHomeScore = Converter.ToInt(r["Livehomescore"]),
+                LiveAwayScore = Converter.ToInt(r["Liveawayscore"]),
+                LeagueId = Converter.ToInt(r["LeagueID"]),
+                MatchId = Converter.ToInt(r["MatchID"]),
+                MatchCode = Converter.ToString2(r["MatchCode"]),
+                HomeId = Converter.To<long>(r["HomeID"]),
+                AwayId = Converter.To<long>(r["AwayID"]),
+                IsNeutral = Converter.ToBool(r["isNeutral"]),
+                BetCheck = Converter.ToString2(r["BetCheck"]),
+                TransDesc = Converter.ToString2(r["transdesc"]),
+                ShowTime = Converter.ToString2(r["showtime"]),
+                EventDate = Converter.ToDateTime(r["eventdate"]),
+                Status = Converter.ToString2(r["status"]),
+                SettlementStatus = r.Table.Columns.Contains("SettlementStatus") ? Convert.ToByte(r["SettlementStatus"]) : (byte)0,
+                TransDate = Converter.ToDateTime(r["TransDate"])
+            },
+            ChoiceHtml = string.Empty,
+            OddHtml = string.Empty,
+            StakeHtml = string.Empty,
+            IsChinaView = r.Table.Columns.Contains("IsChinaView") && Converter.ToBool(r["IsChinaView"]),
+            LeagueGroupId = r.Table.Columns.Contains("LeagueGroupId") ? Converter.ToInt(r["LeagueGroupId"]) : 0
+        };
         public BetListService()
         {
             _betListRepository = new BetListRepository();
@@ -139,7 +176,7 @@
                         MoveBetsDay = ReportService.BalanceUp.MoveBetsDay,
                         BalanceUpDay = ReportService.BalanceUp.BalanceUpDay
                     };
-                    siteDBTickets = _betListRepository.Fetch<TicketDetail>(siteDBCriteria, siteDB.AGIP, mapTicketObjectFunction);
+                    siteDBTickets = _betListRepository.Fetch<TicketDetail>(siteDBCriteria, siteDB.AGIP, mapTicketObjectFunctionForMixParlay);
                 }
                 var mainCriteria = new MixParlayDetailCriteria
                 {
@@ -151,7 +188,7 @@
                     BalanceUpDay = ReportService.BalanceUp.BalanceUpDay
                 };
 
-                var mainTickets = _betListRepository.Fetch<TicketDetail>(mainCriteria, mapTicketObjectFunction);
+                var mainTickets = _betListRepository.Fetch<TicketDetail>(mainCriteria, mapTicketObjectFunctionForMixParlay);
                 var tickets = siteDBTickets.Concat(mainTickets).Distinct().ToList();
                 var factory = new BetListHTMLFactory();
                 var builder = factory.CreateBuilder();
