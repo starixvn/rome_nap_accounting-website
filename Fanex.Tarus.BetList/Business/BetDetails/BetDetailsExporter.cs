@@ -7,13 +7,10 @@
     using Fanex.BetList.Core.Factories;
     using Fanex.BetList.Core.TicketHelper;
     using Fanex.Module.RNGCasino.Criteria;
-    using Fanex.Module.RNGCasino.Repositories;
     using Fanex.Module.RNGCasino.Services;
     using Fanex.RemotingRef;
     using Fanex.Tarus.BetList.Criteria;
     using Fanex.Tarus.BetList.DataAccess;
-    using Fanex.Voidbridge.BetDetail.Criteria;
-    using Fanex.Voidbridge.BetDetail.Repositories;
     using Models;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
