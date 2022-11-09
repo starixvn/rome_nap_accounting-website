@@ -35,6 +35,7 @@ public class UpdateExRate : IHttpHandler, IRequiresSessionState
             string Description = CastAide.AsString(context.Request["Description"]);
             string MultipliedBy = CastAide.AsString(context.Request["MultipliedBy"]);
             string OfferSite = CastAide.AsString(context.Request["OfferSite"]);
+            string CurrencyType = CastAide.AsString(context.Request["CurrencyType"]);
             bool IsActive = CastAide.AsBoolean(context.Request["IsActive"]);
 
             int exRateId = 0;

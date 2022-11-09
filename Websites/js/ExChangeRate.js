@@ -99,7 +99,7 @@ function InsertExChangeRate() {
         });
     }
 }
-
+//phd
 function UpdateEditExChangeRate() {
     var f = Validator();
     if (f) {
@@ -113,6 +113,7 @@ function UpdateEditExChangeRate() {
         param += '&Description=' + $('#tbxDescription').val();
         param += '&MultipliedBy=' + $('#tbxMultipliedBy').val();
         param += '&OfferSite=' + $('#selOfferSite').val();
+        param += '&CurrencyType=' + $('#selCurrencyType').val();
         param += '&IsActive=' + $('#ckbIsActive')[0].checked;
 
         try { parent.BlockUI(); } catch (e) { }
@@ -146,7 +147,7 @@ function UpdateEditExChangeRate() {
 function UpdateExChangeRate(exrateId) {
     var url = 'ExRate/EditRate.aspx?exrateId=' + exrateId;
 
-    parent.OpenPopup(url, "Edit Exchange Rate", 870, 220, true, true, window, 2000, null, null);
+    parent.OpenPopup(url, "Edit Exchange Rate", 940, 220, true, true, window, 2000, null, null);
 }
 
 function CheckDecNumber_ExRate(e) {
@@ -229,6 +230,12 @@ function AddNewExChangeRate() {
     var url = 'ExRate/AddNewExRate.aspx';
     //showPopup('Add New Exchange Rate', url, 0, 0, 860, 220, true, 2000, null);
     parent.OpenPopup(url, "Add New Exchange Rate", 870, 220, true, true, window, 2000, null, null);
+}
+
+function QueryExChangeRate() {
+    var selectedCurrencyType= $("#chkCurrencyType option:selected").val();
+    $('#LoadCurrencyType').val(selectedCurrencyType);
+    $('#form').submit();
 }
 
 function EditBaseRate() {

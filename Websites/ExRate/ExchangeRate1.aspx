@@ -62,9 +62,10 @@
                 <div id="ErrMsg">
                 </div>
                 <asp:Literal ID="ExRateAddContentHtml" runat="server"></asp:Literal>
+                
             </div>
             <div id="sContent" style="margin-top: 5px">
-                <div id="divExhangeRate" class="content-warper" style="width: 569px">
+                <div id="divExhangeRate" class="content-warper" style="width: 642px">
                     <div class="content-toolbox bgtitle">
                         <div id="gridtitle" class="gridtitle">Exchange Rate</div>
                         <div class="btngroup">
@@ -100,6 +101,10 @@
                                             Offer Site</div>
                                     </td>
                                     <td style="border-bottom: none 0px;">
+                                        <div class="c" style="width:73px">
+                                            Currency Type</div>
+                                    </td>  
+                                    <td style="border-bottom: none 0px;">
                                         <div class="c" style="width:48px">
                                             Active</div>
                                     </td>                              
@@ -130,6 +135,7 @@
     </script>
     <form id="form" method="post" action="ExchangeRate1.aspx">
     <input type="hidden" id="IsExport" name="IsExport" value="0" />
+    <input type="hidden" id="LoadCurrencyType" name="LoadCurrencyType" value="0" />
     </form>
 </body>
 </html>

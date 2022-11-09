@@ -1,6 +1,15 @@
 ﻿<table>
     <tr>
         <td>
+            Currency Type
+        </td>
+        <td>
+            <select id="chkCurrencyType" class="w100">
+                {CurrencyType}
+            </select>
+        </td>
+        <td>
+            <input type="button" value="Submit" class="btn" onclick="QueryExChangeRate();" style="width: 60px">
             <input type="button" value="Add New" class="btn" onclick="AddNewExChangeRate();" style="width: 60px">
             <input type="button" value="Edit Base Rate" class="btn" onclick="EditBaseRate();" style="width: 100px">
         </td>       

@@ -57,14 +57,13 @@ namespace Sunplus.Accounting.Business.ExChangeRate
 
         #region GenListContent
 
-        public string GenListContent()
+        public string GenListContent(Hashtable queryParams)
         {
             ExRateList_Template ex = new ExRateList_Template();
-            var rs = IBCProvider.ExChangeRate.ExchangeSelAccount();
+            
+            var rs = IBCProvider.ExChangeRate.ExchangeSelAccount(queryParams);
             DataRow[] Rows = rs.ResultSet.Tables[0].Select();
-
-
-
+            
             StringBuilder html = new StringBuilder();
             string tpl = WebUtils.LoadTemplateBySystem("ExRate/ExRateList1.htm");
             string tplContent = TemplateHandler.CopyBlock(tpl, "Content");
@@ -86,6 +85,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 TemplateHandler.Assign(ref exRow, "exrateId", exid);
                 TemplateHandler.Assign(ref exRow, "description", CastAide.AsString(dr["Description"]));
                 TemplateHandler.Assign(ref exRow, "OfferSite", ExChangeRateHelper.GetOfferSiteName(CastAide.AsString(dr["offersite"])));
+                TemplateHandler.Assign(ref exRow, "CurrencyType", ExChangeRateHelper.GetCurrencyTypeName(CastAide.AsString(dr["currencytype"])));
                 TemplateHandler.Assign(ref exRow, "IsActive", CastAide.AsBoolean(dr["isactive"]) ? " checked" : "");
 
                 if (!Permissions.GetHostPermission(Enumerations.Functions.ExRates.ExchangeRate))
@@ -198,6 +198,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                     TemplateHandler.Assign(ref tpl, "Minbet", CastAide.AsString(dr["minbet"]));
                     TemplateHandler.Assign(ref tpl, "MinbetLive", CastAide.AsString(dr["minbetlive"]));
                     TemplateHandler.Assign(ref tpl, "OfferSite", ExChangeRateHelper.BuildOfferSiteSelection(CastAide.AsString(dr["offersite"])));
+                    TemplateHandler.Assign(ref tpl, "CurrencyType", ExChangeRateHelper.BuildCurrentTypeSelection("0"));
                     TemplateHandler.Assign(ref tpl, "IsActive", CastAide.AsBoolean(dr["isactive"]) ? " checked" : "");
                     TemplateHandler.Assign(ref tpl, "exrateId", exid);
                     tbxStandardCurrency.Value = CastAide.AsString(dr["Code"]);
@@ -232,6 +233,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                     TemplateHandler.Assign(ref tpl, "Minbet", CastAide.AsString(dr["minbet"]));
                     TemplateHandler.Assign(ref tpl, "MinbetLive", CastAide.AsString(dr["minbetlive"]));
                     TemplateHandler.Assign(ref tpl, "OfferSite", ExChangeRateHelper.BuildOfferSiteSelection(CastAide.AsString(dr["offersite"])));
+                    TemplateHandler.Assign(ref tpl, "CurrencyType", ExChangeRateHelper.BuildCurrentTypeSelection("0"));
                     TemplateHandler.Assign(ref tpl, "IsActive", CastAide.AsBoolean(dr["isactive"]) ? " checked" : "");
                     TemplateHandler.Assign(ref tpl, "exrateId", exid);
                     tbxStandardCurrency.Value = CastAide.AsString(dr["Code"]);
