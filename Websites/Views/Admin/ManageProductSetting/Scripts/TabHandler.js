@@ -112,6 +112,7 @@ function Search() {
 }
 
 function UpdateSampleUrl() {
+    $("#btnUpdateExcel").addClass("hide");
     switch (cachedTabId) {
         case "tab_1":
             $('#sampleSettingLink').prop("href", rootUrl + "Views/Admin/ManageProductSetting/Product/Product.xls");
@@ -120,6 +121,7 @@ function UpdateSampleUrl() {
             $('#sampleSettingLink').prop("href", rootUrl + "Views/Admin/ManageProductSetting/Sport/SportType.xls");
             break;
         case "tab_3":
+            $("#btnUpdateExcel").removeClass("hide");
             $('#sampleSettingLink').prop("href", rootUrl + "Views/Admin/ManageProductSetting/Bettype/Bettype.xls");
             break;
         case "tab_4":

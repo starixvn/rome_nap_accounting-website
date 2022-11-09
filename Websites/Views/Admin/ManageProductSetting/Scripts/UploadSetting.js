@@ -1,77 +1,97 @@
 ﻿var form;
 $(document).ready(function () {
-    form = $('#mainForm');
-    form.submit(function (e) {
+    $("#btnInsertExcel").click(function (e) {
         e.preventDefault();
-        var action = "";
-        switch (cachedTabId) {
-            case "tab_1":
-                action = 'InsertProduct';
-                break;
-            case "tab_2":
-                action = 'InsertSport';
-                break;
-            case "tab_3":
-                action = 'InsertBettype';
-                break;
-            case "tab_4":
-                action = 'InsertSportBettypeMatrix';
-                break;
-            case "tab_5":
-                action = 'InsertCSSportBettypeMatrix';
-                break;
-            case "tab_6":
-                action = 'InsertRefResource';
-                break;
-            case "tab_7":
-                action = 'InsertCanSee';
-                break;
-            case "tab_8":
-                action = GetInsertResetWinningAction();
-                break;
-            case "tab_10":
-                action = window.rootUrl + 'ManageVendorGlobalSetting/Insert';
-                break;
-            case "tab_11":
-                action = window.rootUrl + 'ManageProduct3RD/Insert';
-                break;
-        }
-        var formData = new FormData(form[0]);
-        $.ajax({
-            url: action,
-            type: 'POST',
-            datatype: 'json',
-            contentType: false,
-            processData: false,
-            enctype: 'multipart/form-data',
-            data: formData,
-            success: function (result) {
-                showAlertMessage('errMsg', result.ErrorCode === 0 ? 'Updated successfully.' : result.ErrorMessage, result.ErrorCode === 0 ? 0 : 1);
-                if (result.ErrorCode === 0) {
-                    setTimeout(function () {
-                        $('#insert-setting').dialog('close');
-                        Search();
-                    }, 3000);
-                }
-            },
-            error: function (xhr) {
-                showAlertMessage('errMsg', 'Internal Server Error.', 1);
-            },
-            complete: function () {
-                parent.jQuery.unblockUI();
-            }
-        });
+        InsertExcelSetting();
+    });
+
+    $("#btnUpdateExcel").click(function (e) {
+        e.preventDefault();
+        UpdateExcelSetting();
     });
 });
 
-var InsertSetting = function () {
+function InsertExcelSetting() {
+    var action = GetInsertUrl();
+    ProcessInsertUpdateExcel(action);
+}
+
+function UpdateExcelSetting() {
+    var action = GetInsertUrl() + "?isUpdate=true";
+    ProcessInsertUpdateExcel(action);
+}
+
+function ProcessInsertUpdateExcel(action) {
     if (!ValidateUploadFile()) {
         return;
     }
 
     parent.BlockUI();
-    form.submit();
-};
+    form = $('#mainForm');
+    var formData = new FormData(form[0]);
+    $.ajax({
+        url: action,
+        type: 'POST',
+        datatype: 'json',
+        contentType: false,
+        processData: false,
+        enctype: 'multipart/form-data',
+        data: formData,
+        success: function (result) {
+            showAlertMessage('errMsg', result.ErrorCode === 0 ? 'Updated successfully.' : result.ErrorMessage, result.ErrorCode === 0 ? 0 : 1);
+            if (result.ErrorCode === 0) {
+                setTimeout(function () {
+                    $('#insert-setting').dialog('close');
+                    Search();
+                }, 3000);
+            }
+        },
+        error: function (xhr) {
+            showAlertMessage('errMsg', 'Internal Server Error.', 1);
+        },
+        complete: function () {
+            parent.jQuery.unblockUI();
+        }
+    });
+}
+
+function GetInsertUrl() {
+    var action = "";
+    switch (cachedTabId) {
+        case "tab_1":
+            action = 'InsertProduct';
+            break;
+        case "tab_2":
+            action = 'InsertSport';
+            break;
+        case "tab_3":
+            action = 'InsertBettype';
+            break;
+        case "tab_4":
+            action = 'InsertSportBettypeMatrix';
+            break;
+        case "tab_5":
+            action = 'InsertCSSportBettypeMatrix';
+            break;
+        case "tab_6":
+            action = 'InsertRefResource';
+            break;
+        case "tab_7":
+            action = 'InsertCanSee';
+            break;
+        case "tab_8":
+            action = GetInsertResetWinningAction();
+            break;
+        case "tab_10":
+            action = window.rootUrl + 'ManageVendorGlobalSetting/Insert';
+            break;
+        case "tab_11":
+            action = window.rootUrl + 'ManageProduct3RD/Insert';
+            break;
+    }
+
+    return action;
+}
 
 function ValidateUploadFile() {
     var filename = $('#uploadFile').val();
