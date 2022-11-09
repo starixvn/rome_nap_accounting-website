@@ -533,7 +533,7 @@ var ViewPT = {
                 ViewPT.viewPTBasedOnKindOfCustomer(userName, 0, 0, isLive, 23);
                 break;
             case 212: // Voidbridge
-                ViewPT.viewPTBasedOnKindOfCustomer(userName, 0, 0, isLive, 53);
+                ViewPT.viewPTBasedOnKindOfCustomer(userName, 0, 0, isLive, 18);
                 break;
             case 219: // Fishing World
                 ViewPT.viewPTBasedOnKindOfCustomer(userName, 0, 0, isLive, 24);
