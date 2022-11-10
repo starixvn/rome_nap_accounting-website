@@ -135,7 +135,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
 
                 hash.Add("code", Code.Trim());
                 hash.Add("description", Description);
-                hash.Add("multipliedby", Convert.ToInt32(MultipliedBy.Trim()));
+                hash.Add("multipliedby", Convert.ToDecimal(MultipliedBy.Trim()));
                 int exchangeid = 0;
                 var result = IBCProvider.ExChangeRate.ExchangeIns(hash, ref exchangeid);
                 msg = result.ErrorMessage;
@@ -329,7 +329,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 hash.Add("errmsg", "");
                 hash.Add("description", Description);
                 hash.Add("code", Code.Trim());
-                hash.Add("multipliedby", Convert.ToInt32(MultipliedBy.Trim()));
+                hash.Add("multipliedby", Convert.ToDecimal(MultipliedBy.Trim()));
 
                 DbResult rs;
                 rs = IBCProvider.ExChangeRate.ExchangeSelByID(exid);// get info to send email
