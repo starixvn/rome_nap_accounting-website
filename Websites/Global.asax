@@ -37,6 +37,8 @@
 <%@ Import Namespace="ONEbook.UM.Helpers" %>
 <%@ Import Namespace="ONEbook.UM.NETFramework" %>
 <%@ Import Namespace="ONEbook.UM.Transport" %>
+<%@ Import Namespace="Fanex.MailDeliver.MailClient" %>
+
 
 <script RunAt="server">
 
@@ -98,7 +100,9 @@
         {
             ConnectionOptions = StackExchange.Redis.ConfigurationOptions.Parse(ConfigurationManager.AppSettings["Redis:ConnectionString"])
         }));
-
+        
+        AppSettings.AppMailId = ConfigurationManager.AppSettings["app_mail_id"];
+        AppSettings.AppMailAddress = ConfigurationManager.AppSettings["app_mail_address"];
     }
 
     static void RegisterRouteMiscController(RouteCollection routes)
