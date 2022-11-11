@@ -919,6 +919,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="TelegramBot.Client, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\TelegramBot.Client.1.0.2-beta1\lib\netstandard2.0\TelegramBot.Client.dll</HintPath>
+    </Reference>
     <Reference Include="ThirdPartyProducts.StatusSetting, Version=1.0.2.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ThirdPartyProducts.StatusSetting.1.0.2.4\lib\net461\ThirdPartyProducts.StatusSetting.dll</HintPath>
     </Reference>
