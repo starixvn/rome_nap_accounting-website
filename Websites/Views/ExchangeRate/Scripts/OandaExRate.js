@@ -69,7 +69,7 @@
 
     exportExcelOANDAExRate: function () {
 
-        var url = 'OandaExRate?IsExport=1&fdate=' + OANDAExRate.fdate + '&tdate=' + OANDAExRate.tdate;
+        var url = 'Index?IsExport=1&fdate=' + OANDAExRate.fdate + '&tdate=' + OANDAExRate.tdate + '&typeExport=Oanda';
         $('#frm').attr('src', url);
     },
 

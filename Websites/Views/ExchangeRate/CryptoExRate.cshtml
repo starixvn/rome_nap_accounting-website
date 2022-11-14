@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+@using System.Configuration;
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <script src="~/Views/ExchangeRate/Scripts/CryptoExRate.js?version=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" type="text/javascript"></script>
+    <title></title>
+</head>
+<body>
+    <div class="main">
+        <div class="maincontent">
+            <div class="maincontent_box" style="width: 1153px;">
+                <table>
+                    <tr>
+                        <td>
+                            From:
+                        </td>
+                        <td style="width: 120px">
+                            <input type="text" id="txtCryptoExRateFromDate" readonly="readonly" class="txtdate" style="width: 100px;" />
+                        </td>
+                        <td>
+                            To:
+                        </td>
+                        <td style="width: 120px">
+                            <input type="text" id="txtCryptoExRateToDate" readonly="readonly" class="txtdate" style="width: 100px;" />
+                        </td>
+                        <td align="left">
+                            <input type="button" class="btn" onclick="CryptoExRate.loadDataCryptoExRate()" value="Submit"
+                                name="btnShow" id="btnShow" />
+                        </td>
+                    </tr>
+                </table>
+                <br />
+                <div style="font-weight: bold">
+                    Please note that this report is using CoinMarketCap exchange rate for crypto currency conversion. For USDT rate, the currency is using the rate imported from CandyA18 licensee
+                </div>
+            </div>
+            <div id="mainreport" style="padding-top: 2px">
+                <div id="CryptoExRate" class="content-warper hidden">
+                    <div class="content-toolbox bgtitle">
+                        <div id="gridTitle" class="gridtitle">
+                        </div>
+                        <div class="btngroup">
+                            <input type="button" onclick="CryptoExRate.exportExcelCryptoExRate()" value="  " name="btnExport"
+                                id="exportExcel" class="btnExcel" title="Export to Excel" />
+                        </div>
+                    </div>
+                    <div class="content-header clearfix">
+                        <div class="header-scroll">
+                            <table class="tbl-header-scroll" id="tblcontent">
+                                <tr>
+                                    <td style="border-bottom: none 0px;">
+                                        <div class="col120 c">
+                                            Date
+                                        </div>
+                                    </td>
+                                    <td style="border-bottom: none 0px;">
+                                        <div class="col100 c">
+                                            Currency Code</div>
+                                    </td>
+                                    @{
+                                        string[] baseCurrency = ConfigurationManager.AppSettings["Fanex.Tarus.CryptoExchangeRate.BaseCurrency"].Split(new Char[] { ',' });
+                                        for (int i = 0, maxLength = baseCurrency.Length; i < maxLength; i++)
+                                        {
+                                        <td style="border-bottom: none 0px;">
+                                            <div class="col80 c">
+                                                @baseCurrency[i].ToUpper()/Unit</div>
+                                        </td>
+                                        }
+                                    }
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="content-body clearfix">
+                        <div class="body-scroll">
+                            <table id="tblCryptoExRate" class="tbl-body-scroll">
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script type="text/javascript">
+        var today = '@DateTime.Now.ToShortDateString().ToString()';
+        var baseCryptoExRateCurrencyLength = @baseCurrency.Length;
+    </script>
+</body>
+</html>
