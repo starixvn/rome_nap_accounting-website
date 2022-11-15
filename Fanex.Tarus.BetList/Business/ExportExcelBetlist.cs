@@ -1,26 +1,16 @@
 ﻿namespace Fanex.Tarus.BetList.Business
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Data;
-    using System.Diagnostics.CodeAnalysis;
-    using System.IO;
-    using System.Text;
+    using BetListNPOI.SS.UserModel;
     using Builders.ExcelBuilders;
     using Constants;
-    using Criteria;
     using Extensions;
-    using Fanex.BetList.Core.Builder;
     using Fanex.BetList.Core.Entities;
     using Fanex.BetList.Core.Factories;
     using Fanex.BetList.Core.TicketHelper;
-    using Fanex.Common;
-    using Fanex.Data;
-    using Fanex.Tarus.BetList.Core;
     using Models;
-    using NPOI.SS.UserModel;
-    using Sunplus.Accounting.Core.Extensions;
-    using Sunplus.Accounting.DataAccess.Report;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
     using AccBetListCore = Fanex.Tarus.BetList.Core;
 
     /// <summary>
@@ -80,7 +70,7 @@
 
                 var ms = new MemoryStream();
                 IWorkbook resultWorkbook = builder.GetBetList();
-                resultWorkbook.Write(ms);
+                resultWorkbook.Write(ms, true);
                 return ms;
             }
 
