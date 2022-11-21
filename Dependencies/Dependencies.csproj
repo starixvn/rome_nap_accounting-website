@@ -200,6 +200,9 @@
     <Reference Include="Fanex.BetList.PGSoft, Version=1.0.1.3, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.PGSoft.1.0.1.3\lib\net40\Fanex.BetList.PGSoft.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.BetList.PlayerTips, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.PlayerTips.1.0.0\lib\net40\Fanex.BetList.PlayerTips.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.BetList.PP, Version=1.4.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.PP.1.4.1\lib\net40\Fanex.BetList.PP.dll</HintPath>
     </Reference>
