@@ -40,67 +40,50 @@ namespace Sunplus.Accounting.Business.ExportStatement
             var request = HttpContext.Current.Request;
             var contentLength = request.ContentLength;
 
-            if (AccCommon.IsEnabledRecheckin && !UserController.OnlineUserUpdate(AppSession.OnAccId))
+            string htmlData = "";
+            string FileSize = "<input type='hidden' id='FileSize' value='" + contentLength + "'/>";
+            try
             {
-                string appPath = request.ApplicationPath;
-                if (appPath != "/") appPath += "/";
-                html.Append(
-                    "<script type='text/javascript'>alert('Another session has been logged in or your session is expired. Forced to logout!');top.location.href='" +
-                    appPath + "PreLogIn/Logout.ashx';</script>");
-            }
-            else
-            {
-                string htmlData = "";
-                string FileSize = "<input type='hidden' id='FileSize' value='" + contentLength + "'/>";
-                try
+                if (contentLength < 1024000)
                 {
-                    if (contentLength < 1024000)
+                    if (request.Files.Count == 0)
                     {
-                        if (request.Files.Count == 0)
-                        {
-                            htmlData =
-                                "<span class='error-message'>Your upload file don't successfull, Please try again</span>";
-                            success = 0;
-                            html.Append(htmlData);
-                            return html + "|" + userslistvalid + "|" + success;
-                        }
+                        htmlData =
+                            "<span class='error-message'>Your upload file don't successfull, Please try again</span>";
+                        success = 0;
+                        html.Append(htmlData);
+                        return html + "|" + userslistvalid + "|" + success;
+                    }
 
-                        var uploadedFile = request.Files[0];
-                        string filename = uploadedFile.FileName;
-                        string ext = string.Empty;
+                    var uploadedFile = request.Files[0];
+                    string filename = uploadedFile.FileName;
+                    string ext = string.Empty;
 
-                        if (!string.IsNullOrEmpty(filename))
+                    if (!string.IsNullOrEmpty(filename))
+                    {
+                        if (IsValidExtension(filename, ref ext))
                         {
-                            if (IsValidExtension(filename, ref ext))
+                            IVirtualRateExcel virtualRateExcel = new VirtualRateExcel(uploadedFile.InputStream);
+                            var result = virtualRateExcel.ValidateTemplateFile();
+
+                            if (!result.IsSuccessful)
                             {
-                                IVirtualRateExcel virtualRateExcel = new VirtualRateExcel(uploadedFile.InputStream);
-                                var result = virtualRateExcel.ValidateTemplateFile();
-
-                                if (!result.IsSuccessful)
-                                {
-                                    htmlData = $"<span class='error-message'>{result.Message}</span>";
-                                }
-                                else
-                                {
-                                    DataTable dtb = virtualRateExcel.ExcelToDataTable();
-                                    rows = dtb.Rows.Count;
-                                    if (rows > 100)
-                                    {
-                                        htmlData =
-                                            "<span class='error-message'>You are allowed to export statements of maximum 100 accounts.</span>";
-                                        success = 0;
-                                    }
-                                    else
-                                    {
-                                        htmlData = ListUsers(dtb, ref userslistvalid);
-                                    }
-                                }
+                                htmlData = $"<span class='error-message'>{result.Message}</span>";
                             }
                             else
                             {
-                                htmlData =
-                                    "<span class='error-message'>Sorry, You chose invalid file extension. Please choose an excel file.</span>";
-                                success = 0;
+                                DataTable dtb = virtualRateExcel.ExcelToDataTable();
+                                rows = dtb.Rows.Count;
+                                if (rows > 100)
+                                {
+                                    htmlData =
+                                        "<span class='error-message'>You are allowed to export statements of maximum 100 accounts.</span>";
+                                    success = 0;
+                                }
+                                else
+                                {
+                                    htmlData = ListUsers(dtb, ref userslistvalid);
+                                }
                             }
                         }
                         else
@@ -112,31 +95,37 @@ namespace Sunplus.Accounting.Business.ExportStatement
                     }
                     else
                     {
-                        htmlData = "<span class='error-message'>Your uploaded file's size can't be larger than 1 MB</span>";
+                        htmlData =
+                            "<span class='error-message'>Sorry, You chose invalid file extension. Please choose an excel file.</span>";
                         success = 0;
                     }
-
-                    html.Append(htmlData);
                 }
-                catch (Exception ex)
+                else
                 {
+                        htmlData = "<span class='error-message'>Your uploaded file's size can't be larger than 1 MB</span>";
                     success = 0;
+                }
 
-                    if (ex.Message ==
-                        "'Sheet1$' is not a valid name.  Make sure that it does not include invalid characters or punctuation and that it is not too long."
-                        ||
-                        ex.Message == "String or binary data would be truncated.\r\nThe statement has been terminated.")
-                        htmlData =
-                            "<span class='error-message'>The Excel file is not in correct format. Sheet name must be Sheet1. </span>";
-                    else
-                    {
-                        Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                html.Append(htmlData);
+            }
+            catch (Exception ex)
+            {
+                success = 0;
+
+                if (ex.Message ==
+                    "'Sheet1$' is not a valid name.  Make sure that it does not include invalid characters or punctuation and that it is not too long."
+                    ||
+                    ex.Message == "String or binary data would be truncated.\r\nThe statement has been terminated.")
+                    htmlData =
+                        "<span class='error-message'>The Excel file is not in correct format. Sheet name must be Sheet1. </span>";
+                else
+                {
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                         htmlData =
                             "<span class='error-message'>The format of template is wrong. </span>";
-                    }
-
-                    html.Append(htmlData);
                 }
+
+                html.Append(htmlData);
             }
 
             return html + "|" + userslistvalid + "|" + success;
