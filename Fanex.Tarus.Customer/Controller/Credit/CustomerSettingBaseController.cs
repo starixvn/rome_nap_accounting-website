@@ -2,10 +2,9 @@
 
 namespace Fanex.Tarus.Customer.Credit.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Web.Mvc;
     using CustomerSetting.Module.Core.Attributes;
+    using Fanex.CustomerSetting.Module.Core.Services.Impl;
+    using Fanex.CustomerSetting.Module.Core.Services.Interface;
     using Fanex.PTEngine.BusinessObjects;
     using Fanex.PTEngine.Services;
     using Fanex.Tarus.Customer.CreditCustomer.Business;
@@ -14,21 +13,26 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
     using Newtonsoft.Json.Serialization;
     using Sunplus.Accounting.Core.Extensions;
     using Sunplus.Accounting.Core.Helper;
+    using System;
+    using System.Collections.Generic;
+    using System.Web.Mvc;
 
     [SpecialSiteFilter]
     public class CustomerSettingBaseController : BaseController
     {
         protected static ICustomerSettingService _customerSettingService;
         protected static ICustomerService _customerService;
+        protected static IServiceBase _serviceBase;
 
-        public CustomerSettingBaseController(ICustomerSettingService customerSettingService)
+        public CustomerSettingBaseController(ICustomerSettingService customerSettingService, IServiceBase serviceBase = null)
         {
             _customerSettingService = customerSettingService ?? new CustomerSettingService();
             _customerService = new CustomerService();
+            _serviceBase = serviceBase ?? new ServiceBase();
         }
 
         public CustomerSettingBaseController()
-            : this(null)
+            : this(null, null)
         {
         }
 

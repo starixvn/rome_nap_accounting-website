@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Functions SiteId="104" SiteName="NAP - Accounting">
   <Function Name="Customer - Third Party">
     <Setting Key="Acc_CustomerUpdDisableSuperLive" SpName="Acc_CustomerUpdDisableSuperLive" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
@@ -277,7 +277,6 @@
       <Setting Key="Acc_Dep_CustSetting_Game_BetLimitFullLineSettingSelect" SpName="Acc_Dep_CustSetting_Game_BetLimitFullLineSettingSelect" DbName="DBCust.CustDB.bodbAdminNet" />
       <Setting Key="Acc_Dep_CustSetting_Game_BetLimitFullLineUpd" SpName="Acc_Dep_CustSetting_Game_BetLimitFullLineUpd" DbName="DBCust.CustDB.bodbAdminNet" />
     </Function>
-
     <Function Name="Setting Type 11 - Bet Setting without Max Per Match">
       <Setting Key="Acc_Dep_CustSetting_NewBetLimitFullLineSettingSelect" SpName="Acc_Dep_CustSetting_NewBetLimitFullLineSettingSelect" DbName="DBCust.CustDB.bodbAdminNet" />
       <Setting Key="Acc_Dep_CustSetting_NewBetLimitFullLineUpd" SpName="Acc_Dep_CustSetting_NewBetLimitFullLineUpd" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -477,7 +476,7 @@
   <Function Name="Initializing Stake Level">
     <Setting Key="Acc_InitializingStake_StakelevelIns" SpName="Acc_InitializingStake_StakelevelIns" DbName="DBCUST.CustDB.bodbAdminNet" />
   </Function>
-  <Function Name="Licensee Configuration > New Licensee Member">
+  <Function Name="Licensee Configuration &gt; New Licensee Member">
     <Setting Key="Acc_Dep_CheckExistedAccount" SpName="Acc_Dep_CheckExistedAccount" DbName="DBCUST.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Helper">
