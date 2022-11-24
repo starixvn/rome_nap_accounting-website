@@ -959,9 +959,17 @@ accManager.accounts = {
         colFirstName.parent().append("<input type='text' style='width:196px' editor='true' firstname='true' />").find("input[editor]").val(accManager.utils.decodeSpecifiedCharacter(accManager.utils.trimStartEnd(colFirstName.html())));
         colLastName.parent().append("<input type='text' style='width:196px' editor='true' lastname='true' />").find("input[editor]").val(accManager.utils.decodeSpecifiedCharacter(accManager.utils.trimStartEnd(colLastName.html())));
         var isNeverExpired = colExpired.html().trim() === 'Never Expired'? 'checked': '';
-        colExpired.parent().append("<div editor='true' style='width: fit-content; margin: auto;'><input editor='true' class='img-date-selector' onclick='return false;' alt='' id='ExpiredDate_" + id + "_Trigger' title='Date selector' width='18' height='17' src='../App_Themes/Images/calendar.gif' type='image' /><input editor='true' expireddate='true' style='padding-bottom: 4px;' id='ExpiredDate_" + id + "' readonly type='text' placeholder='Expired Date (GMT+7)' title='Expired Date (GMT+7)' /></br><input editor='true' neverexpired='true' type='checkbox' " + isNeverExpired + " /><span> Never Expired</span></div>");
-        
+        colExpired.parent().append("<div editor='true' style='width: fit-content; margin: auto;'><input editor='true' class='img-date-selector' onclick='return false;' alt='' id='ExpiredDate_" + id + "_Trigger' title='Date selector' width='18' height='17' src='../App_Themes/Images/calendar.gif' type='image' /><input editor='true' expireddate='true' style='padding-bottom: 4px;' id='ExpiredDate_" + id + "' readonly type='text' placeholder='Expired Date (GMT+7)' title='Expired Date (GMT+7)' /></br><input id='ckbNeverExpired_" + id + "' editor='true' neverexpired='true' type='checkbox' " + isNeverExpired + " /><span> Never Expired</span></div>");
+
         var expiredDivId = "ExpiredDate_" + id;
+        var neverExpiredDivId = "ckbNeverExpired_" + id;
+        $('#' + neverExpiredDivId).change(function () {
+            $('#' + expiredDivId).prop('disabled', this.checked);
+            $('#' + expiredDivId + '_Trigger').prop('disabled', this.checked);
+        });
+
+        $('#' + neverExpiredDivId).trigger('change');
+
         $('#' + expiredDivId).datetimepicker({
             format: 'm/d/Y',
             timepicker: false
