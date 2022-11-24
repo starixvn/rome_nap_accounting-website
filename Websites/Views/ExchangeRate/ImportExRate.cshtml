@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <meta http-equiv="Cache-Control" content="no-cache"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7"/>
+    <link rel="stylesheet" type="text/css" href="../App_Themes/Public/common.css"/>
+    <link rel="stylesheet" type="text/css" href="../App_Themes/Public/table.css"/>
+    <link rel="stylesheet" type="text/css" href="../App_Themes/Public/input.css"/>
+    <link rel="stylesheet" type="text/css" href="../App_Themes/Report/Report.css"/>
+    <link rel="stylesheet" type="text/css" href="~/Views/ExchangeRate/Styles/ImportExRate.css"/>
+    <link rel="stylesheet" type="text/css" href="~/js/jQuery/FanexGrid/Fanex.Grid.css"/>
+    <link rel="stylesheet" type="text/css" href="../../js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css?version=@Sunplus.Accounting.Core.Configurations.WebSettings.Version">
+
+    <link rel="stylesheet" type="text/css" href="../../js/MonthPicker/MonthPicker.min.css?version=@Sunplus.Accounting.Core.Configurations.WebSettings.Version">
+
+    <script type="text/javascript" src="~/js/common.js"></script>
+    <script src="../../Scripts/_Libs/FanexGrid/Fanex.Grid.js?v=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" type="text/javascript"> </script>
+    <script src="../../Scripts/_Libs/jQuery/jquery-ui-1.9.1.min.js?v=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" type="text/javascript"> </script>
+    <script src="../../js/MonthPicker/MonthPicker.min.js?version=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" type="text/javascript"></script>
+    <script src="../../js/jQuery/ajaxfileupload.js?version=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" type="text/javascript"></script>
+    <script src="../../js/jQuery/scrolltable/webtoolkit.jscrollable.js" type="text/javascript"></script>
+    <script src="../../js/jQuery/scrolltable/webtoolkit.scrollabletable.js" type="text/javascript"></script>
+    <script src="~/Views/ExchangeRate/Scripts/ImportExRate.js?version=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" type="text/javascript"></script>
+</head>
+<body>
+<div class="main">
+    <div class="maincontent">
+        <table border="0" cellpadding="0px" cellspacing="0px" class="maincontent_header">
+            <tr>
+                <td class="maincontent_headerL">
+                </td>
+                <td class="maincontent_headerC">
+                    Import USDT Rate
+                </td>
+                <td class="maincontent_headerR">
+                </td>
+            </tr>
+        </table>
+        <div class="maincontent_box">
+            <div style="margin: 5px;">
+                <div id="containerMsg1" style="margin:5px 0; display: none;"></div>
+                <form id="mainForm" action="OpenUSDTRateExcel" method="post" enctype="multipart/form-data">
+                    <div class="h3 b" style="margin: 5px 0">Choose an Excel file to upload (Format:*.xls,*.xlsx)</div>
+                    <input type="file" onchange="ImportExRate.ValidateFile()" size="40" name="uploadFile" id="USDTExcelFile"/>
+                    <input class="btn" style="width: 60px" id="btnOpenFile" type="submit" value="Open File"/>
+                </form>
+                <div style="margin-top:5px">
+                    <span>File Size limit 1 MB</span>
+                    <a href="~/Views/ExchangeRate/Templates/ImportUSDTRateTemplate.xlsx" class="download-link">Click here to download template</a>
+                </div>
+            </div>
+        </div>
+        <div id="main_content" class="bg_table" style="display: none;">
+            <section style="margin: 5px;">
+                <div id="submitMsg" style="margin:5px 0; display: none;" ></div>
+                <div>
+                    <label for="EffectiveFromDate" style="margin:5px 0"><span class="b">Effective from </span><span class="text-red">* </span></label>
+                    <input class="setting-calendar" disabled id="EffectiveFromDate"/>
+                    <input class="hidden" id="valueUpdateFromDate"/>
+                </div>
+                <div>
+                    <div>Note: Billing date is 5th of month (17:00 GMT+8)</div>
+                </div>
+                <div>
+                    Current billing cycle:
+                    <span id="billingCircle"></span>
+                    <span style="margin: auto 4px; float: none;" id="noteMessageIcon" class="note-info-message" title="" onclick="ImportExRate.OpenNoteMessage();"></span>
+                </div>
+                <form id="noteMessage" style="display:none;" action="">
+                    <p>Billing cycle = current month if current time > 17:00 (GMT+8) 5th of the month</p>
+                    <p>Billing cycle = last month if current time < 17:00 (GMT+8) 5th of the month</p>
+                </form>
+            </section>
+            <section>
+                <div id="importUSTDGrid" class="freegrid grid_mapping hidden"></div>
+                <div style="display: flex;justify-content: end;margin: 5px;">
+                    <input type="button" class="btn" id="btnSubmitUSDTFile" value="Submit" disabled/>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>

@@ -163,6 +163,7 @@
     <Setting Key="Acc_ExchangeIns" SpName="Acc_ExchangeIns" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_ExchangeSel" SpName="Acc_ExchangeSel" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="EchangeUpd" SpName="Acc_ExchangeUpd" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="ExchangeDailyCryptoUpd" SpName="Acc_ExchangeDaily_Crypto_Upd_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="EchangeSelById" SpName="Acc_ExchangeSelByID" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="External Betting Limit">
