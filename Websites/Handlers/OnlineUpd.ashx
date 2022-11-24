@@ -24,24 +24,21 @@ public class OnlineUpd : IHttpHandler , IRequiresSessionState
             if (appPath != "/") appPath += "/";
             if (onlineId != 0 && AccCommon.IsEnabledRecheckin)
                 onlineStatus = UserController.OnlineUserUpdate(onlineId);
-            if (AccCommon.IsLocalTest)
-            {
-                context.Response.Write("</body></html>");
-            }
 
             var alertMessage = string.Empty;
             //Status 1: Kick out
-            if (onlineStatus == 1)
+            if (onlineStatus == 1 && !AccCommon.IsLocalTest)
             {
                 alertMessage = "Another session has been logged in or your session is expired. Forced to logout!";
+                context.Response.Write("<script type='text/javascript'>alert('" + alertMessage + "');top.location.href='" + appPath + "PreLogIn/Logout.ashx';</script>");
             }
             // Status 2 Permission revolked
-            else if(onlineStatus == 2)
+            else if(onlineStatus == 2 && !AccCommon.IsLocalTest)
             {
                 alertMessage = "Your Account was Expired, Please contact your supervisor";
+                context.Response.Write("<script type='text/javascript'>alert('" + alertMessage + "');top.location.href='" + appPath + "PreLogIn/Logout.ashx';</script>");
             }
             
-            context.Response.Write("<script type='text/javascript'>alert('" + alertMessage + "');top.location.href='" + appPath + "PreLogIn/Logout.ashx';</script>");
         }
         catch(Exception ex)
         {
