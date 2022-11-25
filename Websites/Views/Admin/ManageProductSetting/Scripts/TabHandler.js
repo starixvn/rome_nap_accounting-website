@@ -40,6 +40,7 @@ function UpdateSampleUrl() {
             $('#sampleSettingLink').prop("href", rootUrl + "Views/Admin/ManageProductSetting/CSSportBettypeMatrix/CS_SportBettypeMatrix.xls");
             break;
         case "tab_6":
+            $("#btnUpdateExcel").removeClass("hide");
             $('#sampleSettingLink').prop("href", rootUrl + "Views/Admin/ManageProductSetting/RefResource/RefResource.xls");
             break;
         case "tab_7":
