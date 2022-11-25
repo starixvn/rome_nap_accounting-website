@@ -232,7 +232,6 @@ function RenderDcsMatrix() {
         type: "GET",
         url: "GetProductSportBettype?type=deposit",
         success: function (rs) {
-            console.log("render");
             if (rs && rs.ErrorCode !== undefined && rs.ErrorCode !== 0) {
                 showAlertMessage('errMsg', rs.ErrorMessage, 1);
             } else {
@@ -510,16 +509,18 @@ function RenderSiteSelection(enableInput = true) {
     };
 
     siteSelect.multiSelect(option);
-    $('#EditSiteSelect').next('div.ui-multiselect-options').find('input.ui-multiselect-widget-header-filter').on('change', function () {
-        var filterValue = $('#EditSiteSelect').next('div.ui-multiselect-options').find('input.ui-multiselect-widget-header-filter').val().toLowerCase();
-        var selectedSites = filterValue.split(/(?:,| )+/);
-        option.listData.forEach(function (cur) {
-            var curOption = cur.Text.split(" ")[1].toLowerCase();
-            $('#' + cur.Id).prop('checked', selectedSites.indexOf(curOption) >= 0);
-        });
+    $('#EditSiteSelect').next('div.ui-multiselect-options').find('input.ui-multiselect-widget-header-filter').on('keypress', function (e) {
+        if (e.which == 13) {
+            var filterValue = $('#EditSiteSelect').next('div.ui-multiselect-options').find('input.ui-multiselect-widget-header-filter').val().toLowerCase();
+            var selectedSites = filterValue.split(/(?:,| )+/);
+            option.listData.forEach(function (cur) {
+                var curOption = cur.Text.split(" ")[1].toLowerCase();
+                $('#' + cur.Id).prop('checked', selectedSites.indexOf(curOption) >= 0);
+            });
 
-        $('#EditSiteSelect').next('div.ui-multiselect-options').find('input.ui-multiselect-widget-header-filter').val('').keyup();
-        $('#EditSiteSelect').trigger('change');
+            $('#EditSiteSelect').next('div.ui-multiselect-options').find('input.ui-multiselect-widget-header-filter').val('').keyup();
+            $('#EditSiteSelect').trigger('change');
+        }
     });
 }
 
@@ -555,16 +556,18 @@ function RenderCurrencySelection(enableInput) {
     };
 
     currencySelect.multiSelect(option);
-    $('#EditCurrencySelect').next('div.ui-multiselect-options').find('input.ui-multiselect-widget-header-filter').on('change', function () {
-        var filterValue = $('#EditCurrencySelect').next('div.ui-multiselect-options').find('input.ui-multiselect-widget-header-filter').val().toLowerCase();
-        var selectedCurrency = filterValue.split(/(?:,| )+/);
-        option.listData.forEach(function (cur) {
-            var curOption = cur.Text.split(" ")[1].toLowerCase();
-            $('#' + cur.Id).prop('checked', selectedCurrency.indexOf(curOption) >= 0);
-        });
+    $('#EditCurrencySelect').next('div.ui-multiselect-options').find('input.ui-multiselect-widget-header-filter').on('keypress', function (e) {
+        if (e.which == 13) {
+            var filterValue = $('#EditCurrencySelect').next('div.ui-multiselect-options').find('input.ui-multiselect-widget-header-filter').val().toLowerCase();
+            var selectedCurrency = filterValue.split(/(?:,| )+/);
+            option.listData.forEach(function (cur) {
+                var curOption = cur.Text.split(" ")[1].toLowerCase();
+                $('#' + cur.Id).prop('checked', selectedCurrency.indexOf(curOption) >= 0);
+            });
 
-        $('#EditCurrencySelect').next('div.ui-multiselect-options').find('input.ui-multiselect-widget-header-filter').val('').keyup();
-        $('#EditCurrencySelect').trigger('change');
+            $('#EditCurrencySelect').next('div.ui-multiselect-options').find('input.ui-multiselect-widget-header-filter').val('').keyup();
+            $('#EditCurrencySelect').trigger('change');
+        }
     });
 }
 

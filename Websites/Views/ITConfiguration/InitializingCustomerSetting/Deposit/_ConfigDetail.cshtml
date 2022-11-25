@@ -300,7 +300,7 @@
                         </td>
                         <td class="setting-col col-item td-setting" style="border-right: none;">
                             <select class="@("edit-input floatLeft w200 sel-position-taking input-default-" + setting.SettingId)" data-pos=@setting.SettingId @setting.DisableDefault>
-                                @for (float i = 0; i <= 10000; i = i + 5)
+                                @for (float i = 10000; i >= 0; i = i - 5)
                                 {
                                     <option value="@(i/10000)">@(i / 10000)</option>
                                 }

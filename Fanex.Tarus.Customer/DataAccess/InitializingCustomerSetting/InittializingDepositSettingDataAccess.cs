@@ -46,7 +46,7 @@
                 }
             }
 
-            return sites;
+            return sites.OrderBy(site => site.Id);
         }
 
         public override IEnumerable<ProductDcsModel> GetProductDcsModel()
