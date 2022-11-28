@@ -37,7 +37,7 @@ var CryptoExRate = {
             if (i == 0) {
                 strrow += '<td><div class="col100 c">' + items[i].CurrencyCode + '</div></td>';
                 for (var j = 0; j < listBaseCurr.length; j++) {
-                    strrow += '<td><div class="col80 r">' + listBaseCurr[j].Value + '</div></td>';
+                    strrow += '<td><div class="col80 r">' + listBaseCurr[j].FormatedValue + '</div></td>';
                 }
                 strrow += '</tr>';
             }
@@ -45,11 +45,11 @@ var CryptoExRate = {
                 strrow += '<tr>';
                 strrow += '<td><div class="col100 c">' + items[i].CurrencyCode + '</div></td>';
                 for (var j = 0; j < listBaseCurr.length; j++) {
-                    strrow += '<td><div class="col80 r">' + listBaseCurr[j].Value + '</div></td>';
+                    strrow += '<td><div class="col80 r">' + listBaseCurr[j].FormatedValue + '</div></td>';
                 }
                 strrow += '</tr>';
             }
-
+` `
         }
         return strrow;
 

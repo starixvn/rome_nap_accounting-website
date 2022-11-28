@@ -36,6 +36,7 @@ public class UpdateExRate : IHttpHandler, IRequiresSessionState
             string MultipliedBy = CastAide.AsString(context.Request["MultipliedBy"]);
             string OfferSite = CastAide.AsString(context.Request["OfferSite"]);
             string CurrencyType = CastAide.AsString(context.Request["CurrencyType"]);
+            string CoinMarketCapID =CurrencyType == "1"? context.Request["CoinMarketCapID"]: null;
             bool IsActive = CastAide.AsBoolean(context.Request["IsActive"]);
 
             int exRateId = 0;
@@ -44,7 +45,7 @@ public class UpdateExRate : IHttpHandler, IRequiresSessionState
             if (context.Request["type"] == "insert")
             {
 
-                errMsg = exRate.InsertExChangeRate(actualRate, currency, minbet, minbetlive, Code, Description, MultipliedBy, OfferSite);
+                errMsg = exRate.InsertExChangeRate(actualRate, currency, minbet, minbetlive, Code, Description, MultipliedBy, OfferSite, CurrencyType, CoinMarketCapID);
                 if (errMsg.Length > 0)
                     context.Response.Write("no|" + errMsg);
                 else
@@ -68,8 +69,13 @@ public class UpdateExRate : IHttpHandler, IRequiresSessionState
                     Fanex.Tarus.Customer.Business.NG2.ISyncCurrencyService syncCurrencyService = new Fanex.Tarus.Customer.Business.NG2.SyncCurrencyService();
                     var currencies = syncCurrencyService.SyncCurrencies().Currencies;
 
-                    errMsg = exRate.UpdateEditExChangeRate(exRateId, actualRate, currency, minbet, minbetlive, Description, MultipliedBy, Code, OfferSite, IsActive);
-                    if (errMsg.Length == 0)
+                    errMsg = exRate.UpdateEditExChangeRate(exRateId, actualRate, currency, minbet, minbetlive, Description, MultipliedBy, Code, OfferSite, CurrencyType, CoinMarketCapID,IsActive);
+                    if (errMsg.Length == 0 && CurrencyType == "1")
+                    {
+                        context.Response.Write("ok|Update exchange rate successfully!");
+                        return;
+                    }
+                    if (errMsg.Length == 0 )
                     {
                         var allowedCurrency = false;
                         var format = System.Globalization.CultureInfo.CurrentCulture.NumberFormat;

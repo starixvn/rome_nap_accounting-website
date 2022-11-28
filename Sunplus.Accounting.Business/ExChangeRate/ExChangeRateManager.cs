@@ -35,7 +35,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
             try
             {
                 string tpl = WebUtils.LoadTemplate("ExRate/ExRateHeader1.htm");
-                TemplateHandler.Assign(ref tpl, "CurrencyType", ExChangeRateHelper.BuildCurrentTypeSelection(selectedCurrencyType));
+                TemplateHandler.Assign(ref tpl, "CurrencyType", ExChangeRateHelper.BuildHeaderFilterCurrentTypeSelection(selectedCurrencyType));
                 html.Append(tpl);
             }
             catch (Exception ex)
@@ -60,7 +60,12 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 TemplateHandler.Assign(ref tpl, "Minbet", "");
                 TemplateHandler.Assign(ref tpl, "MinbetLive", "");
                 TemplateHandler.Assign(ref tpl, "OfferSite", ExChangeRateHelper.BuildOfferSiteSelection(string.Empty));
-                TemplateHandler.Assign(ref tpl, "CurrencyType", ExChangeRateHelper.BuildCurrentTypeSelection(string.Empty));
+                TemplateHandler.Assign(ref tpl, "CurrencyType", ExChangeRateHelper.BuildCurrentTypeSelection("0"));
+                
+                TemplateHandler.Assign(ref tpl, "readOnlyCoinMarketID", "readonly='true'");
+                TemplateHandler.Assign(ref tpl, "disabledCoinMarketID", "disabled='disabled'");
+                
+                TemplateHandler.Assign(ref tpl, "CoinMarketCapID", "");
                 TemplateHandler.Assign(ref tpl, "IsActive", " checked disabled");
                 TemplateHandler.Assign(ref tpl, "submit", "Submit");
                 TemplateHandler.Assign(ref tpl, "reset", "Reset");
@@ -119,9 +124,10 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 ws.Cells.GetSubrangeAbsolute(0, 5, 1, 5).Merged = true;
                 ws.Cells.GetSubrangeAbsolute(0, 6, 1, 6).Merged = true;
                 ws.Cells.GetSubrangeAbsolute(0, 7, 1, 7).Merged = true;
+                ws.Cells.GetSubrangeAbsolute(0, 8, 1, 8).Merged = true;
 
                 ws.Cells.GetSubrangeAbsolute(0, 0, 0, 6).Style = gembox.GetStyleTitle(181, 196, 208);
-                string[] arrheaders = { "Currency", "Standard Code", "Base Rate", "Min Bet", "Min Bet Live", "Offer Site", "Currency Type", "IsActive" };
+                string[] arrheaders = { "Currency", "Standard Code", "Base Rate", "Min Bet", "Min Bet Live", "Offer Site", "Currency Type","Coin Market ID", "IsActive" };
 
                 for (int i = 0; i < arrheaders.Length; i++) 
                 {
@@ -135,7 +141,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
 
                 int indexrow = 2;
                 DataRow[] Rows = rs.ResultSet.Tables[0].Select();
-                string[] arrContent = { "currency", "currencyCode", "ActualRate", "MinBet", "MinBetLive", "OfferSite","CurrencyType", "IsActive" };
+                string[] arrContent = { "currency", "currencyCode", "ActualRate", "MinBet", "MinBetLive", "OfferSite","CurrencyType","CoinMarketCapID", "IsActive" };
                 int red = 0, green = 0, blue = 0;
 
                 foreach (DataRow dr in Rows)
@@ -175,10 +181,14 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                             ws.Cells[indexrow, j].Value = dr[arrContent[j]];
                         }
 
-                        if (arrContent[j] == "currency")
+                        if (arrContent[j] == "currency" || (arrContent[j] == "CoinMarketCapID"))
+                        {
                             ws.Cells[indexrow, j].Style = gembox.GetStyleText(red, green, blue);
+                        }
                         else
+                        {
                             ws.Cells[indexrow, j].Style = gembox.GetStyleNumber(0, "", red, green, blue);
+                        }
                     }
                     indexrow++;
                 }
