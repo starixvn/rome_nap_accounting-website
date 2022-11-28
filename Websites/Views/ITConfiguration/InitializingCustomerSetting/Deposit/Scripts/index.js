@@ -28,6 +28,11 @@ function GetSetting() {
     });
 }
 
+function RefreshGrid() {
+    hideAlertMessage('errMsg');
+    GetSetting();
+}
+
 function RenderSports(pos) {
     var sports = configSettings.ConfigSettings[pos].SportTypeList;
     if (sports.length > 3) {
