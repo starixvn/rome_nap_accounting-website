@@ -115,8 +115,8 @@ namespace Fanex.Tarus.Customer.Controller.InitializingCustomerSetting
         public ActionResult ValidateAddConfigSetting(string type, ConfigModel request)
         {
             var result = IsCredit(type)
-                ? creditService.ValidateAddConfigSetting(request, HttpContext.Request.UserHostAddress)
-                : depositService.ValidateAddConfigSetting(request, HttpContext.Request.UserHostAddress);
+                ? creditService.ValidateAddConfigSetting(request, HttpContext.Request.UserHostAddress, AppSession.AccId)
+                : depositService.ValidateAddConfigSetting(request, HttpContext.Request.UserHostAddress, AppSession.AccId);
 
             return Json(result);
         }
@@ -126,8 +126,8 @@ namespace Fanex.Tarus.Customer.Controller.InitializingCustomerSetting
         public ActionResult AddConfigSetting(string type, ConfigModel request)
         {
             var result = IsCredit(type)
-                   ? creditService.AddConfigSetting(request, HttpContext.Request.UserHostAddress)
-                   : depositService.AddConfigSetting(request, HttpContext.Request.UserHostAddress);
+                   ? creditService.AddConfigSetting(request, HttpContext.Request.UserHostAddress, AppSession.AccId)
+                   : depositService.AddConfigSetting(request, HttpContext.Request.UserHostAddress, AppSession.AccId);
 
             return Json(result);
         }
@@ -137,8 +137,8 @@ namespace Fanex.Tarus.Customer.Controller.InitializingCustomerSetting
         public ActionResult ValidateUpdateConfigSetting(string type, ConfigModel request)
         {
             var result = IsCredit(type)
-                ? creditService.ValidateUpdateConfigSetting(request, HttpContext.Request.UserHostAddress)
-                : depositService.ValidateUpdateConfigSetting(request, HttpContext.Request.UserHostAddress);
+                ? creditService.ValidateUpdateConfigSetting(request, HttpContext.Request.UserHostAddress, AppSession.AccId)
+                : depositService.ValidateUpdateConfigSetting(request, HttpContext.Request.UserHostAddress, AppSession.AccId);
 
             return Json(result);
         }
@@ -148,8 +148,8 @@ namespace Fanex.Tarus.Customer.Controller.InitializingCustomerSetting
         public ActionResult UpdateConfigSetting(string type, ConfigModel request)
         {
             var result = IsCredit(type)
-                  ? creditService.UpdateConfigSetting(request, HttpContext.Request.UserHostAddress)
-                  : depositService.UpdateConfigSetting(request, HttpContext.Request.UserHostAddress);
+                  ? creditService.UpdateConfigSetting(request, HttpContext.Request.UserHostAddress, AppSession.AccId)
+                  : depositService.UpdateConfigSetting(request, HttpContext.Request.UserHostAddress, AppSession.AccId);
 
             return Json(result);
         }

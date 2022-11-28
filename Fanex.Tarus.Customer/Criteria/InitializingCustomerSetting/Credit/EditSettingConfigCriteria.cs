@@ -4,7 +4,7 @@
     
     public class EditSettingConfigCriteria : AddSettingConfigCriteria
     {
-        public EditSettingConfigCriteria(ConfigModel request, string ip) : base(request, ip)
+        public EditSettingConfigCriteria(ConfigModel request, string ip, int userId) : base(request, ip, userId)
         {
             ConfigID = request.Config.ConfigId;
         }

@@ -23,7 +23,7 @@
         public int IsWarning { get; set; }
         public bool IsConfirmed { get; set; }
 
-        public AddSettingConfigCriteria(ConfigModel request, string ip)
+        public AddSettingConfigCriteria(ConfigModel request, string ip, int userId)
         {
             ProductID = request.Config.ProductId;
             SportTypeList = string.Join(",", request.Config.SportTypeIdList);
@@ -34,6 +34,7 @@
             IsTest = request.Config.IsTest ? 1 : 0;
             Remark = HttpUtility.HtmlDecode(request.Config.Remark);
             XMLConfig = BuildXmlConfig(request.Settings);
+            UserId = userId;
             IP = ip;
         }
 

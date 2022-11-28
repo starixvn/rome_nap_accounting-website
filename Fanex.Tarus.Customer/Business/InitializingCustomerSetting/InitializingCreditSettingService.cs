@@ -27,13 +27,13 @@
 
         ConfigSettingViewModel GenerateConfigSetting(GenerateConfigSettingRequest request);
 
-        ValidateResultModel ValidateAddConfigSetting(ConfigModel request, string ip);
+        ValidateResultModel ValidateAddConfigSetting(ConfigModel request, string ip, int userId);
 
-        IEnumerable<InsertErrorModel> AddConfigSetting(ConfigModel request, string ip);
+        IEnumerable<InsertErrorModel> AddConfigSetting(ConfigModel request, string ip, int userId);
 
-        ValidateResultModel ValidateUpdateConfigSetting(ConfigModel request, string ip);
+        ValidateResultModel ValidateUpdateConfigSetting(ConfigModel request, string ip, int userId);
 
-        IEnumerable<InsertErrorModel> UpdateConfigSetting(ConfigModel request, string ip);
+        IEnumerable<InsertErrorModel> UpdateConfigSetting(ConfigModel request, string ip, int userId);
     }
 
     public class InitializingCreditSettingService : IInitializingCreditSettingService
@@ -375,9 +375,9 @@
             return message.ErrorMsg;
         }
 
-        public virtual IEnumerable<InsertErrorModel> AddConfigSetting(ConfigModel request, string ip)
+        public virtual IEnumerable<InsertErrorModel> AddConfigSetting(ConfigModel request, string ip, int userId)
         {
-            var criteria = new AddSettingConfigCriteria(request, ip)
+            var criteria = new AddSettingConfigCriteria(request, ip, userId)
             {
                 IsConfirmed = true
             };
@@ -385,9 +385,9 @@
             return ProcessAddUpdateSetting(criteria, request);
         }
 
-        public virtual IEnumerable<InsertErrorModel> UpdateConfigSetting(ConfigModel request, string ip)
+        public virtual IEnumerable<InsertErrorModel> UpdateConfigSetting(ConfigModel request, string ip, int userId)
         {
-            var criteria = new EditSettingConfigCriteria(request, ip)
+            var criteria = new EditSettingConfigCriteria(request, ip, userId)
             {
                 IsConfirmed = true
             };
@@ -406,16 +406,16 @@
             return resultMessages;
         }
 
-        public virtual ValidateResultModel ValidateAddConfigSetting(ConfigModel request, string ip)
+        public virtual ValidateResultModel ValidateAddConfigSetting(ConfigModel request, string ip, int userId)
         {
-            var criteria = new AddSettingConfigCriteria(request, ip);
+            var criteria = new AddSettingConfigCriteria(request, ip, userId);
 
             return ProcessValidateSetting(criteria, request);
         }
 
-        public virtual ValidateResultModel ValidateUpdateConfigSetting(ConfigModel request, string ip)
+        public virtual ValidateResultModel ValidateUpdateConfigSetting(ConfigModel request, string ip, int userId)
         {
-            var criteria = new EditSettingConfigCriteria(request, ip);
+            var criteria = new EditSettingConfigCriteria(request, ip, userId);
 
             return ProcessValidateSetting(criteria, request);
         }

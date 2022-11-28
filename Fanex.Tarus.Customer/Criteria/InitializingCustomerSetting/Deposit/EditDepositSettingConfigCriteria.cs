@@ -4,7 +4,7 @@ namespace Fanex.Tarus.Customer.Criteria.InitializingCustomerSetting.Deposit
 {
     public class EditDepositSettingConfigCriteria : AddDepositSettingConfigCriteria
     {
-        public EditDepositSettingConfigCriteria(ConfigModel request, string ip) : base(request, ip)
+        public EditDepositSettingConfigCriteria(ConfigModel request, string ip, int userId) : base(request, ip, userId)
         {
             ConfigID = request.Config.ConfigId;
         }

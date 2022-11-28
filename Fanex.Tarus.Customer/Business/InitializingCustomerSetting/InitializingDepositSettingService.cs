@@ -74,9 +74,9 @@ namespace Fanex.Tarus.Customer.Business.InitializingCustomerSetting
             return dataAccess.ExecuteNonQuery(criteria);
         }
 
-        public override IEnumerable<InsertErrorModel> AddConfigSetting(ConfigModel request, string ip)
+        public override IEnumerable<InsertErrorModel> AddConfigSetting(ConfigModel request, string ip, int userId)
         {
-            var criteria = new AddDepositSettingConfigCriteria(request, ip)
+            var criteria = new AddDepositSettingConfigCriteria(request, ip, userId)
             {
                 IsConfirmed = true
             };
@@ -84,10 +84,10 @@ namespace Fanex.Tarus.Customer.Business.InitializingCustomerSetting
             return ProcessAddUpdateSetting(criteria, request);
         }
 
-        public override IEnumerable<InsertErrorModel> UpdateConfigSetting(ConfigModel request, string ip)
+        public override IEnumerable<InsertErrorModel> UpdateConfigSetting(ConfigModel request, string ip, int userId)
         {
             request.BetSettings = CombineInputAndCurrentBetSetting(request).ToList();
-            var criteria = new EditDepositSettingConfigCriteria(request, ip)
+            var criteria = new EditDepositSettingConfigCriteria(request, ip, userId)
             {
                 IsConfirmed = true
             };
@@ -96,17 +96,17 @@ namespace Fanex.Tarus.Customer.Business.InitializingCustomerSetting
         }
         
 
-        public override ValidateResultModel ValidateAddConfigSetting(ConfigModel request, string ip)
+        public override ValidateResultModel ValidateAddConfigSetting(ConfigModel request, string ip, int userId)
         {
-            var criteria = new AddDepositSettingConfigCriteria(request, ip);
+            var criteria = new AddDepositSettingConfigCriteria(request, ip, userId);
 
             return ProcessValidateSetting(criteria, request);
         }
 
-        public override ValidateResultModel ValidateUpdateConfigSetting(ConfigModel request, string ip)
+        public override ValidateResultModel ValidateUpdateConfigSetting(ConfigModel request, string ip, int userId)
         {
             request.BetSettings = CombineInputAndCurrentBetSetting(request).ToList();
-            var criteria = new EditDepositSettingConfigCriteria(request, ip);
+            var criteria = new EditDepositSettingConfigCriteria(request, ip, userId);
 
             return ProcessValidateSetting(criteria, request);
         }

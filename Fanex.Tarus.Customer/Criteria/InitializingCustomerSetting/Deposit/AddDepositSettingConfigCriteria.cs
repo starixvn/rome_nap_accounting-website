@@ -9,7 +9,7 @@
     {
         public string BetSettingXML { get; set; }
 
-        public AddDepositSettingConfigCriteria(ConfigModel request, string ip) : base(request, ip)
+        public AddDepositSettingConfigCriteria(ConfigModel request, string ip, int userId) : base(request, ip, userId)
         {
             BetSettingXML = BuildBetSettingXML(request.BetSettings);
         }
