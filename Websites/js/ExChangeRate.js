@@ -267,7 +267,7 @@ function onChangeCurrencyType(e) {
             txtCoinMarketID.removeAttr("readonly");
         }
         else {
-            txtCoinMarketID.html("");
+            txtCoinMarketID.val("");
             txtCoinMarketID.attr("disabled", "disabled");
             txtCoinMarketID.attr("readonly", "readonly");
         }
