@@ -170,7 +170,7 @@ function UpdateEditExChangeRate() {
 function UpdateExChangeRate(exrateId) {
     var url = 'ExRate/EditRate.aspx?exrateId=' + exrateId;
 
-    parent.OpenPopup(url, "Edit Exchange Rate", 1010, 220, true, true, window, 2000, null, null);
+    parent.OpenPopup(url, "Edit Exchange Rate", 1200, 220, true, true, window, 2000, null, null);
 }
 
 function CheckDecNumber_ExRate(e) {
@@ -277,7 +277,7 @@ function onChangeCurrencyType(e) {
 function AddNewExChangeRate() {
     var url = 'ExRate/AddNewExRate.aspx';
     //showPopup('Add New Exchange Rate', url, 0, 0, 860, 220, true, 2000, null);
-    parent.OpenPopup(url, "Add New Exchange Rate", 870, 220, true, true, window, 2000, null, null);
+    parent.OpenPopup(url, "Add New Exchange Rate", 1200, 220, true, true, window, 2000, null, null);
 }
 
 function QueryExChangeRate() {
