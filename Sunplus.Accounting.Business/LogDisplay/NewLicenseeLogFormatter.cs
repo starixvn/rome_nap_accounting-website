@@ -1,6 +1,7 @@
 ﻿namespace Sunplus.Accounting.Business.LogDisplay
 {
     using Fanex.RemotingRef;
+    using Fanex.Tarus.Infrastructure.Caching;
     using Sunplus.Accounting.Entities.LogDisplay.SettingPT;
     using System.Collections.Generic;
     using System.Xml.Linq;
@@ -178,7 +179,7 @@
         {
             if (elementName == "Product")
             {
-                return _remotingRefService.GetResourceDataByRefIdAndResourceId("Product", Id, "en-US", null);
+                return CacheRef.GetProductName(Id);
             }
             else if (elementName == "Sport")
             {
@@ -190,11 +191,11 @@
                 {
                     return "Mix Sports Parlay";
                 }
-                return _remotingRefService.GetSportName(Id, "en-US");
+                return CacheRef.GetSportName(Id);
             }
             else if (elementName == "Bettype")
             {
-                return _remotingRefService.GetBetTypeName(Id, "en-US");
+                return CacheRef.GetBettype(Id);
             }
             else
             {
