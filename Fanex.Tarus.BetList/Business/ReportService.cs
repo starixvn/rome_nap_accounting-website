@@ -270,7 +270,7 @@
         {
             return 8900 <= betTypeId && betTypeId <= 8999;
         }
-        
+
         public static bool IsMGRNG(int betTypeId)
         {
             return 8400 <= betTypeId && betTypeId <= 8699;
@@ -310,7 +310,9 @@
                 return SportContants.AdvantPlay;
             if (7801 <= betTypeId && betTypeId <= 7899)
                 return SportContants.AdvantPlayMini;
-            
+            if (8700 <= betTypeId && betTypeId <= 8709)
+                return SportContants.PlayerTips;
+
             return 0;
         }
 

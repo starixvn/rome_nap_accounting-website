@@ -92,5 +92,6 @@
         public const int FGG = 176;
         public const int SealEntertainment = 156;
         public const int MGRNG = 155;
+        public const int PlayerTips = 157;
     }
 }
