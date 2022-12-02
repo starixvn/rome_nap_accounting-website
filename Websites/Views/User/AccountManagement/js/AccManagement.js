@@ -1018,8 +1018,10 @@ accManager.accounts = {
             expiredDate = null;
         } else {
             var expiredDateTime = new Date(expiredDate);
-            expiredDateTime.setHours(-11);
-            expiredDate = '' + (expiredDateTime.getMonth() + 1) + '/' + expiredDateTime.getDate() + '/' + expiredDateTime.getFullYear() + ' ' + expiredDateTime.getHours() + ':00:00';
+            //off set from 7 to -4 : -11
+            //set to 23h59:59 => -11 + 23 = 12
+            expiredDateTime.setHours(12);
+            expiredDate = '' + (expiredDateTime.getMonth() + 1) + '/' + expiredDateTime.getDate() + '/' + expiredDateTime.getFullYear() + ' ' + expiredDateTime.getHours() + ':59:59';
         }
 
         if (!accManager.utils.validateStringInput2(firstName)) {
