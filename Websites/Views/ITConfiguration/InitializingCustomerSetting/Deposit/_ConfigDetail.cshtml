@@ -60,13 +60,16 @@
                         <span>Default</span>
                     </div>
                 </td>
-                <td class="setting-col col-item td-setting" rowspan="@rowSpan" colspan="4">
+                <td class="setting-col col-item td-setting" rowspan="@rowSpan" colspan="2">
                     <form id="mainForm" style="display: flex;">
                         <div class="floatLeft">
                             <input id="@("uploadFile-" + groups.Key )" class="input-file-bet-setting" data-setting-type=@groups.Key name="uploadFile" type="file" style="width: 280px" accept=".xls,.xlsx"/>
                         </div>
                     </form>
                     <div id="@("err-bet-setting-" + groups.Key)" class="err-bet-setting"></div>
+                </td>
+                <td class="setting-col col-item td-setting" rowspan="@rowSpan" colspan="2">
+                    <span>File size limit 1MB. Click <a class="link-download-excel-template b" href="@Url.Content("~/Views/ITConfiguration/InitializingCustomerSetting/Deposit/Template.xls")">here</a> to download template.</span>
                 </td>
             </tr>
 
@@ -78,7 +81,7 @@
                     <td class="setting-col col-item td-sport">[@betSettings[i].BetType] @betSettings[i].BetTypeName</td>
                     <td class="setting-col col-item td-copy">
                         <div class="div-ckb">
-                            <input id="@("ckbDefault" + betSettings[i].SettingId)" class="edit-input ckb ckb-default-bet-setting" type="checkbox" @betSettings[i].CheckBoxDefault data-pos=@betSettings[i].SettingId />
+                            <input id="@("ckbDefault" + betSettings[i].SettingId)" class="@("edit-input ckb ckb-default-bet-setting group-bet-setting-" + groups.Key)" type="checkbox" @betSettings[i].CheckBoxDefault data-pos=@betSettings[i].SettingId />
                             <span>Default</span>
                         </div>
                     </td>

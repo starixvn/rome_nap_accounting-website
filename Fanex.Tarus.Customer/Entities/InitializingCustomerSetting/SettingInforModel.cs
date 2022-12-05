@@ -134,6 +134,9 @@ namespace Fanex.Tarus.Customer.Entities.InitializingCustomerSetting
                     IsCopy = false;
                     DefaultValueSuper = "0";
                     break;
+                case PositionTaking:
+                    DefaultValueSuper = "1";
+                    break;
                 default:
                     IsDefault = false;
                     IsCopy = false;

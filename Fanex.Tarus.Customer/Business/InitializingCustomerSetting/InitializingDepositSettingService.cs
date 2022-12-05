@@ -136,12 +136,12 @@ namespace Fanex.Tarus.Customer.Business.InitializingCustomerSetting
                     var betType = int.Parse(row.GetCell(1).ToString());
                     var currencyCode = HttpUtility.HtmlEncode(row.GetCell(2).ToString().Replace(" ", string.Empty));
                     var currencyName = row.GetCell(3).ToString().Replace(" ", string.Empty);
-                    var minBet = row.GetCell(4) == null || string.IsNullOrWhiteSpace(row.GetCell(4).ToString()) ? (decimal?)null : decimal.Parse(row.GetCell(4).ToString());
-                    var maxBet = row.GetCell(5) == null || string.IsNullOrWhiteSpace(row.GetCell(5).ToString()) ? (decimal?)null : decimal.Parse(row.GetCell(5).ToString());
-                    var maxPerMatch = row.GetCell(6) == null || string.IsNullOrWhiteSpace(row.GetCell(6).ToString()) ? (decimal?)null : decimal.Parse(row.GetCell(6).ToString());
-                    var maxPerNumber = row.GetCell(7) == null || string.IsNullOrWhiteSpace(row.GetCell(7).ToString()) ? (decimal?)null : decimal.Parse(row.GetCell(7).ToString());
-                    var maxPayoutPerMatch = row.GetCell(8) == null || string.IsNullOrWhiteSpace(row.GetCell(8).ToString()) ? (decimal?)null : decimal.Parse(row.GetCell(8).ToString());
-                    var currency = currencies.FirstOrDefault(cur => cur.Name == currencyCode)?.Id;
+                    var minBet = GetCellDecimalValue(row.GetCell(4));
+                    var maxBet = GetCellDecimalValue(row.GetCell(5));
+                    var maxPerMatch = GetCellDecimalValue(row.GetCell(6));
+                    var maxPerNumber = GetCellDecimalValue(row.GetCell(7));
+                    var maxPayoutPerMatch = GetCellDecimalValue(row.GetCell(8));
+                    var currency = currencies.FirstOrDefault(cur => cur.Name == currencyName)?.Id;
 
                     var betSetting = new BetSettingModel
                     {
@@ -171,6 +171,15 @@ namespace Fanex.Tarus.Customer.Business.InitializingCustomerSetting
             }
 
             return result;
+        }
+
+        private decimal? GetCellDecimalValue(ICell cell)
+        {
+            if (cell == null || string.IsNullOrWhiteSpace(cell.ToString())) return null;
+
+            if (cell.CellType == CellType.Numeric) return (decimal)cell.NumericCellValue;
+
+            return decimal.Parse(cell.ToString());
         }
 
         protected override ValidateResultModel ProcessValidateSetting(ICriteria criteria, ConfigModel request)

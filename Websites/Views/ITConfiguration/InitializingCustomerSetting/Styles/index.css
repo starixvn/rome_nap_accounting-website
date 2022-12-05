@@ -230,3 +230,8 @@
 .err-bet-setting {
     display: inherit;
 }
+
+.link-download-excel-template {
+    color: #0066CC !important;
+    text-decoration: underline;
+}
