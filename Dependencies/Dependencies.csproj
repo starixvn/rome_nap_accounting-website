@@ -169,7 +169,6 @@
     </Reference>
     <Reference Include="Fanex.BetList.GDG, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.GDG.2.0.0\lib\net461\Fanex.BetList.GDG.dll</HintPath>
-    </Reference>
     <Reference Include="Fanex.BetList.GlobalGaming, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.GlobalGaming.2.0.0\lib\net461\Fanex.BetList.GlobalGaming.dll</HintPath>
     </Reference>

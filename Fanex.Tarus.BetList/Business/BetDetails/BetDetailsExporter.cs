@@ -53,7 +53,6 @@
                 {SportContants.RNG_Mobile, "SabaCasino_Details"},
                 {SportContants.Sabaclub, "Saba.games_Details"},
                 {SportContants.IonCasino, "IONLiveCasino_Details"},
-                {SportContants.GDG, "GDG_Details"},
                 {SportContants.PPLiveCasino, "PPLiveCasino_Details"}
             };
 
@@ -75,7 +74,6 @@
                 sportType == SportContants.GTCasino ||
                 sportType == SportContants.IonCasino ||
                 sportType == SportContants.WM ||
-                sportType == SportContants.GDG ||
                 sportType == SportContants.BigGame ||
                 sportType == SportContants.PPLiveCasino ||
                 sportType == SportContants.FGG ||
@@ -190,7 +188,7 @@
             cellAddr = builder.AddCell(new HSSFRichTextString(BetListResources.No), headerStyle);
             builder.SetColumnWidth(cellAddr.ColumnIndex, 1200);
 
-            cellAddr = builder.AddCell(new HSSFRichTextString(sportType == SportContants.AllBet || sportType == SportContants.SaGaming || sportType == SportContants.GDG ? BetListResources.Trans_Time : BetListResources.Date), headerStyle);
+            cellAddr = builder.AddCell(new HSSFRichTextString(sportType == SportContants.AllBet || sportType == SportContants.SaGaming ? BetListResources.Trans_Time : BetListResources.Date), headerStyle);
             builder.SetColumnWidth(cellAddr.ColumnIndex, 5400);
 
             cellAddr = builder.AddCell(new HSSFRichTextString(BetListResources.Choice), headerStyle);

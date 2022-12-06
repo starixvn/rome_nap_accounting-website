@@ -700,17 +700,6 @@ function showWMBetDetails(refno, winlossDate, custId, transType) {
 
     openResultsPopUp(params);
 }
-function showGDGBetDetails(refno, winlossDate, custId, transType) {
-    var params = {
-        url: "AGCasinoBetList/BetDetails",
-        title: "GDG - Detailed Bet list - " + winlossDate.split(" ")[0],
-        jsonParam: { Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 236, PageSize: 500 },
-        width: 1110,
-        height: 600
-    };
-
-    openResultsPopUp(params);
-}
 function showBGBetDetails(refno, winlossDate, custId, transType) {
     var params = {
         url: "AGCasinoBetList/BetDetails",
@@ -1159,9 +1148,6 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
         case 232: // PG Soft
             return getPGSoftCasinoParam(custId, transId3rd, gameId3rd, currencyId, siteId);
 
-        case 236: // GDG
-            return getGDGParam(custId, transId3rd, gameId3rd, currencyId, siteId);
-
         case 239: // BG
             return getBGParam(custId, transId3rd, gameId3rd, currencyId, siteId);
 
@@ -1429,16 +1415,6 @@ function getFGGParam(custId, transId3rd, gameId3rd, currencyId, siteId, endTime)
             siteId: siteId,
             productId: 70
         },
-        width: 850,
-        height: 800
-    };
-}
-
-function getGDGParam(custId, transId3rd, gameId3rd, currencyId, siteId) {
-    return {
-        url: "ThirdParty/GDGResult",
-        title: "GDG Result",
-        jsonParam: { custId: custId, TransId3rd: transId3rd, GameId3rd: gameId3rd, productId: 59, siteId: siteId, currencyid: currencyId },
         width: 850,
         height: 800
     };

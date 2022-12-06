@@ -10,10 +10,8 @@
     var allowedProducts = new System.Text.StringBuilder();
     allowedProducts.Append("Casino/Keno/Metricgaming/Colossus Bets/AG Casino/Macau Games/Allbet/ION/AE Sexy/IBCBet Live Casino")
         .Append("/WM")
-        .Append("/GDG")
         .Append("/BG")
         .Append("/PP Live Casino")
-        .Append("/Fishing World")
         .Append("/Lottery/Table Game");
 
     var productIdPP = Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdPP;
@@ -262,7 +260,7 @@
     </div>
     <form id="noteMessage" style="display:none;">
         @allowedProducts.ToString() tickets with win loss dates from @Model.BalanceUpDay.ToShortDateString() are supported.
-        For Allbet/SA Gaming/AE Sexy/IBCBet Live Casino/BBIN/WM/GDG/BG/PP Live Casino/FGG/YeeBet, the search result includes the related tickets with the same GameID.<br />
+        For Allbet/SA Gaming/AE Sexy/IBCBet Live Casino/BBIN/WM/BG/PP Live Casino/FGG/YeeBet, the search result includes the related tickets with the same GameID.<br />
         For Sportsbook, the search result includes the related Bonus/Cash tickets.
     </form>
     <script type="text/javascript">

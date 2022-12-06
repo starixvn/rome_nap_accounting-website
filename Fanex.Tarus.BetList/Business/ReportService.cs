@@ -266,8 +266,6 @@
                 return SportContants.VGaming;
             if (6401 <= betTypeId && betTypeId <= 6700)
                 return SportContants.Joker;            
-            if (5701 <= betTypeId && betTypeId <= 5799)
-                return SportContants.GDG;
             if (5401 <= betTypeId && betTypeId <= 5499)
                 return SportContants.MaxGame;
             if (5500 <= betTypeId && betTypeId <= 5599)
