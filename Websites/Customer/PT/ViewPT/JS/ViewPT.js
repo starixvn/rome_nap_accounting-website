@@ -507,7 +507,6 @@ var ViewPT = {
             case 224: // Funky Games
             case 225: // ION
             case 233: // WM
-            case 236: // GDG
             case 237: // MaxGame
             case 239: // BigGame
             case 238: // Habanero
