@@ -22,7 +22,6 @@ public partial class Others_Menu : System.Web.UI.Page
         sportsbook2 = 16,
         livecasino = 41,
         voidbridge = 18,
-        fishingworld = 24,
         lottery = 28,
         sabaclub = 42,
         vgaming = 66,
@@ -33,7 +32,7 @@ public partial class Others_Menu : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         this.tplMenu = WebUtils.LoadTemplate("Customer/v2/MenuUpdatePT.htm");
-        Boolean AllowedCS, hideVirtualSports, hideLiveCasino, hideVoidbridge, hideFishingWorld, hideRNGLottery, hideVirtualGames, hideSabaclub, hideVGaming;
+        Boolean AllowedCS, hideVirtualSports, hideLiveCasino, hideVoidbridge, hideRNGLottery, hideVirtualGames, hideSabaclub, hideVGaming;
         Boolean hideBitcoin;
         Boolean hideSabaCasino;
         string[] queryStringParams = Request.UrlReferrer.Query.Split('&');
@@ -60,7 +59,6 @@ public partial class Others_Menu : System.Web.UI.Page
         hideVirtualSports = !CastAide.AsBoolean(db.Outputs["allowedvs"]) || !WebSettings.EnableVirtualSports;
         hideLiveCasino = !CastAide.AsBoolean(db.Outputs["allowedlivecasino"]) || !WebSettings.IsShowLiveCasino;
         hideVoidbridge = !CastAide.AsBoolean(db.Outputs["allowedvoidbridge"]) || !WebSettings.IsShowVoidbridge;  
-        hideFishingWorld = !CastAide.AsBoolean(db.Outputs["allowedfishingworld"]) || !WebSettings.IsShowFishingWorld;
         hideRNGLottery = !CastAide.AsBoolean(db.Outputs["allowedrnglottery"]) || Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdRNGLottery == 0;
         hideVirtualGames = !CastAide.AsBoolean(db.Outputs["allowedvirtualgames"]) || Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdVirtualGames == 0;
         hideSabaclub = !CastAide.AsBoolean(db.Outputs["allowedsabaclub"]) || !WebSettings.IsShowSabaclub;
@@ -93,7 +91,6 @@ public partial class Others_Menu : System.Web.UI.Page
         this.RenderSettingTab("sportsbook2", "{sportsbook2LinkSetting}", string.Format(creditDCSLink, (int)products.sportsbook2), !WebSettings.IsShowSportsbook2);
         this.RenderSettingTab("livecasino", "{liveCasinoLinkSetting}", string.Format(creditDCSLink, (int)products.livecasino), hideLiveCasino);
         this.RenderSettingTab("voidbridge", "{voidbridgeLinkSetting}", string.Format(creditDCSLink, (int)products.voidbridge), hideVoidbridge);
-        this.RenderSettingTab("fishingworld", "{fishingWorldLinkSetting}", string.Format(creditDCSLink, (int)products.fishingworld), hideFishingWorld);
         this.RenderSettingTab("RNGLottery", "{rngLotteryLinkSetting}", string.Format(creditDCSLink, Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdRNGLottery), hideRNGLottery);
         this.RenderSettingTab("virtualGames", "{virtualGamesLinkSetting}", string.Format(creditDCSLink, Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdVirtualGames), hideVirtualGames);
         this.RenderSettingTab("sabaclub", "{sabaclubLinkSetting}", string.Format(creditDCSLink, (int)products.sabaclub), hideSabaclub);

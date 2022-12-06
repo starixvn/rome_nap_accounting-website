@@ -129,12 +129,6 @@ string siteName = memberItem.IsMyanmarOdds ? "76666B" : string.Empty;
                             Macau Games
                         </li>
                     }
-                    @if (!memberItem.IsHideFishingWorld)
-                    {
-                        <li class="canchange" onclick="EditDCSByProduct('@memberItem.ChildID', 24, 'Fishing World');">
-                            Fishing World
-                        </li>
-                    }
                     @if (!memberItem.IsHideVirtualGames)
                     {
                         <li class="canchange" onclick="EditDCSByProduct('@memberItem.ChildID', 38, 'Virtual Games');">

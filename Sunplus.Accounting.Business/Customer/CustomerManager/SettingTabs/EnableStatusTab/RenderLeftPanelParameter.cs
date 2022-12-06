@@ -24,8 +24,6 @@ namespace Sunplus.Accounting.Business.Customer
 
         public bool IsShowVoidbridge { get; set; }
 
-        public bool IsShowFishingWorld { get; set; }
-
         public bool IsShowAutoSuspend { get; set; }
 
         public bool IsShowVirtualSport { get; set; }

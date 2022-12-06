@@ -526,9 +526,6 @@ var ViewPT = {
             case 9906: // RNG Slot
                 ViewPT.viewPTBasedOnKindOfCustomer(userName, 0, 0, isLive, 18);
                 break;
-            case 219: // Fishing World
-                ViewPT.viewPTBasedOnKindOfCustomer(userName, 0, 0, isLive, 24);
-                break;
             case 245://Virtual Games
             case 176: // FGG
                 ViewPT.viewPTBasedOnKindOfCustomer(userName, sportId, betTypeId, isLive, 64);

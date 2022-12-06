@@ -379,8 +379,8 @@
     <Reference Include="Fanex.Nap.SSO, Version=1.0.0.8, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Nap.SSO.1.0.0.8\lib\net40\Fanex.Nap.SSO.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.ProductStatus.Setting, Version=1.0.3.15, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.ProductStatus.Setting.1.0.3.15\lib\net461\Fanex.ProductStatus.Setting.dll</HintPath>
+    <Reference Include="Fanex.ProductStatus.Setting, Version=1.0.3.13, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.ProductStatus.Setting.1.0.3.13-beta-01\lib\net461\Fanex.ProductStatus.Setting.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.PTEngine, Version=1.0.7.7, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.PTEngine.1.0.7.7\lib\net40\Fanex.PTEngine.dll</HintPath>
@@ -704,6 +704,10 @@
       <HintPath>..\packages\Fanex.NAP.NPOI.1.0.0.0\lib\net40\NPOI.OpenXmlFormats.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="ONEbook.NG2.API, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ONEbook.NG2.API.NAP.1.0.0.4\lib\net40\ONEbook.NG2.API.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="ONEbook.UM, Version=3.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ONEbook.UM.3.1.1\lib\net461\ONEbook.UM.dll</HintPath>
     </Reference>
@@ -746,8 +750,8 @@
     <Reference Include="StackExchange.Redis, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c219ff1ca8c2ce46, processorArchitecture=MSIL">
       <HintPath>..\packages\StackExchange.Redis.2.0.519\lib\net461\StackExchange.Redis.dll</HintPath>
     </Reference>
-    <Reference Include="Sunplus.Accounting.Core, Version=2.0.4.20, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.Core.2.0.4.20\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
+    <Reference Include="Sunplus.Accounting.Core, Version=2.0.4.18, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Accounting.Core.2.0.4.18-beta-01\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.6.9, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.6.9\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>

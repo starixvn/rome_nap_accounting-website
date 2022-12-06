@@ -122,7 +122,6 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                         superItem.IsHideSportsbook2 = !WebSettings.IsShowSportsbook2;
                         superItem.IsHideLiveCasino = !WebSettings.IsShowLiveCasino;
                         superItem.IsHideVoidbridge = !WebSettings.IsShowVoidbridge;
-                        superItem.IsHideFishingWorld = !WebSettings.IsShowFishingWorld;
                         superItem.IsHideVirtualSports = !WebSettings.EnableVirtualSports;
                         superItem.IsHideVirtualGames = !WebSettings.IsShowVirtualGames;
                         superItem.isDoubleComm = CastAide.AsBoolean(row["doublecommlosing"]);
@@ -253,9 +252,6 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                         masterItem.IsHideVoidbridge = !WebSettings.IsShowVoidbridge ||
                             !CastAide.AsBoolean(row["SyncedVoidbridgeUpline"]) ||
                             CastAide.AsBoolean(row["HideVoidbridgeUpline"]);
-                        masterItem.IsHideFishingWorld = !WebSettings.IsShowFishingWorld ||
-                          !CastAide.AsBoolean(row["SyncedFishingWorldUpline"]) ||
-                          CastAide.AsBoolean(row["HideFishingWorldUpline"]);
                         masterItem.IsHideVirtualSports = !WebSettings.EnableVirtualSports ||
                           CastAide.AsBoolean(row["HideVirtualSportsUpline"]);
                         masterItem.IsHideVirtualGames = !WebSettings.IsShowVirtualGames ||
@@ -344,9 +340,6 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                         agentItem.IsHideVoidbridge = !WebSettings.IsShowVoidbridge ||
                             !CastAide.AsBoolean(row["SyncedVoidbridgeUpline"]) ||
                             CastAide.AsBoolean(row["HideVoidbridgeUpline"]);
-                        agentItem.IsHideFishingWorld = !WebSettings.IsShowFishingWorld ||
-                            !CastAide.AsBoolean(row["SyncedFishingWorldUpline"]) ||
-                            CastAide.AsBoolean(row["HideFishingWorldUpline"]);
                         agentItem.IsHideVirtualSports = !WebSettings.EnableVirtualSports ||
                            CastAide.AsBoolean(row["HideVirtualSportsUpline"]);
                         agentItem.IsHideVirtualGames = !WebSettings.IsShowVirtualGames ||
@@ -435,9 +428,6 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                         memberItem.IsHideVoidbridge = !WebSettings.IsShowVoidbridge ||
                             !CastAide.AsBoolean(row["SyncedVoidbridgeUpline"]) ||
                             CastAide.AsBoolean(row["HideVoidbridgeUpline"]);
-                        memberItem.IsHideFishingWorld = !WebSettings.IsShowFishingWorld ||
-                            !CastAide.AsBoolean(row["SyncedFishingWorldUpline"]) ||
-                            CastAide.AsBoolean(row["HideFishingWorldUpline"]);
                         memberItem.IsHideVirtualSports = !WebSettings.EnableVirtualSports ||
                             CastAide.AsBoolean(row["HideVirtualSportsUpline"]);
                         memberItem.IsHideVirtualGames = !WebSettings.IsShowVirtualGames ||
