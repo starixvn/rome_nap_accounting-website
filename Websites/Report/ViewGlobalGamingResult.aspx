@@ -1,2 +1,0 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="ViewGlobalGamingResult.aspx.cs" Inherits="Report_ViewGloablGamingResult" Theme="" Async="true" %>
-    <asp:Literal ID="lResult" runat="server"></asp:Literal>

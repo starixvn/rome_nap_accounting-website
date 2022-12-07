@@ -44,7 +44,6 @@
                 {SportContants.SexyGaming, "AESexy_Details"},
                 {SportContants.GTCasino, "IBCBetLiveCasino_Details"},
                 {SportContants.Voidbridge, "MacauGames_Details"},
-                {SportContants.FishingWorld, "FishingWorld_Details"},
                 {SportContants.PP, "PP_Details"},
                 {SportContants.CardClub, "ArcadiaGaming_Details"},
                 {SportContants.Spadegaming, "Spadegaming_Details"},
@@ -87,8 +86,7 @@
                 return GetBBinTickets(refNo, custId, transType);
             }
 
-            if (sportType == SportContants.FishingWorld ||
-                sportType == SportContants.RNG_RNGGame ||
+            if (sportType == SportContants.RNG_RNGGame ||
                 sportType == SportContants.RNG_MiniGame ||
                 sportType == SportContants.RNG_Mobile ||
                 sportType == SportContants.Joker ||
@@ -109,7 +107,7 @@
                 sportType == SportContants.MGRNG ||
                 sportType == SportContants.Jili)
             {
-                return GetRNGCasinoOrFishingWorldTickets(refNo, custId, transType, winlostDate);
+                return GetRNGCasinoTickets(refNo, custId, transType, winlostDate);
             }
 
             return Enumerable.Empty<TicketDetail>();
@@ -271,7 +269,7 @@
         }
 
 
-        private static IEnumerable<TicketDetail> GetRNGCasinoOrFishingWorldTickets(long refNo, int custId, byte transType, DateTime winlostDate)
+        private static IEnumerable<TicketDetail> GetRNGCasinoTickets(long refNo, int custId, byte transType, DateTime winlostDate)
         {
             var criteria = new GetRNGCasinoBetDetailsCriteria
             {

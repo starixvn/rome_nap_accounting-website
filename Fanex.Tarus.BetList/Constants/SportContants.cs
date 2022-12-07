@@ -60,7 +60,6 @@
         public const int SaGaming = 244;
         public const int SexyGaming = 243;
         public const int Voidbridge = 212;
-        public const int FishingWorld = 219;
         public const int PP = 248;
 
         public const int Happy5 = 164;
