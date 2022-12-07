@@ -134,8 +134,8 @@ namespace Fanex.Tarus.Customer.Business.InitializingCustomerSetting
 
                     var sportType = int.Parse(row.GetCell(0).ToString());
                     var betType = int.Parse(row.GetCell(1).ToString());
-                    var currencyCode = HttpUtility.HtmlEncode(row.GetCell(2).ToString().Replace(" ", string.Empty));
-                    var currencyName = row.GetCell(3).ToString().Replace(" ", string.Empty);
+                    var currencyCode = HttpUtility.HtmlEncode(row.GetCell(2).ToString().Replace(" ", string.Empty)).ToUpperInvariant();
+                    var currencyName = row.GetCell(3).ToString().Replace(" ", string.Empty).ToUpperInvariant();
                     var minBet = GetCellDecimalValue(row.GetCell(4));
                     var maxBet = GetCellDecimalValue(row.GetCell(5));
                     var maxPerMatch = GetCellDecimalValue(row.GetCell(6));
@@ -340,10 +340,10 @@ namespace Fanex.Tarus.Customer.Business.InitializingCustomerSetting
 
         private string CheckMapping(BetSettingModel betSetting, List<string> currencyNames, List<SettingInforModel> settingInforModels)
         {
-            if(!currencyNames.Contains(betSetting.CurrencyName) ||
+            if(!currencyNames.Contains(betSetting.CurrencyName.ToUpperInvariant()) ||
                 !settingInforModels.Exists(setting => setting.SportType == betSetting.SportTypeId && setting.BetType == betSetting.BetTypeId))
             {
-                return $"Row {betSetting.RowPos}: invalid.Please check again.";
+                return $"Row {betSetting.RowPos}: Sport Type/BetType/Currency in the upload file is invalid. Please check again.";
             }
 
             return string.Empty;
@@ -359,7 +359,7 @@ namespace Fanex.Tarus.Customer.Business.InitializingCustomerSetting
                     foreach (var currency in currencyNames)
                     {
                         var missingCurrencies = new List<string>();
-                        if (!betSettings.Exists(betSetting =>betSetting.SettingType == key && betSetting.CurrencyName == currency && betSetting.SportTypeId == setting.SportType && betSetting.BetTypeId == setting.BetType))
+                        if (!betSettings.Exists(betSetting =>betSetting.SettingType == key && betSetting.CurrencyName.ToUpperInvariant() == currency && betSetting.SportTypeId == setting.SportType && betSetting.BetTypeId == setting.BetType))
                         {
                             missingCurrencies.Add(currency);
                         }

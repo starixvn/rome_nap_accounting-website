@@ -70,7 +70,7 @@
                             currencies.Add(new BaseModel
                             {
                                 Id = Convert.ToInt32(id),
-                                Name = isDisplayMode ? string.Format(FormatDisplay, id, reader["currency"].ToString()) : reader["currency"].ToString()
+                                Name = isDisplayMode ? string.Format(FormatDisplay, id, reader["currency"].ToString()) : reader["currency"].ToString().ToUpperInvariant()
                             });
                         }
                     }
