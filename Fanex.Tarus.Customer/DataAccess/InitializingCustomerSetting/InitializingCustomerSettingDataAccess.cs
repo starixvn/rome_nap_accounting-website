@@ -1,48 +1,52 @@
 ﻿namespace Fanex.Tarus.Customer.DataAccess.InitializingCustomerSetting
 {
-    using Fanex.Caching;
-    using Fanex.Caching.Memory;
-    using Fanex.Data;
-    using Fanex.NAP.Framework.Data;
-    using Fanex.Tarus.Customer.Entities;
-    using Fanex.Tarus.Customer.Entities.InitializingCustomerSetting;
-    using Fanex.Tarus.Customer.ViewModels.InitializingCustomerSetting;
-    using Fanex.Tarus.Infrastructure.Caching;
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Data;
     using System.Linq;
+    using Fanex.Caching;
+    using Fanex.Caching.Memory;
+    using Fanex.Data;
+    using Fanex.NAP.Framework.Data;
+    using Fanex.Tarus.Customer.Criteria.InitializingCustomerSetting;
+    using Fanex.Tarus.Customer.Entities;
+    using Fanex.Tarus.Customer.Entities.InitializingCustomerSetting;
+    using Fanex.Tarus.Customer.ViewModels.InitializingCustomerSetting;
+    using Fanex.Tarus.Infrastructure.Caching;
 
-    public class InitializingCreditSettingDataAccess : IInitializingSettingDataAccess
+    public interface IInitializingCustomerSettingDataAccess
     {
-        protected const string FormatDisplay = "[{0}] {1}";
-        protected const string ProductCacheKey = "InitCust-Product-{0}";
-        protected const string SportCacheKey = "InitCust-Sport-{0}";
-        protected const string BettypeCacheKey = "InitCust-BetType-{0}";
-        protected readonly MemoryCache _MemoryCache;
+        InitializingCustomerSettingViewModel GetSetting(GetSettingCriteria criteria, IEnumerable<BaseModel> currencies, IEnumerable<BaseModel> sites);
 
-        public InitializingCreditSettingDataAccess()
+        IEnumerable<BaseModel> GetSites();
+
+        IEnumerable<BaseModel> GetExchangeCurrency();
+
+        Result ExecuteNonQuery(ICriteria criteria);
+
+        IEnumerable<ProductDcsModel> GetProductDcsModel(DcsProductMatrixCriteria criteria);
+
+        ConfigModel GetConfigDetail(GetConfigDetailCriteria criteria);
+
+        ValidateResultModel ValidateConfigSetting(ICriteria criteria);
+
+        IEnumerable<InsertErrorModel> AddUpdateConfigSetting(ICriteria criteria);
+    }
+    public class InitializingCustomerSettingDataAccess : IInitializingCustomerSettingDataAccess
+    {
+        private const string FormatDisplay = "[{0}] {1}";
+        private const string ProductCacheKey = "InitCust-Product-{0}";
+        private const string SportCacheKey = "InitCust-Sport-{0}";
+        private const string BettypeCacheKey = "InitCust-BetType-{0}";
+        private readonly MemoryCache _MemoryCache;
+
+        public InitializingCustomerSettingDataAccess()
         {
             _MemoryCache = new MemoryCache(new MemoryCacheOptions());
         }
 
-        public Result ExecuteNonQuery(ICriteria criteria)
-        {
-            using (var objDB = new ObjectDb(criteria.GetSettingKey()))
-            {
-                objDB.AssignParamValues(criteria.GetSpParams());
-                objDB.ExecuteNonQuery();
-                var outputs = objDB.GetOuputParams();
-                return new Result()
-                {
-                    ErrorCode = (int)outputs["errcode"],
-                    ErrorMessage = outputs["errmsg"]?.ToString()
-                };
-            }
-        }
-
-        public IEnumerable<BaseModel> GetExchangeCurrency(bool isDisplayMode = true)
+        public IEnumerable<BaseModel> GetExchangeCurrency()
         {
             var currencies = new List<BaseModel>
             {
@@ -70,7 +74,7 @@
                             currencies.Add(new BaseModel
                             {
                                 Id = Convert.ToInt32(id),
-                                Name = isDisplayMode ? string.Format(FormatDisplay, id, reader["currency"].ToString()) : reader["currency"].ToString().ToUpperInvariant()
+                                Name = string.Format(FormatDisplay, id, reader["currency"].ToString())
                             });
                         }
                     }
@@ -80,7 +84,42 @@
             return currencies;
         }
 
-        public virtual IEnumerable<BaseModel> GetSites()
+        public InitializingCustomerSettingViewModel GetSetting(GetSettingCriteria criteria, IEnumerable<BaseModel> currencies, IEnumerable<BaseModel> sites)
+        {
+            var result = new InitializingCustomerSettingViewModel();
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    var configSettings = new List<SettingConfigModel>();
+                    while (reader.Read())
+                    {
+                        configSettings.Add(MappingConfig(reader, currencies, sites));
+                    }
+                    result.ConfigSettings = configSettings;
+
+                    var steps = new List<BaseModel>();
+                    if (reader.NextResult())
+                    {
+                        while (reader.Read())
+                        {
+                            steps.Add(new BaseModel
+                            {
+                                Id = Convert.ToInt32(reader["stepid"].ToString()),
+                                Name = string.Format(reader["stepname"].ToString())
+                            });
+                        }
+
+                    }
+
+                    result.Steps = steps;
+                }
+            }
+
+            return result;
+        }
+
+        public IEnumerable<BaseModel> GetSites()
         {
             var sites = new List<BaseModel>
             {
@@ -113,40 +152,7 @@
             return sites;
         }
 
-        public virtual IEnumerable<ProductDcsModel> GetProductDcsModel()
-        {
-            var result = new List<ProductDcsModel>();
-            using (var db = new ObjectDb("Acc_Initial_DCS_ProductProfile_Sel"))
-            {
-                using (var reader = db.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        var productId = Convert.ToInt32(reader["productid"]);
-                        var sportId = Convert.ToInt32(reader["sporttype"]);
-                        var bettypeId = Convert.ToInt32(reader["bettype"]);
-                        result.Add(new ProductDcsModel
-                        {
-                            ProductId = productId,
-                            ProductName = GetProductName(productId),
-                            SportId = sportId,
-                            SportName = GetSportName(sportId),
-                            BettypeId = bettypeId,
-                            BettypeName = GetBetTypeName(bettypeId),
-                            SettingTypeId = Convert.ToInt32(reader["settingtype"]),
-                            SettingTypeName = reader["settingname"].ToString(),
-                            IsLive = Convert.ToBoolean(reader["islive"]),
-                            MaxDiscount = Convert.IsDBNull(reader["maxdiscount"]) ? 0 : Convert.ToDecimal(reader["maxdiscount"]),
-                            IntervalValue = Convert.IsDBNull(reader["intervalvalue"]) ? 0 : Convert.ToDecimal(reader["intervalvalue"])
-                        });
-                    }
-                }
-            }
-
-            return result;
-        }
-
-        protected virtual SettingConfigModel MappingConfig(IDataReader reader, IEnumerable<BaseModel> currencies, IEnumerable<BaseModel> sites)
+        private SettingConfigModel MappingConfig(IDataReader reader, IEnumerable<BaseModel> currencies, IEnumerable<BaseModel> sites)
         {
             var model = new SettingConfigModel
             {
@@ -209,44 +215,22 @@
             return model;
         }
 
-
-        protected string GetProductName(int productId)
+        public Result ExecuteNonQuery(ICriteria criteria)
         {
-            var key = string.Format(ProductCacheKey, productId);
-            if (!_MemoryCache.TryGet(key, out string productName))
+            using (var objDB = new ObjectDb(criteria.GetSettingKey()))
             {
-                productName = CacheRef.GetProductName(productId);
-                _MemoryCache.Set(key, productName, new CacheItemOptions { SlidingExpiration = TimeSpan.FromHours(1) });
+                objDB.AssignParamValues(criteria.GetSpParams());
+                objDB.ExecuteNonQuery();
+                var outputs = objDB.GetOuputParams();
+                return new Result()
+                {
+                    ErrorCode = (int)outputs["errcode"],
+                    ErrorMessage = outputs["errmsg"]?.ToString()
+                };
             }
-
-            return productName;
         }
 
-        protected string GetSportName(object sportId)
-        {
-            var key = string.Format(SportCacheKey, sportId);
-            if (!_MemoryCache.TryGet(key, out string sportName))
-            {
-                sportName = CacheRef.GetSportName(sportId);
-                _MemoryCache.Set(key, sportName, new CacheItemOptions { SlidingExpiration = TimeSpan.FromHours(1) });
-            }
-
-            return sportName;
-        }
-
-        protected string GetBetTypeName(object bettypeId)
-        {
-            var key = string.Format(BettypeCacheKey, bettypeId);
-            if (!_MemoryCache.TryGet(key, out string bettypeName))
-            {
-                bettypeName = CacheRef.GetBettype(bettypeId);
-                _MemoryCache.Set(key, bettypeName, new CacheItemOptions { SlidingExpiration = TimeSpan.FromHours(1) });
-            }
-
-            return bettypeName;
-        }
-
-        public virtual ConfigModel GetConfigDetail(ICriteria criteria)
+        public ConfigModel GetConfigDetail(GetConfigDetailCriteria criteria)
         {
             var result = new ConfigModel();
             using (var db = new ObjectDb(criteria.GetSettingKey()))
@@ -311,42 +295,40 @@
             return result;
         }
 
-        public virtual InitializingCustomerSettingViewModel GetSetting(ICriteria criteria, IEnumerable<BaseModel> currencies, IEnumerable<BaseModel> sites)
+        public IEnumerable<ProductDcsModel> GetProductDcsModel(DcsProductMatrixCriteria criteria)
         {
-            var result = new InitializingCustomerSettingViewModel();
+            var result = new List<ProductDcsModel>();
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
                 using (var reader = db.ExecuteReader(criteria.GetSpParams()))
                 {
-                    var configSettings = new List<SettingConfigModel>();
                     while (reader.Read())
                     {
-                        configSettings.Add(MappingConfig(reader, currencies, sites));
-                    }
-                    result.ConfigSettings = configSettings;
-
-                    var steps = new List<BaseModel>();
-                    if (reader.NextResult())
-                    {
-                        while (reader.Read())
+                        var productId = Convert.ToInt32(reader["productid"]);
+                        var sportId = Convert.ToInt32(reader["sporttype"]);
+                        var bettypeId = Convert.ToInt32(reader["bettype"]);
+                        result.Add(new ProductDcsModel
                         {
-                            steps.Add(new BaseModel
-                            {
-                                Id = Convert.ToInt32(reader["stepid"].ToString()),
-                                Name = string.Format(reader["stepname"].ToString())
-                            });
-                        }
-
+                            ProductId = productId,
+                            ProductName = GetProductName(productId),
+                            SportId = sportId,
+                            SportName = GetSportName(sportId),
+                            BettypeId = bettypeId,
+                            BettypeName = GetBetTypeName(bettypeId),
+                            SettingTypeId = Convert.ToInt32(reader["settingtype"]),
+                            SettingTypeName = reader["settingname"].ToString(),
+                            IsLive = Convert.ToBoolean(reader["islive"]),
+                            MaxDiscount = Convert.IsDBNull(reader["maxdiscount"]) ? 0 : Convert.ToDecimal(reader["maxdiscount"]),
+                            IntervalValue = Convert.IsDBNull(reader["intervalvalue"]) ? 0 : Convert.ToDecimal(reader["intervalvalue"])
+                        });
                     }
-
-                    result.Steps = steps;
                 }
             }
 
             return result;
         }
 
-        public virtual ValidateResultModel ValidateConfigSetting(ICriteria criteria)
+        public ValidateResultModel ValidateConfigSetting(ICriteria criteria)
         {
             var result = new List<InsertErrorModel>();
             using (ObjectDb objDB = new ObjectDb(criteria.GetSettingKey()))
@@ -374,7 +356,7 @@
             }
         }
 
-        public virtual IEnumerable<InsertErrorModel> AddUpdateConfigSetting(ICriteria criteria)
+        public IEnumerable<InsertErrorModel> AddUpdateConfigSetting(ICriteria criteria)
         {
             var result = new List<InsertErrorModel>();
             using (ObjectDb objDB = new ObjectDb(criteria.GetSettingKey()))
@@ -385,7 +367,7 @@
                     {
                         result.Add(new InsertErrorModel
                         {
-                            Id = Convert.IsDBNull(reader["id"]) ? -1 : Convert.ToInt32(reader["id"]),
+                            Id = Convert.IsDBNull(reader["id"])? -1 : Convert.ToInt32(reader["id"]),
                             ErrorCode = Convert.ToInt32(reader["errorcode"]),
                             ErrorMsg = reader["errormsg"].ToString(),
                         });
@@ -396,9 +378,40 @@
             return result;
         }
 
-        public virtual IEnumerable<BetSettingModel> GetBetSetting(int configId)
+        private string GetProductName(int productId)
         {
-            return null;
+            var key = string.Format(ProductCacheKey, productId);
+            if (!_MemoryCache.TryGet(key, out string productName))
+            {
+                productName = CacheRef.GetProductName(productId);
+                _MemoryCache.Set(key, productName, new CacheItemOptions { SlidingExpiration = TimeSpan.FromHours(1) });
+            }
+
+            return productName;
+        }
+
+        private string GetSportName(object sportId)
+        {
+            var key = string.Format(SportCacheKey, sportId);
+            if (!_MemoryCache.TryGet(key, out string sportName))
+            {
+                sportName = CacheRef.GetSportName(sportId);
+                _MemoryCache.Set(key, sportName, new CacheItemOptions { SlidingExpiration = TimeSpan.FromHours(1) });
+            }
+
+            return sportName;
+        }
+
+        private string GetBetTypeName(object bettypeId)
+        {
+            var key = string.Format(BettypeCacheKey, bettypeId);
+            if (!_MemoryCache.TryGet(key, out string bettypeName))
+            {
+                bettypeName = CacheRef.GetBettype(bettypeId);
+                _MemoryCache.Set(key, bettypeName, new CacheItemOptions { SlidingExpiration = TimeSpan.FromHours(1) });
+            }
+
+            return bettypeName;
         }
     }
 }

@@ -1,10 +1,10 @@
-﻿namespace Fanex.Tarus.Customer.Criteria.InitializingCustomerSetting.Credit
+﻿using Fanex.Tarus.Customer.Entities.InitializingCustomerSetting;
+
+namespace Fanex.Tarus.Customer.Criteria.InitializingCustomerSetting
 {
-    using Fanex.Tarus.Customer.Entities.InitializingCustomerSetting;
-    
     public class EditSettingConfigCriteria : AddSettingConfigCriteria
     {
-        public EditSettingConfigCriteria(ConfigModel request, string ip, int userId) : base(request, ip, userId)
+        public EditSettingConfigCriteria(ConfigModel request, string ip) : base(request, ip)
         {
             ConfigID = request.Config.ConfigId;
         }

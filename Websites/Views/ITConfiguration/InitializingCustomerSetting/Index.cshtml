@@ -25,8 +25,8 @@
                 <div class="box_header" style="width: 100%;">
                     <div class="left_tab" style="width: 100%">
                         <ul id="tabs">
-                            <li id="tab_credit" class="current"><a href="javascript:SwitchTab('credit');"><span>Initializing Credit Setting</span></a></li>
-                            <li id="tab_deposit"><a href="javascript:SwitchTab('deposit');"><span>Initializing Deposit Setting</span></a></li>
+                            <li id="tab_Credit" class="current"><a href="javascript:SwitchTab('InitCustSetting', 'Credit');"><span>Initializing Credit Setting</span></a></li>
+                            <li id="tab_Deposit"><a href="javascript:SwitchTab('InitDepSetting', 'Deposit');"><span>Initializing Deposit Setting</span></a></li>
                         </ul>
                     </div>
                 </div>
@@ -41,6 +41,7 @@
         var today = "@DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss")";
         var minDate = "@DateTime.Now.ToString("MM/dd/yyyy")";
         var minTime = "@DateTime.Now.ToString("HH:mm")";
+        var prefixUrl = '@Url.Content("~")';
     </script>
 
     <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-1.8.2.min.js?v=" + WebSettings.Version)"></script>

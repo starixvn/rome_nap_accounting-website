@@ -1,19 +1,18 @@
 ﻿namespace Fanex.Tarus.Customer.Business.InitializingCustomerSetting
 {
-    using Fanex.Tarus.Customer.ViewModels.InitializingCustomerSetting;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text.RegularExpressions;
+    using System.Web;
+    using System.Web.Mvc;
+    using Fanex.Tarus.Customer.Criteria.InitializingCustomerSetting;
+    using Fanex.Tarus.Customer.DataAccess.InitializingCustomerSetting;
     using Fanex.Tarus.Customer.Entities;
     using Fanex.Tarus.Customer.Entities.InitializingCustomerSetting;
     using Fanex.Tarus.Customer.Requests.InitializingCustomerSetting;
-    using Fanex.Tarus.Customer.DataAccess.InitializingCustomerSetting;
-    using System.Linq;
-    using System.Web.Mvc;
-    using System.Collections.Generic;
-    using System.Text.RegularExpressions;
-    using System.Web;
-    using Fanex.Tarus.Customer.Criteria.InitializingCustomerSetting.Credit;
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Tarus.Customer.ViewModels.InitializingCustomerSetting;
 
-    public interface IInitializingCreditSettingService
+    public interface IInitializingCustomerSettingService
     {
         InitializingCustomerSettingViewModel GetSetting();
 
@@ -23,38 +22,32 @@
 
         ConfigSettingViewModel GetProductSportBettype();
 
-        ConfigSettingViewModel GetConfigDetail(ICriteria criteria, bool isView = false);
+        ConfigSettingViewModel GetConfigDetail(int configId, bool isView = false);
 
         ConfigSettingViewModel GenerateConfigSetting(GenerateConfigSettingRequest request);
 
-        ValidateResultModel ValidateAddConfigSetting(ConfigModel request, string ip, int userId);
+        ValidateResultModel ValidateAddConfigSetting(ConfigModel request, string ip);
 
-        IEnumerable<InsertErrorModel> AddConfigSetting(ConfigModel request, string ip, int userId);
+        IEnumerable<InsertErrorModel> AddConfigSetting(ConfigModel request, string ip);
 
-        ValidateResultModel ValidateUpdateConfigSetting(ConfigModel request, string ip, int userId);
+        ValidateResultModel ValidateUpdateConfigSetting(ConfigModel request, string ip);
 
-        IEnumerable<InsertErrorModel> UpdateConfigSetting(ConfigModel request, string ip, int userId);
+        IEnumerable<InsertErrorModel> UpdateConfigSetting(ConfigModel request, string ip);
     }
-
-    public class InitializingCreditSettingService : IInitializingCreditSettingService
+    public class InitializingCustomerSettingService : IInitializingCustomerSettingService
     {
-        protected readonly IInitializingSettingDataAccess dataAccess;
+        private readonly IInitializingCustomerSettingDataAccess dataAccess;
 
         private const string FormatDisplay = "[{0}] {1}";
         private const string ErrorMessage = "Row {0}: {1}";
         private const string HeadlineRegex = @"^[0-9a-zA-Z\s~,.?:;!|@#$%&*\(\)\{\}+-]+$";
 
-        public InitializingCreditSettingService()
+        public InitializingCustomerSettingService()
         {
-            dataAccess = new InitializingCreditSettingDataAccess();
+            dataAccess = new InitializingCustomerSettingDataAccess();
         }
 
-        public InitializingCreditSettingService(IInitializingSettingDataAccess dataAccess)
-        {
-            this.dataAccess = dataAccess;
-        }
-
-        public virtual Result AbortConfigSetting(int configId, int userId, string ip)
+        public Result AbortConfigSetting(int configId, int userId, string ip)
         {
             var criteria = new UpdateConfigStatusCriteria
             {
@@ -67,7 +60,7 @@
             return dataAccess.ExecuteNonQuery(criteria);
         }
 
-        public virtual Result DeleteConfigSetting(int configId, int userId, string ip)
+        public Result DeleteConfigSetting(int configId, int userId, string ip)
         {
             var criteria = new DeleteConfigCriteria
             {
@@ -79,15 +72,16 @@
             return dataAccess.ExecuteNonQuery(criteria);
         }
 
-        public virtual ConfigSettingViewModel GetConfigDetail(ICriteria criteria, bool isView = false)
+        public ConfigSettingViewModel GetConfigDetail(int configId, bool isView = false)
         {
+            var criteria = new GetConfigDetailCriteria(configId);
             var config = dataAccess.GetConfigDetail(criteria);
             if (config.Config == null)
             {
                 return new ConfigSettingViewModel { Error = new Result(-1, "This row does not exist, please refresh again.") };
             }
 
-            var productDcs = dataAccess.GetProductDcsModel();
+            var productDcs = dataAccess.GetProductDcsModel(new DcsProductMatrixCriteria());
             var allSettings = productDcs.Where(item => item.ProductId == config.Config.ProductId
                                                     && config.Config.SportTypeIdList.Contains(item.SportId)
                                                     && config.Config.BetTypeIdList.Contains(item.BettypeId));
@@ -149,7 +143,7 @@
 
         public ConfigSettingViewModel GetProductSportBettype()
         {
-            var productDcs = dataAccess.GetProductDcsModel();
+            var productDcs = dataAccess.GetProductDcsModel(new DcsProductMatrixCriteria());
 
             return new ConfigSettingViewModel
             {
@@ -157,7 +151,7 @@
             };
         }
 
-        public virtual InitializingCustomerSettingViewModel GetSetting()
+        public InitializingCustomerSettingViewModel GetSetting()
         {
             var currencies = dataAccess.GetExchangeCurrency();
             var sites = dataAccess.GetSites();
@@ -173,7 +167,7 @@
                 ProductId = request.ProductId,
                 SportTypeIdList = request.SportIdList,
             };
-            var productmatrix = dataAccess.GetProductDcsModel();
+            var productmatrix = dataAccess.GetProductDcsModel(new DcsProductMatrixCriteria());
             var sportbettypesetting = GetSportAndBettypeWithSetting(productmatrix);
 
             var settings = productmatrix.Where(item => item.ProductId == request.ProductId
@@ -200,8 +194,7 @@
             var configDetail = new ConfigModel
             {
                 Config = config,
-                Settings = settingInfos,
-                BetSettings = new List<BetSettingModel>()
+                Settings = settingInfos
             };
 
             var sites = dataAccess.GetSites().ToList();
@@ -375,28 +368,13 @@
             return message.ErrorMsg;
         }
 
-        public virtual IEnumerable<InsertErrorModel> AddConfigSetting(ConfigModel request, string ip, int userId)
+        public IEnumerable<InsertErrorModel> AddConfigSetting(ConfigModel request, string ip)
         {
-            var criteria = new AddSettingConfigCriteria(request, ip, userId)
+            var criteria = new AddSettingConfigCriteria(request, ip)
             {
                 IsConfirmed = true
             };
 
-            return ProcessAddUpdateSetting(criteria, request);
-        }
-
-        public virtual IEnumerable<InsertErrorModel> UpdateConfigSetting(ConfigModel request, string ip, int userId)
-        {
-            var criteria = new EditSettingConfigCriteria(request, ip, userId)
-            {
-                IsConfirmed = true
-            };
-
-            return ProcessAddUpdateSetting(criteria, request);
-        }
-
-        protected IEnumerable<InsertErrorModel> ProcessAddUpdateSetting(ICriteria criteria, ConfigModel request)
-        {
             var resultMessages = dataAccess.AddUpdateConfigSetting(criteria);
             foreach (var msg in resultMessages)
             {
@@ -406,22 +384,44 @@
             return resultMessages;
         }
 
-        public virtual ValidateResultModel ValidateAddConfigSetting(ConfigModel request, string ip, int userId)
+        public IEnumerable<InsertErrorModel> UpdateConfigSetting(ConfigModel request, string ip)
         {
-            var criteria = new AddSettingConfigCriteria(request, ip, userId);
+            var criteria = new EditSettingConfigCriteria(request, ip)
+            {
+                IsConfirmed = true
+            };
 
-            return ProcessValidateSetting(criteria, request);
+            var resultMessages = dataAccess.AddUpdateConfigSetting(criteria);
+            foreach (var msg in resultMessages)
+            {
+                msg.ErrorMsg = MappingMessageResult(msg, request.Settings);
+            }
+
+            return resultMessages;
         }
 
-        public virtual ValidateResultModel ValidateUpdateConfigSetting(ConfigModel request, string ip, int userId)
+        public ValidateResultModel ValidateAddConfigSetting(ConfigModel request, string ip)
         {
-            var criteria = new EditSettingConfigCriteria(request, ip, userId);
+            var criteria = new AddSettingConfigCriteria(request, ip);
+            var result = ValidateHeadlines(request);
 
-            return ProcessValidateSetting(criteria, request);
+            if (!result.Errors.Any())
+            {
+                result = dataAccess.ValidateConfigSetting(criteria);
+            }
+
+            foreach (var msg in result.Errors)
+            {
+                msg.ErrorMsg = MappingMessageResult(msg, request.Settings);
+            }
+
+            return result;
         }
 
-        protected virtual ValidateResultModel ProcessValidateSetting(ICriteria criteria, ConfigModel request)
+        public ValidateResultModel ValidateUpdateConfigSetting(ConfigModel request, string ip)
         {
+            var criteria = new EditSettingConfigCriteria(request, ip);
+
             var result = ValidateHeadlines(request);
 
             if (!result.Errors.Any())

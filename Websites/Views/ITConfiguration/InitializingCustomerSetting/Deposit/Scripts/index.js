@@ -8,11 +8,12 @@ var isNeedRenderBettype = false;
 var isLoadCachedFilter = false;
 let headlineRegex = /^[0-9a-zA-Z\s\\r\\n~.,?:;!|@#$%&*\(\)\{\}+-\\"]+$/;
 var betSettingBySettingType = {};
+var rootUrl = window.location.origin + prefixUrl + 'InitDepSetting/';
 function GetSetting() {
     parent.BlockUI();
     $.ajax({
         type: "GET",
-        url: "GetSetting?type=deposit",
+        url: rootUrl + "GetSetting",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (rs) {
@@ -20,6 +21,7 @@ function GetSetting() {
             RenderSettings();
         },
         error: function (event, jqXHR, ajaxSettings) {
+            console.log("asdasd");
             showAlertMessage('errMsg', "Internal server error.", 1);
         },
         complete: function () {
@@ -235,7 +237,7 @@ function RenderDcsMatrix() {
     parent.BlockUI();
     $.ajax({
         type: "GET",
-        url: "GetProductSportBettype?type=deposit",
+        url: rootUrl + "GetProductSportBettype",
         success: function (rs) {
             if (rs && rs.ErrorCode !== undefined && rs.ErrorCode !== 0) {
                 showAlertMessage('errMsg', rs.ErrorMessage, 1);
@@ -326,7 +328,7 @@ function GetConfigDetail(configId, isDialogOpened = false) {
     parent.BlockUI();
     $.ajax({
         type: "GET",
-        url: "GetConfigDetail?type=deposit&configId=" + configId,
+        url: rootUrl + "GetConfigDetail?configId=" + configId,
         success: function (rs) {
             if (rs && rs.ErrorCode !== undefined && rs.ErrorCode !== 0) {
                 showAlertMessage('errMsg', rs.ErrorMessage, 1);
@@ -362,7 +364,7 @@ function GetViewConfigDetail(configId) {
     parent.BlockUI();
     $.ajax({
         type: "GET",
-        url: "ViewConfigDetail?type=deposit&configId=" + configId,
+        url: rootUrl + "ViewConfigDetail?configId=" + configId,
         contentType: "application/json; charset=utf-8",
         success: function (rs) {
             if (rs && rs.ErrorCode !== undefined && rs.ErrorCode !== 0) {
@@ -394,7 +396,7 @@ function GetViewBetSetting(configId) {
     parent.BlockUI();
     $.ajax({
         type: "GET",
-        url: "ViewBetSetting?configId=" + configId,
+        url: rootUrl + "ViewBetSetting?configId=" + configId,
         contentType: "application/json; charset=utf-8",
         success: function (rs) {
             $("#popupContainer").html();
@@ -746,7 +748,7 @@ function RenderEventEdit() {
             $("#uploadFile-" + settingType).val("");
             $.ajax({
                 type: "POST",
-                url: "ParseBetSetting?settingType=" + settingType,
+                url: rootUrl + "ParseBetSetting?settingType=" + settingType,
                 data: data,
                 processData: false,
                 enctype: "multipart/form-data",
@@ -1040,7 +1042,7 @@ function RenderNewConfig() {
     selectedConfig = null;
     $.ajax({
         type: "POST",
-        url: "GenerateConfigSetting?type=deposit",
+        url: rootUrl + "GenerateConfigSetting",
         data: request,
         success: function (rs) {
             $("#grid-information").html(rs);
@@ -1114,7 +1116,7 @@ function ValidateUpdateConfigModel() {
     parent.BlockUI();
     $.ajax({
         type: "POST",
-        url: "ValidateUpdateConfigSetting?type=deposit",
+        url: rootUrl + "ValidateUpdateConfigSetting",
         data: selectedConfig.ConfigDetail,
         success: function (rs) {
             if (rs.IsWarning) {
@@ -1146,7 +1148,7 @@ function UpdateConfigModel() {
     parent.BlockUI();
     $.ajax({
         type: "POST",
-        url: "UpdateConfigSetting?type=deposit",
+        url: rootUrl + "UpdateConfigSetting",
         dataType: 'json',
         data: selectedConfig.ConfigDetail,
         success: function (rs) {
@@ -1178,7 +1180,7 @@ function ValidateNewConfigModel() {
     parent.BlockUI();
     $.ajax({
         type: "POST",
-        url: "ValidateAddConfigSetting?type=deposit",
+        url: rootUrl + "ValidateAddConfigSetting",
         dataType: 'json',
         data: selectedConfig.ConfigDetail,
         success: function (rs) {
@@ -1215,7 +1217,7 @@ function AddConfigModel() {
     parent.BlockUI();
     $.ajax({
         type: "POST",
-        url: "AddConfigSetting?type=deposit",
+        url: rootUrl + "AddConfigSetting",
         dataType: 'json',
         data: selectedConfig.ConfigDetail,
         success: function (rs) {
@@ -1271,7 +1273,7 @@ function AbortConfig(configId) {
         parent.BlockUI();
         $.ajax({
             type: "POST",
-            url: "AbortSetting?type=deposit",
+            url: rootUrl + "AbortSetting",
             dataType: 'json',
             data: { ConfigId: configId },
             success: function (rs) {
@@ -1298,7 +1300,7 @@ function DeleteConfig(configId) {
         parent.BlockUI();
         $.ajax({
             type: "POST",
-            url: "DeleteSetting?type=deposit",
+            url: rootUrl + "DeleteSetting",
             dataType: 'json',
             data: { ConfigId: configId },
             success: function (rs) {

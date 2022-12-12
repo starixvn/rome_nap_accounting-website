@@ -1,17 +1,42 @@
 ﻿namespace Fanex.Tarus.Customer.Criteria.InitializingCustomerSetting.Deposit
 {
-    using Fanex.Tarus.Customer.Criteria.InitializingCustomerSetting.Credit;
+    using Fanex.NAP.Framework.Data;
     using Fanex.Tarus.Customer.Entities.InitializingCustomerSetting;
     using System.Collections.Generic;
     using System.Text;
+    using System.Web;
 
-    public class AddDepositSettingConfigCriteria : AddSettingConfigCriteria
+    public class AddDepositSettingConfigCriteria : CriteriaBase
     {
+        public int ProductID { get; set; }
+        public string SportTypeList { get; set; }
+        public string BetTypeList { get; set; }
+        public string Site { get; set; }
+        public string Currency { get; set; }
+        public string StartTime { get; set; }
+        public int IsTest { get; set; }
+        public string Remark { get; set; }
+        public string XMLConfig { get; set; }
+        public int UserId { get; set; }
+        public string IP { get; set; }
+        public int IsWarning { get; set; }
+        public bool IsConfirmed { get; set; }
         public string BetSettingXML { get; set; }
 
-        public AddDepositSettingConfigCriteria(ConfigModel request, string ip, int userId) : base(request, ip, userId)
+        public AddDepositSettingConfigCriteria(ConfigModel request, string ip, int userId)
         {
+            ProductID = request.Config.ProductId;
+            SportTypeList = string.Join(",", request.Config.SportTypeIdList);
+            BetTypeList = string.Join(",", request.Config.BetTypeIdList);
+            Site = string.Join(",", request.Config.SiteIdList);
+            Currency = string.Join(",", request.Config.CurrencyIdList);
+            StartTime = request.Config.StartTime;
+            IsTest = request.Config.IsTest ? 1 : 0;
+            Remark = HttpUtility.HtmlDecode(request.Config.Remark);
+            XMLConfig = BuildXmlConfig(request.Settings);
+            IP = ip;
             BetSettingXML = BuildBetSettingXML(request.BetSettings);
+            UserId = userId;
         }
 
         public override string GetSettingKey()
@@ -48,7 +73,7 @@
             return xmlConfig.ToString();
         }
 
-        protected override string BuildXmlConfig(List<SettingInforModel> settings)
+        private string BuildXmlConfig(List<SettingInforModel> settings)
         {
             var xmlConfig = new StringBuilder();
             xmlConfig.Append("<ROOT>");

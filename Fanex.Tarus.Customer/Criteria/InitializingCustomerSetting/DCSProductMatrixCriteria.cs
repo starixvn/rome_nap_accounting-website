@@ -1,4 +1,4 @@
-﻿namespace Fanex.Tarus.Customer.Criteria.InitializingCustomerSetting.Credit
+﻿namespace Fanex.Tarus.Customer.Criteria.InitializingCustomerSetting
 {
     using Fanex.NAP.Framework.Data;
 
@@ -6,5 +6,8 @@
     {
         public override string GetSettingKey()
             => "Acc_Initial_DCS_ProductProfile_Sel";
+
+        public override bool IsValid()
+            => true;
     }
 }

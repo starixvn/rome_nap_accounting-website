@@ -1,4 +1,4 @@
-﻿namespace Fanex.Tarus.Customer.Criteria.InitializingCustomerSetting.Credit
+﻿namespace Fanex.Tarus.Customer.Criteria.InitializingCustomerSetting
 {
     using Fanex.NAP.Framework.Data;
 

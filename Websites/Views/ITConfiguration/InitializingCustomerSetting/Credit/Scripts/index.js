@@ -11,7 +11,7 @@ function GetSetting() {
     parent.BlockUI();
     $.ajax({
         type: "GET",
-        url: "GetSetting?type=credit",
+        url: "GetSetting",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (rs) {
@@ -223,7 +223,7 @@ function RenderDcsMatrix() {
     parent.BlockUI();
     $.ajax({
         type: "GET",
-        url: "GetProductSportBettype?type=credit",
+        url: "GetProductSportBettype",
         success: function (rs) {
             if (rs && rs.ErrorCode !== undefined && rs.ErrorCode !== 0) {
                 showAlertMessage('errMsg', rs.ErrorMessage, 1);
@@ -307,7 +307,7 @@ function GetConfigDetail(configId, isDialogOpened = false) {
     parent.BlockUI();
     $.ajax({
         type: "GET",
-        url: "GetConfigDetail?type=credit&configId=" + configId,
+        url: "GetConfigDetail?configId=" + configId,
         success: function (rs) {
             if (rs && rs.ErrorCode !== undefined && rs.ErrorCode !== 0) {
                 showAlertMessage('errMsg', rs.ErrorMessage, 1);
@@ -343,7 +343,7 @@ function GetViewConfigDetail(configId) {
     parent.BlockUI();
     $.ajax({
         type: "GET",
-        url: "ViewConfigDetail?type=credit&configId=" + configId,
+        url: "ViewConfigDetail?configId=" + configId,
         contentType: "application/json; charset=utf-8",
         success: function (rs) {
             if (rs && rs.ErrorCode !== undefined && rs.ErrorCode !== 0) {
@@ -1006,7 +1006,7 @@ function RenderNewConfig() {
     selectedConfig = null;
     $.ajax({
         type: "POST",
-        url: "GenerateConfigSetting?type=credit",
+        url: "GenerateConfigSetting",
         data: request,
         success: function (rs) {
             $("#grid-information").html(rs);
@@ -1074,7 +1074,7 @@ function ValidateUpdateConfigModel() {
     parent.BlockUI();
     $.ajax({
         type: "POST",
-        url: "ValidateUpdateConfigSetting?type=credit",
+        url: "ValidateUpdateConfigSetting",
         data: selectedConfig.ConfigDetail,
         success: function (rs) {
             if (rs.IsWarning) {
@@ -1106,7 +1106,7 @@ function UpdateConfigModel() {
     parent.BlockUI();
     $.ajax({
         type: "POST",
-        url: "UpdateConfigSetting?type=credit",
+        url: "UpdateConfigSetting",
         dataType: 'json',
         data: selectedConfig.ConfigDetail,
         success: function (rs) {
@@ -1138,7 +1138,7 @@ function ValidateNewConfigModel() {
     parent.BlockUI();
     $.ajax({
         type: "POST",
-        url: "ValidateAddConfigSetting?type=credit",
+        url: "ValidateAddConfigSetting",
         dataType: 'json',
         data: selectedConfig.ConfigDetail,
         success: function (rs) {
@@ -1173,7 +1173,7 @@ function AddConfigModel() {
     parent.BlockUI();
     $.ajax({
         type: "POST",
-        url: "AddConfigSetting?type=credit",
+        url: "AddConfigSetting",
         dataType: 'json',
         data: selectedConfig.ConfigDetail,
         success: function (rs) {
@@ -1211,7 +1211,7 @@ function AbortConfig(configId) {
         parent.BlockUI();
         $.ajax({
             type: "POST",
-            url: "AbortSetting?type=credit",
+            url: "AbortSetting",
             dataType: 'json',
             data: { ConfigId: configId },
             success: function (rs) {
@@ -1238,7 +1238,7 @@ function DeleteConfig(configId) {
         parent.BlockUI();
         $.ajax({
             type: "POST",
-            url: "DeleteSetting?type=credit",
+            url: "DeleteSetting",
             dataType: 'json',
             data: { ConfigId: configId },
             success: function (rs) {

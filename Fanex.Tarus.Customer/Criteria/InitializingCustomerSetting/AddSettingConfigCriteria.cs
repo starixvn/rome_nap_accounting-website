@@ -1,12 +1,12 @@
-﻿namespace Fanex.Tarus.Customer.Criteria.InitializingCustomerSetting.Credit
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Web;
+using Fanex.NAP.Framework.Data;
+using Fanex.Tarus.Customer.Entities.InitializingCustomerSetting;
+
+namespace Fanex.Tarus.Customer.Criteria.InitializingCustomerSetting
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Web;
-    using Fanex.NAP.Framework.Data;
-    using Fanex.Tarus.Customer.Entities.InitializingCustomerSetting;
-    
     public class AddSettingConfigCriteria : CriteriaBase
     {
         public int ProductID { get; set; }
@@ -23,7 +23,7 @@
         public int IsWarning { get; set; }
         public bool IsConfirmed { get; set; }
 
-        public AddSettingConfigCriteria(ConfigModel request, string ip, int userId)
+        public AddSettingConfigCriteria(ConfigModel request, string ip)
         {
             ProductID = request.Config.ProductId;
             SportTypeList = string.Join(",", request.Config.SportTypeIdList);
@@ -34,14 +34,13 @@
             IsTest = request.Config.IsTest ? 1 : 0;
             Remark = HttpUtility.HtmlDecode(request.Config.Remark);
             XMLConfig = BuildXmlConfig(request.Settings);
-            UserId = userId;
             IP = ip;
         }
 
         public override string GetSettingKey()
             => "Acc_Initial_DCS_SettingConfig_Ins";
 
-        protected virtual string BuildXmlConfig(List<SettingInforModel> settings)
+        private string BuildXmlConfig(List<SettingInforModel> settings)
         {
             var xmlConfig = new StringBuilder();
             xmlConfig.Append("<ROOT>");
