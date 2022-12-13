@@ -1115,9 +1115,10 @@ function ValidateUpdateConfigModel() {
 
     parent.BlockUI();
     $.ajax({
+        contentType: 'application/json; charset=utf-8',
         type: "POST",
         url: rootUrl + "ValidateUpdateConfigSetting",
-        data: selectedConfig.ConfigDetail,
+        data: JSON.stringify(selectedConfig.ConfigDetail),
         success: function (rs) {
             if (rs.IsWarning) {
                 if (confirm("There already exists a configuration that has the same product/sport type/bet type, currency, setting type in the system with status \"Completed\". Are you sure you want to edit this config ?")) {
@@ -1147,10 +1148,11 @@ function UpdateConfigModel() {
     $("#editErrMsg").html("");
     parent.BlockUI();
     $.ajax({
+        contentType: 'application/json; charset=utf-8',
         type: "POST",
         url: rootUrl + "UpdateConfigSetting",
         dataType: 'json',
-        data: selectedConfig.ConfigDetail,
+        data: JSON.stringify(selectedConfig.ConfigDetail),
         success: function (rs) {
             if (rs && rs.length > 0) {
                 ShowAddEditError(rs);
@@ -1179,10 +1181,11 @@ function ValidateNewConfigModel() {
 
     parent.BlockUI();
     $.ajax({
+        contentType: 'application/json; charset=utf-8',
         type: "POST",
         url: rootUrl + "ValidateAddConfigSetting",
         dataType: 'json',
-        data: selectedConfig.ConfigDetail,
+        data: JSON.stringify(selectedConfig.ConfigDetail),
         success: function (rs) {
             if (rs.IsWarning) {
                 if (confirm("There already exists a configuration that has the same product/sport type/bet type, currency, setting type in the system with status \"Completed\". Are you sure you want to add this config ?")) {
@@ -1216,10 +1219,11 @@ function AddConfigModel() {
     $("#editErrMsg").html("");
     parent.BlockUI();
     $.ajax({
+        contentType: 'application/json; charset=utf-8',
         type: "POST",
         url: rootUrl + "AddConfigSetting",
         dataType: 'json',
-        data: selectedConfig.ConfigDetail,
+        data: JSON.stringify(selectedConfig.ConfigDetail),
         success: function (rs) {
             if (rs && rs.length > 0) {
                 ShowAddEditError(rs);
