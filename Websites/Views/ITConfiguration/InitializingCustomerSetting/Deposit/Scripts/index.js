@@ -21,8 +21,12 @@ function GetSetting() {
             RenderSettings();
         },
         error: function (event, jqXHR, ajaxSettings) {
-            console.log("asdasd");
-            showAlertMessage('errMsg', "Internal server error.", 1);
+            if (jqXHR.status === 401 || jqXHR.status === 403) {
+                var denyObject = $.parseJSON(jqXHR.responseText);
+                showAlertMessage("errMsg", denyObject.ErrorMessage, 1);
+            } else {
+                showAlertMessage('errMsg', "Internal server error.", 1);
+            }
         },
         complete: function () {
             try { parent.jQuery.unblockUI(); } catch (e) { }
@@ -1125,10 +1129,12 @@ function ValidateUpdateConfigModel() {
                     UpdateConfigModel();
                 }
             } else {
-                if (rs && rs.Errors.length > 0) {
+                if (rs.Errors && rs.Errors.length > 0) {
                     ShowAddEditError(rs.Errors);
                     $("#popupContainer").scrollTop(0);
                     try { parent.jQuery.unblockUI(); } catch (e) { }
+                } else if (rs.BetSettingErrorMessage !== null && rs.BetSettingErrorMessage !== "") {
+                    showAlertMessage('err-bet-setting-' + rs.SettingType, rs.BetSettingErrorMessage, 1);
                 } else {
                     $("#popupContainer").scrollTop(0);
                     GetConfigDetail(selectedConfig.ConfigDetail.Config.ConfigId, true);
