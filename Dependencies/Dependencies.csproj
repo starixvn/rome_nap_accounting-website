@@ -129,10 +129,10 @@
       <HintPath>..\packages\Fanex.BetList.AGCasino.2.0.0-net5-03\lib\net461\Fanex.BetList.AGCasino.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.Allbet, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Allbet.2.0.0-net5-03\lib\net461\Fanex.BetList.Allbet.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.Allbet.2.0.0-net5-06\lib\net461\Fanex.BetList.Allbet.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.BBIN, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.BBIN.2.0.0-net5-03\lib\net461\Fanex.BetList.BBIN.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.BBIN.2.0.0-net5-06\lib\net461\Fanex.BetList.BBIN.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.BetTrade, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.BetTrade.2.0.0-net5-05\lib\net461\Fanex.BetList.BetTrade.dll</HintPath>
@@ -141,7 +141,7 @@
       <HintPath>..\packages\Fanex.BetList.BG.2.0.0-net5-03\lib\net461\Fanex.BetList.BG.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.Bitcoin, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Bitcoin.2.0.0-net5-03\lib\net461\Fanex.BetList.Bitcoin.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.Bitcoin.2.0.0-net5-06\lib\net461\Fanex.BetList.Bitcoin.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.CardClub, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.CardClub.2.0.0-net5-03\lib\net461\Fanex.BetList.CardClub.dll</HintPath>
@@ -156,7 +156,7 @@
       <HintPath>..\packages\Fanex.BetList.ColossusBets.2.0.0-net5-05\lib\net461\Fanex.BetList.ColossusBets.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.Core, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Core.3.0.0-net5-21\lib\net461\Fanex.BetList.Core.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.Core.3.0.0-net5-22\lib\net461\Fanex.BetList.Core.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.Core.RemotingRef, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Core.RemotingRef.2.0.0-net5-03\lib\net461\Fanex.BetList.Core.RemotingRef.dll</HintPath>
@@ -174,7 +174,7 @@
       <HintPath>..\packages\Fanex.BetList.GlobalGaming.2.0.0-net5-05\lib\net461\Fanex.BetList.GlobalGaming.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.GTCasino, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.GTCasino.2.0.0-net5-03\lib\net461\Fanex.BetList.GTCasino.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.GTCasino.2.0.0-net5-06\lib\net461\Fanex.BetList.GTCasino.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.Habanero, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Habanero.2.0.0-net5-03\lib\net461\Fanex.BetList.Habanero.dll</HintPath>
@@ -210,7 +210,7 @@
       <HintPath>..\packages\Fanex.BetList.NG2.2.0.0-net5-03\lib\net461\Fanex.BetList.NG2.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.NumberGame, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.NumberGame.2.0.0-net5-03\lib\net461\Fanex.BetList.NumberGame.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.NumberGame.2.0.0-net5-06\lib\net461\Fanex.BetList.NumberGame.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.PGSoft, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.PGSoft.2.0.0-net5-03\lib\net461\Fanex.BetList.PGSoft.dll</HintPath>
@@ -240,7 +240,7 @@
       <HintPath>..\packages\Fanex.BetList.SealEntertainment.2.0.0-net5-03\lib\net461\Fanex.BetList.SealEntertainment.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.SexyGaming, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.SexyGaming.2.0.0-net5-03\lib\net461\Fanex.BetList.SexyGaming.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.SexyGaming.2.0.0-net5-06\lib\net461\Fanex.BetList.SexyGaming.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.Spadegaming, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Spadegaming.2.0.0-net5-03\lib\net461\Fanex.BetList.Spadegaming.dll</HintPath>
