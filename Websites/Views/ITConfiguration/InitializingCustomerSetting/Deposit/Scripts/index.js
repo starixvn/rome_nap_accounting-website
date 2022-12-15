@@ -250,7 +250,12 @@ function RenderDcsMatrix() {
             }
         },
         error: function (event, jqXHR, ajaxSettings) {
-            showAlertMessage('editErrMsg', "Internal server error.", 1);
+            if (jqXHR.status === 401 || jqXHR.status === 403) {
+                var denyObject = $.parseJSON(jqXHR.responseText);
+                showAlertMessage("editErrMsg", denyObject.ErrorMessage, 1);
+            } else {
+                showAlertMessage('editErrMsg', "Internal server error.", 1);
+            }
         },
         complete: function () {
             try { parent.jQuery.unblockUI(); } catch (e) { }
@@ -355,7 +360,12 @@ function GetConfigDetail(configId, isDialogOpened = false) {
             }
         },
         error: function (event, jqXHR, ajaxSettings) {
-            showAlertMessage('editErrMsg', "Internal server error.", 1);
+            if (jqXHR.status === 401 || jqXHR.status === 403) {
+                var denyObject = $.parseJSON(jqXHR.responseText);
+                showAlertMessage("editErrMsg", denyObject.ErrorMessage, 1);
+            } else {
+                showAlertMessage('editErrMsg', "Internal server error.", 1);
+            }
         },
         complete: function () {
             try { parent.jQuery.unblockUI(); } catch (e) { }
@@ -387,7 +397,12 @@ function GetViewConfigDetail(configId) {
             }
         },
         error: function (event, jqXHR, ajaxSettings) {
-            showAlertMessage('editErrMsg', "Internal server error.", 1);
+            if (jqXHR.status === 401 || jqXHR.status === 403) {
+                var denyObject = $.parseJSON(jqXHR.responseText);
+                showAlertMessage("editErrMsg", denyObject.ErrorMessage, 1);
+            } else {
+                showAlertMessage('editErrMsg', "Internal server error.", 1);
+            }
         },
         complete: function () {
             try { parent.jQuery.unblockUI(); } catch (e) { }
@@ -1053,7 +1068,12 @@ function RenderNewConfig() {
             RenderEditConfigDetail();
         },
         error: function (event, jqXHR, ajaxSettings) {
-            showAlertMessage('editErrMsg', "Internal server error.", 1);
+            if (jqXHR.status === 401 || jqXHR.status === 403) {
+                var denyObject = $.parseJSON(jqXHR.responseText);
+                showAlertMessage("editErrMsg", denyObject.ErrorMessage, 1);
+            } else {
+                showAlertMessage('editErrMsg', "Internal server error.", 1);
+            }
         },
         complete: function () {
             try { parent.jQuery.unblockUI(); } catch (e) { }
@@ -1135,6 +1155,7 @@ function ValidateUpdateConfigModel() {
                     try { parent.jQuery.unblockUI(); } catch (e) { }
                 } else if (rs.BetSettingErrorMessage !== null && rs.BetSettingErrorMessage !== "") {
                     showAlertMessage('err-bet-setting-' + rs.SettingType, rs.BetSettingErrorMessage, 1);
+                    try { parent.jQuery.unblockUI(); } catch (e) { }
                 } else {
                     $("#popupContainer").scrollTop(0);
                     GetConfigDetail(selectedConfig.ConfigDetail.Config.ConfigId, true);
@@ -1144,7 +1165,12 @@ function ValidateUpdateConfigModel() {
         },
         error: function (event, jqXHR, ajaxSettings) {
             $("#popupContainer").scrollTop(0);
-            showAlertMessage('editErrMsg', "Internal server error.", 1);
+            if (jqXHR.status === 401 || jqXHR.status === 403) {
+                var denyObject = $.parseJSON(jqXHR.responseText);
+                showAlertMessage("editErrMsg", denyObject.ErrorMessage, 1);
+            } else {
+                showAlertMessage('editErrMsg', "Internal server error.", 1);
+            }
             try { parent.jQuery.unblockUI(); } catch (e) { }
         }
     });
@@ -1168,7 +1194,12 @@ function UpdateConfigModel() {
             }
         },
         error: function (event, jqXHR, ajaxSettings) {
-            showAlertMessage('editErrMsg', "Internal server error.", 1);
+            if (jqXHR.status === 401 || jqXHR.status === 403) {
+                var denyObject = $.parseJSON(jqXHR.responseText);
+                showAlertMessage("editErrMsg", denyObject.ErrorMessage, 1);
+            } else {
+                showAlertMessage('editErrMsg', "Internal server error.", 1);
+            }
             try { parent.jQuery.unblockUI(); } catch (e) { }
         },
         complete: function () {
@@ -1213,7 +1244,12 @@ function ValidateNewConfigModel() {
         },
         error: function (event, jqXHR, ajaxSettings) {
             $("#popupContainer").scrollTop(0);
-            showAlertMessage('editErrMsg', "Internal server error.", 1);
+            if (jqXHR.status === 401 || jqXHR.status === 403) {
+                var denyObject = $.parseJSON(jqXHR.responseText);
+                showAlertMessage("editErrMsg", denyObject.ErrorMessage, 1);
+            } else {
+                showAlertMessage('editErrMsg', "Internal server error.", 1);
+            }
         },
         complete: function () {
             try { parent.jQuery.unblockUI(); } catch (e) { }
@@ -1242,7 +1278,12 @@ function AddConfigModel() {
             }
         },
         error: function (event, jqXHR, ajaxSettings) {
-            showAlertMessage('editErrMsg', "Internal server error.", 1);
+            if (jqXHR.status === 401 || jqXHR.status === 403) {
+                var denyObject = $.parseJSON(jqXHR.responseText);
+                showAlertMessage("editErrMsg", denyObject.ErrorMessage, 1);
+            } else {
+                showAlertMessage('editErrMsg', "Internal server error.", 1);
+            }
         },
         complete: function () {
             try { parent.jQuery.unblockUI(); } catch (e) { }
@@ -1295,7 +1336,12 @@ function AbortConfig(configId) {
                 }
             },
             error: function (error) {
-                showAlertMessage('errMsg', "Internal server error.", 1);
+                if (jqXHR.status === 401 || jqXHR.status === 403) {
+                    var denyObject = $.parseJSON(jqXHR.responseText);
+                    showAlertMessage("errMsg", denyObject.ErrorMessage, 1);
+                } else {
+                    showAlertMessage('errMsg', "Internal server error.", 1);
+                }
             },
             complete: function () {
                 try { parent.jQuery.unblockUI(); } catch (e) { }
@@ -1322,7 +1368,12 @@ function DeleteConfig(configId) {
                 }
             },
             error: function (error) {
-                showAlertMessage('errMsg', "Internal server error.", 1);
+                if (jqXHR.status === 401 || jqXHR.status === 403) {
+                    var denyObject = $.parseJSON(jqXHR.responseText);
+                    showAlertMessage("errMsg", denyObject.ErrorMessage, 1);
+                } else {
+                    showAlertMessage('errMsg', "Internal server error.", 1);
+                }
             },
             complete: function () {
                 try { parent.jQuery.unblockUI(); } catch (e) { }

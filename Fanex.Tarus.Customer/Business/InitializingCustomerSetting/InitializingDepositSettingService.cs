@@ -338,7 +338,7 @@ namespace Fanex.Tarus.Customer.Business.InitializingCustomerSetting
                 return $"Row {betSetting.RowPos}: Bet Type is required info. Please check again.";
             }
 
-            if (string.IsNullOrWhiteSpace(betSetting.CurrencyCode) || string.IsNullOrWhiteSpace(betSetting.CurrencyName))
+            if (string.IsNullOrWhiteSpace(betSetting.CurrencyName))
             {
                 return $"Row { betSetting.RowPos}: Currency is required info. Please check again.";
             }
