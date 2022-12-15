@@ -1152,10 +1152,8 @@ function ValidateUpdateConfigModel() {
                 if (rs.Errors && rs.Errors.length > 0) {
                     ShowAddEditError(rs.Errors);
                     $("#popupContainer").scrollTop(0);
-                    try { parent.jQuery.unblockUI(); } catch (e) { }
                 } else if (rs.BetSettingErrorMessage !== null && rs.BetSettingErrorMessage !== "") {
                     showAlertMessage('err-bet-setting-' + rs.SettingType, rs.BetSettingErrorMessage, 1);
-                    try { parent.jQuery.unblockUI(); } catch (e) { }
                 } else {
                     $("#popupContainer").scrollTop(0);
                     GetConfigDetail(selectedConfig.ConfigDetail.Config.ConfigId, true);
@@ -1171,6 +1169,8 @@ function ValidateUpdateConfigModel() {
             } else {
                 showAlertMessage('editErrMsg', "Internal server error.", 1);
             }
+        },
+        complete: function () {
             try { parent.jQuery.unblockUI(); } catch (e) { }
         }
     });
@@ -1185,6 +1185,7 @@ function UpdateConfigModel() {
         url: rootUrl + "UpdateConfigSetting",
         dataType: 'json',
         data: JSON.stringify(selectedConfig.ConfigDetail),
+        processData: false,
         success: function (rs) {
             if (rs && rs.length > 0) {
                 ShowAddEditError(rs);
@@ -1200,9 +1201,9 @@ function UpdateConfigModel() {
             } else {
                 showAlertMessage('editErrMsg', "Internal server error.", 1);
             }
-            try { parent.jQuery.unblockUI(); } catch (e) { }
         },
         complete: function () {
+            try { parent.jQuery.unblockUI(); } catch (e) { }
             $("#popupContainer").scrollTop(0);
             GetSetting();
         }
@@ -1225,6 +1226,7 @@ function ValidateNewConfigModel() {
         url: rootUrl + "ValidateAddConfigSetting",
         dataType: 'json',
         data: JSON.stringify(selectedConfig.ConfigDetail),
+        processData: false,
         success: function (rs) {
             if (rs.IsWarning) {
                 if (confirm("There already exists a configuration that has the same product/sport type/bet type, currency, setting type in the system with status \"Completed\". Are you sure you want to add this config ?")) {

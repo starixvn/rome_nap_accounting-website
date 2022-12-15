@@ -678,10 +678,10 @@ namespace Fanex.Tarus.Customer.Business.InitializingCustomerSetting
                 foreach (var setting in settingGroup)
                 {
                     setting.Id = pos;
-                    setting.CopyFromSportType = sportBettype.Sports[0].SportId;
-                    setting.SportTypeOptions = BuildSportOptions(sportBettype.Sports, setting.CopyFromSportType).ToList();
-                    setting.CopyFromBetType = sportBettype.Sports[0].Bettypes[0].BettypeId;
-                    setting.BetTypeOptions = BuildBettypeOptions(sportBettype.Sports[0].Bettypes, setting.CopyFromBetType).ToList();
+                    //setting.CopyFromSportType = sportBettype.Sports[0].SportId;
+                    //setting.SportTypeOptions = BuildSportOptions(sportBettype.Sports, setting.CopyFromSportType).ToList();
+                    //setting.CopyFromBetType = sportBettype.Sports[0].Bettypes[0].BettypeId;
+                    //setting.BetTypeOptions = BuildBettypeOptions(sportBettype.Sports[0].Bettypes, setting.CopyFromBetType).ToList();
                     pos++;
                 }
             }
