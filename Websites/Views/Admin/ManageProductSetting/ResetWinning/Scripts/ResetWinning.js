@@ -110,7 +110,6 @@ function SearchDWLList() {
             parent.jQuery.unblockUI();
         },
         error: function (err) {
-            console.log(err);
         }
     });
 }
@@ -155,7 +154,6 @@ function SearchDWLListTest() {
             parent.jQuery.unblockUI();
         },
         error: function (err) {
-            console.log(err);
         }
     });
 }
@@ -351,7 +349,6 @@ function SearchDWLListExtra() {
             parent.jQuery.unblockUI();
         },
         error: function (err) {
-            console.log(err);
         }
     });
 }
@@ -434,7 +431,6 @@ function SearchDWLListExtraTest() {
             parent.jQuery.unblockUI();
         },
         error: function (err) {
-            console.log(err);
         }
     });
 }

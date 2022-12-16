@@ -60,7 +60,6 @@ function GetInitData() {
             parent.jQuery.unblockUI();
         },
         error: function (err) {
-            console.log(err);
         }
     });
 
@@ -92,7 +91,6 @@ function SearchAllUMConfig() {
             parent.jQuery.unblockUI();
         },
         error: function (err) {
-            console.log(err);
         }
     });
 }
@@ -176,6 +174,10 @@ function InitAddNewUMConfig() {
         cachedUMConfigSetting.forEach(function (item, index) {
             functionTypeSelection.append(new Option('[' + item.FunctionType + '] ' + item.FunctionTypeName, item.FunctionType));
         });
+        functionTypeSelection.select2({
+            minimumInputLength: 0,
+            width: '200px'
+        });
     }
 
     RenderSiteSelect();
@@ -185,18 +187,31 @@ function InitAddNewUMConfig() {
     var productDefaultOption = new Option('ProductName', '', true, true);
     productDefaultOption.disabled = true;
     UMProductName.append(productDefaultOption);
+    UMProductName.select2({
+        minimumInputLength: 0,
+        width: '200px'
+    });
 
     var UMSportName = $("#UMSportName");
     UMSportName.empty();
     var sportDefaultOption = new Option('SportName', '', true, true);
     sportDefaultOption.disabled = true;
     UMSportName.append(sportDefaultOption);
+    UMSportName.select2({
+        minimumInputLength: 0,
+        width: '200px'
+    });
 
     var UMSettingType = $("#UMSettingType");
     UMSettingType.empty();
     var settingDefaultOption = new Option('SettingType', '', true, true);
     settingDefaultOption.disabled = true;
     UMSettingType.append(settingDefaultOption);
+    UMSettingType.select2({
+        minimumInputLength: 0,
+        width: '200px'
+    });
+    
     $('#UMSite').val("0");
     $('#UMCurrency').val("0");
     $("#UMShowTime").val("");
@@ -428,6 +443,10 @@ function RenderProductSelect() {
             UMProductName.append(new Option('[' + item.ProductId + '] ' + item.ProductName, item.ProductId));
         });
         cachedSelectProductSetting = cachedSelectFunctionSetting.Products[0];
+        UMProductName.select2({
+            minimumInputLength: 0,
+            width: '200px'
+        });
         RenderSportSelect();
     }
 }
@@ -440,6 +459,10 @@ function RenderSportSelect() {
             UMSportName.append(new Option('[' + item.SportType + '] ' + item.SportName, item.SportType));
         });
         cachedSelectSportSetting = cachedSelectProductSetting.Sports[0];
+        UMSportName.select2({
+            minimumInputLength: 0,
+            width: '200px'
+        });
         RenderSettingTypeSelect();
     }
 }
@@ -452,6 +475,10 @@ function RenderSettingTypeSelect() {
             UMSettingType.append(new Option('[' + item.SettingType + '] ' + item.SettingName, item.SettingType));
         });
         cachedSelectSettingType = cachedSelectSportSetting.Settings[0];
+        UMSettingType.select2({
+            minimumInputLength: 0,
+            width: '200px'
+        });
     }
 }
 
@@ -660,6 +687,10 @@ $(document).ready(function () {
         cachedSelectSettingType = cachedSelectSportSetting.Settings.find(element => element.SettingType === settingType);
     });
 
+    SetupUMCalendar('UMShowTime');
+    SetupUMCalendar('UMEndTime');
+    SetupUMCalendar('UMBeginTime');
+
     $("#UMUsername").off("change").on("change", function () {
         var usernames = $("#UMUsername");
         var usernamesValue = $.trim(usernames.val());
@@ -726,3 +757,8 @@ function IsReportsBetListsFunctionType(functionTypeValue) {
     var functionType = parseInt(functionTypeValue || $("#UMFunctionType").val());
     return functionType >= 201 && functionType <= 216;
 }
+
+$(document).ready(function () {
+    GetInitDataAndSearchAllUMConfig();
+    $('#UMCurrency').select2({ width: "154px" });
+});

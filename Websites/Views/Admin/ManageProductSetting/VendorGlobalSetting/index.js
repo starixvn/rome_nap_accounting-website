@@ -28,7 +28,6 @@ function SearchVendor(pageindex, pagesize) {
             RenderVendorData(data);
         },
         error: function (err) {
-            console.log(err);
         },
         complete: function () {
             parent.jQuery.unblockUI();
@@ -177,7 +176,6 @@ function RenderSportTypes() {
             RenderSportTypeOptions(data.SportTypeEntities);
         },
         error: function (err) {
-            console.log(err);
         }
     });
 }
@@ -246,7 +244,6 @@ function RenderFilterBettype() {
             RenderBettypeOptions(data.BettypeEntities);
         },
         error: function (err) {
-            console.log(err);
         },
         complete: function () {
             parent.jQuery.unblockUI();

@@ -33,7 +33,6 @@ function SearchProduct3rd(pageindex, pagesize) {
             RenderProduct3rdData(data);
         },
         error: function (err) {
-            console.log(err);
         },
         complete: function () {
             parent.jQuery.unblockUI();

@@ -19,7 +19,6 @@ function SearchSport(pageSize, pageIndex) {
             parent.jQuery.unblockUI();
         },
         error: function (err) {
-            console.log(err);
         }
     });
 }
