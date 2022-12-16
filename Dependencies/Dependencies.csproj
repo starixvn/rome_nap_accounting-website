@@ -207,7 +207,7 @@
       <HintPath>..\packages\Fanex.BetList.MGRNGCasino.2.0.0-net5-01\lib\net461\Fanex.BetList.MGRNGCasino.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.NG2, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.NG2.2.0.0-net5-03\lib\net461\Fanex.BetList.NG2.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.NG2.2.0.0-net5-04\lib\net461\Fanex.BetList.NG2.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.NumberGame, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.NumberGame.2.0.0-net5-06\lib\net461\Fanex.BetList.NumberGame.dll</HintPath>
