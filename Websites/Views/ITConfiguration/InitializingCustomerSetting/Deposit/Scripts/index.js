@@ -1218,8 +1218,7 @@ function ValidateNewConfigModel() {
     }
 
     parent.BlockUI();
-    console.log(selectedConfig.ConfigDetail);
-    console.log(JSON.stringify(selectedConfig.ConfigDetail));
+    
     $.ajax({
         contentType: 'application/json; charset=utf-8',
         type: "POST",

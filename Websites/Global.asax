@@ -153,8 +153,6 @@
         if (ex.GetType() != typeof(HttpException))
         {
             LogExtensions.ExceptionHandler(ex);
-            var senderInfor = (System.Web.HttpApplication)sender;
-            if(senderInfor != null) LogExtensions.ExceptionHandler(new Exception(Newtonsoft.Json.JsonConvert.SerializeObject(senderInfor.Context.Request)));
         }
         else
         {
