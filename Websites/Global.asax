@@ -100,7 +100,7 @@
         {
             ConnectionOptions = StackExchange.Redis.ConfigurationOptions.Parse(ConfigurationManager.AppSettings["Redis:ConnectionString"])
         }));
-
+        
         AppSettings.AppMailId = ConfigurationManager.AppSettings["app_mail_id"];
         AppSettings.AppMailAddress = ConfigurationManager.AppSettings["app_mail_address"];
     }

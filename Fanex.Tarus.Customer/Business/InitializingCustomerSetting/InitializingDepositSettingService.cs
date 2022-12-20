@@ -208,7 +208,7 @@ namespace Fanex.Tarus.Customer.Business.InitializingCustomerSetting
             }
             catch (Exception ex)
             {
-                result.ErrorMessage = "Invalid file uploaded. Error at row: " + rowCount.ToString() + ". " + ex.Message;
+                result.ErrorMessage = "Invalid file uploaded. Error at row: " + rowCount.ToString() + ". ";
                 result.SettingType = settingType;
             }
 
