@@ -40,7 +40,7 @@ namespace Sunplus.Accounting.Business.ExportStatement
             var request = HttpContext.Current.Request;
             var contentLength = request.ContentLength;
 
-            if (!UserController.OnlineUserUpdate(AppSession.OnAccId))
+            if (AccCommon.IsEnabledRecheckin && !UserController.OnlineUserUpdate(AppSession.OnAccId))
             {
                 string appPath = request.ApplicationPath;
                 if (appPath != "/") appPath += "/";
@@ -112,7 +112,7 @@ namespace Sunplus.Accounting.Business.ExportStatement
                     }
                     else
                     {
-                        htmlData = "<span class='error-message'>Your upload file Size must be <= 1 MB</span>";
+                        htmlData = "<span class='error-message'>Your uploaded file's size can't be larger than 1 MB</span>";
                         success = 0;
                     }
 
@@ -131,7 +131,8 @@ namespace Sunplus.Accounting.Business.ExportStatement
                     else
                     {
                         Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-                        throw;
+                        htmlData =
+                            "<span class='error-message'>The format of template is wrong. </span>";
                     }
 
                     html.Append(htmlData);
@@ -266,7 +267,7 @@ namespace Sunplus.Accounting.Business.ExportStatement
 
                     oddeven = (oddeven == "even") ? "odd" : "even";
                     TemplateHandler.Assign(ref row, "oddeven", oddeven);
-                    TemplateHandler.Assign(ref row, "Date", CastAide.AsDateTime(dr["accdate"]).ToShortDateString());
+                    TemplateHandler.Assign(ref row, "Date", dr.IsNull("accdate") ? "--" : CastAide.AsDateTime(dr["accdate"]).ToShortDateString());
                     TemplateHandler.Assign(ref row, "Role", GetRoleName(CastAide.AsInt32(dr["roleid"])));
                     TemplateHandler.Assign(ref row, "Account", username_p);
                     TemplateHandler.Assign(ref row, "Currency",
@@ -292,7 +293,9 @@ namespace Sunplus.Accounting.Business.ExportStatement
                         TemplateHandler.Assign(ref row, "Credit", "");
                         TemplateHandler.Assign(ref row, "Debit", NumberFormat.DecFormat(Total * (-1), 2));
                     }
-                    Balance += Total;
+
+                    Balance = transtype.Equals("BAL") ? Total : Balance + Total;
+
                     TemplateHandler.Assign(ref row, "Balance", NumberFormat.DecFormat(Balance, 2));
 
                     html.Append(row);
@@ -486,7 +489,7 @@ namespace Sunplus.Accounting.Business.ExportStatement
                     bgcolorNumber = cellNumberNormalEven;
                 }
 
-                ws.Cells[i, 0].Value = CastAide.AsDateTime(dr["accdate"]).ToShortDateString();
+                ws.Cells[i, 0].Value = dr.IsNull("accdate") ? "--" : CastAide.AsDateTime(dr["accdate"]).ToShortDateString();
                 ws.Cells[i, 0].Style = bgcolorText;
 
                 ws.Cells[i, 1].Value = GetRoleName(CastAide.AsInt32(dr["roleid"]));
