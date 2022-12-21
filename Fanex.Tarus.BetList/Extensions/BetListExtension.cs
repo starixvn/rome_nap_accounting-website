@@ -15,8 +15,8 @@ namespace Fanex.Tarus.BetList.Extensions
     using Fanex.BetList.Core.Entities;
     using Fanex.BetList.Core.Factories;
     using Models;
-    using NPOI.HSSF.UserModel;
-    using NPOI.SS.UserModel;
+    using BetListNPOI.HSSF.UserModel;
+    using BetListNPOI.SS.UserModel;
     using Resources;
 
     /// <summary>

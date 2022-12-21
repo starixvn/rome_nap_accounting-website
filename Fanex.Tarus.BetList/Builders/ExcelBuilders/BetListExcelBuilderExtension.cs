@@ -5,9 +5,9 @@
     using Fanex.BetList.Core.Entities;
     using Fanex.BetList.Core.Utils;
     using Models;
-    using NPOI.HSSF.UserModel;
-    using NPOI.SS.UserModel;
-    using NPOI.SS.Util;
+    using BetListNPOI.HSSF.UserModel;
+    using BetListNPOI.SS.UserModel;
+    using BetListNPOI.SS.Util;
     using PTComm;
     using Resources;
 

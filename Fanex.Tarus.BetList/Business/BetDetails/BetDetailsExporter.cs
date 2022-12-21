@@ -12,9 +12,9 @@
     using Fanex.Tarus.BetList.Criteria;
     using Fanex.Tarus.BetList.DataAccess;
     using Models;
-    using NPOI.HSSF.UserModel;
-    using NPOI.SS.UserModel;
-    using NPOI.SS.Util;
+    using BetListNPOI.HSSF.UserModel;
+    using BetListNPOI.SS.UserModel;
+    using BetListNPOI.SS.Util;
     using Resources;
     using Sunplus.Accounting.Business;
     using Sunplus.Accounting.Core.Common;
@@ -23,6 +23,7 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using CellAddress = Fanex.BetList.Core.Entities.CellAddress;
 
     public class BetDetailsExporter : IBetDetailsExporter
     {
@@ -170,7 +171,7 @@
             }
 
             var workbook = builder.GetBetList();
-            workbook.Write(stream);
+            workbook.Write(stream, true);
         }
 
         private static void AddHeader(IBetListExcelBuilder builder, int sportType)
