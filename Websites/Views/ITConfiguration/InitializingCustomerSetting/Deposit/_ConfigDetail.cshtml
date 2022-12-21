@@ -1,0 +1,425 @@
+﻿@using Fanex.Tarus.Customer.ViewModels.InitializingCustomerSetting
+@using System.Data.Linq
+@using Fanex.Tarus.Infrastructure.Caching
+@using Fanex.Tarus.Customer.Resources
+
+@model ConfigSettingViewModel
+@{
+    const string StatusEnable = "<p class=\"setting-status status-enable input-status-{0} input-status-default-{1} {2}\" id=\"status-{0}-{1}\" data-pos=\"{1}\" data-master=\"status-master-{1}\" data-agent=\"status-agent-{1}\" data-member=\"status-member-{1}\">Enable</p>";
+    const string StatusDisable = "<p class=\"setting-status status-disable input-status-{0} input-status-default-{1} {2}\" id=\"status-{0}-{1}\" data-pos=\"{1}\" data-master=\"status-master-{1}\" data-agent=\"status-agent-{1}\" data-member=\"status-member-{1}\">Disable</p>";
+}
+
+<table class="setting-table">
+    <tr class="setting-row row-header">
+        <td class="setting-col col-header text-center" colspan="8">General Information</td>
+    </tr>
+    <tr class="setting-row row-item">
+        <td class="setting-col col-item" colspan="8">
+            <div class="edit-general-info floatLeft">
+                <label class="edit-label label-filter w60" for="EditSiteSelect">Site<span style="color: red;">*</span>:</label>
+                <select id="EditSiteSelect" class="edit-input setting-edit"></select>
+            </div>
+            <div class="edit-general-info floatLeft">
+                <label class="edit-label label-filter w60" for="EditCurrencySelect">Currency<span style="color: red;">*</span>:</label>
+                <select id="EditCurrencySelect" class="edit-input setting-edit"></select>
+            </div>
+            <div class="edit-general-info floatLeft">
+                <label class="edit-label label-filter w120" for="EditStartTime">Start Time(GMT-4)<span style="color: red;">*</span>:</label>
+                <input class="edit-input setting-calendar" id="EditStartTime" readonly type="text" title="Start Time (GMT-4)" />
+                <input class="edit-input img-date-selector" onclick="return false;" alt="" id="EditStartTime_Trigger" title="Date selector"
+                       width="18" height="17" src="../App_Themes/Images/calendar.gif" type="image" />
+            </div>
+            <div class="edit-general-info floatLeft">
+                <input id="ckbEditIsTest" type="checkbox" class="edit-input" /><span>Is Test</span>
+            </div>
+            <div class="clear"></div>
+            <div class="edit-general-info floatLeft">
+                <label class="edit-label label-filter w60" for="EditRemark">Remark:</label>
+                <textarea id="EditRemark" class="edit-input" cols="120" maxlength="1000"></textarea>
+            </div>
+        </td>
+    </tr>
+    @foreach (var groups in Model.GroupSettings)
+    {
+        <tr class="setting-row row-header">
+            <td class="setting-col col-header text-center" colspan="8">@groups.FirstOrDefault().SettingName - @groups.Key</td>
+        </tr>
+        <!--Bet Setting-->
+        if (groups.FirstOrDefault().SettingName == "Bet Setting")
+        {
+            var betSettings = groups.ToList();
+            var firstBetSetting = betSettings[0];
+            var rowSpan = betSettings.Count;
+            <tr class="setting-row row-item text-center">
+                <td class="setting-col col-item td-row">@firstBetSetting.Id</td>
+                <td class="setting-col col-item td-sport">[@firstBetSetting.SportType] @firstBetSetting.SportName</td>
+                <td class="setting-col col-item td-sport">[@firstBetSetting.BetType] @firstBetSetting.BetTypeName</td>
+                <td class="setting-col col-item td-copy">
+                    <div class="div-ckb">
+                        <input id="@("ckbDefault" + firstBetSetting.SettingId)" class="@("edit-input ckb ckb-default-bet-setting group-bet-setting-" + groups.Key)" type="checkbox" @firstBetSetting.CheckBoxDefault data-pos=@firstBetSetting.SettingId />
+                        <span>Default</span>
+                    </div>
+                </td>
+                <td class="setting-col col-item td-setting" rowspan="@rowSpan" colspan="2">
+                    <form id="mainForm" style="display: flex;">
+                        <div class="floatLeft">
+                            <input id="@("uploadFile-" + groups.Key )" class="input-file-bet-setting" data-setting-type=@groups.Key name="uploadFile" type="file" style="width: 280px" accept=".xls,.xlsx"/>
+                        </div>
+                    </form>
+                    <div id="@("err-bet-setting-" + groups.Key)" class="err-bet-setting"></div>
+                </td>
+                <td class="setting-col col-item td-setting" rowspan="@rowSpan" colspan="2">
+                    <span>File size limit 1MB. Click <a class="link-download-excel-template b" href="@Url.Content("~/Views/ITConfiguration/InitializingCustomerSetting/Deposit/Template.xls")">here</a> to download template.</span>
+                </td>
+            </tr>
+
+            for (int i = 1; i < betSettings.Count; i++)
+            {
+                <tr class="setting-row row-item text-center">
+                    <td class="setting-col col-item td-row">@betSettings[i].Id</td>
+                    <td class="setting-col col-item td-sport">[@betSettings[i].SportType] @betSettings[i].SportName</td>
+                    <td class="setting-col col-item td-sport">[@betSettings[i].BetType] @betSettings[i].BetTypeName</td>
+                    <td class="setting-col col-item td-copy">
+                        <div class="div-ckb">
+                            <input id="@("ckbDefault" + betSettings[i].SettingId)" class="@("edit-input ckb ckb-default-bet-setting group-bet-setting-" + groups.Key)" type="checkbox" @betSettings[i].CheckBoxDefault data-pos=@betSettings[i].SettingId />
+                            <span>Default</span>
+                        </div>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <!--Others Setting-->
+            foreach (var setting in groups)
+            {
+
+                <!-- Product Status -->
+                if (setting.SettingName == "Product Status")
+                {
+                    var disableStatusClass = "";
+                    if (!setting.IsDefault)
+                    {
+                        disableStatusClass = "input-status-disable";
+                    }
+                    var statussuper = setting.DefaultValueSuper != "" && (int)Convert.ToDouble(setting.DefaultValueSuper) == 1 ? string.Format(StatusEnable, "super", setting.SettingId, disableStatusClass) : string.Format(StatusDisable, "super", setting.SettingId, disableStatusClass);
+                    var statusmaster = setting.DefaultValueMaster != "" && (int)Convert.ToDouble(setting.DefaultValueMaster) == 1 ? string.Format(StatusEnable, "master", setting.SettingId, disableStatusClass) : string.Format(StatusDisable, "master", setting.SettingId, disableStatusClass);
+                    var statusagent = setting.DefaultValueAgent != "" && (int)Convert.ToDouble(setting.DefaultValueAgent) == 1 ? string.Format(StatusEnable, "agent", setting.SettingId, disableStatusClass) : string.Format(StatusDisable, "agent", setting.SettingId, disableStatusClass);
+                    var statusmember = setting.DefaultValueMember != "" && (int)Convert.ToDouble(setting.DefaultValueMember) == 1 ? string.Format(StatusEnable, "member", setting.SettingId, disableStatusClass) : string.Format(StatusDisable, "member", setting.SettingId, disableStatusClass);
+                    <tr class="setting-row row-item text-center">
+                        <td class="setting-col col-item td-row" rowspan="2">@setting.Id</td>
+                        <td class="setting-col col-item td-sport" rowspan="2">[@setting.SportType] @setting.SportName</td>
+                        <td class="setting-col col-item td-sport" rowspan="2">[@setting.BetType] @setting.BetTypeName</td>
+                        <td class="setting-col col-item td-copy" rowspan="2">
+                            <div class="div-ckb">
+                                <input id="@("ckbDefault" + setting.SettingId)" class="edit-input ckb ckb-default" type="checkbox" @setting.CheckBoxDefault data-pos=@setting.SettingId />
+                                <span>Default</span>
+                            </div>
+                        </td>
+                        <td class="setting-col col-item td-setting">Super</td>
+                        <td class="setting-col col-item td-setting">Master</td>
+                        <td class="setting-col col-item td-setting">Agent</td>
+                        <td class="setting-col col-item td-setting">Member</td>
+                    </tr>
+                    <tr class="setting-row row-item text-center">
+                        <td class="setting-col col-item td-setting" style="border-right: none;">@Html.Raw(statussuper)</td>
+                        <td class="setting-col col-item td-setting" style="border: none;" colspan="3"></td>
+                    </tr>
+                }
+                else if (setting.SettingName == "Commission")
+                {
+                    <!-- Commission -->
+                    <tr class="setting-row row-item text-center">
+                        <td class="setting-col col-item td-row" rowspan="4">@setting.Id</td>
+                        <td class="setting-col col-item td-sport" rowspan="4">[@setting.SportType] @setting.SportName</td>
+                        <td class="setting-col col-item td-sport" rowspan="4">[@setting.BetType] @setting.BetTypeName</td>
+                        <td class="setting-col col-item td-copy" rowspan="2">
+                            <div class="div-ckb">
+                                <input id="@("ckbDefault" + setting.SettingId)" class="edit-input ckb ckb-default" type="checkbox" @setting.CheckBoxDefault data-pos=@setting.SettingId />
+                                <span>Default</span>
+                            </div>
+                        </td>
+                        <td class="setting-col col-item td-setting">Super</td>
+                        <td class="setting-col col-item td-setting">Master</td>
+                        <td class="setting-col col-item td-setting">Agent</td>
+                        <td class="setting-col col-item td-setting">Member</td>
+                    </tr>
+                    <tr class="setting-row row-item">
+                        <td class="setting-col col-item td-setting">
+                            @Html.DropDownList("input-com-super-" + setting.SettingId,
+                                setting.CommissionOptions,
+                                new
+                                {
+                                    @class = "input-com-super input-default-" + setting.SettingId,
+                                    @data_pos = setting.SettingId
+                                })
+                        </td>
+                        <td class="setting-col col-item td-setting">
+                            @Html.DropDownList("input-com-master-" + setting.SettingId,
+                                setting.CommissionOptions,
+                                new
+                                {
+                                    @class = "input-com-master input-default-" + setting.SettingId,
+                                    @data_pos = setting.SettingId
+                                })
+                        </td>
+                        <td class="setting-col col-item td-setting">
+                            @Html.DropDownList("input-com-agent-" + setting.SettingId,
+                                setting.CommissionOptions,
+                                new
+                                {
+                                    @class = "input-com-agent input-default-" + setting.SettingId,
+                                    @data_pos = setting.SettingId
+                                })
+                        </td>
+                        <td class="setting-col col-item td-setting">
+                            @Html.DropDownList("input-com-member-" + setting.SettingId,
+                                setting.CommissionOptions,
+                                new
+                                {
+                                    @class = "input-com-member input-default-" + setting.SettingId,
+                                    @data_pos = setting.SettingId
+                                })
+                        </td>
+                    </tr>
+                    <tr class="setting-row row-item text-center">
+                        <td class="setting-col col-item td-copy" rowspan="2">
+                            <div class="div-ckb">
+                                <input id="@("ckbCopy" + setting.SettingId)" class="edit-input ckb ckb-copy" type="checkbox" @setting.CheckBoxCopy data-pos=@setting.SettingId />
+                                <span>Copy From</span>
+                            </div>
+                        </td>
+                        <td class="setting-col col-item td-setting">Sport Type</td>
+                        <td class="setting-col col-item td-setting">Bet Type</td>
+                        <td class="setting-col col-item td-setting"></td>
+                        <td class="setting-col col-item td-setting"></td>
+                    </tr>
+                    <tr class="setting-row row-item text-center">
+                        <td class="setting-col col-item td-setting">
+                            @Html.DropDownList(setting.TargetSportType,
+                                setting.SportTypeOptions,
+                                new
+                                {
+                                    @class = "edit-input sel-sport-copy input-copy-" + setting.SettingId,
+                                    @data_target_settingtype = setting.SettingName.Replace(" ", string.Empty).ToLowerInvariant(),
+                                    @data_target_bettype = setting.TargetBetType,
+                                    @data_pos = setting.SettingId,
+                                    @disabled = setting.DisableCopy
+                                })
+                        </td>
+                        <td class="setting-col col-item td-setting">
+                            @Html.DropDownList(setting.TargetBetType,
+                            setting.BetTypeOptions,
+                            new
+                            {
+                                @class = "edit-input sel-bettype-copy input-copy-" + setting.SettingId,
+                                @data_pos = setting.SettingId,
+                                @disabled = setting.DisableCopy
+                            })
+                        </td>
+                        <td class="setting-col col-item td-setting"></td>
+                        <td class="setting-col col-item td-setting"></td>
+                    </tr>
+                }
+                else if (setting.SettingName == "Loss Limit")
+                {
+                    <!-- Loss Limit -->
+                    <tr class="setting-row row-item text-center">
+                        <td class="setting-col col-item td-row" rowspan="4">@setting.Id</td>
+                        <td class="setting-col col-item td-sport" rowspan="4">[@setting.SportType] @setting.SportName</td>
+                        <td class="setting-col col-item td-sport" rowspan="4">[@setting.BetType] @setting.BetTypeName</td>
+                        <td class="setting-col col-item td-copy" rowspan="2">
+                            <div class="div-ckb">
+                                <input id="@("ckbDefault" + setting.SettingId)" class="edit-input ckb ckb-default" type="checkbox" @setting.CheckBoxDefault data-pos=@setting.SettingId />
+                                <span>Default</span>
+                            </div>
+                        </td>
+                        <td class="setting-col col-item td-setting">Maximum Loss</td>
+                        <td class="setting-col col-item" rowspan="2" td-setting>
+                            <div class="div-daily">
+                                <input id="@("ckbAutoReset" + setting.SettingId)" class="@("edit-input ckb ckb-auto-reset input-default-" + setting.SettingId)" type="checkbox" @setting.CheckBoxAutoReset data-pos=@setting.SettingId @setting.DisableDefault />
+                                <span>Daily auto reset limit (at 12 noon GMT+8)</span>
+                            </div>
+                        </td>
+                        <td class="setting-col col-item td-setting"></td>
+                        <td class="setting-col col-item td-setting"></td>
+                    </tr>
+                    <tr class="setting-row row-item text-center">
+                        <td class="setting-col col-item td-setting">Apply Global Setting</td>
+                        <td class="setting-col col-item td-setting"></td>
+                        <td class="setting-col col-item td-setting"></td>
+                    </tr>
+                    <tr class="setting-row row-item text-center">
+                        <td class="setting-col col-item td-copy" rowspan="2">
+                            <div class="div-ckb">
+                                <input id="@("ckbCopy" + setting.SettingId)" class="edit-input ckb ckb-copy" type="checkbox" @setting.CheckBoxCopy data-pos=@setting.SettingId />
+                                <span>Copy From</span>
+                            </div>
+                        </td>
+                        <td class="setting-col col-item td-setting">Sport Type</td>
+                        <td class="setting-col col-item td-setting">Bet Type</td>
+                        <td class="setting-col col-item td-setting"></td>
+                        <td class="setting-col col-item td-setting"></td>
+                    </tr>
+                    <tr class="setting-row row-item text-center">
+                        <td class="setting-col col-item td-setting">
+                            @Html.DropDownList(setting.TargetSportType,
+                                setting.SportTypeOptions,
+                                new
+                                {
+                                    @class = "edit-input sel-sport-copy input-copy-" + setting.SettingId,
+                                    @data_target_settingtype = setting.SettingName.Replace(" ", string.Empty).ToLowerInvariant(),
+                                    @data_target_bettype = setting.TargetBetType,
+                                    @data_pos = setting.SettingId,
+                                    @disabled = setting.DisableCopy
+                                })
+                        </td>
+                        <td class="setting-col col-item td-setting">
+                            @Html.DropDownList(setting.TargetBetType,
+                            setting.BetTypeOptions,
+                            new
+                            {
+                                @class = "edit-input sel-bettype-copy input-copy-" + setting.SettingId,
+                                @data_pos = setting.SettingId,
+                                @disabled = setting.DisableCopy
+                            })
+                        </td>
+                        <td class="setting-col col-item td-setting"></td>
+                        <td class="setting-col col-item td-setting"></td>
+                    </tr>
+                }
+                else if (setting.SettingName == "Position Taking")
+                {
+                    <!-- Position Taking -->
+                    <tr class="setting-row row-item text-center">
+                        <td class="setting-col col-item td-row">@setting.Id</td>
+                        <td class="setting-col col-item td-sport">[@setting.SportType] @setting.SportName</td>
+                        <td class="setting-col col-item td-sport">[@setting.BetType] @setting.BetTypeName</td>
+                        <td class="setting-col col-item td-copy">
+                            <div class="div-ckb">
+                                <input id="@("ckbDefault" + setting.SettingId)" class="edit-input ckb ckb-default" type="checkbox" @setting.CheckBoxDefault data-pos=@setting.SettingId />
+                                <span>Default</span>
+                            </div>
+                        </td>
+                        <td class="setting-col col-item td-setting" style="border-right: none;">
+                            <select class="@("edit-input floatLeft w200 sel-position-taking input-default-" + setting.SettingId)" data-pos=@setting.SettingId @setting.DisableDefault>
+                                @for (float i = 10000; i >= 0; i = i - 5)
+                                {
+                                    <option value="@(i/10000)">@(i / 10000)</option>
+                                }
+                            </select>
+                        </td>
+                        <td class="setting-col col-item td-setting"></td>
+                        <td class="setting-col col-item td-setting" colspan="2"></td>
+                    </tr>
+                }
+                else if (setting.SettingName == "Stake Level")
+                {
+                    <!-- Stake Level -->
+                    <tr class="setting-row row-item text-center">
+                        <td class="setting-col col-item td-row" rowspan="2">@setting.Id</td>
+                        <td class="setting-col col-item td-sport" rowspan="2">[@setting.SportType] @setting.SportName</td>
+                        <td class="setting-col col-item td-sport" rowspan="2">[@setting.BetType] @setting.BetTypeName</td>
+                        <td class="setting-col col-item td-copy" rowspan="2">
+                            <div class="div-ckb">
+                                <input id="@("ckbDefault" + setting.SettingId)" class="edit-input ckb ckb-default" type="checkbox" @setting.CheckBoxDefault data-pos=@setting.SettingId />
+                                <span>Default</span>
+                            </div>
+                        </td>
+                        <td class="setting-col col-item td-setting">Super</td>
+                        <td class="setting-col col-item td-setting">Master</td>
+                        <td class="setting-col col-item td-setting">Agent</td>
+                        <td class="setting-col col-item td-setting">Member</td>
+                    </tr>
+                    <tr class="setting-row row-item text-center">
+                        <td class="setting-col col-item td-setting">Full Stake Levels</td>
+                        <td class="setting-col col-item td-setting">Full Stake Levels</td>
+                        <td class="setting-col col-item td-setting">Full Stake Levels</td>
+                        <td class="setting-col col-item td-setting">Lowest Stake Levels</td>
+                    </tr>
+                }
+                else if (setting.SettingName == "Win Loss Limit")
+                {
+                    <!-- Win Loss Limit -->
+                    <tr class="setting-row row-item text-center">
+                        <td class="setting-col col-item td-row" rowspan="4">@setting.Id</td>
+                        <td class="setting-col col-item td-sport" rowspan="4">[@setting.SportType] @setting.SportName</td>
+                        <td class="setting-col col-item td-sport" rowspan="4">[@setting.BetType] @setting.BetTypeName</td>
+                        <td class="setting-col col-item td-copy" rowspan="2">
+                            <div>
+                                <input id="@("ckbDefault" + setting.SettingId)" class="edit-input ckb ckb-default" type="checkbox" @setting.CheckBoxDefault data-pos=@setting.SettingId />
+                                <span>Default</span>
+                            </div>
+                        </td>
+                        <td class="setting-col col-item td-setting">Maximum Win</td>
+                        <td class="setting-col col-item td-setting">Maximum Loss</td>
+                        <td class="setting-col col-item td-setting" rowspan="2">
+                            <div class="div-daily">
+                                <input id="@("ckbAutoReset" + setting.SettingId)" class="@("edit-input ckb ckb-auto-reset input-default-" + setting.SettingId)" type="checkbox" @setting.CheckBoxAutoReset data-pos=@setting.SettingId @setting.DisableDefault />
+                                <span>Daily auto reset limit (at 12 noon GMT+8)</span>
+                            </div>
+                        </td>
+                        <td class="setting-col col-item"></td>
+                    </tr>
+                    <tr class="setting-row row-item text-center">
+                        <td class="setting-col col-item td-setting">
+                            <select class="@("edit-input max-winloss input-default-" + setting.SettingId)" data-pos=@setting.SettingId @setting.DisableDefault>
+                                <option value="3">3X</option>
+                                <option value="5">5X</option>
+                                <option value="10">10X</option>
+                                <option value="0">Unlimited</option>
+                            </select>
+                            <span>on given credit</span>
+                        </td>
+                        <td class="setting-col col-item td-setting">Apply Global Setting</td>
+                        <td class="setting-col col-item td-setting"></td>
+                    </tr>
+                    <tr class="setting-row row-item text-center">
+                        <td class="setting-col col-item td-copy" rowspan="2">
+                            <div class="div-ckb">
+                                <input id="@("ckbCopy" + setting.SettingId)" class="edit-input ckb ckb-copy" type="checkbox" @setting.CheckBoxCopy data-pos=@setting.SettingId />
+                                <span>Copy From</span>
+                            </div>
+                        </td>
+                        <td class="setting-col col-item td-setting">Sport Type</td>
+                        <td class="setting-col col-item td-setting">Bet Type</td>
+                        <td class="setting-col col-item td-setting"></td>
+                        <td class="setting-col col-item td-setting"></td>
+                    </tr>
+                    <tr class="setting-row row-item text-center">
+                        <td class="setting-col col-item td-setting">
+                            @Html.DropDownList(setting.TargetSportType,
+                                setting.SportTypeOptions,
+                                new
+                                {
+                                    @class = "edit-input sel-sport-copy input-copy-" + setting.SettingId,
+                                    @data_target_settingtype = setting.SettingName.Replace(" ", string.Empty).ToLowerInvariant(),
+                                    @data_target_bettype = setting.TargetBetType,
+                                    @data_pos = setting.SettingId,
+                                    @disabled = setting.DisableCopy
+                                })
+                        </td>
+                        <td class="setting-col col-item td-setting">
+                            @Html.DropDownList(setting.TargetBetType,
+                            setting.BetTypeOptions,
+                            new
+                            {
+                                @class = "edit-input sel-bettype-copy input-copy-" + setting.SettingId,
+                                @data_pos = setting.SettingId,
+                                @disabled = setting.DisableCopy
+                            })
+                        </td>
+                        <td class="setting-col col-item td-setting"></td>
+                        <td class="setting-col col-item td-setting"></td>
+                    </tr>
+                }
+
+            }
+        }
+
+
+    }
+</table>
+<script>
+    selectedConfig = @Html.Raw(Json.Encode(Model));
+</script>

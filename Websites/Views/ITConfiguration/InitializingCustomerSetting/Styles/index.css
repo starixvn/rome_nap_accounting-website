@@ -192,3 +192,46 @@
 .ckb-auto-reset {
     vertical-align: middle;
 }
+
+#popupContainer table {
+    border-spacing: 0px;
+}
+
+#popupContainer tr {
+}
+
+#popupContainer th {
+    padding: 2px;
+    background: #3c5ea5;
+    background: -moz-linear-gradient(#3c5ea5, #3c5ea5) #3c5ea5;
+    background: -webkit-linear-gradient(#3c5ea5, #3c5ea5) #3c5ea5;
+    color: #fff;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    border-color: #c5c5c5;
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+}
+
+#popupContainer td {
+    background-color: #fff;
+    line-height: inherit;
+    overflow: hidden;
+    vertical-align: middle;
+    white-space: normal;
+    border-color: #c5c5c5;
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+    padding: 2px;
+    font-size: 0.9em;
+}
+
+.err-bet-setting {
+    display: inherit;
+}
+
+.link-download-excel-template {
+    color: #0066CC !important;
+    text-decoration: underline;
+}

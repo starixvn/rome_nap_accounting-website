@@ -309,6 +309,7 @@
     <Compile Include="Business\ExtraPtGroup\ExtraPtService.cs" />
     <Compile Include="Business\ExtraPtGroup\IExtraPtService.cs" />
     <Compile Include="Business\InitializingCustomerSetting\InitializingCustomerSettingService.cs" />
+    <Compile Include="Business\InitializingCustomerSetting\InitializingDepositSettingService.cs" />
     <Compile Include="Business\InitializingStakeLevel\InitializingStakeLevelService.cs" />
     <Compile Include="Business\LicenseeDcsSetting\ILicenseeDcsSettingService.cs" />
     <Compile Include="Business\LicenseeDcsSetting\LicenseeDcsSettingService.cs" />
@@ -360,6 +361,7 @@
     <Compile Include="Controller\BetCreditHistoryController.cs" />
     <Compile Include="Controller\Chatbot\ChatbotController.cs" />
     <Compile Include="Controller\CN88Customer\MoveCN88SuperController.cs" />
+    <Compile Include="Controller\InitializingCustomerSetting\InitDepSettingController.cs" />
     <Compile Include="Controller\InitializingStakeLevel\InitStakeLevelController.cs" />
     <Compile Include="Controller\LicenseeMemberController.cs" />
     <Compile Include="Controller\MultipleUpdateSuperStatusController.cs" />
@@ -441,8 +443,16 @@
     <Compile Include="Criteria\InitializingCustomerSetting\AddSettingConfigCriteria.cs" />
     <Compile Include="Criteria\InitializingCustomerSetting\DCSProductMatrixCriteria.cs" />
     <Compile Include="Criteria\InitializingCustomerSetting\DeleteConfigCriteria.cs" />
+    <Compile Include="Criteria\InitializingCustomerSetting\Deposit\AddDepositSettingConfigCriteria.cs" />
+    <Compile Include="Criteria\InitializingCustomerSetting\Deposit\DcsDepositProductMatrixCriteria.cs" />
+    <Compile Include="Criteria\InitializingCustomerSetting\Deposit\DeleteDepositConfigCriteria.cs" />
+    <Compile Include="Criteria\InitializingCustomerSetting\Deposit\EditDepositSettingConfigCriteria.cs" />
+    <Compile Include="Criteria\InitializingCustomerSetting\Deposit\GetDepositConfigDetailCriteria.cs" />
+    <Compile Include="Criteria\InitializingCustomerSetting\Deposit\UpdateDepositConfigStatusCriteria.cs" />
     <Compile Include="Criteria\InitializingCustomerSetting\EditSettingConfigCriteria.cs" />
+    <Compile Include="Criteria\InitializingCustomerSetting\Deposit\GetDepositBetSettingCriteria.cs" />
     <Compile Include="Criteria\InitializingCustomerSetting\GetConfigDetailCriteria.cs" />
+    <Compile Include="Criteria\InitializingCustomerSetting\Deposit\GetDepositSettingCriteria.cs" />
     <Compile Include="Criteria\InitializingCustomerSetting\GetSettingCriteria.cs" />
     <Compile Include="Criteria\InitializingCustomerSetting\UpdateConfigStatusCriteria.cs" />
     <Compile Include="Criteria\InitializingStakeLevel\BetTypeSelCriteria.cs" />
@@ -542,6 +552,7 @@
     <Compile Include="DataAccess\ExtraPtGroup\ExtraPtRepository.cs" />
     <Compile Include="DataAccess\ExtraPtGroup\IExtraPtRepository.cs" />
     <Compile Include="DataAccess\InitializingCustomerSetting\InitializingCustomerSettingDataAccess.cs" />
+    <Compile Include="DataAccess\InitializingCustomerSetting\InittializingDepositSettingDataAccess.cs" />
     <Compile Include="DataAccess\InitializingStakeLevel\InitStakeLevelDataAccess.cs" />
     <Compile Include="DataAccess\LicenseeDcsSetting\ILicenseeDcsSettingDataAccess.cs" />
     <Compile Include="DataAccess\LicenseeDcsSetting\LicenseeDcsSettingDataAccess.cs" />
@@ -645,6 +656,8 @@
     <Compile Include="Entities\ExtraPtGroup\GroupByProduct.cs" />
     <Compile Include="Entities\ExtraPtGroup\Group.cs" />
     <Compile Include="Entities\ExtraPtGroup\Product.cs" />
+    <Compile Include="Entities\InitializingCustomerSetting\BetSettingErrorModel.cs" />
+    <Compile Include="Entities\InitializingCustomerSetting\BetSettingModel.cs" />
     <Compile Include="Entities\InitializingCustomerSetting\BettypeModel.cs" />
     <Compile Include="Entities\InitializingCustomerSetting\ConfigModel.cs" />
     <Compile Include="Entities\InitializingCustomerSetting\InsertErrorModel.cs" />
@@ -655,6 +668,7 @@
     <Compile Include="Entities\InitializingCustomerSetting\SettingTypeModel.cs" />
     <Compile Include="Entities\InitializingCustomerSetting\SportBetTypeBySettingModel.cs" />
     <Compile Include="Entities\InitializingCustomerSetting\SportModel.cs" />
+    <Compile Include="Entities\InitializingCustomerSetting\ValidateBetSettingModel.cs" />
     <Compile Include="Entities\InitializingCustomerSetting\ValidateResultModel.cs" />
     <Compile Include="Entities\InitializingStakeLevel\FilterModel.cs" />
     <Compile Include="Entities\InitializingStakeLevel\StakeLevelModel.cs" />
@@ -711,6 +725,7 @@
     <Compile Include="Requests\CustomerSetting\Suspend\GetSingleSuspendCustomerInfoQuery.cs" />
     <Compile Include="Requests\GetMessageLogsQuery.cs" />
     <Compile Include="Requests\InitializingCustomerSetting\GenerateConfigSettingRequest.cs" />
+    <Compile Include="Requests\InitializingCustomerSetting\ValidateBetSettingRequest.cs" />
     <Compile Include="Requests\InitializingStakeLevel\GetBettypeRequest.cs" />
     <Compile Include="Requests\InitializingStakeLevel\GetStakeLevelRequest.cs" />
     <Compile Include="Requests\InitializingStakeLevel\InsertStakeLevelRequest.cs" />
@@ -761,6 +776,7 @@
     <Compile Include="ViewModels\CustomerSetting\Suspend\SuspendMatrixViewModel.cs" />
     <Compile Include="ViewModels\InitializingCustomerSetting\ConfigSettingViewModel.cs" />
     <Compile Include="ViewModels\InitializingCustomerSetting\InitializingCustomerSettingViewModel.cs" />
+    <Compile Include="ViewModels\InitializingStakeLevel\InitStakeLevelViewModel.cs" />
     <Compile Include="ViewModels\LicenseeDcsSetting\BetSettingWithMaxPerBallViewModel.cs" />
     <Compile Include="ViewModels\LicenseeDcsSetting\BetSettingWithMaxPayoutPerMatchViewModel.cs" />
     <Compile Include="ViewModels\LicenseeDcsSetting\BetSettingWithoutMaxPerMatchViewModel.cs" />

@@ -1,0 +1,16 @@
+﻿@using Sunplus.Accounting.Core.Configurations;
+<div class="maincontent_box">
+    <input class="btn btn-edit" type="button" value="Add New" onclick="OpenAddConfig();" />
+    <input class="btn btn-edit" type="button" value="Refresh" onclick="GetSetting();" />
+</div>
+<div>
+    <div class="mainContent" style="margin-top:10px; width: auto;">
+        <div id="errMsg"></div>
+        <div id="gridCustomerSetting" class="freegrid"></div>
+    </div>
+</div>
+@Html.Partial("~/Views/ITConfiguration/InitializingCustomerSetting/Credit/_ViewExtra.cshtml")
+@Html.Partial("~/Views/ITConfiguration/InitializingCustomerSetting/Credit/_Popup.cshtml")
+
+
+<script type="text/javascript" src="@Url.Content("~/Views/ITConfiguration/InitializingCustomerSetting/Credit/Scripts/index.js?v=" + WebSettings.Version)"></script>

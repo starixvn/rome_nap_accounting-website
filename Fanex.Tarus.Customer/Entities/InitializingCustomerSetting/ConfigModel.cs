@@ -7,5 +7,7 @@
         public SettingConfigModel Config { get; set; }
 
         public List<SettingInforModel> Settings { get; set; }
+
+        public List<BetSettingModel> BetSettings { get; set; }
     }
 }

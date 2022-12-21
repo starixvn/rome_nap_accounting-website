@@ -11,9 +11,10 @@ namespace Fanex.Tarus.Customer.Controller.InitializingCustomerSetting
     public class InitCustSettingController : BaseController
     {
         private readonly string _indexViewPath = "~/Views/ITConfiguration/InitializingCustomerSetting/Index.cshtml";
-        private readonly string _viewConfigPath = "~/Views/ITConfiguration/InitializingCustomerSetting/_ViewConfig.cshtml";
-        private readonly string _configPath = "~/Views/ITConfiguration/InitializingCustomerSetting/_ConfigDetail.cshtml";
-        private readonly string _addEditPath = "~/Views/ITConfiguration/InitializingCustomerSetting/_AddEditConfig.cshtml";
+        private readonly string _creditViewPath = "~/Views/ITConfiguration/InitializingCustomerSetting/Credit/Index.cshtml";
+        private readonly string _viewConfigPath = "~/Views/ITConfiguration/InitializingCustomerSetting/Credit/_ViewConfig.cshtml";
+        private readonly string _configPath = "~/Views/ITConfiguration/InitializingCustomerSetting/Credit/_ConfigDetail.cshtml";
+        private readonly string _addEditPath = "~/Views/ITConfiguration/InitializingCustomerSetting/Credit/_AddEditConfig.cshtml";
         private readonly IInitializingCustomerSettingService service;
 
         public InitCustSettingController()
@@ -24,6 +25,12 @@ namespace Fanex.Tarus.Customer.Controller.InitializingCustomerSetting
         public ActionResult Index()
         {
             return View(_indexViewPath);
+        }
+
+        [HttpGet]
+        public ActionResult Credit()
+        {
+            return PartialView(_creditViewPath);
         }
 
         [HttpGet, AuthenticateRead]

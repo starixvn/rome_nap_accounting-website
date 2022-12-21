@@ -7,5 +7,9 @@
         public bool IsWarning { get; set; }
 
         public List<InsertErrorModel> Errors { get; set; }
+
+        public int SettingType { get; set; }
+
+        public string BetSettingErrorMessage { get; set; }
     }
 }
