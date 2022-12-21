@@ -150,7 +150,7 @@
       <HintPath>..\packages\Fanex.BetList.CashOut.2.0.0\lib\net461\Fanex.BetList.CashOut.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.CG, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.CG.2.0.0-net5-03\lib\net461\Fanex.BetList.CG.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.CG.2.0.0\lib\net461\Fanex.BetList.CG.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.ColossusBets, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.ColossusBets.2.0.0\lib\net461\Fanex.BetList.ColossusBets.dll</HintPath>
