@@ -532,8 +532,8 @@ var ViewPT = {
             case 23:
                 ViewPT.viewPTBasedOnKindOfCustomer(userName, 0, 0, isLive, 23);
                 break;
-            case 212: // Voidbridge
-                ViewPT.viewPTBasedOnKindOfCustomer(userName, 0, 0, isLive, 22);
+            case 9906: // RNG Slot
+                ViewPT.viewPTBasedOnKindOfCustomer(userName, 0, 0, isLive, 18);
                 break;
             case 219: // Fishing World
                 ViewPT.viewPTBasedOnKindOfCustomer(userName, 0, 0, isLive, 24);
