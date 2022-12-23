@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections;
-using Fanex.CustomerSetting.Module.Core;
+﻿using Fanex.CustomerSetting.Module.Core;
 using Fanex.CustomerSetting.Module.Core.Models;
 using Fanex.CustomerSetting.Module.Core.Web;
 using Fanex.Data;
 using Fanex.Tarus.Customer.Entities.NG2;
+using Sunplus.Accounting.Core.Configurations;
+using System.Collections;
 
 namespace Fanex.Tarus.Customer.DataAccess.NG2
 {
@@ -40,7 +40,7 @@ namespace Fanex.Tarus.Customer.DataAccess.NG2
                             result.Usernames.Add(entity);
                         }
                     }
-                }             
+                }
             }
 
             return result;
@@ -74,7 +74,7 @@ namespace Fanex.Tarus.Customer.DataAccess.NG2
                             while (reader.Read())
                             {
                                 result.NotExistUsernames.Add(reader.ToString("Username"));
-                            }                                
+                            }
                         }
                     }
                 }
@@ -95,6 +95,7 @@ namespace Fanex.Tarus.Customer.DataAccess.NG2
                 param.Add("productid", productId);
                 param.Add("userid", AppSession.CurrentSession.UserId);
                 param.Add("ip", AppSession.CurrentContext.Ip4Address);
+                param.Add("settingstatus", WebSettings.SettingStatus);
                 param.Add("errcode", 0);
                 param.Add("errmsg", string.Empty);
 

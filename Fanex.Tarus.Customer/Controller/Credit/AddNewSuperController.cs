@@ -230,7 +230,7 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
             if (syncUpline)
             {
                 ING2StatusService syncService = new NG2StatusService();
-                syncService.AutoInsertAccount(custId, username, (RoleId)roleId, uplineId, disabledUpline, SiteId.NAP, currencyId, userId, SystemId);
+                syncService.AutoInsertAccount(custId, username, (RoleId)roleId, uplineId, disabledUpline, SiteId.NAP, currencyId, userId, SystemId, WebSettings.SettingStatus);
             }
         }
 

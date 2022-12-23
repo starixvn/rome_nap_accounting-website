@@ -514,18 +514,7 @@ var ViewPT = {
             case 174: // Advantplay Mini
                 ViewPT.viewPTBasedOnKindOfCustomer(userName, sportId, betTypeId, isLive);
                 break;
-            case 180: // Virtual Soccer
-            case 181: // Virtual Horse Racing
-            case 182: // Virtual Greyhounds
-            case 183: // Virtual Speedway
-            case 184: // Virtual Motorsports
-            case 185: // Virtual Cycling
-            case 186: // Virtual Tennis
-            case 190: // Virtual Soccer League
-            case 191: // Virtual Soccer Nation
-            case 192: // Virtual Soccer World Cup
-            case 193: // Virtual Basketball
-            case 231: // Leap Gaming
+            case 9908: // Virtual Sports
                 ViewPT.viewPTBasedOnKindOfCustomer(userName, sportId, betTypeId, isLive, 5);
                 break;
 
