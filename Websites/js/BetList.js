@@ -1031,14 +1031,27 @@ function ViewResult(matchid, race, bettype, sporttype, refno, username, winlostd
 
     if (resultParam) {
         $.extend(defaultResultParam, resultParam);
+        openResultsPopUp(defaultResultParam);
+    }
+    
+    if(sporttype == 170){
+        var param = getPPLiveCasinoParam(bettype, betcheck, transdesc, matchcode, betid, siteId, bettype);
+        
+        var option = "toolbar=no,scrollbars=no,resizable=yes,top=150,left=200,width=835,height=400,location=no";
+        var resultPopup = window.open("", "_blank", option);
+        resultPopup.document.title = param.title;
+        $.ajax({
+            type: "POST",
+            url: window.rootUrl + param.url + $.param(param.jsonParam),
+            success: function (data) {
+                resultPopup.location.href = data.Result;
+            },
+            error: function () {
+                resultPopup.location.href = window.rootUrl + 'ErrorPage.aspx';
+            }
+        });
     }
 
-    //if (2501 <= bettype && bettype <= 2699) {
-    //    width = 500;
-    //    url = 'Report/ViewNG2Result.aspx';
-    //}
-
-    openResultsPopUp(defaultResultParam);
 }
 
 function isFM2(betttype) {
@@ -1078,10 +1091,7 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
             return getLinkedGamesParam(custId, refno, gameId3rd, currencyId, siteId);
 
         case 169: // Sports Lottery
-            return getSportsLotteryParam(custId, transId3rd, gameId3rd, currencyId, siteId);
-
-        case 170: // PP Live Casino
-            return getPPLiveCasinoParam(bettype, custId, transId3rd, gameId3rd, currencyId, siteId, bettype);
+            return getSportsLotteryParam(custId, transId3rd, gameId3rd, currencyId, siteId);            
 
         case 171: // VGaming
         case 173: // VGaming
@@ -1564,7 +1574,7 @@ function getMaxGameParam(custId, transId3rd, gameId3rd, currencyId, siteId, betT
 
 function getPPLiveCasinoParam(bettype, custId, transId3rd, gameId3rd, currencyId, siteId, bettype) {
     return {
-        url: "ThirdParty/PPLiveCasinoResult",
+        url: "ThirdParty/PPLiveCasinoResult?",
         title: "PP Live Casino Result",
         jsonParam:
         {
