@@ -1,7 +1,7 @@
 ﻿var cachedTabId;
 
 $(document).ready(function () {
-    cachedTabId = "tab_1";
+    cachedTabId = "tab_product";
     $('.numeric-input-int').NAPNumericInput({
         numOfDecimal: 0,
         minValue: 0,
@@ -20,48 +20,6 @@ $(document).ready(function () {
 
     OpenProductSetting();
 });
-
-function UpdateSampleUrl() {
-    $("#btnUpdateExcel").addClass("hide");
-    switch (cachedTabId) {
-        case "tab_1":
-            break;
-        case "tab_2":
-            $('#sampleSettingLink').prop("href", rootUrl + "Views/Admin/ManageProductSetting/Sport/SportType.xls");
-            break;
-        case "tab_3":
-            $("#btnUpdateExcel").removeClass("hide");
-            $('#sampleSettingLink').prop("href", rootUrl + "Views/Admin/ManageProductSetting/Bettype/Bettype.xls");
-            break;
-        case "tab_4":
-            $('#sampleSettingLink').prop("href", rootUrl + "Views/Admin/ManageProductSetting/SportBettypeMatrix/SportBettypeMatrix.xls");
-            break;
-        case "tab_5":
-            $('#sampleSettingLink').prop("href", rootUrl + "Views/Admin/ManageProductSetting/CSSportBettypeMatrix/CS_SportBettypeMatrix.xls");
-            break;
-        case "tab_6":
-            $("#btnUpdateExcel").removeClass("hide");
-            $('#sampleSettingLink').prop("href", rootUrl + "Views/Admin/ManageProductSetting/RefResource/RefResource.xls");
-            break;
-        case "tab_7":
-            $('#sampleSettingLink').prop("href", rootUrl + "Views/Admin/ManageProductSetting/CanSee/CanSee.xls");
-            break;
-        case "tab_8":
-            UpdateResetWinningSampleUrl();
-            break;
-        case "tab_9":
-            $('#sampleSettingLink').prop("href", rootUrl + "Views/Admin/ManageProductSetting/UMConfig/UMConfig.xls");
-            break;
-        case "tab_10":
-            $('#sampleSettingLink').prop("href", rootUrl + "Views/Admin/ManageProductSetting/VendorGlobalSetting/VendorGlobalSetting.xls");
-            break;
-        case "tab_11":
-            $('#sampleSettingLink').prop("href", rootUrl + "Views/Admin/ManageProductSetting/Product3rd/Product3rd.xls");
-            break;
-        default:
-            break;
-    }
-}
 
 function GetPartialView(requestUrl) {
     parent.BlockUI();
@@ -89,6 +47,7 @@ function UpdateTabs() {
     $('#tabs').find('li').removeClass('current');
     $('div[id^="tab_content_"]').hide();
     $('#' + cachedTabId).addClass('current');
+    $("#btnUpdateExcel").addClass("hide");
 }
 
 function OpenProductSetting() {
@@ -110,6 +69,7 @@ function OpenBettypeSetting() {
     cachedTabId = "tab_bettype";
     $('#sampleSettingLink').prop("href", rootUrl + "Views/Admin/ManageProductSetting/Bettype/Bettype.xls");
     UpdateTabs();
+    $("#btnUpdateExcel").removeClass("hide");
     GetPartialView("BettypeIndex");
 }
 
@@ -131,6 +91,7 @@ function OpenRefResourceSetting() {
     cachedTabId = "tab_refresource";
     $('#sampleSettingLink').prop("href", rootUrl + "Views/Admin/ManageProductSetting/RefResource/RefResource.xls");
     UpdateTabs();
+    $("#btnUpdateExcel").removeClass("hide");
     GetPartialView("RefResourceIndex");
 }
 
