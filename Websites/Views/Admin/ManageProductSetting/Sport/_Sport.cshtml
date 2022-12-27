@@ -4,9 +4,9 @@
     <div class="filterContent">
         <div id="errSportMsg"></div>
         <div class="floatLeft"><label for="txtSportType">Sport Type</label></div>
-        <div class="floatLeft"><input id="txtSportType" type="text" class="numeric-input-tinyint" /></div>
+        <div class="floatLeft"><input id="txtSportType" type="text" class="numeric-input-tinyint filter_input_txt" /></div>
         <div class="floatLeft"><label for="txtSportName">Sport Name</label></div>
-        <div class="floatLeft"><input id="txtSportName" type="text" /></div>
+        <div class="floatLeft"><input id="txtSportName" type="text" class="filter_input_txt"/></div>
         <div class="floatLeft"><input type="button" value="Search" class="btn" onclick="SearchSport(50, 1)" /></div>
         <div class="floatLeft"><input type="button" value="Import From Excel" class="btn" onclick="OpenInsertSetting()" /></div>
     </div>
@@ -15,3 +15,9 @@
 <div id="gridSportContainer" class="grid-container">
     <div id="gridSportId" class="freegrid"></div>
 </div>
+
+
+@Html.Partial("~/Views/Admin/ManageProductSetting/Sport/_UpdateSport.cshtml")
+
+
+<script type="text/javascript" src="@Url.Content("~/Views/Admin/ManageProductSetting/Sport/Scripts/Sport.js?v=" + @WebSettings.Version)"></script>

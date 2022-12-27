@@ -58,34 +58,34 @@ function ProcessInsertUpdateExcel(action) {
 function GetInsertUrl() {
     var action = "";
     switch (cachedTabId) {
-        case "tab_1":
+        case "tab_product":
             action = 'InsertProduct';
             break;
-        case "tab_2":
+        case "tab_sport":
             action = 'InsertSport';
             break;
-        case "tab_3":
+        case "tab_bettype":
             action = 'InsertBettype';
             break;
-        case "tab_4":
+        case "tab_sbm":
             action = 'InsertSportBettypeMatrix';
             break;
-        case "tab_5":
+        case "tab_cssbm":
             action = 'InsertCSSportBettypeMatrix';
             break;
-        case "tab_6":
+        case "tab_refresource":
             action = 'InsertRefResource';
             break;
-        case "tab_7":
+        case "tab_cansee":
             action = 'InsertCanSee';
             break;
-        case "tab_8":
+        case "tab_resetwinning":
             action = GetInsertResetWinningAction();
             break;
-        case "tab_10":
+        case "tab_vendor":
             action = window.rootUrl + 'ManageVendorGlobalSetting/Insert';
             break;
-        case "tab_11":
+        case "tab_product3rd":
             action = window.rootUrl + 'ManageProduct3RD/Insert';
             break;
     }

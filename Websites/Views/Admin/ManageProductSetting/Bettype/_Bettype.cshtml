@@ -1,10 +1,12 @@
-﻿<div class="filterBox" style="border: solid 1px #7C98A4; height:40px;">
+﻿@using Sunplus.Accounting.Core.Configurations;
+
+<div class="filterBox" style="border: solid 1px #7C98A4; height:40px;">
     <div class="filterContent">
         <div id="errBettypeMsg"></div>
         <div class="floatLeft"><label for="txtBettypeId">TypeID</label></div>
-        <div class="floatLeft"><input id="txtBettypeId" type="text" class="numeric-input-int" /></div>
+        <div class="floatLeft"><input id="txtBettypeId" type="text" class="numeric-input-int filter_input_txt" /></div>
         <div class="floatLeft"><label for="txtBettypeNamee">TypeNameE</label></div>
-        <div class="floatLeft"><input id="txtBettypeNamee" type="text" /></div>
+        <div class="floatLeft"><input id="txtBettypeNamee" type="text" class="filter_input_txt" /></div>
         <div class="floatLeft"><input type="button" value="Search" class="btn" onclick="SearchBettype(50, 1)" /></div>
         <div class="floatLeft"><input type="button" value="Import From Excel" class="btn" onclick="OpenInsertSetting()" /></div>
     </div>
@@ -13,3 +15,8 @@
 <div id="gridBettypeContainer" class="grid-container">
     <div id="gridBettypeId" class="freegrid"></div>
 </div>
+
+
+@Html.Partial("~/Views/Admin/ManageProductSetting/Bettype/_UpdateBettype.cshtml")
+
+<script type="text/javascript" src="@Url.Content("~/Views/Admin/ManageProductSetting/Bettype/Scripts/Bettype.js?v=" + @WebSettings.Version)"></script>

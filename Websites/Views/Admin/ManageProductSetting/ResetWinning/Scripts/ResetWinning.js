@@ -13,6 +13,7 @@ function SwitchSubTab(id, contentId) {
     UpdateResetWinningSampleUrl();
 }
 
+
 function UpdateResetWinningSampleUrl() {
     switch (cachedSubTabId) {
         case "sub_tab_1":
@@ -109,7 +110,6 @@ function SearchDWLList() {
             parent.jQuery.unblockUI();
         },
         error: function (err) {
-            console.log(err);
         }
     });
 }
@@ -154,7 +154,6 @@ function SearchDWLListTest() {
             parent.jQuery.unblockUI();
         },
         error: function (err) {
-            console.log(err);
         }
     });
 }
@@ -350,7 +349,6 @@ function SearchDWLListExtra() {
             parent.jQuery.unblockUI();
         },
         error: function (err) {
-            console.log(err);
         }
     });
 }
@@ -433,7 +431,6 @@ function SearchDWLListExtraTest() {
             parent.jQuery.unblockUI();
         },
         error: function (err) {
-            console.log(err);
         }
     });
 }
@@ -544,3 +541,11 @@ function DeleteDWLListExtraPT(index) {
         });
     }
 }
+
+$(document).ready(function () {
+    UpdateResetWinningSampleUrl();
+    $("#txtDWLListIsDeleted").select2({ width: "138px" });
+    $("#txtDWLListExtraIsDisabled").select2({ width: "138px" });
+    $("#txtDWLListExtraTestIsDisabled").select2({ width: "138px" });
+    $("#txtDWLListTestIsDeleted").select2({ width: "138px" });
+});

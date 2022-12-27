@@ -1,14 +1,15 @@
-﻿@using Fanex.Tarus.Admin.ManageProductSetting.ViewModel;
+﻿@using Sunplus.Accounting.Core.Configurations;
+@using Fanex.Tarus.Admin.ManageProductSetting.ViewModel;
 @model ManageProductSettingViewModel
 <div class="filterBox" style="border: solid 1px #7C98A4; height:80px;">
     <div class="filterContent">
         <div id="errVDMsg"></div>
         <div class="floatLeft w70"><label for="txtVendorID">VendorID</label></div>
-        <div class="floatLeft"><input id="txtVendorID" type="text" class="numeric-input-tinyint" /></div>
+        <div class="floatLeft"><input id="txtVendorID" type="text" class="numeric-input-tinyint filter_input_txt" /></div>
         <div class="floatLeft w70"><label for="txtVendorName">VendorName</label></div>
-        <div class="floatLeft"><input id="txtVendorName" type="text" /></div>
+        <div class="floatLeft"><input id="txtVendorName" type="text" class="filter_input_txt"/></div>
         <div class="floatLeft w70"><label for="txtNumberValue">NumberValue</label></div>
-        <div class="floatLeft"><input id="txtNumberValue" type="text" class="numeric-input-tinyint" /></div>
+        <div class="floatLeft"><input id="txtNumberValue" type="text" class="numeric-input-tinyint filter_input_txt" /></div>
         <div class="clear"></div>
         <div class="floatLeft w70"><label for="txtVDSportType">SportType</label></div>
         <div class="floatLeft ">
@@ -26,3 +27,7 @@
 <div id="gridVDContainer" class="grid-container">
     <div id="gridVDId" class="freegrid"></div>
 </div>
+
+@Html.Partial("~/Views/Admin/ManageProductSetting/VendorGlobalSetting/_UpdateVendor.cshtml")
+
+<script type="text/javascript" src="@Url.Content("~/Views/Admin/ManageProductSetting/VendorGlobalSetting/index.js?v=" + @WebSettings.Version)"></script>

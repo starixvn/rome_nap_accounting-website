@@ -1,5 +1,11 @@
 ﻿@using Fanex.Tarus.Admin.ManageProductSetting.ViewModel;
 @model ManageProductSettingViewModel
+<style>
+    label {
+        font-weight: bold;
+        padding-right: 5px;
+    }
+</style>
 <form id="edit-vendor-form" style="display: none;">
     <div id="updateVendorErrMsg">
     </div>
@@ -13,7 +19,7 @@
         </tr>
         <tr>
             <td><label for="UpdVendorNumberValue">NumberValue</label></td>
-            <td><input class="numeric-input-tinyint setting-input" id="UpdVendorNumberValue" type="text" /></td>
+            <td><input class="numeric-input-tinyint setting-input filter_input_txt" id="UpdVendorNumberValue" type="text" style="width: 196px;" /></td>
             <td style="width: 40px;"></td>
             <td><label for="UpdVendorSportType">SportType</label></td>
             <td>

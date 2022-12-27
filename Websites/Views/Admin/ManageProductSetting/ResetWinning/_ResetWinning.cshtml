@@ -1,4 +1,10 @@
 ﻿@using Sunplus.Accounting.Core.Configurations;
+<style>
+    label {
+        font-weight: bold;
+        padding-right: 5px;
+    }
+</style>
 <div class="left_tab" style="margin-left: 16px; width: 100%">
     <ul id="sub_tabs">
         <li id="sub_tab_1" class="current"><a href="javascript:SwitchSubTab('sub_tab_1', 'sub_tab_content_1');"><span>Acc_DWLList</span></a></li>
@@ -20,5 +26,7 @@
     @Html.Partial("~/Views/Admin/ManageProductSetting/ResetWinning/_DWLListExtraPTTest.cshtml")
 </div>
 
+@Html.Partial("~/Views/Admin/ManageProductSetting/ResetWinning/_UpdateDWLList.cshtml")
+@Html.Partial("~/Views/Admin/ManageProductSetting/ResetWinning/_UpdateDWLListExtraPT.cshtml")
 
 <script type="text/javascript" src="@Url.Content("~/Views/Admin/ManageProductSetting/ResetWinning/Scripts/ResetWinning.js?v=" + @WebSettings.Version)"></script>

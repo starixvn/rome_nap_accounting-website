@@ -23,8 +23,8 @@ function SearchBettype(pageSize, pageIndex) {
 
 function RenderBettypeData(data, pageSize, pageIndex) {
     var bodyRows = [];
-    var rowCount = data.BettypeEntities.length;
-    for (i = 0; i < rowCount; i++) {
+    let rowCount = data.BettypeEntities.length;
+    for (var i = 0; i < rowCount; i++) {
         var row = { Columns: [] };
         row.Columns.push({ Name: 'TypeID', Value: data.BettypeEntities[i].TypeId });
         row.Columns.push({ Name: 'TypeNamee', Value: data.BettypeEntities[i].TypeNamee });

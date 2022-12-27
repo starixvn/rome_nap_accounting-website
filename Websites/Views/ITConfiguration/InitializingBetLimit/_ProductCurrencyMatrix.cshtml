@@ -1,0 +1,35 @@
+﻿<div id="errMatrixMsg"></div>
+<div id="filterDiv" style="display: flex; width:100%;">
+    <div class="filterBox">
+        <div class="filterContent" style="padding:0 5px;">
+            <table class="floatLeft">
+                <tr>
+                    <td class="w100">
+                        <label for="FilterProductMatrix" class="edit-label">Product</label>
+                    </td>
+                    <td class="floatLeft">
+                        <select id="FilterProductMatrix" class="setting-edit">
+                            <option value="" disabled selected>Please select</option>
+                        </select>
+                    </td>
+                    <td class="w100">
+                        <label for="FilterCurrency" class="edit-label">Currency</label>
+                    </td>
+                    <td class="floatLeft">
+                        <select id="FilterCurrency" class="setting-edit">
+                            <option value="" disabled selected>Please select</option>
+                        </select>
+                    </td>
+                    <td></td>
+                    <td class="floatLeft">
+                        <input id="btnSearchMatrix" type="button" value="Search" class="btn btn-edit" onclick="GetProductCurrencyMatrix();">
+                        <input id="btnExportMatrix" type="button" title="Export to Excel" class="btnExcel" name="btnExportMatrix" value="  " onclick="ExportMatrixExcel();">
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="mainContent" style="margin-top:10px; width: auto;">
+    <div id="gridProductCurrencyMatrix" class="freegrid" style="display: none;"></div>
+</div>

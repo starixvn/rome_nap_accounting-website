@@ -3,11 +3,11 @@
 <div class="filterBox" style="border: solid 1px #7C98A4; height:40px;">
     <div class="filterContent">
         <div class="floatLeft"><label for="txtRefId">RefId</label></div>
-        <div class="floatLeft"><input id="txtRefId" type="text" /></div>
+        <div class="floatLeft"><input id="txtRefId" type="text" class="filter_input_txt"/></div>
         <div class="floatLeft"><label for="txtResourceId">ResourceId</label></div>
-        <div class="floatLeft"><input id="txtResourceId" type="text" /></div>
+        <div class="floatLeft"><input id="txtResourceId" type="text" class="filter_input_txt"/></div>
         <div class="floatLeft"><label for="txtResourceEN">Resource_EN</label></div>
-        <div class="floatLeft"><input id="txtResourceEN" type="text" /></div>
+        <div class="floatLeft"><input id="txtResourceEN" type="text" class="filter_input_txt"/></div>
         <div class="floatLeft"><input type="button" value="Search" class="btn" onclick="SearchRefResource(50, 1)" /></div>
         <div class="floatLeft"><input type="button" value="Import From Excel" class="btn" onclick="OpenInsertSetting()" /></div>
     </div>
@@ -17,3 +17,8 @@
     <div id="errRefResMsg"></div>
     <div id="gridRefResId" class="freegrid"></div>
 </div>
+
+
+@Html.Partial("~/Views/Admin/ManageProductSetting/RefResource/_UpdateRefResource.cshtml")
+
+<script type="text/javascript" src="@Url.Content("~/Views/Admin/ManageProductSetting/RefResource/Scripts/RefResource.js?v=" + @WebSettings.Version)"></script>

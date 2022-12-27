@@ -10,14 +10,14 @@
             @Html.DropDownList("ddlSBMProductId", Model.Products, new { id = "ddlSBMProductId" })
         </div>
         <div class="floatLeft w70"><label for="txtSBMSportType">SportType</label></div>
-        <div class="floatLeft "><input id="txtSBMSportType" type="text" class="w150 numeric-input-tinyint" /></div>
+        <div class="floatLeft "><input id="txtSBMSportType" type="text" class="w150 numeric-input-tinyint filter_input_txt" /></div>
         <div class="floatLeft w80"><label for="txtSBMSportTypeName">SportTypeName</label></div>
-        <div class="floatLeft"><input id="txtSBMSportTypeName" type="text" class="w150" /></div>
+        <div class="floatLeft"><input id="txtSBMSportTypeName" type="text" class="w150 filter_input_txt" /></div>
         <div class="clear"></div>
         <div class="floatLeft w50"><label for="txtSBMBetType">BetType</label></div>
-        <div class="floatLeft"><input id="txtSBMBetType" type="text" class="w250 numeric-input-smallint" /></div>
+        <div class="floatLeft"><input id="txtSBMBetType" type="text" class="w250 numeric-input-smallint filter_input_txt" /></div>
         <div class="floatLeft w70"><label for="txtSBMBetTypeName">BetTypeName</label></div>
-        <div class="floatLeft"><input id="txtSBMBetTypeName" type="text" class="w150" /></div>
+        <div class="floatLeft"><input id="txtSBMBetTypeName" type="text" class="w150 filter_input_txt" /></div>
         <div class="floatLeft w80"><label for="ddlSBMEventType">EventType</label></div>
         <div class="floatLeft">
             <select id="ddlSBMEventType" class="w150">
@@ -49,3 +49,7 @@
 <div id="gridSBMContainer" class="grid-container">
     <div id="gridSBMId" class="freegrid"></div>
 </div>
+
+@Html.Partial("~/Views/Admin/ManageProductSetting/SportBettypeMatrix/_UpdateSportBettypeMatrix.cshtml")
+
+<script type="text/javascript" src="@Url.Content("~/Views/Admin/ManageProductSetting/SportBettypeMatrix/Scripts/SportBettypeMatrix.js?v=" + @WebSettings.Version)"></script>

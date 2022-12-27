@@ -1,14 +1,15 @@
-﻿<div class="filterBox" style="border: solid 1px #7C98A4; height:80px;">
+﻿@using Sunplus.Accounting.Core.Configurations;
+<div class="filterBox" style="border: solid 1px #7C98A4; height:90px;">
     <div class="filterContent">
         <div id="err3rdMsg"></div>
         <div class="floatLeft w70"><label for="txtProduct3rdID">ProductId</label></div>
-        <div class="floatLeft"><input id="txtProduct3rdID" type="text" class="numeric-input-int" /></div>
+        <div class="floatLeft"><input id="txtProduct3rdID" type="text" class="numeric-input-int filter_input_txt" /></div>
         <div class="floatLeft w70"><label for="txtProduct3rdName">ProductName</label></div>
-        <div class="floatLeft"><input id="txtProduct3rdName" type="text" /></div>
+        <div class="floatLeft"><input id="txtProduct3rdName" type="text" class="filter_input_txt"/></div>
         <div class="floatLeft w70"><label for="txt3rdDescription">Description</label></div>
-        <div class="floatLeft"><input id="txt3rdDescription" type="text" /></div>
+        <div class="floatLeft"><input id="txt3rdDescription" type="text" class="filter_input_txt"/></div>
         <div class="floatLeft w70"><label for="txtProduct3rdPrefix">ProductPrefix</label></div>
-        <div class="floatLeft"><input id="txtProduct3rdPrefix" type="text" /></div>
+        <div class="floatLeft"><input id="txtProduct3rdPrefix" type="text" class="filter_input_txt"/></div>
         <div class="clear"></div>
         <div class="floatLeft w70"><label for="txt3rdOfferSingle">OfferSingle</label></div>
         <div class="floatLeft">
@@ -42,3 +43,7 @@
 <div id="grid3rdContainer" class="grid-container">
     <div id="grid3rdId" class="freegrid"></div>
 </div>
+
+@Html.Partial("~/Views/Admin/ManageProductSetting/Product3rd/_UpdateProduct3rd.cshtml")
+
+<script type="text/javascript" src="@Url.Content("~/Views/Admin/ManageProductSetting/Product3rd/index.js?v=" + @WebSettings.Version)"></script>

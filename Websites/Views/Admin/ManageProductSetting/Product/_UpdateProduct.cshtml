@@ -29,34 +29,39 @@
         <tr>
             <td><label for="ProductId">ProductID</label></td>
             <td><span id="ProductId" /></td>
+            <td style="width: 20px;"></td>
             <td></td>
             <td></td>
         </tr>
         <tr>
             <td><label for="ProductName">ProductName</label></td>
-            <td><input class="setting-edit" id="ProductName" type="text" maxlength="50" /></td>
+            <td><input class="setting-edit filter_input_txt" id="ProductName" type="text" maxlength="50" /></td>
+            <td style="width: 20px;"></td>
             <td><label for="Description">Description</label></td>
-            <td><textarea class="setting-textarea" id="Description" rows="2" cols="40" maxlength="100"></textarea></td>
+            <td><textarea class="setting-textarea filter_input_txtarea" id="Description" rows="2" cols="40" maxlength="100"></textarea></td>
         </tr>
         <tr>
             <td><label for="ProductPrefix">ProductPrefix</label></td>
-            <td><input class="setting-edit" id="ProductPrefix" rows="2" cols="40" maxlength="10"></td>
+            <td><input class="setting-edit filter_input_txt" id="ProductPrefix" rows="2" cols="40" maxlength="10"></td>
+            <td style="width: 20px;"></td>
             <td><label for="Enabled">Enabled</label></td>
             <td><input id="Enabled" type="checkbox"></td>
         </tr>
         <tr>
             <td><label for="EndOfSupportDate ">EndOfSupportDate </label></td>
             <td>
-                <input class="setting-calendar" id="EndOfSupportDate" type="text" />
+                <input class="setting-calendar filter_input_txt" id="EndOfSupportDate" type="text" />
                 <input class="img-date-selector" onclick="return false;" alt="" id="EndOfSupportDate_Trigger" title="Date selector"
                        width="18" height="17" src="../App_Themes/Images/calendar.gif" type="image" />
             </td>
+            <td style="width: 20px;"></td>
             <td><label for="IsOfferPlayForFun">IsOfferPlayForFun</label></td>
             <td><input id="IsOfferPlayForFun" type="checkbox"></td>
         </tr>
         <tr>
             <td><label for="SubProductBalanceType">SubProductBalanceType</label></td>
-            <td><textarea class="setting-textarea" id="SubProductBalanceType" rows="4" cols="40" maxlength="512"></textarea></td>
+            <td><textarea class="setting-textarea filter_input_txtarea" id="SubProductBalanceType" rows="4" cols="40" maxlength="512"></textarea></td>
+            <td style="width: 20px;"></td>
             <td><label for="GroupType">GroupType</label></td>
             <td>
                 <select class="setting-edit" id="GroupType">
@@ -74,6 +79,7 @@
                     <option value="0">[0] Others</option>
                 </select>
             </td>
+            <td style="width: 20px;"></td>
             <td>
                 <label for="BalanceType">BalanceType</label>
             </td>
@@ -89,12 +95,13 @@
         </tr>
         <tr>
             <td><label for="VendorId">VendorId</label></td>
-            <td><input class="setting-edit numeric-input-smallint" id="VendorId" ></td>
+            <td><input class="setting-edit numeric-input-smallint filter_input_txt" id="VendorId"></td>
+            <td style="width: 20px;"></td>
             <td><label for="OrderNo">OrderNo</label></td>
-            <td><input class="setting-edit numeric-input-int" id="OrderNo" ></td>
+            <td><input class="setting-edit numeric-input-int filter_input_txt" id="OrderNo"></td>
         </tr>
         <tr>
-            <td colspan="4" style="text-align: center">
+            <td colspan="5" style="text-align: center">
                 <input class="btn" type="button" value="Submit" onclick="UpdateProduct();" />
             </td>
         </tr>

@@ -11,15 +11,6 @@
 };
 var cachedProduct3rd = [];
 
-function GetInitDataProduct3rd() {
-    $('#Upd3rdDate').datetimepicker({
-        format: 'm/d/Y'
-    });
-
-    $('#Upd3rdDate_Trigger').click(function () {
-        jQuery('#Upd3rdDate').datetimepicker('show');
-    });
-}
 
 function SearchProduct3rd(pageindex, pagesize) {
     parent.BlockUI();
@@ -42,7 +33,6 @@ function SearchProduct3rd(pageindex, pagesize) {
             RenderProduct3rdData(data);
         },
         error: function (err) {
-            console.log(err);
         },
         complete: function () {
             parent.jQuery.unblockUI();
@@ -198,3 +188,19 @@ function DeleteProduct3rd(index) {
         });
     }
 }
+
+$(document).ready(function () {
+
+    $('#Upd3rdDate').datetimepicker("destroy");
+    $('#Upd3rdDate').datetimepicker({
+        format: 'm/d/Y'
+    });
+
+    $('#Upd3rdDate_Trigger').click(function () {
+        jQuery('#Upd3rdDate').datetimepicker('show');
+    });
+    $("#txt3rdOfferSingle").select2({ width: "138px" });
+    $("#txt3rdApplyDCS").select2({ width: "138px" });
+    $("#txt3rdSite").select2({ width: "138px" }); 
+    $("#Upd3rdSite").select2({ width: "126px" });
+});

@@ -1,4 +1,14 @@
-﻿<form id="edit-3rd-form" style="display: none;">
+﻿<style>
+    textarea {
+        resize: none;
+    }
+
+    label {
+        font-weight: bold;
+        padding-right: 5px;
+    }
+</style>
+<form id="edit-3rd-form" style="display: none;">
     <div id="update3rdErrMsg">
     </div>
     <table style="line-height: 28px; margin-top: 10px; border-collapse: collapse;">
@@ -7,14 +17,14 @@
             <td><span id="UpdProduct3rdId" /></td>
             <td style="width: 40px;"></td>
             <td><label>ProductName<span style="color: red;">*</span></label></td>
-            <td><input class="setting-input" id="Upd3rdName" type="text" /></td>
+            <td><input class="setting-input filter_input_txt" id="Upd3rdName" type="text" /></td>
         </tr>
         <tr>
             <td><label for="Upd3rdDesc">Description</label></td>
-            <td><textarea class="setting-input" id="Upd3rdDesc"></textarea></td>
+            <td><textarea class="setting-input filter_input_txtarea" id="Upd3rdDesc"></textarea></td>
             <td style="width: 40px;"></td>
             <td><label for="Upd3rdPrefix">ProductPrefix</label></td>
-            <td><input class="setting-input" id="Upd3rdPrefix" type="text" /></td>
+            <td><input class="setting-input filter_input_txt" id="Upd3rdPrefix" type="text" /></td>
         </tr>
         <tr>
             <td><label for="Upd3rdOffer">OfferSingle</label></td>
@@ -29,7 +39,7 @@
             <td style="width: 40px;"></td>
             <td><label for="Upd3rdDate">EndOfSupportDate</label></td>
             <td>
-                <input class="setting-calendar" id="Upd3rdDate" type="text" />
+                <input class="setting-calendar filter_input_txt" id="Upd3rdDate" type="text" />
                 <input class="img-date-selector" onclick="return false;" alt="" id="Upd3rdDate_Trigger" title="Date selector"
                        width="18" height="17" src="../App_Themes/Images/calendar.gif" type="image" />
             </td>

@@ -6,7 +6,6 @@
 }
 <html>
 <head>
-    <link rel="stylesheet" href="@Url.Content("~/js/select2/select2.min.css")" />
     <link href="@Url.Content("~/App_Themes/Public/Message.css")" rel="stylesheet" type="text/css">
     <link href="@Url.Content("~/js/Calendar2/css/jscal2.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/js/Calendar2/css/border-radius.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
@@ -19,9 +18,11 @@
     <link href="@Url.Content("~/App_Themes/Public/table.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/App_Themes/Public/Message.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Grid.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/js/select2/select2.min.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/js/MultipleSelect/jquery.multiselect.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Pagination.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/Views/Admin/Style/bootstrap-toggle.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Views/Admin/ManageProductSetting/Styles/index.css")" rel="stylesheet" type="text/css" />
 
     <style>
         .floatLeft {
@@ -42,7 +43,7 @@
         .w180 {
             width: 180px;
         }
-        
+
         .word-break {
             word-break: break-all;
         }
@@ -58,69 +59,27 @@
                 <div class="box_header" style="width: 100%;">
                     <div class="left_tab" style="width: 100%">
                         <ul id="tabs">
-                            <li id="tab_1" class="current"><a href="javascript:SwitchTab('tab_1', 'tab_content_1');"><span>Product</span></a></li>
-                            <li id="tab_2"><a href="javascript:SwitchTab('tab_2', 'tab_content_2');"><span>Sport</span></a></li>
-                            <li id="tab_3"><a href="javascript:SwitchTab('tab_3', 'tab_content_3');"><span>Bet Type</span></a></li>
-                            <li id="tab_4"><a href="javascript:SwitchTab('tab_4', 'tab_content_4');"><span>Sport Bettype Matrix</span></a></li>
-                            <li id="tab_5"><a href="javascript:SwitchTab('tab_5', 'tab_content_5');"><span>CS Sport Bettype Matrix</span></a></li>
-                            <li id="tab_6"><a href="javascript:SwitchTab('tab_6', 'tab_content_6');"><span>RefResource</span></a></li>
-                            <li id="tab_7"><a href="javascript:SwitchTab('tab_7', 'tab_content_7');"><span>Can See</span></a></li>
-                            <li id="tab_8"><a href="javascript:SwitchTab('tab_8', 'tab_content_8');"><span>Reset Winning</span></a></li>
-                            <li id="tab_9"><a href="javascript:SwitchTab('tab_9', 'tab_content_9');"><span>UMConfig</span></a></li>
-                            <li id="tab_10"><a href="javascript:SwitchTab('tab_10', 'tab_content_10');"><span>VendorGlobalSetting</span></a></li>
-                            <li id="tab_11"><a href="javascript:SwitchTab('tab_11', 'tab_content_11');"><span>Product3rd</span></a></li>
+                            <li id="tab_product" class="current"><a href="javascript:void(0);" onclick="OpenProductSetting();"><span>Product</span></a></li>
+                            <li id="tab_sport"><a href="javascript:void(0);" onclick="OpenSportSetting();"><span>Sport</span></a></li>
+                            <li id="tab_bettype"><a href="javascript:void(0);" onclick="OpenBettypeSetting();"><span>Bet Type</span></a></li>
+                            <li id="tab_sbm"><a href="javascript:void(0);" onclick="OpenSBMSetting();"><span>Sport Bettype Matrix</span></a></li>
+                            <li id="tab_cssbm"><a href="javascript:void(0);" onclick="OpenCSSBMSetting();"><span>CS Sport Bettype Matrix</span></a></li>
+                            <li id="tab_refresource"><a href="javascript:void(0);" onclick="OpenRefResourceSetting();"><span>RefResource</span></a></li>
+                            <li id="tab_cansee"><a href="javascript:void(0);" onclick="OpenCanSeeSetting();"><span>Can See</span></a></li>
+                            <li id="tab_resetwinning"><a href="javascript:void(0);" onclick="OpenResetWinningSetting();"><span>Reset Winning</span></a></li>
+                            <li id="tab_umconfig"><a href="javascript:void(0);" onclick="OpenUMConfigSetting();"><span>UMConfig</span></a></li>
+                            <li id="tab_vendor"><a href="javascript:void(0);" onclick="OpenVendorSetting();"><span>VendorGlobalSetting</span></a></li>
+                            <li id="tab_product3rd"><a href="javascript:void(0);" onclick="OpenProduct3rdSetting();"><span>Product3rd</span></a></li>
                         </ul>
                     </div>
                 </div>
             </div>
-            <div id="tab_content_1" style="margin-top:38px;">
-                @Html.Partial("~/Views/Admin/ManageProductSetting/Product/_Product.cshtml")
-            </div>
-            <div id="tab_content_2" style="display: none;margin-top:38px">
-                @Html.Partial("~/Views/Admin/ManageProductSetting/Sport/_Sport.cshtml")
-            </div>
-            <div id="tab_content_3" style="display: none;margin-top:38px">
-                @Html.Partial("~/Views/Admin/ManageProductSetting/Bettype/_Bettype.cshtml")
-            </div>
-            <div id="tab_content_4" style="display: none;margin-top:38px">
-                @Html.Partial("~/Views/Admin/ManageProductSetting/SportBettypeMatrix/_SportBettypeMatrix.cshtml")
-            </div>
-            <div id="tab_content_5" style="display: none;margin-top:38px">
-                @Html.Partial("~/Views/Admin/ManageProductSetting/CSSportBettypeMatrix/_CSSportBettypeMatrix.cshtml")
-            </div>
-            <div id="tab_content_6" style="display: none;margin-top:38px">
-                @Html.Partial("~/Views/Admin/ManageProductSetting/RefResource/_RefResource.cshtml")
-            </div>
-            <div id="tab_content_7" style="display: none;margin-top:38px">
-                @Html.Partial("~/Views/Admin/ManageProductSetting/CanSee/_index.cshtml")
-            </div>
-            <div id="tab_content_8" style="display: none;margin-top:38px">
-                @Html.Partial("~/Views/Admin/ManageProductSetting/ResetWinning/_ResetWinning.cshtml")
-            </div>
-            <div id="tab_content_9" style="display: none;margin-top:38px">
-                @Html.Partial("~/Views/Admin/ManageProductSetting/UMConfig/_UMConfig.cshtml")
-            </div>
-            <div id="tab_content_10" style="display: none;margin-top:38px">
-                @Html.Partial("~/Views/Admin/ManageProductSetting/VendorGlobalSetting/_VendorGlobalSetting.cshtml")
-            </div>
-            <div id="tab_content_11" style="display: none;margin-top:38px">
-                @Html.Partial("~/Views/Admin/ManageProductSetting/Product3rd/_Product3rd.cshtml")
+            <div id="setting-content" style="margin-top:38px;">
+
             </div>
         </div>
     </div>
     @Html.Partial("~/Views/Admin/ManageProductSetting/_UploadSetting.cshtml")
-    @Html.Partial("~/Views/Admin/ManageProductSetting/Bettype/_UpdateBettype.cshtml")
-    @Html.Partial("~/Views/Admin/ManageProductSetting/Sport/_UpdateSport.cshtml")
-    @Html.Partial("~/Views/Admin/ManageProductSetting/Product/_UpdateProduct.cshtml")
-    @Html.Partial("~/Views/Admin/ManageProductSetting/SportBettypeMatrix/_UpdateSportBettypeMatrix.cshtml")
-    @Html.Partial("~/Views/Admin/ManageProductSetting/RefResource/_UpdateRefResource.cshtml")
-    @Html.Partial("~/Views/Admin/ManageProductSetting/CSSportBettypeMatrix/_UpdateCSSportBettypeMatrix.cshtml")
-    @Html.Partial("~/Views/Admin/ManageProductSetting/ResetWinning/_UpdateDWLList.cshtml")
-    @Html.Partial("~/Views/Admin/ManageProductSetting/ResetWinning/_UpdateDWLListExtraPT.cshtml")
-    @Html.Partial("~/Views/Admin/ManageProductSetting/UMConfig/_UpdateUMConfig.cshtml")
-    @Html.Partial("~/Views/Admin/ManageProductSetting/UMConfig/_NewUMConfig.cshtml")
-    @Html.Partial("~/Views/Admin/ManageProductSetting/VendorGlobalSetting/_UpdateVendor.cshtml")
-    @Html.Partial("~/Views/Admin/ManageProductSetting/Product3rd/_UpdateProduct3rd.cshtml")
 
     <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-1.8.2.min.js?v=" + WebSettings.Version)"></script>
     <script type="text/javascript" src="@Url.Content("~/js/select2/select2.min.js")"></script>
@@ -139,16 +98,6 @@
     <script type="text/javascript" src="@Url.Content("~/js/common.js?v=" + WebSettings.Version)"></script>
     <script type="text/javascript" src="@Url.Content("~/Views/Admin/ManageProductSetting/Scripts/Index.js?v=" + @WebSettings.Version)"></script>
     <script type="text/javascript" src="@Url.Content("~/Views/Admin/ManageProductSetting/Scripts/UploadSetting.js?v=" + @WebSettings.Version)"></script>
-    <script type="text/javascript" src="@Url.Content("~/Views/Admin/ManageProductSetting/Bettype/Scripts/Bettype.js?v=" + @WebSettings.Version)"></script>
-    <script type="text/javascript" src="@Url.Content("~/Views/Admin/ManageProductSetting/Sport/Scripts/Sport.js?v=" + @WebSettings.Version)"></script>
-    <script type="text/javascript" src="@Url.Content("~/Views/Admin/ManageProductSetting/Product/Scripts/Product.js?v=" + @WebSettings.Version)"></script>
-    <script type="text/javascript" src="@Url.Content("~/Views/Admin/ManageProductSetting/SportBettypeMatrix/Scripts/SportBettypeMatrix.js?v=" + @WebSettings.Version)"></script>
-    <script type="text/javascript" src="@Url.Content("~/Views/Admin/ManageProductSetting/CanSee/Scripts/Index.js?v=" + @WebSettings.Version)"></script>
-    <script type="text/javascript" src="@Url.Content("~/Views/Admin/ManageProductSetting/RefResource/Scripts/RefResource.js?v=" + @WebSettings.Version)"></script>
-    <script type="text/javascript" src="@Url.Content("~/Views/Admin/ManageProductSetting/CSSportBettypeMatrix/Scripts/CSSportBettypeMatrix.js?v=" + @WebSettings.Version)"></script>
-    <script type="text/javascript" src="@Url.Content("~/Views/Admin/ManageProductSetting/UMConfig/Scripts/UMConfig.js?v=" + @WebSettings.Version)"></script>
-    <script type="text/javascript" src="@Url.Content("~/Views/Admin/ManageProductSetting/VendorGlobalSetting/index.js?v=" + @WebSettings.Version)"></script>
-    <script type="text/javascript" src="@Url.Content("~/Views/Admin/ManageProductSetting/Product3rd/index.js?v=" + @WebSettings.Version)"></script>
 
 
     <script type="text/javascript" src="@Url.Content("~/Views/Admin/ManageProductSetting/Scripts/TabHandler.js?v=" + @WebSettings.Version)"></script>

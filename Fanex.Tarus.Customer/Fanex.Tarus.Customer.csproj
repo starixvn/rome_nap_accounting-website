@@ -101,8 +101,8 @@
       <HintPath>..\packages\Fanex.PTVirtualSports.1.0.0.3\lib\net40\Fanex.PTVirtualSports.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Tarus.Admin, Version=1.0.4.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Admin.1.0.4.5\lib\net461\Fanex.Tarus.Admin.dll</HintPath>
+    <Reference Include="Fanex.Tarus.Admin, Version=1.0.4.8, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Admin.1.0.4.8\lib\net461\Fanex.Tarus.Admin.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Business.Implement, Version=1.0.1.8, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Business.Implement.1.0.1.8\lib\net40\Fanex.Tarus.Business.Implement.dll</HintPath>
@@ -310,7 +310,7 @@
     <Compile Include="Business\ExtraPtGroup\IExtraPtService.cs" />
     <Compile Include="Business\InitializingCustomerSetting\InitializingCustomerSettingService.cs" />
     <Compile Include="Business\InitializingCustomerSetting\InitializingDepositSettingService.cs" />
-    <Compile Include="Business\InitializingStakeLevel\InitializingStakeLevelService.cs" />
+    <Compile Include="Business\InitializingBetLimit\InitializingBetLimitService.cs" />
     <Compile Include="Business\LicenseeDcsSetting\ILicenseeDcsSettingService.cs" />
     <Compile Include="Business\LicenseeDcsSetting\LicenseeDcsSettingService.cs" />
     <Compile Include="Business\LicenseeMember\ILicenseeMemberService.cs" />
@@ -361,8 +361,8 @@
     <Compile Include="Controller\BetCreditHistoryController.cs" />
     <Compile Include="Controller\Chatbot\ChatbotController.cs" />
     <Compile Include="Controller\CN88Customer\MoveCN88SuperController.cs" />
+    <Compile Include="Controller\InitializingBetLimit\InitBetLimitController.cs" />
     <Compile Include="Controller\InitializingCustomerSetting\InitDepSettingController.cs" />
-    <Compile Include="Controller\InitializingStakeLevel\InitStakeLevelController.cs" />
     <Compile Include="Controller\LicenseeMemberController.cs" />
     <Compile Include="Controller\MultipleUpdateSuperStatusController.cs" />
     <Compile Include="Controller\CopySuperSettingController.cs" />
@@ -440,6 +440,7 @@
     <Compile Include="Criteria\ExtraPtGroup\GroupByProductCriteria.cs" />
     <Compile Include="Criteria\ExtraPtGroup\GroupCriteria.cs" />
     <Compile Include="Criteria\ExtraPtGroup\ProductCriteria.cs" />
+    <Compile Include="Criteria\InitializingBetLimit\ProductCurrencyMatrixCriteria.cs" />
     <Compile Include="Criteria\InitializingCustomerSetting\AddSettingConfigCriteria.cs" />
     <Compile Include="Criteria\InitializingCustomerSetting\DCSProductMatrixCriteria.cs" />
     <Compile Include="Criteria\InitializingCustomerSetting\DeleteConfigCriteria.cs" />
@@ -455,14 +456,14 @@
     <Compile Include="Criteria\InitializingCustomerSetting\Deposit\GetDepositSettingCriteria.cs" />
     <Compile Include="Criteria\InitializingCustomerSetting\GetSettingCriteria.cs" />
     <Compile Include="Criteria\InitializingCustomerSetting\UpdateConfigStatusCriteria.cs" />
-    <Compile Include="Criteria\InitializingStakeLevel\BetTypeSelCriteria.cs" />
-    <Compile Include="Criteria\InitializingStakeLevel\CurrencySelCriteria.cs" />
-    <Compile Include="Criteria\InitializingStakeLevel\ProductSelCriteria.cs" />
-    <Compile Include="Criteria\InitializingStakeLevel\SiteSelCriteria.cs" />
-    <Compile Include="Criteria\InitializingStakeLevel\SportTypeSelCriteria.cs" />
-    <Compile Include="Criteria\InitializingStakeLevel\StakeLevelCheckCriteria.cs" />
-    <Compile Include="Criteria\InitializingStakeLevel\StakeLevelInsCriteria.cs" />
-    <Compile Include="Criteria\InitializingStakeLevel\StakeLevelSelCriteria.cs" />
+    <Compile Include="Criteria\InitializingBetLimit\BetTypeSelCriteria.cs" />
+    <Compile Include="Criteria\InitializingBetLimit\CurrencySelCriteria.cs" />
+    <Compile Include="Criteria\InitializingBetLimit\ProductSelCriteria.cs" />
+    <Compile Include="Criteria\InitializingBetLimit\SiteSelCriteria.cs" />
+    <Compile Include="Criteria\InitializingBetLimit\SportTypeSelCriteria.cs" />
+    <Compile Include="Criteria\InitializingBetLimit\BetLimitCheckCriteria.cs" />
+    <Compile Include="Criteria\InitializingBetLimit\BetLimitInsCriteria.cs" />
+    <Compile Include="Criteria\InitializingBetLimit\BetLimitSelCriteria.cs" />
     <Compile Include="Criteria\LicenseeDcsSetting\GetAgentCriteria.cs" />
     <Compile Include="Criteria\LicenseeDcsSetting\GetBetSettingWithMaxPerBallCriteria.cs" />
     <Compile Include="Criteria\LicenseeDcsSetting\GetBetSettingWithMaxPayoutPerMatchCriteria.cs" />
@@ -553,7 +554,7 @@
     <Compile Include="DataAccess\ExtraPtGroup\IExtraPtRepository.cs" />
     <Compile Include="DataAccess\InitializingCustomerSetting\InitializingCustomerSettingDataAccess.cs" />
     <Compile Include="DataAccess\InitializingCustomerSetting\InittializingDepositSettingDataAccess.cs" />
-    <Compile Include="DataAccess\InitializingStakeLevel\InitStakeLevelDataAccess.cs" />
+    <Compile Include="DataAccess\InitializingBetLimit\InitBetLimitDataAccess.cs" />
     <Compile Include="DataAccess\LicenseeDcsSetting\ILicenseeDcsSettingDataAccess.cs" />
     <Compile Include="DataAccess\LicenseeDcsSetting\LicenseeDcsSettingDataAccess.cs" />
     <Compile Include="DataAccess\LicenseeMember\ILicenseeMemberDataAccess.cs" />
@@ -656,6 +657,7 @@
     <Compile Include="Entities\ExtraPtGroup\GroupByProduct.cs" />
     <Compile Include="Entities\ExtraPtGroup\Group.cs" />
     <Compile Include="Entities\ExtraPtGroup\Product.cs" />
+    <Compile Include="Entities\InitializingBetLimit\ProductCurrencyModel.cs" />
     <Compile Include="Entities\InitializingCustomerSetting\BetSettingErrorModel.cs" />
     <Compile Include="Entities\InitializingCustomerSetting\BetSettingModel.cs" />
     <Compile Include="Entities\InitializingCustomerSetting\BettypeModel.cs" />
@@ -670,10 +672,10 @@
     <Compile Include="Entities\InitializingCustomerSetting\SportModel.cs" />
     <Compile Include="Entities\InitializingCustomerSetting\ValidateBetSettingModel.cs" />
     <Compile Include="Entities\InitializingCustomerSetting\ValidateResultModel.cs" />
-    <Compile Include="Entities\InitializingStakeLevel\FilterModel.cs" />
-    <Compile Include="Entities\InitializingStakeLevel\StakeLevelModel.cs" />
-    <Compile Include="Entities\InitializingStakeLevel\StakeLevelResponse.cs" />
-    <Compile Include="Entities\InitializingStakeLevel\ValidateStakeLevelResponse.cs" />
+    <Compile Include="Entities\InitializingBetLimit\FilterModel.cs" />
+    <Compile Include="Entities\InitializingBetLimit\BetLimitModel.cs" />
+    <Compile Include="Entities\InitializingBetLimit\BetLimitResponse.cs" />
+    <Compile Include="Entities\InitializingBetLimit\ValidateBetLimitResponse.cs" />
     <Compile Include="Entities\JsonWithoutNullField.cs" />
     <Compile Include="Entities\LicenseeDcsSetting\AgentsExtraInfo.cs" />
     <Compile Include="Entities\LicenseeDcsSetting\BaseModelExtra.cs" />
@@ -724,11 +726,12 @@
     <Compile Include="Requests\CustomerSetting\Suspend\GetMultipleSuspendCustomerInfoQuery.cs" />
     <Compile Include="Requests\CustomerSetting\Suspend\GetSingleSuspendCustomerInfoQuery.cs" />
     <Compile Include="Requests\GetMessageLogsQuery.cs" />
+    <Compile Include="Requests\InitializingBetLimit\GetProductCurrencyRequest.cs" />
     <Compile Include="Requests\InitializingCustomerSetting\GenerateConfigSettingRequest.cs" />
     <Compile Include="Requests\InitializingCustomerSetting\ValidateBetSettingRequest.cs" />
-    <Compile Include="Requests\InitializingStakeLevel\GetBettypeRequest.cs" />
-    <Compile Include="Requests\InitializingStakeLevel\GetStakeLevelRequest.cs" />
-    <Compile Include="Requests\InitializingStakeLevel\InsertStakeLevelRequest.cs" />
+    <Compile Include="Requests\InitializingBetLimit\GetBettypeRequest.cs" />
+    <Compile Include="Requests\InitializingBetLimit\GetBetLimitRequest.cs" />
+    <Compile Include="Requests\InitializingBetLimit\InsertBetLimitRequest.cs" />
     <Compile Include="Requests\LicenseeMember\InsertMemberRequest.cs" />
     <Compile Include="Requests\LicenseeOddsGroup\UpdateOddsGroupRequest.cs" />
     <Compile Include="Requests\MultipleUpdateSuperStatus\UpdatedCustomerIinfo.cs" />
@@ -776,7 +779,6 @@
     <Compile Include="ViewModels\CustomerSetting\Suspend\SuspendMatrixViewModel.cs" />
     <Compile Include="ViewModels\InitializingCustomerSetting\ConfigSettingViewModel.cs" />
     <Compile Include="ViewModels\InitializingCustomerSetting\InitializingCustomerSettingViewModel.cs" />
-    <Compile Include="ViewModels\InitializingStakeLevel\InitStakeLevelViewModel.cs" />
     <Compile Include="ViewModels\LicenseeDcsSetting\BetSettingWithMaxPerBallViewModel.cs" />
     <Compile Include="ViewModels\LicenseeDcsSetting\BetSettingWithMaxPayoutPerMatchViewModel.cs" />
     <Compile Include="ViewModels\LicenseeDcsSetting\BetSettingWithoutMaxPerMatchViewModel.cs" />

@@ -18,104 +18,13 @@ $(document).ready(function () {
         maxValue: 255
     });
 
-    SearchProduct(50, 1);
+    OpenProductSetting();
 });
-
-function SwitchTab(id, contentId) {
-    cachedTabId = id;
-    $('#tabs').find('li').removeClass('current');
-    $('div[id^="tab_content_"]').hide();
-    $('#' + id).addClass('current');
-    $('#' + contentId).show();
-    UpdateSampleUrl();
-    InitTab();
-}
-
-function InitTab() {
-    switch (cachedTabId) {
-        case "tab_1":
-            SearchProduct(50, 1);
-            break;
-        case "tab_2":
-            SearchSport(50, 1);
-            break;
-        case "tab_3":
-            SearchBettype(50, 1);
-            break;
-        case "tab_4":
-            SearchSBM(50, 1);
-            break;
-        case "tab_5":
-            GetGroupsAndSearchCSSBM(50, 1);
-            break;
-        case "tab_6":
-            SearchRefResource(50, 1);
-            break;
-        case "tab_7":
-            SearchCanSee();
-            break;
-        case "tab_8":
-            SearchResetWinning();
-            break;
-        case "tab_9":
-            GetInitDataAndSearchAllUMConfig();
-            break;
-        case "tab_10":
-            GetInitVendor();
-            break;
-        case "tab_11":
-            GetInitDataProduct3rd();
-            break;
-        default:
-            break;
-    }
-}
-
-function Search() {
-    switch (cachedTabId) {
-        case "tab_1":
-            SearchProduct(50, 1);
-            break;
-        case "tab_2":
-            SearchSport(50, 1);
-            break;
-        case "tab_3":
-            SearchBettype(50, 1);
-            break;
-        case "tab_4":
-            SearchSBM(50, 1);
-            break;
-        case "tab_5":
-            GetGroupsAndSearchCSSBM(50, 1);
-            break;
-        case "tab_6":
-            SearchRefResource(50, 1);
-            break;
-        case "tab_7":
-            SearchCanSee();
-            break;
-        case "tab_8":
-            SearchResetWinning();
-            break;
-        case "tab_9":
-            GetInitDataAndSearchAllUMConfig();
-            break;
-        case "tab_10":
-            SearchVendor(1, 50);
-            break;
-        case "tab_11":
-            SearchProduct3rd(1, 50);
-            break;
-        default:
-            break;
-    }
-}
 
 function UpdateSampleUrl() {
     $("#btnUpdateExcel").addClass("hide");
     switch (cachedTabId) {
         case "tab_1":
-            $('#sampleSettingLink').prop("href", rootUrl + "Views/Admin/ManageProductSetting/Product/Product.xls");
             break;
         case "tab_2":
             $('#sampleSettingLink').prop("href", rootUrl + "Views/Admin/ManageProductSetting/Sport/SportType.xls");
@@ -151,4 +60,109 @@ function UpdateSampleUrl() {
         default:
             break;
     }
+}
+
+function GetPartialView(requestUrl) {
+    parent.BlockUI();
+    $("#setting-content").html("<div id=\"errMsg\"></div>");
+    $.ajax({
+        type: "GET",
+        url: requestUrl,
+        success: function (rs) {
+            if (rs && rs.ErrorCode !== undefined && rs.ErrorCode !== 0) {
+                showAlertMessage('errMsg', rs.ErrorMessage, 1);
+            } else {
+                $("#setting-content").html(rs);
+            }
+        },
+        error: function (event, jqXHR, ajaxSettings) {
+            showAlertMessage('errMsg', "Internal server error.", 1);
+        },
+        complete: function () {
+            try { parent.jQuery.unblockUI(); } catch (e) { }
+        }
+    });
+}
+
+function UpdateTabs() {
+    $('#tabs').find('li').removeClass('current');
+    $('div[id^="tab_content_"]').hide();
+    $('#' + cachedTabId).addClass('current');
+}
+
+function OpenProductSetting() {
+    cachedTabId = "tab_product";
+    $('#sampleSettingLink').prop("href", rootUrl + "Views/Admin/ManageProductSetting/Product/Product.xls");
+    UpdateTabs();
+    GetPartialView("ProductIndex");
+}
+
+
+function OpenSportSetting() {
+    cachedTabId = "tab_sport";
+    $('#sampleSettingLink').prop("href", rootUrl + "Views/Admin/ManageProductSetting/Sport/SportType.xls");
+    UpdateTabs();
+    GetPartialView("SportIndex");
+}
+
+function OpenBettypeSetting() {
+    cachedTabId = "tab_bettype";
+    $('#sampleSettingLink').prop("href", rootUrl + "Views/Admin/ManageProductSetting/Bettype/Bettype.xls");
+    UpdateTabs();
+    GetPartialView("BettypeIndex");
+}
+
+function OpenSBMSetting() {
+    cachedTabId = "tab_sbm";
+    $('#sampleSettingLink').prop("href", rootUrl + "Views/Admin/ManageProductSetting/SportBettypeMatrix/SportBettypeMatrix.xls");
+    UpdateTabs();
+    GetPartialView("SBMIndex");
+}
+
+function OpenCSSBMSetting() {
+    cachedTabId = "tab_cssbm";
+    $('#sampleSettingLink').prop("href", rootUrl + "Views/Admin/ManageProductSetting/CSSportBettypeMatrix/CS_SportBettypeMatrix.xls");
+    UpdateTabs();
+    GetPartialView("CSSBMIndex");
+}
+
+function OpenRefResourceSetting() {
+    cachedTabId = "tab_refresource";
+    $('#sampleSettingLink').prop("href", rootUrl + "Views/Admin/ManageProductSetting/RefResource/RefResource.xls");
+    UpdateTabs();
+    GetPartialView("RefResourceIndex");
+}
+
+function OpenCanSeeSetting() {
+    cachedTabId = "tab_cansee";
+    $('#sampleSettingLink').prop("href", rootUrl + "Views/Admin/ManageProductSetting/CanSee/CanSee.xls");
+    UpdateTabs();
+    GetPartialView("CanSeeIndex");
+}
+
+function OpenResetWinningSetting() {
+    cachedTabId = "tab_resetwinning";
+    UpdateTabs();
+    GetPartialView("ResetWinningIndex");
+}
+
+function OpenUMConfigSetting() {
+    cachedTabId = "tab_umconfig";
+    $('#sampleSettingLink').prop("href", rootUrl + "Views/Admin/ManageProductSetting/UMConfig/UMConfig.xls");
+    UpdateTabs();
+    GetPartialView("UmConfigIndex");
+}
+
+function OpenVendorSetting() {
+    cachedTabId = "tab_vendor";
+    $('#sampleSettingLink').prop("href", rootUrl + "Views/Admin/ManageProductSetting/VendorGlobalSetting/VendorGlobalSetting.xls");
+    UpdateTabs();
+    GetPartialView("VendorIndex");
+}
+
+function OpenProduct3rdSetting() {
+    cachedTabId = "tab_product3rd";
+    $('#sampleSettingLink').prop("href", rootUrl + "Views/Admin/ManageProductSetting/Product3rd/Product3rd.xls");
+    UpdateTabs();
+    GetPartialView("Product3rdIndex");
 }

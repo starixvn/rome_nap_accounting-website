@@ -9,11 +9,6 @@
 };
 var cachedVendor = [];
 
-function GetInitVendor() {
-    RenderSportTypes();
-    RenderFilterBettype();
-}
-
 function SearchVendor(pageindex, pagesize) {
     parent.BlockUI();
     filterVDData.VendorId = $('#txtVendorID').val();
@@ -33,7 +28,6 @@ function SearchVendor(pageindex, pagesize) {
             RenderVendorData(data);
         },
         error: function (err) {
-            console.log(err);
         },
         complete: function () {
             parent.jQuery.unblockUI();
@@ -182,7 +176,6 @@ function RenderSportTypes() {
             RenderSportTypeOptions(data.SportTypeEntities);
         },
         error: function (err) {
-            console.log(err);
         }
     });
 }
@@ -251,7 +244,6 @@ function RenderFilterBettype() {
             RenderBettypeOptions(data.BettypeEntities);
         },
         error: function (err) {
-            console.log(err);
         },
         complete: function () {
             parent.jQuery.unblockUI();
@@ -307,3 +299,8 @@ function RenderBettypeOptions(bettypes) {
         width: '200px'
     });
 }
+
+$(document).ready(function(){
+    RenderSportTypes();
+    RenderFilterBettype();
+});
