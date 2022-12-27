@@ -11,40 +11,34 @@ using Sunplus.Accounting.DataAccess.IBCDLL;
 
 public class OnlineUpd : IHttpHandler , IRequiresSessionState
 {
-    
+
     public void ProcessRequest (HttpContext context) {
         try
         {
             context.Response.ContentType = "text/html";
             context.Response.Cache.SetCacheability(HttpCacheability.NoCache);
             int onlineId = AppSession.OnAccId;
-            bool isOnline = true;
+            int onlineStatus = 0;
             context.Response.Write("<html><head></head><body>");
             string appPath = context.Request.ApplicationPath;
             if (appPath != "/") appPath += "/";
             if (onlineId != 0 && AccCommon.IsEnabledRecheckin)
-                isOnline = UserController.OnlineUserUpdate(onlineId);
-            
-            if (!isOnline && !AccCommon.IsLocalTest)
-            {
-                //#region Remove Cache Item from Cache
-                //((ASP.global_asax)context.ApplicationInstance).RemoveSessionCacheItem(
-                //    DNAide.Core.CastAide.AsString(AppSession.AccId), AppSession.Username, DNAide.Core.CastAide.AsString(AppSession.RoleID));
-                //#endregion
-                context.Response.Write("<script type='text/javascript'>alert('Another session has been logged in or your session is expired. Forced to logout!');top.location.href='" + appPath + "PreLogIn/Logout.ashx';</script>");
-            }
-            //else
-            //{
-            //    #region Access Cache Item
-            //    string msSessionCacheValue =
-            //        ((ASP.global_asax)context.ApplicationInstance).GetSessionCacheItem(
-            //        DNAide.Core.CastAide.AsString(AppSession.OnAccId), AppSession.Username, DNAide.Core.CastAide.AsString(AppSession.RoleID));
-            //    #endregion
-            //}
+                onlineStatus = UserController.OnlineUserUpdate(onlineId);
 
+            var alertMessage = string.Empty;
+            //Status 1: Kick out
+            if (onlineStatus == 1 && !AccCommon.IsLocalTest)
+            {
+                alertMessage = "Another session has been logged in or your session is expired. Forced to logout!";
+                context.Response.Write("<script type='text/javascript'>alert('" + alertMessage + "');top.location.href='" + appPath + "PreLogIn/Logout.ashx';</script>");
+            }
+            // Status 2 Permission revolked
+            else if(onlineStatus == 2 && !AccCommon.IsLocalTest)
+            {
+                alertMessage = "Your Account was Expired, Please contact your supervisor";
+                context.Response.Write("<script type='text/javascript'>alert('" + alertMessage + "');top.location.href='" + appPath + "PreLogIn/Logout.ashx';</script>");
+            }
             
-            
-            context.Response.Write("</body></html>");
         }
         catch(Exception ex)
         {
@@ -53,7 +47,7 @@ public class OnlineUpd : IHttpHandler , IRequiresSessionState
             context.Response.Write("<html><head></head><body><script type='text/javascript'>top.location.href='../PreLogIn/LogOut.ashx';</script></body></html>");
         }
     }
- 
+
     public bool IsReusable {
         get {
             return false;

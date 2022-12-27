@@ -6,7 +6,7 @@
             <tr>
                 <td class="cellborder cellheader">
                     <div id="divHeaderUserName" class="c sorter" title="Sort by User name" style="cursor: pointer"
-                        onclick="javascript:accManager.accounts.sortByUserName(event);">
+                         onclick="javascript:accManager.accounts.sortByUserName(event);">
                         User Name
                     </div>
                 </td>
@@ -33,6 +33,11 @@
                 <td class="cellborder cellheader">
                     <div class="c">
                         Create Date
+                    </div>
+                </td>
+                <td class="cellborder cellheader">
+                    <div class="c">
+                        Expired Date (GMT +7)
                     </div>
                 </td>
                 <td class="cellborder cellheader">
@@ -100,6 +105,10 @@
             </td><td class="cellborder">
                 <div class="c">
                     ${CreateDate}
+                </div>
+            </td><td class="cellborder">
+                <div class="c" expired="true">
+                    ${ExpiredDate}
                 </div>
             </td><td class="cellborder">
                 <div class="c" style="color: #0066CC; cursor:pointer" onclick="javascript:accManager.accounts.policy(${Id}, '${Department}', ${DeptId}, '${UserName}');">

@@ -227,6 +227,11 @@ accManager.accounts = {
                         callback: function (popuid) {
                             accManager.accounts.updateUserPolicy(custId, popuid);
                         }
+                    }, {
+                        "text": "Clear Permission",
+                        callback: function (popuid) {
+                            accManager.accounts.clearUserPolicy(custId, popuid);
+                        }
                     }], multiple: false, dialog: true,
                     onclose: function () {
                         if (accManager.utils.getMessageType() == "alertboxerr") {
@@ -263,6 +268,14 @@ accManager.accounts = {
             }
             accManager.utils.unBlock();
             closePopup(popuid);
+        });
+    },
+    clearUserPolicy: function (custId, popuid) {
+        $('#' + popuid).find("input[cbxHost]").each(function () {
+            this.checked = false;
+        });
+        $('#' + popuid).find("input[cbxRead]").each(function () {
+            this.checked = false;
         });
     },
     bindDataPolicy: function (table) {
@@ -941,9 +954,32 @@ accManager.accounts = {
         var colFirstName = $(target).parents("tr:first").find("div[firstname]").hide();
         var colLastName = $(target).parents("tr:first").find("div[lastname]").hide();
         var colDept = $(target).parents("tr:first").find("div[dept]").hide();
+        var colExpired = $(target).parents("tr:first").find("div[expired]").hide();
 
         colFirstName.parent().append("<input type='text' style='width:196px' editor='true' firstname='true' />").find("input[editor]").val(accManager.utils.decodeSpecifiedCharacter(accManager.utils.trimStartEnd(colFirstName.html())));
         colLastName.parent().append("<input type='text' style='width:196px' editor='true' lastname='true' />").find("input[editor]").val(accManager.utils.decodeSpecifiedCharacter(accManager.utils.trimStartEnd(colLastName.html())));
+        var isNeverExpired = colExpired.html().trim() === 'Never Expired'? 'checked': '';
+        colExpired.parent().append("<div editor='true' style='width: fit-content; margin: auto;'><input editor='true' class='img-date-selector' onclick='return false;' alt='' id='ExpiredDate_" + id + "_Trigger' title='Date selector' width='18' height='17' src='../App_Themes/Images/calendar.gif' type='image' /><input editor='true' expireddate='true' style='padding-bottom: 4px;' id='ExpiredDate_" + id + "' readonly type='text' placeholder='Expired Date (GMT+7)' title='Expired Date (GMT+7)' /></br><input id='ckbNeverExpired_" + id + "' editor='true' neverexpired='true' type='checkbox' " + isNeverExpired + " /><span> Never Expired</span></div>");
+
+        var expiredDivId = "ExpiredDate_" + id;
+        var neverExpiredDivId = "ckbNeverExpired_" + id;
+        $('#' + neverExpiredDivId).change(function () {
+            $('#' + expiredDivId).prop('disabled', this.checked);
+            $('#' + expiredDivId + '_Trigger').prop('disabled', this.checked);
+        });
+
+        $('#' + neverExpiredDivId).trigger('change');
+
+        $('#' + expiredDivId).datetimepicker({
+            format: 'm/d/Y',
+            timepicker: false
+        });
+
+        $('#' + expiredDivId + '_Trigger').click(function () {
+            jQuery('#' + expiredDivId).datetimepicker('show');
+        });
+
+        $('#' + expiredDivId).val(colExpired.html().trim());
 
         var arr = jlinq.from(window.viewModel.Accounts).equals("Id", id).select();
         if (arr.length > 0) {
@@ -963,9 +999,11 @@ accManager.accounts = {
 
         $(target).parents("tr:first").find("input[editor]").remove();
         $(target).parents("tr:first").find("select[editor]").remove();
+        $(target).parents("tr:first").find("div[editor]").remove();
         $(target).parents("tr:first").find("div[firstname]").show();
         $(target).parents("tr:first").find("div[lastname]").show();
         $(target).parents("tr:first").find("div[dept]").show();
+        $(target).parents("tr:first").find("div[expired]").show();
 
         $(target).parents("tr:first").find("img[alt='Edit']").show();
         $(target).parents("tr:first").find("img[alt='Save']").hide();
@@ -974,6 +1012,17 @@ accManager.accounts = {
     saveEdit: function (tr, id) {
         var firstName = tr.find("input[editor][firstname]").val();
         var lastName = tr.find("input[editor][lastname]").val();
+        var neverExprired = tr.find("input[editor][neverexpired]")[0].checked;
+        var expiredDate = tr.find("input[editor][expireddate]").val();
+        if (neverExprired) {
+            expiredDate = null;
+        } else {
+            var expiredDateTime = new Date(expiredDate);
+            //off set from 7 to -4 : -11
+            //set to 23h59:59 => -11 + 23 = 12
+            expiredDateTime.setHours(12);
+            expiredDate = '' + (expiredDateTime.getMonth() + 1) + '/' + expiredDateTime.getDate() + '/' + expiredDateTime.getFullYear() + ' ' + expiredDateTime.getHours() + ':59:59';
+        }
 
         if (!accManager.utils.validateStringInput2(firstName)) {
             accManager.utils.showErr("First name is invalid!");
@@ -1002,6 +1051,11 @@ accManager.accounts = {
             "Name": "lastname",
             "Value": accManager.utils.encodeSpecifiedCharacter(lastName)
         });
+        params.push({
+            "Name": "expireddate",
+            "Value": expiredDate
+        });
+
         accManager.utils.blockUI();
         $.ajax({
             url: 'UpdateAccount',
