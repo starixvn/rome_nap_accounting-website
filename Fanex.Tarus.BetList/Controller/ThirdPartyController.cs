@@ -60,7 +60,7 @@
             };
 
             var result = service.GetResultGET(resultRequest);
-            return Json(new ThirdPartyResultViewModel(ProductResultTitle, result));
+            return Json(new ThirdPartyResultViewModel(ProductResultTitle, result), JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult PPResult(ThirdPartyResultRequest request) => BaseResult(request, "PPResultConfigs");
