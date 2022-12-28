@@ -1012,28 +1012,6 @@ function ViewNewCashOutHistory(transId, custId, winlostDate) {
 }
 
 function ViewResult(matchid, race, bettype, sporttype, refno, username, winlostdate, refno_mixparlay, league, is_outright, betid, matchcode, betcheck, transdesc, siteId) {
-    var resultParam = getResultParamBySportType(matchid, race, bettype, sporttype, refno, username, winlostdate, refno_mixparlay, league, is_outright, betid, matchcode, betcheck, transdesc, siteId);
-
-    resultParam = resultParam || getResultParamByBetType(matchid, race, bettype, sporttype, refno, username, winlostdate, refno_mixparlay, league, is_outright, betid, matchcode);
-
-    var handicap2 = 0
-    if (isFM2(bettype)) {
-        handicap2 = matchcode;
-    }
-
-    var defaultResultParam = {
-        url: "Report/ViewResult.aspx",
-        jsonParam: { matchid: matchid, bettype: bettype, betid: betid, sporttype: sporttype, handicap2: handicap2 },
-        title: "Result",
-        width: 750,
-        height: 300
-    };
-
-    if (resultParam) {
-        $.extend(defaultResultParam, resultParam);
-        openResultsPopUp(defaultResultParam);
-    }
-    
     if(sporttype == 170){
         var param = getPPLiveCasinoParam(bettype, betcheck, transdesc, matchcode, betid, siteId, bettype);
         
@@ -1051,7 +1029,30 @@ function ViewResult(matchid, race, bettype, sporttype, refno, username, winlostd
             }
         });
     }
+    else{
+       var resultParam = getResultParamBySportType(matchid, race, bettype, sporttype, refno, username, winlostdate, refno_mixparlay, league, is_outright, betid, matchcode, betcheck, transdesc, siteId);
 
+        resultParam = resultParam || getResultParamByBetType(matchid, race, bettype, sporttype, refno, username, winlostdate, refno_mixparlay, league, is_outright, betid, matchcode);
+
+        var handicap2 = 0
+        if (isFM2(bettype)) {
+            handicap2 = matchcode;
+        }
+
+        var defaultResultParam = {
+            url: "Report/ViewResult.aspx",
+            jsonParam: { matchid: matchid, bettype: bettype, betid: betid, sporttype: sporttype, handicap2: handicap2 },
+            title: "Result",
+            width: 750,
+            height: 300
+        };
+
+        if (resultParam) {
+            $.extend(defaultResultParam, resultParam);        
+        }
+    
+        openResultsPopUp(defaultResultParam);
+    }
 }
 
 function isFM2(betttype) {
