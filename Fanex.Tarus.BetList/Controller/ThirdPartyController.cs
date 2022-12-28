@@ -60,7 +60,7 @@
             };
 
             var result = service.GetResultGET(resultRequest);
-            return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(ProductResultTitle, result));
+            return Json(new ThirdPartyResultViewModel(ProductResultTitle, result));
         }
 
         public ActionResult PPResult(ThirdPartyResultRequest request) => BaseResult(request, "PPResultConfigs");
