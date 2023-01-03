@@ -214,16 +214,27 @@ function ResetValueWhenEdit() {
         data: param,
         success: function (rs) {
             if (rs.length > 0) {
-                var BaseRate = 0, Currency = 1, Minbet = 2, MinbetLive = 3, Description = 9, MultipliedBy = 10,
-                    Code = 11;
-                var arr = rs.split('|');
+                const Currency = 0,
+                    Description = 1,
+                    MultipliedBy = 2,
+                    BaseRate = 3,
+                    MinBet = 4, 
+                    MinBetLive = 5,
+                    OfferSite=6,
+                    CoinMarketCapID=8,
+                    IsActive=9;
+
+                const arr = rs.split('|');
                 $('#txtBaseRate').val(arr[BaseRate]);
                 $('#txtCurrency').val(arr[Currency]);
-                $('#txtMinbet').val(arr[Minbet]);
-                $('#txtMinbetLive').val(arr[MinbetLive]);
+                $('#txtMinbet').val(arr[MinBet]);
+                $('#txtMinbetLive').val(arr[MinBetLive]);
                 $('#tbxDescription').val(arr[Description]);
                 $('#tbxMultipliedBy').val(arr[MultipliedBy]);
-                //$('#tbxStandardCurrency').val(arr[Code]);
+                $('#selOfferSite').val(arr[OfferSite])
+                $('#txtCoinMarketID').val(arr[CoinMarketCapID]);
+                $('#ckbIsActive')[0].checked=arr[IsActive]==="true";
+
                 try {
                     parent.jQuery.unblockUI();
                 } catch (e) {

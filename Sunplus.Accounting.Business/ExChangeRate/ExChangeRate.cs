@@ -150,7 +150,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 hash.Add("description", Description);
                 hash.Add("multipliedby", Convert.ToDecimal(MultipliedBy.Trim()));
                 int exchangeid = 0;
-                //phd nghiên cứu chỗ syn này??
+                
                 var result = IBCProvider.ExChangeRate.ExchangeIns(hash, ref exchangeid);
                 msg = result.ErrorMessage;
                 if (result.ErrorCode == 0 && currencyType!="1")
@@ -319,13 +319,18 @@ namespace Sunplus.Accounting.Business.ExChangeRate
             string html = "";
             DataTable dt = rs.ResultSet.Tables[0];
             foreach (DataRow dr in dt.Rows)
-            {
-                html = CastAide.AsString(dr["actualrate"]) + "|";
+            {  //actualrate=> base rate
+               
                 html += CastAide.AsString(dr["currency"]) + "|";
+                html += CastAide.AsString(dr["Description"]) + "|";
+                html += CastAide.AsString(dr["MultipliedBy"])+ "|";
+                html += CastAide.AsString(dr["actualrate"]) + "|";
                 html += CastAide.AsString(dr["minbet"]) + "|";
                 html += CastAide.AsString(dr["minbetlive"]) + "|";
-                html += CastAide.AsString(dr["Description"]) + "|";
-                html += CastAide.AsString(dr["MultipliedBy"]);
+                html += CastAide.AsString(dr["offersite"])+ "|";
+                html += CastAide.AsString(dr["currencytype"])+ "|";
+                html += CastAide.AsString(dr["CoinMarketCapID"])+ "|";
+                html += CastAide.AsString(dr["isactive"]).ToLower();
             }
             return html;
         }
