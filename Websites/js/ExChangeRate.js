@@ -223,7 +223,6 @@ function ResetValueWhenEdit() {
                 $('#txtMinbetLive').val(arr[MinbetLive]);
                 $('#tbxDescription').val(arr[Description]);
                 $('#tbxMultipliedBy').val(arr[MultipliedBy]);
-                $('#txtCoinMarketID').val(arr[CoinMarketCapID]);
                 //$('#tbxStandardCurrency').val(arr[Code]);
                 try {
                     parent.jQuery.unblockUI();
