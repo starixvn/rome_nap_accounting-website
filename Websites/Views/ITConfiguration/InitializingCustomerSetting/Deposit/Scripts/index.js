@@ -1338,7 +1338,7 @@ function AbortConfig(configId) {
                     showAlertMessage('errMsg', rs.ErrorMessage, 1);
                 }
             },
-            error: function (error) {
+            error: function (event, jqXHR, ajaxSettings) {
                 if (jqXHR.status === 401 || jqXHR.status === 403) {
                     var denyObject = $.parseJSON(jqXHR.responseText);
                     showAlertMessage("errMsg", denyObject.ErrorMessage, 1);
@@ -1370,7 +1370,7 @@ function DeleteConfig(configId) {
                     showAlertMessage('errMsg', rs.ErrorMessage, 1);
                 }
             },
-            error: function (error) {
+            error: function (event, jqXHR, ajaxSettings) {
                 if (jqXHR.status === 401 || jqXHR.status === 403) {
                     var denyObject = $.parseJSON(jqXHR.responseText);
                     showAlertMessage("errMsg", denyObject.ErrorMessage, 1);
