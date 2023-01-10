@@ -4,7 +4,6 @@ using System;
 using System.Web;
 using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using IBCUtils;
@@ -103,14 +102,7 @@ public class UpdateCustomerStatus : BaseHandler
                     }
                     CustomerUpdateStatus.CustomerUpdInternal(_custid, status, _accid, context.Request.UserHostAddress);
                     s = "parent.changeDisplayStatus();";
-                    break;
-                case "disabledNumberGame"://NumberGame
-                    isUpdDownline = false;
-                    if (!Boolean.TryParse(context.Request["isupddownline"] as string ?? string.Empty, out isUpdDownline))
-                        throw new AccException("Invalid isupddownline parameters");
-                    CustomerUpdateStatus.CustomerUpdateDisabledNumberGame(_accid, _custid, status, context.Request.UserHostAddress, isUpdDownline);
-                    s = "parent.changeDisplayStatus();";
-                    break;
+                    break;               
                 case "SelectedBetting"://Selected Betting
                     isUpdDownline = false;
                     if (!Boolean.TryParse(context.Request["isupddownline"] as string ?? string.Empty, out isUpdDownline))

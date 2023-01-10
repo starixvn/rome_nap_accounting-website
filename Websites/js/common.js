@@ -605,7 +605,7 @@ function open_dailyreport(link) {
 //this function is used to display span error for Adding, Editing of Customer
 //when error of each Sporttype is shown, panel of each Sporttype is shown too
 var arrPlaceHolder = ["err", "error1", "error2", "error3", "error5", "error8", "error10", "error11", "error201", "error99", "error151", "error161", "error99_9"];
-var arrPanel = ["", "panelSoccer", "panelBasket", "panelFootball", "panelTennis", "panelBaseball", "panelGolf", "panelMoto", "panelFinancial", "panelOtherSports", "panelHorseRacing", "panelNumberGame", "panelMixedSports"];
+var arrPanel = ["", "panelSoccer", "panelBasket", "panelFootball", "panelTennis", "panelBaseball", "panelGolf", "panelMoto", "panelFinancial", "panelOtherSports", "panelHorseRacing", "panelMixedSports"];
 function ShowError(errMsg, placeHolder) {
     flag = false;
     window.scroll(0, 0);
