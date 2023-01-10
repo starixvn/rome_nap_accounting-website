@@ -70,7 +70,7 @@
     <Setting Key="Acc_CustomerSelTransferOption" SpName="Acc_CustomerSelTransferOption" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Customer">
-    <Setting Key="CustomerSelStatus" SpName="Acc_CustomerSelStatus" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="CustomerSelStatus" SpName="Acc_CustomerSelStatus_UAT4" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="SelAllInfo" SpName="Acc_CustomerSelAllInfo" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="Acc_CustDirectSel" SpName="Acc_CustDirectSel" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="Acc_CustomerSelSiteByUserName" SpName="Acc_CustomerSelSiteByUserName" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -108,9 +108,9 @@
     <Setting Key="Acc_CustomerCheckMoveMaster" SpName="Acc_CustomerCheckMoveMaster" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="View Pt">
-    <Setting Key="GetPT" SpName="Acc_MT_GetPT" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="GetSportType" SpName="Acc_MT_SportTypeSel" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="GetBetType" SpName="Acc_MT_BetTypeSel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="GetPT" SpName="Acc_MT_GetPT_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="GetSportType" SpName="Acc_MT_SportTypeSel_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="GetBetType" SpName="Acc_MT_BetTypeSel_UAT4" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="ViewPT_Keno" SpName="Acc_MT_GetKenoPT" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Progressive Bonus">
@@ -121,7 +121,7 @@
     <Setting Key="Acc_CustomerSelCheckEnable" SpName="Acc_CustomerSelCheckEnable" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="External Betting Limit">
-    <Setting Key="Age_CustomerSelBetSetting" SpName="Age_CustomerSelBetSetting" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
+    <Setting Key="Age_CustomerSelBetSetting" SpName="Age_CustomerSelBetSetting_UAT4" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
     <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
   </Function>
   <Function Name="DCS-ViewComm">

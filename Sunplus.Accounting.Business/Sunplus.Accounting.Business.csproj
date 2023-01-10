@@ -268,11 +268,11 @@
     <Reference Include="Sunplus.Accounting.Core, Version=2.0.4.17, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Accounting.Core.2.0.4.17\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.4.12, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.4.12\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
+    <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.4.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.4.9-RemoveNG-01\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.Entities, Version=2.0.2.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.Entities.2.0.2.1\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
+      <HintPath>..\packages\Sunplus.Accounting.Entities.2.0.2-RemoveNG-01\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.Services, Version=1.0.2.7, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Accounting.Services.1.0.2.7\lib\net40\Sunplus.Accounting.Services.dll</HintPath>
@@ -431,7 +431,6 @@
     <Compile Include="Customer\CustomerManager\ViewModels\SettingTabs\BitcoinBettingViewModel.cs" />
     <Compile Include="Customer\CustomerManager\ViewModels\SettingTabs\VGamingViewModel.cs" />
     <Compile Include="Customer\CustomerManager\ViewModels\SettingTabs\SabaclubViewModel.cs" />
-    <Compile Include="Customer\CustomerManager\ViewModels\SettingTabs\NumberGameViewModel.cs" />
     <Compile Include="Customer\CustomerManager\ViewModels\SettingTabs\EsportViewModel.cs" />
     <Compile Include="Customer\CustomerManager\ViewModels\SettingTabs\AllbetViewModel.cs" />
     <Compile Include="Customer\CustomerManager\ViewModels\SettingTabs\VoidbridgeViewModel.cs" />
