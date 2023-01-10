@@ -598,16 +598,27 @@ function RenderSiteSelect() {
     }
 
     cachedSites.forEach(function (item, index) {
-        multiselectData.push({
-            Id: 'sel_opt_newum_' + item.Value,
-            Value: item.Value,
-            Text: item.Text,
-            Checked: false,
-            Enable: true,
-            CssClass: "",
-            Items: []
-        });
+        if(item.IsParent){
+            htmlOptions.push('<optgroup label="' + item.Name + '">');
+            item.ChildSites.forEach(function(child, i){
+                htmlOptions.push('<option value="');
+                htmlOptions.push(child.Id);
+                htmlOptions.push('">');
+                htmlOptions.push(child.Name);
+                htmlOptions.push('</option>');
+            });
+            htmlOptions.push('</optgroup>');
+        }else{
+            htmlOptions.push('<option value="');
+            htmlOptions.push(item.Id);
+            htmlOptions.push('">');
+            htmlOptions.push(item.Name);
+            htmlOptions.push('</option>');
+        }
     });
+
+
+
     OnSelectReportsBetListsFunctionType(isSelectedReportsBetLists);
 
     $('#UMSite').multiSelect({

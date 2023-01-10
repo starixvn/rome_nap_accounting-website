@@ -22,11 +22,11 @@
                     warningStepOne += `<br /><span style="margin-left: 20px">- ${item.GroupName}: ${item.Prefixes}</span>`;
                     warningStepTwo += `<br />- ${item.GroupName}: ${item.Prefixes}`;
                 });
-                $notAllowedSuperPrefixes.addClass("noteMsg");
+                $notAllowedSuperPrefixes.addClass("headlineBelongSiteMsg");
                 $notAllowedSuperPrefixes.html(warningStepTwo);
                 $notAllowedSuperPrefixesStepOne.html(warningStepOne);
                 $notAllowedSuperPrefixesStepTwo.html(warningStepTwo);
-                $notAllowedSuperPrefixesStepTwo.addClass("noteMsg");
+                $notAllowedSuperPrefixesStepTwo.addClass("headlineBelongSiteMsg");
             }
         },
         error: function (xhr, ajaxOptions, thrownError) { }

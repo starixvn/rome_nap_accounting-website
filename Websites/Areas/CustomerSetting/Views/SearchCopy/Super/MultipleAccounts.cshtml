@@ -32,6 +32,11 @@
                 <tbody>
                     <tr>
                         <td>
+                            <div id="headlineBelongSite"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
                             <div id="notAllowedSuperPrefixes_multiple"></div>
                         </td>
                     </tr>
@@ -113,7 +118,7 @@
                                 <label for="ddSite">Site</label>
                             </td>
                             <td>
-                                @Html.DropDownList("ddSite", Model.Sites, new { id = "ddSite" })
+                                <select id="ddSite" title="Site"></select>
                             </td>
                             <td>
                                 <label for="txtFax">Fax</label>
@@ -185,9 +190,11 @@
         </div>
     </div>
     <script type="text/javascript">
+        var jsonSites = @Html.Raw(Json.Encode(Model.Sites));
         var viewModel = {
             rootUrl: "@ViewBag.RootUrl",
             userName: "@customer.UserName",
+            site: "@customer.Site",
             maxInputUsernames: @Model.DefaultMaxInputUsername,
             maxGivenCredit: "@customer.CreditMax",
             code: "@Fanex.Tarus.Security.Services.Encryptor.Code",
@@ -198,7 +205,8 @@
             isSyncNG2: @Convert.ToBoolean(customer.IsSyncNG2).ToString().ToLowerInvariant(),
             disableNG2: @Convert.ToBoolean(customer.DisableNG2).ToString().ToLowerInvariant(),
             isSuper: @isSuper.ToString().ToLowerInvariant(),
-            getSuperPrefixesUrl: "@Url.Content("~/AddNewSuper/GetSuperPrefixes")"
+            getSuperPrefixesUrl: "@Url.Content("~/AddNewSuper/GetSuperPrefixes")",
+            getHeadlineBelongSiteUrl: "@Url.Content("~/AddNewSuper/GetHeadlineBelongSite")"
         };
     </script>
     <script type="text/javascript" src="@Url.Content("~/js/encode.js?v=" + version)"></script>

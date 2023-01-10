@@ -13,6 +13,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
     using DNAide.Utils;
     using Fanex.Data;
     using Fanex.PTEngine.BusinessObjects;
+    using Fanex.Tarus.Admin.ViewModel;
     using Fanex.Tarus.Customer.CreditCustomer.DataAccess;
     using Fanex.Tarus.Customer.CreditCustomer.Entities;
     using Fanex.Tarus.Customer.Criteria.CN88.Headline;
@@ -67,7 +68,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
         /// </summary>
         /// <param name="system">system name</param>
         /// <returns>Return list of Site Name</returns>
-        public List<Sites> GetSites(string system)
+        public List<SiteViewModel> GetSites(string system)
         {
             return _customerSettingDataAccess.GetSites(system);
         }
@@ -307,6 +308,14 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
             return _customerSettingDataAccess.ExecuteNonQuery(criteria);
         }
 
+        public dynamic GetHeadlineBelongSite(GetHeadlineBelongSiteCriteria criteria)
+            => _customerSettingDataAccess.GetHeadlineBelongSite(criteria)
+            .GroupBy(item => item.Site, item => item.Headline, (site, headline) => new
+            {
+                Site = site,
+                Headline = string.Join(", ", headline)
+            });
+        
         public dynamic GetSuperPrefixes(SuperPrefixCriteria criteria)
             => _customerSettingDataAccess.GetSuperPrefixes(criteria)
             .GroupBy(item => item.GroupName, item => item.Prefix, (groupName, prefixes) => new

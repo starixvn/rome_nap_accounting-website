@@ -62,7 +62,11 @@
                 Site
             </td>
             <td class="l" style="width: 38%">
-                <select id="listSite" ng-model="existedUser.selectedSite" ng-options="s.SiteName for s in existedUser.sites" ng-change="HideProductList()"></select>
+                <select ng-model="existedUser.selectedSite">
+                    <optgroup ng-repeat="s in existedUser.sites" label="{{s.SiteName}}">
+                        <option ng-repeat="s in s.ChildSites" ng-value="{{s.SiteName}}">{{s.SiteName}}</option>
+                    </optgroup>                    
+                </select>
             </td>
             <td class="l" style="width: 12%">
                 Fax

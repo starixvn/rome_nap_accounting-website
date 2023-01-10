@@ -12,6 +12,8 @@ namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
     using CustomerSetting.Module.Core;
     using DNAide.Core;
     using Fanex.Data;
+    using Fanex.Tarus.Admin.Entities;
+    using Fanex.Tarus.Admin.ViewModel;
     using Fanex.Tarus.Customer.CreditCustomer.Entities;
     using Fanex.Tarus.Customer.Entities;
     using NAP.Framework.Data;
@@ -22,6 +24,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
     using System.Collections;
     using System.Collections.Generic;
     using System.Data;
+    using System.Linq;
     using ViewModels.CN88;
 
     /// <summary>
@@ -72,61 +75,50 @@ namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
         /// </summary>
         /// <param name="system">system name</param>
         /// <returns>Return list of Site Name</returns>
-        public List<Sites> GetSites(string system)
+        public List<SiteViewModel> GetSites(string system)
         {
-            var sites = new List<Sites>();
-            Sites licenseeSites = new Sites
+            var listCredit = new List<SiteEntity>();
+            var listSiteDTO = new List<SiteViewModel>();
+
+            using (ObjectDb objDB = new ObjectDb("CustomerSetting_SiteSel"))
             {
-                Name = "Licensee",
-                ListSite = new List<Site>()
-            };
-            Sites creditSites = new Sites
-            {
-                Name = "Credit",
-                ListSite = new List<Site>()
-            };
-            try
-            {
-                using (ObjectDb objDB = new ObjectDb("CustomerSetting_SiteSel"))
+                objDB.AddInParameter("system", DbType.String, system.ToUpper());
+                objDB.AddInParameter("userid", DbType.Int32, AppSession.AccId);
+                using (var reader = objDB.ExecuteReader())
                 {
-                    objDB.AddInParameter("system", DbType.String, system.ToUpper());
-                    objDB.AddInParameter("userid", DbType.Int32, AppSession.AccId);
-                    using (var reader = objDB.ExecuteReader())
+                    if (reader != null)
                     {
-                        if (reader != null)
+                        while (reader.Read())
                         {
-                            while (reader.Read())
+                            if (reader["islicensee"].ToString() == "False")
                             {
-                                if (reader["islicensee"].ToString() == "True")
-                                {
-                                    licenseeSites.ListSite.Add(new Site
-                                    {
-                                        Id = int.Parse(reader[0].ToString()),
-                                        Name = reader[1].ToString()
-                                    });
-                                }
-                                else
-                                {
-                                    creditSites.ListSite.Add(new Site
-                                    {
-                                        Id = int.Parse(reader[0].ToString()),
-                                        Name = reader[1].ToString()
-                                    });
-                                }
+                                var credit = new SiteEntity();
+                                credit.SiteId = int.Parse(reader["siteId"].ToString());
+                                credit.SiteName = reader["site"].ToString();
+                                credit.SiteLabel = reader["sitelabel"].ToString();
+                                listCredit.Add(credit);
                             }
                         }
                     }
                 }
+            }
 
-                sites.Add(creditSites);
-                // Because integrate of Deposit customer, so remove licensee customer in future
-                if (!WebSettings.IsApplySplitingDepositeCustomer) sites.Add(licenseeSites);
-            }
-            catch (Exception ex)
-            {
-                LogExtensions.ExceptionHandler(ex);
-            }
-            return sites;
+            listCredit
+            .GroupBy(p => p.SiteLabel)
+           .ToList()
+           .ForEach(grp =>
+           {
+               if (string.IsNullOrEmpty(grp.Key))
+               {
+                   listSiteDTO.AddRange(grp.Select(pt => new SiteViewModel(pt.SiteId.ToString(), pt.SiteName, null)));
+               }
+               else
+               {
+                   listSiteDTO.Add(new SiteViewModel(grp.Key, grp.Key, grp.Select(p => new SiteViewModel(p.SiteId.ToString(), p.SiteName, null))));
+               }
+           });
+
+            return listSiteDTO;
         }
 
         /// <summary>
@@ -152,7 +144,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
             return dt;
         }
 
-        public Result UpdateDoubleComm(int userId, int custId, bool isDoubleComm)
+        public Fanex.Tarus.Customer.Entities.Result UpdateDoubleComm(int userId, int custId, bool isDoubleComm)
         {
             try
             {
@@ -170,12 +162,12 @@ namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
 
                     var errMsg = DNAide.Core.CastAide.AsString(db.GetParameterValue("ErrMsg"));
                     var errCode = DNAide.Core.CastAide.AsInt32(db.GetParameterValue("errcode"));
-                    return new Result { ErrorCode = errCode, ErrorMessage = errMsg };
+                    return new Fanex.Tarus.Customer.Entities.Result { ErrorCode = errCode, ErrorMessage = errMsg };
                 }
             }
             catch (Exception e)
             {
-                return new Result { ErrorCode = 1, ErrorMessage = e.Message };
+                return new Fanex.Tarus.Customer.Entities.Result { ErrorCode = 1, ErrorMessage = e.Message };
             }
         }
 
@@ -195,7 +187,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
             }
         }
 
-        public Result UpdateAllDayBalTransfer(ICriteria criteria)
+        public Fanex.Tarus.Customer.Entities.Result UpdateAllDayBalTransfer(ICriteria criteria)
         {
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
@@ -205,13 +197,13 @@ namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
 
                 if (outputParams != null)
                 {
-                    return new Result(
+                    return new Fanex.Tarus.Customer.Entities.Result(
                         Convert.ToInt32(outputParams["errcode"]),
                         outputParams["errmsg"].ToString());
                 }
             }
 
-            return new Result(500, string.Empty);
+            return new Fanex.Tarus.Customer.Entities.Result(500, string.Empty);
         }
 
         public CreditRangeModel GetCreditRangeModel(ICriteria criteria)
@@ -241,6 +233,25 @@ namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
                     Utils.ToDecimal(reader["TotalBetStake"]),
                     0,
                     0);
+            }
+        }
+
+        public IEnumerable<HeadlineBelongSiteInfo> GetHeadlineBelongSite(ICriteria criteria)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    while (reader.Read())
+                    {
+                        yield return new HeadlineBelongSiteInfo
+                        {
+                            Headline = reader.ToString("headlines"),
+                            Site = reader.ToString("site")
+                        };
+                    }
+
+                }
             }
         }
 

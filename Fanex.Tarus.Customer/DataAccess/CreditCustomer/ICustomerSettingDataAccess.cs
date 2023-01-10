@@ -14,6 +14,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
     using NAP.Framework.Data;
     using CustomerSetting.Module.Core.Models;
     using Customer.Entities.CN88;
+    using Fanex.Tarus.Admin.ViewModel;
 
     /// <summary>
     /// TODO: Update summary.
@@ -32,7 +33,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
         /// </summary>
         /// <param name="system">system name</param>
         /// <returns>Return list of Site Name</returns>
-        List<Sites> GetSites(string system);
+        List<SiteViewModel> GetSites(string system);
 
         /// <summary>
         /// Get Cutomer Info for Member Group
@@ -54,5 +55,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
         CreditRangeModel GetMemberCreditRangeModel(ICriteria criteria);
 
         IEnumerable<SuperPrefix> GetSuperPrefixes(ICriteria criteria);
+
+        IEnumerable<HeadlineBelongSiteInfo> GetHeadlineBelongSite(ICriteria criteria);
     }
 }

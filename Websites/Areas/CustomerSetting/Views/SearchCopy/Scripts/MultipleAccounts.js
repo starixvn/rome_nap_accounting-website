@@ -324,9 +324,40 @@ $.fn.forceNumber = function () {
             }
         });
 
+        getHeadlineBelongSite();
+        RenderSite();
         getNotAllowedNewSuperPrefixes();
     }
 
+    function RenderSite(){
+        var htmlOptions = [];
+        jsonSites.forEach(function (item, index) {
+            if(item.IsParent){
+                htmlOptions.push('<optgroup label="' + item.SiteName + '">');
+                item.ChildSites.forEach(function(child, i){
+                    htmlOptions.push('<option value="');
+                    htmlOptions.push(child.SiteName + '"');
+                    if(vm.site == child.SiteName){
+                        htmlOptions.push('selected="selected"');
+                    }
+                    htmlOptions.push('>');
+                    htmlOptions.push(child.SiteName);
+                    htmlOptions.push('</option>');
+                });
+                htmlOptions.push('</optgroup>');
+            }else{
+                htmlOptions.push('<option value="');
+                htmlOptions.push(item.SiteName + '"');
+                if(vm.site == child.SiteName){    
+                    htmlOptions.push('selected="selected"');
+                }
+                htmlOptions.push('>');
+                htmlOptions.push(item.SiteName);
+                htmlOptions.push('</option>');
+            }
+        });
+        $("#ddSite").html(htmlOptions.join(""));
+    }
     function getNotAllowedNewSuperPrefixes() {
         if (!vm.isSuper) { return; }
 
@@ -347,13 +378,36 @@ $.fn.forceNumber = function () {
                     $.each(data, function (index, item) {
                         warning += `<br />- ${item.GroupName}: ${item.Prefixes}`;
                     });
-                    $notAllowedSuperPrefixesMultiple.addClass("noteMsg");
+                    $notAllowedSuperPrefixesMultiple.addClass("headlineBelongSiteMsg");
                     $notAllowedSuperPrefixesMultiple.html(warning);
                 }
             },
             error: function (xhr, ajaxOptions, thrownError) { }
         });
     }
+
+    function getHeadlineBelongSite() {
+        if (!vm.isSuper) { return; }
+
+        $.ajax({
+            type: "POST",
+            url: vm.getHeadlineBelongSiteUrl,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                var $messageHtml = $("#headlineBelongSite");
+                if (data && data.length > 0) {
+                    var message = "For 789y site group, the following headlines belong to site:";
+                    $.each(data, function (index, item) {                    
+                        message += `<br />- ${item.Site}: ${item.Headline}`;
+                    });
+                    $messageHtml.addClass("headlineBelongSiteMsg");
+                    $messageHtml.html(message);
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) { }
+        });
+    };
 
     initialize();
 })(jQuery, viewModel, window);

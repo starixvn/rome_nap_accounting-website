@@ -40,36 +40,34 @@
         exportExcelElement.addClass("hidden");
         smaMangementGridElement.addClass("hidden");
     }
+    
+    var buildSiteData = function (siteList) {
+            var dataList = [];
+            $.each(siteList, function (i, site) {
+                dataList.push({
+                    Id: site.Id,
+                    Value: site.Id,
+                    Text: site.Name,
+                    Checked: true,
+                    Enable: true,
+                    Items: site.IsParent ? buildSiteData(site.ChildSites) : []
+                });
+            });
+
+            return dataList;
+    };
 
     function assignSites() {
-        var site;
-        var multiselectData = [];
-
-        var totalSites = jsonSites ? jsonSites.length : 0;
-
-        for (var i = 0; i < totalSites; i++) {
-            site = jsonSites[i];
-
-            multiselectData.push({
-                Id: "selectSite" + site.Value,
-                Value: site.Value,
-                Text: site.Text,
-                Checked: true,
-                Enable: true,
-                CssClass: "",
-                Items: []
-            });
-        }
-
         $("#ddlSites").multiSelect({
-            minWidth: 110,
+            minWidth: 180,
             maxHeight: 450,
             shadow: true,
             showHeader: true,
             isCheckAll: true,
             showFooter: false,
             checkAllText: "All",
-            listData: multiselectData,
+            listData: buildSiteData(jsonSites),
+            selectableOptgroup: true,
             onCheck: function () {
                 if ($("#ddlSites").multiSelect("getCheckedItems").length === 0) {
                     showAlertMessage("err", "Please choose Site!", 1);

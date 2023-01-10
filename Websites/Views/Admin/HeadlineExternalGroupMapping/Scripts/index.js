@@ -110,7 +110,7 @@ function InsertMapping() {
 
 function AddNewMapping() {
     $('#addNewErrMsg').html('');
-    $('#SiteId').val("").trigger('change');
+    $('#ddlPopupSites').val("").trigger('change');
     $('#CurrencyId').val("").trigger('change');
     $('#NewEffectiveFromId').val(tomorrow);
     try { parent.BlockUI(); } catch (e) { BlockUI(); }
@@ -131,7 +131,7 @@ function AddNewMapping() {
         title: 'New Headline/External Group Mapping',
         modal: true,
         width: 'auto',
-        height: 'auto'
+        height: 600
     });
 }
 
@@ -374,6 +374,37 @@ function DeleteMapping(index) {
     }
 }
 
+var buildSiteData = function (siteList) {
+        var dataList = [];
+        $.each(siteList, function (i, site) {
+            dataList.push({
+                Id: site.Id,
+                Value: site.Id,
+                Text: site.Name,
+                Checked: true,
+                Enable: true,
+                Items: site.IsParent ? buildSiteData(site.ChildSites) : []
+            });
+        });
+
+        return dataList;
+};
+
+function assignSites(id) {
+    $(id).multiSelect({
+        minWidth: 180,
+        maxHeight: 450,
+        shadow: true,
+        showHeader: true,
+        isCheckAll: true,
+        showFooter: false,
+        checkAllText: "All",
+        listData: buildSiteData(jsonSites),
+        selectableOptgroup: true,              
+        noItemText: "No item selected."
+    });
+}
+
 function RenderMultiSelect(id, mw = 120) {
     var multiselectData = [];
     $('#' + id + ' > option').each(function (index, _) {
@@ -567,7 +598,7 @@ function UnBlockUI() {
 }
 
 $(function () {
-    RenderMultiSelect("ddlSites");
+    assignSites("#ddlSites");
     RenderMultiSelect("ddlCurrency");
     RenderMultiSelect("ddlExternalGroups", 180);
     RenderMultiSelect("ddlPrimaryGroups", 180);

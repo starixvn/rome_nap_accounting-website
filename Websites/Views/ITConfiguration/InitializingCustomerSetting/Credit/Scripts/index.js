@@ -396,25 +396,31 @@ function DisableEditInput(isDisabled) {
     });
 }
 
+var buildSiteData = function (siteList) {
+        var dataList = [];
+        $.each(siteList, function (i, site) {
+            dataList.push({
+                Id: site.Id,
+                Value: site.Id,
+                Text: site.Name,
+                Checked: selectedConfig && selectedConfig.ConfigDetail.Config.SiteIdList.indexOf(i.Id) >= 0,
+                Enable: true,
+                Items: site.IsParent ? buildSiteData(site.ChildSites) : []
+            });
+        });
+
+        return dataList;
+};
+
 function RenderSiteSelection(enableInput = true) {
     var siteSelect = $("#EditSiteSelect");
     siteSelect.empty();
     var multiselectData = [];
     if (selectedConfig) {
-        selectedConfig.Sites.forEach(function (item, index) {
-            multiselectData.push({
-                Id: 'optsiteEdit' + item.Id,
-                Value: item.Id,
-                Text: item.Name,
-                Checked: selectedConfig && selectedConfig.ConfigDetail.Config.SiteIdList.indexOf(item.Id) >= 0,
-                Enable: true,
-                CssClass: "",
-                Items: []
-            });
-        });
+        multiselectData=buildSiteData(selectedConfig.SiteList);
     }
     siteSelect.multiSelect({
-        minWidth: 140,
+        minWidth: 180,
         maxHeight: 250,
         shadow: true,
         showHeader: true,

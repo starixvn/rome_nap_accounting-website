@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using Fanex.Tarus.Admin.ViewModel;
     using Fanex.Tarus.Customer.Entities;
     using Fanex.Tarus.Customer.Entities.InitializingCustomerSetting;
 

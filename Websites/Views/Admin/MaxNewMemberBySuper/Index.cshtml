@@ -6,9 +6,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var test = new SelectList(Model.ListSites.Select(x => new
     {
-        Value = x.SiteName,
-        Text = x.SiteName,
-        Selected = x.SiteName.Equals("789y")
+        Value = x.Name,
+        Text = x.Name,
+        Selected = Model.Sites789.Contains(x.Name)
     }));
 }
 @section Styles
@@ -53,7 +53,7 @@
                     Site
                 </td>
                 <td>
-                    @Html.DropDownList("Site", Model.ListSites.Select(x => new SelectListItem() { Value = x.SiteName, Text = x.SiteName, Selected = x.SiteName.Equals("789y") }), new { id = "Site" })
+                    <select id="Site" class="setting-edit" title="Site"></select>                    
                 </td>
                 <td>
                     <input type="button" class="btn" value="Submit" onclick="GetData(1, 50)" />
@@ -88,3 +88,8 @@
     <div class="clear"></div><br />
     <input type="button" class="btn" value="Submit" onclick="UpdateData()" />
 </div>
+
+<script type="text/javascript">
+    var jsonSites = @Html.Raw(Json.Encode(Model.ListSites));
+    var site789 =@Html.Raw(Json.Encode(Model.Sites789));     
+</script>

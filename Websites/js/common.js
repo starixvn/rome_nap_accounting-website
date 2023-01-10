@@ -1353,62 +1353,36 @@ function convertUnitToLocalDatetime(objDatime, strFormat) {
     return date.format(strFormat);
 }
 
-function SiteRendering(selectControlId, rootPath) {
-    $.ajax({
-        type: "POST",
-        url: rootPath + "Services/WCF/HelperService.svc/GetSiteList",
-        data: "",
-        contentType: "application/json; charset=utf-8",
-        success: function (objSite) {
-            var objSelectControl = $("#" + selectControlId);
-            objSelectControl.append("<option>Select</option>");
-            var totalSiteDTO = objSite.length;
-            for (var i = 0; i < totalSiteDTO; i++) {
-                if (objSite[i].Name == "Licensee" && enableDeposit) continue;
-                var siteDTO = objSite[i];
-                if (siteDTO.Sites != null && siteDTO.Sites.length > 0) {
-                    var totalSite = siteDTO.Sites.length;
-                    if (totalSite == 1) {
-                        objSelectControl.append("<option>" + siteDTO.Sites[0].Name + "</option>")
-                    }
-                    else {
-                        var optgroup = "";
-                        if (!enableDeposit) {
-                            optgroup = "<optgroup label=" + siteDTO.Name + ">";
-                        }
-                        for (var j = 0; j < totalSite; j++) {
-                            optgroup += "<option>" + siteDTO.Sites[j].Name + "</option>";
-                        }
-                        if (!enableDeposit) {
-                            optgroup += "</optgroup>";
-                        }
-                        objSelectControl.append(optgroup);
-                    }
-                }
-
-            }
-        },
-        error: Error
-    });
-}
-
 function SiteRenderingCreditOnly(selectControlId, rootPath, isCreditOnly) {
+    var htmlOptions = [];
+    htmlOptions.push("<option>Select</option>");
+
     $.ajax({
         type: "POST",
         url: rootPath + "Services/WCF/HelperService.svc/GetSiteList",
         data: "",
         contentType: "application/json; charset=utf-8",
         success: function (objSite) {
-            var objSelectControl = $("#" + selectControlId);
-            objSelectControl.append("<option>Select</option>");
-            var totalSiteDTO = objSite.length;
-            var siteDTO = objSite[0];
-            if (siteDTO.Sites != null && siteDTO.Sites.length > 0) {
-                var totalSite = siteDTO.Sites.length;
-                for (var j = 0; j < totalSite; j++) {
-                    objSelectControl.append("<option>" + siteDTO.Sites[j].Name + "</option>");
-                }
-            }
+            objSite.forEach(function (item, index) {
+                    if(item.IsParent){
+                        htmlOptions.push('<optgroup label="' + item.Name + '">');
+                        item.ChildSites.forEach(function(child, i){
+                            htmlOptions.push('<option value="');
+                            htmlOptions.push(child.Name);
+                            htmlOptions.push('">');
+                            htmlOptions.push(child.Name);
+                            htmlOptions.push('</option>');
+                        });
+                        htmlOptions.push('</optgroup>');
+                    }else{
+                        htmlOptions.push('<option value="');
+                        htmlOptions.push(item.Name);
+                        htmlOptions.push('">');
+                        htmlOptions.push(item.Name);
+                        htmlOptions.push('</option>');
+                    }
+                });
+            $("#" + selectControlId).html(htmlOptions.join(""));
         },
         error: Error
     });

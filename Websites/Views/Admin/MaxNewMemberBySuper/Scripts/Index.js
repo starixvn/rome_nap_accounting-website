@@ -195,6 +195,36 @@ function RenderSuccessMsg(successMsg) {
     $('#errMsg').append('<div class="alertboxscc"><div>' + successMsg + '</div></div>');
 }
 
+function RenderSite(){
+    var htmlOptions = [];
+    jsonSites.forEach(function (item, index) {
+        if(item.IsParent){
+            htmlOptions.push('<optgroup label="' + item.Name + '">');
+            item.ChildSites.forEach(function(child, i){
+                htmlOptions.push('<option value="');
+                htmlOptions.push(child.Name + '"');
+                if(site789.indexOf(child.Name)){
+                    htmlOptions.push('selected="selected"');
+                }
+                htmlOptions.push('>');
+                htmlOptions.push(child.Name);
+                htmlOptions.push('</option>');
+            });
+            htmlOptions.push('</optgroup>');
+        }else{
+            htmlOptions.push('<option value="');
+            htmlOptions.push(item.Name + '"');
+            if(site789.indexOf(child.Name)){    
+                htmlOptions.push('selected="selected"');
+            }
+            htmlOptions.push('>');
+            htmlOptions.push(item.Name);
+            htmlOptions.push('</option>');
+        }
+    });
+    $("#Site").html(htmlOptions.join(""));
+}
+
 $(document).ready(function () {
     $('#txtMaxMemberLimit').keydown(function (e) {
         var key = e.charCode || e.keyCode || 0;
@@ -226,4 +256,5 @@ $(document).ready(function () {
             jQuery(this).val("");
         }
     })
+    RenderSite();
 })

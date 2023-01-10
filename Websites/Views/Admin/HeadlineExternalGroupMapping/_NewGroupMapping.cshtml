@@ -1,4 +1,5 @@
-﻿@model Fanex.Tarus.Admin.Entities.HeadlineExternalGroupMapping.FilterModel
+﻿@using Fanex.Tarus.Admin.ViewModel;
+@model Fanex.Tarus.Admin.Entities.HeadlineExternalGroupMapping.FilterModel
 
 <form id="add-new-group_mapping" style="display: none;">
     <div id="addNewErrMsg">
@@ -13,7 +14,25 @@
         <tr>
             <td class="w80"><label for="SiteId">Site</label></td>
             <td>
-                @Html.DropDownList("SiteId", Model.Sites, "Please select", new { id = "SiteId", @class = "setting-edit" })
+                <select name="ddlPopupSites" id="ddlPopupSites" class="select-group">
+                    <option>Select</option>
+                    @foreach (SiteViewModel site in (List<SiteViewModel>)Model.Sites)
+                    {
+                        if (site.IsParent)
+                        {
+                            <optgroup label="@site.Name">
+                                @foreach (SiteViewModel child in site.ChildSites)
+                                {
+                                    <option value="@child.Id">@child.Name</option>
+                                }
+                            </optgroup>
+                        }
+                        else
+                        {
+                            <option value="@site.Id">@site.Name</option>
+                        }
+                    }
+                </select>
             </td>
         </tr>
         <tr>
@@ -25,7 +44,7 @@
         <tr>
             <td class="w80"><label for="NewExternalGroupIds">External Group</label></td>
             <td colspan="3">
-                <select id="NewExternalGroupIds" multiple="multiple" class="setting-edit" style="width: 360px;""></select>
+                <select id="NewExternalGroupIds" multiple="multiple" class="setting-edit" style="width: 360px;" "></select>
             </td>
         </tr>
         <tr>

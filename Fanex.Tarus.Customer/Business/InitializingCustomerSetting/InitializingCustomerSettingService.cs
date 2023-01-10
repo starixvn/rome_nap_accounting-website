@@ -5,6 +5,8 @@
     using System.Text.RegularExpressions;
     using System.Web;
     using System.Web.Mvc;
+    using Fanex.Tarus.Admin.Business.SMAManagement;
+    using Fanex.Tarus.Admin.DataAccess.SMAManagement;
     using Fanex.Tarus.Customer.Criteria.InitializingCustomerSetting;
     using Fanex.Tarus.Customer.DataAccess.InitializingCustomerSetting;
     using Fanex.Tarus.Customer.Entities;
@@ -22,7 +24,7 @@
 
         ConfigSettingViewModel GetProductSportBettype();
 
-        ConfigSettingViewModel GetConfigDetail(int configId, bool isView = false);
+        ConfigCustomerSettingViewModel GetConfigDetail(int configId, bool isView = false);
 
         ConfigSettingViewModel GenerateConfigSetting(GenerateConfigSettingRequest request);
 
@@ -37,6 +39,7 @@
     public class InitializingCustomerSettingService : IInitializingCustomerSettingService
     {
         private readonly IInitializingCustomerSettingDataAccess dataAccess;
+        private readonly ISMAManagementService smaManagementService;
 
         private const string FormatDisplay = "[{0}] {1}";
         private const string ErrorMessage = "Row {0}: {1}";
@@ -45,6 +48,7 @@
         public InitializingCustomerSettingService()
         {
             dataAccess = new InitializingCustomerSettingDataAccess();
+            smaManagementService = new SMAManagementService();
         }
 
         public Result AbortConfigSetting(int configId, int userId, string ip)
@@ -72,13 +76,13 @@
             return dataAccess.ExecuteNonQuery(criteria);
         }
 
-        public ConfigSettingViewModel GetConfigDetail(int configId, bool isView = false)
+        public ConfigCustomerSettingViewModel GetConfigDetail(int configId, bool isView = false)
         {
             var criteria = new GetConfigDetailCriteria(configId);
             var config = dataAccess.GetConfigDetail(criteria);
             if (config.Config == null)
             {
-                return new ConfigSettingViewModel { Error = new Result(-1, "This row does not exist, please refresh again.") };
+                return new ConfigCustomerSettingViewModel { Error = new Result(-1, "This row does not exist, please refresh again.") };
             }
 
             var productDcs = dataAccess.GetProductDcsModel(new DcsProductMatrixCriteria());
@@ -99,7 +103,6 @@
                 }
             }
             var sportbettypesetting = GetSportAndBettypeWithSetting(productDcs);
-            var sites = dataAccess.GetSites().ToList();
             var exchangeCurrencies = dataAccess.GetExchangeCurrency().ToList();
             var groupSettings = config.Settings.OrderBy(st => st.SettingOrder).ThenBy(st => st.SettingType).GroupBy(setting => setting.SettingType);
 
@@ -122,14 +125,13 @@
                     pos++;
                 }
             }
-            sites.RemoveAt(0);
             exchangeCurrencies.RemoveAt(0);
-            var result = new ConfigSettingViewModel
+            var result = new ConfigCustomerSettingViewModel
             {
                 ConfigDetail = config,
                 SportBettypeBySettings = sportbettypesetting,
                 GroupSettings = groupSettings,
-                Sites = sites,
+                SiteList = smaManagementService.GetSites(),
                 Currencies = exchangeCurrencies
             };
 
@@ -197,18 +199,14 @@
                 Settings = settingInfos
             };
 
-            var sites = dataAccess.GetSites().ToList();
-
             var exchangeCurrencies = dataAccess.GetExchangeCurrency().ToList();
-
-            sites.RemoveAt(0);
             exchangeCurrencies.RemoveAt(0);
 
-            return new ConfigSettingViewModel
+            return new ConfigCustomerSettingViewModel
             {
                 ConfigDetail = configDetail,
                 Currencies = exchangeCurrencies,
-                Sites = sites,
+                SiteList = smaManagementService.GetSites(),
                 SportBettypeBySettings = sportbettypesetting,
                 GroupSettings = groupSettings
             };
