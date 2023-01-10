@@ -2,14 +2,11 @@
 using DNAide.Core;
 using DNAide.Data;
 using DNAide.Utils;
-using Fanex.CustomerSetting.Module.Keno.KenoSetting.Configurations;
-using Sunplus.Accounting.Business.Customer;
 using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
-using Sunplus.Accounting.Entities.Criteria.ViewPT;
 using Sunplus.Accounting.Entities.Customer.PT.ViewPT;
 using System;
 using System.Collections.Generic;
@@ -91,10 +88,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
 
                         if (sportId == Constants.Sport.OtherSports &&
                             bettypeId == Constants.BetType.MixParlay)
-                            continue;
-
-                        if (sportId == Constants.Sport.NumberGame && !CheckNGBettypeStatusBySport(bettypeId))
-                            continue;
+                            continue;                      
 
                         var bettype = new Bettype()
                         {
@@ -117,20 +111,6 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
             var result = new ViewPtDTO();
             try
             {
-                switch (sportId)
-                {
-                    case Constants.Sport.Keno:
-                        var viewPTCriteria = new ViewKenoPTCriteria
-                        {
-                            Username = userName,
-                            SportId = sportId,
-                            BetType = bettypeId,
-                            IsLive = isLive,
-                            HasCommission = false
-                        };
-
-                        return (new KenoPT()).ViewPositionTaking(viewPTCriteria);   
-                }
 
                 var data = SelectCustomer.GetPT(userName, sportId == 999 ? Constants.Sport.OtherSports : sportId,
                                                 sportId == 999 ? Constants.BetType.MixParlay : bettypeId, isLive, false);
@@ -513,19 +493,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                                              ResourceExtension.Resources.Language, "lblMixedSports"),
                 Bettype = new BettypeDTO()
             };
-            sports.SportsList.Add(parlayMixsport);
-
-            if (KenoSection.Instance.ShowSetting)
-            {
-                var kenoPT = new KenoPT();
-                var sport = new Sport()
-                {
-                    SportId = Constants.Sport.Keno,
-                    SportName = "RNG Keno",
-                    Bettype = kenoPT.GetBettypeByKeno()
-                };
-                sports.SportsList.Add(sport);
-            }
+            sports.SportsList.Add(parlayMixsport);          
 
             if (WebSettings.EnableAGCasino)
             {
@@ -563,9 +531,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                     var betType = CastAide.AsInt32(dr["bettype"]);
                     var sportType = CastAide.AsInt32(dr["sporttype"].ToString());
                     if (sportType == Constants.Sport.OtherSports && betType == Constants.BetType.MixParlay && sportId == Constants.Sport.OtherSports)
-                        continue;
-                    if (sportId == Constants.Sport.NumberGame && !CheckBettypeSatusForNumberGame(betType, CastAide.AsBoolean(dr["islive"])))
-                        continue;
+                        continue;                   
 
                     ptCurrent.LiveGame = (CastAide.AsBoolean(dr["islive"])) ? "LIVE" : string.Empty;
                     ptCurrent.SportName = ((sportType == Constants.Sport.OtherSports &&
@@ -723,58 +689,8 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
             };
 
             return customerRelation;
-        }
-
-        private static bool CheckBettypeSatusForNumberGame(int bettype, bool isLive)
-        {
-            var status = false;
-            var bettypes = NumberGameSection.Instance[NumberGameSection.NumberGameCollectionType.Bettype];
-            var ball = new NumberGameElement();
-
-            if (isLive)
-                ball = bettypes[NumberGameSection.BallCollectionType.Liveball.ToString()];
-            else
-                ball = bettypes[NumberGameSection.BallCollectionType.Deadball.ToString()];
-
-            if (ball != null)
-            {
-                var query = (from q in ball.Settings.Cast<NumberGameElement>().Where(q => q.Id == bettype && q.IsSetting) select q);
-                if (query != null)
-                    status = query.First().Active;
-            }
-
-            return status;
-        }
-
-        private static bool CheckNGBettypeStatusBySport(int bettype)
-        {
-            var status = false;
-            try
-            {
-                var bettypes = NumberGameSection.Instance[NumberGameSection.NumberGameCollectionType.Bettype];
-                var deadball = bettypes[NumberGameSection.BallCollectionType.Deadball.ToString()];
-                var liveball = bettypes[NumberGameSection.BallCollectionType.Liveball.ToString()];
-
-                var deadQuery = (from q in deadball.Settings.Cast<NumberGameElement>().Where(q => q.Id == bettype && q.IsSetting) select q);
-                var liveQuery = (from q in liveball.Settings.Cast<NumberGameElement>().Where(q => q.Id == bettype && q.IsSetting) select q);
-
-                if (deadQuery != null && liveQuery != null
-                    && deadQuery.Count<NumberGameElement>() > 0 && liveQuery.Count<NumberGameElement>() > 0)
-                {
-                    if (deadQuery.First().Active || liveQuery.First().Active)
-                        status = true;
-                }
-                else
-                {
-                    if (deadQuery != null && deadQuery.Count<NumberGameElement>() > 0)
-                        status = deadQuery.First().Active;
-                    else if (liveQuery != null && liveQuery.Count<NumberGameElement>() > 0)
-                        status = liveQuery.First().Active;
-                }
-            }
-            catch { }
-            return status;
-        }
+        }  
+     
 
         public IList<DCSProduct> GetProducts()
         {

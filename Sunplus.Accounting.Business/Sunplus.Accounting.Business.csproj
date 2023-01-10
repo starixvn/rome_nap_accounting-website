@@ -111,9 +111,6 @@
     <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.5.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.2.0.5.1\lib\net461\Fanex.CustomerSetting.Module.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Keno.KenoSetting, Version=2.0.3.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.Keno.Setting.2.0.3.1\lib\net461\Fanex.CustomerSetting.Module.Keno.KenoSetting.dll</HintPath>
-    </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.ProgressiveBonus, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.CustomerSetting.Module.ProgressiveBonus.1.0.0.1\lib\net40\Fanex.CustomerSetting.Module.ProgressiveBonus.dll</HintPath>
       <Private>True</Private>
@@ -462,7 +459,6 @@
     <Compile Include="LogDisplay\NewCurrencyForLicenseeLogFormatter.cs" />
     <Compile Include="LogDisplay\NewLicenseeLogFormatter.cs" />
     <Compile Include="Logs.cs" />
-    <Compile Include="PT\ViewPT\KenoPT.cs" />
     <Compile Include="LogDisplay\ISettingManager.cs" />
     <Compile Include="LogDisplay\LogFormater.cs" />
     <Compile Include="LogDisplay\SettingManager.cs" />
@@ -496,7 +492,6 @@
     <Compile Include="MenuManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PT\SportBooks\MixedSportsManager.cs" />
-    <Compile Include="PT\SportBooks\NumberGameManager.cs" />
     <Compile Include="PT\SportBooks\SportBooksBase.cs" />
     <Compile Include="Report\ReportBase.cs" />
     <Compile Include="Report\ReportUtils.cs" />

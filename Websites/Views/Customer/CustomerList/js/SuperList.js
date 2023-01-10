@@ -312,12 +312,7 @@
         showPopup(" Edit Betting Limit"
                 , "customersetting/betsetting/sportsbook/index/" + custId + "/" + uplineId + "/" + accId + "/" + groupName
                 , 0, 0, 900, 680, false, 2000, null);
-    },
-    kenoSetting: function (custId) {
-        showPopup(""
-                , "customersetting/KenoSetting/kenosetting/EditSuper?custId=" + custId + "&userId=" + _userId, 0, 0, 900, 700, false, 2000, null);
-    },
-    
+    },    
     asianGamingCasino: function (custId) {
         showPopup("Update AG Casino Setting",
         "AGCasino/EditAGCasinoGameSetting?customerId=" + _userId + "&uplineId=0&roleId=4&exchangeId=0" + _userId,

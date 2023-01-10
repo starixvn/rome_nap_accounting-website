@@ -4,7 +4,6 @@
 @using System.Collections
 @using Sunplus.Accounting.Core.Common
 @using Sunplus.Accounting.Business.Security
-@using Fanex.CustomerSetting.Module.Keno.KenoSetting.Configurations
 @{
 
     var IsVisibleVirtualRate = Functions.Customer.IsVisibleVirtualRate;
@@ -46,7 +45,6 @@
 
     hash.Add("IsVisibleVirtualRate", IsVisibleVirtualRate);
     hash.Add("EnableVirtualSports", EnableVirtualSports);
-    hash.Add("allowKeno", KenoSection.Instance.ShowSetting);
     hash.Add("isParentMyanmarOdds", isParentMyanmarOdds);
     string[] renderResult = Render(Model, hash);
 }
@@ -112,13 +110,7 @@ string siteName = memberItem.IsMyanmarOdds ? "76666B" : string.Empty;
                         <li class="canchange" onclick="EditDCSByProduct('@memberItem.ChildID', 5, 'Virtual Sports');">
                             Virtual Sports
                         </li>
-                    }
-                    @if (CastAide.AsBoolean(hash["allowKeno"]))
-                    {
-                        <li class="canchange" onclick="MemberList.kenoSetting('@memberItem.ChildID');">
-                            RNG Keno
-                        </li>
-                    }
+                    }                  
                     @if (!memberItem.IsHideSportsbook2)
                     {
                         <li class="canchange" onclick="EditDCSByProduct('@memberItem.ChildID', 16, 'Sportsbook 2');">

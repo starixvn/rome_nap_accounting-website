@@ -22,8 +22,7 @@
             CustomerInfoViewModel customerInfoViewModel)
         {
             var renderLeftPanelParameter = new RenderLeftPanelParameter
-            {
-                IsShowKeno = customerInfoViewModel.ShowEnableCheckBoxKeno,
+            {              
                 IsShowMacau = customerInfoViewModel.ShowMacauDeposit,
                 IsShowEnableBetTrade = customerInfoViewModel.ShowEnableBetTradeDeposit,
                 IsShowAutoSuspend = customerInfoViewModel.HasReadPermission_AutoSuspend,
@@ -59,7 +58,6 @@
 
             htmlcontent = RenderDangerousControl(htmlcontent, customerInfoViewModel);
             htmlcontent = RenderAGCasinoControl(htmlcontent, customerInfoViewModel);
-            htmlcontent = RenderKenoControl(htmlcontent, customerInfoViewModel);
 
             htmlcontent = AssignTemplateValue(htmlcontent);
             htmlcontent = AssignCustomerInfo(htmlcontent, customerInfoViewModel);
@@ -330,26 +328,6 @@
                     customerInfoViewModel.SearchAccountRoleId,
                     18,
                     "Update RNG Slot Status"));
-            }
-
-            return htmlcontent;
-        }
-
-        private string RenderKenoControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
-        {
-            if (!customerInfoViewModel.ShowEnableCheckBoxKeno || customerInfoViewModel.IsDeposit)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "EnableKeno");
-            }
-            else
-            {
-                TemplateHandler.Assign(ref htmlcontent, "{KenoOnClickFunction}", _renderLeftPanelService.GetProductStatusJsFunction(
-                    customerInfoViewModel.IsDeposit,
-                    customerInfoViewModel.CustId,
-                    customerInfoViewModel.UserName,
-                    customerInfoViewModel.SearchAccountRoleId,
-                    8,
-                    "Update RNG Keno Status"));
             }
 
             return htmlcontent;

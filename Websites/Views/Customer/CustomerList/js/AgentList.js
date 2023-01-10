@@ -281,11 +281,7 @@
                 , "VirtualSportAgentPT/EditAgent?custId=" + custId + "&uplineId=" + uplineId + "&roleId=" + roleId
                 , 0, 0, 860, 480, false, 2000, null);
     },
-    kenoSetting: function (custId) {
-        var url = "customersetting/KenoSetting/kenosetting/EditAgent?custId=" + custId + "&userId=" + _userId;
-        showPopup(""
-                , url, 0, 0, 900, 700, false, 2000, null);
-    },
+    
     casino: function (custId, uplineId) {
         showPopup(""
                 , "CustomerSetting/Casino/Agent/EditAgent?id=" + custId + "&uplineid= " + uplineId, 0, 0, 1024, 700, false, 2000, null);

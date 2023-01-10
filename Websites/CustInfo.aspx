@@ -255,13 +255,7 @@
             var height = 260;
             parent.OpenPopup(url, title, width, height, true, true, window, 2000, null, null);
         }
-        function showhideKeno(id, uplineid, roleid, subAccountId, userid) {
-            var title = 'Update Enable Keno';
-            var url = 'CustomerSetting/enablestatus/productstatus/index?custid=' + id + '&uplineId=' + uplineid + '&level=' + roleid + '&subAccId=' + subAccountId + '&userid=' + userid + '&productid=keno';
-            var width = 480;
-            var height = 450;
-            parent.OpenPopup(url, title, width, height, true, false, window, 2000, null, null);
-        }
+      
         function updateAGCasinoStatus(id, roleIds) {
             var title = 'Update AG Casino Status';
             var url = 'AGCasino/AGCasinoStatus?custId=' + id + '&roleId=' + roleIds;

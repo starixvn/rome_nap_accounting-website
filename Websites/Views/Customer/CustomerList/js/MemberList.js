@@ -282,11 +282,7 @@
         showPopup("Virtual Sport"
                 , "VirtualSportMemberPT/EditMember?custId=" + custId + "&uplineId=" + uplineId + "&roleId=" + roleId
                 , 0, 0, 860, 480, false, 2000, null);
-    },
-    kenoSetting: function (custId) {
-        showPopup(""
-                , "customersetting/KenoSetting/kenosetting/AgentEditMember?custId=" + custId + "&userId=" + _userId, 0, 0, 900, 700, false, 2000, null);
-    },
+    },   
     casino: function (custId, uplineId) {
         showPopup(""
                 , "CustomerSetting/Casino/Member/EditMember?id=" + custId + "&uplineid= " + uplineId, 0, 0, 1024, 700, false, 2000, null);

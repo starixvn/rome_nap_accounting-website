@@ -306,12 +306,6 @@
     <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.5.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.2.0.5.1\lib\net461\Fanex.CustomerSetting.Module.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Keno.KenoResources, Version=1.0.2.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.Keno.KenoResources.1.0.2.4\lib\net461\Fanex.CustomerSetting.Module.Keno.KenoResources.dll</HintPath>
-    </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Keno.KenoSetting, Version=2.0.3.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.Keno.Setting.2.0.3.1\lib\net461\Fanex.CustomerSetting.Module.Keno.KenoSetting.dll</HintPath>
-    </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.ProgressiveBonus, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.CustomerSetting.Module.ProgressiveBonus.1.0.0.1\lib\net40\Fanex.CustomerSetting.Module.ProgressiveBonus.dll</HintPath>
       <Private>True</Private>

@@ -4,8 +4,6 @@ using System.Threading;
 using DNAide.Core;
 using DNAide.Data;
 using DNAide.Web;
-using Fanex.CustomerSetting.Module.Keno.KenoSetting.Configurations;
-using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
@@ -72,35 +70,30 @@ public partial class Others_Menu : System.Web.UI.Page
         hideBitcoin = !CastAide.AsBoolean(db.Outputs["allowedbitcoin"]) || !WebSettings.IsShowBitcoinBetting;
         hideSabaCasino = !CastAide.AsBoolean(db.Outputs["allowedsabacasino"]) || !WebSettings.IsShowSabaCasino;
 
-        string kenoPath = string.Empty;
+     
         string creditDCSLink = string.Empty;
 
 
         if (roleid == 1)
-        {
-            kenoPath = Page.ResolveUrl("~/customersetting/KenoSetting/kenosetting/AgentEditMember?custId=" + custID + "&userId=" + accId);
+        {          
             creditDCSLink = Page.ResolveUrl("~/DCS/ViewCustomerSetting?productId={0}&customerLevel=1&uplinelevel=2&customerId=" + custID);
         }
         else if (roleid == 2)
-        {
-            kenoPath = Page.ResolveUrl("~/customersetting/KenoSetting/kenosetting/EditAgent?custId=" + custID + "&userId=" + accId);
+        {       
             creditDCSLink = Page.ResolveUrl("~/DCS/ViewCustomerSetting?productId={0}&customerLevel=2&customerId=" + custID);
         }
         else if (roleid == 3)
-        {
-            kenoPath = Page.ResolveUrl("~/customersetting/KenoSetting/kenosetting/EditMaster?custId=" + custID + "&userId=" + accId);
+        {        
             creditDCSLink = Page.ResolveUrl("~/DCS/ViewCustomerSetting?productId={0}&customerLevel=3&customerId=" + custID);
         }
         else
         {
-            var exChangeId = CastAide.AsInt32(queryStringParams[4].Split('=')[1]);
-            kenoPath = Page.ResolveUrl("~/customersetting/KenoSetting/kenosetting/EditSuper?custId=" + custID + "&userId=" + accId);
+            var exChangeId = CastAide.AsInt32(queryStringParams[4].Split('=')[1]);        
             creditDCSLink = Page.ResolveUrl("~/DCS/ViewCustomerSetting?productId={0}&customerLevel=4&customerId=" + custID);
         }
 
         TemplateHandler.Assign(ref this.tplMenu, "{NG2}", CacheRef.GetProductName(23));
-        this.RenderSettingTab("VirtualSports", "{urlVirtualSports}", string.Format(creditDCSLink, (int)products.virtualsport), hideVirtualSports);
-        this.RenderSettingTab("Keno", "{urlKeno}", kenoPath, !KenoSection.Instance.ShowSetting);
+        this.RenderSettingTab("VirtualSports", "{urlVirtualSports}", string.Format(creditDCSLink, (int)products.virtualsport), hideVirtualSports);      
         this.RenderSettingTab("sportsbook2", "{sportsbook2LinkSetting}", string.Format(creditDCSLink, (int)products.sportsbook2), !WebSettings.IsShowSportsbook2);
         this.RenderSettingTab("livecasino", "{liveCasinoLinkSetting}", string.Format(creditDCSLink, (int)products.livecasino), hideLiveCasino);
         this.RenderSettingTab("voidbridge", "{voidbridgeLinkSetting}", string.Format(creditDCSLink, (int)products.voidbridge), hideVoidbridge);
