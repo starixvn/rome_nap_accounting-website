@@ -26,26 +26,16 @@ namespace Sunplus.Accounting.Business.Customer
         CustomerExRate SelectCustomerExRate(string username);
 
         Result CustomerCrossTransferInsert(
-            int fromCustID, 
-            int toCustID, 
-            double fromAmount, 
-            double toAmount, 
-            double fromExRate, 
-            double toExRate, 
-            string forexUsername, 
-            string remark, 
+            int fromCustID,
+            int toCustID,
+            double fromAmount,
+            double toAmount,
+            double fromExRate,
+            double toExRate,
+            string forexUsername,
+            string remark,
             int custid);
 
         List<ForexAccount> SelectAllForexAccount();
-
-        BetSettingNG CheckEnableNGDownline(string username);
-
-        Result UpdateBetSettingNGDownline(
-            string username, 
-            int isEnable, 
-            string minbet, 
-            string maxbet, 
-            string maxMatch, 
-            string MaxBall);
     }
 }

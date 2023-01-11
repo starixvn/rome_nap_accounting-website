@@ -90,17 +90,6 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Customer
             var customerManager = CommonBootStrapper.Locator.GetInstance<ICustomerManager>();
             return customerManager.SelectAllForexAccount();
         }
-
-        public Result UpdBetSettingEnableNGCustomer(string username, int isEnable, string maxbet, string minbet, string maxperball, string maxpermatch)
-        {
-            var enableNG = CommonBootStrapper.Locator.GetInstance<ICustomerManager>();
-            return enableNG.UpdateBetSettingNGDownline(username, isEnable, maxbet, minbet, maxpermatch, maxperball);
-        }
-
-        public BetSettingNG SelBetSettingUpline(string username)
-        {
-            var enableNG = CommonBootStrapper.Locator.GetInstance<ICustomerManager>();
-            return enableNG.CheckEnableNGDownline(username);
-        }
+     
     }
 }

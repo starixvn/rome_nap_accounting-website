@@ -27,7 +27,6 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
         private static string _comGroupD = "gd{0}";
         private static string _comOther = "othercomm{0}";
         private static string _com1x2 = "comm_5_{0}";
-        private static string _comGameComm = "v161_comm_81_{0}";
         private static string _currency = "currency";
 
         public SportDTO GetPtSportType(string userName)
@@ -269,12 +268,6 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                                     Status = CastAide.AsBoolean(rComm["IsMyanmarOdds"]),
                                     Name = myanmarOdds.Name,
                                     Comm = NumberFormat.DecFormat(rComm["MyanmarOddsComm_4"], 4)
-                                },
-                                GameComm = new AllowViewSport()
-                                {
-                                    Status = gameComm.Status,
-                                    Name = gameComm.Name,
-                                    Comm = NumberFormat.DecFormat(rComm[string.Format(_comGameComm, 4)], 4)
                                 }
                             };
                             result.Comm.Add(superCom);
@@ -337,12 +330,6 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                                     Status = CastAide.AsBoolean(rComm["IsMyanmarOdds"]),
                                     Name = myanmarOdds.Name,
                                     Comm = NumberFormat.DecFormat(rComm["MyanmarOddsComm_3"], 4)
-                                },
-                                GameComm = new AllowViewSport()
-                                {
-                                    Status = gameComm.Status,
-                                    Name = gameComm.Name,
-                                    Comm = NumberFormat.DecFormat(rComm[string.Format(_comGameComm, 3)], 4)
                                 }
                             };
                             result.Comm.Add(masterCom);
@@ -396,12 +383,6 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                                     Status = CastAide.AsBoolean(rComm["IsMyanmarOdds"]),
                                     Name = myanmarOdds.Name,
                                     Comm = NumberFormat.DecFormat(rComm["MyanmarOddsComm_2"], 4)
-                                },
-                                GameComm = new AllowViewSport()
-                                {
-                                    Status = gameComm.Status,
-                                    Name = gameComm.Name,
-                                    Comm = NumberFormat.DecFormat(rComm[string.Format(_comGameComm, 2)], 4)
                                 }
                             };
                             result.Comm.Add(agentCom);
@@ -457,12 +438,6 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                                     Status = CastAide.AsBoolean(rComm["IsMyanmarOdds"]),
                                     Name = myanmarOdds.Name,
                                     Comm = NumberFormat.DecFormat(rComm["MyanmarOddsComm_1"], 4)
-                                },
-                                GameComm = new AllowViewSport()
-                                {
-                                    Status = gameComm.Status,
-                                    Name = gameComm.Name,
-                                    Comm = NumberFormat.DecFormat(rComm["v161_comm_81"], 4)
                                 }
                             };
                             result.Comm.Add(memberCom);
