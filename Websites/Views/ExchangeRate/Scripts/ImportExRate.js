@@ -65,21 +65,17 @@ const ImportExRate = {
         parent.BlockUI();
         form = $('#mainForm');
         var formData = new FormData(form[0]);
-        $.ajaxFileUpload({
-            type: 'POST',
+        $.ajax({
             url: 'OpenUSDTRateExcel',
-            secureuri: false,
-            fileElementId: 'USDTExcelFile',
-            dataType: 'jsonResult',
+            type: 'POST',
+            datatype: 'json',
             contentType: false,
             processData: false,
             enctype: 'multipart/form-data',
             data: formData,
             success: function (data) {
                 const {FileData, Result, CompareBillingCycleResult} = data;
-
                 ImportExRate.SetupCalendar(CompareBillingCycleResult);
-
                 if (FileData) {
                     ImportExRate.ShowElementById(mainContent);
                     ImportExRate.RenderMapping(FileData);

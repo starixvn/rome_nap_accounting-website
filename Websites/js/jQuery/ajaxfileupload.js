@@ -206,9 +206,7 @@ jQuery.extend({
             data = data.replace("</pre>", "");
             eval("data = " + data);
         }
-        if (type == "jsonResult") {
-            data =  JSON.parse(r.responseText.replace("<pre>", "").replace("</pre>", ""));
-        }
+       
         return data;
     },
 
