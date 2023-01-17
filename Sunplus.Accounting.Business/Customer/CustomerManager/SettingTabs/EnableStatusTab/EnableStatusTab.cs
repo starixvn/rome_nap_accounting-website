@@ -98,6 +98,7 @@
 
             htmlcontent = RenderAutoMasterControl(htmlcontent, customerInfoViewModel);
             htmlcontent = RenderDoubleCommControl(htmlcontent, customerInfoViewModel);
+            htmlcontent = RenderNumberGameControl(htmlcontent, customerInfoViewModel);
             htmlcontent = RenderOutrightControl(htmlcontent, customerInfoViewModel);
             htmlcontent = RenderSuperLiveControl(
                 htmlcontent,
@@ -728,6 +729,34 @@
                 );
 
             TemplateHandler.Assign(ref htmlcontent, "{suspendedControl}", suspendedControlSettingGroup.GetHTMLSettingControl());
+
+            return htmlcontent;
+        }
+        private string RenderNumberGameControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
+        {
+            if (customerInfoViewModel.IsDeposit)
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "chkNumberGame");
+                TemplateHandler.Assign(ref htmlcontent, "{numberGameControl}", string.Empty);
+            }
+            else
+            {
+                var numberGameSettingGroup = new SettingGroup();
+
+                numberGameSettingGroup.Add(
+                    GetSettingControlNumberGame(
+                        customerInfoViewModel.SearchAccountRoleId,
+                        customerInfoViewModel.CustParent.IsDisabledNumberGame,
+                        customerInfoViewModel.ManageCustomerAccess,
+                        "disabledNumberGame",
+                        !customerInfoViewModel.DisabledNumberGame,
+                        !customerInfoViewModel.DisabledDownlinesNumberGame,
+                        customerInfoViewModel.Enabled,
+                        customerInfoViewModel.IsDeposit));
+
+                TemplateHandler.Assign(ref htmlcontent, "{chkNumberGame}", customerInfoViewModel.DisabledNumberGame ? 1 : 0);
+                TemplateHandler.Assign(ref htmlcontent, "{numberGameControl}", numberGameSettingGroup.GetHTMLSettingControl());
+            }
 
             return htmlcontent;
         }

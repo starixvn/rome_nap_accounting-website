@@ -441,6 +441,7 @@
                     <!--/CN88VisibleItem-->
                     <!--CN88HiddenItem-->
                     {outrightControl}
+                    {numberGameControl}
                     <!--AGCasinoStatus-->
                     <div class="col">
                         <span class="canchange" onclick="updateAGCasinoStatus({CustId}, {RoleId})">
@@ -448,7 +449,7 @@
                             <span class="icon-list"></span>
                         </span>
                     </div>
-                    <!--/AGCasinoStatus-->                  
+                    <!--/AGCasinoStatus-->
                     <!--BetTrade-->
                     <div class="col">
                         <span class="canchange" onclick="leftPanelManager.updateStatus({CustId},'{FullUserName}', {RoleId}, {HasDownline}, {AccId}, true, {uplineStatusBetTrade}, true, 'Update Bet Trade Status' ,'BetTrade', {betTradeId})">
@@ -736,6 +737,7 @@
     <input type="hidden" id="accId" name="accId" value="{AccId}" />
     <input type="hidden" id="roleId" name="roleId" value="{RoleId}" />
     <!--checkbox-oldvalue-->  
+    <input type="hidden" id="chkOldValueNumberGame" name="chkOldValueNumberGame" value="{chkNumberGame}" />
     <input type="hidden" id="chkOldValueEsport" name="chkOldValueEsport" value="{chkEsports}" />
     <input type="hidden" id="chkOldValueEnableDirectStatus" name="chkOldValueEnableDirectStatus" value="{chkEnableDirectStatus}" />
     <input type="hidden" id="chkOldValueSuperLive" name="chkOldValueSuperLive" value="{chkSuperLive}" />
