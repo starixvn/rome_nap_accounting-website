@@ -106,7 +106,8 @@
                 sportType == SportContants.PGSoft ||
                 sportType == SportContants.RNGWar ||
                 sportType == SportContants.SealEntertainment ||
-                sportType == SportContants.MGRNG)
+                sportType == SportContants.MGRNG ||
+                sportType == SportContants.Jili)
             {
                 return GetRNGCasinoOrFishingWorldTickets(refNo, custId, transType, winlostDate);
             }

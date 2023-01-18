@@ -276,6 +276,11 @@
             return 8400 <= betTypeId && betTypeId <= 8699;
         }
 
+        public static bool IsJili(int betTypeId)
+        {
+            return 5100 <= betTypeId && betTypeId <= 5299;
+        }
+
         public static int GetSportFromBetTypeId(int betTypeId)
         {
             if (5601 <= betTypeId && betTypeId <= 5699)
