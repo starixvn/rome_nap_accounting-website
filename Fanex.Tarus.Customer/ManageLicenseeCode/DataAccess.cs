@@ -93,7 +93,7 @@
                     }
 
                     var output = db.GetOuputParams();
-                    response.Totals = int.Parse(output["totalrows"].ToString());
+                    response.Totals = Converter.ToInt(output["totalrows"]?.ToString());
 
                     return response;
                 }
