@@ -229,12 +229,11 @@ const ImportExRate = {
         return date.toLocaleDateString('en-US', {month: 'short', year: 'numeric'});
     },
    
-    InitCalendar(id, defaultSelectedMonth, minSelectedMonth, maxSelectedMonth) {
+    InitCalendar(id, minSelectedMonth, maxSelectedMonth) {
         $("#" + id).MonthPicker({
             MonthFormat: 'M yy',
             AltFormat: 'mm/01/yy',
             AltField: '#value' + id,
-            SelectedMonth: defaultSelectedMonth,
             MinMonth: minSelectedMonth,
             MaxMonth: maxSelectedMonth,
             Button: '<img class="img-date-selector" alt="" id="' + id + '_Trigger" title="Month selector" width="18" height="17" src="../App_Themes/Images/calendar.gif" /> '
@@ -247,7 +246,7 @@ const ImportExRate = {
             minMonth = "-1m";
         }
         const currentMonth = ImportExRate.GetDisplayMonthOnly(new Date(checkTime.getFullYear(), checkTime.getMonth(), 1));
-        ImportExRate.InitCalendar(calendarInput, currentMonth, minMonth, currentMonth);
+        ImportExRate.InitCalendar(calendarInput, minMonth, currentMonth);
     },
     
     GetEffectFromDate(dateString) {
