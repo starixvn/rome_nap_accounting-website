@@ -135,10 +135,12 @@ const ImportExRate = {
         var bodyRows = [];
         for (var i = 0; i < data.length; i++) {
             var row = {Columns: []};
-            const {CurrencyCode, USDTValue, RemarkErrors} = data[i];
+            const {Currency, USDTValue, RemarkErrors,MultipliedBy,USDTAfterMultiply} = data[i];
             const remarkErrorFormatted = `<span class="text-red">${RemarkErrors.join(", ")}</span>`
-            row.Columns.push({Name: 'currency', Value: CurrencyCode});
-            row.Columns.push({Name: 'usdtunit', Value: USDTValue});
+            row.Columns.push({Name: 'currency', Value: Currency});
+            row.Columns.push({Name: 'usdtUnit', Value: USDTValue});
+            row.Columns.push({Name: 'multipliedBy', Value: MultipliedBy});
+            row.Columns.push({Name: 'usdtAfterMultiply', Value: USDTAfterMultiply});
             row.Columns.push({Name: 'remarks', Value: remarkErrorFormatted});
 
             bodyRows.push(row);
@@ -155,13 +157,27 @@ const ImportExRate = {
                 },
                 {
                     HeaderText: "USDT/Unit",
-                    Width: 300,
-                    Name: "usdtunit",
+                    Width: 230,
+                    Name: "usdtUnit",
+                    HeaderAlign: "center",
+                    CellAlign: "right"
+                }, 
+                {
+                    HeaderText: "Multiplied By",
+                    Width: 150,
+                    Name: "multipliedBy",
                     HeaderAlign: "center",
                     CellAlign: "right"
                 },
                 {
-                    HeaderText: "Remarks",
+                    HeaderText: "USDT/Unit\n(after Multiplied By)",
+                    Width: 230,
+                    Name: "usdtAfterMultiply",
+                    HeaderAlign: "center",
+                    CellAlign: "right"
+                },
+                {
+                    HeaderText: "Remark",
                     Width: 360,
                     Name: "remarks",
                     HeaderAlign: "center",
@@ -224,7 +240,7 @@ const ImportExRate = {
             Button: '<img class="img-date-selector" alt="" id="' + id + '_Trigger" title="Month selector" width="18" height="17" src="../App_Themes/Images/calendar.gif" /> '
         })
     },
-
+    
     SetupCalendar(compareBillingCycleResult = undefined) {
         let minMonth = "-0m";
         if (compareBillingCycleResult <= 0) {
