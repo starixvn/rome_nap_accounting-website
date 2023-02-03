@@ -885,6 +885,18 @@ function showSealEntertainmentBetDetails(transId, winlossDate, custId, transType
 
     openResultsPopUp(param);
 }
+
+function showJGBetDetails(transId, winlossDate, custId, transType) {
+    var param = {
+        url: "RNGCasinoBetList/BetDetails",
+        title: "Jili - Detailed Bet list - " + winlossDate.split(" ")[0],
+        jsonParam: { TransId: transId, WinLossDate: winlossDate, TransType: transType, CustId: custId, SportType: 158, PageSize: 500 },
+        width: 1170,
+        height: 600
+    };
+
+    openResultsPopUp(param);
+}
 // -------------------- Functions whose name must name by Fanex.Toco
 function ViewRNGCasinoResult(matchId, race, betType, sportType, refNo, winlostDate, custId) {
     var params = $.param({
