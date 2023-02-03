@@ -1,4 +1,4 @@
-var form;
+let form;
 const fileSelector = "#USDTExcelFile";
 const choseFileMsg = "containerMsg1";
 const submitMsg = "submitMsg";
@@ -7,6 +7,12 @@ const calendarInput = "EffectiveFromDate";
 const btnSubmit = "btnSubmitUSDTFile";
 const btnOpenFile = "btnOpenFile";
 const billingCircle = "billingCircle";
+const conditionSubmit = {
+    "RequiredEffectiveField": {message: "Effective from is required field.", isActive: false},
+    "InvalidEffectiveField": {message: "Effective from is invalid.", isActive: false},
+    "InvalidFile": {message: "All errors must be fixed before uploading USDT rate.", isActive: false},
+    "Another": {message: "Something went wrong, please try again.", isActive: false}
+}
 
 const ImportExRate = {
     ValidateFile() {
@@ -17,7 +23,7 @@ const ImportExRate = {
             return;
         }
 
-        var fileExtension = filename.substring(filename.lastIndexOf('.') + 1, filename.length).toLowerCase();
+        let fileExtension = filename.substring(filename.lastIndexOf('.') + 1, filename.length).toLowerCase();
         if (!["xls", "xlsx"].includes(fileExtension)) {
             const invalidExtensionMess = "Sorry, You choose invalid file extension. Please choose an Excel file (.xls or .xlsx)";
             errorMess.push(invalidExtensionMess);
@@ -39,7 +45,7 @@ const ImportExRate = {
             return true;
         }
     },
-    
+
     GetFileSize(eName) {
         return parseFloat($(eName).get(0).files[0].size);
     },
@@ -47,7 +53,7 @@ const ImportExRate = {
     ShowElementById(id) {
         $("#" + id).show();
     },
-    
+
     HideElementById(id) {
         $("#" + id).hide();
     },
@@ -55,16 +61,25 @@ const ImportExRate = {
     ClearFile() {
         $(fileSelector).val("");
     },
+
+    ResetValidateEffectFromDate(){
+        conditionSubmit["InvalidFile"].isActive = false;
+        conditionSubmit["Another"].isActive = false;
+        conditionSubmit["RequiredEffectiveField"].isActive = false;
+        conditionSubmit["InvalidEffectiveField"].isActive = false;
+    },
     
     OpenUSDTRateExcel() {
+        ImportExRate.HideElementById(submitMsg);
+        ImportExRate.ResetValidateEffectFromDate();
+        
         if (!ImportExRate.ValidateFile()) {
-
             return;
         }
 
         parent.BlockUI();
         form = $('#mainForm');
-        var formData = new FormData(form[0]);
+        let formData = new FormData(form[0]);
         $.ajax({
             url: 'OpenUSDTRateExcel',
             type: 'POST',
@@ -74,21 +89,23 @@ const ImportExRate = {
             enctype: 'multipart/form-data',
             data: formData,
             success: function (data) {
-                const {FileData, Result, CompareBillingCycleResult} = data;
+                const {Items, Result, CompareBillingCycleResult} = data;
                 ImportExRate.SetupCalendar(CompareBillingCycleResult);
-                if (FileData) {
+                if (Items) {
                     ImportExRate.ShowElementById(mainContent);
-                    ImportExRate.RenderMapping(FileData);
-                    const isHaveInvalidRow = FileData.some(e => e.RemarkErrors.length > 0);
-                    !isHaveInvalidRow && $("#" + btnSubmit).removeAttr("disabled");
-                    isHaveInvalidRow && ImportExRate.ClearFile();
+                    ImportExRate.RenderMapping(Items);
+                    const isHaveInvalidRow = Items.some(e => e.RemarkErrors.length > 0);
+                    if (isHaveInvalidRow) {
+                        conditionSubmit["InvalidFile"].isActive = true
+                        ImportExRate.ClearFile();
+                    }
                 }
 
                 if (Result.ErrorCode && Result.ErrorMessage) {
                     ImportExRate.ShowElementById(choseFileMsg);
                     ImportExRate.HideElementById(mainContent);
                     showAlertMessage(choseFileMsg, Result.ErrorMessage, 1);
-                    $("#" + btnSubmit).attr("disabled", "true")
+                    conditionSubmit["Another"].isActive = true
                 }
             },
             error: function (xhr) {
@@ -100,8 +117,16 @@ const ImportExRate = {
         });
     },
 
-    Submit() {
-        const data = {effectFrom: ImportExRate.GetEffectFromDate($("#" + calendarInput).MonthPicker('GetSelectedDate'))};
+    Submit: function () {
+        const effectFrom = ImportExRate.GetEffectFromDate($("#" + calendarInput).MonthPicker('GetSelectedDate'));
+        
+        const validateMessage = Object.values(conditionSubmit).map((e) => { if (e.isActive) return e.message;}).filter(e => e);
+        if (validateMessage.length) {
+            ImportExRate.ShowElementById(submitMsg)
+            showAlertMessage(submitMsg, validateMessage.join("</br>"), 1);
+            return;
+        }
+        const data = {effectFrom};
         parent.BlockUI();
         $.ajax({
             type: "POST",
@@ -123,19 +148,19 @@ const ImportExRate = {
             },
             error: function (xhr) {
                 ImportExRate.ShowElementById(submitMsg)
-                showAlertMessage('submitMsg', 'Internal Server Error.', 1);
+                showAlertMessage(submitMsg, 'Internal Server Error.', 1);
             },
             complete: function () {
                 parent.jQuery.unblockUI();
             }
         });
     },
-    
+
     RenderMapping(data) {
-        var bodyRows = [];
-        for (var i = 0; i < data.length; i++) {
-            var row = {Columns: []};
-            const {Currency, USDTValue, RemarkErrors,MultipliedBy,USDTAfterMultiply} = data[i];
+        let bodyRows = [];
+        for (const element of data) {
+            let row = {Columns: []};
+            const {Currency, USDTValue, RemarkErrors, MultipliedBy, USDTAfterMultiply} = element;
             const remarkErrorFormatted = `<span class="text-red">${RemarkErrors.join(", ")}</span>`
             row.Columns.push({Name: 'currency', Value: Currency});
             row.Columns.push({Name: 'usdtUnit', Value: USDTValue});
@@ -146,7 +171,7 @@ const ImportExRate = {
             bodyRows.push(row);
         }
 
-        var gridOptions = {
+        let gridOptions = {
             columns: [
                 {
                     HeaderText: "Currency",
@@ -161,7 +186,7 @@ const ImportExRate = {
                     Name: "usdtUnit",
                     HeaderAlign: "center",
                     CellAlign: "right"
-                }, 
+                },
                 {
                     HeaderText: "Multiplied By",
                     Width: 150,
@@ -194,20 +219,24 @@ const ImportExRate = {
     },
 
     GetBillingCircle() {
-        var today = new Date();
-        var year = today.getFullYear();
-        var checkTimeWithoutTZ = new Date(year, today.getMonth(), 5, 17, 0, 0, 0);
+        let today = new Date();
+        let year = today.getFullYear();
+        let checkTimeWithoutTZ = new Date(year, today.getMonth(), 5, 17, 0, 0, 0);
         checkTime = new Date(checkTimeWithoutTZ.getTime() - (480 + today.getTimezoneOffset()) * 60 * 1000);
         if (+checkTime > +today) {
             checkTime = new Date(checkTime.getFullYear(), checkTime.getMonth() - 1, checkTime.getDate(), checkTime.getHours(), 0, 0);
         }
 
-        var monthCircle = checkTime.getMonth();
+        let monthCircle = checkTime.getMonth();
 
-        var startDate = new Date(year, monthCircle, 1);
-        var endDate = new Date(year, monthCircle + 1, 0);
+        let startDate = new Date(year, monthCircle, 1);
+        let endDate = new Date(year, monthCircle + 1, 0);
 
-        return startDate.toLocaleDateString('en-US', {dateStyle: 'medium'}) + ' - ' + endDate.toLocaleDateString('en-US', {dateStyle: 'medium'});
+        return {
+            startDate:startDate,
+            endDate:endDate,
+            billingCircle: startDate.toLocaleDateString('en-US', {dateStyle: 'medium'}) + ' - ' + endDate.toLocaleDateString('en-US', {dateStyle: 'medium'})
+        };
     },
 
     OpenNoteMessage() {
@@ -228,7 +257,7 @@ const ImportExRate = {
 
         return date.toLocaleDateString('en-US', {month: 'short', year: 'numeric'});
     },
-   
+
     InitCalendar(id, minSelectedMonth, maxSelectedMonth) {
         $("#" + id).MonthPicker({
             MonthFormat: 'M yy',
@@ -239,7 +268,7 @@ const ImportExRate = {
             Button: '<img class="img-date-selector" alt="" id="' + id + '_Trigger" title="Month selector" width="18" height="17" src="../App_Themes/Images/calendar.gif" /> '
         })
     },
-    
+
     SetupCalendar(compareBillingCycleResult = undefined) {
         let minMonth = "-0m";
         if (compareBillingCycleResult <= 0) {
@@ -248,24 +277,36 @@ const ImportExRate = {
         const currentMonth = ImportExRate.GetDisplayMonthOnly(new Date(checkTime.getFullYear(), checkTime.getMonth(), 1));
         ImportExRate.InitCalendar(calendarInput, minMonth, currentMonth);
     },
-    
+
     GetEffectFromDate(dateString) {
+        if (!dateString) {
+            conditionSubmit["RequiredEffectiveField"].isActive = "";
+            return;
+        }
         const date = new Date(dateString);
         const fromDate = new Date(date.getFullYear(), date.getMonth(), 1);
-
+        
+        const {startDate,endDate} =ImportExRate.GetBillingCircle();
+        if (fromDate > endDate  || fromDate < startDate) {
+            conditionSubmit["InvalidEffectiveField"].isActive = true;
+        }
+        else {
+            conditionSubmit["InvalidEffectiveField"].isActive = false;
+        }
+        
         return fromDate.toLocaleDateString('en-US', {month: '2-digit', day: '2-digit', year: 'numeric'});
     },
 
 };
 
 $(document).ready(function () {
-    $("#"+btnOpenFile).click(function (e) {
+    $("#" + btnOpenFile).click(function (e) {
         e.preventDefault();
         ImportExRate.OpenUSDTRateExcel();
     });
-    $("#"+btnSubmit).click(function (e) {
+    $("#" + btnSubmit).click(function (e) {
         e.preventDefault();
         ImportExRate.Submit();
     });
-    $("#"+billingCircle).html(ImportExRate.GetBillingCircle());
+    $("#" + billingCircle).html(ImportExRate.GetBillingCircle().billingCircle);
 }); 
