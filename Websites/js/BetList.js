@@ -886,7 +886,7 @@ function showSealEntertainmentBetDetails(transId, winlossDate, custId, transType
     openResultsPopUp(param);
 }
 
-function showJGBetDetails(transId, winlossDate, custId, transType) {
+function showJiliBetDetails(transId, winlossDate, custId, transType) {
     var param = {
         url: "RNGCasinoBetList/BetDetails",
         title: "Jili - Detailed Bet list - " + winlossDate.split(" ")[0],
