@@ -105,7 +105,8 @@ const ImportExRate = {
                     ImportExRate.ShowElementById(choseFileMsg);
                     ImportExRate.HideElementById(mainContent);
                     showAlertMessage(choseFileMsg, Result.ErrorMessage, 1);
-                    conditionSubmit["Another"].isActive = true
+                    conditionSubmit["Another"].isActive = true;
+                    ImportExRate.ClearFile();
                 }
             },
             error: function (xhr) {
