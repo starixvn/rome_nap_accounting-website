@@ -58,3 +58,16 @@ function RenderMultiSelect(id) {
         noItemText: "No item selected."
     });
 }
+
+var __entityMap = {
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': '&quot;'
+};
+
+String.prototype.escapeHTML = function () {
+    return String(this).replace(/[&<>"]/g, function (s) {
+        return __entityMap[s];
+    });
+};
