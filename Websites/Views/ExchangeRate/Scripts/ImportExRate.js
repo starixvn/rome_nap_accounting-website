@@ -91,6 +91,7 @@ const ImportExRate = {
             success: function (data) {
                 const {Items, Result, CompareBillingCycleResult} = data;
                 ImportExRate.SetupCalendar(CompareBillingCycleResult);
+                $("#" + calendarInput).MonthPicker('Clear');
                 if (Items) {
                     ImportExRate.ShowElementById(mainContent);
                     ImportExRate.RenderMapping(Items);
@@ -281,8 +282,11 @@ const ImportExRate = {
 
     GetEffectFromDate(dateString) {
         if (!dateString) {
-            conditionSubmit["RequiredEffectiveField"].isActive = "";
+            conditionSubmit["RequiredEffectiveField"].isActive = true;
             return;
+        }
+        else {
+            conditionSubmit["RequiredEffectiveField"].isActive = false;
         }
         const date = new Date(dateString);
         const fromDate = new Date(date.getFullYear(), date.getMonth(), 1);
