@@ -21,7 +21,7 @@
   </Function>
   <Function Name="Exchange Rate">
     <Setting Key="Acc_ExchangeCurrencySel" SpName="Acc_ExchangeCurrencySel" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="EchangeSelAcc" SpName="Acc_ExchangeSelAccount_xtest" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="EchangeSelAcc" SpName="Acc_ExchangeSelAccount" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Left Panel - Credit term">
     <Setting Key="GetAllGroup" SpName="Acc_CreditTermSelGroupHeadline" DbName="DBAGE.bodb02.bodbAdminNet" />
