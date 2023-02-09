@@ -1090,6 +1090,8 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
             
         case 155:
             return getMGParam(custId, transId3rd, gameId3rd, currencyId, bettype, siteId);
+        case 158:
+            return getJiliParam(custId, transId3rd, gameId3rd, currencyId, bettype, siteId);
 
         case 161: // Number Game.
             return getNumberGameParam(matchid);
@@ -1476,6 +1478,16 @@ function getMGParam(custId, transId3rd, gameId3rd, currencyId, betType, siteId) 
         url: "ThirdParty/MGRNGCasinoResult",
         title: "MG-RNG Result",
         jsonParam: { custId: custId, transId3rd: transId3rd, siteId: siteId, gameId3rd: gameId3rd, currencyId: currencyId, BetTypeId: betType, productId: 73 },
+        width: 850,
+        height: 800
+    };
+}
+
+function getJiliParam(custId, transId3rd, gameId3rd, currencyId, betType, siteId) {
+    return {
+        url: "ThirdParty/JiliResult",
+        title: "Jili Result",
+        jsonParam: { custId: custId, transId3rd: transId3rd, siteId: siteId, gameId3rd: gameId3rd, currencyId: currencyId, BetTypeId: betType, productId: 75 },
         width: 850,
         height: 800
     };
