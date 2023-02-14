@@ -57,14 +57,13 @@ namespace Sunplus.Accounting.Business.ExChangeRate
 
         #region GenListContent
 
-        public string GenListContent()
+        public string GenListContent(Hashtable queryParams)
         {
             ExRateList_Template ex = new ExRateList_Template();
-            var rs = IBCProvider.ExChangeRate.ExchangeSelAccount();
+            
+            var rs = IBCProvider.ExChangeRate.ExchangeSelAccount(queryParams);
             DataRow[] Rows = rs.ResultSet.Tables[0].Select();
-
-
-
+            
             StringBuilder html = new StringBuilder();
             string tpl = WebUtils.LoadTemplateBySystem("ExRate/ExRateList1.htm");
             string tplContent = TemplateHandler.CopyBlock(tpl, "Content");
@@ -80,12 +79,14 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 string exRow = tplContent;
                 TemplateHandler.Assign(ref exRow, "currency", CastAide.AsString(dr["currency"]));
                 TemplateHandler.Assign(ref exRow, "standardCode", CastAide.AsString(dr["currencyCode"]));
-                TemplateHandler.Assign(ref exRow, "BaseRate", CastAide.AsString(dr["actualrate"]));
-                TemplateHandler.Assign(ref exRow, "MinBet", CastAide.AsString(dr["MinBet"]));
+                TemplateHandler.Assign(ref exRow, "BaseRate", ExChangeRateHelper.TruncateBaseRate(CastAide.AsString(dr["actualrate"])));
+                TemplateHandler.Assign(ref exRow, "MinBet", ((CastAide.AsString(dr["MinBet"]))));
                 TemplateHandler.Assign(ref exRow, "MinBetLive", CastAide.AsString(dr["MinBetLive"]));
                 TemplateHandler.Assign(ref exRow, "exrateId", exid);
                 TemplateHandler.Assign(ref exRow, "description", CastAide.AsString(dr["Description"]));
                 TemplateHandler.Assign(ref exRow, "OfferSite", ExChangeRateHelper.GetOfferSiteName(CastAide.AsString(dr["offersite"])));
+                TemplateHandler.Assign(ref exRow, "CurrencyType", ExChangeRateHelper.GetCurrencyTypeName(CastAide.AsString(dr["currencytype"])));
+                TemplateHandler.Assign(ref exRow, "CoinMarketCapID", CastAide.AsString(dr["CoinMarketCapID"]));
                 TemplateHandler.Assign(ref exRow, "IsActive", CastAide.AsBoolean(dr["isactive"]) ? " checked" : "");
 
                 if (!Permissions.GetHostPermission(Enumerations.Functions.ExRates.ExchangeRate))
@@ -115,7 +116,17 @@ namespace Sunplus.Accounting.Business.ExChangeRate
 
         #region InsertExChangeRate
 
-        public string InsertExChangeRate(string actualrate, string currency, string minbet, string minbetlive, string Code, string Description, string MultipliedBy, string offerSite)
+        public string InsertExChangeRate(
+            string actualrate, 
+            string currency,
+            string minbet, 
+            string minbetlive,
+            string Code, 
+            string Description, 
+            string MultipliedBy,
+            string offerSite,
+            string currencyType,
+            string coinMarketId)
         {
             string msg = "";
             try
@@ -127,7 +138,9 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 hash.Add("minbet", minbet);
                 hash.Add("minbetlive", minbetlive);
                 hash.Add("offersite", offerSite);
-
+                hash.Add("currencytype", currencyType);
+                hash.Add("coinmarketcapid", coinMarketId);
+                
                 hash.Add("ip", HttpContext.Current.Request.UserHostAddress);
                 hash.Add("errcode", 0);
                 hash.Add("errmsg", "");
@@ -137,9 +150,10 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 hash.Add("description", Description);
                 hash.Add("multipliedby", Convert.ToDecimal(MultipliedBy.Trim()));
                 int exchangeid = 0;
+                
                 var result = IBCProvider.ExChangeRate.ExchangeIns(hash, ref exchangeid);
                 msg = result.ErrorMessage;
-                if (result.ErrorCode == 0)
+                if (result.ErrorCode == 0 && currencyType!="1")
                 {
                     var response = casinoApiService.UpdateExchange(new CasinoApiRequest
                     {
@@ -198,6 +212,13 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                     TemplateHandler.Assign(ref tpl, "Minbet", CastAide.AsString(dr["minbet"]));
                     TemplateHandler.Assign(ref tpl, "MinbetLive", CastAide.AsString(dr["minbetlive"]));
                     TemplateHandler.Assign(ref tpl, "OfferSite", ExChangeRateHelper.BuildOfferSiteSelection(CastAide.AsString(dr["offersite"])));
+                    TemplateHandler.Assign(ref tpl, "CurrencyType", ExChangeRateHelper.BuildCurrentTypeSelection(CastAide.AsString(dr["currencytype"])));
+                    TemplateHandler.Assign(ref tpl, "CoinMarketCapID", CastAide.AsString(dr["CoinMarketCapID"]));
+                    if (ExChangeRateHelper.GetCurrencyTypeName(CastAide.AsString(dr["currencytype"])) != "Crypto")
+                    {
+                        TemplateHandler.Assign(ref tpl, "readOnlyCoinMarketID", "readonly='true'");
+                        TemplateHandler.Assign(ref tpl, "disabledCoinMarketID", "disabled='disabled'");
+                    }
                     TemplateHandler.Assign(ref tpl, "IsActive", CastAide.AsBoolean(dr["isactive"]) ? " checked" : "");
                     TemplateHandler.Assign(ref tpl, "exrateId", exid);
                     tbxStandardCurrency.Value = CastAide.AsString(dr["Code"]);
@@ -212,7 +233,9 @@ namespace Sunplus.Accounting.Business.ExChangeRate
             string tpl = WebUtils.LoadTemplateBySystem("ExRate/ExRateEditBaseRate.htm");
             TemplateHandler.Assign(ref tpl, "function", "UpdateEditExChangeRate();");
             TemplateHandler.Assign(ref tpl, "Function_Reset", "ResetValueWhenEdit();");
-            DbResult rs = IBCProvider.ExChangeRate.ExchangeSelAccount();
+            Hashtable queryParams = new Hashtable();
+            queryParams.Add("currencytype", "0");
+            DbResult rs = IBCProvider.ExChangeRate.ExchangeSelAccount(queryParams);
             DataTable dt = rs.ResultSet.Tables[0];
             StringBuilder bodyHtml = new StringBuilder();
             if (dt.Rows.Count == 0)
@@ -232,6 +255,8 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                     TemplateHandler.Assign(ref tpl, "Minbet", CastAide.AsString(dr["minbet"]));
                     TemplateHandler.Assign(ref tpl, "MinbetLive", CastAide.AsString(dr["minbetlive"]));
                     TemplateHandler.Assign(ref tpl, "OfferSite", ExChangeRateHelper.BuildOfferSiteSelection(CastAide.AsString(dr["offersite"])));
+                    TemplateHandler.Assign(ref tpl, "CurrencyType", ExChangeRateHelper.BuildCurrentTypeSelection("0"));
+                    TemplateHandler.Assign(ref tpl, "CoinMarketCapID", CastAide.AsString(dr["CoinMarketCapID"]));
                     TemplateHandler.Assign(ref tpl, "IsActive", CastAide.AsBoolean(dr["isactive"]) ? " checked" : "");
                     TemplateHandler.Assign(ref tpl, "exrateId", exid);
                     tbxStandardCurrency.Value = CastAide.AsString(dr["Code"]);
@@ -294,13 +319,18 @@ namespace Sunplus.Accounting.Business.ExChangeRate
             string html = "";
             DataTable dt = rs.ResultSet.Tables[0];
             foreach (DataRow dr in dt.Rows)
-            {
-                html = CastAide.AsString(dr["actualrate"]) + "|";
+            {  //actualrate=> base rate
+               
                 html += CastAide.AsString(dr["currency"]) + "|";
+                html += CastAide.AsString(dr["Description"]) + "|";
+                html += CastAide.AsString(dr["MultipliedBy"])+ "|";
+                html += CastAide.AsString(dr["actualrate"]) + "|";
                 html += CastAide.AsString(dr["minbet"]) + "|";
                 html += CastAide.AsString(dr["minbetlive"]) + "|";
-                html += CastAide.AsString(dr["Description"]) + "|";
-                html += CastAide.AsString(dr["MultipliedBy"]);
+                html += CastAide.AsString(dr["offersite"])+ "|";
+                html += CastAide.AsString(dr["currencytype"])+ "|";
+                html += CastAide.AsString(dr["CoinMarketCapID"])+ "|";
+                html += CastAide.AsString(dr["isactive"]).ToLower();
             }
             return html;
         }
@@ -309,7 +339,20 @@ namespace Sunplus.Accounting.Business.ExChangeRate
 
         #region UpdateEditExChangeRate
 
-        public string UpdateEditExChangeRate(int exid, string actualrate, string currency, string minbet, string minbetlive, string Description, string MultipliedBy, string Code, string offerSite, bool isActive)
+        public string UpdateEditExChangeRate(
+            int exid,
+            string actualrate,
+            string currency,
+            string minbet, 
+            string minbetlive, 
+            string Description,
+            string MultipliedBy,
+            string Code, 
+            string offerSite, 
+            string currencyType,
+            string coinMarketId,
+            bool isActive
+            )
         {
             string msg = "";
             try
@@ -322,6 +365,8 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 hash.Add("minbet", minbet);
                 hash.Add("minbetlive", minbetlive);
                 hash.Add("offersite", offerSite);
+                hash.Add("currencytype", currencyType);
+                hash.Add("coinmarketcapid", coinMarketId);
                 hash.Add("isactive", isActive);
 
                 hash.Add("ip", HttpContext.Current.Request.UserHostAddress);
@@ -338,7 +383,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 var result = IBCProvider.ExChangeRate.ExchangeUpd(hash);
                 msg = result.ErrorMessage;
 
-                if (msg.Length == 0)
+                if (msg.Length == 0 && currencyType!="1")
                 {
                     var response = casinoApiService.UpdateExchange(new CasinoApiRequest
                     {
@@ -395,7 +440,9 @@ namespace Sunplus.Accounting.Business.ExChangeRate
         #region Edit Base Rate
         public string EditBaseRate_GenListContent()
         {
-            var rs = IBCProvider.ExChangeRate.ExchangeSelAccount();
+            Hashtable queryParams = new Hashtable();
+            queryParams.Add("currencytype", "0");
+            var rs = IBCProvider.ExChangeRate.ExchangeSelAccount(queryParams);
             DataRow[] Rows = rs.ResultSet.Tables[0].Select();
             StringBuilder html = new StringBuilder();
             string odd_even = "";

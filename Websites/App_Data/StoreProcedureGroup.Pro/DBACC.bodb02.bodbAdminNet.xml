@@ -72,6 +72,7 @@
   </Function>
   <Function Name="Exchange Rate">
     <Setting Key="OANDAExRateSel" SpName="Acc_Rpt_ExchangeDailyOanda_Sel" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="CryptoExRateSel" SpName="Acc_Rpt_ExchangeDaily_Crypto_Sel" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="BetList - Cashout">
     <Setting Key="Acc_BetList_CashOut_Detail" SpName="Acc_BetList_CashOut_Detail" DbName="DBACC.bodb02.bodbAdminNet" />

@@ -27,14 +27,6 @@
     <script src="../js/showhidepopup.js" type="text/javascript"></script> 
     <script src="../js/jQuery/gridscroller.js" type="text/javascript"></script>
     <script src="Script/ExchangeRate1.js?ver=<%=WebSettings.Version%>" type="text/javascript"></script>
-   
-    <script type="text/javascript">
-        function ExportToExcel()
-        {
-            $('#IsExport').val('1');
-            $('#form').submit();
-        }
-    </script>
     <style>
         a
         {
@@ -62,9 +54,10 @@
                 <div id="ErrMsg">
                 </div>
                 <asp:Literal ID="ExRateAddContentHtml" runat="server"></asp:Literal>
+                
             </div>
             <div id="sContent" style="margin-top: 5px">
-                <div id="divExhangeRate" class="content-warper" style="width: 569px">
+                <div id="divExhangeRate" class="content-warper" style="width: 725px">
                     <div class="content-toolbox bgtitle">
                         <div id="gridtitle" class="gridtitle">Exchange Rate</div>
                         <div class="btngroup">
@@ -100,6 +93,14 @@
                                             Offer Site</div>
                                     </td>
                                     <td style="border-bottom: none 0px;">
+                                        <div class="c" style="width:73px">
+                                            Currency Type</div>
+                                    </td>  
+                                    <td style="border-bottom: none 0px;">
+                                        <div class="c" style="width:73px">
+                                            Coin Market ID</div>
+                                        </td>  
+                                    <td style="border-bottom: none 0px;">
                                         <div class="c" style="width:48px">
                                             Active</div>
                                     </td>                              
@@ -130,6 +131,7 @@
     </script>
     <form id="form" method="post" action="ExchangeRate1.aspx">
     <input type="hidden" id="IsExport" name="IsExport" value="0" />
+    <input type="hidden" id="LoadCurrencyType" name="LoadCurrencyType" value="0" />
     </form>
 </body>
 </html>

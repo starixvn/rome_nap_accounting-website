@@ -49,7 +49,7 @@
             if (i == 0) {
                 strrow += '<td><div class="col100 c">' + items[i].CurrencyCode + '</div></td>';
                 for (var j = 0; j < listBaseCurr.length; j++) {
-                    strrow += '<td><div class="col80 r">' + listBaseCurr[j].Value + '</div></td>';
+                    strrow += '<td><div class="col80 r">' + listBaseCurr[j].FormatedValue + '</div></td>';
                 }
                 strrow += '</tr>';
             }
@@ -57,7 +57,7 @@
                 strrow += '<tr>';
                 strrow += '<td><div class="col100 c">' + items[i].CurrencyCode + '</div></td>';
                 for (var j = 0; j < listBaseCurr.length; j++) {
-                    strrow += '<td><div class="col80 r">' + listBaseCurr[j].Value + '</div></td>';
+                    strrow += '<td><div class="col80 r">' + listBaseCurr[j].FormatedValue + '</div></td>';
                 }
                 strrow += '</tr>';
             }
@@ -69,7 +69,7 @@
 
     exportExcelOANDAExRate: function () {
 
-        var url = 'OandaExRate?IsExport=1&fdate=' + OANDAExRate.fdate + '&tdate=' + OANDAExRate.tdate;
+        var url = 'Index?IsExport=1&fdate=' + OANDAExRate.fdate + '&tdate=' + OANDAExRate.tdate + '&typeExport=Oanda';
         $('#frm').attr('src', url);
     },
 

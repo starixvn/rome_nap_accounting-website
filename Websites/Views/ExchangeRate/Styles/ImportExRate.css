@@ -1,0 +1,28 @@
+.download-link {
+    color: #0066cc;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+.download-link:hover {
+    color: #d66d35;
+    text-decoration: none;
+}
+
+.text-red {
+    color: #ff0000;
+}
+
+.bg_table {
+    width: 1120px;
+    padding: 0;
+}
+
+.maincontent_box {
+    border: 1px solid #7C98A4;
+    width: 1120px;
+    padding: 0px
+}
+.freegrid {
+    margin: 0 1px;
+}

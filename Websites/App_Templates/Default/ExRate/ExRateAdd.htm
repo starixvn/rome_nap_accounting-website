@@ -11,6 +11,8 @@
         <td>Min Bet</td>
         <td>Min Bet Live</td>
         <td>Offer Site</td>
+        <td>Currency Type</td>
+        <td>Coin Market ID</td>
         <td>Active</td>
     </tr>
    
@@ -26,7 +28,7 @@
             <input type="text" class="w120" id="tbxMultipliedBy" value="{MultipliedBy}" />
         </td>
         <td>
-            <input type="text" class="w70" name="txtEx" id="txtBaseRate" value="{BaseRate}" {ReadOnly} {disabled} onkeypress="return CheckDecNumber_ExRate(event);" />
+            <input type="text" class="w280" name="txtEx" id="txtBaseRate" value="{BaseRate}" {ReadOnly} {disabled} onkeypress="return CheckDecNumber_ExRate(event);" />
         </td>
         <td>
             <input type="text" class="w70" name="txtEx" id="txtMinbet" value="{Minbet}" onkeypress="return CheckDecNumber_ExRate(event);" />
@@ -38,6 +40,14 @@
             <select class="w70" id="selOfferSite">
                 {OfferSite}
             </select>
+        </td>  
+        <td>
+            <select class="w70" id="selCurrencyType" {ReadOnly} {disabled} onchange="onChangeCurrencyType(this);" >
+                {CurrencyType}
+            </select>
+        </td>
+        <td>
+            <input type="text" class="w70" name="txtEx" id="txtCoinMarketID" value="{CoinMarketCapID}" {readOnlyCoinMarketID} {disabledCoinMarketID} onkeypress="return CheckDecNumber_ExRate(event);" />
         </td>
         <td>
             <input type="checkbox" class="w40" name="txtEx" id="ckbIsActive" {IsActive} value="true"/>

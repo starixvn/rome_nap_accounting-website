@@ -206,6 +206,7 @@ jQuery.extend({
             data = data.replace("</pre>", "");
             eval("data = " + data);
         }
+       
         return data;
     },
 
