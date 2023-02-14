@@ -89,7 +89,7 @@ const ImportExRate = {
             enctype: 'multipart/form-data',
             data: formData,
             success: function (data) {
-                const {Items, Result, CompareBillingCycleResult} = data;
+                const {Items, Result, CompareBillingCycleResult,ErrorCode,ErrorMessage} = data;
                 ImportExRate.SetupCalendar(CompareBillingCycleResult);
                 $("#" + calendarInput).MonthPicker('Clear');
                 if (Items) {
@@ -102,15 +102,30 @@ const ImportExRate = {
                     }
                 }
 
-                if (Result.ErrorCode && Result.ErrorMessage) {
+                if (Result && Result.ErrorCode && Result.ErrorMessage) {
                     ImportExRate.ShowElementById(choseFileMsg);
                     ImportExRate.HideElementById(mainContent);
                     showAlertMessage(choseFileMsg, Result.ErrorMessage, 1);
                     conditionSubmit["Another"].isActive = true;
                     ImportExRate.ClearFile();
                 }
+
+                if (ErrorCode && ErrorMessage) {
+                    ImportExRate.ShowElementById(choseFileMsg);
+                    ImportExRate.HideElementById(mainContent);
+                    showAlertMessage(choseFileMsg, ErrorMessage, 1);
+                    ImportExRate.ClearFile();
+                }
+
+                if (typeof(data)==="string" && data.indexOf('Access Denied') > 0)
+                {
+                    ImportExRate.ShowElementById(choseFileMsg);
+                    ImportExRate.HideElementById(mainContent);
+                    showAlertMessage(choseFileMsg, lang.AccessDenied, 1);
+                    ImportExRate.ClearFile();
+                }
             },
-            error: function (xhr) {
+            error: function (er) {
                 showAlertMessage(choseFileMsg, 'Internal Server Error.', 1);
             },
             complete: function () {
