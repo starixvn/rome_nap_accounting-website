@@ -185,7 +185,7 @@
         {
             if (customerInfoViewModel.IsDeposit
                 || customerInfoViewModel.SearchAccountRoleId < 2
-                || CustomerAppSettings.IsNotOfferProtectedMode(customerInfoViewModel.CustomerSite))
+                || CustomerAppSettings.IsNotOfferProtectedMode(customerInfoViewModel.SiteLabel))
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "ProtectedStatusBlock");
             }

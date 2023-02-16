@@ -7,23 +7,23 @@ namespace Sunplus.Accounting.Business.Customer
 {
     public static class CustomerAppSettings
     {
-        private static IDictionary<string, bool> protectedModeOfferSites;
+        private static IDictionary<string, bool> protectedModeOfferSiteLabel;
 
         static CustomerAppSettings()
         {
-            protectedModeOfferSites = GetProtectedModeOfferSites();
+            protectedModeOfferSiteLabel = GetProtectedModeOfferSiteLabel();
         }
 
-        public static bool IsNotOfferProtectedMode(string customerSite)
-            => !IsOfferProtectedMode(customerSite);
+        public static bool IsNotOfferProtectedMode(string siteLabel)
+            => !IsOfferProtectedMode(siteLabel);
 
         public static bool IsOfferProtectedMode(string customerSite)
-            => protectedModeOfferSites.ContainsKey("*") || protectedModeOfferSites.ContainsKey(customerSite);
+            => protectedModeOfferSiteLabel.ContainsKey("*") || protectedModeOfferSiteLabel.ContainsKey(customerSite);
 
-        private static IDictionary<string, bool> GetProtectedModeOfferSites()
+        private static IDictionary<string, bool> GetProtectedModeOfferSiteLabel()
         {
             var offerSites = new Dictionary<string, bool>(StringComparer.OrdinalIgnoreCase);
-            var configValue = ConfigurationManager.AppSettings["ProtectedMode:OfferSites"] ?? string.Empty;
+            var configValue = ConfigurationManager.AppSettings["ProtectedMode:OfferSiteLabel"] ?? string.Empty;
             configValue
                 .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
                 .ToList()

@@ -16,7 +16,7 @@ namespace Sunplus.Accounting.Business.CustSetting
     {
         #region GetSiteNameByCustId
 
-        public string GetSiteNameByCustId(int custId, int roleId, string siteName, string userName)
+        public string GetSiteNameByCustId(int custId, int roleId, string siteName, string userName, string siteLabel)
         {
             bool isAllow = false;
             if (AppSession.SYSTEM.Equals(Enumerations.AccountingSystem.Accounting))
@@ -25,9 +25,9 @@ namespace Sunplus.Accounting.Business.CustSetting
             if (isAllow)
                 siteName = "<div id='dvSite'><a target='centerFr' href='Customer/ChangeSite.aspx?CustId=" + custId +
                            "&Site=" + siteName + "&UserName=" + userName + "&RoleId=" + roleId +
-                           "' onclick='parent.resetMenu();'>" + siteName + "</a></div>";
+                           "' onclick='parent.resetMenu();'>" + siteName + $" ({siteLabel})" + "</a></div>";
             else
-                siteName = "<div id='dvSite'>" + siteName + "</div>";
+                siteName = "<div id='dvSite'>" + siteName + $" ({siteLabel})" + "</div>";
 
             return siteName;
         }
