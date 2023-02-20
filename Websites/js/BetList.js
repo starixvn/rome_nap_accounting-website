@@ -1163,7 +1163,7 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
             return getVirtualGamesParam(custId, transId3rd, gameId3rd, currencyId, siteId);
 
         case 247: //Spadegaming
-            return getSpadegamingParam(custId, transId3rd, gameId3rd, currencyId, siteId);
+            return getSpadegamingParam(custId, transId3rd, gameId3rd, currencyId, siteId, bettype);
 
         case 248: //PP
             return getPPParam(custId, transId3rd, gameId3rd, currencyId, siteId);
@@ -1533,11 +1533,11 @@ function getIONCasinoParam(custId, transId3rd, gameId3rd, currencyId, siteId) {
     };
 }
 
-function getSpadegamingParam(custId, transId3rd, gameId3rd, currencyId, siteId) {
+function getSpadegamingParam(custId, transId3rd, gameId3rd, currencyId, siteId, betType) {
     return {
         url: "ThirdParty/SpadegamingResult",
         title: "Spadegaming Result",
-        jsonParam: { custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, siteId: siteId, currencyId: currencyId, productId: 36},
+        jsonParam: { custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, siteId: siteId, currencyId: currencyId, BetTypeId: betType, productId: 36},
         width: 945,
         height: 500
     };

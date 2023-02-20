@@ -95,7 +95,18 @@
 
         public ActionResult RNGWarResult(ThirdPartyResultRequest request) => BaseResult(request, "RNGWarResultConfigs");
 
-        public ActionResult SpadegamingResult(ThirdPartyResultRequest request) => BaseResult(request, "SpadegamingResultConfigs");
+        public ActionResult SpadegamingResult(ThirdPartyResultRequest request)
+        {
+            SetProductResultTitle(request.ProductId);
+            var service = new ThirdPartyResult("SpadegamingResultConfigs");
+            var resultRequest = new ResultRequest(request.CustId, request.TransId3rd, request.GameId3rd, request.CurrencyId, request.SiteId)
+            {
+                BetTypeId = request.BetTypeId
+            };
+            var result = service.GetResultGET(resultRequest);
+
+            return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(ProductResultTitle, result));
+        }
 
         public ActionResult CardClubResult(ThirdPartyResultRequest request)
         {
