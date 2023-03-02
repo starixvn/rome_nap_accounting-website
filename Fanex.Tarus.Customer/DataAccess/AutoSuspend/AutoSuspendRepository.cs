@@ -58,10 +58,13 @@ namespace Fanex.Tarus.Customer.DataAccess.AutoSuspend
                 Username = CastAide.AsString(rawCustomerInfo["Username"]),
                 RoleId = CastAide.AsInt32(rawCustomerInfo["RoleId"]),
                 UplineAutoSuspendSoccer = CastAide.AsBoolean(rawCustomerInfo["AutoSuspendUplineSoccer"]),
+                UplineAutoSuspendBasketball = CastAide.AsBoolean(rawCustomerInfo["AutoSuspendUplineBasketball"]),
                 UplineAutoSuspendOtherSports = CastAide.AsBoolean(rawCustomerInfo["AutoSuspendUplineOtherSports"]),
                 AutoSuspendSoccer = CastAide.AsBoolean(rawCustomerInfo["AutoSuspendSoccer"]),
+                AutoSuspendBasketball = CastAide.AsBoolean(rawCustomerInfo["AutoSuspendBasketball"]),
                 AutoSuspendOtherSports = CastAide.AsBoolean(rawCustomerInfo["AutoSuspendOtherSports"]),
                 AutoSuspendSoccerDownlines = CastAide.AsBoolean(rawCustomerInfo["AutoSuspendDownlinesSoccer"]),
+                AutoSuspendBasketballDownlines = CastAide.AsBoolean(rawCustomerInfo["AutoSuspendDownlinesBasketball"]),
                 AutoSuspendOtherSportsDownlines = CastAide.AsBoolean(rawCustomerInfo["AutoSuspendDownlinesOtherSports"])
             };
 
@@ -89,6 +92,11 @@ namespace Fanex.Tarus.Customer.DataAccess.AutoSuspend
             if (!criteria.UplineAutoSuspendOtherSports)
             {
                 hashtableParams.Add("autosuspendother", criteria.AutoSuspendOtherSports);
+            }
+
+            if (!criteria.UplineAutoSuspendBasketball)
+            {
+                hashtableParams.Add("autosuspend3", criteria.AutoSuspendBasketball);
             }
 
             hashtableParams.Add("errcode", 0);
