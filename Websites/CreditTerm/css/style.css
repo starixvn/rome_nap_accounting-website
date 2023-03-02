@@ -126,7 +126,7 @@ div.refresh
 }
 /*css sorter*/
 div.sorter
-{
+,th.sorter{
     background-image: url(../../App_Themes/images/sorting_bg.gif);
     background-repeat: no-repeat !important;
     background-position: center right !important;
@@ -141,11 +141,11 @@ div.sorter a:hover
     color: #000 !important;
 }
 div.sorter.asc
-{
+,th.sorter.asc{
     background-image: url(../../App_Themes/images/sorting_asc.gif) !important;
 }
 div.sorter.desc
-{
+,th.sorter.desc{
     background-image: url(../../App_Themes/images/sorting_desc.gif) !important;
 }
 /*search*/
@@ -246,4 +246,7 @@ span#search input.btn_clear
 }
 .off-button:hover {
     background: url("Images/off-hover.png") repeat scroll 0 0 transparent;
+}
+.canClick:hover {
+    cursor: pointer;
 }
