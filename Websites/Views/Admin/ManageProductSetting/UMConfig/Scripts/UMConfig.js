@@ -8,6 +8,7 @@ var cachedNewUMConfigs;
 var cachedCreditSites = [];
 var cachedAllSites = [];
 var cachedMarkets = [];
+var checkedRows = [];
 
 function GetInitDataAndSearchAllUMConfig() {
     GetInitData();
@@ -51,6 +52,18 @@ function GetInitData() {
                 $("#UMConfigContent").removeClass("display-none");
                 cachedUMConfigSetting = data;
                 SearchAllUMConfig();
+                var functionTypeSelection = $("#FilterUMFunctionType");
+                var defaultOption = new Option('[0] All', '0', true, true);
+                functionTypeSelection.append(defaultOption);
+                cachedUMConfigSetting.forEach(function (item, index) {
+                    functionTypeSelection.append(new Option('[' + item.FunctionType + '] ' + item.FunctionTypeName, item.FunctionType));
+                });
+                functionTypeSelection.select2({
+                    minimumInputLength: 0,
+                    width: '200px'
+                });
+                SetupFilterCalendar("FilterUMBeginTime");
+                SetupFilterCalendar("FilterUMEndTime");
             } else {
                 $("#UMConfigAccessDenied").removeClass("display-none");
                 $("#UMConfigContent").addClass("display-none");
@@ -80,11 +93,19 @@ function GetInitData() {
 
 function SearchAllUMConfig() {
     parent.BlockUI();
+    var filterValue = {
+        FunctionType: $("#FilterUMFunctionType").val(),
+        BeginTime: $("#FilterUMBeginTime").val(),
+        EndTime: $("#FilterUMEndTime").val()
+    };
+
     $.ajax({
         url: 'GetAllUMConfiguration',
-        type: 'GET',
+        type: 'POST',
+        data: filterValue,
         success: function (data) {
             cachedUMConfigData = data;
+            checkedRows = [];
             RenderUMConfigData(data);
         },
         complete: function () {
@@ -101,6 +122,7 @@ function RenderUMConfigData(data) {
     for (i = 0; i < data.length; i++) {
         var umConfig = data[i];
         var row = { Columns: [], CssClass: "" };
+        row.Columns.push({ Name: 'ConfigId', Value: umConfig.ConfigId });
         row.Columns.push({ Name: 'FunctionType', Value: "[" + umConfig.FunctionType + "] " + umConfig.FunctionTypeName });
         row.Columns.push({ Name: 'ProductName', Value: "[" + umConfig.ProductId + "] " + umConfig.ProductName });
         row.Columns.push({ Name: 'SportName', Value: "[" + umConfig.SportType + "] " + umConfig.SportName });
@@ -114,8 +136,7 @@ function RenderUMConfigData(data) {
         row.Columns.push({ Name: 'LockAddingNew', Value: umConfig.LockAddingNew ? 1 : 0 });
         row.Columns.push({
             Name: 'Action',
-            Value: '<img class="edit-entity" alt="Edit" title="Edit" src="../App_Themes/Images/icn_edit.png" style="cursor: pointer" onclick="EditUMConfig(' + i + ')" >&nbsp;'
-                + '<img class="edit-entity" alt="Delete" title="Delete" src="../App_Themes/Images/icn_del.png" style="cursor: pointer" onclick="DeleteUMConfig(' + i + ')" >'
+            Value: '<input type="checkbox" class="ckb-um" data-position="'+ i + '"/>'
         });
         if (IsOverUMTime(umConfig.EndTime)) {
             row.CssClass = "um-overtime";
@@ -126,18 +147,24 @@ function RenderUMConfigData(data) {
     var gridOptions =
     {
         columns: [
+            { HeaderText: "ConfigId", Width: 50, Name: "ConfigId", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "FunctionType", Width: 100, Name: "FunctionType", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "ProductName", Width: 100, Name: "ProductName", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "SportName", Width: 100, Name: "SportName", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "SettingType", Width: 100, Name: "SettingType", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "Site", Width: 100, Name: "Site", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "Currency", Width: 100, Name: "Currency", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: "Username", Width: 180, Name: "Username", HeaderAlign: "center", CellAlign: "left" },
+            { HeaderText: "Username", Width: 160, Name: "Username", HeaderAlign: "center", CellAlign: "left" },
             { HeaderText: "ShowTime (GMT+8)", Width: 100, Name: "ShowTime", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "BeginTime (GMT+8)", Width: 100, Name: "BeginTime", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "EndTime (GMT+8)", Width: 100, Name: "EndTime", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "Lock Adding New", Width: 60, Name: "LockAddingNew", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: "Action", Width: 50, Name: "Action", HeaderAlign: "center", CellAlign: "center" }
+            {
+                HeaderText: 'Action</br><input type="checkbox" id="ckb-all-um"/>&nbsp;'
+                    + '<img class="edit-entity" alt="Edit" title="Edit" src="../App_Themes/Images/icn_edit.png" style="cursor: pointer" onclick="EditUMConfig()" >&nbsp;'
+                    + '<img class="edit-entity" alt="Delete" title="Delete" src="../App_Themes/Images/icn_del.png" style="cursor: pointer" onclick="DeleteUMConfig()" >',
+                Width: 70, Name: "Action", HeaderAlign: "center", CellAlign: "center"
+            }
         ],
         bodyRows: bodyRows,
         gridExpandHeight: 200,
@@ -145,6 +172,37 @@ function RenderUMConfigData(data) {
     };
 
     $('#gridUMConfigId').fanexGrid(gridOptions);
+    checkedRows = [];
+
+    $('#ckb-all-um').change(function () {
+        var newValue = this.checked;
+        $(".ckb-um").each(function () {
+            $(this).prop('checked', newValue);
+        });
+
+        if (newValue) {
+            checkedRows = cachedUMConfigData;
+        } else {
+            checkedRows = [];
+        }
+    });
+
+    $(".ckb-um").each(function () {
+        $(this).change(function () {
+            UpdateCheckedRows();
+        });
+    });
+}
+
+function UpdateCheckedRows() {
+    checkedRows = [];
+    $(".ckb-um").each(function () {
+        if (this.checked) {
+            checkedRows.push(cachedUMConfigData[$(this).attr('data-position')]);
+        }
+    });
+    var isCheckAll = checkedRows.length === cachedUMConfigData.length;
+    $('#ckb-all-um').prop('checked', isCheckAll);
 }
 
 function OpenNewUMConfig() {
@@ -154,7 +212,10 @@ function OpenNewUMConfig() {
         title: 'Add UMConfig',
         modal: true,
         width: 'auto',
-        height: 800
+        height: 800,
+        close: function (event, ui) {
+            $(this).dialog('destroy');
+        }
     });
     RenderAllNewUMConfigs();
 }
@@ -166,7 +227,7 @@ function InitAddNewUMConfig() {
     cachedSelectSettingType = null;
     hideAlertMessage("newUMConfigErrMsg");
     var functionTypeSelection = $("#UMFunctionType");
-    functionTypeSelection.empty();
+    $("#UMFunctionType").empty();
     if (cachedUMConfigSetting) {
         var defaultOption = new Option('FunctionType', '', true, true);
         defaultOption.disabled = true;
@@ -213,7 +274,7 @@ function InitAddNewUMConfig() {
     });
     
     $('#UMSite').val("0");
-    $('#UMCurrency').val("0");
+    $('#UMCurrency').val("0").trigger('change');
     $("#UMShowTime").val("");
     $("#UMEndTime").val("");
     $("#UMBeginTime").val("");
@@ -271,6 +332,11 @@ function AddNewUMConfig() {
         return;
     }
 
+    if (!$('#UMSite').multiSelect("getCheckedItems") || $('#UMSite').multiSelect("getCheckedItems").length === 0) {
+        showAlertMessage('newUMConfigErrMsg', "Site is required.", 1);
+        return;
+    }
+
     if (!ValidateUMData('newUMConfigErrMsg', beginTime, endTime, showTime, IsReportsBetListsFunctionType())) {
         return;
     }
@@ -285,39 +351,71 @@ function AddNewUMConfig() {
             return;
         }
     }
-    AppendNewUMConfig();
+    AppendNewUMConfigs();
     RenderAllNewUMConfigs();
     InitAddNewUMConfig();
 }
 
-function AppendNewUMConfig() {
+function AppendNewUMConfigs() {
     var usernamesArray = $("#UMUsername").val().replace(/<[^>]+>/g, "").split(',').filter(function (item, pos, self) {
         return self.indexOf(item) === pos;
     });
 
-    var umConfig = {
-        FunctionType: $('#UMFunctionType').val(),
-        FunctionTypeName: $('#UMFunctionType option:selected').text(),
-        ProductId: $('#UMProductName').val(),
-        ProductName: $('#UMProductName option:selected').text(),
-        SportType: $('#UMSportName').val(),
-        SportName: $('#UMSportName option:selected').text(),
-        SettingType: $('#UMSettingType').val(),
-        SettingName: $('#UMSettingType option:selected').text(),
-        BetType: cachedSelectSettingType.BetType,
-        IsLive: cachedSelectSettingType.IsLive,
-        SiteId: $('#UMSite').val(),
-        Site: $('#UMSite').val() === "0" ? "[0] All" : $('#UMSite option:selected').text(),
-        Currency: $('#UMCurrency').val(),
-        CurrencyName: $('#UMCurrency').val() === "0" ? "[0] All" : $('#UMCurrency option:selected').text(),
-        BeginTime: $("#UMBeginTime").val(),
-        EndTime: $("#UMEndTime").val(),
-        ShowTime: $("#UMShowTime").val(),
-        LockAddingNew: $('#UMLockAddingNew').is(":checked"),
-        Username: usernamesArray.join(',')
-    };
 
-    cachedNewUMConfigs.push(umConfig);
+    if ($('#UMSite').multiSelect("getUncheckItems").length === 0) {
+        var umConfig = {
+            FunctionType: $('#UMFunctionType').val(),
+            FunctionTypeName: $('#UMFunctionType option:selected').text(),
+            ProductId: $('#UMProductName').val(),
+            ProductName: $('#UMProductName option:selected').text(),
+            SportType: $('#UMSportName').val(),
+            SportName: $('#UMSportName option:selected').text(),
+            SettingType: $('#UMSettingType').val(),
+            SettingName: $('#UMSettingType option:selected').text(),
+            BetType: cachedSelectSettingType.BetType,
+            IsLive: cachedSelectSettingType.IsLive,
+            SiteId: 0,
+            Site: '[0] All Sites',
+            Currency: $('#UMCurrency').val(),
+            CurrencyName: $('#UMCurrency').val() === "0" ? "[0] All" : $('#UMCurrency option:selected').text(),
+            BeginTime: $("#UMBeginTime").val(),
+            EndTime: $("#UMEndTime").val(),
+            ShowTime: $("#UMShowTime").val(),
+            LockAddingNew: $('#UMLockAddingNew').is(":checked"),
+            Username: usernamesArray.join(',')
+        };
+
+        cachedNewUMConfigs.push(umConfig);
+    } else {
+        var selectedSites = $('#UMSite').multiSelect("getCheckedItems");
+        selectedSites.forEach(function (selSite) {
+            var umConfig = {
+                FunctionType: $('#UMFunctionType').val(),
+                FunctionTypeName: $('#UMFunctionType option:selected').text(),
+                ProductId: $('#UMProductName').val(),
+                ProductName: $('#UMProductName option:selected').text(),
+                SportType: $('#UMSportName').val(),
+                SportName: $('#UMSportName option:selected').text(),
+                SettingType: $('#UMSettingType').val(),
+                SettingName: $('#UMSettingType option:selected').text(),
+                BetType: cachedSelectSettingType.BetType,
+                IsLive: cachedSelectSettingType.IsLive,
+                SiteId: selSite,
+                Site: $('#sel_opt_newum_' + selSite).attr('title'),
+                Currency: $('#UMCurrency').val(),
+                CurrencyName: $('#UMCurrency').val() === "0" ? "[0] All" : $('#UMCurrency option:selected').text(),
+                BeginTime: $("#UMBeginTime").val(),
+                EndTime: $("#UMEndTime").val(),
+                ShowTime: $("#UMShowTime").val(),
+                LockAddingNew: $('#UMLockAddingNew').is(":checked"),
+                Username: usernamesArray.join(',')
+            };
+
+            cachedNewUMConfigs.push(umConfig);
+        });
+    }
+
+    
 }
 
 function RenderAllNewUMConfigs() {
@@ -417,7 +515,10 @@ function SubmitAddNewUMConfig() {
 
 
         if (divError === "") {
+            InitAddNewUMConfig();
             showAlertMessage("newUMConfigErrMsg", "Insert Successfull.", 0);
+            cachedNewUMConfigs = [];
+            RenderAllNewUMConfigs();
         } else {
             var errorString = "<div class='alertboxerr'>" + divError + "</div>";
             $("#newUMConfigErrMsg").html(errorString);
@@ -483,38 +584,61 @@ function RenderSettingTypeSelect() {
 }
 
 function RenderSiteSelect() {
-    var htmlOptions = [];
+    var multiselectData = [];
     var cachedSites = [];
     var isSelectedReportsBetLists = false;
     var functionType = $('#UMFunctionType').val();
     if (functionType === "101") {
         cachedSites = cachedAllSites;
     } else if (IsReportsBetListsFunctionType(functionType)) {
-        cachedSites = cachedMarkets;
+        cachedSites = cachedCreditSites;
         isSelectedReportsBetLists = true;
     } else {
         cachedSites = cachedCreditSites;
     }
 
     cachedSites.forEach(function (item, index) {
-        htmlOptions.push('<option value="');
-        htmlOptions.push(item.Value);
-        htmlOptions.push('">');
-        htmlOptions.push(item.Text);
-        htmlOptions.push('</option>');
+        multiselectData.push({
+            Id: 'sel_opt_newum_' + item.Value,
+            Value: item.Value,
+            Text: item.Text,
+            Checked: false,
+            Enable: true,
+            CssClass: "",
+            Items: []
+        });
     });
     OnSelectReportsBetListsFunctionType(isSelectedReportsBetLists);
 
-    var siteSelection = $("#UMSite").html(htmlOptions.join(""));
-    siteSelection.select2({
-        minimumInputLength: 0,
-        width: '200px'
+    $('#UMSite').multiSelect({
+        minWidth: 200,
+        maxHeight: 450,
+        shadow: true,
+        showHeader: true,
+        isCheckAll: false,
+        showFooter: false,
+        showFilter: true,
+        checkAllText: "[0] All Sites",
+        noneSelectedText: "Sites",
+        listData: multiselectData,
+        noItemText: "No item selected."
     });
 }
 
-function EditUMConfig(index) {
-    var umConfig = cachedUMConfigData[index];
-    var isDisabledShowTime = IsReportsBetListsFunctionType(umConfig.FunctionType);
+function EditUMConfig() {
+    if (checkedRows.length === 0) {
+        return;
+    }
+
+    var isDisabledShowTime = false;
+    for (var i = 0; i < checkedRows.length; i++) {
+        if (IsReportsBetListsFunctionType(checkedRows[i].FunctionType)) {
+            isDisabledShowTime = true;
+            break;
+        }
+    }
+
+    var umConfig = checkedRows[0];
     var showTimeElement =  $('#UpdUMShowTime').datetimepicker('destroy');
     $('#UpdUMEndTime').datetimepicker('destroy');
     $('#UpdUMBeginTime').datetimepicker('destroy');
@@ -532,7 +656,7 @@ function EditUMConfig(index) {
     $('#UpdUMCurrency').html("[" + umConfig.Currency + "] " + umConfig.CurrencyName);
 
     $('#btnUpdateUMConfig').off();
-    $('#btnUpdateUMConfig').click(function () { return UpdateUMConfig(index); });
+    $('#btnUpdateUMConfig').click(function () { return UpdateUMConfig(isDisabledShowTime); });
     $.ui.dialog.prototype._focusTabbable = function () { };
     $('#edit-umConfig-form').dialog({
         title: 'Edit UMConfig',
@@ -548,48 +672,201 @@ function EditUMConfig(index) {
     });
 }
 
-function DeleteUMConfig(index) {
-    var message = "Are you sure you want to delete this row?";
-    $.ajax({
-        url: 'CheckIsInUMTime?configId=' + cachedUMConfigData[index].ConfigId,
-        type: 'GET',
-        success: function (result) {
-            if (result) {
-                message = 'This row is in UM time. Are you sure you want to delete this row?';
+function CallUpdateUMConfig(umConfig) {
+    return $.ajax({
+        url: 'UpdateUMConfiguration',
+        type: 'POST',
+        dataType: 'json',
+        data: umConfig
+    });
+}
+
+function UpdateUMConfig(isDisabledShowTime) {
+    parent.BlockUI();
+    var beginTime = $('#UpdUMBeginTime').val();
+    var endTime = $('#UpdUMEndTime').val();
+    var showTime = $('#UpdUMShowTime').val();
+    var lockAddingNew = $('#UpdUMLockAddingNew').is(":checked");
+    if (!ValidateUMData('updateUMConfigErrMsg', beginTime, endTime, showTime, isDisabledShowTime)) {
+        parent.jQuery.unblockUI();
+        return;
+    }
+
+    var requests = [];
+    var divError = '';
+    checkedRows.forEach(function (umConfig) {
+        umConfig.BeginTime = beginTime;
+        umConfig.EndTime = endTime;
+        if (!isDisabledShowTime) {
+            umConfig.ShowTime = showTime;
+            umConfig.LockAddingNew = lockAddingNew;
+        }
+
+        requests.push(CallUpdateUMConfig(umConfig));
+    });
+
+    $.when.apply(undefined, requests).then(function () {
+        var responses = arguments;
+        if (checkedRows.length === 1) {
+            if (responses[1] === "success") {
+                if (responses[0].ErrorCode !== 0) {
+                    divError = divError + "Config ID: " + checkedRows[0].ConfigId + ' ' + responses[0].ErrorMessage;
+                }
+            } else {
+                divError = divError + "Internal Error.";
             }
-        },
-        error: function (xhr) {
-            alert('Internal Server Error.');
-        },
-        complete: function () {
-            ShowConfirmDelete(message, cachedUMConfigData[index].ConfigId);
+        } else {
+            for (var j = 0; j < responses.length; j++) {
+                response = responses[j];
+                if (response[1] === "success") {
+                    if (response[0].ErrorCode !== 0) {
+                        divError = divError + "Config ID: " + checkedRows[j].ConfigId + ": " + response[0].ErrorMessage + "</br>";
+                    }
+                } else {
+                    divError = divError + "Config ID: " + checkedRows[j].ConfigId + ": Internal Error.</br>";
+                }
+            }
+        }
+
+
+        if (divError === "") {
+            alert('Update successfully.');
+            $('#edit-umConfig-form').dialog('close');
+            SearchAllUMConfig();
+        } else {
+            parent.jQuery.unblockUI();
+            showAlertMessage('updateUMConfigErrMsg', divError, 1);
         }
     });
-};
+}
 
-function ShowConfirmDelete(message, configId) {
+function DeleteUMConfig() {
+    if (checkedRows.length !== 0) {
+        CheckIsInUMTime();
+    }
+}
+
+function CallCheckUMTime(configId) {
+    return $.ajax({
+        url: 'CheckIsInUMTime?configId=' + configId,
+        type: 'GET'
+    });
+}
+
+function CheckIsInUMTime() {
+    parent.BlockUI();
+    var configIdsInUmTime = [];
+    var divError = "";
+    var requests = [];
+    for (var i = 0; i < checkedRows.length; i++) {
+        var configId = checkedRows[i].ConfigId;
+        requests.push(CallCheckUMTime(configId));
+    }
+
+    $.when.apply(undefined, requests).then(function () {
+        var responses = arguments;
+        if (checkedRows.length === 1) {
+            if (responses[1] === "success") {
+                if (responses[0]) {
+                    configIdsInUmTime.push(checkedRows[0].ConfigId);
+                }
+            } else {
+                divError = divError + "ConfigId " + checkedRows[0].ConfigId +": Internal Error.\n";
+            }
+        } else {
+            for (var j = 0; j < responses.length; j++) {
+                response = responses[j];
+                if (response[1] === "success") {
+                    if (response[0].ErrorCode !== 0) {
+                        configIdsInUmTime.push(checkedRows[j].ConfigId);
+                    }
+                } else {
+                    divError = divError + "ConfigId " + checkedRows[j].ConfigId + ": Internal Error.\n";
+                }
+            }
+        }
+
+
+        parent.jQuery.unblockUI();
+        if (divError === "") {
+            var message = "Are you sure you want to delete selected row(s)?";
+            if (configIdsInUmTime.length > 0) {
+                message = "Config ID: " + configIdsInUmTime.join(', ') + " is in UM time. Are you sure you want to delete selected rows?";
+            }
+
+            ShowConfirmDelete(message, checkedRows);
+        } else {
+            alert(divError);
+        }
+    });
+}
+
+function CallDeleteUMConfig(configId) {
+    return $.ajax({
+        url: 'DeleteUMConfiguration',
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            ConfigId: configId
+        }
+    });
+}
+
+function ShowConfirmDelete(message, deleteRows) {
     if (confirm(message)) {
         parent.BlockUI();
-        $.ajax({
-            url: 'DeleteUMConfiguration',
-            type: 'POST',
-            dataType: 'json',
-            data: {
-                ConfigId: configId
-            },
-            success: function (result) {
-                if (result.ErrorCode === 0) {
-                    alert('Deleted successfully.');
-                    SearchAllUMConfig();
+        var divError = "";
+        var notExistConfigIds = [];
+        var requests = [];
+
+        for (var i = 0; i < deleteRows.length; i++) {
+            var configId = deleteRows[i].ConfigId;
+            requests.push(CallDeleteUMConfig(configId));
+        }
+
+        $.when.apply(undefined, requests).then(function () {
+            var responses = arguments;
+            if (deleteRows.length === 1) {
+                if (responses[1] === "success") {
+                    if (responses[0].ErrorCode !== 0 && response[0].ErrorCode !== 1) {
+                        divError = divError + "Config ID: " + deleteRows[0].ConfigId + ' ' + responses[0].ErrorMessage + "\n";
+                    }
+
+                    if (response[0].ErrorCode === 1) {
+                        notExistConfigIds.push(deleteRows[0].ConfigId);
+                    }
                 } else {
-                    alert(result.ErrorMessage);
+                    divError = divError + "Internal Error.";
                 }
-            },
-            error: function (xhr) {
-                alert('Internal Server Error.');
-            },
-            complete: function () {
-                parent.jQuery.unblockUI();
+            } else {
+                for (var j = 0; j < responses.length; j++) {
+                    response = responses[j];
+                    if (response[1] === "success") {
+                        if (response[0].ErrorCode !== 0 && response[0].ErrorCode !== 1) {
+                            divError = divError + "Config ID: " + deleteRows[j].ConfigId + ": " + response[0].ErrorMessage + "\n";
+                        }
+
+                        if (response[0].ErrorCode === 1) {
+                            notExistConfigIds.push(deleteRows[j].ConfigId);
+                        }
+                    } else {
+                        divError = divError + "Config ID: " + deleteRows[j].ConfigId + ": Internal Error.\n";
+                    }
+                }
+            }
+
+            parent.jQuery.unblockUI();
+            if (notExistConfigIds.length > 0) {
+                message = "Config ID: " + notExistConfigIds.join(', ') + " don't exist.\n";
+                divError = message + divError;
+            }
+
+            if (divError === "" ) {
+                alert('Deleted successfully.');
+                SearchAllUMConfig();
+            } else {
+                alert(divError);
+                SearchAllUMConfig();
             }
         });
     }
@@ -617,41 +894,6 @@ function DeleteOldData() {
             }
         });
     }
-}
-
-function UpdateUMConfig(index) {
-    parent.BlockUI();
-    umConfig = cachedUMConfigData[index];
-    umConfig.BeginTime = $('#UpdUMBeginTime').val();
-    umConfig.EndTime = $('#UpdUMEndTime').val();
-    umConfig.ShowTime = $('#UpdUMShowTime').val();
-    umConfig.LockAddingNew = $('#UpdUMLockAddingNew').is(":checked");
-    if (!ValidateUMData('updateUMConfigErrMsg', umConfig.BeginTime, umConfig.EndTime, umConfig.ShowTime, IsReportsBetListsFunctionType(umConfig.FunctionType))) {
-        parent.jQuery.unblockUI();
-        return;
-    }
-
-    $.ajax({
-        url: 'UpdateUMConfiguration',
-        type: 'POST',
-        dataType: 'json',
-        data: umConfig,
-        success: function (result) {
-            showAlertMessage('updateUMConfigErrMsg', result.ErrorCode == 0 ? 'Updated successfully.' : result.ErrorMessage, result.ErrorCode == 0 ? 0 : 1);
-            if (result.ErrorCode == 0) {
-                setTimeout(function () {
-                    $('#edit-umConfig-form').dialog('close');
-                    SearchAllUMConfig();
-                }, 3000);
-            }
-        },
-        error: function (xhr) {
-            showAlertMessage('updateUMConfigErrMsg', 'Internal Server Error.', 1);
-        },
-        complete: function () {
-            parent.jQuery.unblockUI();
-        }
-    });
 }
 
 $(document).ready(function () {
@@ -722,9 +964,27 @@ $(document).ready(function () {
 
 function SetupUMCalendar(divId) {
     $('#' + divId).datetimepicker("destroy");
+    var _today = GetTodayWithOffset('m/d/y', 8);
+    var _todayTime = GetTodayWithOffset('HH:mm', 8);
     $('#' + divId).datetimepicker({
         format: 'm/d/Y H:i:00',
-        step: 5
+        step: 5,
+        defaultDate: _today, formatDate: 'm/d/y',
+        defaultTime: _todayTime, formatTime: 'H:i'
+    });
+
+    $('#' + divId + '_Trigger').click(function () {
+        jQuery('#' + divId).datetimepicker('show');
+    });
+}
+
+function SetupFilterCalendar(divId) {
+    var _today = GetTodayWithOffset('m/d/y', 8);
+    $('#' + divId).datetimepicker("destroy");
+    $('#' + divId).datetimepicker({
+        timepicker: false,
+        format: 'm/d/Y',
+        defaultDate: _today, formatDate: 'm/d/y'
     });
 
     $('#' + divId + '_Trigger').click(function () {
@@ -760,5 +1020,5 @@ function IsReportsBetListsFunctionType(functionTypeValue) {
 
 $(document).ready(function () {
     GetInitDataAndSearchAllUMConfig();
-    $('#UMCurrency').select2({ width: "154px" });
+    $('#UMCurrency').select2({ width: "200px" });
 });

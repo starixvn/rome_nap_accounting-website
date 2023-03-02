@@ -13,6 +13,23 @@
 <div id="UMConfigContent">
     <div class="filterBox" style="border: solid 1px #7C98A4; overflow: hidden;">
         <div class="filterContent">
+            <div class="floatLeft"><label for="FilterUMFunctionType">Function Type</label></div>
+            <div class="floatLeft w200">
+                <select id="FilterUMFunctionType" class="setting-edit" title="FunctionType"></select>
+            </div>
+            <div class="floatLeft"><label for="FilterUMBeginTime">BeginTime</label></div>
+            <div class="floatLeft w200">
+                <input class="setting-calendar filter_input_txt" id="FilterUMBeginTime" type="text" placeholder="BeginTime (GMT+8)" title="BeginTime (GMT+8)" />
+                <input class="img-date-selector" onclick="return false;" alt="" id="FilterUMBeginTime_Trigger" title="Date selector"
+                       width="18" height="17" src="../App_Themes/Images/calendar.gif" type="image" />
+            </div>
+            <div class="floatLeft"><label for="FilterUMEndTime">EndTime</label></div>
+            <div class="floatLeft w200">
+                <input class="setting-calendar filter_input_txt" id="FilterUMEndTime" type="text" placeholder="EndTime (GMT+8)" title="EndTime (GMT+8)" />
+                <input class="img-date-selector" onclick="return false;" alt="" id="FilterUMEndTime_Trigger" title="Date selector"
+                       width="18" height="17" src="../App_Themes/Images/calendar.gif" type="image" />
+            </div>
+            <div class="floatLeft"><input type="button" value="Search" class="btn" onclick="SearchAllUMConfig()" /></div>
             <div class="floatLeft"><input type="button" value="Add New" class="btn" onclick="OpenNewUMConfig()" /></div>
             <div class="floatLeft"><input type="button" value="Delete Old Data" class="btn" onclick="DeleteOldData()" /></div>
         </div>

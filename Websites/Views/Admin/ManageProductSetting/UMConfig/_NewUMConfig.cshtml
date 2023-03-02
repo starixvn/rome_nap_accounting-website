@@ -12,6 +12,22 @@
     .setting-edit {
         height: 27px;
     }
+
+    #UMSite {
+        background-color: rgb(255, 255, 255);
+        border: 1px solid rgb(170, 170, 170);
+        border-radius: 4px;
+        height: 26px;
+    }
+
+    #UMSite > input {
+        line-height: 26px;
+        height: 26px !important;
+    }
+
+    #UMSite > span {
+        margin-top: -24px;
+    }
 </style>
 <div id="new-umconfig-popup" style="display: none; min-height: 500px;">
     <div style="display: flex;">
@@ -72,7 +88,7 @@
     </div>
    
     <div style="clear: both"></div>
-    <div id="newUMConfigErrMsg" style="margin-top: 20px; word-break: break-all;"></div>
+    <div id="newUMConfigErrMsg" style="margin-top: 20px; word-break: break-all; max-width: 1325px;"></div>
     <div id="gridUMNewContainer" class="grid-container">
         <div id="gridUMNewId" class="freegrid"></div>
         <div style="text-align: center">
