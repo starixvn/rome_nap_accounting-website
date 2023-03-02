@@ -238,5 +238,6 @@
             $('#form').submit();
         }
     </script>
+   <script src="js/Creditterm_Group_Feed.js?v=<%= AccCommon.Version()%>" type="text/javascript"></script>
 </body>
 </html>

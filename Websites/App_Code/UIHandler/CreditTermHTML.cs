@@ -1,3 +1,4 @@
+using Sunplus.Accounting.Business.Security;
 namespace Sunplus.Accounting.Presentation
 {
     using DNAide.Core;
@@ -20,7 +21,6 @@ namespace Sunplus.Accounting.Presentation
     public class CreditTermHTML
     {
         public static string html = string.Empty;
-
         #region Credit Term
 
         public static string GetContentCreditTermFilter(HttpContext context, string groupMaxLoss)
@@ -49,6 +49,7 @@ namespace Sunplus.Accounting.Presentation
         public static string GetContentCreditTerm(HttpContext context, ref string groupMaxLoss)
         {
             html = WebUtils.LoadTemplate("CreditTeam/Creditterm_Group_Feed_Form.htm");
+            var hasTransferPermission = Permissions.GetHostPermission(Enumerations.Functions.Transfer.OtherTrans) ? "1":string.Empty ;
             string formHtml = html;
 
             try
@@ -104,7 +105,7 @@ namespace Sunplus.Accounting.Presentation
 
                 var creditTermService = new CreditTermService();
                 var memberList = creditTermService.GetMemberByGroupId(groupId);
-
+                
                 int totalmember = memberList.Count;
                 if (totalmember <= 1)
                 {
@@ -126,13 +127,17 @@ namespace Sunplus.Accounting.Presentation
                     string jsheadline = string.Empty;
                     string title = string.Empty;
                     string roweven = "evenrow";
+                    string jsTranferPopup = string.Empty;
                     int index = 0;
                     var removeUserFunction = "ExecuteCreditTerm('3', 0, false)";
+                    
                     foreach (var member in memberList)
                     {
                         if (member.CustId > 0)
                         {
-                            _userrow = (string)userrow.Clone();                            
+                            _userrow = (string)userrow.Clone();
+                            jsTranferPopup = "OpenPopupTransfer" + "('" + hasTransferPermission + "','" + member.YesterdayBalance  +
+                                             "','" + member.Username+ "');";
                             if (member.IsGroupHeadline)
                             {
                                 jsheadline = string.Empty;
@@ -176,6 +181,8 @@ namespace Sunplus.Accounting.Presentation
                                member.TotalBalance.StartsWith("-") ?
                                    string.Format("<span style=\"color:#ee0000\">{0}</span>", member.YesterdayBalance) :
                                    member.YesterdayBalance);
+                            
+                            TemplateHandler.Assign(ref _userrow,"{jsTranferPopup}",jsTranferPopup);
                             TemplateHandler.Assign(
                                 ref _userrow,
                                 "{TotalBalance}",
