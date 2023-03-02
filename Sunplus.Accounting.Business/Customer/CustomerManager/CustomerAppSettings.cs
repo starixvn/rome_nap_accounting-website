@@ -23,7 +23,7 @@ namespace Sunplus.Accounting.Business.Customer
         private static IDictionary<string, bool> GetProtectedModeOfferSiteLabel()
         {
             var offerSites = new Dictionary<string, bool>(StringComparer.OrdinalIgnoreCase);
-            var configValue = ConfigurationManager.AppSettings["ProtectedMode:OfferSiteLabel"] ?? string.Empty;
+            var configValue = ConfigurationManager.AppSettings["ProtectedMode:OfferSites"] ?? string.Empty;
             configValue
                 .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
                 .ToList()

@@ -597,27 +597,21 @@ function RenderSiteSelect() {
         cachedSites = cachedCreditSites;
     }
 
-    cachedSites.forEach(function (item, index) {
-        if(item.IsParent){
-            htmlOptions.push('<optgroup label="' + item.Name + '">');
-            item.ChildSites.forEach(function(child, i){
-                htmlOptions.push('<option value="');
-                htmlOptions.push(child.Id);
-                htmlOptions.push('">');
-                htmlOptions.push(child.Name);
-                htmlOptions.push('</option>');
+    var buildSiteData = function (siteList) {
+            var dataList = [];
+            $.each(siteList, function (i, site) {
+                dataList.push({
+                    Id: site.Id,
+                    Value: site.Id,
+                    Text: site.Name,
+                    Checked: true,
+                    Enable: true,
+                    Items: site.IsParent ? buildSiteData(site.ChildSites) : []
+                });
             });
-            htmlOptions.push('</optgroup>');
-        }else{
-            htmlOptions.push('<option value="');
-            htmlOptions.push(item.Id);
-            htmlOptions.push('">');
-            htmlOptions.push(item.Name);
-            htmlOptions.push('</option>');
-        }
-    });
 
-
+            return dataList;
+    };
 
     OnSelectReportsBetListsFunctionType(isSelectedReportsBetLists);
 
@@ -631,7 +625,7 @@ function RenderSiteSelect() {
         showFilter: true,
         checkAllText: "[0] All Sites",
         noneSelectedText: "Sites",
-        listData: multiselectData,
+        listData: buildSiteData(cachedSites),
         noItemText: "No item selected."
     });
 }

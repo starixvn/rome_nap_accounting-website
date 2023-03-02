@@ -1052,7 +1052,7 @@ function ValidateBeforeAddUpdate() {
         return false;
     }
 
-    if (selectedConfig.Sites.length === selectedConfig.ConfigDetail.Config.SiteIdList.length) {
+    if (selectedConfig.SiteList.length === selectedConfig.ConfigDetail.Config.SiteIdList.length) {
         selectedConfig.ConfigDetail.Config.SiteIdList = [0];
     }
     if (selectedConfig.Currencies.length === selectedConfig.ConfigDetail.Config.CurrencyIdList.length) {

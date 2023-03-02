@@ -80,8 +80,8 @@
       <HintPath>..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Tarus.Admin, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Admin.1.0.5-splitsite-07\lib\net461\Fanex.Tarus.Admin.dll</HintPath>
+    <Reference Include="Fanex.Tarus.Admin, Version=1.0.5.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Admin.1.0.5.2-splitsite-01\lib\net461\Fanex.Tarus.Admin.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Security, Version=1.0.1.9, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Security.1.0.1.9\lib\net40\Fanex.Tarus.Security.dll</HintPath>
@@ -127,8 +127,8 @@
     <Reference Include="Sunplus.Accounting.Entities, Version=2.0.2.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Accounting.Entities.2.0.2.1-splitsite-02\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
     </Reference>
-    <Reference Include="Sunplus.Accounting.Services, Version=1.0.2.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.Services.1.0.2.5-splitsite-01\lib\net40\Sunplus.Accounting.Services.dll</HintPath>
+    <Reference Include="Sunplus.Accounting.Services, Version=1.0.2.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Accounting.Services.1.0.2.7-splitsite-01\lib\net40\Sunplus.Accounting.Services.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Data.DataAbstract, Version=2.0.0.9, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Data.DataAbstract.2.0.0.9\lib\net40\Sunplus.Data.DataAbstract.dll</HintPath>

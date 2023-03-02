@@ -136,8 +136,8 @@
     <Reference Include="Fanex.RemotingRef, Version=1.5.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.RemotingRef.1.5.0\lib\net461\Fanex.RemotingRef.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Tarus.Admin, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Admin.1.0.5-splitsite-07\lib\net461\Fanex.Tarus.Admin.dll</HintPath>
+    <Reference Include="Fanex.Tarus.Admin, Version=1.0.5.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Admin.1.0.5.2-splitsite-01\lib\net461\Fanex.Tarus.Admin.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.DataAccess.Implement, Version=1.0.1.6, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.DataAccess.Implement.1.0.1.6\lib\net40\Fanex.Tarus.DataAccess.Implement.dll</HintPath>
@@ -274,8 +274,8 @@
     <Reference Include="Sunplus.Accounting.Entities, Version=2.0.2.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Accounting.Entities.2.0.2.1-splitsite-02\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
     </Reference>
-    <Reference Include="Sunplus.Accounting.Services, Version=1.0.2.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.Services.1.0.2.5-splitsite-01\lib\net40\Sunplus.Accounting.Services.dll</HintPath>
+    <Reference Include="Sunplus.Accounting.Services, Version=1.0.2.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Accounting.Services.1.0.2.7-splitsite-01\lib\net40\Sunplus.Accounting.Services.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Agent.Utilities, Version=3.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Agent.Utilities.3.0.2\lib\net461\Sunplus.Agent.Utilities.dll</HintPath>
