@@ -186,7 +186,7 @@ namespace Sunplus.Accounting.Presentation
                                member.TotalBalance.StartsWith("-") ?
                                    string.Format("<span style=\"color:#ee0000\">{0}</span>", member.YesterdayBalance) :
                                    member.YesterdayBalance);
-                            TemplateHandler.Assign(ref _userrow, "{YesterdayBalanceNoneFormat}", member.YesterdayBalanceNoneFormat);
+                            TemplateHandler.Assign(ref _userrow, "{YesterdayBalanceNoneFormat}", member.YesterdayBalance);
                             TemplateHandler.Assign(ref _userrow,"{jsTranferPopup}",jsTranferPopup);
                            
                             TemplateHandler.Assign(
@@ -195,7 +195,7 @@ namespace Sunplus.Accounting.Presentation
                                 member.TotalBalance.StartsWith("-") ?
                                     string.Format("<span style=\"color:#ee0000\">{0}</span>", member.TotalBalance) :
                                     member.TotalBalance);
-                            TemplateHandler.Assign(ref _userrow, "{TotalBalanceNoneFormat}", member.TotalBalanceNoneFormat);
+                            TemplateHandler.Assign(ref _userrow, "{TotalBalanceNoneFormat}", member.TotalBalance);
                             TemplateHandler.Assign(ref _userrow, "{MaxLoss}", member.MaxLoss);
                             TemplateHandler.Assign(ref _userrow, "{headlineclasstext}", headlineclasstext);
                             TemplateHandler.Assign(ref _userrow, "{removeitem}", removeitem);

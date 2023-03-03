@@ -303,9 +303,7 @@ namespace Sunplus.Accounting.Business.CreditTerm
                         Username = CastAide.AsString(drow["username"]),
                         Currency = CastAide.AsString(drow["currency"]),
                         YesterdayBalance = IBCUtils.FormatHandler.FormatNumber20(drow["yesterdaytotalbalance"]),
-                        YesterdayBalanceNoneFormat =CastAide.AsDecimal(drow["yesterdaytotalbalance"]) ,
                         TotalBalance = IBCUtils.FormatHandler.FormatNumber20(drow["totalbalance"]),
-                        TotalBalanceNoneFormat = CastAide.AsDecimal(drow["totalbalance"]),
                         MaxLoss = GetMaxLossValue(drow["maxloss"]),
                         IsGroupHeadline = CastAide.AsBoolean(drow["isgroupheadline"])
                     });
@@ -323,9 +321,7 @@ namespace Sunplus.Accounting.Business.CreditTerm
                         Username = "Group Total Balance",
                         Currency = "RM",
                         YesterdayBalance = IBCUtils.FormatHandler.FormatNumber20(totalrow["yesterdaytotalbalance_rm"]),
-                        YesterdayBalanceNoneFormat =CastAide.AsDecimal(totalrow["yesterdaytotalbalance_rm"]) ,
                         TotalBalance = IBCUtils.FormatHandler.FormatNumber20(totalrow["totalbalance_rm"]),
-                        TotalBalanceNoneFormat = CastAide.AsDecimal(totalrow["totalbalance_rm"]),
                         MaxLoss = GetMaxLossValue(totalrow["totalmaxloss_rm"]),
                         IsGroupHeadline = false
                     });
