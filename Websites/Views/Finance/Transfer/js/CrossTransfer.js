@@ -2,7 +2,9 @@
     ForexAccDefault: "DIFF10"
 
 };
-
+function closeDialogModal (){
+    parent.ClosePopup();
+}
 transfer.init = function () {
     transfer.tab.init();
     transfer.crossCurrencyTransfer.init();
@@ -210,6 +212,7 @@ transfer.crossCurrencyTransfer = {
                 transfer.utils.showError(data.ErrorMessage);
             } else {
                 transfer.utils.showSuccessMessage("Transfer successfully.");
+                setTimeout(closeDialogModal, 3000);
             }
             transfer.utils.unBlock();
         });
@@ -514,6 +517,7 @@ transfer.crossCurrencyTransfer2 = {
                 transfer.utils.showError(data.ErrorMessage);
             } else {
                 transfer.utils.showSuccessMessage("Transfer successfully.");
+                setTimeout(closeDialogModal, 3000);
             }
             transfer.utils.unBlock();
         });
@@ -753,9 +757,9 @@ transfer.utils = {
         $("#errMsg").hide();
     }
 };
-transfer.forceNumberAmount = function(){
+transfer.forceNumberAmount = function () {
     //tab yesterday
-    $("#txtamount").forceNumber(undefined,true);
+    $("#txtamount").forceNumber(undefined, true);
     $("#txtamount").keyup();
 }
 
@@ -801,7 +805,7 @@ var YesterdayTransactionsForm = {
         if (isNaN(parseFloat(_amount))) {
             return false;
         }
-      //  param.amount = pa(_amount);
+        
         param.amount = param.amount.replace(/,/g, "");
         transfer.utils.blockUI();
         $.post("TransferYesterdayTransactionHandler", param,
@@ -809,8 +813,8 @@ var YesterdayTransactionsForm = {
                 if (parseInt(data.ErrorCode) != 0) {
                     transfer.utils.showError(data.ErrorMessage);
                 } else {
-
                     $("#frmTransfer").attr("src", '../TransferResult.aspx?fuser=' + escape(fromUsername) + "&touser=" + _toUser + "&exrate=" + _exRate);
+                    setTimeout(closeDialogModal, 3000);
                 }
                 transfer.utils.unBlock();
             });

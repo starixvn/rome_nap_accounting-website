@@ -176,7 +176,7 @@ function ClosePopup() {
 }
 
 
-function afterUpdate(autoClose) {
+function afterUpdate(autoClose, time=2000) {
     if (currentExecFrame != null) {
         var duration = currentExecFrame.duration;
         if (duration == null) duration = 0;
@@ -186,6 +186,6 @@ function afterUpdate(autoClose) {
         setTimeout('currentExecFrame=null;', duration + 1000);
     }
     if (autoClose)
-        setTimeout('ClosePopup()', 2000);
+        setTimeout('ClosePopup()', time);
 }
 
