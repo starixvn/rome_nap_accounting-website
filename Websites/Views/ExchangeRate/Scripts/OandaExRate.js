@@ -15,7 +15,8 @@
             dataType: "json",
             data: JSON.stringify(data),
             success: function (rs) {
-                var width = 243 + (80 + 2) * baseCurrencyLength;
+               // var width = 243 + (80 + 2) * baseCurrencyLength;
+                var width = 1155;
                 var height = 550;
                 if (rs.length > 0) {
                     for (var i = 0; i < rs.length; i++) {
@@ -23,12 +24,13 @@
                             endRow = true;
                         arr.push(OANDAExRate.renderRow(rs[i], endRow));
                     }
+                    
                     $("#tblOANDAExRate").html(arr.join(''));
-                    $("#OANDAExRate").removeClass("hidden").reRenderScroller(width, height, true);
+                    $("#OANDAExRate").removeClass("hidden").scroller().reRenderScroller(width, height, false);
                 }
                 else {
                     $("#tblOANDAExRate").html('<tr><td colspan="' + (baseCurrencyLength + 2) + '" style="border-right:0px none"><div class="c b" style="width:' + width + 'px">There is no information available</div></td></tr>');
-                    $("#OANDAExRate").removeClass("hidden").reRenderScroller(width, height, true);
+                    $("#OANDAExRate").removeClass("hidden").scroller().reRenderScroller(width, height, true);
                 }
                 try { parent.jQuery.unblockUI(); } catch (e) { }
             }
