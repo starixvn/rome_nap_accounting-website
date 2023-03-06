@@ -8,7 +8,7 @@
     titleColor: "black",
     backgroundColor: "#fbe3d2"
 };
-userGuide.show = function (fName, title, width, height) {
+userGuide.show = function (fName, title, width, height, zindex=0) {
     this.close();
 
     if (typeof width == "undefined") width = 600;
@@ -34,6 +34,9 @@ userGuide.show = function (fName, title, width, height) {
     divPopup.show();
     divPopup.CenterIt();
     divPopup.css("position", "absolute");
+    if(zindex){
+        divPopup.css("z-index", zindex.toString());
+    }
 };
 
 userGuide.getTopBody = function () {
