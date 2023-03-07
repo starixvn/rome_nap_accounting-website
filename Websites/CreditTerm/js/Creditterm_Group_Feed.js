@@ -6,7 +6,7 @@ function OpenPopupTransfer(permission, value = mockValue, custName = mockVCustNa
     if (!permission) return;
     var url = 'CrossTransfer/Index?fromCustName=' + custName + '&fromAmount=' + value;
 
-    parent.OpenPopup(url, "Transfer", 770, 440, true, true, window, 1500, null, null);
+    parent.OpenPopup(url, "Transfer", 770, 440, true, true, window, 1500, refreshPage,null );
 }
 
 
@@ -39,7 +39,30 @@ function sortColumn(columnIndex, typeColumn) {
         tbody.appendChild(row);
     });
 }
+function refreshPage(){
+    let param = '';
+    param += '&mode=9';
+    param += '&type=' + 4; //type > 3 for wait service delay time update
+    try { parent.jQuery.BlockUI(); } catch (e) { }
+    $.ajax(
+        {
+            type: "POST",
+            url: "../Report/GetData.ashx",
+            data: param,
+            success: GetJSONResult
+        }
+    );
+}
 
+function GetJSONResult(resContent) {
+    let reportInfo = $.evalJSON(resContent);
+    let sData = reportInfo.CreditTerm;
+    $("#sContent").html(sData);
+    try {
+        setTimeout(function () { parent.jQuery.unblockUI(); }, 2000);
+    } catch (e) { }
+
+}
 function getSortFunc(columnIndex, typeColumn, order) {
     if (typeColumn === "string") {
         return (rowA, rowB) => {

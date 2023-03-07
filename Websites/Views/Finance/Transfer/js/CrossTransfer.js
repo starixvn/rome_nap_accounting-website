@@ -3,7 +3,8 @@
 
 };
 function closeDialogModal (){
-    parent.ClosePopup();
+    parent.afterUpdate(true)
+    setTimeout(parent.ClosePopup, 4000);
 }
 transfer.init = function () {
     transfer.tab.init();
@@ -212,7 +213,7 @@ transfer.crossCurrencyTransfer = {
                 transfer.utils.showError(data.ErrorMessage);
             } else {
                 transfer.utils.showSuccessMessage("Transfer successfully.");
-                setTimeout(closeDialogModal, 3000);
+                closeDialogModal()
             }
             transfer.utils.unBlock();
         });
@@ -517,7 +518,7 @@ transfer.crossCurrencyTransfer2 = {
                 transfer.utils.showError(data.ErrorMessage);
             } else {
                 transfer.utils.showSuccessMessage("Transfer successfully.");
-                setTimeout(closeDialogModal, 3000);
+                closeDialogModal()
             }
             transfer.utils.unBlock();
         });
@@ -814,7 +815,7 @@ var YesterdayTransactionsForm = {
                     transfer.utils.showError(data.ErrorMessage);
                 } else {
                     $("#frmTransfer").attr("src", '../TransferResult.aspx?fuser=' + escape(fromUsername) + "&touser=" + _toUser + "&exrate=" + _exRate);
-                    setTimeout(closeDialogModal, 3000);
+                    closeDialogModal()
                 }
                 transfer.utils.unBlock();
             });
