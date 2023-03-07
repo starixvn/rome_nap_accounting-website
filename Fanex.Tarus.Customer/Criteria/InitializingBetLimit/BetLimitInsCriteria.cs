@@ -1,9 +1,10 @@
 ﻿namespace Fanex.Tarus.Customer.Criteria.InitializingBetLimit
 {
-    using System.Collections.Generic;
-    using System.Text;
     using Fanex.NAP.Framework.Data;
     using Fanex.Tarus.Customer.Entities.InitializingBetLimit;
+    using Sunplus.Accounting.Core.Configurations;
+    using System.Collections.Generic;
+    using System.Text;
 
     public class BetLimitInsCriteria : CriteriaBase
     {
@@ -56,6 +57,8 @@
         public int ErrCode { get; set; }
 
         public string ErrMsg { get; set; }
+
+        public byte SettingStatus => WebSettings.SettingStatus;
 
         public override string GetSettingKey()
             => "Acc_InitializingGlobal_BetLimitIns";
