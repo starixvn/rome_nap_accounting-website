@@ -3,8 +3,13 @@
 
 };
 function closeDialogModal (){
-    parent.afterUpdate(true)
-    setTimeout(parent.ClosePopup, 4000);
+    const isPopup =window?.location?.toString().includes("isOpenInPopup");
+    if(isPopup){
+        parent.afterUpdate(true)
+        setTimeout(function (){
+            parent.ClosePopup();
+        }, 4000);
+    }
 }
 transfer.init = function () {
     transfer.tab.init();
@@ -760,7 +765,7 @@ transfer.utils = {
 };
 transfer.forceNumberAmount = function () {
     //tab yesterday
-    $("#txtamount").forceNumber(undefined, true);
+    $("#txtamount").forceNumber(undefined, true,true);
     $("#txtamount").keyup();
 }
 

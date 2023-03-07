@@ -5,8 +5,9 @@
  * @usage: $(selector).forceNumber();
  *
  */
-$.fn.forceNumber = function (keyupCallback, isDecimalSupport) {
+$.fn.forceNumber = function (keyupCallback, isDecimalSupport, isNegativeNumberSupport) {
     isDecimalSupport = isDecimalSupport || false;
+    isNegativeNumberSupport = isNegativeNumberSupport || false;
     var number_0 = 48,
         number_9 = 57,
         numpad_0 = 96,
@@ -25,7 +26,8 @@ $.fn.forceNumber = function (keyupCallback, isDecimalSupport) {
         c = 67,
         v = 86,
         x = 88,
-        point = 190;
+        point = 190,
+        negativeCode=[173,189,109];
 
     function isNumeric(text) {
         var regExp = /^-?(\d+|\d+\.\d*|\d*\.\d+)$/;
@@ -46,7 +48,8 @@ $.fn.forceNumber = function (keyupCallback, isDecimalSupport) {
             code === escape ||
             code === del ||
             (isDecimalSupport && code === numpad_point) ||
-            (isDecimalSupport && code === point)) {
+            (isDecimalSupport && code === point) ||
+            (isNegativeNumberSupport && (negativeCode.includes(code)))) {
             return true;
         }
         var ctrlKey = e.ctrlKey;
@@ -57,6 +60,9 @@ $.fn.forceNumber = function (keyupCallback, isDecimalSupport) {
     function keyupHandler(e) {
         var text = this.value;
         if (text.length === 0) {
+            return;
+        }
+        if (isNegativeNumberSupport && text === '-') {
             return;
         }
 
@@ -71,7 +77,10 @@ $.fn.forceNumber = function (keyupCallback, isDecimalSupport) {
         if (number !== 0 && !isEndWithDotOrZero) {
             this.value = number + (isEndWithOneDot ? "." : "");
         }
-
+        if (number==="NaN") {
+            this.value="";
+        }
+        
         if (keyupCallback && typeof keyupCallback === "function") {
             keyupCallback(this);
         }

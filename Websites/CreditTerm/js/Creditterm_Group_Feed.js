@@ -4,9 +4,9 @@ const mockVCustName = 'SuperTest1'
 //use in Creditterm_Group_Feed_Form.htm
 function OpenPopupTransfer(permission, value = mockValue, custName = mockVCustName) {
     if (!permission) return;
-    var url = 'CrossTransfer/Index?fromCustName=' + custName + '&fromAmount=' + value;
+    var url = 'CrossTransfer/Index?fromCustName=' + custName + '&fromAmount=' + value +'&isOpenInPopup=' + '1' ;
 
-    parent.OpenPopup(url, "Transfer", 770, 440, true, true, window, 1500, refreshPage,null );
+    parent.OpenPopup(url, "Transfer", 770, 440, true, true, window, 0, refreshPage,null );
 }
 
 
