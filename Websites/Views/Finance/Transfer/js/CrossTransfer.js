@@ -765,7 +765,8 @@ transfer.utils = {
 };
 transfer.forceNumberAmount = function () {
     //tab yesterday
-    $("#txtamount").forceNumber(undefined, true,true);
+    $("#txtamount").forceNumber(undefined, {isDecimalSupport :true, isNegativeNumberSupport:true,maximumFractionDigits:4 });
+
     $("#txtamount").keyup();
 }
 

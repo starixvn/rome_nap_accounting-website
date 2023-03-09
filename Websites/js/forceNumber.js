@@ -5,9 +5,11 @@
  * @usage: $(selector).forceNumber();
  *
  */
-$.fn.forceNumber = function (keyupCallback, isDecimalSupport, isNegativeNumberSupport) {
-    isDecimalSupport = isDecimalSupport || false;
-    isNegativeNumberSupport = isNegativeNumberSupport || false;
+$.fn.forceNumber = function (keyupCallback, options) {
+    isDecimalSupport = options.isDecimalSupport || false;
+    isNegativeNumberSupport = options.isNegativeNumberSupport || false;
+    minimumFractionDigits = options.minimumFractionDigits || 0;
+    maximumFractionDigits = options.maximumFractionDigits || 2;
     var number_0 = 48,
         number_9 = 57,
         numpad_0 = 96,
@@ -68,15 +70,17 @@ $.fn.forceNumber = function (keyupCallback, isDecimalSupport, isNegativeNumberSu
 
         text = text.replace(/\,/g, "");
         var isEndWithOneDot = text.slice(-1) === '.' && text.slice(-2) !== '..';
-        var isEndWithDotOrZero = text.slice(-2) == '0.' || text.slice(-2) == '.0' || text.slice(-3) == '0.0';
+        var isEndWithDotOrZero = text.slice(-2) == '0.' || text.slice(-2) == '.0' || text.slice(-3) == '0.0' || text.split(".")[1]==0 ;
         if (text.replace(/^\.+|\.+$/g, "") === "") {
             text = "0";
         }
-
-        var number = parseFloat(text.replace(/^\.+|\.+$/g, "")).toLocaleString("en-US", { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+        
+        var number = parseFloat(text.replace(/^\.+|\.+$/g, "")).toLocaleString("en-US", { minimumFractionDigits, maximumFractionDigits });
         if (number !== 0 && !isEndWithDotOrZero) {
             this.value = number + (isEndWithOneDot ? "." : "");
         }
+        
+        
         if (number==="NaN") {
             this.value="";
         }
