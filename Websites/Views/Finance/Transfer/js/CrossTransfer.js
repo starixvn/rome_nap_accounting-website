@@ -5,7 +5,7 @@
 function closeDialogModal (){
     const isPopup =window?.location?.toString().includes("isOpenInPopup");
     if(isPopup){
-        parent.afterUpdate(true)
+        parent.afterUpdate(true);
         setTimeout(function (){
             parent.ClosePopup();
         }, 4000);

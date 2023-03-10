@@ -6,10 +6,12 @@ function OpenPopupTransfer(permission, value = mockValue, custName = mockVCustNa
     if (!permission) return;
     var url = 'CrossTransfer/Index?fromCustName=' + custName + '&fromAmount=' + value +'&isOpenInPopup=' + '1' ;
 
-    parent.OpenPopup(url, "Transfer", 770, 440, true, true, window, 0, refreshPage,null );
+    parent.OpenPopup(url, "Transfer", 770, 440, true, true, window, 0, function (){refreshPage(); removeGuideline();},removeGuideline );
 }
 
-
+function removeGuideline (){
+    $($(window.top.document).find("#content").get(0).contentDocument).find("div[ugpopup]").remove();
+}
 function sortColumn(columnIndex, typeColumn) {
     const table = document.getElementById("creditTermTable");
     const headers = table.rows[0].cells;
