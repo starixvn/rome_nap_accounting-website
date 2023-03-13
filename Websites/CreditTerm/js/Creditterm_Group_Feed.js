@@ -12,7 +12,12 @@ function OpenPopupTransfer(permission, value = mockValue, custName = mockVCustNa
 function removeGuideline (){
     $($(window.top.document).find("#content").get(0).contentDocument).find("div[ugpopup]").remove();
 }
-function sortColumn(columnIndex, typeColumn) {
+var cacheSortSate={
+    columnIndex:1,
+    typeColumn: "string",
+    defaultSort: "asc"
+}
+function sortColumn(columnIndex, typeColumn, defaultSort=undefined) {
     const table = document.getElementById("creditTermTable");
     const headers = table.rows[0].cells;
     const canSortHeadersIndex = Array.from(headers).reduce((acc, cell, index) => {
@@ -24,8 +29,10 @@ function sortColumn(columnIndex, typeColumn) {
 
     const headerClicked = headers[columnIndex];
     const isAsc = headerClicked.classList.contains("asc");
-    const order = isAsc ? "desc" : "asc";
-
+    let order = defaultSort || isAsc ? "desc" : "asc";
+    if(defaultSort) {
+        order = defaultSort;
+    }
     for (const element of canSortHeadersIndex) {
         headers[element].classList.remove("asc", "desc");
     }
@@ -36,6 +43,7 @@ function sortColumn(columnIndex, typeColumn) {
     const sortFunc = getSortFunc(columnIndex, typeColumn, order);
 
     rows.sort(sortFunc);
+    cacheSortSate={columnIndex:columnIndex,typeColumn:typeColumn,defaultSort:order};
     rows.forEach((row, index) => {
         row.cells[0].textContent = index + 1;
         tbody.appendChild(row);
@@ -60,10 +68,11 @@ function GetJSONResult(resContent) {
     let reportInfo = $.evalJSON(resContent);
     let sData = reportInfo.CreditTerm;
     $("#sContent").html(sData);
+    sortColumn(cacheSortSate.columnIndex,cacheSortSate.typeColumn,cacheSortSate.defaultSort);
     try {
         setTimeout(function () { parent.jQuery.unblockUI(); }, 2000);
     } catch (e) { }
-
+    
 }
 function getSortFunc(columnIndex, typeColumn, order) {
     if (typeColumn === "string") {
