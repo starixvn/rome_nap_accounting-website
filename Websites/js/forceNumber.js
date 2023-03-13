@@ -38,6 +38,9 @@ $.fn.forceNumber = function (keyupCallback, options) {
 
     function keydownHandler(e) {
         var code = e.which || e.keyCode;
+        if((isDecimalSupport && code === numpad_point) || (isDecimalSupport && code === point) ){
+            return !($(this).val() === "" || $(this).val().indexOf(".") >= 0);
+        }
         if (number_0 <= code && code <= number_9 ||
             numpad_0 <= code && code <= numpad_9 ||
             code === end ||
@@ -49,8 +52,7 @@ $.fn.forceNumber = function (keyupCallback, options) {
             code === enter ||
             code === escape ||
             code === del ||
-            (isDecimalSupport && code === numpad_point) ||
-            (isDecimalSupport && code === point) ||
+            
             (isNegativeNumberSupport && (negativeCode.includes(code)))) {
             return true;
         }
@@ -61,6 +63,8 @@ $.fn.forceNumber = function (keyupCallback, options) {
 
     function keyupHandler(e) {
         var text = this.value;
+        var backupValue = $(this).val();
+        var currentPosition =  $(this).caret().start;
         if (text.length === 0) {
             return;
         }
@@ -84,7 +88,13 @@ $.fn.forceNumber = function (keyupCallback, options) {
         if (number==="NaN") {
             this.value="";
         }
-        
+        var numberIncreasedChars = this.value.length - backupValue.length;
+        if (numberIncreasedChars >= 0) {
+            $(this).setCaretPosition(currentPosition + numberIncreasedChars);
+        }
+        else {
+            $(this).setCaretPosition(currentPosition);
+        }
         if (keyupCallback && typeof keyupCallback === "function") {
             keyupCallback(this);
         }
