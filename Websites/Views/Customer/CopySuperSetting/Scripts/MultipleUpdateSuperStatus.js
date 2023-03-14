@@ -176,7 +176,7 @@ function MultipleUpdateSuperStatus_UpdateProtectedStatus(isProtected) {
                 IsProtected: isProtected
             };
 
-            updateData.Supers.map(o => request.CustList.push({ CustId: o.CustId, UserName: o.UserName, Site: o.Site }));
+            updateData.Supers.map(o => request.CustList.push({ CustId: o.CustId, UserName: o.UserName, Site: o.Site, SiteLabel: o.SiteLabel }));
             $.ajax({
                 type: "POST",
                 url: "../MultipleUpdateSuperStatus/UpdateProtectedStatus",

@@ -13,5 +13,7 @@ namespace Fanex.Tarus.Customer.Requests.MultipleUpdateSuperStatus
         public string UserName { get; set; }
 
         public string Site { get; set; }
+
+        public string SiteLabel { get; set; }
     }
 }
