@@ -24,7 +24,7 @@
 <script src="~/js/forceNumber.js?version=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" type="text/javascript"></script>
 <script type="text/javascript">
     var fromUsername = '@Model.FromCustName';
-    
+    var rootUrl = '@Url.Content("~")';
     var showHelpMultiCrossTran = function (functionName) {
         var url = "UserGuide/View.aspx?functionName=" + functionName;
         ShowPopupSettle(url, "Multiple Cross-Currency Finance Transfer", 720, 600, 50, 100);

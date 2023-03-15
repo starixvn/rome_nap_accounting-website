@@ -19,7 +19,7 @@ userGuide.show = function (fName, title, width, height, zindex=0) {
     this.fName = fName;
     this.title = title;
 
-    this.path = this.getAppPath() + "UserGuide/";
+    this.path = (rootUrl || this.getAppPath()) + "UserGuide/";
     this.imgPath = this.path + "image/";
 
     var topBody = this.getTopBody();
