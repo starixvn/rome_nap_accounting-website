@@ -148,7 +148,8 @@ namespace Fanex.Tarus.BetList.DataAccess.Results
                 BetID = criteria.BetId.ToString(),
                 Bettype = criteria.BetType,
                 GameDetails = new List<GameDetail>(),
-                SettlementStatus = reader["SettlementStatus"] != DBNull.Value ? Convert.ToByte(reader["SettlementStatus"]) : default(byte)
+                SettlementStatus = reader["SettlementStatus"] != DBNull.Value ? Convert.ToByte(reader["SettlementStatus"]) : default(byte),
+                NoHTScore = reader["NoHTScore"] != DBNull.Value ? Convert.ToBoolean(reader["NoHTScore"]) : false,
             };
         }
 

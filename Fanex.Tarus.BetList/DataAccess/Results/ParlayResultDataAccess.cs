@@ -174,6 +174,7 @@ namespace Fanex.Tarus.BetList.DataAccess.Results
                 GoalRecord = reader["goalrecord"] != DBNull.Value ? reader["goalrecord"].ToString() : string.Empty,
                 IsHTCal = reader["IsHTCal"] != DBNull.Value ? Convert.ToBoolean(reader["IsHTCal"]) : false,
                 Calculate = reader["Calculate"] != DBNull.Value ? Convert.ToBoolean(reader["Calculate"]) : false,
+                NoHTScore = reader["NoHTScore"] != DBNull.Value ? Convert.ToBoolean(reader["NoHTScore"]) : false,
                 RefNo = string.Empty,
                 GameDetails = new List<GameDetail>(),
                 Bettype = GetBetTypeFromToken(reader),
