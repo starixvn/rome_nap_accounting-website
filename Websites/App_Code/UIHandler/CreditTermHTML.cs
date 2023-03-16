@@ -7,6 +7,7 @@ namespace Sunplus.Accounting.Presentation
     using Sunplus.Accounting.Core.Web;
     using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
     using Sunplus.Accounting.WcfServiceLibrary.CreditTerm;
+    using Sunplus.Accounting.Business.Security;
     using System;
     using System.Collections.Generic;
     using System.Text;
@@ -20,7 +21,6 @@ namespace Sunplus.Accounting.Presentation
     public class CreditTermHTML
     {
         public static string html = string.Empty;
-
         #region Credit Term
 
         public static string GetContentCreditTermFilter(HttpContext context, string groupMaxLoss)
@@ -49,6 +49,7 @@ namespace Sunplus.Accounting.Presentation
         public static string GetContentCreditTerm(HttpContext context, ref string groupMaxLoss)
         {
             html = WebUtils.LoadTemplate("CreditTeam/Creditterm_Group_Feed_Form.htm");
+            var hasTransferPermission = Permissions.GetHostPermission(Enumerations.Functions.Transfer.OtherTrans) ;
             string formHtml = html;
 
             try
@@ -104,7 +105,7 @@ namespace Sunplus.Accounting.Presentation
 
                 var creditTermService = new CreditTermService();
                 var memberList = creditTermService.GetMemberByGroupId(groupId);
-
+                
                 int totalmember = memberList.Count;
                 if (totalmember <= 1)
                 {
@@ -126,13 +127,21 @@ namespace Sunplus.Accounting.Presentation
                     string jsheadline = string.Empty;
                     string title = string.Empty;
                     string roweven = "evenrow";
+                    string jsTranferPopup = string.Empty;
                     int index = 0;
                     var removeUserFunction = "ExecuteCreditTerm('3', 0, false)";
+                    
                     foreach (var member in memberList)
                     {
                         if (member.CustId > 0)
                         {
-                            _userrow = (string)userrow.Clone();                            
+                            _userrow = (string)userrow.Clone();
+
+                            if (hasTransferPermission)
+                            {
+                                jsTranferPopup = "OpenPopupTransfer" + "('1','" + member.YesterdayBalance  + "','" + member.Username+ "');";
+                                TemplateHandler.Assign(ref _userrow,"{canClick}","canClick");
+                            }
                             if (member.IsGroupHeadline)
                             {
                                 jsheadline = string.Empty;
@@ -167,6 +176,7 @@ namespace Sunplus.Accounting.Presentation
                             TemplateHandler.Assign(ref _userrow, "{row-even}", roweven);
                             TemplateHandler.Assign(ref _userrow, "{No}", ++index);
                             TemplateHandler.Assign(ref _userrow, "{CustId}", member.Username + " " + headline);
+                            TemplateHandler.Assign(ref _userrow, "{OnlyUserName}", member.Username);
                             TemplateHandler.Assign(ref _userrow, "{UserName}", member.Username + " " + headline);
                             TemplateHandler.Assign(ref _userrow, "{headline}", headlineclass);
                             TemplateHandler.Assign(ref _userrow, "{Currency}", member.Currency);
@@ -176,12 +186,16 @@ namespace Sunplus.Accounting.Presentation
                                member.TotalBalance.StartsWith("-") ?
                                    string.Format("<span style=\"color:#ee0000\">{0}</span>", member.YesterdayBalance) :
                                    member.YesterdayBalance);
+                            TemplateHandler.Assign(ref _userrow, "{YesterdayBalanceNoneFormat}", member.YesterdayBalance);
+                            TemplateHandler.Assign(ref _userrow,"{jsTranferPopup}",jsTranferPopup);
+                           
                             TemplateHandler.Assign(
                                 ref _userrow,
                                 "{TotalBalance}",
                                 member.TotalBalance.StartsWith("-") ?
                                     string.Format("<span style=\"color:#ee0000\">{0}</span>", member.TotalBalance) :
                                     member.TotalBalance);
+                            TemplateHandler.Assign(ref _userrow, "{TotalBalanceNoneFormat}", member.TotalBalance);
                             TemplateHandler.Assign(ref _userrow, "{MaxLoss}", member.MaxLoss);
                             TemplateHandler.Assign(ref _userrow, "{headlineclasstext}", headlineclasstext);
                             TemplateHandler.Assign(ref _userrow, "{removeitem}", removeitem);

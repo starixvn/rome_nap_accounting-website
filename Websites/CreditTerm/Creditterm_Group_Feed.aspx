@@ -11,6 +11,7 @@
     <link href="../App_Themes/Public/common.css" rel="stylesheet" type="text/css" />
     <link href="../App_Themes/Public/image.css" rel="stylesheet" type="text/css" />
     <link href="../App_Themes/CreditTerm/creditterm.css" rel="stylesheet" type="text/css" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
     <link href="../App_Themes/Public/Message.css?v1" rel="stylesheet" type="text/css" />
 
     <link href="../js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css" rel="stylesheet" type="text/css" />
@@ -238,5 +239,6 @@
             $('#form').submit();
         }
     </script>
+   <script src="js/Creditterm_Group_Feed.js?v=<%= AccCommon.Version()%>" type="text/javascript"></script>
 </body>
 </html>

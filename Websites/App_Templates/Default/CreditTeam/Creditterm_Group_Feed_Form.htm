@@ -34,24 +34,27 @@
 {scriptRedirectWhenNoUser}
 <!--DataContent-->
 <div id="dvcontent">
-    <table class="tbllayout" cellspacing="1">
-        <tr class="title">
-            <td>#</td>
-            <td>UserName</td>
-            <td style="width:100px;">Currency</td>
-            <td style="width:100px;">Yesterday Balance</td>
-            <td style="width:100px;">Total Balance</td>
-            <td style="width:100px;">Max Loss</td>
-            <td style="width:100px;">Set Headline</td>
-            <td style="width:100px;"><input type="checkbox" id="chkcheckall" onclick="checkall();" /></td>
-        </tr>
+    <table class="tbllayout" cellspacing="1" id="creditTermTable">
+        <thead>
+            <tr class="title">
+                <th>#</th>
+                <th class="sorter" onclick="sortColumn(1,'string')" >UserName</th>
+                <th class="sorter" onclick="sortColumn(2,'string')" style="width:100px;">Currency</th>
+                <th class="sorter" onclick="sortColumn(3,'number')" style="width:100px;">Yesterday Balance</th>
+                <th class="sorter" onclick="sortColumn(4,'number')" style="width:100px;">Total Balance</th>
+                <th style="width:100px;">Max Loss</th>
+                <th style="width:100px;">Set Headline</th>
+                <th style="width:100px;"><input type="checkbox" id="chkcheckall" onclick="checkall();" /></th>
+            </tr>
+        </thead>
+       <tbody>
         <!--UserRow-->
         <tr align="center" class="{row-even}">
             <td>{No}</td>
-            <td class="{headlineclasstext}">{UserName}</td>
-            <td class="c">{Currency}</td>
-            <td class="r">{YesterdayTotalBalance}</td>
-            <td class="r">{TotalBalance}</td>
+            <td class="{headlineclasstext}" value="{OnlyUserName}">{UserName}</td>
+            <td class="c" value="{Currency}" >{Currency}</td>
+            <td class="r {canClick}" onclick="{jsTranferPopup}" value="{YesterdayBalanceNoneFormat}">{YesterdayTotalBalance}</td>
+            <td class="r" value="{TotalBalanceNoneFormat}">{TotalBalance} </td>
             <td class="r">{MaxLoss}</td>
             <td class="c">
                 <img src="{headline}" onclick="{jsaddheadline}" title="{title}" width="16px" height="14px" border="0" style="cursor:pointer;" />
@@ -60,6 +63,9 @@
         </tr>
         <!--/UserRow-->
         {UserRowList}
+         </tbody>
+        <tfoot>
+        
         <tr class="title">
             <td colspan="2" class="r b">Group Total Balance</td>
             <td class="c b">RM</td>
@@ -80,6 +86,7 @@
             <td></td>
             <td class="c"><input class="btn" onclick="{removeUserFunction}" type="button" value="Remove" name="btnremove" /></td>
         </tr>
+        </tfoot>
     </table>
 </div>
 <!--/DataContent-->

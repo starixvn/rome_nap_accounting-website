@@ -1,11 +1,21 @@
 ﻿var transfer = {
     ForexAccDefault: "DIFF10"
-};
 
+};
+function closeDialogModal (){
+    const isPopup =window?.location?.toString().includes("isOpenInPopup");
+    if(isPopup){
+        parent.afterUpdate(true);
+        setTimeout(function (){
+            parent.ClosePopup();
+        }, 4000);
+    }
+}
 transfer.init = function () {
     transfer.tab.init();
     transfer.crossCurrencyTransfer.init();
     transfer.crossCurrencyTransfer2.init();
+    transfer.forceNumberAmount();
 };
 
 transfer.tab = {
@@ -52,6 +62,7 @@ transfer.tab = {
     }
 };
 
+//tab 2
 transfer.crossCurrencyTransfer = {
     showExRateFromUser: function () {
         transfer.utils.hideMessage();
@@ -65,7 +76,7 @@ transfer.crossCurrencyTransfer = {
             $("#divAjaxLoaderImageFromUser").hide();
             return;
         }
-        var param = { username: $("#tbxFromUser").val() };
+        var param = {username: $("#tbxFromUser").val()};
         $.get("SelectCustomerExRate", param, $.proxy(function (rs) {
             if (rs == null || typeof rs == "undefined" || typeof rs.username == "undefined") {
                 $("#spanCurrencyFromUser").text('');
@@ -73,8 +84,7 @@ transfer.crossCurrencyTransfer = {
                 $("#trSystemTransExRate").hide();
                 transfer.utils.showError("User does not exist");
                 this.rowFromUser = null;
-            }
-            else {
+            } else {
                 this.rowFromUser = rs;
                 $("#spanCurrencyFromUser").text(rs.currency);
                 $("#spanExRateFromUser").text(rs.actualrate);
@@ -95,7 +105,7 @@ transfer.crossCurrencyTransfer = {
             $("#divAjaxLoaderImageToUser").hide();
             return;
         }
-        var param = { username: $("#tbxToUser").val() };
+        var param = {username: $("#tbxToUser").val()};
         $.get("SelectCustomerExRate", param, $.proxy(function (rs) {
             if (rs == null || typeof rs == "undefined" || typeof rs.username == "undefined") {
                 $("#spanCurrencyToUser").text('');
@@ -103,8 +113,7 @@ transfer.crossCurrencyTransfer = {
                 $("#trSystemTransExRate").hide();
                 transfer.utils.showError("User does not exist");
                 this.rowToUser = null;
-            }
-            else {
+            } else {
                 this.rowToUser = rs;
                 $("#spanCurrencyToUser").text(rs.currency);
                 $("#spanExRateToUser").text(rs.actualrate);
@@ -168,12 +177,10 @@ transfer.crossCurrencyTransfer = {
                 transfer.utils.showError("From amount or To amount is invalid");
                 return false;
             }
-        }
-        else if ($("#tbxFromAmount").val() == "") {
+        } else if ($("#tbxFromAmount").val() == "") {
             transfer.utils.showError("From amount is invalid.");
             return false;
-        }
-        else if ($("#tbxToAmount").val() == "") {
+        } else if ($("#tbxToAmount").val() == "") {
             transfer.utils.showError("To amount is invalid.");
             return false;
         }
@@ -182,8 +189,7 @@ transfer.crossCurrencyTransfer = {
     showTransExRate: function () {
         if (transfer.crossCurrencyTransfer.checkTransferAmount() == false) {
             return;
-        }
-        else {
+        } else {
             transfer.utils.hideMessage();
             var fromAmount = parseFloat(transfer.utils.removeAllExistCharacter($("#tbxFromAmount").val(), ","));
             var toAmount = parseFloat(transfer.utils.removeAllExistCharacter($("#tbxToAmount").val(), ","));
@@ -210,9 +216,9 @@ transfer.crossCurrencyTransfer = {
         $.post("CrossCurrencyTransferInsert", param, function (data) {
             if (parseInt(data.ErrorCode) != 0) {
                 transfer.utils.showError(data.ErrorMessage);
-            }
-            else {
+            } else {
                 transfer.utils.showSuccessMessage("Transfer successfully.");
+                closeDialogModal()
             }
             transfer.utils.unBlock();
         });
@@ -226,8 +232,7 @@ transfer.crossCurrencyTransfer = {
                 }
                 if ($("#hiddenForexAccount").val() != "") {
                     $("#selectForexAccount").val($("#hiddenForexAccount").val());
-                }
-                else {
+                } else {
                     $("#selectForexAccount").val(transfer.ForexAccDefault);
                 }
             }
@@ -241,13 +246,12 @@ transfer.crossCurrencyTransfer = {
             }
             if (e.keyCode == 13) {
                 transfer.crossCurrencyTransfer.showExRateFromUser();
-            }
-            else {
+            } else {
                 this.timeoutID = setTimeout(
-                        $.proxy(function () {
-                            clearTimeout(this.timeoutID);
-                            transfer.crossCurrencyTransfer.showExRateFromUser();
-                        }, this), 1000);
+                    $.proxy(function () {
+                        clearTimeout(this.timeoutID);
+                        transfer.crossCurrencyTransfer.showExRateFromUser();
+                    }, this), 1000);
             }
 
         });
@@ -259,13 +263,12 @@ transfer.crossCurrencyTransfer = {
             }
             if (e.keyCode == 13) {
                 transfer.crossCurrencyTransfer.showExRateToUser();
-            }
-            else {
+            } else {
                 this.timeoutID = setTimeout(
-                        $.proxy(function () {
-                            transfer.crossCurrencyTransfer.showExRateToUser();
-                            clearTimeout(this.timeoutID);
-                        }, this)
+                    $.proxy(function () {
+                        transfer.crossCurrencyTransfer.showExRateToUser();
+                        clearTimeout(this.timeoutID);
+                    }, this)
                     , 1000);
             }
         });
@@ -282,13 +285,12 @@ transfer.crossCurrencyTransfer = {
 
             if (e.keyCode == 13) {
                 transfer.crossCurrencyTransfer.showTransExRate();
-            }
-            else {
+            } else {
                 this.timeoutID = setTimeout(
-                        $.proxy(function () {
-                            transfer.crossCurrencyTransfer.showTransExRate();
-                            clearTimeout(this.timeoutID);
-                        }, this)
+                    $.proxy(function () {
+                        transfer.crossCurrencyTransfer.showTransExRate();
+                        clearTimeout(this.timeoutID);
+                    }, this)
                     , 1000);
             }
         });
@@ -301,8 +303,7 @@ transfer.crossCurrencyTransfer = {
             }
             if (e.keyCode == 13) {
                 transfer.crossCurrencyTransfer.showTransExRate();
-            }
-            else {
+            } else {
                 this.timeoutID = setTimeout(transfer.crossCurrencyTransfer.showTransExRate, 1000);
             }
         });
@@ -315,35 +316,27 @@ transfer.crossCurrencyTransfer = {
             if (transfer.crossCurrencyTransfer.rowFromUser == null || typeof transfer.crossCurrencyTransfer.rowFromUser == "undefined") {
                 transfer.utils.showError("From user is invalid.");
                 return;
-            }
-            else if (isNaN(fromAmount) || fromAmount == 0) {
+            } else if (isNaN(fromAmount) || fromAmount == 0) {
                 transfer.utils.showError("From amount is invalid.");
                 return false;
-            }
-            else if (transfer.crossCurrencyTransfer.rowToUser == null || typeof transfer.crossCurrencyTransfer.rowToUser == "undefined") {
+            } else if (transfer.crossCurrencyTransfer.rowToUser == null || typeof transfer.crossCurrencyTransfer.rowToUser == "undefined") {
                 transfer.utils.showError("To user is invalid.");
                 return;
-            }
-            else if (isNaN(toAmount) || toAmount == 0) {
+            } else if (isNaN(toAmount) || toAmount == 0) {
                 transfer.utils.showError("To amount is invalid.");
                 return false;
-            }
-            else if (transfer.crossCurrencyTransfer.rowToUser.actualrate == 0) {
+            } else if (transfer.crossCurrencyTransfer.rowToUser.actualrate == 0) {
                 transfer.utils.showError("System Ex.Rate is invalid.");
                 return;
-            }
-            else if (transfer.crossCurrencyTransfer.checkTransferAmountOnTransfer() == false) {
+            } else if (transfer.crossCurrencyTransfer.checkTransferAmountOnTransfer() == false) {
                 return;
-            }
-            else if ($("#tbxDescription").val().indexOf(">") >= 0 || $("#tbxDescription").val().indexOf("<") >= 0) {
+            } else if ($("#tbxDescription").val().indexOf(">") >= 0 || $("#tbxDescription").val().indexOf("<") >= 0) {
                 transfer.utils.showError("Remark is invalid.");
                 return;
-            }
-            else if (transfer.crossCurrencyTransfer.rowFromUser.currency == transfer.crossCurrencyTransfer.rowToUser.currency) {
+            } else if (transfer.crossCurrencyTransfer.rowFromUser.currency == transfer.crossCurrencyTransfer.rowToUser.currency) {
                 transfer.utils.showError("You can only do cross-currency transfer between 2 accounts that have different currencies");
                 return;
-            }
-            else {
+            } else {
                 transfer.utils.hideMessage();
                 transfer.crossCurrencyTransfer.save();
             }
@@ -351,6 +344,7 @@ transfer.crossCurrencyTransfer = {
     }
 };
 
+//tab 3
 transfer.crossCurrencyTransfer2 = {
     showExRateFromUser: function () {
         transfer.utils.hideMessage();
@@ -364,7 +358,7 @@ transfer.crossCurrencyTransfer2 = {
             $("#divAjaxLoaderImageFromUser2").hide();
             return;
         }
-        var param = { username: $("#tbxFromUser2").val() };
+        var param = {username: $("#tbxFromUser2").val()};
         $.get("SelectCustomerExRate", param, $.proxy(function (rs) {
             if (rs == null || typeof rs == "undefined" || typeof rs.username == "undefined") {
                 $("#spanCurrencyFromUser2").text('');
@@ -372,8 +366,7 @@ transfer.crossCurrencyTransfer2 = {
                 $("#trSystemTransExRate2").hide();
                 transfer.utils.showError("User does not exist");
                 this.rowFromUser = null;
-            }
-            else {
+            } else {
                 this.rowFromUser = rs;
                 $("#spanCurrencyFromUser2").text(rs.currency);
                 $("#spanExRateFromUser2").text(rs.actualrate);
@@ -382,8 +375,7 @@ transfer.crossCurrencyTransfer2 = {
                     $("#selectCurrencyCodeFromUser2").removeAttr("disabled");
                     $("#tbxFromAmountConvert2").removeAttr("disabled").css("background-color", "");
                     $("#imgCalculateLeft").css("cursor", "pointer").css("background-position", "0px 0px");
-                }
-                else {
+                } else {
                     $("#selectCurrencyCodeFromUser2").attr("disabled", "disabled");
                     $("#tbxFromAmountConvert2").attr("disabled", "disabled").css("background-color", "#DDDDDD");
                     $("#imgCalculateLeft").css("cursor", "").css("background-position", "19px 0px");
@@ -406,7 +398,7 @@ transfer.crossCurrencyTransfer2 = {
             $("#divAjaxLoaderImageToUser2").hide();
             return;
         }
-        var param = { username: $("#tbxToUser2").val() };
+        var param = {username: $("#tbxToUser2").val()};
         $.get("SelectCustomerExRate", param, $.proxy(function (rs) {
             if (rs == null || typeof rs == "undefined" || typeof rs.username == "undefined") {
                 $("#spanCurrencyToUser2").text('');
@@ -414,8 +406,7 @@ transfer.crossCurrencyTransfer2 = {
                 $("#trSystemTransExRate2").hide();
                 transfer.utils.showError("User does not exist");
                 this.rowToUser = null;
-            }
-            else {
+            } else {
                 this.rowToUser = rs;
                 $("#spanCurrencyToUser2").text(rs.currency);
                 $("#spanExRateToUser2").text(rs.actualrate);
@@ -424,8 +415,7 @@ transfer.crossCurrencyTransfer2 = {
                     $("#selectCurrencyCodeToUser2").removeAttr("disabled");
                     $("#tbxToAmountConvert2").removeAttr("disabled").css("background-color", "");
                     $("#imgCalculateRight").css("cursor", "pointer").css("background-position", "0px 0px");
-                }
-                else {
+                } else {
                     $("#selectCurrencyCodeToUser2").attr("disabled", "disabled");
                     $("#tbxToAmountConvert2").attr("disabled", "disabled").css("background-color", "#DDDDDD");
                     $("#imgCalculateRight").css("cursor", "").css("background-position", "19px 0px");
@@ -492,12 +482,10 @@ transfer.crossCurrencyTransfer2 = {
                 transfer.utils.showError("From amount or To amount is invalid");
                 return false;
             }
-        }
-        else if ($("#tbxFromAmount2").val() == "") {
+        } else if ($("#tbxFromAmount2").val() == "") {
             transfer.utils.showError("From amount is invalid.");
             return false;
-        }
-        else if ($("#tbxToAmount2").val() == "") {
+        } else if ($("#tbxToAmount2").val() == "") {
             transfer.utils.showError("To amount is invalid.");
             return false;
         }
@@ -506,8 +494,7 @@ transfer.crossCurrencyTransfer2 = {
     showTransExRate: function () {
         if (transfer.crossCurrencyTransfer2.checkTransferAmount() == false) {
             return;
-        }
-        else {
+        } else {
             transfer.utils.hideMessage();
             var fromAmount = parseFloat(transfer.utils.removeAllExistCharacter($("#tbxFromAmount2").val(), ","));
             var toAmount = parseFloat(transfer.utils.removeAllExistCharacter($("#tbxToAmount2").val(), ","));
@@ -534,9 +521,9 @@ transfer.crossCurrencyTransfer2 = {
         $.post("CrossCurrencyTransferInsert", param, function (data) {
             if (parseInt(data.ErrorCode) != 0) {
                 transfer.utils.showError(data.ErrorMessage);
-            }
-            else {
+            } else {
                 transfer.utils.showSuccessMessage("Transfer successfully.");
+                closeDialogModal()
             }
             transfer.utils.unBlock();
         });
@@ -550,8 +537,7 @@ transfer.crossCurrencyTransfer2 = {
                 }
                 if ($("#hiddenForexAccount2").val() != "") {
                     $("#selectForexAccount2").val($("#hiddenForexAccount").val());
-                }
-                else {
+                } else {
                     $("#selectForexAccount2").val(transfer.ForexAccDefault);
                 }
             }
@@ -565,13 +551,12 @@ transfer.crossCurrencyTransfer2 = {
             }
             if (e.keyCode == 13) {
                 transfer.crossCurrencyTransfer2.showExRateFromUser();
-            }
-            else {
+            } else {
                 this.timeoutID = setTimeout(
-                        $.proxy(function () {
-                            clearTimeout(this.timeoutID);
-                            transfer.crossCurrencyTransfer2.showExRateFromUser();
-                        }, this), 1000);
+                    $.proxy(function () {
+                        clearTimeout(this.timeoutID);
+                        transfer.crossCurrencyTransfer2.showExRateFromUser();
+                    }, this), 1000);
             }
 
         });
@@ -583,13 +568,12 @@ transfer.crossCurrencyTransfer2 = {
             }
             if (e.keyCode == 13) {
                 transfer.crossCurrencyTransfer2.showExRateToUser();
-            }
-            else {
+            } else {
                 this.timeoutID = setTimeout(
-                        $.proxy(function () {
-                            transfer.crossCurrencyTransfer2.showExRateToUser();
-                            clearTimeout(this.timeoutID);
-                        }, this)
+                    $.proxy(function () {
+                        transfer.crossCurrencyTransfer2.showExRateToUser();
+                        clearTimeout(this.timeoutID);
+                    }, this)
                     , 1000);
             }
         });
@@ -606,13 +590,12 @@ transfer.crossCurrencyTransfer2 = {
 
             if (e.keyCode == 13) {
                 transfer.crossCurrencyTransfer2.showTransExRate();
-            }
-            else {
+            } else {
                 this.timeoutID = setTimeout(
-                        $.proxy(function () {
-                            transfer.crossCurrencyTransfer2.showTransExRate();
-                            clearTimeout(this.timeoutID);
-                        }, this)
+                    $.proxy(function () {
+                        transfer.crossCurrencyTransfer2.showTransExRate();
+                        clearTimeout(this.timeoutID);
+                    }, this)
                     , 1000);
             }
         });
@@ -625,8 +608,7 @@ transfer.crossCurrencyTransfer2 = {
             }
             if (e.keyCode == 13) {
                 transfer.crossCurrencyTransfer2.showTransExRate();
-            }
-            else {
+            } else {
                 this.timeoutID = setTimeout(transfer.crossCurrencyTransfer2.showTransExRate, 1000);
             }
         });
@@ -639,35 +621,27 @@ transfer.crossCurrencyTransfer2 = {
             if (transfer.crossCurrencyTransfer2.rowFromUser == null || typeof transfer.crossCurrencyTransfer2.rowFromUser == "undefined") {
                 transfer.utils.showError("From user is invalid.");
                 return;
-            }
-            else if (isNaN(fromAmount) || fromAmount == 0) {
+            } else if (isNaN(fromAmount) || fromAmount == 0) {
                 transfer.utils.showError("From amount is invalid.");
                 return false;
-            }
-            else if (transfer.crossCurrencyTransfer2.rowToUser == null || typeof transfer.crossCurrencyTransfer2.rowToUser == "undefined") {
+            } else if (transfer.crossCurrencyTransfer2.rowToUser == null || typeof transfer.crossCurrencyTransfer2.rowToUser == "undefined") {
                 transfer.utils.showError("To user is invalid.");
                 return;
-            }
-            else if (isNaN(toAmount) || toAmount == 0) {
+            } else if (isNaN(toAmount) || toAmount == 0) {
                 transfer.utils.showError("To amount is invalid.");
                 return false;
-            }
-            else if (transfer.crossCurrencyTransfer2.rowToUser.actualrate == 0) {
+            } else if (transfer.crossCurrencyTransfer2.rowToUser.actualrate == 0) {
                 transfer.utils.showError("System Ex.Rate is invalid.");
                 return;
-            }
-            else if (transfer.crossCurrencyTransfer2.checkTransferAmountOnTransfer() == false) {
+            } else if (transfer.crossCurrencyTransfer2.checkTransferAmountOnTransfer() == false) {
                 return;
-            }
-            else if ($("#tbxDescription2").val().indexOf(">") >= 0 || $("#tbxDescription2").val().indexOf("<") >= 0) {
+            } else if ($("#tbxDescription2").val().indexOf(">") >= 0 || $("#tbxDescription2").val().indexOf("<") >= 0) {
                 transfer.utils.showError("Remark is invalid.");
                 return;
-            }
-            else if (transfer.crossCurrencyTransfer2.rowFromUser.currency == transfer.crossCurrencyTransfer2.rowToUser.currency) {
+            } else if (transfer.crossCurrencyTransfer2.rowFromUser.currency == transfer.crossCurrencyTransfer2.rowToUser.currency) {
                 transfer.utils.showError("You can only do cross-currency transfer between 2 accounts that have different currencies");
                 return;
-            }
-            else {
+            } else {
                 transfer.utils.hideMessage();
                 transfer.crossCurrencyTransfer2.save();
             }
@@ -678,8 +652,7 @@ transfer.crossCurrencyTransfer2 = {
             if ($(this).val() == "") {
                 $("#spanExRateFromUser2Left").html("");
                 $("#tbxFromAmount2").val("");
-            }
-            else {
+            } else {
                 $("#spanExRateFromUser2Left").html(transfer.crossCurrencyTransfer2.getExchangeRate($(this).val()));
             }
         });
@@ -689,8 +662,7 @@ transfer.crossCurrencyTransfer2 = {
             if ($(this).val() == "") {
                 $("#spanExRateToUser2Right").html("");
                 $("#tbxToAmount2").val("");
-            }
-            else {
+            } else {
                 $("#spanExRateToUser2Right").html(transfer.crossCurrencyTransfer2.getExchangeRate($(this).val()));
             }
         });
@@ -755,18 +727,28 @@ transfer.utils = {
     },
     blockUI: function () {
         if (parent.parent.BlockUI) {
-            try { parent.parent.BlockUI(); } catch (e) { }
-        }
-        else {
-            try { parent.BlockUI(); } catch (e) { }
+            try {
+                parent.parent.BlockUI();
+            } catch (e) {
+            }
+        } else {
+            try {
+                parent.BlockUI();
+            } catch (e) {
+            }
         }
     },
     unBlock: function () {
         if (parent.parent.$ && parent.parent.$.unblockUI) {
-            try { parent.parent.$.unblockUI(); } catch (e) { }
-        }
-        else {
-            try { parent.$.unblockUI(); } catch (e) { }
+            try {
+                parent.parent.$.unblockUI();
+            } catch (e) {
+            }
+        } else {
+            try {
+                parent.$.unblockUI();
+            } catch (e) {
+            }
         }
     },
     showError: function (message) {
@@ -781,8 +763,70 @@ transfer.utils = {
         $("#errMsg").hide();
     }
 };
+transfer.forceNumberAmount = function () {
+    //tab yesterday
+    $("#txtamount").forceNumber(undefined, {isDecimalSupport :true, isNegativeNumberSupport:true,maximumFractionDigits:4 });
+
+    $("#txtamount").keyup();
+}
 
 $(document).ready(function () {
     transfer.init();
 });
+
+
+/*var fromUsername = '@Sunplus.Accounting.Core.Common.AppSession.CustUName';*/
+
+var YesterdayTransactionsForm = {
+    validateValue: function () {
+        $('#errMsg').hide();
+        var _toUser = document.getElementById("touser").value;
+        if (_toUser.isNullOrEmpty()) {
+            $('#errMsg').show();
+            showAlertMessage("errMsg", "Invalid To User", 1);
+            return false;
+        }
+
+        var _exRate = document.getElementById("exrate").value;
+        if (!_exRate.isNumeric() || parseFloat(_exRate) == 0) {
+            $('#errMsg').show();
+            showAlertMessage("errMsg", "Invalid Exchange Rate", 1);
+            return false;
+        }
+
+        var _amount = document.getElementById('txtamount').value;
+        if (!_amount.isNumeric() || parseFloat(_amount) == 0) {
+            $('#errMsg').show();
+            showAlertMessage("errMsg", "Invalid Amount", 1);
+            return false;
+        }
+        var param = {
+            fromCustName: fromUsername,
+            toCustName: _toUser,
+            exRate: _exRate,
+            amount: _amount,
+            remark: $("#remark").val(),
+            isCollection: $("#chk-collection-yesterday").is(":checked")
+        };
+
+        if (isNaN(parseFloat(_amount))) {
+            return false;
+        }
+        
+        param.amount = param.amount.replace(/,/g, "");
+        transfer.utils.blockUI();
+        $.post("TransferYesterdayTransactionHandler", param,
+            function (data) {
+                if (parseInt(data.ErrorCode) != 0) {
+                    transfer.utils.showError(data.ErrorMessage);
+                } else {
+                    $("#frmTransfer").attr("src", '../TransferResult.aspx?fuser=' + escape(fromUsername) + "&touser=" + _toUser + "&exrate=" + _exRate);
+                    closeDialogModal()
+                }
+                transfer.utils.unBlock();
+            });
+        return true;
+    }
+}
+
 
