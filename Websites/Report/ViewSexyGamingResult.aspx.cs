@@ -11,7 +11,8 @@ public partial class Report_ViewLiveCasinoResult : System.Web.UI.Page
 
         try
         {
-            allbetResult = service.Render(Request.QueryString["transDesc"], Request.QueryString["matchCode"], Request.QueryString["betTypeId"]);
+            var bettypeid = Int32.Parse(Request.QueryString["betTypeId"]);
+            allbetResult = service.Render(Request.QueryString["transDesc"], Request.QueryString["matchCode"], bettypeid);
             if (string.IsNullOrEmpty(allbetResult))
             {
                 allbetResult = "<table class=\"fn-rs casino popup\"><tbody><tr><td class=\"row-noinfo\">There is no information available</td></tr></tbody></table>";
