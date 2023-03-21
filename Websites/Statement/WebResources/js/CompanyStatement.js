@@ -91,6 +91,6 @@ function DelTrans(refno) {
 }
 
 function viewDetail(transtype, date) {
-    url = 'StatementByDay.aspx?transtype=' + transtype + '&fdate=' + date;
-    ibcWnd.open(url, '', 300, 100, 510, 400, 'class1', 'class2');
+    url = 'Statement/StatementByDay.aspx?transtype=' + transtype + '&fdate=' + date;
+    parent.OpenPopup(url, "", 550, 300, true, false, window, 2000, null, null);
 }
