@@ -397,7 +397,7 @@
                     mainDBTickets = _betListRepository.GetBetTypeByDate(mainCriteria);
                 }
 
-                var tickets = siteDBTickets.Concat(mainDBTickets).ToList();
+                var tickets = siteDBTickets.Concat(mainDBTickets).GroupBy(g => g.BetTypeID).Select(g => g.First()).ToList();
                 foreach (var ticket in tickets)
                 {
                     ticket.BetTypeName += GetSportNameSuffixByBetType(ticket.BetTypeID);
