@@ -102,13 +102,6 @@ public class UpdateCustomerStatus : BaseHandler
                     }
                     CustomerUpdateStatus.CustomerUpdInternal(_custid, status, _accid, context.Request.UserHostAddress);
                     s = "parent.changeDisplayStatus();";
-                    break; 
-                case "disabledNumberGame"://NumberGame
-                    isUpdDownline = false;
-                    if (!Boolean.TryParse(context.Request["isupddownline"] as string ?? string.Empty, out isUpdDownline))
-                        throw new AccException("Invalid isupddownline parameters");
-                    CustomerUpdateStatus.CustomerUpdateDisabledNumberGame(_accid, _custid, status, context.Request.UserHostAddress, isUpdDownline);
-                    s = "parent.changeDisplayStatus();";
                     break;
                 case "SelectedBetting"://Selected Betting
                     isUpdDownline = false;
