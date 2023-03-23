@@ -267,7 +267,7 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
         StringBuilder stb = new StringBuilder();
 
         List<CustomerExRate> listCust = new List<CustomerExRate>();
-
+    
         int rowIndex = -1;
         foreach (DataRow row in dataTable.Rows)
         {
@@ -292,7 +292,7 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
             TemplateHandler.Assign(ref strConentTemp, "remark", remark);
             TemplateHandler.Assign(ref strConentTemp, "collection", collection);
 
-            CustomerExRate fromCustomerExRate = null;
+            CustomerExRate fromCustomerExRate = null;       //=> 
             CustomerExRate toCustomerExRate = null;
 
             if (!UserNameIsValid(fromcust, ref fromCustomerExRate, ref listCust) || !UserNameIsValid(tocust, ref toCustomerExRate, ref listCust))
@@ -422,6 +422,10 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
         StringBuilder stb = new StringBuilder();
 
         int rowIndex = -1;
+        
+        var customerManager = CommonBootStrapper.Locator.GetInstance<Sunplus.Accounting.Business.Customer.ICustomerManager>();
+       
+        
         foreach (DataRow row in dataTable.Rows)
         {
             ++rowIndex;
@@ -437,13 +441,25 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
 
             remark = row.IsNull(4) ? string.Empty : row[4].ToString();
             collection = row.IsNull(5) ? string.Empty : row[5].ToString();
-
+            
+            var fromCustomerExRate = customerManager.SelectCustomerExRate(fromcust.Trim());
+            var toCustomerExRate = customerManager.SelectCustomerExRate(tocust.Trim());
+            var systemExRate = fromCustomerExRate.actualrate / toCustomerExRate.actualrate;
+            var transExRate = toamount/fromamount;
+            var systemExRateMax = systemExRate * (1+8/100);
+            var systemExRateMin = systemExRate * (1-8/100);
+            var exRateCss  = (transExRate > systemExRateMax || transExRate < systemExRateMin) ? "background-color-yellow" :"";
+            
             TemplateHandler.Assign(ref strConentTemp, "fromcust", fromcust);
             TemplateHandler.Assign(ref strConentTemp, "tocust", tocust);
 
             TemplateHandler.Assign(ref strConentTemp, "fromamount", IBCUtils.FormatHandler.FormatNumber2(fromamount));
             TemplateHandler.Assign(ref strConentTemp, "toamount", IBCUtils.FormatHandler.FormatNumber2(toamount));
 
+            TemplateHandler.Assign(ref strConentTemp, "systemexrate", IBCUtils.FormatHandler.FormatNumber4(systemExRate));
+            TemplateHandler.Assign(ref strConentTemp, "transexrate", IBCUtils.FormatHandler.FormatNumber4(transExRate));
+            TemplateHandler.Assign(ref strConentTemp, "exratecss", exRateCss);
+            
             TemplateHandler.Assign(ref strConentTemp, "remark", remark);
             TemplateHandler.Assign(ref strConentTemp, "collection", collection);
 
