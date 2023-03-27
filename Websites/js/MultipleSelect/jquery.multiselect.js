@@ -563,13 +563,15 @@
                     $divHover.each(function () {
                         var $displayTextSpan = $(this).find('span');
                         var originalText = $displayTextSpan.attr('data-original-text');
-                        if (originalText.toLowerCase().indexOf(filterValueToLower) > -1) {
-                            $(this).show();
-                            $displayTextSpan.html(originalText.replace(new RegExp('(' + filterValue + ')', "ig"), '<mark class="ui-multiselect-filter-highlight">$1</mark>'));
-                        }
-                        else {
-                            $(this).hide();
-                        }
+                        if(originalText != undefined){
+                            if (originalText.toLowerCase().indexOf(filterValueToLower) > -1) {
+                                $(this).show();
+                                $displayTextSpan.html(originalText.replace(new RegExp('(' + filterValue + ')', "ig"), '<mark class="ui-multiselect-filter-highlight">$1</mark>'));
+                            }
+                            else {
+                                $(this).hide();
+                            }
+                        }                        
                     });
                 });
 

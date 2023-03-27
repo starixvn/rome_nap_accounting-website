@@ -622,7 +622,7 @@ function RenderSiteSelect() {
         showHeader: true,
         isCheckAll: true,
         showFooter: false,
-        showFilter: false,
+        showFilter: true,
         checkAllText: "[0] All Sites",
         noneSelectedText: "Sites",
         listData: buildSiteData(cachedSites),
