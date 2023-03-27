@@ -186,7 +186,7 @@
       <HintPath>..\packages\Fanex.BetList.IONCasino.2.0.0\lib\net461\Fanex.BetList.IONCasino.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Betlist.Jili, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Betlist.Jili.1.0.0-Jili-04\lib\net461\Fanex.Betlist.Jili.dll</HintPath>
+      <HintPath>..\packages\Fanex.Betlist.Jili.1.0.0\lib\net461\Fanex.Betlist.Jili.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.Joker, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Joker.2.0.0\lib\net461\Fanex.BetList.Joker.dll</HintPath>
