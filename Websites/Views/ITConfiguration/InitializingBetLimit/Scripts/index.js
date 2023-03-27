@@ -500,8 +500,9 @@ function InitSubmitExcelFile() {
     form.submit(function (e) {
         e.preventDefault();
         var formData = new FormData(form[0]);
+        var isGlobalValue = $("#ckbGlobalValue").prop("checked");
         $.ajax({
-            url: 'CheckBetLimits',
+            url: 'CheckBetLimits?isGlobalValue=' + isGlobalValue,
             type: 'POST',
             datatype: 'json',
             contentType: false,

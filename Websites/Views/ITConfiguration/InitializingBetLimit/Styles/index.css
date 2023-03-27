@@ -17,3 +17,8 @@
     float: left;
     padding: 4px;
 }
+
+#ckbGlobalValue {
+    margin: auto;
+    vertical-align: middle;
+}
