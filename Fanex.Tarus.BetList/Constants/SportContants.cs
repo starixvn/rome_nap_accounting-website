@@ -93,5 +93,6 @@
         public const int SealEntertainment = 156;
         public const int MGRNG = 155;
         public const int PlayerTips = 157;
+        public const int Jili = 158;
     }
 }

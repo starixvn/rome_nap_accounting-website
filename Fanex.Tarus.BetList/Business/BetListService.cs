@@ -1361,6 +1361,10 @@
             {
                 sportName = ticketHelper.GetSportNameById(SportContants.MGRNG);
             }
+            else if (ReportService.IsJili(betTypeId))
+            {
+                sportName = ticketHelper.GetSportNameById(SportContants.Jili);
+            }
 
             else
             {

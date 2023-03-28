@@ -179,6 +179,9 @@
             return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(ProductResultTitle, result));
         }
 
+        public ActionResult JiliResult(ThirdPartyResultRequest request)
+            => BaseResult(request, "JiliResultConfigs");
+
         private void SetProductResultTitle(int productId)
             => ProductResultTitle = CacheRef.GetProductName(productId) + " Result";
     }

@@ -885,6 +885,18 @@ function showSealEntertainmentBetDetails(transId, winlossDate, custId, transType
 
     openResultsPopUp(param);
 }
+
+function showJiliBetDetails(transId, winlossDate, custId, transType) {
+    var param = {
+        url: "RNGCasinoBetList/BetDetails",
+        title: "Jili - Detailed Bet list - " + winlossDate.split(" ")[0],
+        jsonParam: { TransId: transId, WinLossDate: winlossDate, TransType: transType, CustId: custId, SportType: 158, PageSize: 500 },
+        width: 1170,
+        height: 600
+    };
+
+    openResultsPopUp(param);
+}
 // -------------------- Functions whose name must name by Fanex.Toco
 function ViewRNGCasinoResult(matchId, race, betType, sportType, refNo, winlostDate, custId) {
     var params = $.param({
@@ -1078,6 +1090,8 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
             
         case 155:
             return getMGParam(custId, transId3rd, gameId3rd, currencyId, bettype, siteId);
+        case 158:
+            return getJiliParam(custId, transId3rd, gameId3rd, currencyId, bettype, siteId);
 
         case 161: // Number Game.
             return getNumberGameParam(matchid);
@@ -1464,6 +1478,16 @@ function getMGParam(custId, transId3rd, gameId3rd, currencyId, betType, siteId) 
         url: "ThirdParty/MGRNGCasinoResult",
         title: "MG-RNG Result",
         jsonParam: { custId: custId, transId3rd: transId3rd, siteId: siteId, gameId3rd: gameId3rd, currencyId: currencyId, BetTypeId: betType, productId: 73 },
+        width: 850,
+        height: 800
+    };
+}
+
+function getJiliParam(custId, transId3rd, gameId3rd, currencyId, betType, siteId) {
+    return {
+        url: "ThirdParty/JiliResult",
+        title: "Jili Result",
+        jsonParam: { custId: custId, transId3rd: transId3rd, siteId: siteId, gameId3rd: gameId3rd, currencyId: currencyId, BetTypeId: betType, productId: 75 },
         width: 850,
         height: 800
     };
