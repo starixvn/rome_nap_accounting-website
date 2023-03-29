@@ -40,13 +40,19 @@ namespace Fanex.Tarus.Customer.Criteria.AutoSuspend
 
         public bool UplineAutoSuspendSoccer { get; set; }
 
+        public bool UplineAutoSuspendBasketball { get; set; }
+
         public bool UplineAutoSuspendOtherSports { get; set; }
 
         public bool AutoSuspendSoccer { get; set; }
 
+        public bool AutoSuspendBasketball { get; set; }
+
         public bool AutoSuspendOtherSports { get; set; }
 
         public bool AutoSuspendSoccerDownlines { get; set; }
+
+        public bool AutoSuspendBasketballDownlines { get; set; }
 
         public bool AutoSuspendOtherSportsDownlines { get; set; }
 

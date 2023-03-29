@@ -39,11 +39,21 @@
                         </tr>
                         <tr>
                             <td class="align-left">
+                                <input id="checkbox-enable-autosuspend-basketball" type="checkbox" />
+                                <span id="checkbox-enable-autosuspend-basketball-disable" class="checkbox-checked display-none"
+                                    title="Upline has been auto suspended"></span>
+                                <label id="label-enable-autosuspend-basketball" class="label-for-checkbox" for="checkbox-enable-autosuspend-basketball">
+                                    Auto Suspend Basketball
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="align-left">
                                 <input id="checkbox-enable-autosuspend-othersports" type="checkbox" />
                                 <span id="checkbox-enable-autosuspend-othersports-disable" class="checkbox-unchecked display-none"
                                     title="Upline has been auto suspended"></span>
                                 <label id="label-enable-autosuspend-othersports" class="label-for-checkbox" for="checkbox-enable-autosuspend-othersports">
-                                    Auto Suspend Other Sports (Exclude Esports & Basketball)
+                                    Auto Suspend Other Sports (Exclude Esports)
                                 </label>
                             </td>
                         </tr>

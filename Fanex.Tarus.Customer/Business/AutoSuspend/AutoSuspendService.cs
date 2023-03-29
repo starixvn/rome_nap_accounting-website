@@ -64,7 +64,8 @@ namespace Fanex.Tarus.Customer.Business.AutoSuspend
             try
             {
                 Result updateResult = new Result();
-                if (criteria.UplineAutoSuspendSoccer &&
+                if (criteria.UplineAutoSuspendSoccer && 
+                    criteria.UplineAutoSuspendBasketball &&
                     criteria.UplineAutoSuspendOtherSports)
                 {
                     updateResult.ErrorCode = 1;
