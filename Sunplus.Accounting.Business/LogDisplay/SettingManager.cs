@@ -37,6 +37,8 @@ namespace Sunplus.Accounting.Business.LogDisplay
 
         private int[] listBetsettingActionIDLicensee = new int[] { 2012, 2013, 2019, 2036 };
 
+        private int[] listStatusActionIDHasRNGKeno = new int[] { 1100, 1101, 1102, 1103 };
+
         public SettingManager(
             ILogDisplayDAO logDAO,
             CN88LogFormatter cn88LogFormatter,
@@ -502,6 +504,13 @@ namespace Sunplus.Accounting.Business.LogDisplay
                     trackingVal = ReplaceSystemIdOfSearchAndCopyFunction(trackingVal);
 
                     #endregion
+
+                    // Hard code to detect new Status log for RNG Keno after migrate to DCS
+                    if (listStatusActionIDHasRNGKeno.Contains(actionId) && trackingVal.IndexOf("HideKeno") < 0)
+                    {
+                        trackingVal = trackingVal.Replace("Disable202_1501", "Disable202");
+
+                    }
 
                     xmlLoad = XElement.Parse(trackingVal);
 

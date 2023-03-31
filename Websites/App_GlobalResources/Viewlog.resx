@@ -3354,4 +3354,7 @@
   <data name="Disable9906_4001" xml:space="preserve">
     <value>Disabled RNG Slot</value>
   </data>
+  <data name="Disable202" xml:space="preserve">
+    <value>Disabled RNG Keno</value>
+  </data>
 </root>
