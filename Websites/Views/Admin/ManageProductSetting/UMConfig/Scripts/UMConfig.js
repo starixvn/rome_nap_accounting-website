@@ -401,7 +401,7 @@ function AppendNewUMConfigs() {
                 BetType: cachedSelectSettingType.BetType,
                 IsLive: cachedSelectSettingType.IsLive,
                 SiteId: selSite,
-                Site: $('#sel_opt_newum_' + selSite).attr('title'),
+                Site: $('#' + selSite).attr('title'),
                 Currency: $('#UMCurrency').val(),
                 CurrencyName: $('#UMCurrency').val() === "0" ? "[0] All" : $('#UMCurrency option:selected').text(),
                 BeginTime: $("#UMBeginTime").val(),
