@@ -446,8 +446,10 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
             var toCustomerExRate = customerManager.SelectCustomerExRate(tocust.Trim());
             var systemExRate = fromCustomerExRate.actualrate / toCustomerExRate.actualrate;
             var transExRate = toamount/fromamount;
-            var systemExRateMax = systemExRate * (1+8/100);
-            var systemExRateMin = systemExRate * (1-8/100);
+            
+            var systemExRateMin = systemExRate * 0.92; // -8%
+            var systemExRateMax = systemExRate * 1.08; // +8%
+            
             var exRateCss  = (transExRate > systemExRateMax || transExRate < systemExRateMin) ? "background-color-yellow" :"";
             
             TemplateHandler.Assign(ref strConentTemp, "fromcust", fromcust);
