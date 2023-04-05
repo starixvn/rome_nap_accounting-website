@@ -849,11 +849,12 @@ transfer.YesterdayTransactionsForm = {
         const fromCus =await transfer.YesterdayTransactionsForm.getUserInfo($("#fromuser").text().trim());
         const toCus =await transfer.YesterdayTransactionsForm.getUserInfo($("#touser").val());
 
-        if(!toCus){
+        if(!toCus || !fromCus){
             transfer.utils.showError("User does not exist");
             $("#transfer").attr("disabled", "disabled");
             $("#systemExRateText").text("");
             $("#systemExRateValue").text("");
+            return;
         }
         
         const isSameCurrency = fromCus.currency === toCus.currency;
