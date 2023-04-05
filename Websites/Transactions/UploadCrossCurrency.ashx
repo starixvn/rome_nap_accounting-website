@@ -414,11 +414,12 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
 
         string fromcust = string.Empty;
         string tocust = string.Empty;
-        double fromamount;
-        double toamount;
+        decimal fromamount;
+        decimal toamount;
         string remark = string.Empty;
         string collection = string.Empty;
-
+        const int digits = 4;
+        
         StringBuilder stb = new StringBuilder();
 
         int rowIndex = -1;
@@ -436,19 +437,20 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
             fromcust = row.IsNull(0) ? string.Empty : row[0].ToString();
             tocust = row.IsNull(1) ? string.Empty : row[1].ToString();
 
-            fromamount = row.IsNull(2) ? 0 : DNAide.Core.CastAide.AsDouble(row[2].ToString().Trim());
-            toamount = row.IsNull(3) ? 0 : DNAide.Core.CastAide.AsDouble(row[3].ToString().Trim());
+            fromamount = row.IsNull(2) ? 0 : DNAide.Core.CastAide.AsDecimal(row[2].ToString().Trim());
+            toamount = row.IsNull(3) ? 0 : DNAide.Core.CastAide.AsDecimal(row[3].ToString().Trim());
 
             remark = row.IsNull(4) ? string.Empty : row[4].ToString();
             collection = row.IsNull(5) ? string.Empty : row[5].ToString();
             
-            var fromCustomerExRate = customerManager.SelectCustomerExRate(fromcust.Trim());
-            var toCustomerExRate = customerManager.SelectCustomerExRate(tocust.Trim());
-            var systemExRate = fromCustomerExRate.actualrate / toCustomerExRate.actualrate;
-            var transExRate = Math.Round(toamount/fromamount,5);
+            var fromCustomerExRate =  DNAide.Core.CastAide.AsDecimal(customerManager.SelectCustomerExRate(fromcust.Trim()).actualrate);
+            var toCustomerExRate =  DNAide.Core.CastAide.AsDecimal(customerManager.SelectCustomerExRate(tocust.Trim()).actualrate);
+            decimal systemExRate = fromCustomerExRate / toCustomerExRate;
+          
+            decimal transExRate = Math.Round(toamount/fromamount,digits,MidpointRounding.AwayFromZero);
             
-            var systemExRateMin = Math.Round(systemExRate * 0.92,5) ; // -8%
-            var systemExRateMax = Math.Round(systemExRate * 1.08,5); // +8%
+            decimal systemExRateMin = Math.Round(systemExRate * 0.92M,digits,MidpointRounding.AwayFromZero) ; // -8%
+            decimal systemExRateMax = Math.Round(systemExRate * 1.08M,digits,MidpointRounding.AwayFromZero); // +8%
 
             var exRateCss  = (transExRate > systemExRateMax || transExRate < systemExRateMin) ? "background-color-yellow" :"";
 
@@ -458,8 +460,8 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
             TemplateHandler.Assign(ref strConentTemp, "fromamount", IBCUtils.FormatHandler.FormatNumber2(fromamount));
             TemplateHandler.Assign(ref strConentTemp, "toamount", IBCUtils.FormatHandler.FormatNumber2(toamount));
 
-            TemplateHandler.Assign(ref strConentTemp, "systemexrate", IBCUtils.FormatHandler.FormatNumber4(systemExRate));
-            TemplateHandler.Assign(ref strConentTemp, "transexrate", IBCUtils.FormatHandler.FormatNumber4(transExRate));
+            TemplateHandler.Assign(ref strConentTemp, "systemexrate", Math.Round(systemExRate,digits,MidpointRounding.AwayFromZero));
+            TemplateHandler.Assign(ref strConentTemp, "transexrate", transExRate);
             TemplateHandler.Assign(ref strConentTemp, "exratecss", exRateCss);
             
             TemplateHandler.Assign(ref strConentTemp, "remark", remark);
@@ -471,6 +473,7 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
         TemplateHandler.ReplaceBlock(ref strTemplate, "content", stb.ToString());
     }
 
+    
     private bool UserNameIsValid(string username, ref CustomerExRate cust, ref List<CustomerExRate> listCust)
     {
         if (ExistedCustInList(username, ref listCust, ref cust))
