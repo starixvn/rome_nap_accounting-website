@@ -75,6 +75,8 @@ namespace Sunplus.Accounting.Business.LogDisplay
                     return GetResourceName(val);
                 case 5:
                     return GetAccountType(val);
+                case 6:
+                    return ReplaceLeagueGroup(val);
                 default:
                     break;
             }          
@@ -163,6 +165,17 @@ namespace Sunplus.Accounting.Business.LogDisplay
         public static string GetAccountType(string strValue)
         {
             return GetResourceName("AccountType_" + strValue);
+        }
+        
+        public static string ReplaceLeagueGroup(string leagueGroupsString)
+        {
+            if(leagueGroups.Length > 2)
+            {
+                return string.Format("<a href='#' data-league-group='{0}' onclick='LogPT.openPopupLeagueGroup(this);'>{1}</a>", leagueGroupString, leagueGroups.Length);
+            } else
+            {
+                return leagueGroupString;
+            }
         }
     }
 }

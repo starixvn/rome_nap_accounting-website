@@ -9,7 +9,7 @@
     logType: 'setting',
     Rows: null,
     doSearch: function (_page, _size) {
-
+        $("#logPopUp").dialog("close");
         var _custName = "", _custId = custId, _fromDate = "", _toDate = "", _viewBy = "";
         if (typeof _page == 'undefined') {
             _page = this.page;
@@ -385,5 +385,25 @@
                 }, 100);
             }
         }
+    },
+    openPopupLeagueGroup: function($element) {
+        var leagueGroupName = $element.dataset.leagueGroup;
+        let html = [
+            '<table class="tbl-popup">',
+            '<thead><tr><th class="w50 r-tbl-popup">#</th><th class="w150 r-tbl-popup">', 'League Group', '</th></tr></thead>',
+            '<tbody>'
+        ];
+        leagueGroupName.split(",").forEach(function (item, index) {
+            html.push('<tr><td class="align-center r-tbl-popup">', index + 1, '</td><td class="r-tbl-popup">', item, '</td></tr>');
+        });
+        html.push('</tbody></table>');
+        $('#logPopUp').html(html.join(""));
+
+        $("#logPopUp").dialog({
+            width: 250,
+            height: 'auto',
+            modal: true,
+            title: "League Group"
+        });
     }
 };
