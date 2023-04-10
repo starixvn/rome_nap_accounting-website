@@ -86,7 +86,7 @@
             var result = new List<UpdateResultEntity>();
             foreach (var cust in request.CustList)
             {
-                if (CustomerAppSettings.IsOfferProtectedMode(cust.Site))
+                if (CustomerAppSettings.IsOfferProtectedMode(cust.SiteLabel))
                 {
                     var updateResult = _customerService.UpdateProtectedStatus(cust.CustId, request.IsProtected, AppSession.AccId, Utils.GetClientIP());
                     if (updateResult.ErrorCode != 0)

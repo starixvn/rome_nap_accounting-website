@@ -8,9 +8,11 @@ namespace Fanex.Tarus.Customer.Entities.MultipleUpdateSuperStatus
 
         public string UserName { get; set; }
 
-        public bool IsOfferedProtectedMode => CustomerAppSettings.IsOfferProtectedMode(Site);
+        public bool IsOfferedProtectedMode => CustomerAppSettings.IsOfferProtectedMode(SiteLabel);
 
         public string Site { get; set; }
+
+        public string SiteLabel { get; set; }
 
         public bool Closed { get; set; }
 

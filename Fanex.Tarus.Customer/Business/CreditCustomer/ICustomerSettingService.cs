@@ -10,6 +10,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
     using Criteria.CreditCustomer;
     using Customer.Entities.CN88;
     using Fanex.PTEngine.BusinessObjects;
+    using Fanex.Tarus.Admin.ViewModel;
     using Fanex.Tarus.Customer.CreditCustomer.Entities;
     using Fanex.Tarus.Customer.Criteria.CN88.Headline;
     using Fanex.Tarus.Customer.Criteria.CN88.HeadlinePossess;
@@ -33,7 +34,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
         /// </summary>
         /// <param name="system">system name</param>
         /// <returns>Return list of Site Name</returns>
-        List<Sites> GetSites(string system);
+        List<SiteViewModel> GetSites(string system);
 
         /// <summary>
         /// Get Cutomer Info for Member Group
@@ -80,6 +81,8 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
         CustomerSetting.Module.Core.Models.Result AddNewHeadline(AddNewHeadlineCriteria criteria);
 
         dynamic GetSuperPrefixes(SuperPrefixCriteria criteria);
+
+        dynamic GetHeadlineBelongSite(GetHeadlineBelongSiteCriteria criteria);
 
         CustomerSetting.Module.Core.Models.Result UnlockAccess(int custId, int userId, string ip);
 

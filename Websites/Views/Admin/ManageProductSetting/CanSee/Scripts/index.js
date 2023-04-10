@@ -296,8 +296,39 @@ function RenderMultiSelect(id, checkAll = true) {
     });
 }
 
+var buildSiteData = function (siteList) {
+        var dataList = [];
+        $.each(siteList, function (i, site) {
+            dataList.push({
+                Id: site.Id,
+                Value: site.Id,
+                Text: site.Name,
+                Checked: true,
+                Enable: true,
+                Items: site.IsParent ? buildSiteData(site.ChildSites) : []
+            });
+        });
+
+        return dataList;
+};
+
+function assignSites() {
+    $("#ddlCanSeeSiteNameId").multiSelect({
+        minWidth: 180,
+        maxHeight: 450,
+        shadow: true,
+        showHeader: true,
+        isCheckAll: true,
+        showFooter: false,
+        checkAllText: "All",
+        listData: buildSiteData(jsonSites),
+        selectableOptgroup: true,              
+        noItemText: "No item selected."
+    });
+}
 $(document).ready(function () {
+debugger;
     RenderMultiSelect('ddlCanSeeSportTypeId', false);
-    RenderMultiSelect('ddlCanSeeSiteNameId');
+    assignSites();
     RenderMultiSelect('ddlCanSeeCurrencyId');
 });

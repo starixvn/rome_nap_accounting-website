@@ -21,7 +21,8 @@
 
         <div class="floatLeft w80"><label for="ddlSBMSiteNameId" class="">SiteName</label></div>
         <div class="floatLeft w250">
-            @Html.DropDownList("ddlCanSeeSiteNameId", Model.Sites, new { id = "ddlCanSeeSiteNameId", @class = "w250" })
+            <div id="ddlCanSeeSiteNameId" class="multiselect" multiple="multiple">
+            </div>
         </div>
 
         <div class="floatLeft"><input type="button" value="Search" class="btn" onclick="SearchCanSee()" /></div>
@@ -32,6 +33,8 @@
 <div id="gridSportContainer" class="grid-container">
     <div id="gridCanSee" class="freegrid"></div>
 </div>
-
+<script type="text/javascript">    
+    var jsonSites = @Html.Raw(Json.Encode(Model.Sites));
+</script>
 
 <script type="text/javascript" src="@Url.Content("~/Views/Admin/ManageProductSetting/CanSee/Scripts/Index.js?v=" + @WebSettings.Version)"></script>

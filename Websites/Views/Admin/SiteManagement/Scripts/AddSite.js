@@ -3,6 +3,7 @@
 
     var $rdoTypes;
     var $txtSiteName;
+    var $txtSiteLabel;
     var $selSiteDBGroup;
     var $errorMessage;
 
@@ -13,6 +14,7 @@
     this.cacheElements = function () {
         this.$rdoTypes = $(".rdo-type");
         this.$txtSiteName = $("#txt-site-name");
+        this.$txtSiteLabel = $("#txt-site-label");
         this.$selSiteDBGroup = $("#sel-site-db-group");
         this.$errorMessage = $("#err-message");
     };
@@ -27,6 +29,7 @@
         var param = {
             Type: $(".rdo-type:checked").val(),
             SiteName: $.trim(this.$txtSiteName.val()),
+            SiteLabel: $.trim(this.$txtSiteLabel.val()),
             SiteDBGroupID: this.$selSiteDBGroup.val()
         };
 

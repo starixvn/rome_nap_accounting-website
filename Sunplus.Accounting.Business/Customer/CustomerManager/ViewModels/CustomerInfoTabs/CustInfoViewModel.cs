@@ -69,6 +69,8 @@
 
         public string LastIp => Converter.ToString2(customerInfoRow["lastloginip"]);
 
+        public string SiteLabel => Converter.ToString2(customerInfoRow["sitelabel"]);
+
         public string CustomerSite => SearchAccountRoleId.Equals(1) ? Converter.ToString2(customerInfoRow["membersite"]) : Converter.ToString2(customerInfoRow["site"]);
 
         public string Createdate => Convert.IsDBNull(customerInfoRow["createdate"]) ? string.Empty : Converter.ToDateTime(customerInfoRow["createdate"]).ToShortDateString();

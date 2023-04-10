@@ -27,6 +27,7 @@
                         CustId = Utils.ToInt32(reader["custid"]),
                         UserName = Utils.ToString(reader["username"]),
                         Site = Utils.ToString(reader["site"]),
+                        SiteLabel = Utils.ToString(reader["sitelabel"]),
                         Closed = Utils.ToBoolean(reader["closed"]),
                         Suspended = Utils.ToBoolean(reader["suspended"]),
                         Protected = Utils.ToBoolean(reader["IsProtectedMode"])

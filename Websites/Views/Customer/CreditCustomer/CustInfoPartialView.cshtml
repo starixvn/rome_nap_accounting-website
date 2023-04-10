@@ -1,5 +1,6 @@
 ﻿@using Fanex.Tarus.Customer.CreditCustomer.Entities;
-@using Sunplus.Accounting.Core.Configurations;
+@using Fanex.Tarus.Admin.ViewModel;
+
 @model Fanex.Tarus.Customer.CreditCustomer.Entities.CustomerSettingView
 @{
     bool isShowMyanmarOdds = false;
@@ -167,14 +168,21 @@ else
                 <td class="l">
                     <select name="listSite" id="listSite" class="select-group">
                         <option>Select</option>
-                        @foreach (Sites sites in (List<Sites>)ViewData["listSite"])
+                        @foreach (SiteViewModel site in (List<SiteViewModel>)ViewData["listSite"])
                         {
-                            <optgroup label="@sites.Name">
-                                @foreach (Site site in sites.ListSite)
+                            if(site.IsParent)
+                            {
+                                <optgroup label="@site.Name">
+                                @foreach (SiteViewModel child in site.ChildSites)
                                 {
-                                    <option id="@site.Id" value="@site.Name">@site.Name</option>
+                                    <option value="@child.Name">@child.Name</option>
                                 }
-                            </optgroup>
+                                </optgroup>
+                            }
+                            else
+                            {
+                                <option id="@site.Id" value="@site.Name">@site.Name</option>
+                            }                            
                         }
                     </select>
                 </td>

@@ -44,7 +44,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                 break;
             }
         }
-        var hideVGaming = ["789y", "76666B"];
+        var hideVGaming = ["yUT", "y789", "y889", "yOther", "76666B"];
         if (hideVGaming.indexOf($scope.existedUser.selectedSite.SiteName) !== -1) {
             if (existed) {
                 parent.sports.splice(index, 1);
@@ -460,11 +460,11 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                 message.hideAlertMessage("errorMsg");
 
                 if ($scope.existedUser.selectedSite) {
-                    $scope.existedUser.selectedSite.SiteName = custInfo.Site || "";
+                    $scope.existedUser.selectedSite = custInfo.Site || "";
                 }
                 else {
                     $scope.existedUser.selectedSite = {};
-                    $scope.existedUser.selectedSite.SiteName = custInfo.Site || "";
+                    $scope.existedUser.selectedSite = custInfo.Site || "";
                 }
                 $scope.siteName = custInfo.Site || "";
                 $scope.existedUser.credit = formatNumber('maxCredit', custInfo.Credit, true);
@@ -504,15 +504,8 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             success: function (data) {
                 message.hideAlertMessage("errorMsg");
 
-                //get selected index.
-                var index = 0;
-                while (index < data.length && $scope.existedUser.selectedSite.SiteName != data[index].SiteName) {
-                    index++;
-                }
-
                 $scope.$apply(function () {
                     $scope.existedUser.sites = data;
-                    $scope.existedUser.selectedSite = $scope.existedUser.sites[index];
                 });
             }
             , error: function (xhr, ajaxOptions, thrownError) {
@@ -532,7 +525,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                 LastName: $scope.newUser.lastname,
                 Phone: $scope.newUser.phone,
                 MobilePhone: $scope.newUser.mobilephone,
-                Site: $scope.existedUser.selectedSite ? ($scope.existedUser.selectedSite.SiteName || "") : "",
+                Site: $scope.existedUser.selectedSite,
                 Fax: $scope.newUser.fax,
                 Credit: (parent.level == 'member' ? $scope.existedUser.credit.replace(/,/g, '') : $scope.existedUser.maxCredit.replace(/,/g, '')),
                 IsInternal: $scope.newUser.internaluser,

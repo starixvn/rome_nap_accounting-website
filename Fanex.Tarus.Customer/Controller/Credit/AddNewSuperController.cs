@@ -20,6 +20,7 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
     using Sunplus.Accounting.Core.Configurations;
     using Sunplus.Accounting.Core.Extensions;
     using System;
+    using System.Configuration;
     using System.Threading;
     using System.Web.Mvc;
     using static Fanex.Tarus.Infrastructure.Common.Enumerations;
@@ -193,6 +194,10 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
                 AllowNewSuper = query.AllowNewSuper
             }), JsonRequestBehavior.DenyGet);
 
+        [HttpPost]
+        public ActionResult GetHeadlineBelongSite()
+            => Json(_customerSettingService.GetHeadlineBelongSite(new GetHeadlineBelongSiteCriteria()), JsonRequestBehavior.AllowGet);
+
         /// <summary>
         /// This function will check a customer pemission for insert function
         /// </summary>
@@ -272,6 +277,6 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
             return result;
         }
 
-        private bool IsNeedToUpdateAutoTransferAndDateLimit(string siteName, int currencyId) => siteName.Equals("789y") && currencyId != 20;
+        private bool IsNeedToUpdateAutoTransferAndDateLimit(string siteName, int currencyId) => ConfigurationManager.AppSettings["Sites789"].Contains(siteName) && currencyId != 20;
     }
 }

@@ -24,18 +24,18 @@
 <script type="text/javascript" src="@Url.Content("~/js/BlockUI.js")"></script>
 <script type="text/javascript" src="@Url.Content("~/Views/Customer/CreditCustomer/Js/CommonCustomerSetting.js?v=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version"></script>
 <script type="text/javascript" src="@Url.Content("~/Views/Customer/CreditCustomer/Js/AddNewSuper.js?v=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version"></script>
+<script type="text/javascript" src="@Url.Content("~/Assets/Js/HeadlineBelongSiteGetter.js?v=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version"></script>
 <script type="text/javascript" src="@Url.Content("~/Assets/Js/SuperPrefixGetter.js?v=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version"></script>
+
 @*header*@
 <div class="maincontent">
     <table border="0" cellpadding="0px" cellspacing="0px" class="maincontent_header">
         <tr>
-            <td class="maincontent_headerL">
-            </td>
+            <td class="maincontent_headerL"></td>
             <td class="maincontent_headerC fixfont">
                 Add New Super
             </td>
-            <td class="maincontent_headerR">
-            </td>
+            <td class="maincontent_headerR"></td>
         </tr>
     </table>
     <div id="divShowInfo" class="maincontent_box" style="width: 850px;">
@@ -54,19 +54,14 @@
         <table cellspacing="0" cellpadding="0" border="0" style="margin-bottom:10px;">
             <tbody>
                 <tr>
-                    <td class="custBtn1">
-                    </td>
+                    <td class="custBtn1"></td>
                     <td onclick="return ans.addNewSuper();" class="custBtn2 hand">
                         Add
                     </td>
                 </tr>
             </tbody>
         </table>
-        <div class="noteMsg">
-            @Resources.Language.NoteSportsbookSetting
-        </div>
-        <div class="noteMsg">
-            @Html.Raw(Resources.Language.SMAUnlimitedBetSettingWarningMessage)
+        <div id="headlineBelongSite">
         </div>
         <div id="notAllowedSuperPrefixes"></div>
         @Html.Partial("~/Views/Customer/CreditCustomer/CustInfoPartialView.cshtml", Model, tempViewDataDictionary)
@@ -76,9 +71,8 @@
         <table cellspacing="0" cellpadding="0" border="0">
             <tbody>
                 <tr>
-                    <td class="custBtn1">
-                    </td>
-                    <td onclick="return ans.addNewSuper();"  class="custBtn2 hand">
+                    <td class="custBtn1"></td>
+                    <td onclick="return ans.addNewSuper();" class="custBtn2 hand">
                         Add
                     </td>
                 </tr>

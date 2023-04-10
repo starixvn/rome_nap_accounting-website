@@ -401,7 +401,7 @@ function AppendNewUMConfigs() {
                 BetType: cachedSelectSettingType.BetType,
                 IsLive: cachedSelectSettingType.IsLive,
                 SiteId: selSite,
-                Site: $('#sel_opt_newum_' + selSite).attr('title'),
+                Site: $('#' + selSite).attr('title'),
                 Currency: $('#UMCurrency').val(),
                 CurrencyName: $('#UMCurrency').val() === "0" ? "[0] All" : $('#UMCurrency option:selected').text(),
                 BeginTime: $("#UMBeginTime").val(),
@@ -597,17 +597,22 @@ function RenderSiteSelect() {
         cachedSites = cachedCreditSites;
     }
 
-    cachedSites.forEach(function (item, index) {
-        multiselectData.push({
-            Id: 'sel_opt_newum_' + item.Value,
-            Value: item.Value,
-            Text: item.Text,
-            Checked: false,
-            Enable: true,
-            CssClass: "",
-            Items: []
-        });
-    });
+    var buildSiteData = function (siteList) {
+            var dataList = [];
+            $.each(siteList, function (i, site) {
+                dataList.push({
+                    Id: site.Id,
+                    Value: site.Id,
+                    Text: site.Name,
+                    Checked: true,
+                    Enable: true,
+                    Items: site.IsParent ? buildSiteData(site.ChildSites) : []
+                });
+            });
+
+            return dataList;
+    };
+
     OnSelectReportsBetListsFunctionType(isSelectedReportsBetLists);
 
     $('#UMSite').multiSelect({
@@ -615,12 +620,12 @@ function RenderSiteSelect() {
         maxHeight: 450,
         shadow: true,
         showHeader: true,
-        isCheckAll: false,
+        isCheckAll: true,
         showFooter: false,
         showFilter: true,
         checkAllText: "[0] All Sites",
         noneSelectedText: "Sites",
-        listData: multiselectData,
+        listData: buildSiteData(cachedSites),
         noItemText: "No item selected."
     });
 }
