@@ -11,7 +11,7 @@
 </head>
 <body>
        <div class="main">
-        <div class="maincontent">
+        <div class="maincontent" style="width: fit-content;">
             <table border="0" cellpadding="0px" cellspacing="0px" class="maincontent_header">
                 <tr>
                     <td class="maincontent_headerL">

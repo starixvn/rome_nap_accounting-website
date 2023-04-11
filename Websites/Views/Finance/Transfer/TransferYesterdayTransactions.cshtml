@@ -4,7 +4,8 @@
             <td class="l b">
                 From:
                 <td class="l">
-                    <span class="b">@Model.FromCustName
+                    <span class="b" id="fromuser">
+                        @Model.FromCustName
                     </span>
                 </td>
             </td>
@@ -27,15 +28,22 @@
             </td>
             <td class="l">
                 <input type="text" class="txt" id="txtamount" name="txtamount" size="10" value="@Model.FromAmount"
-                       style="text-align: right" />
+                       style="text-align: right"/>
             </td>
         </tr>
         <tr>
-            <td class="l b" colspan="2">
+            <td class="l b">
+                System Ex.Rate
+                <span id="systemExRateText"></span>
+            </td>
+            <td class="l">
+                <span id="systemExRateValue" class="b" ></span>
+            </td>
+            <td class="l b">
                 Description:
             </td>
-            <td class="l" colspan="2">
-                <input type="text" class="txt" id="remark" name="remark" size="50" style="width: 265px;"/>
+            <td class="l">
+                <input type="text" class="txt" id="remark" name="remark" size="50" />
             </td>
         </tr>
         <tr>
@@ -46,7 +54,7 @@
         </tr>
         <tr>
             <td colspan="4" class="c">
-                <input class="btn" type="button" id="transfer" value="Transfer" onclick="YesterdayTransactionsForm.validateValue();"></input>
+                <input class="btn" type="button" id="transfer" value="Transfer" onclick="transfer.YesterdayTransactionsForm.validateValue();"></input>
             </td>
         </tr>
     </table>
