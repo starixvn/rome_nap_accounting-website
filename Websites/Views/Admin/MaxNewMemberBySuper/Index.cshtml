@@ -4,18 +4,13 @@
 @model MaxMemberLimitViewModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var test = new SelectList(Model.ListSites.Select(x => new
-    {
-        Value = x.Name,
-        Text = x.Name,
-        Selected = Model.Sites789.Contains(x.Name)
-    }));
 }
 @section Styles
 {
     <link href="@Url.Content("~/Scripts/_Libs/jQuery/Styles/jquery-ui-1.9.1.custom.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Grid.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Pagination.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/js/MultipleSelect/jquery.multiselect.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
 }
 @section Scripts
 {
@@ -25,6 +20,7 @@
     <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Pagination.js?v=" + WebSettings.Version)"></script>
     <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/numeral.js?v=" + WebSettings.Version)"></script>
     <script type="text/javascript" src="@Url.Content("~/Views/Admin/MaxNewMemberBySuper/Scripts/Index.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/js/MultipleSelect/jquery.multiselect.js?v=" + WebSettings.Version)"></script>
     <script type="text/javascript">
         var lang = {
             AccessDenied: '@Resources.Error.AccessDenied'
@@ -53,7 +49,7 @@
                     Site
                 </td>
                 <td>
-                    <select id="Site" class="setting-edit" title="Site"></select>                    
+                    <div id="Site" class="multiselect" multiple="multiple" style="padding-top: 2px;"></div>
                 </td>
                 <td>
                     <input type="button" class="btn" value="Submit" onclick="GetData(1, 50)" />
@@ -77,19 +73,19 @@
     <div class="clear"></div><br />
     <label class="bold" for="txtSuperName">Super usernames (up to 50), separated by ','</label>
     <div class="clear"></div><br />
-    <textarea id="txtSuperName" maxlength="3000" ></textarea>
+    <textarea id="txtSuperName" maxlength="3000"></textarea>
     <div class="clear"></div><br />
     <label class="bold" for="txtMaxMemberLimit">Max Members Limit <span style="color:red">*</span></label>
     <input id="txtMaxMemberLimit" maxlength="6" /> <label></label><input type="checkbox" id="chkUnlimited" onchange="chkUnlimited_OnChange();" />Unlimited</label>
     <div class="clear"></div><br />
     <label class="bold" for="txtRemark">Remark</label>
     <div class="clear"></div>
-    <textarea id="txtRemark" maxlength="300" ></textarea>
+    <textarea id="txtRemark" maxlength="300"></textarea>
     <div class="clear"></div><br />
     <input type="button" class="btn" value="Submit" onclick="UpdateData()" />
 </div>
 
 <script type="text/javascript">
+
     var jsonSites = @Html.Raw(Json.Encode(Model.ListSites));
-    var site789 =@Html.Raw(Json.Encode(Model.Sites789));     
 </script>
