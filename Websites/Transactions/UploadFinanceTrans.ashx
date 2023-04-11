@@ -100,7 +100,7 @@ public class UploadFinanceTrans : IHttpHandler, IRequiresSessionState
             dtbFail = dataset.Tables[1];
             dtbSuccess = dataset.Tables[0];
         }
-       
+
         var strFail = string.Empty;
         var strSuccess = string.Empty;
 
@@ -230,17 +230,16 @@ public class UploadFinanceTrans : IHttpHandler, IRequiresSessionState
                 HttpUtility.HtmlDecode(Convert.ToBoolean(row["IsCollection"]) ? "Yes" : "No", collection);
                 TemplateHandler.Assign(ref strTmp, "collection", collection.ToString());
 
-                if (hasReason) 
+                if (hasReason)
                 {
                     TemplateHandler.Assign(ref strTmp, "reason", CastAide.AsString(row["reason"], string.Empty));
                     TemplateHandler.Assign(ref strTmp, "rowstyle", rowStyle);
                 }
-                else  
-                {   
+                else
+                {
                     rowStyle = string.Empty;
                     var remark = string.Empty;
-                    var remarkCss = string.Empty;
-                    
+
                     int fromCurrency = CastAide.AsInt32(row["FromCurrency"]);
                     int toCurrency = CastAide.AsInt32(row["ToCurrency"]);
                     decimal exrate = CastAide.AsDecimal(row["exrate"]);
@@ -269,15 +268,13 @@ public class UploadFinanceTrans : IHttpHandler, IRequiresSessionState
                             {
                                 remark = "<b>Exceed limit range (" + SplitString(min.ToString()) + " - " + SplitString(max.ToString()) + ")</b>";
                             }
-                            remarkCss = "background-color-yellow";
+
                             rowStyle = "add-customer-bggray";
                         }
                     }
 
                     TemplateHandler.Assign(ref strTmp, "rowstyle", rowStyle);
                     TemplateHandler.Assign(ref strTmp, "reason", remark);
-                    TemplateHandler.Assign(ref strTmp, "reasonCss", remarkCss);
-                    TemplateHandler.Assign(ref strTmp, "actualRateCSS", remarkCss);
                 }
 
                 strBuild.Append(strTmp);

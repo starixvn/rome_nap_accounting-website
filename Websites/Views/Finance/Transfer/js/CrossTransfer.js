@@ -2,23 +2,20 @@
     ForexAccDefault: "DIFF10"
 
 };
-
-function closeDialogModal() {
-    const isPopup = window?.location?.toString().includes("isOpenInPopup");
-    if (isPopup) {
+function closeDialogModal (){
+    const isPopup =window?.location?.toString().includes("isOpenInPopup");
+    if(isPopup){
         parent.afterUpdate(true);
-        setTimeout(function () {
+        setTimeout(function (){
             parent.ClosePopup();
         }, 4000);
     }
 }
-
 transfer.init = function () {
     transfer.tab.init();
     transfer.crossCurrencyTransfer.init();
     transfer.crossCurrencyTransfer2.init();
-    transfer.YesterdayTransactionsForm.init();
-    transfer.YesterdayTransactionsForm.forceNumberAmount();
+    transfer.forceNumberAmount();
 };
 
 transfer.tab = {
@@ -766,17 +763,21 @@ transfer.utils = {
         $("#errMsg").hide();
     }
 };
+transfer.forceNumberAmount = function () {
+    //tab yesterday
+    $("#txtamount").forceNumber(undefined, {isDecimalSupport :true, isNegativeNumberSupport:true,maximumFractionDigits:4 });
 
+    $("#txtamount").keyup();
+}
 
 $(document).ready(function () {
     transfer.init();
 });
 
-transfer.YesterdayTransactionsForm = {
-    variables: {
-        fromUserInfo: {},
-        toUserInfo: {}
-    },
+
+/*var fromUsername = '@Sunplus.Accounting.Core.Common.AppSession.CustUName';*/
+
+var YesterdayTransactionsForm = {
     validateValue: function () {
         $('#errMsg').hide();
         var _toUser = document.getElementById("touser").value;
@@ -811,7 +812,7 @@ transfer.YesterdayTransactionsForm = {
         if (isNaN(parseFloat(_amount))) {
             return false;
         }
-
+        
         param.amount = param.amount.replace(/,/g, "");
         transfer.utils.blockUI();
         $.post("TransferYesterdayTransactionHandler", param,
@@ -825,71 +826,6 @@ transfer.YesterdayTransactionsForm = {
                 transfer.utils.unBlock();
             });
         return true;
-    },
-    forceNumberAmount: function () {
-        //tab yesterday
-        $("#txtamount").forceNumber(undefined, {
-            isDecimalSupport: true,
-            isNegativeNumberSupport: true,
-            maximumFractionDigits: 4
-        });
-
-        $("#txtamount").keyup();
-    },
-    getUserInfo: function (username) {
-        return $.get("SelectCustomerExRate", {username: username}, $.proxy(function (rs) {
-            if (rs == null || typeof rs == "undefined" || typeof rs.username == "undefined") {
-                return null;
-            } else {
-                return rs;
-            }
-        }, this));
-    },
-    checkCurrency:async function (){
-        const fromCus =await transfer.YesterdayTransactionsForm.getUserInfo($("#fromuser").text().trim());
-        const toCus =await transfer.YesterdayTransactionsForm.getUserInfo($("#touser").val());
-
-        if(!toCus || !fromCus){
-            transfer.utils.showError("User does not exist");
-            $("#transfer").attr("disabled", "disabled");
-            $("#systemExRateText").text("");
-            $("#systemExRateValue").text("");
-            return;
-        }
-        
-        const isSameCurrency = fromCus.currency === toCus.currency;
-        const hasRmCurrency = fromCus.currency === "RM" || toCus.currency === "RM";
-        const hasUUSCurrency = fromCus.currency === "UUS" || toCus.currency === "UUS";
-        let systemExRate = hasUUSCurrency ? 0: fromCus.actualrate / toCus.actualrate;
-        systemExRate = Math.round(systemExRate * 10000) / 10000;
-        $("#systemExRateText").text(`(${fromCus.currency}/${toCus.currency}):`)
-        $("#systemExRateValue").text(`${systemExRate}`);
-        
-        if (isSameCurrency || hasRmCurrency) {
-            transfer.utils.hideMessage();
-            $("#transfer").removeAttr("disabled");
-        } else {
-            transfer.utils.showError("The two accounts have different currencies, but neither of them includes the RM currency. Please check again Users Info.");
-            $("#transfer").attr("disabled", "disabled");
-        }
-    },
-    init: function () {
-        $("#touser").keyup(async function (e) {
-            if (typeof this.timeoutID != "undefined") {
-                clearTimeout(this.timeoutID);
-            }
-            const Enter = 13;
-            if (e.keyCode == Enter) {
-                transfer.YesterdayTransactionsForm.checkCurrency();
-            } else {
-                this.timeoutID = setTimeout(
-                    $.proxy(function () {
-                        clearTimeout(this.timeoutID);
-                        transfer.YesterdayTransactionsForm.checkCurrency();
-                    }, this), 1000);
-            }
-
-        });
     }
 }
 
