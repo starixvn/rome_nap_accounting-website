@@ -79,7 +79,7 @@
         for (var row = 0; row < this.daysPerWeek; row++) {
             var tr = $('<tr></tr>');
             if (row === 0) {
-                tr.append('<td rowspan="7" align="center">For Days</td>');
+                tr.append('<td rowspan="7" align="center">For Winlostdate</td>');
             }
 
             for (var column = 0; column < this.daysPerWeek; column++) {

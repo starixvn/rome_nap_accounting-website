@@ -1,93 +1,112 @@
 ﻿@using Sunplus.Accounting.Core.Configurations;
+@using Sunplus.Accounting.DataAccess.Report;
 
 @model IEnumerable<Fanex.Tarus.Admin.Entities.MoveBetSchedule.MoveBetDayViewModel>
 
-@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+    @{
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
 
-@section Styles
+    @section Styles
 {
-    <link href="@Url.Content("~/App_Themes/Public/table.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
-    <link href="@Url.Content("~/App_Themes/Public/commonIOM.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
-    <link href="@Url.Content("~/Scripts/_Libs/jQuery/Styles/jquery-ui-1.9.1.custom.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
-    <link href="@Url.Content("~/Views/Admin/MoveBetSchedule/Styles/Index.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
-}
+        <link href="@Url.Content("~/App_Themes/Public/table.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+        <link href="@Url.Content("~/App_Themes/Public/commonIOM.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+        <link href="@Url.Content("~/Scripts/_Libs/jQuery/Styles/jquery-ui-1.9.1.custom.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+        <link href="@Url.Content("~/Views/Admin/MoveBetSchedule/Styles/Index.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    }
 
-@section Scripts
+    @section Scripts
 {
-    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-ui-1.9.1.min.js?v=" + WebSettings.Version)"></script>
-    <script type="text/javascript" src="@Url.Content("~/Views/Admin/MoveBetSchedule/Scripts/MoveBetSchedule.js?v=" + WebSettings.Version)"></script>
-    <script type="text/javascript" src="@Url.Content("~/Views/Admin/MoveBetSchedule/Scripts/Index.js?v=" + WebSettings.Version)"></script>
-    <script type="text/javascript">
+        <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-ui-1.9.1.min.js?v=" + WebSettings.Version)"></script>
+        <script type="text/javascript" src="@Url.Content("~/Views/Admin/MoveBetSchedule/Scripts/MoveBetSchedule.js?v=" + WebSettings.Version)"></script>
+        <script type="text/javascript" src="@Url.Content("~/Views/Admin/MoveBetSchedule/Scripts/Index.js?v=" + WebSettings.Version)"></script>
+        <script type="text/javascript">
         var currentDay = '@DateTime.Today.ToString("MM/dd/yyyy")';
         var sevenDaysFromToday = '@DateTime.Today.AddDays(6).ToString("MM/dd/yyyy")';
         var defaultMoveBetSchedule = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model, Newtonsoft.Json.Formatting.Indented));
         var getMoveBetScheduleUrl = '@Url.Content("~/MoveBetSchedule/GetMoveBetSchedule")';
         var updateMoveBetScheduleUrl = '@Url.Content("~/MoveBetSchedule/UpdateMoveBetSchedule")';
-    </script>
-}
+        </script>
+    }
 
-<div class="main">
-    <div id="divMainHeader">
-        <div id="left_tab1">
-            <ul>
-                <li class="lefticon"></li>
-                <li class="current"><span>Move Bet Schedule</span></li>
-            </ul>
-        </div>
-    </div>
-
-    <div class="maincontent">
-        <div class="filterBox">
-            <div id="default-movebet">
-                <h3>Default Move Bet Days</h3>
-                <table id="tbl-default-movebet" class="tbl-default-movebet">
-                    <thead>
-                        <tr>
-                            <th>Move Bet Day <br /> (GMT -4)</th>
-                            <th data-weekday="1">Monday</th>
-                            <th data-weekday="2">Tuesday</th>
-                            <th data-weekday="3">Wednesday</th>
-                            <th data-weekday="4">Thurday</th>
-                            <th data-weekday="5">Friday</th>
-                            <th data-weekday="6">Saturday</th>
-                            <th data-weekday="0">Sunday</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-            <div id="update-movebet" class="update-movebet">
-                <div id="form-filter-movebet" class="form-inline">
-                    <h3 class="form-title">Adjust Move Bet Days</h3>
-                    <div class="form-control">
-                        <label>From</label>
-                        <input type="text" class="txtdate" id="txtFromDate" readonly="readonly" />
-                    </div>
-                    <div class="form-control">
-                        <label>To</label>
-                        <input type="text" class="txtdate" id="txtToDate" readonly="readonly" />
-                    </div>
-                </div>
-                <table id="tbl-movebet-schedule" class="tbl-movebet-schedule">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th colspan="7" class="month-year-wrapper">
-                                <label id="month-year-label" class="month-year-label"></label>
-                                <span id="previous-icon" class="icon previous-icon"></span>
-                                <span id="next-icon" class="icon next-icon"></span>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-                <div id="form-update-movebet" class="form-update-movebet">
-                    <span id="result-message"></span>
-                    <button id="btn-save" type="submit">Save</button>
-                </div>
+    <div class="main">
+        <div id="divMainHeader">
+            <div id="left_tab1">
+                <ul>
+                    <li class="lefticon"></li>
+                    <li class="current"><span>Move Bet Schedule</span></li>
+                </ul>
             </div>
         </div>
+
+        <div class="maincontent">
+            <div class="filterBox">
+                <div id="default-movebet">
+                    <h3>Default Move Bet Days</h3>
+                    <table id="tbl-default-movebet" class="tbl-default-movebet">
+                        <thead>
+                            <tr>
+                                <th>Move Bet Day <br /> (GMT -4)</th>
+                                <th data-weekday="1">Monday</th>
+                                <th data-weekday="2">Tuesday</th>
+                                <th data-weekday="3">Wednesday</th>
+                                <th data-weekday="4">Thurday</th>
+                                <th data-weekday="5">Friday</th>
+                                <th data-weekday="6">Saturday</th>
+                                <th data-weekday="0">Sunday</th>
+                            </tr>
+                            <tr class="header-gmt8">
+                                <th>Move Bet Day <br /> (GMT +8)</th>
+                                <th data-weekday="1">Tuesday</th>
+                                <th data-weekday="2">Wednesday</th>
+                                <th data-weekday="3">Thurday</th>
+                                <th data-weekday="4">Friday</th>
+                                <th data-weekday="5">Saturday</th>
+                                <th data-weekday="6">Sunday</th>
+                                <th data-weekday="0">Monday</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div id="update-movebet" class="update-movebet">
+                    <div id="form-filter-movebet" class="form-inline">
+                        <h3 class="form-title">Adjust Move Bet Days</h3>
+                        <div class="form-control">
+                            <label>From</label>
+                            <input type="text" class="txtdate" id="txtFromDate" readonly="readonly" />
+                        </div>
+                        <div class="form-control">
+                            <label>To</label>
+                            <input type="text" class="txtdate" id="txtToDate" readonly="readonly" />
+                        </div>
+                        <div class="form-control">
+                            <h4 class="form-title">Current Move Bet Day: </h4>
+                            <span>@ReportUtils.BalanceUp.MoveBetsDay.ToString("MM/dd/yyyy")</span>
+                        </div>
+                        <div class="form-control">
+                            <h4 class="form-title">Current Balance Up: </h4>
+                            <span>@ReportUtils.BalanceUp.BalanceUpDay.ToString("MM/dd/yyyy")</span>
+                        </div>
+                    </div>
+                    <table id="tbl-movebet-schedule" class="tbl-movebet-schedule">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th colspan="7" class="month-year-wrapper">
+                                    <label id="month-year-label" class="month-year-label"></label>
+                                    <span id="previous-icon" class="icon previous-icon"></span>
+                                    <span id="next-icon" class="icon next-icon"></span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <div id="form-update-movebet" class="form-update-movebet">
+                        <span id="result-message"></span>
+                        <button id="btn-save" type="submit">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>

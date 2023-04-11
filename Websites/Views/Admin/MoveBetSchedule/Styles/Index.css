@@ -118,7 +118,10 @@ table {
 .tbl-default-movebet {
     border: 1px solid #7C98A4;
 }
-
+    .tbl-default-movebet tr.header-gmt8 th {
+        background-color: #FFE4C4;
+    }
+    
     .tbl-default-movebet th, .tbl-default-movebet td {
         border: 1px solid #7C98A4;
     }
@@ -133,7 +136,7 @@ table {
     }
 
         .tbl-default-movebet th.current-day, .tbl-default-movebet td.current-day {
-            background-color: #e6b8b7;
+            background-color: #e6b8b7 !important;
         }
 
 .update-movebet {
@@ -160,6 +163,9 @@ tr.tr-date td {
 .tbl-movebet-schedule tbody {
     border: 1px solid #7C98A4;
 }
+    .tbl-movebet-schedule tr.header-gmt8 td {
+        background-color: #FFE4C4;
+    }
 
     .tbl-movebet-schedule tbody tr td {
         border-right: 1px solid #7C98A4;
