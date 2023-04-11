@@ -203,7 +203,7 @@ function RenderSite(){
             item.ChildSites.forEach(function(child, i){
                 htmlOptions.push('<option value="');
                 htmlOptions.push(child.Name + '"');
-                if(site789.indexOf(child.Name)){
+                if(site789.indexOf(child.Name)>=0){
                     htmlOptions.push('selected="selected"');
                 }
                 htmlOptions.push('>');
@@ -214,7 +214,7 @@ function RenderSite(){
         }else{
             htmlOptions.push('<option value="');
             htmlOptions.push(item.Name + '"');
-            if(site789.indexOf(child.Name)){    
+            if(site789.indexOf(item.Name)>=0){    
                 htmlOptions.push('selected="selected"');
             }
             htmlOptions.push('>');
