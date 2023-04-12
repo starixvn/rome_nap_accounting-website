@@ -2,7 +2,7 @@
     $('#errMsg1').html('');
     var params = {
         SuperName: $("#SuperName").val(),
-        Site: $("#Site").val(),
+        Site: $("#Site").multiSelect("getCheckedItems").join(","),
         PageSize: pageSize,
         PageIndex: pageIndex
     };
@@ -195,34 +195,35 @@ function RenderSuccessMsg(successMsg) {
     $('#errMsg').append('<div class="alertboxscc"><div>' + successMsg + '</div></div>');
 }
 
-function RenderSite(){
-    var htmlOptions = [];
-    jsonSites.forEach(function (item, index) {
-        if(item.IsParent){
-            htmlOptions.push('<optgroup label="' + item.Name + '">');
-            item.ChildSites.forEach(function(child, i){
-                htmlOptions.push('<option value="');
-                htmlOptions.push(child.Name + '"');
-                if(site789.indexOf(child.Name)>=0){
-                    htmlOptions.push('selected="selected"');
-                }
-                htmlOptions.push('>');
-                htmlOptions.push(child.Name);
-                htmlOptions.push('</option>');
+var buildSiteData = function (siteList) {
+            var dataList = [];
+            $.each(siteList, function (i, site) {
+                dataList.push({
+                    Id: site.Id,
+                    Value: site.Id,
+                    Text: site.Name,
+                    Checked: true,
+                    Enable: true,
+                    Items: site.IsParent ? buildSiteData(site.ChildSites) : []
+                });
             });
-            htmlOptions.push('</optgroup>');
-        }else{
-            htmlOptions.push('<option value="');
-            htmlOptions.push(item.Name + '"');
-            if(site789.indexOf(item.Name)>=0){    
-                htmlOptions.push('selected="selected"');
-            }
-            htmlOptions.push('>');
-            htmlOptions.push(item.Name);
-            htmlOptions.push('</option>');
-        }
+
+            return dataList;
+};
+
+function assignSites() {
+    $("#Site").multiSelect({
+        minWidth: 180,
+        maxHeight: 450,
+        shadow: true,
+        showHeader: true,
+        isCheckAll: true,
+        showFooter: false,
+        checkAllText: "All",
+        listData: buildSiteData(jsonSites),
+        selectableOptgroup: true,
+        noItemText: "No site found."
     });
-    $("#Site").html(htmlOptions.join(""));
 }
 
 $(document).ready(function () {
@@ -256,5 +257,5 @@ $(document).ready(function () {
             jQuery(this).val("");
         }
     })
-    RenderSite();
+    assignSites();
 })
