@@ -311,7 +311,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.SearchCopy, Version=2.0.8.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.SearchCopy.NAP.2.0.8.6-RemoveNG004\lib\net461\Fanex.CustomerSetting.Module.SearchCopy.dll</HintPath>
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.SearchCopy.NAP.2.0.8.6-RemoveNG005\lib\net461\Fanex.CustomerSetting.Module.SearchCopy.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Security, Version=2.0.0.6, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.CustomerSetting.Security.2.0.0.6\lib\net40\Fanex.CustomerSetting.Security.dll</HintPath>
