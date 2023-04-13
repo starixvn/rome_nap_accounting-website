@@ -172,6 +172,7 @@
             var group = parseInt(week / weeksPerMonth),
                 hidden = week > 3,
                 tr = $(`<tr class="tr-date ${hidden ? 'hidden' : ''}" data-group="${group}"></tr>`),
+                trGMT8 = $(`<tr class="header-gmt8 tr-date ${hidden ? 'hidden' : ''}" data-group="${group}"></tr>`),
                 rows = [
                     $(`<tr class="${hidden ? 'hidden' : ''}" data-group="${group}"></tr>`),
                     $(`<tr class="${hidden ? 'hidden' : ''}" data-group="${group}"></tr>`),
@@ -184,19 +185,23 @@
             if (week % weeksPerMonth === 0) {
                 var rowSpan = weeks - week < weeksPerMonth ? (weeks - week) * rowNeededForADay - 1 : daysPerMonth;
                 tr.append('<td class="td-date">Move Bet Day <br /> (GMT -4)</td>');
-                rows[0].append(`<td align="center" rowspan="${rowSpan}">For Days</td>`);
+                trGMT8.append('<td class="td-date">Move Bet Day <br /> (GMT +8)</td>');
+                rows[0].append(`<td align="center" rowspan="${rowSpan}">For Winlostdate</td>`);
             }
 
             for (var day = 0; day < daysPerWeek; day++) {
                 var stillInRange = dataIndex < length,
                     date = stillInRange ? new Date(data[dataIndex].Date) : new Date(toDate.setDate(toDate.getDate() + 1)),
+                    dateGMT8 = new Date(date.getTime()),
                     weekDay = stillInRange ? data[dataIndex].WeekDay : date.getDay(),
                     options = stillInRange ? data[dataIndex].Options : defaultMoveBetSchedule[weekDay].Options;
 
+                dateGMT8.addDays(1);
                 var disabled = dataIndex >= length,
                     checked = false,
                     weekDayName = days[weekDay],
-                    localeDate = date.toLocaleDateString();
+                    localeDate = date.toLocaleDateString(),
+                    localeDateGMT8 = dateGMT8.toLocaleDateString();
 
                 tr.append(
                     `<td class="td-date">
@@ -214,6 +219,13 @@
                     })}
                         <div class="date-box ${isToday(date) ? 'current-day' : ''}">
                             <span>${localeDate}</span>
+                        </div>
+                    </td>`);
+
+                trGMT8.append(
+                    `<td class="td-date">
+                        <div class="date-box ${isToday(date) ? 'current-day' : ''}">
+                            <span>${localeDateGMT8}</span>
                         </div>
                     </td>`);
 
@@ -252,7 +264,7 @@
                 dataIndex++;
             }
 
-            tbody.append(tr, rows);
+            tbody.append(tr, trGMT8, rows);
         }
 
         highlightNewChangeAfterRendering.call(this, changedIndexList);
@@ -282,3 +294,7 @@
         return this;
     };
 }(jQuery));
+
+Date.prototype.addDays = function (days) {
+    this.setDate(this.getDate() + days);
+} 
