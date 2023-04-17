@@ -88,9 +88,50 @@ function GetInsertUrl() {
         case "tab_product3rd":
             action = window.rootUrl + 'ManageProduct3RD/Insert';
             break;
+        case "tab_sbsm":
+            action = 'InsertSBSM';
+            break;
     }
 
     return action;
+}
+
+function Search() {
+    switch (cachedTabId) {
+        case "tab_product":
+            SearchProduct(50, 1);
+            break;
+        case "tab_sport":
+            SearchSport(50, 1);
+            break;
+        case "tab_bettype":
+            SearchBettype(50, 1);
+            break;
+        case "tab_sbm":
+            SearchSBM(50, 1);
+            break;
+        case "tab_cssbm":
+            GetGroupsAndSearchCSSBM(50, 1);
+            break;
+        case "tab_refresource":
+            SearchRefResource(50, 1);
+            break;
+        case "tab_cansee":
+            SearchCanSee();
+            break;
+        case "tab_resetwinning":
+            SearchResetWinning();
+            break;
+        case "tab_vendor":
+            SearchVendor(1, 50);
+            break;
+        case "tab_product3rd":
+            SearchProduct3rd(1, 50);
+            break;
+        case "tab_sbsm":
+            SearchSBSM(50, 0);
+            break;
+    }
 }
 
 function ValidateUploadFile() {

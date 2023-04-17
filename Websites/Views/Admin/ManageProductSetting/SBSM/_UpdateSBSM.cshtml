@@ -1,0 +1,109 @@
+﻿@using Fanex.Tarus.Admin.ManageProductSetting.ViewModel;
+
+@model ManageProductSettingViewModel
+<style>
+    .setting-edit {
+        width: 180px;
+        height: 18px;
+    }
+
+    label {
+        font-weight: bold;
+        padding-right: 10px;
+    }
+
+    .hint-note {
+        line-height: 10px !important;
+    }
+</style>
+<form id="edit-SBSM-form" style="display: none;">
+    <div id="updateSBSMErrMsg">
+    </div>
+    <table style="line-height: 28px; margin-top: 10px; border-collapse: collapse;">
+        <tr>
+            <td><label for="SBSMProduct">Product</label></td>
+            <td>
+                @Html.DropDownList("SBSMProductId", Model.Products, new { id = "SBSMProductId", @class = "setting-edit" })
+            </td>
+            <td style="width: 40px;"></td>
+            <td><label for="SBSMSportTypeRefPT">SportTypeRefPT</label></td>
+            <td><input id="SBSMSportTypeRefPT" type="text" /></td>
+            <td style="width: 40px;"></td>
+            <td><label for="SBSMSportTypeRefBetSetting">SportTypeRefBetSetting</label></td>
+            <td><input id="SBSMSportTypeRefBetSetting" type="text" /></td>
+        </tr>
+        <tr>
+            <td><label for="SBSMSportType">SportType</label></td>
+            <td><input id="SBSMSportType" type="text" disabled /></td>
+            <td style="width: 40px;"></td>
+            <td><label for="SBSMBetTypeRefPT">BetTypeRefPT</label></td>
+            <td><input id="SBSMBetTypeRefPT" type="text" /></td>
+            <td style="width: 40px;"></td>
+            <td><label for="SBSMBetTypeRefBetSetting">BetTypeRefBetSetting</label></td>
+            <td><input id="SBSMBetTypeRefBetSetting" type="text" /></td>
+        </tr>
+        <tr>
+            <td><label for="SBSMBetType">BetType</label></td>
+            <td><input id="SBSMBetType" type="text" disabled /></td>
+            <td style="width: 40px;"></td>
+            <td><label for="ddlSBSMTablePT">TablePT</label></td>
+            <td>
+                @Html.DropDownList("SBSMTablePT", Model.FunctionTables.TablePT, new { id = "SBSMTablePT", @class = "setting-edit" })
+            </td>
+            <td style="width: 40px;"></td>
+            <td><label for="ddlSBSMTableBetSetting">TableBetSetting</label></td>
+            <td>
+                @Html.DropDownList("SBSMTableBetSetting", Model.FunctionTables.TableBetSetting, new { id = "SBSMTableBetSetting", @class = "setting-edit" })
+            </td>
+        </tr>
+        <tr>
+            <td><label for="SBSMIsLive">IsLive</label></td>
+            <td><input id="SBSMIsLive" type="checkbox" disabled /></td>
+            <td style="width: 40px;"></td>
+            <td><label for="SBSMIsLivePT">IsLivePT</label></td>
+            <td><input id="SBSMIsLivePT" type="checkbox" /></td>
+            <td style="width: 40px;"></td>
+            <td><label for="ddlSBSMTableBettrans">TableBettrans</label></td>
+            <td>
+                @Html.DropDownList("SBSMTableBettrans", Model.FunctionTables.TableBettrans, new { id = "SBSMTableBettrans", @class = "setting-edit" })
+            </td>
+        </tr>
+        <tr>
+            <td><label for="SBSMIsLicensee">IsLicensee</label></td>
+            <td><input id="SBSMIsLicensee" type="checkbox" disabled /></td>
+            <td style="width: 40px;"></td>
+            <td><label for="SBSMSportTypeRefComm">SportTypeRefComm</label></td>
+            <td><input id="SBSMSportTypeRefComm" type="text" /></td>
+            <td style="width: 40px;"></td>
+            <td><label for="SBSMSportTypeRefWinlossLimit">SportTypeRefWinlossLimit</label></td>
+            <td><input id="SBSMSportTypeRefWinlossLimit" type="text" /></td>
+        </tr>
+        <tr>
+            <td><label for="SBSMSite">Site</label></td>
+            <td><input id="SBSMSite" type="checkbox" disabled /></td>
+            <td style="width: 40px;"></td>
+            <td><label for="SBSMBetTypeRefComm">BetTypeRefComm</label></td>
+            <td><input id="SBSMBetTypeRefComm" type="text" /></td>
+            <td style="width: 40px;"></td>
+            <td><label for="SBSMBetTypeRefWinlossLimit">BetTypeRefWinlossLimit</label></td>
+            <td><input id="SBSMBetTypeRefWinlossLimit" type="text" /></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td style="width: 40px;"></td>
+            <td><label for="ddlSBSMTableComm">TableComm</label></td>
+            <td>
+                @Html.DropDownList("SBSMTableComm", Model.FunctionTables.TableComm, new { id = "SBSMTableComm", @class = "setting-edit" })
+            </td>
+            <td style="width: 40px;"></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td colspan="8" style="text-align: center">
+                <input id="btnSBSMUpdate" class="btn" type="button" value="Submit" />
+            </td>
+        </tr>
+    </table>
+</form>
