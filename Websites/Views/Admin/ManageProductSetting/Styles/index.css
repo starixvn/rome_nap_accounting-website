@@ -17,3 +17,15 @@
     vertical-align: middle;
 }
 
+.edit_input_txt {
+    border: 1px solid #BDC7D8;
+    border-radius: 2px 2px 2px 2px;
+    padding: 2px 2px 2px 2px;
+    background-color: white;
+    min-height: 20px;
+}
+
+.edit_input_txt:disabled {
+    background-color: rgb(180,180,180) !important;
+}
+

@@ -364,4 +364,9 @@ function GetBetType() {
 
 $(document).ready(function () {
     RenderProductDdl();
+    $("#SBSMProductId").select2({ width: "185px" });
+    $("#SBSMTablePT").select2({ width: "185px" });
+    $("#SBSMTableBetSetting").select2({ width: "185px" });
+    $("#SBSMTableBettrans").select2({ width: "185px" });
+    $("#SBSMTableComm").select2({ width: "185px" });
 });
