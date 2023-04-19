@@ -37,13 +37,19 @@ namespace Fanex.Tarus.Customer.Controller
         {
             CustomerVirtualRateModel result = _virtualRateService.CustomerVirtualRate(criteria);
             return View("~/Areas/CustomerSetting/Views/VirtualRate/EditRate/Index.cshtml", result);
-        }    
+        }
 
         [AuthenticateRead]
         public ActionResult HistoryLogView(ViewHistoryLogCriteria criteria)
         {
             HistoryLogReportModel result = _virtualRateService.HistoryLog(criteria);
             return View("~/Areas/CustomerSetting/Views/VirtualRate/HistoryLog/Index.cshtml", result);
+        }
+
+        public JsonResult HistoryLogQuery(ViewHistoryLogCriteria criteria)
+        {
+            HistoryLogReportModel result = _virtualRateService.HistoryLog(criteria);
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
