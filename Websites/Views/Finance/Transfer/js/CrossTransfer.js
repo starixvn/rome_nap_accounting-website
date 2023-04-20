@@ -857,8 +857,8 @@ transfer.YesterdayTransactionsForm = {
             return;
         }
         
-        const isSameCurrency = fromCus.currency === toCus.currency;
-        const hasRmCurrency = fromCus.currency === "RM" || toCus.currency === "RM";
+        const isSameCurrency = fromCus.currencycode === toCus.currencycode;
+        const hasRmCurrency = fromCus.currencycode === "MYR" || toCus.currencycode === "MYR"; // RM
         const hasUUSCurrency = fromCus.currency === "UUS" || toCus.currency === "UUS";
         let systemExRate = hasUUSCurrency ? 0: fromCus.actualrate / toCus.actualrate;
         systemExRate = Math.round(systemExRate * 10000) / 10000;
@@ -869,7 +869,7 @@ transfer.YesterdayTransactionsForm = {
             transfer.utils.hideMessage();
             $("#transfer").removeAttr("disabled");
         } else {
-            transfer.utils.showError("The two accounts have different currencies, but neither of them includes the RM currency. Please check again Users Info.");
+            transfer.utils.showError("The two accounts have different currency code, but neither of them includes the RM currency. Please check again Users Info.");
             $("#transfer").attr("disabled", "disabled");
         }
     },
