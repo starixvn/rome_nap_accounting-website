@@ -252,7 +252,7 @@ public class UploadFinanceTrans : IHttpHandler, IRequiresSessionState
                         remark = "<b>Same currency, but actual rate is different 1.</b>";
                         rowStyle = "add-customer-bggray";
                     }
-                    else if (fromCurrency == 2 || toCurrency == 2)
+                    else if (isMYRCode(fromCurrency) || isMYRCode(toCurrency))
                     {
                         if (!string.IsNullOrEmpty(row["CurrentExRate"].ToString()) && strCurrentExRate != strExRate)
                         {
@@ -286,6 +286,12 @@ public class UploadFinanceTrans : IHttpHandler, IRequiresSessionState
 
         TemplateHandler.ReplaceBlock(ref strResult, "content", strBuild.ToString());
         return strResult;
+    }
+
+    private bool isMYRCode(int code)
+    {
+      var ringgitMalaysia  = new List<int> { 2, 132 };
+      return ringgitMalaysia.Contains(code);
     }
 
     private string SplitString(string value)
