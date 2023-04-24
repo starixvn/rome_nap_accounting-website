@@ -9,7 +9,7 @@
     logType: 'setting',
     Rows: null,
     doSearch: function (_page, _size) {
-        $("#logPopUp").dialog("close");
+       // $("#logPopUp").dialog("close");
         var _custName = "", _custId = custId, _fromDate = "", _toDate = "", _viewBy = "";
         if (typeof _page == 'undefined') {
             _page = this.page;
@@ -386,7 +386,8 @@
             }
         }
     },
-    openPopupLeagueGroup: function($element) {
+    openPopupLeagueGroup: function ($element, $event) {
+        $event.preventDefault();
         var leagueGroupName = $element.dataset.leagueGroup;
         let html = [
             '<table class="tbl-popup">',
@@ -401,7 +402,7 @@
 
         $("#logPopUp").dialog({
             width: 250,
-            height: 'auto',
+            height: 400,
             modal: true,
             title: "League Group"
         });

@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
 
     <title>View log</title>
+    <link href="../../App_Themes/jquery-ui.css" rel="stylesheet" type="text/css" />
     <link href="../../App_Themes/Log/ViewLog.css" rel="stylesheet" type="text/css" />
     <link href="../../App_Themes/Log/Tab.css?v=<%= Sunplus.Accounting.Core.Configurations.WebSettings.Version %>" rel="stylesheet" type="text/css" />
     <link href="../../App_Themes/Public/table.css" rel="stylesheet" type="text/css" />
@@ -19,6 +20,9 @@
     <script src="../../js/jQuery/jquery.ui.widget.min.js" type="text/javascript"></script>
     <script src="../../js/jQuery/jquery.ui.mouse.min.js" type="text/javascript"></script>
     <script src="../../js/jQuery/jquery.ui.draggable.min.js" type="text/javascript"></script>
+    <script src="../../js/jQuery/jquery.ui.position.min.js" type="text/javascript"></script>
+    <script src="../../js/jQuery/jquery.ui.resizable.min.js" type="text/javascript"></script>
+    <script src="../../js/jQuery/jquery.ui.dialog.min.js" type="text/javascript"></script>
     <script type="text/javascript" src="../../js/Calendar2/js/jscal2.js"></script>
     <script type="text/javascript" src="../../js/Calendar2/js/lang/en.js"></script>
     <link rel="stylesheet" type="text/css" href="../../js/Calendar2/css/jscal2.css" />
@@ -29,8 +33,6 @@
 
     <script src="../../js/jQuery/Template/jquery.tmpl.js" type="text/javascript"></script>
     <script src="../../js/Common/Functions.js" type="text/javascript"></script>
-    <script src="../../js/jQuery/jquery-ui-1.8.20.custom.min.js" type="text/javascript"></script>
-    <link rel="stylesheet" type="text/css" href="../../js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css" />
     <script src="Scripts/LogSetting.js?v=<%=Sunplus.Accounting.Core.Configurations.WebSettings.Version%>" type="text/javascript"></script>
     <script type="text/javascript">
         function getQuerystring(key, default_) {
@@ -68,8 +70,6 @@
         .w400r {width: 479px; white-space:normal; overflow:hidden;}
         .w300r {width: 300px; white-space:normal; overflow:hidden;}
         .w200c {width: 187px; overflow:hidden}
-        .w50 {width: 50px;}
-        .w150 {width: 150px;}
         .w200c_credit {width: 180px; overflow:hidden}
         .w200c_desc {width: 247px; overflow:hidden}
         .h35r {height: 35px;}

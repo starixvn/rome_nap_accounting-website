@@ -167,11 +167,12 @@ namespace Sunplus.Accounting.Business.LogDisplay
             return GetResourceName("AccountType_" + strValue);
         }
         
-        public static string ReplaceLeagueGroup(string leagueGroupsString)
+        public static string ReplaceLeagueGroup(string leagueGroupString)
         {
-            if(leagueGroups.Length > 2)
+            var leagueGroups = leagueGroupString.Split(',');
+            if (leagueGroups.Length > 2)
             {
-                return string.Format("<a href='#' data-league-group='{0}' onclick='LogPT.openPopupLeagueGroup(this);'>{1}</a>", leagueGroupString, leagueGroups.Length);
+                return string.Format("<a href='#' data-league-group='{0}' onclick='LogPT.openPopupLeagueGroup(this, event);'>{1}</a>", leagueGroupString, leagueGroups.Length);
             } else
             {
                 return leagueGroupString;
