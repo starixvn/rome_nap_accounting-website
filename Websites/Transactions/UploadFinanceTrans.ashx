@@ -241,18 +241,15 @@ public class UploadFinanceTrans : IHttpHandler, IRequiresSessionState
                     var remark = string.Empty;
                     var remarkCss = string.Empty;
                     
-                    int fromCurrency = CastAide.AsInt32(row["FromCurrency"]);
-                    int toCurrency = CastAide.AsInt32(row["ToCurrency"]);
+                    int fromCurrency = CastAide.AsInt32(row["FromCurrCode"]);
+                    int toCurrency = CastAide.AsInt32(row["ToCurrCode"]);
                     decimal exrate = CastAide.AsDecimal(row["exrate"]);
                     string strCurrentExRate = SplitString(CastAide.AsString(row["CurrentExRate"]));
                     string strExRate = SplitString(CastAide.AsString(row["ExRate"]));
-
-                    if (fromCurrency == toCurrency && CastAide.AsDecimal(strExRate) != 1)
-                    {
-                        remark = "<b>Same currency, but actual rate is different 1.</b>";
-                        rowStyle = "add-customer-bggray";
-                    }
-                    else if (isMYRCode(fromCurrency) || isMYRCode(toCurrency))
+                    
+                    var isSameCurrencyCode = fromCurrency == toCurrency;
+                    var isMalaysiaCurrency = isMYRCode(CastAide.AsInt32(row["FromCurrency"])) || isMYRCode(CastAide.AsInt32(row["ToCurrency"]));
+                    if (isSameCurrencyCode || isMalaysiaCurrency)
                     {
                         if (!string.IsNullOrEmpty(row["CurrentExRate"].ToString()) && strCurrentExRate != strExRate)
                         {
@@ -288,10 +285,10 @@ public class UploadFinanceTrans : IHttpHandler, IRequiresSessionState
         return strResult;
     }
 
-    private bool isMYRCode(int code)
+    private bool isMYRCode(int exchangeID)
     {
       var ringgitMalaysia  = new List<int> { 2, 132 };
-      return ringgitMalaysia.Contains(code);
+      return ringgitMalaysia.Contains(exchangeID);
     }
 
     private string SplitString(string value)
