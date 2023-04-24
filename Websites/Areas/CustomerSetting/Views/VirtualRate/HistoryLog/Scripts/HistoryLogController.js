@@ -47,7 +47,7 @@ var HistoryLogController = function () {
             numberOfFrozenColumn: 0,
             fullWidth: true,
             fullHeight: false,
-            gridHeight: 550,
+            gridHeight: 500,
             showDistinctRow: false,
             showHighlightRow: false,
             headerColumnHeight: 29,
