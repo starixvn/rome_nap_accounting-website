@@ -12,6 +12,8 @@
         [SpParam(Ignored = true)]
         public string Username { get; set; }
 
+        public int ViewType { get; set; }
+
         public override string GetSettingKey()
         {
             return "Customer_VirtualRate_GetLog";

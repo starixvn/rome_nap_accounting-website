@@ -14,6 +14,26 @@
     <div class="maincontent">
         <div id="result-message">
         </div>
+        <table style="margin: 10px;">
+            <tbody>
+                <tr>
+                    <td class="b">
+                        <label for="selViewType">Log Type </label>
+                    </td>
+                    <td>
+                        <select id="selViewType">
+                            <option value="0">All</option>
+                            <option value="1">Lock Status</option>
+                            <option value="2">Virtual Rate</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="button" id="btnSearch" class="btn" value="Search" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <span class="note-message">Note: This page is displayed in the top 50 lines of the log.</span>
         <div id="virtual-rate-log-container">
             <div id="virtual-rate-log" class="freegrid">
             </div>

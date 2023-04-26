@@ -26,8 +26,18 @@ var HistoryLogController = function () {
     };
 
     self.initPage = function () {
+        self.CustId = historyLogReport.CustId;
+        self.Username = historyLogReport.Username;
         self.renderHistoryLogReport(historyLogReport);
+        $('#btnSearch').click(function () {
+            self.search({ CustId: self.CustId, Username: self.Username, ViewType: $('#selViewType').find(":selected").val() });
+        });
     };
+
+    self.search = function (data) {
+        $.get("HistoryLogQuery", data, function (result) { self.renderHistoryLogReport(result); });
+    }
+
     self.renderHistoryLogReport = function (historyLogReport) {
         var gridOptions = {
             columns: self.renderHistoryLogReportHeader(historyLogReport),
@@ -37,7 +47,7 @@ var HistoryLogController = function () {
             numberOfFrozenColumn: 0,
             fullWidth: true,
             fullHeight: false,
-            gridHeight: 550,
+            gridHeight: 500,
             showDistinctRow: false,
             showHighlightRow: false,
             headerColumnHeight: 29,
@@ -229,14 +239,14 @@ var HistoryLogController = function () {
             });
         }
         else if (logInfo.UpdateType == self.Constants.UpdateType.Status ||
-            logInfo.UpdateType == self.Constants.UpdateType.LicenseeStatus) {   
+            logInfo.UpdateType == self.Constants.UpdateType.LicenseeStatus) {
             columns.push({
                 Name: "ColSport",
                 Value: viewResources.Virtual_Rate + ": " +
                     (logInfo.EnableVirtualRate ? viewResources.Enabled : viewResources.Disabled),
                 MergeColNumber: (maxColumnNumber - 3)
-                });
-        
+            });
+
         } else {
             columns.push({
                 Name: "ColSport",
