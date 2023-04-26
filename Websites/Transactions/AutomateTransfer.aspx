@@ -13,7 +13,7 @@
     <link href="../App_Themes/Public/Message.css" rel="stylesheet" type="text/css" />
     <link href="../App_Themes/LeftPanel/left_panel.css" rel="stylesheet" type="text/css" />
     <link href="../UserGuide/css/userguide.css" rel="stylesheet" type="text/css" />
-    <link href="style/AutomateTransfer.css" rel="stylesheet" type="text/css" />
+    <link href="style/AutomateTransfer.css?v=26042023" rel="stylesheet" type="text/css" />
     <script src="../js/jQuery/jquery.js" type="text/javascript"></script>
 
     <script src="../js/jQuery/ajaxfileupload.js" type="text/javascript"></script>
