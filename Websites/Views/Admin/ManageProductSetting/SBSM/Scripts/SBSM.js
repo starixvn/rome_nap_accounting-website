@@ -236,7 +236,7 @@ function RenderProductDdl() {
 
 
     $('#ddlSBSMProductId').multiSelect({
-        minWidth: 180,
+        minWidth: 250,
         maxHeight: 450,
         shadow: true,
         showHeader: true,
@@ -284,7 +284,7 @@ function GetSportType() {
             });
 
             $('#ddlSBSMSportType').multiSelect({
-                minWidth: 180,
+                minWidth: 250,
                 maxHeight: 450,
                 shadow: true,
                 showHeader: true,
@@ -341,7 +341,7 @@ function GetBetType() {
             });
 
             $('#ddlSBSMBetType').multiSelect({
-                minWidth: 180,
+                minWidth: 250,
                 maxHeight: 450,
                 shadow: true,
                 showHeader: true,
