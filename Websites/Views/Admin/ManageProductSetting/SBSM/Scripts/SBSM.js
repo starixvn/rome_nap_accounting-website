@@ -221,16 +221,13 @@ function UpdateSBSM(index) {
 
 function RenderProductDdl() {
     var multiselectData = [];
-    $('#ddlSBSMProductId > option').each(function () {
-        var $this = $(this);
+    $.each(productList, function (_, item) {
         multiselectData.push({
-            Id: "filterProduct_" + $this.attr('value'),
-            Value: $this.attr('value'),
-            Text: $this.html(),
+            Id: "filterProduct_" + item.Value,
+            Value: item.Value,
+            Text: item.Text,
             Checked: true,
-            Enable: true,
-            CssClass: "",
-            Items: []
+            Enable: true
         });
     });
 
@@ -239,7 +236,6 @@ function RenderProductDdl() {
         minWidth: 250,
         maxHeight: 450,
         shadow: true,
-        showHeader: true,
         isCheckAll: true,
         showFooter: false,
         showFilter: true,
@@ -256,7 +252,9 @@ function RenderProductDdl() {
             }
         }
     });
-    
+
+    $('#ddlSBSMProductId').trigger('change');
+    $('#ddlSBSMProductId > input:first').removeAttr("title");
     GetSportType();
 }
 
@@ -304,6 +302,7 @@ function GetSportType() {
                     }
                 }
             });
+            $('#ddlSBSMSportType > input:first').removeAttr("title");
 
             GetBetType();
         },
@@ -352,6 +351,7 @@ function GetBetType() {
                 listData: multiselectData,
                 noItemText: "No item selected."
             });
+            $('#ddlSBSMBetType > input:first').removeAttr("title");
         },
         error: function (xhr) {
             showAlertMessage('updateSBSMErrMsg', 'Internal Server Error.', 1);

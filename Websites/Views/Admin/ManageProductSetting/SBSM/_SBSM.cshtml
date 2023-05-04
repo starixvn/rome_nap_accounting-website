@@ -7,7 +7,8 @@
         <div id="errSBSMMsg"></div>
         <div class="floatLeft w50"><label for="ddlSBSMProductId" class="">Product</label></div>
         <div class="floatLeft w250">
-            @Html.DropDownList("ddlSBSMProductId", Model.Products, new { id = "ddlSBSMProductId" })
+            <div id="ddlSBSMProductId">
+            </div>
         </div>
         <div class="floatLeft w70"><label for="txtSBSMSportType">SportType</label></div>
         <div class="floatLeft w250">
@@ -37,4 +38,7 @@
 
 @Html.Partial("~/Views/Admin/ManageProductSetting/SBSM/_UpdateSBSM.cshtml", Model)
 
+<script type="text/javascript">
+    var productList = @Html.Raw(Json.Encode(Model.Products));
+</script>
 <script type="text/javascript" src="@Url.Content("~/Views/Admin/ManageProductSetting/SBSM/Scripts/SBSM.js?v=" + @WebSettings.Version)"></script>
