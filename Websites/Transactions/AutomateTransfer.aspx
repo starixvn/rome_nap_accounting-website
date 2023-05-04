@@ -4,7 +4,7 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
+<head>
     <title></title>
     <link href="../App_Themes/Public/common.css" rel="stylesheet" type="text/css" />
     <link href="../App_Themes/Public/table.css" rel="stylesheet" type="text/css" />
@@ -13,7 +13,7 @@
     <link href="../App_Themes/Public/Message.css" rel="stylesheet" type="text/css" />
     <link href="../App_Themes/LeftPanel/left_panel.css" rel="stylesheet" type="text/css" />
     <link href="../UserGuide/css/userguide.css" rel="stylesheet" type="text/css" />
-    <link href="style/AutomateTransfer.css?v=26042023" rel="stylesheet" type="text/css" />
+    <link href="style/AutomateTransfer.css?v=<%=AccCommon.Version() %>" rel="stylesheet" type="text/css" />
     <script src="../js/jQuery/jquery.js" type="text/javascript"></script>
 
     <script src="../js/jQuery/ajaxfileupload.js" type="text/javascript"></script>
@@ -157,7 +157,7 @@
                                 Choose an Excel file to update:
                             </div>
                             <input type="file" style="font-size: 11px; vertical-align: middle" onchange="javascript:return IsValidFileExtension();"
-                                size="40" name="txtfile" id="txtfile" />
+                                size="40" name="txtfile" id="txtfile"  />
                             <input class="btn" id="btnUpload" type="submit" onclick="UploadFile()" value="Open File" style="margin-left: 9px" />
                             <input class='btn' id='btnSubmit' onclick='UpdateData()' type='button' value='Update Now!'
                                 disabled="disabled" style="margin-left: 9px" />
