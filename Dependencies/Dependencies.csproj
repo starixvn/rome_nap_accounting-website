@@ -266,8 +266,8 @@
     <Reference Include="Fanex.BetList.VoidBridge, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.VoidBridge.2.0.0\lib\net461\Fanex.BetList.VoidBridge.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.WM, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.WM.2.0.0\lib\net461\Fanex.BetList.WM.dll</HintPath>
+    <Reference Include="Fanex.BetList.WM, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.WM.2.0.0.1-HideOdds-02\lib\net461\Fanex.BetList.WM.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Caching, Version=2.2.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Caching.2.2.2\lib\net461\Fanex.Caching.dll</HintPath>
