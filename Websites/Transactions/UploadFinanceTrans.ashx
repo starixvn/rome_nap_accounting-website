@@ -100,7 +100,7 @@ public class UploadFinanceTrans : IHttpHandler, IRequiresSessionState
             dtbFail = dataset.Tables[1];
             dtbSuccess = dataset.Tables[0];
         }
-
+       
         var strFail = string.Empty;
         var strSuccess = string.Empty;
 
@@ -230,28 +230,26 @@ public class UploadFinanceTrans : IHttpHandler, IRequiresSessionState
                 HttpUtility.HtmlDecode(Convert.ToBoolean(row["IsCollection"]) ? "Yes" : "No", collection);
                 TemplateHandler.Assign(ref strTmp, "collection", collection.ToString());
 
-                if (hasReason)
+                if (hasReason) 
                 {
                     TemplateHandler.Assign(ref strTmp, "reason", CastAide.AsString(row["reason"], string.Empty));
                     TemplateHandler.Assign(ref strTmp, "rowstyle", rowStyle);
                 }
-                else
-                {
+                else  
+                {   
                     rowStyle = string.Empty;
                     var remark = string.Empty;
-
-                    int fromCurrency = CastAide.AsInt32(row["FromCurrency"]);
-                    int toCurrency = CastAide.AsInt32(row["ToCurrency"]);
+                    var remarkCss = string.Empty;
+                    
+                    int fromCurrency = CastAide.AsInt32(row["FromCurrCode"]);
+                    int toCurrency = CastAide.AsInt32(row["ToCurrCode"]);
                     decimal exrate = CastAide.AsDecimal(row["exrate"]);
                     string strCurrentExRate = SplitString(CastAide.AsString(row["CurrentExRate"]));
                     string strExRate = SplitString(CastAide.AsString(row["ExRate"]));
-
-                    if (fromCurrency == toCurrency && CastAide.AsDecimal(strExRate) != 1)
-                    {
-                        remark = "<b>Same currency, but actual rate is different 1.</b>";
-                        rowStyle = "add-customer-bggray";
-                    }
-                    else if (fromCurrency == 2 || toCurrency == 2)
+                    
+                    var isSameCurrencyCode = fromCurrency == toCurrency;
+                    var isMalaysiaCurrency = isMYRCode(CastAide.AsInt32(row["FromCurrency"])) || isMYRCode(CastAide.AsInt32(row["ToCurrency"]));
+                    if (isSameCurrencyCode || isMalaysiaCurrency)
                     {
                         if (!string.IsNullOrEmpty(row["CurrentExRate"].ToString()) && strCurrentExRate != strExRate)
                         {
@@ -268,13 +266,15 @@ public class UploadFinanceTrans : IHttpHandler, IRequiresSessionState
                             {
                                 remark = "<b>Exceed limit range (" + SplitString(min.ToString()) + " - " + SplitString(max.ToString()) + ")</b>";
                             }
-
+                            remarkCss = "background-color-yellow";
                             rowStyle = "add-customer-bggray";
                         }
                     }
 
                     TemplateHandler.Assign(ref strTmp, "rowstyle", rowStyle);
                     TemplateHandler.Assign(ref strTmp, "reason", remark);
+                    TemplateHandler.Assign(ref strTmp, "reasonCss", remarkCss);
+                    TemplateHandler.Assign(ref strTmp, "actualRateCSS", remarkCss);
                 }
 
                 strBuild.Append(strTmp);
@@ -283,6 +283,12 @@ public class UploadFinanceTrans : IHttpHandler, IRequiresSessionState
 
         TemplateHandler.ReplaceBlock(ref strResult, "content", strBuild.ToString());
         return strResult;
+    }
+
+    private bool isMYRCode(int exchangeID)
+    {
+      var ringgitMalaysia  = new List<int> { 2, 132 };
+      return ringgitMalaysia.Contains(exchangeID);
     }
 
     private string SplitString(string value)
