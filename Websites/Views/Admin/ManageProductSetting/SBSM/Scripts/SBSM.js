@@ -153,13 +153,13 @@ function EditSBSM(index) {
     $('#SBSMProductId').val(cachedSBSMData.SbsmEntities[index].ProductId).trigger('change');
     $('#SBSMSportType').val(cachedSBSMData.SbsmEntities[index].SportType);
     $('#SBSMBetType').val(cachedSBSMData.SbsmEntities[index].BetType);
-    $('#SBSMIsLive').prop('checked', cachedSBSMData.SbsmEntities[index].IsLive === 'True' ? true : false);
-    $('#SBSMIsLicensee').prop('checked', cachedSBSMData.SbsmEntities[index].IsLicensee === 'True' ? true : false);
+    $('#SBSMIsLive').prop('checked', cachedSBSMData.SbsmEntities[index].IsLive === 'True' || cachedSBSMData.SbsmEntities[index].IsLive === '1' ? true : false);
+    $('#SBSMIsLicensee').prop('checked', cachedSBSMData.SbsmEntities[index].IsLicensee === 'True' || cachedSBSMData.SbsmEntities[index].IsLicensee === '1' ? true : false);
     $('#SBSMSite').val(cachedSBSMData.SbsmEntities[index].Site);
     $('#SBSMSportTypeRefPT').val(cachedSBSMData.SbsmEntities[index].SportTypeRefPT).trigger('change');
     $('#SBSMBetTypeRefPT').val(cachedSBSMData.SbsmEntities[index].BetTypeRefPT);
     $('#SBSMTablePT').val(cachedSBSMData.SbsmEntities[index].TablePT).trigger('change');
-    $('#SBSMIsLivePt').prop('checked', cachedSBSMData.SbsmEntities[index].IsLivePt === 'True' ? true : false);
+    $('#SBSMIsLivePt').prop('checked', cachedSBSMData.SbsmEntities[index].IsLivePt === 'True' || cachedSBSMData.SbsmEntities[index].IsLivePt === '1' ? true : false);
     $('#SBSMSportTypeRefBetSetting').val(cachedSBSMData.SbsmEntities[index].SportTypeRefBetSetting);
     $('#SBSMBetTypeRefBetSetting').val(cachedSBSMData.SbsmEntities[index].BetTypeRefBetSetting);
     $('#SBSMTableBetSetting').val(cachedSBSMData.SbsmEntities[index].TableBetSetting).trigger('change');
