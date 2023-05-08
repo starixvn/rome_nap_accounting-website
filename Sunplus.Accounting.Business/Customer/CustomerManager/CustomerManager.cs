@@ -12,8 +12,6 @@
     using DNAide.Web;
     using Entities;
     using Entities.Customer;
-    using Fanex.Module.NG2.Entities;
-    using Fanex.Module.NG2.Services;
     using Fanex.RemotingRef;
     using Fanex.Tarus.Infrastructure.Configurations;
     using Fanex.Tarus.Security.Criteria;
@@ -291,27 +289,6 @@
         }
 
         public List<ForexAccount> SelectAllForexAccount() => Accounting.DataAccess.IBCDLL.Accounting.CustomerManager.SelectAllForexAccount();
-
-        #region Enable Number game for Downline
-
-        public BetSettingNG CheckEnableNGDownline(string username) => _customerDAO.CheckEnableNGDownline(username);
-
-        public Result UpdateBetSettingNGDownline(
-            string username,
-            int isEnable,
-            string minbet,
-            string maxbet,
-            string maxMatch,
-            string MaxBall)
-            => _customerDAO.UpdateBetSettingNGDownline(
-                            username,
-                            isEnable,
-                            minbet,
-                            maxbet,
-                            maxMatch,
-                            MaxBall);
-
-        #endregion Enable Number game for Downline
 
         #region private functions
 

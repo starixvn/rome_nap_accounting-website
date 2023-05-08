@@ -2221,4 +2221,7 @@ Max Keno (20+1) 2</value>
   <data name="Disable220_1024" xml:space="preserve">
     <value>Disabled Lottery</value>
   </data>
+  <data name="Disable161_81" xml:space="preserve">
+    <value>Disabled Number Game</value>
+  </data>
 </root>

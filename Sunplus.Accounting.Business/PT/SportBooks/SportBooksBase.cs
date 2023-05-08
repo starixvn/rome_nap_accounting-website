@@ -166,69 +166,7 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
         {
             throw new NotImplementedException();
         }
-
-        public virtual void GetMaxPerBall(DataRow dr, int RoleId, bool IsAddNew, ref string strAccInfo)
-        {
-            //IBCUtils.FormatHandler.FormatNumber1(minbet)
-            try
-            {
-                string tpl = WebUtils.LoadTemplate("Customer/v2/NumberGame/MaxPerBall.htm");
-                TemplateHandler.Assign(ref tpl, "RoleId", RoleId);
-                switch (RoleId)
-                {
-                    case 4:
-                        if (IsAddNew)
-                        {
-                            TemplateHandler.Assign(ref tpl, "txtMaxPerBall-val", 0);
-                            TemplateHandler.Assign(ref tpl, "mbMin", "hide");
-                        }
-                        else
-                        {
-                            TemplateHandler.Assign(ref tpl, "txtMaxPerBall-val", FormatHandler.FormatNumber1(dr["maxperball161"]));
-                            TemplateHandler.Assign(ref tpl, "mbMin", "hide");
-                        }
-                        break;
-
-                    case 3:
-                    case 2:
-                    case 1:
-                        //decimal MaxBet = 0, MaxPerMatch = 0;
-                        //MaxBet = CastAide.AsDecimal(dr["maxbetv161_Min"]);
-                        //MaxPerMatch = CastAide.AsDecimal(dr["MaxPerMatchv161_Min"]);
-                        var maxPerBall = CastAide.AsDecimal(dr["MaxPerBallv161_Max"]);
-
-                        if (IsAddNew)
-                        {
-                            TemplateHandler.Assign(ref tpl, "txtMaxPerBall-val", FormatHandler.FormatNumber1(dr["MaxPerBallv161_Max"]));
-                            TemplateHandler.Assign(ref tpl, "maxbet-161", FormatHandler.FormatNumber1(dr["maxbetv161_Min"]));
-                            TemplateHandler.Assign(ref tpl, "maxpermatch-161", FormatHandler.FormatNumber1(maxPerBall));
-
-                            //if(MaxBet == 0 && MaxPerMatch == 0)
-                            //    TemplateHandler.Assign(ref tpl, "mbMin", "hide");
-                            //else
-                            //    TemplateHandler.Assign(ref tpl, "mbMin", "");
-
-                            TemplateHandler.Assign(ref tpl, "mbMin", maxPerBall > 0 ? "" : "hide");
-                        }
-                        else
-                        {
-                            TemplateHandler.Assign(ref tpl, "txtMaxPerBall-val", FormatHandler.FormatNumber1(dr["maxperballv161"]));
-                            TemplateHandler.Assign(ref tpl, "maxbet-161", FormatHandler.FormatNumber1(dr["maxbetv161"]));
-                            TemplateHandler.Assign(ref tpl, "maxpermatch-161", FormatHandler.FormatNumber1(maxPerBall));
-
-                            TemplateHandler.Assign(ref tpl, "mbMin", maxPerBall > 0 ? "" : "hide");
-                        }
-                        break;
-                }
-                TemplateHandler.Assign(ref strAccInfo, "MaxPerBall", tpl);               
-            }
-            catch (Exception ex)
-            {
-                {
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-                }
-            }
-        }
+     
     }
 
 }

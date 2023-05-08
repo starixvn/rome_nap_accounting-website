@@ -171,7 +171,7 @@ function changeDisable(obj, type) {
 
         return;
     }
-
+   
     if (type == "VS") {
         if (($("#" + chk1).attr('checked') == true && $('#chkOldValueVirtualSport').val() == '1') ||
             ($("#" + chk1).attr('checked') == false && $('#chkOldValueVirtualSport').val() == '0')) {

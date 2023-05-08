@@ -46,14 +46,7 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Customer
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
-        List<Sunplus.Accounting.Entities.Customer.ForexAccount> SelectAllForexAccount();
+        List<Sunplus.Accounting.Entities.Customer.ForexAccount> SelectAllForexAccount();       
 
-        [OperationContract]
-        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
-        Result UpdBetSettingEnableNGCustomer(string username, int isEnable, string maxbet, string minbet, string maxperball, string maxpermatch);
-
-        [OperationContract]
-        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
-        BetSettingNG SelBetSettingUpline(string username);
     }
 }

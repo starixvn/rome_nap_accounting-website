@@ -1,14 +1,13 @@
 ﻿namespace Sunplus.Accounting.Business.Customer
 {
-    using System.Collections;
-    using System.Data;
     using Core.Common;
     using Core.Configurations;
     using DataAccess;
     using Entities;
     using Fanex.CustomerSetting.Module.Core;
-    using Fanex.CustomerSetting.Module.Keno.KenoSetting.Configurations;
     using Security;
+    using System.Collections;
+    using System.Data;
     using static Fanex.Tarus.Infrastructure.Common.Enumerations;
 
     public partial class CustomerInfoViewModel
@@ -102,11 +101,7 @@
 
         public bool HideSabaVirtualSports { get; private set; } = true;
 
-        public bool ShowSettingLinkAGCasinoDeposit => WebSettings.EnableAGCasino && IsDeposit;
-
-        public bool ShowEnableCheckBoxKeno => KenoSection.Instance.Enable;
-
-        public bool ShowSettingLinkKenoCredit => KenoSection.Instance.ShowSetting && !IsDeposit;
+        public bool ShowSettingLinkAGCasinoDeposit => WebSettings.EnableAGCasino && IsDeposit;      
 
         public bool ShowEnableBetTradeDeposit => WebSettings.EnableBetTrade && SearchAccountRoleId.Equals(4) && IsDeposit;
 
@@ -204,25 +199,30 @@
                                 HideRNGLottery = Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdRNGLottery == 0 ||
                                     IsDeposit || (SearchAccountRoleId < 4 && (isHideRNGLottery || isHideUplineRNGLottery));
                                 break;
+
                             case "64":
                                 bool isHideVirtualGames = Utils.ToBoolean(row["IsHidden"]);
                                 HideVirtualGames = Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdVirtualGames == 0 || isHideVirtualGames;
                                 break;
+
                             case "42":
                                 HideSabaclub = Utils.ToBoolean(row["IsHidden"]) || !WebSettings.IsShowSabaclub;
                                 SyncSabaclub = Utils.ToBoolean(row["IsSync"]);
                                 HideSabaclubUpline = Utils.ToBoolean(row["IsHiddenUpline"]) && SearchAccountRoleId < 4;
                                 SyncSabaclubUpline = Utils.ToBoolean(row["IsSyncedUpline"]);
                                 break;
+
                             case "54":
                                 HideSabaVirtualSports = Utils.ToBoolean(row["IsHidden"]) || !WebSettings.IsShowSabaVirtualSports;
                                 break;
+
                             case "66":
                                 HideVGaming = Utils.ToBoolean(row["IsHidden"]) || !WebSettings.IsShowVGaming;
                                 SyncVGaming = Utils.ToBoolean(row["IsSync"]);
                                 HideVGamingUpline = Utils.ToBoolean(row["IsHiddenUpline"]) && SearchAccountRoleId < 4;
                                 SyncVGamingUpline = Utils.ToBoolean(row["IsSyncedUpline"]);
                                 break;
+
                             case "69":
                                 bool isHideBitcoin = Utils.ToBoolean(row["IsHidden"]);
                                 HideBitcoin = !WebSettings.IsShowBitcoinBetting || isHideBitcoin;

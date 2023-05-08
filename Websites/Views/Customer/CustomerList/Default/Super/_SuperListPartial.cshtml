@@ -4,7 +4,6 @@
 @using System.Collections
 @using Sunplus.Accounting.Core.Common
 @using Sunplus.Accounting.Business.Security
-@using Fanex.CustomerSetting.Module.Keno.KenoSetting.Configurations
 @{
     var IsVisibleMaxExposure = Functions.Customer.IsVisibleMaxExposure;
     var IsVisibleVirtualRate = Functions.Customer.IsVisibleVirtualRate;
@@ -34,7 +33,6 @@
     hash.Add("IsVisibleVirtualRate", IsVisibleVirtualRate);
     hash.Add("EnableVirtualSports", EnableVirtualSports);
     hash.Add("directMaster", directMaster);
-    hash.Add("allowKeno", KenoSection.Instance.ShowSetting);
 
     string[] renderResult = Render(Model, hash);
 }
@@ -113,10 +111,7 @@ string siteName = superItem.IsMyanmarOdds ? "76666B" : string.Empty;
                             Virtual Sports
                         </li>
                     }
-                    @if (CastAide.AsBoolean(hash["allowKeno"]))
-                    {
-                        <li class="canchange" onclick="SuperList.kenoSetting('@superItem.ChildID');">RNG Keno</li>
-                    }
+                 
                     @if (superItem.IsLicensee)
                     {
                         <li class="canchange" onclick="SuperList.asianGamingCasino('@superItem.ChildID');">

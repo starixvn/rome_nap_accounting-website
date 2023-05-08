@@ -22,8 +22,7 @@
             CustomerInfoViewModel customerInfoViewModel)
         {
             var renderLeftPanelParameter = new RenderLeftPanelParameter
-            {
-                IsShowKeno = customerInfoViewModel.ShowEnableCheckBoxKeno,
+            {              
                 IsShowMacau = customerInfoViewModel.ShowMacauDeposit,
                 IsShowEnableBetTrade = customerInfoViewModel.ShowEnableBetTradeDeposit,
                 IsShowAutoSuspend = customerInfoViewModel.HasReadPermission_AutoSuspend,
@@ -59,7 +58,6 @@
 
             htmlcontent = RenderDangerousControl(htmlcontent, customerInfoViewModel);
             htmlcontent = RenderAGCasinoControl(htmlcontent, customerInfoViewModel);
-            htmlcontent = RenderKenoControl(htmlcontent, customerInfoViewModel);
 
             htmlcontent = AssignTemplateValue(htmlcontent);
             htmlcontent = AssignCustomerInfo(htmlcontent, customerInfoViewModel);
@@ -101,7 +99,6 @@
             htmlcontent = RenderAutoMasterControl(htmlcontent, customerInfoViewModel);
             htmlcontent = RenderDoubleCommControl(htmlcontent, customerInfoViewModel);
             htmlcontent = RenderOutrightControl(htmlcontent, customerInfoViewModel);
-            htmlcontent = RenderNumberGameControl(htmlcontent, customerInfoViewModel);
             htmlcontent = RenderSuperLiveControl(
                 htmlcontent,
                 row1,
@@ -331,26 +328,6 @@
                     customerInfoViewModel.SearchAccountRoleId,
                     18,
                     "Update RNG Slot Status"));
-            }
-
-            return htmlcontent;
-        }
-
-        private string RenderKenoControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
-        {
-            if (!customerInfoViewModel.ShowEnableCheckBoxKeno || customerInfoViewModel.IsDeposit)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "EnableKeno");
-            }
-            else
-            {
-                TemplateHandler.Assign(ref htmlcontent, "{KenoOnClickFunction}", _renderLeftPanelService.GetProductStatusJsFunction(
-                    customerInfoViewModel.IsDeposit,
-                    customerInfoViewModel.CustId,
-                    customerInfoViewModel.UserName,
-                    customerInfoViewModel.SearchAccountRoleId,
-                    8,
-                    "Update RNG Keno Status"));
             }
 
             return htmlcontent;
@@ -751,35 +728,6 @@
                 );
 
             TemplateHandler.Assign(ref htmlcontent, "{suspendedControl}", suspendedControlSettingGroup.GetHTMLSettingControl());
-
-            return htmlcontent;
-        }
-
-        private string RenderNumberGameControl(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
-        {
-            if (customerInfoViewModel.IsDeposit)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "chkNumberGame");
-                TemplateHandler.Assign(ref htmlcontent, "{numberGameControl}", string.Empty);
-            }
-            else
-            {
-                var numberGameSettingGroup = new SettingGroup();
-
-                numberGameSettingGroup.Add(
-                    GetSettingControlNumberGame(
-                        customerInfoViewModel.SearchAccountRoleId,
-                        customerInfoViewModel.CustParent.IsDisabledNumberGame,
-                        customerInfoViewModel.ManageCustomerAccess,
-                        "disabledNumberGame",
-                        !customerInfoViewModel.DisabledNumberGame,
-                        !customerInfoViewModel.DisabledDownlinesNumberGame,
-                        customerInfoViewModel.Enabled,
-                        customerInfoViewModel.IsDeposit));
-
-                TemplateHandler.Assign(ref htmlcontent, "{chkNumberGame}", customerInfoViewModel.DisabledNumberGame ? 1 : 0);
-                TemplateHandler.Assign(ref htmlcontent, "{numberGameControl}", numberGameSettingGroup.GetHTMLSettingControl());
-            }
 
             return htmlcontent;
         }

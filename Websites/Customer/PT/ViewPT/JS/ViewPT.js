@@ -486,9 +486,11 @@ var ViewPT = {
             case 43: // esport
             case 44: // Sportsbook 2
             case 50: // Cricket
+            case 161: // Number Game
             case 167: // CG
             case 169: // Sports Lottery
             case 170: // PP Live Casino
+            case 202: // RNG Keno
             case 211: // Allbet
             case 241: // BBIN
             case 242: // GT Casino

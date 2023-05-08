@@ -101,7 +101,6 @@
                 TemplateHandler.Assign(ref contentTpl, "{groupd}", "Group D");
                 TemplateHandler.Assign(ref contentTpl, "{12}", "1x2");
                 TemplateHandler.Assign(ref contentTpl, "{Others}", "Others");
-                TemplateHandler.Assign(ref contentTpl, "{NG}", "Number Game");
                 TemplateHandler.Assign(ref contentTpl, "{minmaxPT}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblMinPT"));
 
                 #endregion start code

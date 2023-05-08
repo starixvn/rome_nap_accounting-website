@@ -111,9 +111,6 @@
     <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.5.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.2.0.5.1\lib\net461\Fanex.CustomerSetting.Module.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Keno.KenoSetting, Version=2.0.3.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.Keno.Setting.2.0.3.1\lib\net461\Fanex.CustomerSetting.Module.Keno.KenoSetting.dll</HintPath>
-    </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.ProgressiveBonus, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.CustomerSetting.Module.ProgressiveBonus.1.0.0.1\lib\net40\Fanex.CustomerSetting.Module.ProgressiveBonus.dll</HintPath>
       <Private>True</Private>
@@ -268,11 +265,11 @@
     <Reference Include="Sunplus.Accounting.Core, Version=2.0.4.17, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Accounting.Core.2.0.4.17\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.4.12, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.4.12\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
+    <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.4.13, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.4.13\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
     </Reference>
-    <Reference Include="Sunplus.Accounting.Entities, Version=2.0.2.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.Entities.2.0.2.1\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
+    <Reference Include="Sunplus.Accounting.Entities, Version=2.0.2.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Accounting.Entities.2.0.2.2\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.Services, Version=1.0.2.7, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Accounting.Services.1.0.2.7\lib\net40\Sunplus.Accounting.Services.dll</HintPath>
@@ -431,7 +428,6 @@
     <Compile Include="Customer\CustomerManager\ViewModels\SettingTabs\BitcoinBettingViewModel.cs" />
     <Compile Include="Customer\CustomerManager\ViewModels\SettingTabs\VGamingViewModel.cs" />
     <Compile Include="Customer\CustomerManager\ViewModels\SettingTabs\SabaclubViewModel.cs" />
-    <Compile Include="Customer\CustomerManager\ViewModels\SettingTabs\NumberGameViewModel.cs" />
     <Compile Include="Customer\CustomerManager\ViewModels\SettingTabs\EsportViewModel.cs" />
     <Compile Include="Customer\CustomerManager\ViewModels\SettingTabs\AllbetViewModel.cs" />
     <Compile Include="Customer\CustomerManager\ViewModels\SettingTabs\VoidbridgeViewModel.cs" />
@@ -463,7 +459,6 @@
     <Compile Include="LogDisplay\NewCurrencyForLicenseeLogFormatter.cs" />
     <Compile Include="LogDisplay\NewLicenseeLogFormatter.cs" />
     <Compile Include="Logs.cs" />
-    <Compile Include="PT\ViewPT\KenoPT.cs" />
     <Compile Include="LogDisplay\ISettingManager.cs" />
     <Compile Include="LogDisplay\LogFormater.cs" />
     <Compile Include="LogDisplay\SettingManager.cs" />
@@ -497,7 +492,6 @@
     <Compile Include="MenuManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PT\SportBooks\MixedSportsManager.cs" />
-    <Compile Include="PT\SportBooks\NumberGameManager.cs" />
     <Compile Include="PT\SportBooks\SportBooksBase.cs" />
     <Compile Include="Report\ReportBase.cs" />
     <Compile Include="Report\ReportUtils.cs" />
