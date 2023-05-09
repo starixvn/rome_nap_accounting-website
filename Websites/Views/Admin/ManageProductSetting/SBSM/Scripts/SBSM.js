@@ -159,7 +159,7 @@ function EditSBSM(index) {
     $('#SBSMSportTypeRefPT').val(cachedSBSMData.SbsmEntities[index].SportTypeRefPT).trigger('change');
     $('#SBSMBetTypeRefPT').val(cachedSBSMData.SbsmEntities[index].BetTypeRefPT);
     $('#SBSMTablePT').val(cachedSBSMData.SbsmEntities[index].TablePT).trigger('change');
-    $('#SBSMIsLivePt').prop('checked', cachedSBSMData.SbsmEntities[index].IsLivePt === 'True' || cachedSBSMData.SbsmEntities[index].IsLivePt === '1' ? true : false);
+    $('#SBSMIsLivePT').prop('checked', cachedSBSMData.SbsmEntities[index].IsLivePT === 'True' || cachedSBSMData.SbsmEntities[index].IsLivePT === '1' ? true : false);
     $('#SBSMSportTypeRefBetSetting').val(cachedSBSMData.SbsmEntities[index].SportTypeRefBetSetting);
     $('#SBSMBetTypeRefBetSetting').val(cachedSBSMData.SbsmEntities[index].BetTypeRefBetSetting);
     $('#SBSMTableBetSetting').val(cachedSBSMData.SbsmEntities[index].TableBetSetting).trigger('change');
@@ -185,7 +185,7 @@ function UpdateSBSM(index) {
     request.ProductId = $('#SBSMProductId').val();
     request.SportTypeRefPT = $('#SBSMSportTypeRefPT').val();
     request.BetTypeRefPT = $('#SBSMBetTypeRefPT').val();
-    request.IsLivePt = $('#SBSMIsLivePT').is(":checked") ? 1 : 0;
+    request.IsLivePT = $('#SBSMIsLivePT').is(":checked") ? 1 : 0;
     request.TablePT = $('#SBSMTablePT').val();
     request.SportTypeRefBetSetting = $('#SBSMSportTypeRefBetSetting').val();
     request.BetTypeRefBetSetting = $('#SBSMBetTypeRefBetSetting').val();
@@ -363,10 +363,14 @@ function GetBetType() {
 }
 
 $(document).ready(function () {
+    try {
+        $("#edit-SBSM-form").dialog('destroy').remove();
+    } catch { }
+
     RenderProductDdl();
     $("#SBSMProductId").select2({ width: "185px" });
-    $("#SBSMTablePT").select2({ width: "185px" });
-    $("#SBSMTableBetSetting").select2({ width: "185px" });
-    $("#SBSMTableBettrans").select2({ width: "185px" });
-    $("#SBSMTableComm").select2({ width: "185px" });
+    $("#SBSMTablePT").select2({ width: "185px", dropdownAutoWidth: true });
+    $("#SBSMTableBetSetting").select2({ width: "185px", dropdownAutoWidth: true });
+    $("#SBSMTableBettrans").select2({ width: "185px", dropdownAutoWidth: true });
+    $("#SBSMTableComm").select2({ width: "185px", dropdownAutoWidth: true });
 });
