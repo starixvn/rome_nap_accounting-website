@@ -47,8 +47,8 @@ function RenderSBSMData(data, pageSize, pageIndex) {
         row.Columns.push({ Name: 'SportTypeRefBetSetting', Value: data.SbsmEntities[i].SportTypeRefBetSetting });
         row.Columns.push({ Name: 'BetTypeRefBetSetting', Value: data.SbsmEntities[i].BetTypeRefBetSetting });
         row.Columns.push({ Name: 'TableBettrans', Value: data.SbsmEntities[i].TableBettrans });
-        row.Columns.push({ Name: 'SportTypeRefWinlossLimit', Value: data.SbsmEntities[i].SportTypeRefWinlossLimit });
-        row.Columns.push({ Name: 'BetTypeRefWinlossLimit', Value: data.SbsmEntities[i].BetTypeRefWinlossLimit });
+        row.Columns.push({ Name: 'SportTypeRefWinlossLimit', Value: data.SbsmEntities[i].SporttypeRefWinlossLimit });
+        row.Columns.push({ Name: 'BetTypeRefWinlossLimit', Value: data.SbsmEntities[i].BettypeRefWinlossLimit });
         row.Columns.push({ Name: 'Product', Value: '[' + data.SbsmEntities[i].ProductId + '] ' + data.SbsmEntities[i].ProductName });
         row.Columns.push({ Name: 'Edit', Value: '<img class="edit-entity" alt="Edit" title="Edit" src="../App_Themes/Images/icn_edit.png" style="cursor: pointer" onclick="EditSBSM(' + i + ')" >' });
         row.Columns.push({
@@ -166,8 +166,8 @@ function EditSBSM(index) {
     $('#SBSMSportTypeRefComm').val(cachedSBSMData.SbsmEntities[index].SportTypeRefComm);
     $('#SBSMBetTypeRefComm').val(cachedSBSMData.SbsmEntities[index].BetTypeRefComm);
     $('#SBSMTableComm').val(cachedSBSMData.SbsmEntities[index].TableComm).trigger('change');
-    $('#SBSMSportTypeRefWinlossLimit').val(cachedSBSMData.SbsmEntities[index].SportTypeRefWinlossLimit);
-    $('#SBSMBetTypeRefWinlossLimit').val(cachedSBSMData.SbsmEntities[index].BetTypeRefWinlossLimit);
+    $('#SBSMSportTypeRefWinlossLimit').val(cachedSBSMData.SbsmEntities[index].SporttypeRefWinlossLimit);
+    $('#SBSMBetTypeRefWinlossLimit').val(cachedSBSMData.SbsmEntities[index].BettypeRefWinlossLimit);
     $('#SBSMTableBettrans').val(cachedSBSMData.SbsmEntities[index].TableBettrans).trigger('change');
     $('#btnSBSMUpdate').off();
     $('#btnSBSMUpdate').click(function () { return UpdateSBSM(index); });
@@ -193,8 +193,8 @@ function UpdateSBSM(index) {
     request.SportTypeRefComm = $('#SBSMSportTypeRefComm').val();
     request.BetTypeRefComm = $('#SBSMBetTypeRefComm').val();
     request.TableComm = $('#SBSMTableComm').val();
-    request.SportTypeRefWinlossLimit = $('#SBSMSportTypeRefWinlossLimit').val();
-    request.BetTypeRefWinlossLimit = $('#SBSMBetTypeRefWinlossLimit').val();
+    request.SporttypeRefWinlossLimit = $('#SBSMSportTypeRefWinlossLimit').val();
+    request.BettypeRefWinlossLimit = $('#SBSMBetTypeRefWinlossLimit').val();
     request.TableBettrans = $('#SBSMTableBettrans').val();
     $.ajax({
         url: 'UpdateSBSM',
