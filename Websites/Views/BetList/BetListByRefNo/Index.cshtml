@@ -58,6 +58,7 @@
     allowedProducts.Append("/").Append(CacheRef.GetProductName(72));
     allowedProducts.Append("/").Append(CacheRef.GetProductName(73));
     allowedProducts.Append("/").Append(CacheRef.GetProductName(75));
+    allowedProducts.Append("/").Append(CacheRef.GetProductName(76));
 }
 <html>
 <head>
@@ -191,6 +192,7 @@
                                     <option value="72">@CacheRef.GetProductName(72)</option>
                                     <option value="73">@CacheRef.GetProductName(73)</option>
                                     <option value="75">@CacheRef.GetProductName(75)</option>
+                                    <option value="75">@CacheRef.GetProductName(76)</option>
 
                                 </select>
                             </td>
@@ -263,7 +265,7 @@
     </div>
     <form id="noteMessage" style="display:none;">
         @allowedProducts.ToString() tickets with win loss dates from @Model.BalanceUpDay.ToShortDateString() are supported.
-        For Allbet/SA Gaming/AE Sexy/IBCBet Live Casino/BBIN/WM/GDG/BG/PP Live Casino/FGG, the search result includes the related tickets with the same GameID.<br />
+        For Allbet/SA Gaming/AE Sexy/IBCBet Live Casino/BBIN/WM/GDG/BG/PP Live Casino/FGG/YeeBet, the search result includes the related tickets with the same GameID.<br />
         For Sportsbook, the search result includes the related Bonus/Cash tickets.
     </form>
     <script type="text/javascript">

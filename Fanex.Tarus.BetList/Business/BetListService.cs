@@ -1365,6 +1365,10 @@
             {
                 sportName = ticketHelper.GetSportNameById(SportContants.Jili);
             }
+            else if (ReportService.IsYeeBet(betTypeId))
+            {
+                sportName = ticketHelper.GetSportNameById(SportContants.YeeBet);
+            }
 
             else
             {

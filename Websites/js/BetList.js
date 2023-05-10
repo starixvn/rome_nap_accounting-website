@@ -897,6 +897,18 @@ function showJiliBetDetails(transId, winlossDate, custId, transType) {
 
     openResultsPopUp(param);
 }
+
+function showYeeBetDetails(refno, winlossDate, custId, transType) {
+    var params = {
+        url: "AGCasinoBetList/BetDetails",
+        title: "YeeBet - Detailed Bet list - " + winlossDate.split(" ")[0],
+        jsonParam: { Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 159, PageSize: 500 },
+        width: 1110,
+        height: 600
+    };
+
+    openResultsPopUp(params);
+}
 // -------------------- Functions whose name must name by Fanex.Toco
 function ViewRNGCasinoResult(matchId, race, betType, sportType, refNo, winlostDate, custId) {
     var params = $.param({

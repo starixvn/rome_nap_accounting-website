@@ -148,19 +148,19 @@ BetList.BetListByRefNo = (function ($) {
             return false;
         }
 
-        var productRequireBetIdAndGameId = ["12", "21", "30", "45", "46", "47", "39", "51", "59", "57", "65", "70"];
+        var productRequireBetIdAndGameId = ["12", "21", "30", "45", "46", "47", "39", "51", "59", "57", "65", "70","76"];
         if (productRequireBetIdAndGameId.indexOf(selProductValue) !== -1 && $gameId.val().trim() === "" && $betId.val().trim() === "") {
             showError("Either GameID or BetID is required");
             return false;
         }
 
-        var productRequireBetId = ["22", "24", "32", "34", "36", "52", "55", "56", "60", "61", "62", "66", "67", "68", "72", "73", "75"];
+        var productRequireBetId = ["22", "24", "32", "34", "36", "52", "55", "56", "60", "61", "62", "66", "67", "68", "72", "73", "75", "76"];
         if ((isSabaclub || productRequireBetId.indexOf(selProductValue) !== -1) && $betId.val().trim() === "") {
             showError("BetID is required");
             return false;
         }
 
-        var productRequiredGameId3rd = ["38", "63"];
+        var productRequiredGameId3rd = ["38", "63", "76"];
         if ((productRequiredGameId3rd.indexOf(selProductValue) !== -1 && $gameId.val().trim() === "")) {
             showError("GameID (3rd) is required");
             return false;
