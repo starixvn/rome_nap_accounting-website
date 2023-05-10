@@ -18,14 +18,14 @@ function InsertExcelSetting() {
 
 function UpdateExcelSetting() {
     var action = GetInsertUrl() + "?isUpdate=true";
-    ProcessInsertUpdateExcel(action);
+    ProcessInsertUpdateExcel(action, true);
 }
 
-function ProcessInsertUpdateExcel(action) {
+function ProcessInsertUpdateExcel(action, isUpdate = false) {
     if (!ValidateUploadFile()) {
         return;
     }
-
+    var successMessage = isUpdate ? 'Updated successfully.' : 'Inserted successfully.';
     parent.BlockUI();
     form = $('#mainForm');
     var formData = new FormData(form[0]);
@@ -38,7 +38,7 @@ function ProcessInsertUpdateExcel(action) {
         enctype: 'multipart/form-data',
         data: formData,
         success: function (result) {
-            showAlertMessage('errMsg', result.ErrorCode === 0 ? 'Updated successfully.' : result.ErrorMessage, result.ErrorCode === 0 ? 0 : 1);
+            showAlertMessage('errMsg', result.ErrorCode === 0 ? successMessage : result.ErrorMessage, result.ErrorCode === 0 ? 0 : 1);
             if (result.ErrorCode === 0) {
                 setTimeout(function () {
                     $('#insert-setting').dialog('close');
