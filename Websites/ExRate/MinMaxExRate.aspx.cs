@@ -54,6 +54,9 @@ public partial class MinMaxExRate : PageBase
             {
                 while (dr.Read())
                 {
+                    double fromBaseRate = Convert.ToDouble(dr["FromActualRate"]);
+                    double toBaseRate = Convert.ToDouble(dr["ToActualRate"]);                   
+                    double exRate = fromBaseRate / toBaseRate;
                     counter++;
                     bgcolor_row = (bgcolor_row == "") ? "evenrow" : "";
                     CopyContent = ListContent;
@@ -64,6 +67,9 @@ public partial class MinMaxExRate : PageBase
                     TemplateHandler.Assign(ref CopyContent, "ToCurrency_Value", CacheUtils.GetExchangeName(exchange, CastAide.AsInt32(dr["toexchangeId"])));
                     TemplateHandler.Assign(ref CopyContent, "Min_Value", NumberFormat.DecFormat(dr["minactualrate"], 2));
                     TemplateHandler.Assign(ref CopyContent, "Max_Value", NumberFormat.DecFormat(dr["maxactualrate"], 2));
+                    TemplateHandler.Assign(ref CopyContent, "ExRate_Value", NumberFormat.DoubleFormat(exRate, 4));
+                    TemplateHandler.Assign(ref CopyContent, "MinExRate_Value", NumberFormat.DoubleFormat(exRate * (100 + Convert.ToDouble(dr["minactualrate"])) / 100, 4));
+                    TemplateHandler.Assign(ref CopyContent, "MaxExRate_Value", NumberFormat.DoubleFormat(exRate * (100 + Convert.ToDouble(dr["maxactualrate"])) / 100, 4));
                     TemplateHandler.Assign(ref CopyContent, "LastUpdate_Value", dr["lastupdate"]);
                     TemplateHandler.Assign(ref CopyContent, "Creator_Value", dr["creator"]);
                     TemplateHandler.Assign(ref CopyContent, "frmid", dr["fromexchangeid"]);
