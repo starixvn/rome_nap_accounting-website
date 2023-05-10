@@ -40,6 +40,7 @@
                     result.MaxVirtualRate = Converter.ToDecimal(reader["Max_VirtualMultiplier"]);
                     result.EnableVirtualRate = Converter.ToDecimal(reader["EnableVirtualRate"]) != 0;
                     result.LockVirtualRateStatus = Converter.ToDecimal(reader["VRLockedStatus_Soccer"]) != 0;
+                    result.LockVirtualRateBasketballStatus = Converter.ToDecimal(reader["VRLockedStatus_Basketball"]) != 0;
                     result.LockVirtualRateOtherStatus = Converter.ToDecimal(reader["VRLockedStatus_OS"]) != 0;
                 }
 
