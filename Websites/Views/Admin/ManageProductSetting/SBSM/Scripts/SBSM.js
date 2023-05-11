@@ -58,8 +58,7 @@ function RenderSBSMData(data, pageSize, pageIndex) {
         bodyRows.push(row);
     }
 
-    var gridOptions =
-        {
+    var gridOptions = {
             columns: [
                 { HeaderText: "SportType", Width: 100, Name: "SportType", HeaderAlign: "center", CellAlign: "center" },
                 { HeaderText: "BetType", Width: 100, Name: "BetType", HeaderAlign: "center", CellAlign: "center" },
@@ -92,15 +91,30 @@ function RenderSBSMData(data, pageSize, pageIndex) {
                 itemsPerPageArray: [50, 100, 150, 200],
                 pagerSelectCallBack: reRenderSBSMAfterPaged,
                 totalItem: data.TotalRows
-            }
-        };
+        }
+    };
 
     $('#gridSBSMId').fanexGrid(gridOptions);
+
+    InitGridEvent();
 }
 
 function reRenderSBSMAfterPaged(currentPageIndex, itemsPerPage) {
     parent.BlockUI();
     SearchSBSM(itemsPerPage, currentPageIndex);
+}
+
+function InitGridEvent() {
+    $(".ckbDeleteSBSM").on('click', function () {
+        if (!$(this).is(":checked")) {
+            $("#ckbDeleteAll").prop('checked', false);
+            
+        }
+
+        if ($(".ckbDeleteSBSM:not(:checked)").length === 0) {
+            $("#ckbDeleteAll").prop('checked', true);
+        }
+    });
 }
 
 
@@ -181,21 +195,21 @@ function EditSBSM(index) {
 
 function UpdateSBSM(index) {
     parent.BlockUI();
-    var request = cachedSBSMData.SbsmEntities[index];
+    var request = { ...cachedSBSMData.SbsmEntities[index] };
     request.ProductId = $('#SBSMProductId').val();
     request.SportTypeRefPT = $('#SBSMSportTypeRefPT').val();
     request.BetTypeRefPT = $('#SBSMBetTypeRefPT').val();
     request.IsLivePT = $('#SBSMIsLivePT').is(":checked") ? 1 : 0;
-    request.TablePT = $('#SBSMTablePT').val();
+    request.TablePT = $('#SBSMTablePT').val() === 'N/A' ? '' : $('#SBSMTablePT').val();
     request.SportTypeRefBetSetting = $('#SBSMSportTypeRefBetSetting').val();
     request.BetTypeRefBetSetting = $('#SBSMBetTypeRefBetSetting').val();
-    request.TableBetSetting = $('#SBSMTableBetSetting').val();
+    request.TableBetSetting = $('#SBSMTableBetSetting').val() === 'N/A' ? '' : $('#SBSMTableBetSetting').val();
     request.SportTypeRefComm = $('#SBSMSportTypeRefComm').val();
     request.BetTypeRefComm = $('#SBSMBetTypeRefComm').val();
-    request.TableComm = $('#SBSMTableComm').val();
+    request.TableComm = $('#SBSMTableComm').val() === 'N/A' ? '' : $('#SBSMTableComm').val();
     request.SporttypeRefWinlossLimit = $('#SBSMSportTypeRefWinlossLimit').val();
     request.BettypeRefWinlossLimit = $('#SBSMBetTypeRefWinlossLimit').val();
-    request.TableBettrans = $('#SBSMTableBettrans').val();
+    request.TableBettrans = $('#SBSMTableBettrans').val() === 'N/A' ? '' : $('#SBSMTableBettrans').val();
     $.ajax({
         url: 'UpdateSBSM',
         type: 'POST',
@@ -369,8 +383,8 @@ $(document).ready(function () {
 
     RenderProductDdl();
     $("#SBSMProductId").select2({ width: "185px" });
-    $("#SBSMTablePT").select2({ width: "185px", dropdownAutoWidth: true });
-    $("#SBSMTableBetSetting").select2({ width: "185px", dropdownAutoWidth: true });
-    $("#SBSMTableBettrans").select2({ width: "185px", dropdownAutoWidth: true });
-    $("#SBSMTableComm").select2({ width: "185px", dropdownAutoWidth: true });
+    $("#SBSMTablePT").select2({ width: "185px", dropdownAutoWidth: true, placeholder: "N/A" });
+    $("#SBSMTableBetSetting").select2({ width: "185px", dropdownAutoWidth: true, placeholder: "N/A" });
+    $("#SBSMTableBettrans").select2({ width: "185px", dropdownAutoWidth: true, placeholder: "N/A" });
+    $("#SBSMTableComm").select2({ width: "185px", dropdownAutoWidth: true, placeholder: "N/A" });
 });
