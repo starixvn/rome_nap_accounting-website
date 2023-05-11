@@ -89,15 +89,8 @@
         </td>
         <td>
             <div class="width30 table-cell">
-                @if (betdetail.AllowDelete == false || betdetail.Ticket.BetTypeId == 1102 || betdetail.Ticket.BetTypeId == 1103 || betdetail.Ticket.BetTypeId == 1000)
-                {
                     <span>&nbsp;</span>
-                }
-                else
-                {
-                    <span id="delete_@betdetail.Ticket.TransId" class="delete_button"  onclick="confirm_delete(@betdetail.Ticket.TransId, '@betdetail.BetFrom', '@betdetail.Ticket.MatchId', @betdetail.Ticket.BetTypeId)" onmouseout="" onmouseover="this.style.cursor='pointer';">
-                    </span> 
-                }</div>
+            </div>
         </td>
     </tr>
  
