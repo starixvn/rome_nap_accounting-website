@@ -44,8 +44,6 @@ namespace Fanex.Tarus.BetList.Models
 
         public string HTAwayScore { get; set; }
 
-        public string BetFrom { get; set; }
-
         public bool AllowDelete { get; set; }
 
         public string Creator { get; set; }

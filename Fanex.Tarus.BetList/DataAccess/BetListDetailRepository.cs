@@ -98,8 +98,7 @@
                 Ticket = BuildCoreTicket(reader, custId),
                 ChoiceHtml = string.Empty,
                 OddHtml = string.Empty,
-                StakeHtml = string.Empty,
-                BetFrom = Convert.ToString(reader["betfrom"])
+                StakeHtml = string.Empty
             };
         }
 
