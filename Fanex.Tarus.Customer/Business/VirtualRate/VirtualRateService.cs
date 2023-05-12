@@ -215,6 +215,14 @@
                     VRLock = Converter.ToInt(xmlLoad.Attribute("VRLock").Value) != 0
                 });
             }
+            else if (historyLog.ActionId == UpdateTypeConstants.VRLockBasketball)
+            {
+                historyLogDetailList.Add(new HistoryLogDetailModel
+                {
+                    UpdateType = historyLog.ActionId,
+                    VRLockBasketball = Converter.ToInt(xmlLoad.Attribute("VRLock").Value) != 0
+                });
+            }
             else if (historyLog.ActionId == UpdateTypeConstants.Status ||
                 historyLog.ActionId == UpdateTypeConstants.LicenseeStatus)
             {

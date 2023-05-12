@@ -10,6 +10,7 @@ var HistoryLogController = function () {
             Status: 806,
             VRLock: 829,
             VRLockOther: 830,
+            VRLockBasketball: 837,
             Rate: 801,
             LicenseeStatus: 2802,
             LicenseeRate: 2800
@@ -129,6 +130,7 @@ var HistoryLogController = function () {
                     var detailHistoryLog = historyLog.HistoryLogDetailList[j];
                     if (detailHistoryLog.UpdateType == self.Constants.UpdateType.Status ||
                         detailHistoryLog.UpdateType == self.Constants.UpdateType.VRLock ||
+                        detailHistoryLog.UpdateType == self.Constants.UpdateType.VRLockBasketball ||
                         detailHistoryLog.UpdateType == self.Constants.UpdateType.VRLockOther ||
                         detailHistoryLog.UpdateType == self.Constants.UpdateType.LicenseeStatus) {
                         if (isFirstRow) {
@@ -146,6 +148,14 @@ var HistoryLogController = function () {
                                     Name: "ColSport",
                                     Value: viewResources.VRLock + ": " +
                                         (detailHistoryLog.VRLock ? viewResources.Enabled : viewResources.Disabled),
+                                    MergeColNumber: maxColumnNumber - 3
+                                });
+                            }
+                            else if (detailHistoryLog.UpdateType == self.Constants.UpdateType.VRLockBasketball) {
+                                columns.push({
+                                    Name: "ColSport",
+                                    Value: viewResources.VRLockBasketball + ": " +
+                                        (detailHistoryLog.VRLockBasketball ? viewResources.Enabled : viewResources.Disabled),
                                     MergeColNumber: maxColumnNumber - 3
                                 });
                             }
@@ -227,6 +237,14 @@ var HistoryLogController = function () {
                 Name: "ColSport",
                 Value: viewResources.VRLock + ": " +
                     (logInfo.VRLock ? viewResources.Enabled : viewResources.Disabled),
+                MergeColNumber: (maxColumnNumber - 3)
+            });
+        }
+        else if (logInfo.UpdateType == self.Constants.UpdateType.VRLockBasketball) {
+            columns.push({
+                Name: "ColSport",
+                Value: viewResources.VRLockBasketball + ": " +
+                    (logInfo.VRLockBasketball ? viewResources.Enabled : viewResources.Disabled),
                 MergeColNumber: (maxColumnNumber - 3)
             });
         }
