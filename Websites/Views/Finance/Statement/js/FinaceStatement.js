@@ -114,6 +114,8 @@
         this.recalcuGrid(false);
         mainreport.removeClass("hidden");
         mainreport.gridScroller(this.optionGrid);
+        $("#chkAll").attr('checked', false);
+        this.updateBuntonStateAndSelectedCount();
     },
     renderFirstCols: function (row, cssClass) {
         var rowspan = row.ListTrans.length;
@@ -192,10 +194,10 @@
             var ActionHTML = '';
             if (row.IsVerify) {
                 if (row.CheckerName == '') {
-                    ActionHTML = '<td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:55px;"><input id="' + row.RefNo + '" type="checkbox" onclick="financeStatement.checkSelectAll(this)"></div></td><td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:55px;"><input id="' + row.RefNo + '" class="verified" type="button" onclick="financeStatement.VerifyTrans(' + row.RefNo + ');" title="Verify" value="Verify"></div></td>';
+                    ActionHTML = '<td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:75px;"><input id="' + row.RefNo + '" type="checkbox" onclick="financeStatement.checkSelectAll(this)"></div></td><td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:55px;"><input id="' + row.RefNo + '" class="verified" type="button" onclick="financeStatement.VerifyTrans(' + row.RefNo + ');" title="Verify" value="Verify"></div></td>';
                 }
                 else {
-                    ActionHTML = '<td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:55px;"><input id="' + row.RefNo + '" type="checkbox" disabled="disabled" checked = "checked" onclick="financeStatement.checkSelectAll(this)"</div></td><td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:55px;"><input id="' + row.RefNo + '" class="unverify" type="button" onclick="financeStatement.UnVerifyTrans(' + row.RefNo + ');" title="Verify" value="Unverify"></div></td>';
+                    ActionHTML = '<td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:75px;"><input id="' + row.RefNo + '" type="checkbox" disabled="disabled" checked = "checked" onclick="financeStatement.checkSelectAll(this)"</div></td><td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:55px;"><input id="' + row.RefNo + '" class="unverify" type="button" onclick="financeStatement.UnVerifyTrans(' + row.RefNo + ');" title="Verify" value="Unverify"></div></td>';
                 }
             }
             else {
@@ -224,19 +226,6 @@
         }
         return html;
     },
-    checkSelectItem: function (id) {
-        if ($("#chkAll").attr('checked') == true && chkItem.checked == false)
-            $("#chkAll").attr('checked', false);
-
-        if (chkItem.checked == true) {
-            $("#btnVerify").removeAttr("disabled");
-            $("#btnVerify").attr("class", "verified");
-            this.checkSelectAll();
-        }
-        else {
-            this.setEnableVerify();
-        }
-    },
     checkSelectAll: function () {
         var flag = true;
         //explore all check box except chkAll
@@ -244,27 +233,48 @@
             if (this.checked == false && !this.disabled)
                 flag = false;
         });
-
         $("#chkAll").attr('checked', flag);
-    },
-    setEnableVerify: function () {
-        var totalCheckedCheckbox = $("input:checked").length;
-        var totalDisabledCheckbox = $("input[type='checkbox'][disabled]").length;
-
-        if (totalCheckedCheckbox > totalDisabledCheckbox) {
-            $("#btnVerify").removeAttr("disabled");
-            $("#btnVerify").attr("class", "verified");
-
-        }
-        else {
-            $("#btnVerify").attr("disabled", "true");
-            $("#btnVerify").attr("class", "verifiedDisabled");
-        }
+        this.updateBuntonStateAndSelectedCount();
     },
     itemAllClicked: function () {
-        $("input[type='checkbox']").attr('checked', $('#chkAll').is(':checked'));
+        var flag = $('#chkAll').is(':checked');
+        $("input[type='checkbox']").attr('checked', flag);
         $("input[type='checkbox'][disabled]").attr('checked', 'checked');
-        this.setEnableVerify();
+        this.updateBuntonStateAndSelectedCount();
+    },
+    countSelectedItems: function () {
+        let count = 0;
+        $("input[type='checkbox'][id!='chkAll']").each(function () {
+            if (this.checked && !this.disabled)
+                count++;
+        });
+        return count;
+    },
+    updateSelectedItemsText: function (count) {
+        if (!count) {
+            $("#selectedCount").text("");
+            return;
+        }
+        $("#selectedCount").text(count + ' selected');
+    },
+    updateButtonState: function (enable) {
+        if (enable) {
+            $("#btnVerify").removeClass("verifiedDisabled");
+            $("#btnReverse").removeClass("verifiedDisabled");
+            $("#btnVerify").removeAttr("disabled");
+            $("#btnReverse").removeAttr("disabled");
+        } else {
+            $("#btnVerify").addClass("verifiedDisabled");
+            $("#btnReverse").addClass("verifiedDisabled");
+            $("#btnVerify").attr("disabled", "disabled");
+            $("#btnReverse").attr("disabled", "disabled");
+
+        }
+    },
+    updateBuntonStateAndSelectedCount: function () {
+        const selectedItems = this.countSelectedItems();
+        this.updateSelectedItemsText(selectedItems);
+        this.updateButtonState(selectedItems);
     },
     getParams: function () {
         if ($('input[name=type]:checked').val() == "-1") {
@@ -381,10 +391,19 @@
             }
         });
     },
-    DeleteTrans: function (refno) {
-        financeStatement.VerifyParams.RefNo = refno;
-        if (confirm("Please make sure you see all transactions before trying to reverse.\nDo you want to delete the transaction with Ref.No: " + refno + "?")) {
-            if (confirm("To double check, do you want to delete the transaction with Ref.No: " + refno + "?")) {
+    DeleteTrans: function (id) {
+        var selectedRefNo;
+        if (id == "btnReverse") {
+            //verify multiple
+            selectedRefNo = financeStatement.GetSelectedRefNo();
+        }
+        else {
+            selectedRefNo = id;
+        }
+        financeStatement.VerifyParams.RefNo = selectedRefNo;
+        debugger;
+        if (confirm("Please make sure you see all transactions before trying to reverse.\nDo you want to delete the transaction with Ref.No: " + selectedRefNo + "?")) {
+            if (confirm("To double check, do you want to delete the transaction with Ref.No: " + selectedRefNo + "?")) {
                 try { parent.BlockUI(); } catch (e) { }
                 $.ajax({
                     type: "POST",

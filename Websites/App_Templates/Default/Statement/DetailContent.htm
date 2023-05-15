@@ -1,44 +1,56 @@
-﻿<table class="tbllayout" style="width:900px" cellspacing="1">
+﻿<table class="tbllayout" style="width:960px" cellspacing="1">
 <!--ReportHeader-->
-<tr class="title">
-    <td class="c">Date</td> 
-    <td class="c">Ref.no</td>
-    <td class="c">Remark</td>
-    <td class="c">Debit</td>
-    <td class="c">Credit</td>
-    <td class="c">Total</td>
-    <td class="c">Creator</td>
-    <!--DelHeader-->
-    <td class="c">Del</td>
-    <!--/DelHeader-->
-</tr>
+    <tr>
+        <!--DelAllHeaderRow-->
+        <td colspan="7"></td>
+        <td style="width: 75px;">
+            <span id="selectedCount"></span>
+        </td>
+        <td align="center">
+            <!--DelAllLink-->
+            <input id="btnReverse" class="reversed  verifiedDisabled" disabled="disabled" type="button" onclick="DelTransAll()" title="Reverse" value="Reverse">
+            <!--/DelAllLink-->
+        </td>
+        <!--/DelAllHeaderRow-->
+    </tr>    
+    <tr class="title">
+        <td class="c">Date</td>
+        <td class="c">Ref.no</td>
+        <td class="c">Remark</td>
+        <td class="c">Debit</td>
+        <td class="c">Credit</td>
+        <td class="c">Total</td>
+        <td class="c">Creator</td>
+        <!--DelHeader-->
+        <td class="c"><input type="checkbox" id="chkDelAll" onclick="onClickAllCheckBox();" /></td>
+        <td class="c">Reverse</td>
+        <!--/DelHeader-->
+    </tr>
 <!--/ReportHeader-->
 <!--ReportContent-->
-<tr class="{odd_even}" class="r">
-    <td class="c">{Date}</td>
-    <td class="l">&nbsp;{Refno}</td>
-    <td class="l"><b>{Remark}</b></td>
-    <td class="r">{Debit}</td>
-    <td class="r">{Credit}</td>
-    <td class="r">{Total}</td>
-    <td align="center">{Creator}</td>
-    
-    <!--DelCol-->
-    <td align="center">
-    <!--DelLink-->
-    <a href="#" onclick="DelTrans('{Refno}');">
-      <img src="../App_Themes/Images/icon_del.gif" width="14px" border="0" />
-    </a>
-    <!--/DelLink-->
-    </td>
-    <!--/DelCol-->
-</tr>
+    <tr class="{odd_even}" class="r">
+        <td class="c">{Date}</td>
+        <td class="l">&nbsp;{Refno}</td>
+        <td class="l"><b>{Remark}</b></td>
+        <td class="r">{Debit}</td>
+        <td class="r">{Credit}</td>
+        <td class="r">{Total}</td>
+        <td align="center">{Creator}</td>
+        <!--DelCol-->
+        <td class="c"><input type="checkbox" id="chkDel_{Refno}" name="chkDel" onclick="onClickCheckBoxItem('chkDel_{Refno}')" /></td>
+        <td align="center">
+            <!--DelLink-->
+            <input class="reversed" type="button" onclick="DelTrans('{Refno}');" title="Reverse" value="Reverse">
+            <!--/DelLink-->
+        </td>
+        <!--/DelCol-->
+    </tr>
 <!--/ReportContent-->
 
 <!--ReportFooter-->
 <tr class="title">
   <!--Excel-Footer-->  
-  <td colspan="8" align="center">
+  <td colspan="9" align="center">
   <!--/Excel-Footer-->
     Total: &nbsp;&nbsp;  {total}
   </td>

@@ -36,7 +36,7 @@ public class DelTrans : IHttpHandler,IRequiresSessionState {
                     IBCUtils.IbcError error = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.AccountStatement.Acc_BettransDelTransaction(refno, custId , (int)context.Session["AccId"], context.Request.UserHostAddress);
                     if (error.ErrorCode != 0)
                     {
-                        context.Response.Write("1|" + AlertMessage.GetMsg(error.ErrorMsg, AlertMessage.MsgType.Error));
+                        context.Response.Write("1|" + error.ErrorMsg);
                     }
                     else
                     {

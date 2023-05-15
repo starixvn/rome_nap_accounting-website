@@ -153,15 +153,22 @@
                                             <div class="table-cell" style="height: 17px;">
                                                 &nbsp;</div>
                                         </th>
+                                        <th colspan="1">
+                                            <div class="table-cell" style="height: 17px; width:75px;">
+                                                <span id="selectedCount"></span>
+                                            </div>
+                                        </th>
                                         <th>
                                             <div style="height: 17px;">
-                                                <input type="button" value="Verify" class="verified" onclick="financeStatement.VerifyTrans('btnVerify');"
+                                                <input type="button" value="Verify" class="verified verifiedDisabled" onclick="financeStatement.VerifyTrans('btnVerify');" disabled="disabled"
                                                     id="btnVerify">
                                             </div>
                                         </th>
-                                        <th colspan="2">
-                                            <div class="table-cell" style="height: 17px;">
-                                                &nbsp;</div>
+                                        <th>
+                                            <div style="height: 17px;">
+                                                <input type="button" value="Reverse" class="reversed verifiedDisabled" onclick="financeStatement.DeleteTrans('btnReverse');" disabled="disabled"
+                                                       id="btnReverse">
+                                            </div>
                                         </th>
                                     </tr>
                                     <tr>
@@ -207,7 +214,7 @@
                                                 Checked time</div>
                                         </th>
                                         <th>
-                                            <div class="table-cell" style="width: 55px; height: 34px;">
+                                            <div class="table-cell" style="width: 75px; height: 34px;">
                                                 <input type="checkbox" onclick="financeStatement.itemAllClicked()" id="chkAll">
                                             </div>
                                         </th>
@@ -293,7 +300,7 @@
                                                 &nbsp;</div>
                                         </th>
                                         <th>
-                                            <div class="table-cell" style="width: 55px; height: 34px;">
+                                            <div class="table-cell" style="width: 75px; height: 34px;">
                                                 &nbsp;</div>
                                         </th>
                                         <th>
