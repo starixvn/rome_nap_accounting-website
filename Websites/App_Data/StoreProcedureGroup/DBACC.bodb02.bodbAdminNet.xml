@@ -108,4 +108,12 @@
   <Function Name="IT Configuration - Initializing Customer Setting">
     <Setting Key="Acc_SiteSel_Licensee" SpName="Acc_SiteSel_Licensee" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
+  <Function Name="Admin - Manage Product Setting - Sport Bettype Setting Matrix">
+    <Setting Key="Acc_ReferenceSetting_ProductSel" SpName="Acc_ReferenceSetting_ProductSel" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_ReferenceSetting_SportTypeSel" SpName="Acc_ReferenceSetting_SportTypeSel" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_ReferenceSetting_BetTypeSel" SpName="Acc_ReferenceSetting_BetTypeSel" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_ReferenceSetting_TableSel" SpName="Acc_ReferenceSetting_TableSel" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_ReferenceSetting_Sel" SpName="Acc_ReferenceSetting_Sel" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_ReferenceSetting_Check" SpName="Acc_ReferenceSetting_Check" DbName="DBACC.bodb02.bodbAdminNet" />
+  </Function>
 </Functions>

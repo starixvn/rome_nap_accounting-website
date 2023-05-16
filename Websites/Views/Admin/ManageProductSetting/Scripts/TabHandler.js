@@ -128,3 +128,51 @@ function OpenProduct3rdSetting() {
     UpdateTabs();
     GetPartialView("Product3rdIndex");
 }
+
+function OpenSBSMSetting() {
+    cachedTabId = "tab_sbsm";
+    $('#sampleSettingLink').prop("href", rootUrl + "Views/Admin/ManageProductSetting/SBSM/SBSM.xls");
+    UpdateTabs();
+    $("#btnUpdateExcel").removeClass("hide");
+    GetPartialView("SBSMIndex");
+}
+
+function Search() {
+    switch (cachedTabId) {
+        case "tab_1":
+            SearchProduct(50, 1);
+            break;
+        case "tab_2":
+            SearchSport(50, 1);
+            break;
+        case "tab_3":
+            SearchBettype(50, 1);
+            break;
+        case "tab_4":
+            SearchSBM(50, 1);
+            break;
+        case "tab_5":
+            GetGroupsAndSearchCSSBM(50, 1);
+            break;
+        case "tab_6":
+            SearchRefResource(50, 1);
+            break;
+        case "tab_7":
+            SearchCanSee();
+            break;
+        case "tab_8":
+            SearchResetWinning();
+            break;
+        case "tab_9":
+            GetInitDataAndSearchAllUMConfig();
+            break;
+        case "tab_10":
+            SearchVendor(1, 50);
+            break;
+        case "tab_11":
+            SearchProduct3rd(1, 50);
+            break;
+        default:
+            break;
+    }
+}

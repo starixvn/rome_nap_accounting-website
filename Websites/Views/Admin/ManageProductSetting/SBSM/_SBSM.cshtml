@@ -1,0 +1,44 @@
+﻿@using Sunplus.Accounting.Core.Configurations;
+@using Fanex.Tarus.Admin.ManageProductSetting.ViewModel;
+@model ManageProductSettingViewModel
+
+<div class="filterBox" style="border: solid 1px #7C98A4; overflow: hidden;">
+    <div class="filterContent">
+        <div id="errSBSMMsg"></div>
+        <div class="floatLeft w50"><label for="ddlSBSMProductId" class="">Product</label></div>
+        <div class="floatLeft w250">
+            <div id="ddlSBSMProductId">
+            </div>
+        </div>
+        <div class="floatLeft w70"><label for="txtSBSMSportType">SportType</label></div>
+        <div class="floatLeft w250">
+            <select id="ddlSBSMSportType">
+                <option>Please Select</option>
+            </select>
+        </div>
+        <div class="floatLeft w70"><label for="txtSBSMBetTypeName">BetType</label></div>
+        <div class="floatLeft w250">
+            <select id="ddlSBSMBetType">
+                <option>Please Select</option>
+            </select>
+        </div>
+        <div class="clear"></div>
+
+        <div class="floatLeft w150"><label for="ckbFilterIsLicensee">IsLicensee</label><input type="checkbox" class="ckbFilter" id="ckbFilterIsLicensee" /></div>
+        <div class="floatLeft w150"><label for="ckbFilterIsLive">IsLive</label><input class="ckbFilter" type="checkbox" id="ckbFilterIsLive" /></div>
+        <div class="clear middle"></div>
+        <div class="floatLeft"><input type="button" value="Search" class="btn" onclick="SearchSBSM(50, 0)" /></div>
+        <div class="floatLeft"><input type="button" value="Import From Excel" class="btn" onclick="OpenInsertSetting()" /></div>
+    </div>
+</div>
+<div style="clear: both"></div>
+<div id="gridSBSMContainer" class="grid-container">
+    <div id="gridSBSMId" class="freegrid"></div>
+</div>
+
+@Html.Partial("~/Views/Admin/ManageProductSetting/SBSM/_UpdateSBSM.cshtml", Model)
+
+<script type="text/javascript">
+    var productList = @Html.Raw(Json.Encode(Model.Products));
+</script>
+<script type="text/javascript" src="@Url.Content("~/Views/Admin/ManageProductSetting/SBSM/Scripts/SBSM.js?v=" + @WebSettings.Version)"></script>

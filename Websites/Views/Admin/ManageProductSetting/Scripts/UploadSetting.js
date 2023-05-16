@@ -18,14 +18,14 @@ function InsertExcelSetting() {
 
 function UpdateExcelSetting() {
     var action = GetInsertUrl() + "?isUpdate=true";
-    ProcessInsertUpdateExcel(action);
+    ProcessInsertUpdateExcel(action, true);
 }
 
-function ProcessInsertUpdateExcel(action) {
+function ProcessInsertUpdateExcel(action, isUpdate = false) {
     if (!ValidateUploadFile()) {
         return;
     }
-
+    var successMessage = isUpdate ? 'Updated successfully.' : 'Inserted successfully.';
     parent.BlockUI();
     form = $('#mainForm');
     var formData = new FormData(form[0]);
@@ -38,7 +38,7 @@ function ProcessInsertUpdateExcel(action) {
         enctype: 'multipart/form-data',
         data: formData,
         success: function (result) {
-            showAlertMessage('errMsg', result.ErrorCode === 0 ? 'Updated successfully.' : result.ErrorMessage, result.ErrorCode === 0 ? 0 : 1);
+            showAlertMessage('errMsg', result.ErrorCode === 0 ? successMessage : result.ErrorMessage, result.ErrorCode === 0 ? 0 : 1);
             if (result.ErrorCode === 0) {
                 setTimeout(function () {
                     $('#insert-setting').dialog('close');
@@ -88,9 +88,50 @@ function GetInsertUrl() {
         case "tab_product3rd":
             action = window.rootUrl + 'ManageProduct3RD/Insert';
             break;
+        case "tab_sbsm":
+            action = 'InsertSBSM';
+            break;
     }
 
     return action;
+}
+
+function Search() {
+    switch (cachedTabId) {
+        case "tab_product":
+            SearchProduct(50, 1);
+            break;
+        case "tab_sport":
+            SearchSport(50, 1);
+            break;
+        case "tab_bettype":
+            SearchBettype(50, 1);
+            break;
+        case "tab_sbm":
+            SearchSBM(50, 1);
+            break;
+        case "tab_cssbm":
+            GetGroupsAndSearchCSSBM(50, 1);
+            break;
+        case "tab_refresource":
+            SearchRefResource(50, 1);
+            break;
+        case "tab_cansee":
+            SearchCanSee();
+            break;
+        case "tab_resetwinning":
+            SearchResetWinning();
+            break;
+        case "tab_vendor":
+            SearchVendor(1, 50);
+            break;
+        case "tab_product3rd":
+            SearchProduct3rd(1, 50);
+            break;
+        case "tab_sbsm":
+            SearchSBSM(50, 0);
+            break;
+    }
 }
 
 function ValidateUploadFile() {
