@@ -219,10 +219,10 @@ function exportStatementReport(rs) {
     statementReportManager.exportStatementReport(statementReportCriteria);
 }
 
-function DelTrans(refno) {
-    __confirm("Delete transaction", "Do you want to reverse the transaction with Ref.No: " + refno + "?", 250, 150, 'cfm_1', function () {
+function ReverseTrans(refno) {
+    __confirm("Reverse transaction", "Do you want to reverse the transaction with Ref.No: " + refno + "?", 250, 150, 'cfm_1', function () {
         __close(null, null, 'cfm_1', null);
-        __confirm("Delete transaction", "To double check, do you want to reverse the transaction with Ref.No: " + refno + "?", 250, 180, 'cfm_2', function () {
+        __confirm("Reverse transaction", "To double check, do you want to reverse the transaction with Ref.No: " + refno + "?", 250, 180, 'cfm_2', function () {
             try { parent.BlockUI(); } catch (e) { }
             $.ajax({
                 url: 'DelTrans.ashx?refno=' + refno + '&custName=' + custName,
@@ -231,13 +231,11 @@ function DelTrans(refno) {
                     __close(null, null, 'cfm_2', null);
                     var arr = data.split('|');
                     if (arr[0] == "1") {
-
-                        parent.AlertPopup("", arr[1])
-                        //obj('sData').innerHTML = arr[1];
-
+                        __showMessage("", arr[1], 350, 250);
                         parent.jQuery.unblockUI();
                     }
                     else {
+                        __showMessage("", arr[1], 350, 250);
                         setTimeout("GetDataReport()", 3000);
                     }
                 }
@@ -260,57 +258,58 @@ function GetSelectedRefNo() {
 
 
 function VerifyTrans(btn) {
-    var bCconfirm = window.confirm("Are you sure you want to verify the selected transaction(s)?");
-    if (!bCconfirm)
-        return bCconfirm;
+    __confirm("Verify transaction", "Are you sure you want to verify the selected transaction(s)?", 400, 250, 'cfm_1', function () {
+        __close(null, null, 'cfm_1', null);
 
-    var selectedRefNo;
-    if (btn.id.toLowerCase() == "btnverify") {
-        //verify multiple
-        selectedRefNo = '{"refNoList":"' + GetSelectedRefNo() + '"}';
-    }
-    else {
-        selectedRefNo = '{"refNoList":"' + btn.id + '"}';
-    }
+        let selectedRefNo;
+        if (btn.id.toLowerCase() == "btnverify") {
+            //verify multiple
+            selectedRefNo = '{"refNoList":"' + GetSelectedRefNo() + '"}';
+        }
+        else {
+            selectedRefNo = '{"refNoList":"' + btn.id + '"}';
+        }
 
-
-    try { parent.BlockUI(); } catch (e) { }
-    $.ajax({
-        type: "POST",
-        url: "../Services/WCF/ServiceDailyTran.svc/VerifyTransaction",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        data: selectedRefNo,
-        success: VerifyTransCallBack
+        try { parent.BlockUI(); } catch (e) { }
+        $.ajax({
+            type: "POST",
+            url: "../Services/WCF/ServiceDailyTran.svc/VerifyTransaction",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: selectedRefNo,
+            success: VerifyTransCallBack
+        });
     });
 }
 
 function UnVerifyTrans(trans) {
-    var bCconfirm = window.confirm("Are you sure you want to unverify the selected transaction(s)?");
-    if (!bCconfirm)
-        return bCconfirm;
-
-    var selectedRefNo = '{"refNo":' + trans.id + '}';
-    try { parent.BlockUI(); } catch (e) { }
-    $.ajax({
-        type: "POST",
-        url: "../Services/WCF/ServiceDailyTran.svc/UnVerifyTransaction",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        data: selectedRefNo,
-        success: VerifyTransCallBack
+    __confirm("Verify transaction", "Are you sure you want to verify the selected transaction(s)?", 400, 250, 'cfm_1', function () {
+        __close(null, null, 'cfm_1', null);
+        var selectedRefNo = '{"refNo":' + trans.id + '}';
+        try { parent.BlockUI(); } catch (e) { }
+        $.ajax({
+            type: "POST",
+            url: "../Services/WCF/ServiceDailyTran.svc/UnVerifyTransaction",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: selectedRefNo,
+            success: VerifyTransCallBack
+        });
     });
+
 }
 
 function VerifyTransCallBack(data) {
 
     //request to process data successful
     if (data == true) {
-        window.alert("Update data successfully");
-        GetDataReport();
+        setTimeout(() => {
+            GetDataReport();
+            __showMessage("", "Update data successfully", 350, 250);
+        }, 3000);
     }
     else {
-        window.alert("Cannot update data! Please contact Adminstrator");
+        __showMessage("", "Cannot update data! Please contact Adminstrator", 350, 250);
         parent.jQuery.unblockUI();
     }
 }
@@ -436,80 +435,74 @@ function viewGuidelines() {
 }
 
 function onClickAllCheckBox() {
-    var checkedAll = $('#chkDelAll').is(':checked');
-    $("input[name='chkDel']").each(function () {
+    var checkedAll = $('#chkAll').is(':checked');
+    $("input[name='chkReverse']").each(function () {
         this.checked = checkedAll;
     });
 
     this.updateBuntonStateAndSelectedCount();
 }
 
-function DelTransAll() {
+function ReverseTransAll() {
 
-    let transIds = "";
-    $("input[name='chkDel']").each(function () {
+    let transIds = [];
+    $("input[name='chkReverse']").each(function () {
         if (this.checked) {
-            transIds += this.id.replace('chkDel_', '') + ",";
+            transIds.push(this.id.replace('chkReverse_', ''));
         }
     });
-    const refsno = transIds.replace(/.$/, "");
-    //alert(transIds.replace(/.$/, "").split(',').filter(element => element).length);
-
-    __confirm("Delete transaction", "Do you want to reverse the transaction with Ref.No: " + refsno + "?", 280, 200, 'cfm_1', function () {
+    const refsno = transIds.join(', ');
+    const _this = this;
+    __confirm("Reverse transaction", "Do you want to reverse the transaction(s) with Ref.No: " + refsno + "?", 350, 250, 'cfm_1', function () {
         __close(null, null, 'cfm_1', null);
-        __confirm("Delete transaction", "To double check, do you want to reverse the transaction with Ref.No: " + refsno + "?", 280, 200, 'cfm_2', function () {
+        __confirm("Reverse transaction", "To double check, do you want to reverse the transaction(s) with Ref.No: " + refsno + "?", 350, 250, 'cfm_2', function () {
             try { parent.BlockUI(); } catch (e) { }
-            //$.ajax({
-            //    url: 'DelTrans.ashx?refno=' + refno + '&custName=' + custName,
-            //    dataType: 'html',
-            //    success: function (data) {
-            //        __close(null, null, 'cfm_2', null);
-            //        var arr = data.split('|');
-            //        if (arr[0] == "1") {
-            //            obj('sData').innerHTML = arr[1];
-            //            parent.jQuery.unblockUI();
-            //        }
-            //        else {
-            //            setTimeout("GetDataReport()", 3000);
-            //        }
-            //    }
-            //});
+            $.ajax({
+                url: 'ReverseMultipleTrans.ashx?refsno=' + refsno + '&custName=' + custName,
+                dataType: 'html',
+                success: function (data) {
+                    __close(null, null, 'cfm_2', null);
+                    const arr = data.split('|');
+                    if (arr[0] == "1") {
+                        __showMessage("", arr[1], 350, 250);
+                        parent.jQuery.unblockUI();
+                        return;
+                    }
+
+                    let info = arr[1] && arr[1];
+                    arr[2] && (info += arr[2]);
+
+                    setTimeout(() => {
+                        __showMessage("", info, 350, 250);
+                        _this.GetDataReport();
+                    }, 3000);
+
+                }
+            });
         })
     });
 
 }
 
 function onClickCheckBoxItem(id) {
-
-    let itemIsChecked = $("input[type='checkbox'][id=" + id + "]").is(':checked');
-
-    if ($("#chkDelAll").is(':checked') == true && !itemIsChecked) {
-        $("#chkDelAll").attr('checked', false);
-    }
-
-
-    if (itemIsChecked) {
-        //$("#btnVerify").removeAttr("disabled");
-        //$("#btnVerify").attr("class", "verified");
-        this.checkSelectAll();
-    }
+    this.updateSelectAll();
     this.updateBuntonStateAndSelectedCount();
 }
 
-function checkSelectAll() {
+function updateSelectAll() {
     var flag = true;
     //explore all check box except chkAll
-    $("input[type='checkbox'][id!='chkDelAll']").each(function () {
+    $("input[type='checkbox'][id!='chkAll']").each(function () {
         if (this.checked == false)
             flag = false;
     });
 
-    $("#chkDelAll").attr('checked', flag);
+    $("#chkAll").attr('checked', flag);
 }
 
 function updateBuntonStateAndSelectedCount() {
     let count = 0;
-    $("input[type='checkbox'][id!='chkDelAll']").each(function () {
+    $("input[type='checkbox'][id!='chkAll']").each(function () {
         if (this.checked)
             count++;
     });

@@ -67,8 +67,8 @@ function ExportToExcel() {
 }
 
 function DelTrans(refno) {
-    if (confirm("Do you want to delete the transaction with Ref.No: " + refno + "?")) {
-        if (confirm("To double check, do you want to delete the transaction with Ref.No: " + refno + "?")) {
+    if (confirm("Do you want to reverse the transaction with Ref.No: " + refno + "?")) {
+        if (confirm("To double check, do you want to reverse the transaction with Ref.No: " + refno + "?")) {
             try { parent.BlockUI(); } catch (e) { }
             $.ajax({
                 url: 'DelTrans.ashx?refno=' + refno,

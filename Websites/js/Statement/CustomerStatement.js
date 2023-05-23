@@ -95,6 +95,7 @@ function DelTrans(refno)
                         parent.jQuery.unblockUI();
                     }
                     else {
+                        window.alert("Reverse successfully");
                         setTimeout("GetDataReport()", 3000);
                     }
 

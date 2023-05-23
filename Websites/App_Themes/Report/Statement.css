@@ -42,3 +42,11 @@ body
 {
     overflow-y: auto;
 }
+
+#cfm_1 span {
+	word-wrap: break-word;
+}
+
+#cfm_2 span {
+	word-wrap: break-word;
+}

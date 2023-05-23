@@ -1,0 +1,28 @@
+﻿.ui-dialog .ui-dialog-buttonpane button {
+    float: left;
+}
+
+.ui-widget-header {
+    border: 1px solid #4297d7;
+    background: #cccccc url(../../js/jQuery/UI/css/custom-theme/images/ui-bg_gloss-wave_75_2191c0_500x100.png) 50% 50% repeat-x;
+    color: #eaf5f7;
+    font-weight: bold;
+}
+
+.ui-button.ui-widget {
+    border: 1px solid #77d5f7;
+    background: #0078ae url(../../js/jQuery/UI/css/custom-theme/images/ui-bg_glass_45_0078ae_1x400.png) 50% 50% repeat-x;
+    font-weight: normal;
+    color: #ffffff;
+}
+
+.ui-button.ui-widget.ui-state-hover {
+    border: 1px solid #448dae;
+    background: #79c9ec url(../../js/jQuery/UI/css/custom-theme/images/ui-bg_glass_45_79c9ec_1x400.png) 50% 50% repeat-x;
+    font-weight: normal;
+    color: #026890;
+}
+
+.ui-widget-content {
+    border: 1px solid #a6c9e2;
+}

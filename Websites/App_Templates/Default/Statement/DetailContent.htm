@@ -8,7 +8,7 @@
         </td>
         <td align="center">
             <!--DelAllLink-->
-            <input id="btnReverse" class="reversed  verifiedDisabled" disabled="disabled" type="button" onclick="DelTransAll()" title="Reverse" value="Reverse">
+            <input id="btnReverse" class="reversed  verifiedDisabled" disabled="disabled" type="button" onclick="ReverseTransAll()" title="Reverse" value="Reverse">
             <!--/DelAllLink-->
         </td>
         <!--/DelAllHeaderRow-->
@@ -22,7 +22,7 @@
         <td class="c">Total</td>
         <td class="c">Creator</td>
         <!--DelHeader-->
-        <td class="c"><input type="checkbox" id="chkDelAll" onclick="onClickAllCheckBox();" /></td>
+        <td class="c"><input type="checkbox" id="chkAll" onclick="onClickAllCheckBox();" /></td>
         <td class="c">Reverse</td>
         <!--/DelHeader-->
     </tr>
@@ -37,11 +37,15 @@
         <td class="r">{Total}</td>
         <td align="center">{Creator}</td>
         <!--DelCol-->
-        <td class="c"><input type="checkbox" id="chkDel_{Refno}" name="chkDel" onclick="onClickCheckBoxItem('chkDel_{Refno}')" /></td>
+        <td class="c">
+            <!--ReverseCheckbox-->
+            <input type="checkbox" id="chkReverse_{Refno}" name="chkReverse" onclick="onClickCheckBoxItem('chkReverse_{Refno}')" />
+            <!--/ReverseCheckbox-->
+        </td>
         <td align="center">
-            <!--DelLink-->
-            <input class="reversed" type="button" onclick="DelTrans('{Refno}');" title="Reverse" value="Reverse">
-            <!--/DelLink-->
+            <!--ReverseLink-->
+            <input class="reversed" type="button" onclick="ReverseTrans('{Refno}');" title="Reverse" value="Reverse">
+            <!--/ReverseLink-->
         </td>
         <!--/DelCol-->
     </tr>

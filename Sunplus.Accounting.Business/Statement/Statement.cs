@@ -312,8 +312,11 @@ namespace Sunplus.Accounting.Business.Statement
                             TemplateHandler.Assign(ref rowHtml, "{Total}", FormatHandler.FormatNumber20(totalAmt));
 
                             total += creditAmt - debitAmt;
-                            if (!CastAide.AsBoolean(row["allowdelete"], true) || !candelete)
-                                TemplateHandler.RemoveBlock(ref rowHtml, "DelLink");
+                            if (!CastAide.AsBoolean(row["IsAllowReversal"], true) || !candelete)
+                            {
+                                TemplateHandler.RemoveBlock(ref rowHtml, "ReverseLink");
+                                TemplateHandler.RemoveBlock(ref rowHtml, "ReverseCheckbox");
+                            }
 
                             htmlReport.Append(rowHtml);
 

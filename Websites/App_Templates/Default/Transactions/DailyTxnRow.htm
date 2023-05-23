@@ -9,9 +9,11 @@
     <td rowspan="{rowspan}" style="text-align:center; width:100px;">{creator}</td>
 <!--/UnVerifiedButtonBlock-->
 <!--CheckBoxBlock-->
-<td style="text-align:center; width:65px;" rowspan="{rowspan}">
-    <input type="checkbox" {id} {checked} {disabled}  onclick="CheckSelectItem(this)"/>
-</td>   
+    <td style="text-align:center; width:65px;" rowspan="{rowspan}">
+        <!--CheckBoxInputBlock-->
+        <input type="checkbox" {id} {checked} {disabled} onclick="CheckSelectItem(this)" />
+        <!--/CheckBoxInputBlock-->
+    </td>   
 <!--/CheckBoxBlock-->
 <!--UnVerifiedButtonBlock-->
 <td rowspan="{rowspan}"style="text-align:center; width:100px;">{verifiedby}&nbsp;</td>

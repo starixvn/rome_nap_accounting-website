@@ -10,9 +10,11 @@
     <link href="~/App_Themes/Public/table.css" rel="stylesheet" type="text/css" />
     <link href="~/App_Themes/Public/input.css" rel="stylesheet" type="text/css" />
     <link href="~/App_Themes/Public/common.css" rel="stylesheet" type="text/css" />
+    <link href="~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css" rel="stylesheet" type="text/css" />
     <link href="~/App_Themes/Public/Pagination.css" rel="stylesheet" type="text/css" />
     <link href="../App_Themes/jquery-ui.css" rel="stylesheet" type="text/css" />
     <link href="../App_Themes/ui.jqgrid.css" rel="stylesheet" type="text/css" />
+    <link href="style/DailyTransaction.css?v=<%=AccCommon.Version() %>" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <div class="main">
@@ -90,6 +92,8 @@
     <script src="../js/jQuery/jquery.history.js" type="text/javascript"></script>
 
     <script src="../js/pager_v2.js" type="text/javascript"></script> 
+    <script src="../js/Popup/confirmbox.js?ver=20161208" type="text/javascript"></script>
+    <script src="../js/jQuery/UI/jquery-ui-1.8.10.custom.min.js" type="text/javascript"></script>
 	
     <script src="WebResources/js/DailyFinanceTrans.js?ver=<%=WebSettings.Version%>" type="text/javascript"></script>         
     <iframe id="frm" width="0" height="0"  frameborder="0" style="display:none"></iframe>
