@@ -514,6 +514,7 @@ var ViewPT = {
             case 238: // Habanero
             case 172: // Advantplay
             case 174: // Advantplay Mini
+            case 159: // YeeBet
                 ViewPT.viewPTBasedOnKindOfCustomer(userName, sportId, betTypeId, isLive);
                 break;
             case 9908: // Virtual Sports
