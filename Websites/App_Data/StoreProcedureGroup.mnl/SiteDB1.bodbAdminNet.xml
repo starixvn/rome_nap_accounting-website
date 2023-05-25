@@ -26,5 +26,6 @@
     <Setting Key="SiteDB1_Acc_CustomerSelBalanceCashInfo" SpName="Acc_CustomerSelBalanceCashInfo" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
     <Setting Key="SiteDB1_Acc_OutstandingMemberSel" SpName="Acc_OutstandingMemberSel" DbName="DBBOF.bodb02.bodbAdminNet" Plain="0" />
     <Setting Key="SiteDB1_Acc_BalanceMemberSel" SpName="Acc_BalanceMemberSel" DbName="DBTXN.BODB02.bodbAdminNet" Plain="0" />
+    <Setting Key="SiteDB1_Acc_CustomerTotalAmountSel" SpName="Acc_CustomerTotalAmountSel" DbName="DBTXN.BODB02.bodbAdminNet" Plain="0" />
   </Function>
 </Functions>

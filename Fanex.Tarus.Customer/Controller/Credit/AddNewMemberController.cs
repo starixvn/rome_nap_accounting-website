@@ -105,8 +105,13 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
             Fanex.PTEngine.BusinessObjects.Result result;
             try
             {
+
                 ICustomer customer = GetCustomerFromDeserializeJsonString(stringcustomer);
                 customer.Password = Fanex.Tarus.Security.Services.Encryptor.Decrypt(customer.Password, code);
+
+                var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(customer.SRecommend);
+                customer.DBServerIp = siteDB.AGIP;
+                customer.SiteDBGroupId = siteDB.SiteDBGroupID;
 
                 //do insert new agent
                 int memberId = 0;

@@ -2,14 +2,15 @@
 
 using System;
 using System.Web;
-using System.Web.SessionState;
-using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Helper;
-using Fanex.Tarus.Security.HttpModules.Services;
+using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
+using Sunplus.Accounting.Entities.Customer;
 
-public class UpdateChangeGroup : BaseHandler {
+public class UpdateChangeGroup : BaseHandler
+{
 
-    public override void ProcessRequest (HttpContext context) {
+    public override void ProcessRequest(HttpContext context)
+    {
         context.Response.ContentType = "text/html";
         base.ProcessRequest(context);
         if (context.Session["AccId"] != null)
@@ -27,7 +28,17 @@ public class UpdateChangeGroup : BaseHandler {
                 if (strClear == "1")
                 {
                     strResult = "Clear Credit successfully.";
-                    err = Sunplus.Accounting.DataAccess.IBCDLL.Customer.UpdateCustomer.CustomerUpdClearCreditRpt(uname, accId);
+                    var custInfo = UpdateCustomer.GetCustInfo(uname);
+                    if (custInfo.RoleId == 1)
+                    {
+                        var totalAmt = UpdateCustomer.GetTotalAmount(custInfo.CustId);
+                        err = UpdateCustomer.UpdClearMemberCreditRpt(uname, accId, totalAmt);
+                    }
+                    else
+                    {
+                        err = UpdateCustomer.UpdClearSMACreditRpt(uname, accId);
+                    }
+
                 }
                 else
                 {
@@ -37,7 +48,7 @@ public class UpdateChangeGroup : BaseHandler {
                 }
                 if (err.IsSuccess())
                 {
-                    context.Response.Write("parent.alert_error('" + AlertMessage.GetMsg(strResult,AlertMessage.MsgType.Success) + "','errMsg');");
+                    context.Response.Write("parent.alert_error('" + AlertMessage.GetMsg(strResult, AlertMessage.MsgType.Success) + "','errMsg');");
                 }
                 else
                 {
@@ -70,8 +81,10 @@ public class UpdateChangeGroup : BaseHandler {
 
         return false;
     }
-    public override bool IsReusable {
-        get {
+    public override bool IsReusable
+    {
+        get
+        {
             return false;
         }
     }

@@ -1,5 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Functions SiteId="104" SiteName="NAP - Accounting"> 
+<Functions SiteId="104" SiteName="NAP - Accounting">
+  <Function Name ="Add member">
+    <Setting Key="Dot_BalanceDebitInitialize" SpName="Dot_BalanceDebitInitialize" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="Dot_BalanceCreditInitialize" SpName="Dot_BalanceCreditInitialize" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="Dot_BalanceDebitRemove" SpName="Dot_BalanceDebitRemove" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="Dot_BalanceCreditRemove" SpName="Dot_BalanceCreditRemove" DbName="DBTXN.bodb02.bodbAdminNet" />
+  </Function>
+
   <Function Name="Finance">
     <Setting Key="Acc_CustomerSelForexAccount" SpName="Acc_CustomerSelForexAccount" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
@@ -48,6 +55,7 @@
   </Function>
   <Function Name="Account Info">
     <Setting Key="Acc_BalanceMemberSel" SpName="Acc_BalanceMemberSel" DbName="DBTXN.BODB02.bodbAdminNet" Plain="0" />
+    <Setting Key="Acc_CustomerTotalAmountSel" SpName="Acc_CustomerTotalAmountSel" DbName="DBTXN.BODB02.bodbAdminNet" Plain="0" />
   </Function>
   <Function Name="Mangage Move Bet Schedule">
     <Setting Key="Acc_Manual_MoveBet_Sel" SpName="Acc_Manual_MoveBet_Sel" DbName="DBTXN.bodb02.bodbAdminNet" Plain="0" />
@@ -57,8 +65,5 @@
     <Setting Key="Task_Cust_CheckBalance_Exception_Ins" SpName="Task_Cust_CheckBalance_Exception_Ins" DbName="DBTXN.bodb02.bodbAdminNet" Plain="0" />
     <Setting Key="Dot_BalanceInsCredit" SpName="Dot_BalanceInsCredit" DbName="DBTXN.bodb02.bodbAdminNet" Plain="0" />
     <Setting Key="Dot_BalanceInsDebit" SpName="Dot_BalanceInsDebit" DbName="DBTXN.bodb02.bodbAdminNet" Plain="0" />
-  </Function>
-  <Function Name="Special Status - Function">
-    <Setting Key="Acc_CustomerUpdUserName_Bettrans" SpName="Acc_CustomerUpdUserName_Bettrans" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
 </Functions>

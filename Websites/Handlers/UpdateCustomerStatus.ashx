@@ -7,6 +7,7 @@ using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using IBCUtils;
+using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
 
 public class UpdateCustomerStatus : BaseHandler
 {
@@ -34,14 +35,14 @@ public class UpdateCustomerStatus : BaseHandler
                 context.Response.Write("<script type='text/javascript'>" + StringUtils.JS_Alert(errmsg) + "</script>");
                 return;
             }
-            
+
             switch (type)
             {
-                case "suspended":                       
+                case "suspended":
                     Sunplus.Accounting.DataAccess.IBCDLL.Accounting.CustomerUpdateStatus.CustomerUpdateSuspend(_accid, _custid, status, context.Request.UserHostAddress);
                     s = "parent.changeDisplayStatus('suspended','" + status + "');";
                     s += "var chksuspended = parent.parent.frames['centerFr'].document.getElementById('chkSuspended');";
-                    s += "if (chksuspended!=null) chksuspended.checked=" + ((status) ? "true;" : "false;");                    
+                    s += "if (chksuspended!=null) chksuspended.checked=" + ((status) ? "true;" : "false;");
                     break;
                 case "Outright":
                     Sunplus.Accounting.DataAccess.IBCDLL.Accounting.CustomerUpdateStatus.CustomerUpdateDisableOutright(_accid, _custid, status, context.Request.UserHostAddress);
@@ -52,11 +53,11 @@ public class UpdateCustomerStatus : BaseHandler
                     s = "parent.changeDisplayStatus('special','" + status + "');";
                     break;
                 case "autompt":
-                    Sunplus.Accounting.DataAccess.IBCDLL.Accounting.CustomerUpdateStatus.CustomerUpdateAutoMPT(_accid, _custid, status, context.Request.UserHostAddress);     
+                    Sunplus.Accounting.DataAccess.IBCDLL.Accounting.CustomerUpdateStatus.CustomerUpdateAutoMPT(_accid, _custid, status, context.Request.UserHostAddress);
                     s = "parent.document.getElementById('AllowAutoPT').innerHTML ='" + ((status) ? "Yes" : "No") + "';";
                     s += "parent.changeDisplayStatus();";
                     break;
-                case "closed":                           
+                case "closed":
                     Sunplus.Accounting.DataAccess.IBCDLL.Accounting.CustomerUpdateStatus.CustomerUpdateClosed(_accid, _custid, status, context.Request.UserHostAddress);
                     if (context.Request["isClearCredit"] != null)
                     {
@@ -66,7 +67,16 @@ public class UpdateCustomerStatus : BaseHandler
                             var customerManager = new Sunplus.Accounting.Business.Customer.CustomerManager();
                             string CustUserName = customerManager.GetCustName(AppSession.CustRoleId);
                             string accId = AppSession.AccId.ToString();
-                            IbcError error = Sunplus.Accounting.DataAccess.IBCDLL.Customer.UpdateCustomer.CustomerUpdClearCreditRpt(CustUserName, accId);
+                            IbcError error;
+                            if(AppSession.CustRoleId == 1) // member
+                            {
+                                var totalAmt = UpdateCustomer.GetTotalAmount(AppSession.CustID);
+                                error = UpdateCustomer.UpdClearMemberCreditRpt(CustUserName, accId, totalAmt);
+                            }
+                            else
+                            {
+                                error = UpdateCustomer.UpdClearSMACreditRpt(CustUserName, accId);
+                            }
 
                             if (error.ErrorCode > 0)
                             {
@@ -78,8 +88,8 @@ public class UpdateCustomerStatus : BaseHandler
                         s += "parent.HideClosedPop('ClosedStatusPop');";
 
                     }
-                    s += "parent.changeDisplayStatus();";                   
-                    break;               
+                    s += "parent.changeDisplayStatus();";
+                    break;
                 /*Phuong.Nguyen
                  *Add new case for HR request changing status
                  */
@@ -130,8 +140,8 @@ public class UpdateCustomerStatus : BaseHandler
         }
         catch (AccException ex)
         {
-           context.Response.Write("<script type='text/javascript'>" + StringUtils.JS_Alert(ex.Message) +
-                                       "</script>");
+            context.Response.Write("<script type='text/javascript'>" + StringUtils.JS_Alert(ex.Message) +
+                                        "</script>");
         }
         catch (Exception ex)
         {
