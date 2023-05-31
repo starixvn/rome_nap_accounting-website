@@ -898,7 +898,7 @@ function showJiliBetDetails(transId, winlossDate, custId, transType) {
     openResultsPopUp(param);
 }
 
-function showYeeBetDetails(refno, winlossDate, custId, transType) {
+function showYeeBetBetDetails(refno, winlossDate, custId, transType) {
     var params = {
         url: "AGCasinoBetList/BetDetails",
         title: "YeeBet - Detailed Bet list - " + winlossDate.split(" ")[0],

@@ -270,7 +270,7 @@
       <HintPath>..\packages\Fanex.BetList.WM.2.0.0.1\lib\net461\Fanex.BetList.WM.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.YeeBet, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.YeeBet.1.0.0-YeeBet-01\lib\net461\Fanex.BetList.YeeBet.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.YeeBet.1.0.0-YeeBet-03\lib\net461\Fanex.BetList.YeeBet.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Caching, Version=2.2.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Caching.2.2.2\lib\net461\Fanex.Caching.dll</HintPath>
