@@ -154,13 +154,13 @@ BetList.BetListByRefNo = (function ($) {
             return false;
         }
 
-        var productRequireBetId = ["22", "24", "32", "34", "36", "52", "55", "56", "60", "61", "62", "66", "67", "68", "72", "73", "75", "76"];
+        var productRequireBetId = ["22", "24", "32", "34", "36", "52", "55", "56", "60", "61", "62", "66", "67", "68", "72", "73", "75"];
         if ((isSabaclub || productRequireBetId.indexOf(selProductValue) !== -1) && $betId.val().trim() === "") {
             showError("BetID is required");
             return false;
         }
 
-        var productRequiredGameId3rd = ["38", "63", "76"];
+        var productRequiredGameId3rd = ["38", "63"];
         if ((productRequiredGameId3rd.indexOf(selProductValue) !== -1 && $gameId.val().trim() === "")) {
             showError("GameID (3rd) is required");
             return false;
