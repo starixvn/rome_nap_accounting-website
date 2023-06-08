@@ -2224,4 +2224,16 @@ Max Keno (20+1) 2</value>
   <data name="Disable161_81" xml:space="preserve">
     <value>Disabled Number Game</value>
   </data>
+  <data name="TypeId" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="AccountType_1" xml:space="preserve">
+    <value>VIP</value>
+  </data>
+  <data name="AccountType_2" xml:space="preserve">
+    <value>Suspicious</value>
+  </data>
+  <data name="AccountType_3" xml:space="preserve">
+    <value>Problem</value>
+  </data>
 </root>

@@ -73,6 +73,8 @@ namespace Sunplus.Accounting.Business.LogDisplay
                     return string.IsNullOrWhiteSpace(val) ? val : FormatDecimalTrailingZeros(val);
                 case 4:
                     return GetResourceName(val);
+                case 5:
+                    return GetAccountType(val);
                 default:
                     break;
             }          
@@ -156,6 +158,11 @@ namespace Sunplus.Accounting.Business.LogDisplay
                 return  string.Format("{0:G29}", value);
             }
             return strValue;
+        }
+
+        public static string GetAccountType(string strValue)
+        {
+            return GetResourceName("AccountType_" + strValue);
         }
     }
 }
