@@ -22,3 +22,7 @@
     margin: auto;
     vertical-align: middle;
 }
+
+.word-break-auto {
+    word-break: break-word;
+}
