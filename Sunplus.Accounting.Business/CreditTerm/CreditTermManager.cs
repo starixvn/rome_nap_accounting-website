@@ -304,6 +304,7 @@ namespace Sunplus.Accounting.Business.CreditTerm
                         Currency = CastAide.AsString(drow["currency"]),
                         YesterdayBalance = IBCUtils.FormatHandler.FormatNumber20(drow["yesterdaytotalbalance"]),
                         TotalBalance = IBCUtils.FormatHandler.FormatNumber20(drow["totalbalance"]),
+                        PendingTransfer3rd = IBCUtils.FormatHandler.FormatNumber20(drow["pendingtransfer3rd"]),
                         MaxLoss = GetMaxLossValue(drow["maxloss"]),
                         IsGroupHeadline = CastAide.AsBoolean(drow["isgroupheadline"])
                     });
@@ -323,6 +324,7 @@ namespace Sunplus.Accounting.Business.CreditTerm
                         YesterdayBalance = IBCUtils.FormatHandler.FormatNumber20(totalrow["yesterdaytotalbalance_rm"]),
                         TotalBalance = IBCUtils.FormatHandler.FormatNumber20(totalrow["totalbalance_rm"]),
                         MaxLoss = GetMaxLossValue(totalrow["totalmaxloss_rm"]),
+                        PendingTransfer3rd = IBCUtils.FormatHandler.FormatNumber20(totalrow["pendingtransfer3rd_rm"]),
                         IsGroupHeadline = false
                     });
                 }

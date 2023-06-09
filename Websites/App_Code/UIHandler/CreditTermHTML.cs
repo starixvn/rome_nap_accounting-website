@@ -2,18 +2,18 @@ namespace Sunplus.Accounting.Presentation
 {
     using DNAide.Core;
     using DNAide.Web;
+    using Sunplus.Accounting.Business.Security;
     using Sunplus.Accounting.Core.Common;
     using Sunplus.Accounting.Core.Extensions;
     using Sunplus.Accounting.Core.Web;
     using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
     using Sunplus.Accounting.WcfServiceLibrary.CreditTerm;
-    using Sunplus.Accounting.Business.Security;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Text;
     using System.Threading;
     using System.Web;
-    using System.Linq;
 
     /// <summary>
     /// Summary description for CreditTermHTML
@@ -21,6 +21,7 @@ namespace Sunplus.Accounting.Presentation
     public class CreditTermHTML
     {
         public static string html = string.Empty;
+
         #region Credit Term
 
         public static string GetContentCreditTermFilter(HttpContext context, string groupMaxLoss)
@@ -49,7 +50,7 @@ namespace Sunplus.Accounting.Presentation
         public static string GetContentCreditTerm(HttpContext context, ref string groupMaxLoss)
         {
             html = WebUtils.LoadTemplate("CreditTeam/Creditterm_Group_Feed_Form.htm");
-            var hasTransferPermission = Permissions.GetHostPermission(Enumerations.Functions.Transfer.OtherTrans) ;
+            var hasTransferPermission = Permissions.GetHostPermission(Enumerations.Functions.Transfer.OtherTrans);
             string formHtml = html;
 
             try
@@ -105,12 +106,12 @@ namespace Sunplus.Accounting.Presentation
 
                 var creditTermService = new CreditTermService();
                 var memberList = creditTermService.GetMemberByGroupId(groupId);
-                
+
                 int totalmember = memberList.Count;
                 if (totalmember <= 1)
                 {
                     TemplateHandler.RemoveBlock(ref formHtml, "DataContent");
-                    TemplateHandler.Assign(ref formHtml, "{scriptRedirectWhenNoUser}", "<script>RedirectToGroupList();</script>");                    
+                    TemplateHandler.Assign(ref formHtml, "{scriptRedirectWhenNoUser}", "<script>RedirectToGroupList();</script>");
                 }
                 else
                 {
@@ -130,7 +131,7 @@ namespace Sunplus.Accounting.Presentation
                     string jsTranferPopup = string.Empty;
                     int index = 0;
                     var removeUserFunction = "ExecuteCreditTerm('3', 0, false)";
-                    
+
                     foreach (var member in memberList)
                     {
                         if (member.CustId > 0)
@@ -139,8 +140,8 @@ namespace Sunplus.Accounting.Presentation
 
                             if (hasTransferPermission)
                             {
-                                jsTranferPopup = "OpenPopupTransfer" + "('1','" + member.YesterdayBalance  + "','" + member.Username+ "');";
-                                TemplateHandler.Assign(ref _userrow,"{canClick}","canClick");
+                                jsTranferPopup = "OpenPopupTransfer" + "('1','" + member.YesterdayBalance + "','" + member.Username + "');";
+                                TemplateHandler.Assign(ref _userrow, "{canClick}", "canClick");
                             }
                             if (member.IsGroupHeadline)
                             {
@@ -154,7 +155,8 @@ namespace Sunplus.Accounting.Presentation
                                             "' name='chkuser' id='chkuser' />";
                                     removeUserFunction = "ExecuteCreditTerm('3', 0, true)";
                                 }
-                                else {
+                                else
+                                {
                                     removeitem = string.Empty;
                                 }
 
@@ -187,15 +189,24 @@ namespace Sunplus.Accounting.Presentation
                                    string.Format("<span style=\"color:#ee0000\">{0}</span>", member.YesterdayBalance) :
                                    member.YesterdayBalance);
                             TemplateHandler.Assign(ref _userrow, "{YesterdayBalanceNoneFormat}", member.YesterdayBalance);
-                            TemplateHandler.Assign(ref _userrow,"{jsTranferPopup}",jsTranferPopup);
-                           
+                            TemplateHandler.Assign(ref _userrow, "{jsTranferPopup}", jsTranferPopup);
+
                             TemplateHandler.Assign(
                                 ref _userrow,
                                 "{TotalBalance}",
                                 member.TotalBalance.StartsWith("-") ?
                                     string.Format("<span style=\"color:#ee0000\">{0}</span>", member.TotalBalance) :
                                     member.TotalBalance);
+
+                            TemplateHandler.Assign(
+                            ref _userrow,
+                            "{PendingTranfer3rd}",
+                            member.PendingTransfer3rd.StartsWith("-") ?
+                                string.Format("<span style=\"color:#ee0000\">{0}</span>", member.PendingTransfer3rd) :
+                                member.PendingTransfer3rd);
+
                             TemplateHandler.Assign(ref _userrow, "{TotalBalanceNoneFormat}", member.TotalBalance);
+                            TemplateHandler.Assign(ref _userrow, "{PendingTranfer3rdNoneFormat}", member.PendingTransfer3rd);
                             TemplateHandler.Assign(ref _userrow, "{MaxLoss}", member.MaxLoss);
                             TemplateHandler.Assign(ref _userrow, "{headlineclasstext}", headlineclasstext);
                             TemplateHandler.Assign(ref _userrow, "{removeitem}", removeitem);
@@ -218,6 +229,12 @@ namespace Sunplus.Accounting.Presentation
                                 member.TotalBalance.StartsWith("-") ?
                                     string.Format("<span style=\"color:#ee0000\">{0}</span>", member.TotalBalance) :
                                     member.TotalBalance);
+                            TemplateHandler.Assign(
+                               ref formHtml,
+                               "{SumPendingTranfer3rd}",
+                               member.PendingTransfer3rd.StartsWith("-") ?
+                                   string.Format("<span style=\"color:#ee0000\">{0}</span>", member.PendingTransfer3rd) :
+                                   member.PendingTransfer3rd);
 
                             groupMaxLoss = member.MaxLoss;
                         }
@@ -225,8 +242,6 @@ namespace Sunplus.Accounting.Presentation
                     TemplateHandler.Assign(ref formHtml, "{removeUserFunction}", removeUserFunction);
                     TemplateHandler.Assign(ref formHtml, "{UserRowList}", userrows.ToString());
                 }
-
-               
             }
             catch (Exception ex)
             {
@@ -273,10 +288,11 @@ namespace Sunplus.Accounting.Presentation
 
             if (count_normal_user_selected > 0)
             {
-                if(affectedSupers.Count > 0)
+                if (affectedSupers.Count > 0)
                 {
                     msg += "The selected supers have been successfully removed from the Headline Group. The following supers are enqueued to be removed from their old External Groups at 0:00 on tomorrow: " + String.Join(",", affectedSupers);
-                } else
+                }
+                else
                 {
                     msg += username + " has been removed.";
                 }
@@ -329,9 +345,9 @@ namespace Sunplus.Accounting.Presentation
                     affectectSuper.AddRange(result.AffectedSupers.Split(',').Select(m => m.Trim()));
                 }
                 affectectSuper.RemoveAll(sp => sp == string.Empty || sp == null);
-                var affectecSuperString = string.Join("," , affectectSuper.Distinct());
+                var affectecSuperString = string.Join(",", affectectSuper.Distinct());
                 successMsg.Length -= successMsg.Length > 2 ? 2 : 0;
-                if(affectecSuperString.Length > 0)
+                if (affectecSuperString.Length > 0)
                 {
                     if (errorMsg.Length == 0)
                     {
@@ -392,7 +408,7 @@ namespace Sunplus.Accounting.Presentation
             return true;
         }
 
-        #endregion
+        #endregion Credit Term
 
         private static void ThreadMethod()
         {
