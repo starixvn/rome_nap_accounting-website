@@ -382,13 +382,14 @@ namespace Sunplus.Accounting.Business.CreditTerm
 
             // set columns width
             int fontWidth = 30;
-            int maxColumnIndex = 5;
+            int maxColumnIndex = 6;
             workSheet.Columns[0].Width = 60 * fontWidth;
             workSheet.Columns[1].Width = 300 * fontWidth;
             workSheet.Columns[2].Width = 120 * fontWidth;
             workSheet.Columns[3].Width = 180 * fontWidth;
             workSheet.Columns[4].Width = 120 * fontWidth;
-            workSheet.Columns[5].Width = 120 * fontWidth;
+            workSheet.Columns[5].Width = 180 * fontWidth;
+            workSheet.Columns[6].Width = 120 * fontWidth;
 
             // title
             string title = sheetName;
@@ -439,6 +440,11 @@ namespace Sunplus.Accounting.Business.CreditTerm
 
             currentCell = workSheet.Cells[currentRow, currentColumn];
             currentCell.Value = "Total Balance";
+            currentCell.Style = headerTextStyle;
+            currentColumn++;
+
+            currentCell = workSheet.Cells[currentRow, currentColumn];
+            currentCell.Value = "3rd Party Pending Transfer";
             currentCell.Style = headerTextStyle;
             currentColumn++;
 
@@ -519,6 +525,18 @@ namespace Sunplus.Accounting.Business.CreditTerm
                 currentCell = workSheet.Cells[currentRow, currentColumn];
                 currentCell.Value = group.TotalBalance;
                 if (group.TotalBalance.StartsWith("-"))
+                {
+                    currentCell.Style = i % 2 == 0 ? redOddTextStyle : redEvenTextStyle;
+                }
+                else
+                {
+                    currentCell.Style = textStyle;
+                }
+                currentColumn++;
+
+                currentCell = workSheet.Cells[currentRow, currentColumn];
+                currentCell.Value = group.PendingTransfer3rd;
+                if (group.PendingTransfer3rd.StartsWith("-"))
                 {
                     currentCell.Style = i % 2 == 0 ? redOddTextStyle : redEvenTextStyle;
                 }
