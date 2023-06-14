@@ -65,4 +65,8 @@
     <Setting Key="Dot_BalanceInsCredit" SpName="Dot_BalanceInsCredit" DbName="DBTXN.bodb02.bodbAdminNet" Plain="0" />
     <Setting Key="Dot_BalanceInsDebit" SpName="Dot_BalanceInsDebit" DbName="DBTXN.bodb02.bodbAdminNet" Plain="0" />
   </Function>
+  <Function Name="ResetWinning">
+    <Setting Key="Task_ResetWinning_Non3rdParty_Add" SpName="Task_ResetWinning_Non3rdParty_Add_UAT1" DbName="DBTXN.bodb02.bodbAdminNet" TimeOut="0" />    
+  </Function>
+
 </Functions>

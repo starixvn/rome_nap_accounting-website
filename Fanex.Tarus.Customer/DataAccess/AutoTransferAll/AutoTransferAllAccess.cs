@@ -8,7 +8,8 @@ namespace Fanex.Tarus.Customer.DataAccess.AutoTransferAll
     using Fanex.Tarus.Customer.Criteria.AutoTransferAll;
     using Fanex.Tarus.Customer.Entities;
     using Fanex.Tarus.Customer.Entities.AutoTransferAll;
-    
+    using Fanex.Tarus.Infrastructure.Extensions;
+
     /// <summary>
     /// Auto Transfer All Access.
     /// </summary>
@@ -37,15 +38,15 @@ namespace Fanex.Tarus.Customer.DataAccess.AutoTransferAll
                             {
                                 autoTransferAll.AutoTransfers.Add(new AutoTransfer
                                 {
-                                 No = no + index,
-                                 UserName = reader.ToString("username"),
-                                 CustId = reader.ToString("custid"),
-                                 UserRole = reader.ToString("role"),
-                                 SuperName = reader.ToString("super"),
-                                 MasterName = reader.ToString("master"),
-                                 TransferType = reader.ToInt("transferType"),
-                                 LastestAutoTransferLog = reader.ToDateTime("lastTransfer"),
-                                  StatusName = reader.ToString("status"),
+                                    No = no + index,
+                                    UserName = reader.ToString("username"),
+                                    CustId = reader.ToString("custid"),
+                                    UserRole = reader.ToString("role"),
+                                    SuperName = reader.ToString("super"),
+                                    MasterName = reader.ToString("master"),
+                                    TransferType = reader.ToInt("transferType"),
+                                    LastestAutoTransferLog = reader.ToDateTime("lastTransfer"),
+                                    StatusName = reader.ToString("status"),
                                 });
 
                                 index++;
@@ -124,7 +125,7 @@ namespace Fanex.Tarus.Customer.DataAccess.AutoTransferAll
 
             return new Result();
         }
-           
+
         /// <summary>
         /// Delete transfer.
         /// </summary>
@@ -166,24 +167,18 @@ namespace Fanex.Tarus.Customer.DataAccess.AutoTransferAll
         {
             if (criteria.IsValid())
             {
-                try
+                Result result = new Result();
+                var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(criteria.CustId);
+                var key = siteDB.IsSiteDB ? $"SiteDB{siteDB.SiteDBGroupID}_{criteria.GetSettingKey()}" : criteria.GetSettingKey();
+                using (var objDb = new ObjectDb(key))
                 {
-                    Result result = new Result();
-
-                    using (var objDb = new ObjectDb(criteria.GetSettingKey()))
-                    {
-                        objDb.ExecuteReader(criteria.GetSpParams());
-                        var outParameters = objDb.GetOuputParams();
-                        result.ErrorCode = Converter.ToInt(outParameters["errcode"]);
-                        result.ErrorMessage = Converter.ToString2(outParameters["errmsg"]);
-                    }
-
-                    return result;
+                    objDb.ExecuteReaderScaleoutDB(criteria.GetSpParams(), siteDB.AGIP);
+                    var outParameters = objDb.GetOuputParams();
+                    result.ErrorCode = Converter.ToInt(outParameters["errcode"]);
+                    result.ErrorMessage = Converter.ToString2(outParameters["errmsg"]);
                 }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
+
+                return result;
             }
 
             return new Result();
@@ -198,24 +193,18 @@ namespace Fanex.Tarus.Customer.DataAccess.AutoTransferAll
         {
             if (criteria.IsValid())
             {
-                try
+                Result result = new Result();
+                var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(criteria.CustId);
+                var key = siteDB.IsSiteDB ? $"SiteDB{siteDB.SiteDBGroupID}_{criteria.GetSettingKey()}" : criteria.GetSettingKey();
+                using (var objDb = new ObjectDb(key))
                 {
-                    Result result = new Result();
-
-                    using (var objDb = new ObjectDb(criteria.GetSettingKey()))
-                    {
-                        objDb.ExecuteReader(criteria.GetSpParams());
-                        var outParameters = objDb.GetOuputParams();
-                        result.ErrorCode = Converter.ToInt(outParameters["errcode"]);
-                        result.ErrorMessage = Converter.ToString2(outParameters["errmsg"]);
-                    }
-
-                    return result;
+                    objDb.ExecuteNonQueryScaleoutDB(criteria.GetSpParams(), siteDB.AGIP);
+                    var outParameters = objDb.GetOuputParams();
+                    result.ErrorCode = Converter.ToInt(outParameters["errcode"]);
+                    result.ErrorMessage = Converter.ToString2(outParameters["errmsg"]);
                 }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
+
+                return result;
             }
 
             return new Result();

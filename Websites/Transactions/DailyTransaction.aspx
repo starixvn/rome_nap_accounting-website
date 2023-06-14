@@ -92,7 +92,7 @@
     <script src="../js/jQuery/jquery.history.js" type="text/javascript"></script>
 
     <script src="../js/pager_v2.js" type="text/javascript"></script> 
-    <script src="../js/Popup/confirmbox.js?ver=20161208" type="text/javascript"></script>
+    <script src="../js/Popup/confirmbox.js?ver=<%=WebSettings.Version%>" type="text/javascript"></script>
     <script src="../js/jQuery/UI/jquery-ui-1.8.10.custom.min.js" type="text/javascript"></script>
 	
     <script src="WebResources/js/DailyFinanceTrans.js?ver=<%=WebSettings.Version%>" type="text/javascript"></script>         
