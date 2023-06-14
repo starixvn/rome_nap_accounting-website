@@ -498,7 +498,6 @@ namespace Sunplus.Accounting.Business.LogDisplay
 
                     #endregion sporttypes
 
-
                     #region SystemId
 
                     trackingVal = ReplaceSystemIdOfSearchAndCopyFunction(trackingVal);

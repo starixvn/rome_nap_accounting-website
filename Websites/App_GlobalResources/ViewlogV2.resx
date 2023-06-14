@@ -2236,4 +2236,7 @@ Max Keno (20+1) 2</value>
   <data name="AccountType_3" xml:space="preserve">
     <value>Problem</value>
   </data>
+  <data name="LeagueGroupName" xml:space="preserve">
+    <value>League Group Name</value>
+  </data>
 </root>

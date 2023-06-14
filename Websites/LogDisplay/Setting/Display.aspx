@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
 
     <title>View log</title>
+    <link href="../../App_Themes/jquery-ui.css" rel="stylesheet" type="text/css" />
     <link href="../../App_Themes/Log/ViewLog.css" rel="stylesheet" type="text/css" />
     <link href="../../App_Themes/Log/Tab.css?v=<%= Sunplus.Accounting.Core.Configurations.WebSettings.Version %>" rel="stylesheet" type="text/css" />
     <link href="../../App_Themes/Public/table.css" rel="stylesheet" type="text/css" />
@@ -19,6 +20,9 @@
     <script src="../../js/jQuery/jquery.ui.widget.min.js" type="text/javascript"></script>
     <script src="../../js/jQuery/jquery.ui.mouse.min.js" type="text/javascript"></script>
     <script src="../../js/jQuery/jquery.ui.draggable.min.js" type="text/javascript"></script>
+    <script src="../../js/jQuery/jquery.ui.position.min.js" type="text/javascript"></script>
+    <script src="../../js/jQuery/jquery.ui.resizable.min.js" type="text/javascript"></script>
+    <script src="../../js/jQuery/jquery.ui.dialog.min.js" type="text/javascript"></script>
     <script type="text/javascript" src="../../js/Calendar2/js/jscal2.js"></script>
     <script type="text/javascript" src="../../js/Calendar2/js/lang/en.js"></script>
     <link rel="stylesheet" type="text/css" href="../../js/Calendar2/css/jscal2.css" />
@@ -82,6 +86,8 @@
         .diffPopup { position: absolute; display: none; padding: 2px 3px; border: 1px solid #cc9; background-color: #fff;-moz-box-shadow: 2px 2px 11px #666; -webkit-box-shadow: 2px 2px 11px #666;}
         .diffhead { background-color: #B5C4D0; text-align: left; font-weight: bold; text-transform: capitalize; padding-left: 3px; cursor: move;}
         .diffhead .close { float: right; width: 16px; background: url(../../App_Themes/Images/close_16_16.gif) no-repeat scroll 0 0 transparent;cursor: pointer;height: 16px; display: inline; }
+        .tbl-popup {padding: 2px 3px; border: 1px solid #7C98A4;}
+        .r-tbl-popup { padding: 2px 3px; border: 1px solid #7C98A4;}
     </style>
 </head>
 <body>
@@ -270,7 +276,7 @@
             </form>
         </div>
     </div>
-    
+    <div id="logPopUp" style="display: none;"></div>
     <script type="text/javascript" language="javascript">
         var custId = <%=custId%>;
         $(document).ready(function () {
