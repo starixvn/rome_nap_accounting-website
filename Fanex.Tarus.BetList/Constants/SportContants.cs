@@ -94,5 +94,6 @@
         public const int MGRNG = 155;
         public const int PlayerTips = 157;
         public const int Jili = 158;
+        public const int YeeBet = 159;
     }
 }

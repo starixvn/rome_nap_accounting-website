@@ -281,6 +281,11 @@
             return 5100 <= betTypeId && betTypeId <= 5299;
         }
 
+        public static bool IsYeeBet(int betTypeId)
+        {
+            return 3151 <= betTypeId && betTypeId <= 3200;
+        }
+
         public static int GetSportFromBetTypeId(int betTypeId)
         {
             if (5601 <= betTypeId && betTypeId <= 5699)

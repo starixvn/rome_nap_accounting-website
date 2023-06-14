@@ -897,6 +897,18 @@ function showJiliBetDetails(transId, winlossDate, custId, transType) {
 
     openResultsPopUp(param);
 }
+
+function showYeeBetBetDetails(refno, winlossDate, custId, transType) {
+    var params = {
+        url: "AGCasinoBetList/BetDetails",
+        title: "YeeBet - Detailed Bet list - " + winlossDate.split(" ")[0],
+        jsonParam: { Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 159, PageSize: 500 },
+        width: 1110,
+        height: 600
+    };
+
+    openResultsPopUp(params);
+}
 // -------------------- Functions whose name must name by Fanex.Toco
 function ViewRNGCasinoResult(matchId, race, betType, sportType, refNo, winlostDate, custId) {
     var params = $.param({
@@ -1165,6 +1177,7 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
         case 243: // SexyGaming.
         case 244: // SaGaming.
         case 233: // WM
+        case 159: // YeeBet
             return getLiveCasinoParam(transId3rd, gameId3rd, bettype, sporttype);
 
         case 212: // Macau Games.
@@ -1336,6 +1349,7 @@ function getLiveCasinoParam(transdesc, betcheck, bettype, sporttype) {
     sporttypes["243"] = "AE Sexy Result";
     sporttypes["244"] = "SA Gaming Result";
     sporttypes["233"] = "WM Result";
+    sporttypes["159"] = "YeeBet Result";
 
     var resultPageBySportTypes = {};
     resultPageBySportTypes["211"] = "Report/ViewAllbetCasinoResult.aspx";
@@ -1343,6 +1357,7 @@ function getLiveCasinoParam(transdesc, betcheck, bettype, sporttype) {
     resultPageBySportTypes["243"] = "Report/ViewSexyGamingResult.aspx";
     resultPageBySportTypes["244"] = "Report/ViewSAGamingResult.aspx";
     resultPageBySportTypes["233"] = "Report/ViewWMResult.aspx";
+    resultPageBySportTypes["159"] = "Report/ViewWMResult.aspx";
 
     var title = sporttypes[sporttype];
     var url = resultPageBySportTypes[sporttype];
