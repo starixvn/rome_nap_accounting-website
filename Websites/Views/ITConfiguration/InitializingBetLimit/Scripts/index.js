@@ -412,8 +412,8 @@ function RenderBetLimits(data) {
             { HeaderText: "Bet Type ID", Width: 100, Name: "BetTypeId", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "Bet Type", Width: 150, Name: "BetType", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "Site", Width: 100, Name: "Site", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: "Credit Currency", Width: 110, Name: "CreditCurrency", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: "Deposit Currency", Width: 110, Name: "DepositCurrency", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Credit Currency", Width: 110, Name: "CreditCurrency", HeaderAlign: "center", CellAlign: "center", CssClass: "word-break-auto" },
+            { HeaderText: "Deposit Currency", Width: 110, Name: "DepositCurrency", HeaderAlign: "center", CellAlign: "center", CssClass: "word-break-auto" },
             { HeaderText: "Min Bet", Width: 100, Name: "MinBet", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "Max Bet", Width: 100, Name: "MaxBet", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "Max Per Match", Width: 100, Name: "MaxPerMatch", HeaderAlign: "center", CellAlign: "center" },
@@ -500,8 +500,9 @@ function InitSubmitExcelFile() {
     form.submit(function (e) {
         e.preventDefault();
         var formData = new FormData(form[0]);
+        var isGlobalValue = $("#ckbGlobalValue").prop("checked");
         $.ajax({
-            url: 'CheckBetLimits',
+            url: 'CheckBetLimits?isGlobalValue=' + isGlobalValue,
             type: 'POST',
             datatype: 'json',
             contentType: false,
@@ -587,8 +588,8 @@ function RenderExcelGrid(BetLimits) {
             { HeaderText: "Bet Type ID", Width: 100, Name: "BetTypeId", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "Bet Type", Width: 150, Name: "BetType", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "Site", Width: 100, Name: "Site", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: "Credit Currency", Width: 110, Name: "CreditCurrency", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: "Deposit Currency", Width: 110, Name: "DepositCurrency", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Credit Currency", Width: 110, Name: "CreditCurrency", HeaderAlign: "center", CellAlign: "center", TdClass: "word-break-auto" },
+            { HeaderText: "Deposit Currency", Width: 110, Name: "DepositCurrency", HeaderAlign: "center", CellAlign: "center", TdClass: "word-break-auto" },
             { HeaderText: "Min Bet", Width: 100, Name: "MinBet", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "Max Bet", Width: 100, Name: "MaxBet", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "Max Per Match", Width: 100, Name: "MaxPerMatch", HeaderAlign: "center", CellAlign: "center" },

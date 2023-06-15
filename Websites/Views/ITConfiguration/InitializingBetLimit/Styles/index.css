@@ -17,3 +17,12 @@
     float: left;
     padding: 4px;
 }
+
+#ckbGlobalValue {
+    margin: auto;
+    vertical-align: middle;
+}
+
+.word-break-auto {
+    word-break: break-word;
+}

@@ -444,4 +444,7 @@
   <data name="VRLockOther" xml:space="preserve">
     <value>Other Sports Virtual Rate Lock</value>
   </data>
+  <data name="VRLockBasketball" xml:space="preserve">
+    <value>Basketball Virtual Rate Lock</value>
+  </data>
 </root>

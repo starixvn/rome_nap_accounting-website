@@ -33,6 +33,8 @@ namespace Fanex.Tarus.Customer.Criteria.VirtualRate
 
         public bool LockVirtualRateStatus { get; set; }
 
+        public bool LockVirtualRateBasketballStatus { get; set; }
+
         public bool LockVirtualRateOtherStatus { get; set; }
 
         public string AdditionalActions { get; set; }
@@ -91,7 +93,9 @@ namespace Fanex.Tarus.Customer.Criteria.VirtualRate
             storeProcedureParams.Add("custid", CustId);
             storeProcedureParams.Add("enablevirtualrate", EnableVirtualRate);
             storeProcedureParams.Add("vrlockedstatus_soccer", LockVirtualRateStatus);
+            storeProcedureParams.Add("vrlockedstatus_basketball", LockVirtualRateBasketballStatus);
             storeProcedureParams.Add("vrlockedstatus_os", LockVirtualRateOtherStatus);
+            
             if (EnableVirtualRate)
             {
                 storeProcedureParams.Add("virtualmultiplier", VirtualRateParam());
