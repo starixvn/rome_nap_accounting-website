@@ -67,9 +67,9 @@
         }
 
         [HttpPost, AuthenticateHost]
-        public ActionResult CheckBetLimits(HttpPostedFileBase uploadFile)
+        public ActionResult CheckBetLimits(HttpPostedFileBase uploadFile, bool isGlobalValue)
         {
-            return Json(service.ValidateSetting(uploadFile));
+            return Json(service.ValidateSetting(uploadFile, isGlobalValue));
         }
 
         [HttpPost, AuthenticateHost]
