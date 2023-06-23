@@ -138,8 +138,7 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
                 if (result.ErrorCode == "0")
                 {
                     _serviceBase.AddMsgAfterCreateNewSMA(new AddMsgAfterCreateNewSMACriteria(masterId, 0, (int)Role.Super));
-                    result.ErrorMessage = "Customer/V2/UpdatePT.aspx?custid=" + masterId + "&insert=" + "true" + "&roleid=3" + "&uplineid=" + currentContext.CustId.ToString();
-                    _customerSettingService.UpdateStatusThirdPartyAccountAfterInsertCustomer(masterId, customer, currentContext);
+                    result.ErrorMessage = "Customer/V2/UpdatePT.aspx?custid=" + masterId + "&insert=" + "true" + "&roleid=3" + "&uplineid=" + currentContext.CustId.ToString();                 
                 }
             }
             catch (Exception ex)

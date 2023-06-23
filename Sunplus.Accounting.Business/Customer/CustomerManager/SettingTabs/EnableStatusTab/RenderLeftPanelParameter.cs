@@ -44,8 +44,6 @@ namespace Sunplus.Accounting.Business.Customer
 
         public int AccId { get; set; }
 
-        public bool IsShowNG2 { get; internal set; }
-
         public bool IsShowRNGLottery { get; set; }
 
         public bool IsShowVirtualGames { get; set; }

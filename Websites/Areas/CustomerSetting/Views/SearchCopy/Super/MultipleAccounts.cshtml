@@ -201,9 +201,7 @@
             currencyId: @customer.CurrencyId,
             existingCustId: @Model.CustId,
             custLevel: @customer.RoleId,
-            uplineId: @Model.ParentId,
-            isSyncNG2: @Convert.ToBoolean(customer.IsSyncNG2).ToString().ToLowerInvariant(),
-            disableNG2: @Convert.ToBoolean(customer.DisableNG2).ToString().ToLowerInvariant(),
+            uplineId: @Model.ParentId,          
             isSuper: @isSuper.ToString().ToLowerInvariant(),
             getSuperPrefixesUrl: "@Url.Content("~/AddNewSuper/GetSuperPrefixes")",
             getHeadlineBelongSiteUrl: "@Url.Content("~/AddNewSuper/GetHeadlineBelongSite")"

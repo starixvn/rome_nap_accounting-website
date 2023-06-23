@@ -125,38 +125,6 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
         }
 
         /// <summary>
-        /// This function will update status after insert customer success
-        /// </summary>
-        /// <param name="custId">Id of customer've just inserted</param>
-        /// <param name="customer">Information of up-line customer</param>
-        /// <param name="currentContext">context of request</param>
-        /// <returns></returns>
-        public void UpdateStatusThirdPartyAccountAfterInsertCustomer(int custId, ICustomer customer, IRequestContext currentContext)
-        {
-            try
-            {
-                var uplineCustStatus = IBCProvider.IBCCustomer.GetCustomerStatus(currentContext.CustId, WebSettings.SettingStatus);
-                var custInfo = SelectCustomer.CustomerSelUserInfoRpt(custId);
-                var currencyId = Fanex.CustomerSetting.Module.Core.Utils.ToInt32(custInfo.ResultSet.Tables[0].Rows[0]["exchangeid"]);
-                var custManager = new Sunplus.Accounting.Business.Customer.CustomerService();
-                custManager.AutoInsertThridPartyAccount(
-                    custId, 
-                    customer.UserName, 
-                    currentContext.TargetRoleId, 
-                    currentContext.CustId, 
-                    uplineCustStatus.IsDisableNG2,
-                    currencyId, 
-                    uplineCustStatus.IsSyncNG2, 
-                    AppSession.AccId, 
-                    currentContext.IP);
-            }
-            catch (Exception ex)
-            {
-                LogExtensions.ExceptionHandler(ex);
-            }
-        }
-
-        /// <summary>
         /// This funtion will return a boolean variable, let us know the current admin can edit credit or not
         /// </summary>
         /// <returns></returns>

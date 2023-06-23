@@ -496,7 +496,6 @@ var ViewPT = {
             case 242: // GT Casino
             case 243: // Sexy Gaming
             case 244: // SA Gaming
-            case 213: // NG2
             case 214:
             case 215:
             case 216:

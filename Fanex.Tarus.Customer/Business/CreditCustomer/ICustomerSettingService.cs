@@ -41,16 +41,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
         /// </summary>
         /// <param name="paramerters">Paramerter contains agent id</param>
         /// <returns>List Of Group</returns>
-        IEnumerable<MemberGroup> GetListMemberGroup(int agentId);
-
-        /// <summary>
-        /// This function will update status after insert customer success
-        /// </summary>
-        /// <param name="custId">Id of customer've just inserted</param>
-        /// <param name="customer">Information of up-line customer</param>
-        /// <param name="currentContext">context of request</param>
-        /// <returns></returns>
-        void UpdateStatusThirdPartyAccountAfterInsertCustomer(int custId, ICustomer customer, IRequestContext currentContext);
+        IEnumerable<MemberGroup> GetListMemberGroup(int agentId);      
 
         /// <summary>
         /// This funtion will return a boolean variable, let us know the current admin can edit credit or not

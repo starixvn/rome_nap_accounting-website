@@ -196,8 +196,6 @@ $.fn.forceNumber = function () {
             existingCustId: vm.existingCustId,
             custLevel: vm.custLevel,
             uplineId: vm.uplineId,
-            isSyncNG2: vm.isSyncNG2,
-            disableNG2: vm.disableNG2,
             code: vm.code
         };
     }
@@ -225,7 +223,6 @@ $.fn.forceNumber = function () {
         $usernames.val("");
         $password.val("");
         $credit.val("");
-        //$site.val("");
         $firstName.val("");
         $lastName.val("");
         $phone.val("");

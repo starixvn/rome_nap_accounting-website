@@ -30,8 +30,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
     $scope.init = function () {
         $scope.newUser = angular.copy(user);
         $("#step2").hide();
-        $scope.addEvents();
-        //$("#maxCredit").ForceDecimalOnly().ForceCurrencyOnly();        
+        $scope.addEvents();       
     };
 
     $scope.HideProductList = function () {
@@ -212,8 +211,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         $("#frmVirtualSports").attr('src', "");
         $("#frmSportsbook2").attr('src', "");
         $("#frmLiveCasino").attr('src', "");
-        $("#frmVoidbridge").attr('src', "");
-        $("#frmNG2").attr('src', "");
+        $("#frmVoidbridge").attr('src', "");      
         $("#frmFishingWorld").attr('src', "");
         $("#frmRNGLottery").attr('src', "");
         $("#frmBitcoin").attr('src', "");
@@ -275,11 +273,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             case 'tabRNGLottery': url += "DCS/ViewCustomerSetting?productId=44&customerLevel=4&IsReadOnly=true&customerId=" + $scope.existedUser.userid;
                 $scope.loadData("#frmRNGLottery", url);
                 $scope.resize("#frmRNGLottery");
-                break;
-            case 'tabNG2': url += "DCS/ViewCustomerSetting?productId=23&customerLevel=4&IsReadOnly=true&customerId=" + $scope.existedUser.userid;
-                $scope.loadData("#frmNG2", url);
-                $scope.resize("#frmNG2");
-                break;
+                break;        
             case 'tabVirtualGames': url += "DCS/ViewCustomerSetting?productId=64&customerLevel=4&IsReadOnly=true&customerId=" + $scope.existedUser.userid;
                 $scope.loadData("#frmVirtualGames", url);
                 $scope.resize("#frmVirtualGames");
@@ -363,13 +357,11 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                     $("#errorMsg").width("550");
                 }
                 else {
-                    var custid = customerSettingView.UserId;
-                    //$scope.addSportsToDropdownlist(customerSettingView.StatusSports);
+                    var custid = customerSettingView.UserId;                  
                     $scope.existedUser.userid = custid;
                     $scope.parentId = customerSettingView.ParentId;
                     $scope.newUser.BreadCrumbs = customerSettingView.BreadCrumbs;
-                    if (custid != "-1") {
-                        //step1
+                    if (custid != "-1") {                    
                         message.hideAlertMessage("errorMsg");
                         $("#checkExisted").removeClass('not_success');
                         $("#checkExisted").addClass('success');
@@ -388,10 +380,9 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                     }
                 }
 
-                try { parent.jQuery.unblockUI() } catch (e) { }
+                try { parent.jQuery.unblockUI(); } catch (e) { }
                 try { parent.parent.jQuery.unblockUI(); } catch (e) { }
                 try { parent.parent.parent.jQuery.unblockUI(); } catch (e) { }
-                //$('body').removeClass('wait');
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 var errorMessage = xhr.status === 403
@@ -399,46 +390,18 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                     : "Error for searching existing user !";
                 message.showAlertMessage("errorMsg", errorMessage, 1);
                 $("#errorMsg").width("550");
-                try { parent.jQuery.unblockUI() } catch (e) { }
+                try { parent.jQuery.unblockUI(); } catch (e) { }
                 try { parent.parent.jQuery.unblockUI(); } catch (e) { }
                 try { parent.parent.parent.jQuery.unblockUI(); } catch (e) { }
-                $('#step1>.btnNextR').hide()
+                $('#step1>.btnNextR').hide();
             }
         });
     };
 
     $scope.checkAllowedShow = function (custid) {
-        $.ajax({
-            type: "POST",
-            url: toUrl("../../Handlers/CheckAllowedShow.ashx?custid=" + custid),
-            success: function (allowedng2) {
-                allowedng2 = parseInt(allowedng2);
-                var existed = false;
-                var index = -1;
-                for (var i = 0; i < parent.sports.length; i++) {
-                    if (parent.sports[i].sportvalue == 'tabNG2') {
-                        existed = true;
-                        index = i;
-                        break;
-                    }
-                }
-
-                if (allowedng2 && parent.showNG2) {
-                    if (!existed) {
-                        parent.sports.push({ sportname: parent.ng2Text, sportvalue: 'tabNG2' });
-                    }
-                }
-                else {
-                    if (existed) {
-                        parent.sports.splice(index, 1);
-                    }
-                }
-
-                $scope.$apply(function () {
-                    $scope.sports = parent.sports;
-                    $scope.selectedSport = $scope.sports[0];
-                });
-            }
+        $scope.$apply(function () {
+            $scope.sports = parent.sports;
+            $scope.selectedSport = $scope.sports[0];
         });
 
         $scope.HideProductList();
@@ -469,10 +432,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                 $scope.siteName = custInfo.Site || "";
                 $scope.existedUser.credit = formatNumber('maxCredit', custInfo.Credit, true);
                 $scope.existedUser.maxCredit = (parent.level == "super" ? formatNumber('maxCredit', custInfo.Credit, true) : formatNumber('maxCredit2', custInfo.CreditMax, true));
-                $scope.existedUser.selectedCurrencyId = custInfo.CurrencyId;
-                $scope.existedUser.selectedCurrency = custInfo.Currency;
-                $scope.existedUser.syncNG2 = custInfo.IsSyncNG2;
-                $scope.existedUser.disableNG2 = custInfo.DisableNG2;
+                $scope.existedUser.selectedCurrencyId = custInfo.CurrencyId;             
                 $scope.existedUser.isDirectCustomer = custInfo.IsDirectCustomer;
 
                 if (custInfo.RoleId == 4) {
@@ -534,9 +494,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                 Creator: $("#currentUserId").val(),
                 CreatorName: adminUsername,
                 CustLevel: (parent.level == 'member' ? 1 : 4),
-                UplineId: $scope.parentId,
-                IsSyncNG2: $scope.existedUser.syncNG2 == 1 ? true : false,
-                DisableNG2: $scope.existedUser.disableNG2 == 1 ? true : false,
+                UplineId: $scope.parentId,            
                 code: code
             };
 
