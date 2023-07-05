@@ -661,13 +661,6 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
             var repository = new ViewCommDCSRepository();
             var products = repository.GetProducts();
 
-            // Check special site permission to limit access NG2.
-
-            if (!Permissions.HasPermission(Enumerations.Functions.AccessSpecialSites))
-            {
-                products = products.Where(p => p.ProductId != 23).ToList();
-            }
-
             return products;
         }
         private static string FormatPTValue(object positionTakingValue)
