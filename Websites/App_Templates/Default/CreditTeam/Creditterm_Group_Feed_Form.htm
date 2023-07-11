@@ -27,7 +27,7 @@
         <td></td>
     </tr>
 </table>
-<div style="float:right;padding-top:55px;">
+<div style="float:right;">
     <div class="btngroup"><input type="button" title="Export to Excel" class="btnExcel" id="btnExport" name="btnExport" value="  " onclick="ExportToExcel({groupid});" /></div>
 </div>
 <!--/Filter-->
@@ -38,54 +38,57 @@
         <thead>
             <tr class="title">
                 <th>#</th>
-                <th class="sorter" onclick="sortColumn(1,'string')" >UserName</th>
-                <th class="sorter" onclick="sortColumn(2,'string')" style="width:100px;">Currency</th>
+                <th class="sorter" onclick="sortColumn(1,'string')">UserName</th>
+                <th class="sorter" onclick="sortColumn(2,'string')" style="width:80px;">Currency</th>
                 <th class="sorter" onclick="sortColumn(3,'number')" style="width:100px;">Yesterday Balance</th>
                 <th class="sorter" onclick="sortColumn(4,'number')" style="width:100px;">Total Balance</th>
+                <th class="sorter" onclick="sortColumn(5,'number')" style="width:120px;">3rd Party Pending Tranfer</th>
                 <th style="width:100px;">Max Loss</th>
-                <th style="width:100px;">Set Headline</th>
-                <th style="width:100px;"><input type="checkbox" id="chkcheckall" onclick="checkall();" /></th>
+                <th style="width:80px;">Set Headline</th>
+                <th style="width:80px;"><input type="checkbox" id="chkcheckall" onclick="checkall();" /></th>
             </tr>
         </thead>
        <tbody>
         <!--UserRow-->
-        <tr align="center" class="{row-even}">
-            <td>{No}</td>
-            <td class="{headlineclasstext}" value="{OnlyUserName}">{UserName}</td>
-            <td class="c" value="{Currency}" >{Currency}</td>
-            <td class="r {canClick}" onclick="{jsTranferPopup}" value="{YesterdayBalanceNoneFormat}">{YesterdayTotalBalance}</td>
-            <td class="r" value="{TotalBalanceNoneFormat}">{TotalBalance} </td>
-            <td class="r">{MaxLoss}</td>
-            <td class="c">
-                <img src="{headline}" onclick="{jsaddheadline}" title="{title}" width="16px" height="14px" border="0" style="cursor:pointer;" />
-            </td>
-            <td class="c">{removeitem}</td>
-        </tr>
+           <tr align="center" class="{row-even}">
+               <td>{No}</td>
+               <td class="{headlineclasstext}" value="{OnlyUserName}">{UserName}</td>
+               <td class="c" value="{Currency}">{Currency}</td>
+               <td class="r {canClick}" onclick="{jsTranferPopup}" value="{YesterdayBalanceNoneFormat}">{YesterdayTotalBalance}</td>
+               <td class="r" value="{TotalBalanceNoneFormat}">{TotalBalance} </td>
+               <td class="r" value="{PendingTranfer3rdNoneFormat}">{PendingTranfer3rd} </td>
+               <td class="r">{MaxLoss}</td>
+               <td class="c">
+                   <img src="{headline}" onclick="{jsaddheadline}" title="{title}" width="16px" height="14px" border="0" style="cursor:pointer;" />
+               </td>
+               <td class="c">{removeitem}</td>
+           </tr>
         <!--/UserRow-->
         {UserRowList}
          </tbody>
         <tfoot>
         
-        <tr class="title">
-            <td colspan="2" class="r b">Group Total Balance</td>
-            <td class="c b">RM</td>
-            <td class="c r">{SumYesterdayTotalBalance}</td>
-            <td class="c r">{SumTotalBalance}</td>
-
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td class="c"><input class="btn" onclick="{removeUserFunction}" type="button" value="Remove" name="btnremove" /></td>
-        </tr>
+            <tr class="title">
+                <td colspan="2" class="r b">Group Total Balance</td>
+                <td class="c b">RM</td>
+                <td class="c r">{SumYesterdayTotalBalance}</td>
+                <td class="c r">{SumTotalBalance}</td>
+                <td class="c r">{SumPendingTranfer3rd}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="c"><input class="btn" onclick="{removeUserFunction}" type="button" value="Remove" name="btnremove" /></td>
+            </tr>
         </tfoot>
     </table>
 </div>
