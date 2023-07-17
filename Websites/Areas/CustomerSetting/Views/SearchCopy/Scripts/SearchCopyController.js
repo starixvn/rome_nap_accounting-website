@@ -432,7 +432,8 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                 $scope.siteName = custInfo.Site || "";
                 $scope.existedUser.credit = formatNumber('maxCredit', custInfo.Credit, true);
                 $scope.existedUser.maxCredit = (parent.level == "super" ? formatNumber('maxCredit', custInfo.Credit, true) : formatNumber('maxCredit2', custInfo.CreditMax, true));
-                $scope.existedUser.selectedCurrencyId = custInfo.CurrencyId;             
+                $scope.existedUser.selectedCurrencyId = custInfo.CurrencyId;
+                $scope.existedUser.selectedCurrency = custInfo.Currency;
                 $scope.existedUser.isDirectCustomer = custInfo.IsDirectCustomer;
 
                 if (custInfo.RoleId == 4) {
