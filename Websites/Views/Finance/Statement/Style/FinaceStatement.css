@@ -38,6 +38,3 @@ input .verified
 #cfm_2 span {
     word-wrap: break-word;
 }
-.ui-dialog-content.ui-widget-content {
-    word-break: break-all;
-}

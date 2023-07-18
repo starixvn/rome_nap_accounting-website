@@ -283,7 +283,7 @@ function VerifyTrans(btn) {
 }
 
 function UnVerifyTrans(trans) {
-    __confirm("Verify transaction", "Are you sure you want to verify the selected transaction(s)?", 400, 250, 'cfm_1', function () {
+    __confirm("UnVerify transaction", "Are you sure you want to unverify the selected transaction(s)?", 400, 250, 'cfm_1', function () {
         __close(null, null, 'cfm_1', null);
         var selectedRefNo = '{"refNo":' + trans.id + '}';
         try { parent.BlockUI(); } catch (e) { }
