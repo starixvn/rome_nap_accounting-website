@@ -429,10 +429,6 @@ function showColossusBetsDetails(refno, winlossDate, transId, custId, eventId) {
         });
 }
 
-function showNG2Details(transId, refno, custId) {
-    var width = 660;
-    parent.OpenNextPopup("NG2Result", 'Report/ViewNG2ParlayResult.aspx?refno=' + refno, '', width, 500, true, false, window, 0, null, null);
-}
 
 // -------------------- Functions whose name must name by BetListCore
 function showRnGCasinoDetails(transId, winlossDate, custId, transType) {
@@ -1690,16 +1686,6 @@ function getSystemParlayParam(matchid, refno, bettype, betid) {
         title: bettype === 9 ? "System Parlay" : "Mix Parlay",
         jsonParam: { refno: refno, matchid: matchid, bettype: bettype, betid: betid },
         width: 945,
-        height: 500
-    };
-}
-
-function getNG2Param(matchId) {
-    return {
-        url: "Report/ViewNG2Result.aspx",
-        title: "Result",
-        jsonParam: { matchId: matchId },
-        width: 500,
         height: 500
     };
 }

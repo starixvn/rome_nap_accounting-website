@@ -13,8 +13,6 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
     using Fanex.Tarus.Customer.Criteria.AutoTransferAll;
     using Fanex.Tarus.Customer.Criteria.CreditCustomer;
     using Fanex.Tarus.Web.Controllers.Filters;
-    using Module.NG2.Entities;
-    using Module.NG2.Services;
     using Newtonsoft.Json;
     using Sunplus.Accounting.Core.Common;
     using Sunplus.Accounting.Core.Configurations;
@@ -166,9 +164,7 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
                 if (string.IsNullOrWhiteSpace(result.ErrorCode) || result.ErrorCode == "0")
                 {
                     string strUrl = "Customer/V2/UpdatePT.aspx?custid=" + superId + "&insert=true&roleid=4&uplineid=0&exchangeId=" + currency;
-                    result.ErrorMessage = strUrl;
-                    Thread.Sleep(3000);
-                    AutoInsertNG2(superId, customer.UserName, 4, false, true, superId, customer.CurrencyId, AppSession.AccId);
+                    result.ErrorMessage = strUrl;                  
                 }
             }
             catch (Exception ex)
@@ -229,15 +225,7 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
 
             return result;
         }
-
-        private void AutoInsertNG2(int custId, string username, int roleId, bool disabledUpline, bool syncUpline, int uplineId, int currencyId, int userId)
-        {
-            if (syncUpline)
-            {
-                ING2StatusService syncService = new NG2StatusService();
-                syncService.AutoInsertAccount(custId, username, (RoleId)roleId, uplineId, disabledUpline, SiteId.NAP, currencyId, userId, SystemId, WebSettings.SettingStatus);
-            }
-        }
+      
 
         private PTEngine.BusinessObjects.Result UpdateDefaultValueAutoTransferAndDateLimitForSpecialSiteSuper(int superId, string UserName)
         {

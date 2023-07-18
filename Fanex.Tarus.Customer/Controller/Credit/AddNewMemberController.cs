@@ -120,7 +120,6 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
                 if (result.ErrorCode == "0")
                 {
                     result.ErrorMessage = "Customer/V2/UpdatePT.aspx?custid=" + memberId + "&insert=" + "true" + "&roleid=1" + "&uplineid=" + currentContext.CustId.ToString();
-                    _customerSettingService.UpdateStatusThirdPartyAccountAfterInsertCustomer(memberId, customer, currentContext);
                 }
             }
             catch (Exception ex)

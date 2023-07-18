@@ -1,8 +1,6 @@
 ﻿namespace Sunplus.Accounting.Business.Customer
 {
-    using Core.Common;
     using DNAide.Web;
-    using Fanex.RemotingRef;
 
     public partial class CustomerManager
     {
@@ -104,12 +102,7 @@
             if (renderLeftPanelParameter.IsShowVoidbridge)
             {
                 superSettingTab += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?productId=18&language=en-US&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=4\");' target='centerFr'>RNG Slot</a>";
-            }
-
-            if (renderLeftPanelParameter.IsShowNG2)
-            {
-                superSettingTab += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?productId=23&language=en-US&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=4\");' target='centerFr'>" + _remotingRefService.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2") + "</a>";
-            }
+            }         
 
             if (renderLeftPanelParameter.IsShowFishingWorld)
             {
@@ -176,12 +169,7 @@
             if (renderLeftPanelParameter.IsShowVoidbridge)
             {
                 masterSettingTab += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?productId=18&language=en-US&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=3\");' target='centerFr'>RNG Slot</a>";
-            }
-
-            if (renderLeftPanelParameter.IsShowNG2)
-            {
-                masterSettingTab += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?productId=23&language=en-US&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=3\");' target='centerFr'>" + _remotingRefService.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2") + "</a>";
-            }
+            }        
 
             if (renderLeftPanelParameter.IsShowFishingWorld)
             {

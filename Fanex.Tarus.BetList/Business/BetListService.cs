@@ -1311,11 +1311,7 @@
             else if (ReportService.IsPP(betTypeId))
             {
                 sportName += ticketHelper.GetSportNameById(SportContants.PP);
-            }
-            else if (ReportService.IsNG2NeedSuffix(betTypeId))
-            {
-                sportName += ticketHelper.GetSportNameById(ReportService.GetNG2SportType(betTypeId));
-            }
+            }           
             else if (ReportService.IsVirtualSports2(betTypeId))
             {
                 const int VirtualSports2ProductId = 27;

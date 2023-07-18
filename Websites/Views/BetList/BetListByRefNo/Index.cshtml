@@ -7,15 +7,12 @@
 
 @model  BetListByRefNoViewModel
 @{
-    var hasNG2Permission = Permissions.HasPermission(Enumerations.Functions.AccessSpecialSites);
-    var ng2Text = hasNG2Permission ? "/" + Fanex.Tarus.Infrastructure.Caching.CacheRef.GetProductName(23) : string.Empty;
     var allowedProducts = new System.Text.StringBuilder();
     allowedProducts.Append("Casino/Keno/Metricgaming/Colossus Bets/AG Casino/Macau Games/Allbet/ION/AE Sexy/IBCBet Live Casino")
         .Append("/WM")
         .Append("/GDG")
         .Append("/BG")
         .Append("/PP Live Casino")
-        .Append(ng2Text)
         .Append("/Fishing World")
         .Append("/Lottery/Table Game");
 

@@ -319,16 +319,13 @@ namespace Sunplus.Accounting.Business.Customer
                 jsonmouseout = canChange ? string.Empty : "UnTip()";
                 jsonmouseover = canChange ? string.Empty :
                      string.Format(
-                        "Tip('{0}', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)",
-                        productId == 23 ? isEnabled ? _remotingRefService.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2") + " status has been disabled at upline" : ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblDisabledAccount") :
-                        ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language,
-                        isEnabled ? "lblDisabled" + productName + "Upline" : "lblDisabledAccount"));
+                        "Tip('{0}', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)",                        
+                        ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, isEnabled ? "lblDisabled" + productName + "Upline" : "lblDisabledAccount"));
             }
 
             return
-                new SettingControl(
-                    productId == 23 ? "Enable " + _remotingRefService.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2") :
-                        ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "enable" + productName),
+                new SettingControl(                   
+                    ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "enable" + productName),
                     isAllowEdit ? currStatus : false,
                     !isAllowEdit,
                     jsonclick,
@@ -368,16 +365,13 @@ namespace Sunplus.Accounting.Business.Customer
                 jsonmouseout = canChange ? string.Empty : "UnTip()";
                 jsonmouseover = canChange ? string.Empty :
                      string.Format(
-                        "Tip('{0}', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)",
-                        productId == 23 ? isEnabled ? _remotingRefService.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2") + " status has been disabled at upline" : ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblDisabledAccount") :
-                        ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language,
-                        isEnabled ? "lblDisabled" + productName + "Upline" : "lblDisabledAccount"));
+                        "Tip('{0}', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)",                       
+                        ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, isEnabled ? "lblDisabled" + productName + "Upline" : "lblDisabledAccount"));
             }
 
             return
                 new SettingControl(
-                    productId == 23 ? _remotingRefService.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2") :
-                        ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "enable" + productName),
+                    ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "enable" + productName),
                     isAllowEdit ? currStatus : false,
                     !isAllowEdit,
                     jsonclick,

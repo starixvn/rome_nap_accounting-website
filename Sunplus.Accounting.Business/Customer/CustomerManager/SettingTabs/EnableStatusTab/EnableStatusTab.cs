@@ -37,8 +37,7 @@
                 RoleId = customerInfoViewModel.SearchAccountRoleId,
                 CustId = customerInfoViewModel.CustId,
                 Username = customerInfoViewModel.UserName,
-                AccId = AppSession.AccId,
-                IsShowNG2 = !customerInfoViewModel.HideEnabledCheckBoxNG2Credit,
+                AccId = AppSession.AccId,             
                 IsShowRNGLottery = !customerInfoViewModel.HideRNGLottery,
                 IsShowVirtualGames = !customerInfoViewModel.HideVirtualGames,
                 IsShowSabaclub = !customerInfoViewModel.HideSabaclub,
@@ -481,20 +480,6 @@
                                                renderLeftPanelParameter,
                                                "Update Saba Casino Status",
                                                6);
-                            break;
-
-                        case "23":
-                            _renderLeftPanelService.RenderEnableProductBoxDCS2(
-                                               row1,
-                                               productRow,
-                                               sg,
-                                               ref htmlcontent,
-                                               isManageCustomerAccess,
-                                               "NG2",
-                                               renderLeftPanelParameter.IsShowNG2,
-                                               renderLeftPanelParameter,
-                                               "Update " + _remotingRefService.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2") + " Status",
-                                               23);
                             break;
 
                         case "24":

@@ -58,18 +58,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
             catch (Exception ex)
             {
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-            }
-
-            // Check special site permission to limit access NG2
-            if (!Permissions.HasPermission(Enumerations.Functions.AccessSpecialSites))
-            {
-                result.SportsList = result.SportsList.Where(s => s.SportId != 213
-                    && s.SportId != 214
-                    && s.SportId != 215
-                    && s.SportId != 216
-                    && s.SportId != 217
-                    && s.SportId != 218).ToList();
-            }
+            }           
 
             return result;
         }
@@ -671,13 +660,6 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
         {
             var repository = new ViewCommDCSRepository();
             var products = repository.GetProducts();
-
-            // Check special site permission to limit access NG2.
-
-            if (!Permissions.HasPermission(Enumerations.Functions.AccessSpecialSites))
-            {
-                products = products.Where(p => p.ProductId != 23).ToList();
-            }
 
             return products;
         }
