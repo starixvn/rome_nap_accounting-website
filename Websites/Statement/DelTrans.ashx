@@ -40,7 +40,7 @@ public class DelTrans : IHttpHandler,IRequiresSessionState {
                     }
                     else
                     {
-                        context.Response.Write("0|Delete transaction successfully");
+                        context.Response.Write("0|Revert transaction successfully");
                     }
                 }
                 catch(Exception ex)
