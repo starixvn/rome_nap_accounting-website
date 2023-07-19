@@ -114,6 +114,8 @@
         this.recalcuGrid(false);
         mainreport.removeClass("hidden");
         mainreport.gridScroller(this.optionGrid);
+        $("#chkAll").attr('checked', false);
+        this.updateBuntonStateAndSelectedCount();
     },
     renderFirstCols: function (row, cssClass) {
         var rowspan = row.ListTrans.length;
@@ -181,7 +183,7 @@
 
         var ReverseHTML = '';
 
-        if (!row.IsShowReversal) {
+        if (!row.IsAllowReversal) {
             var ActionHTML = '';
             ActionHTML = '<td rowspan ="' + rowspanWinLoss + '"><div class="c " style="width:55px;">&nbsp;</div></td><td rowspan ="' + rowspanWinLoss + '"><div class="c " style="width:55px;">&nbsp;</div></td>';
             html += ActionHTML;
@@ -192,10 +194,10 @@
             var ActionHTML = '';
             if (row.IsVerify) {
                 if (row.CheckerName == '') {
-                    ActionHTML = '<td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:55px;"><input id="' + row.RefNo + '" type="checkbox" onclick="financeStatement.checkSelectAll(this)"></div></td><td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:55px;"><input id="' + row.RefNo + '" class="verified" type="button" onclick="financeStatement.VerifyTrans(' + row.RefNo + ');" title="Verify" value="Verify"></div></td>';
+                    ActionHTML = '<td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:75px;"><input id="' + row.RefNo + '" type="checkbox" onclick="financeStatement.checkSelectAll(this)"></div></td><td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:55px;"><input id="' + row.RefNo + '" class="verified" type="button" onclick="financeStatement.VerifyTrans(' + row.RefNo + ');" title="Verify" value="Verify"></div></td>';
                 }
                 else {
-                    ActionHTML = '<td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:55px;"><input id="' + row.RefNo + '" type="checkbox" disabled="disabled" checked = "checked" onclick="financeStatement.checkSelectAll(this)"</div></td><td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:55px;"><input id="' + row.RefNo + '" class="unverify" type="button" onclick="financeStatement.UnVerifyTrans(' + row.RefNo + ');" title="Verify" value="Unverify"></div></td>';
+                    ActionHTML = '<td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:75px;"><input id="' + row.RefNo + '" type="checkbox" onclick="financeStatement.checkSelectAll(this)"</div></td><td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:55px;"><input id="' + row.RefNo + '" class="unverify" type="button" onclick="financeStatement.UnVerifyTrans(' + row.RefNo + ');" title="Verify" value="Unverify"></div></td>';
                 }
             }
             else {
@@ -224,19 +226,6 @@
         }
         return html;
     },
-    checkSelectItem: function (id) {
-        if ($("#chkAll").attr('checked') == true && chkItem.checked == false)
-            $("#chkAll").attr('checked', false);
-
-        if (chkItem.checked == true) {
-            $("#btnVerify").removeAttr("disabled");
-            $("#btnVerify").attr("class", "verified");
-            this.checkSelectAll();
-        }
-        else {
-            this.setEnableVerify();
-        }
-    },
     checkSelectAll: function () {
         var flag = true;
         //explore all check box except chkAll
@@ -244,27 +233,48 @@
             if (this.checked == false && !this.disabled)
                 flag = false;
         });
-
         $("#chkAll").attr('checked', flag);
-    },
-    setEnableVerify: function () {
-        var totalCheckedCheckbox = $("input:checked").length;
-        var totalDisabledCheckbox = $("input[type='checkbox'][disabled]").length;
-
-        if (totalCheckedCheckbox > totalDisabledCheckbox) {
-            $("#btnVerify").removeAttr("disabled");
-            $("#btnVerify").attr("class", "verified");
-
-        }
-        else {
-            $("#btnVerify").attr("disabled", "true");
-            $("#btnVerify").attr("class", "verifiedDisabled");
-        }
+        this.updateBuntonStateAndSelectedCount();
     },
     itemAllClicked: function () {
-        $("input[type='checkbox']").attr('checked', $('#chkAll').is(':checked'));
+        var flag = $('#chkAll').is(':checked');
+        $("input[type='checkbox']").attr('checked', flag);
         $("input[type='checkbox'][disabled]").attr('checked', 'checked');
-        this.setEnableVerify();
+        this.updateBuntonStateAndSelectedCount();
+    },
+    countSelectedItems: function () {
+        let count = 0;
+        $("input[type='checkbox'][id!='chkAll']").each(function () {
+            if (this.checked && !this.disabled)
+                count++;
+        });
+        return count;
+    },
+    updateSelectedItemsText: function (count) {
+        if (!count) {
+            $("#selectedCount").text("");
+            return;
+        }
+        $("#selectedCount").text(count + ' selected');
+    },
+    updateButtonState: function (enable) {
+        if (enable) {
+            $("#btnVerify").removeClass("verifiedDisabled");
+            $("#btnReverse").removeClass("verifiedDisabled");
+            $("#btnVerify").removeAttr("disabled");
+            $("#btnReverse").removeAttr("disabled");
+        } else {
+            $("#btnVerify").addClass("verifiedDisabled");
+            $("#btnReverse").addClass("verifiedDisabled");
+            $("#btnVerify").attr("disabled", "disabled");
+            $("#btnReverse").attr("disabled", "disabled");
+
+        }
+    },
+    updateBuntonStateAndSelectedCount: function () {
+        const selectedItems = this.countSelectedItems();
+        this.updateSelectedItemsText(selectedItems);
+        this.updateButtonState(selectedItems);
     },
     getParams: function () {
         if ($('input[name=type]:checked').val() == "-1") {
@@ -295,96 +305,170 @@
         //        ? '' : Helper.trim($('#txtRefNo').val())
     },
     GetSelectedRefNo: function () {
-        var refNos;
-        refNos = "";
+        let refNos = [];
 
         $("input[type='checkbox'][id!='chkAll']").each(function () {
             if (this.checked == true && !this.disabled)
-                refNos += this.id + ",";
+                refNos.push(this.id);
         });
 
-        return refNos;
+        return refNos.join(', ');
     },
     VerifyTrans: function (id) {
-        var bCconfirm = window.confirm("Are you sure you want to verify the selected transaction(s)?");
-        if (!bCconfirm)
-            return bCconfirm;
+        __confirm("Verify transaction", "Are you sure you want to verify the selected transaction(s)?", 400, 250, 'cfm_1', function () {
+            __close(null, null, 'cfm_1', null);
+            let selectedRefNo;
 
-        var selectedRefNo;
-        if (id == "btnVerify") {
-            //verify multiple
-            selectedRefNo = financeStatement.GetSelectedRefNo();
-        }
-        else {
-            selectedRefNo = id;
-        }
-
-        financeStatement.VerifyParams.RefNo = selectedRefNo;
-        financeStatement.VerifyParams.IsVerify = true;
-        try { parent.BlockUI(); } catch (e) { }
-        $.ajax({
-            type: "POST",
-            url: window.rootUrl + "CustomerStatement/UpdateVerifyTrans",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            data: JSON.stringify(financeStatement.VerifyParams),
-            success: function (result) {
-                if (result.ErrorCode == 0) {
-                    window.alert("Update data successfully");
-                    setTimeout(financeStatement.getFinanceStatement(), 60000);
-
-                }
-                else {
-                    window.alert("Cannot update data! Please contact Adminstrator");
-                    parent.jQuery.unblockUI();
-                }
-            },
-            error: function () {
-                showAlertMessage("err", "There is no data.", 1);
-            },
-            complete: function () {
-                try { parent.jQuery.unblockUI(); } catch (e) { }
+            if (id == "btnVerify") {
+                //verify multiple
+                selectedRefNo = financeStatement.GetSelectedRefNo();
             }
+            else {
+                selectedRefNo = id;
+            }
+
+            financeStatement.VerifyParams.RefNo = selectedRefNo;
+            financeStatement.VerifyParams.IsVerify = true;
+
+            try { parent.BlockUI(); } catch (e) { }
+            $.ajax({
+                type: "POST",
+                url: window.rootUrl + "CustomerStatement/UpdateVerifyTrans",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(financeStatement.VerifyParams),
+                success: function (result) {
+                    let message = "";
+                    const successRefNos = result.SuccessRefNos;
+                    if (successRefNos && successRefNos.length > 0) {
+                        message = "<div style='color:green'>Update successfully: " + successRefNos.join(', ') + "</div>";
+                    }
+
+                    const errorResults = result.ErrorResults;
+                    if (result.ErrorResults && result.ErrorResults.length > 0) {
+                        message += "<div style='color:red'></br>Update unsuccessfully:"
+                        errorResults.forEach(error => {
+                            if (error.RefNo) {
+                                message += `</br>${error.RefNo}: ${error.Message}`;
+                            } else {
+                                message += "</br>" + error.Message;
+                            }
+                        });
+                        message += "</div>";
+
+                    }
+
+                    if (message == "") {
+                        message = "Update successfully";
+                    }
+
+                    setTimeout(() => {
+                        __showMessage("Success", message, 350, 250);
+
+                        financeStatement.getFinanceStatement()
+                    }, 3000);
+                },
+                error: function () {
+                    showAlertMessage("err", "There is no data.", 1);
+                },
+                complete: function () {
+                    //try { parent.jQuery.unblockUI(); } catch (e) { }
+                }
+            });
+
+
         });
     },
     UnVerifyTrans: function (id) {
-        var bCconfirm = window.confirm("Are you sure you want to unverify the selected transaction(s)?");
-        if (!bCconfirm)
-            return bCconfirm;
 
-        selectedRefNo = id;
+        __confirm("Unverify transaction", "Are you sure you want to unverify the selected transaction(s)?", 400, 250, 'cfm_1', function () {
+            __close(null, null, 'cfm_1', null);
+            selectedRefNo = id;
+            financeStatement.VerifyParams.RefNo = selectedRefNo;
+            financeStatement.VerifyParams.IsVerify = false;
+            try { parent.BlockUI(); } catch (e) { }
+            $.ajax({
+                type: "POST",
+                url: window.rootUrl + "CustomerStatement/UpdateVerifyTrans",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(financeStatement.VerifyParams),
+                success: function (result) {
+                    let message = "";
+                    const successRefNos = result.SuccessRefNos;
+                    if (successRefNos && successRefNos.length > 0) {
+                        message = "<div style='color:green'>Update successfully: " + successRefNos.join(', ') + "</div>";
+                    }
 
-        financeStatement.VerifyParams.RefNo = selectedRefNo;
-        financeStatement.VerifyParams.IsVerify = false;
-        try { parent.BlockUI(); } catch (e) { }
-        $.ajax({
-            type: "POST",
-            url: window.rootUrl + "CustomerStatement/UpdateVerifyTrans",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            data: JSON.stringify(financeStatement.VerifyParams),
-            success: function (result) {
-                if (result.ErrorCode == 0) {
-                    window.alert("Update data successfully");
-                    setTimeout(financeStatement.getFinanceStatement(), 60000);
+                    const errorResults = result.ErrorResults;
+                    if (result.ErrorResults && result.ErrorResults.length > 0) {
+                        message += "<div style='color:red'>Update unsuccessfully: ";
+
+                        errorResults.forEach(error => {
+                            if (error.RefNo) {
+                                message += `<br/>${error.RefNo}: ${error.Message}`
+                            } else {
+                                message += "<br/>" + error.Message;
+                            }
+                        });
+                        message += "</div>";
+                    }
+
+                    if (message == "") {
+                        message = "Update successfully";
+                    }
+
+                    setTimeout(() => {
+                        __showMessage("", message, 350, 250);
+
+                        financeStatement.getFinanceStatement()
+                    }, 3000);
+                },
+                error: function () {
+                    showAlertMessage("err", "There is no data.", 1);
+                },
+                complete: function () {
+                    //try { parent.jQuery.unblockUI(); } catch (e) { }
                 }
-                else {
-                    window.alert("Cannot update data! Please contact Adminstrator");
-                    parent.jQuery.unblockUI();
-                }
-            },
-            error: function () {
-                showAlertMessage("err", "There is no data.", 1);
-            },
-            complete: function () {
-                try { parent.jQuery.unblockUI(); } catch (e) { }
-            }
+            });
+        });
+    },
+    ReverseMultipleTrans: function () {
+        const refsno = financeStatement.GetSelectedRefNo();
+        __confirm("Reverse transaction", "Do you want to reverse the transaction(s) with Ref.No: " + refsno + "?", 400, 250, 'cfm_1', function () {
+            __close(null, null, 'cfm_1', null);
+            __confirm("Reverse transaction", "To double check, do you want to reverse the transaction(s) with Ref.No: " + refsno + "?", 400, 250, 'cfm_2', function () {
+                try { parent.BlockUI(); } catch (e) { }
+                $.ajax({
+                    url: '../Statement/ReverseMultipleTrans.ashx?refsno=' + refsno + '&custName=' + financeStatement.Params.custName,
+                    dataType: 'html',
+                    success: function (data) {
+                        __close(null, null, 'cfm_2', null);
+                        const arr = data.split('|');
+                        if (arr[0] == "1") {
+                            __showMessage("", arr[1], 350, 250);
+                            parent.jQuery.unblockUI();
+                            return;
+                        }
+                        let message = arr[1] && arr[1];
+                        arr[2] && (message += arr[2]);
+
+                        setTimeout(() => {
+                            __showMessage("", message, 350, 250);
+
+                            financeStatement.getFinanceStatement();
+                        }, 3000);
+                    }
+                });
+            });
         });
     },
     DeleteTrans: function (refno) {
         financeStatement.VerifyParams.RefNo = refno;
-        if (confirm("Please make sure you see all transactions before trying to reverse.\nDo you want to delete the transaction with Ref.No: " + refno + "?")) {
-            if (confirm("To double check, do you want to delete the transaction with Ref.No: " + refno + "?")) {
+
+        __confirm("Reverse transaction", "Do you want to reverse the transaction with Ref.No: " + refno + "?", 400, 250, 'cfm_1', function () {
+            __close(null, null, 'cfm_1', null);
+            __confirm("Reverse transaction", "To double check, do you want to reverse the transaction with Ref.No: " + refno + "?", 400, 250, 'cfm_2', function () {
                 try { parent.BlockUI(); } catch (e) { }
                 $.ajax({
                     type: "POST",
@@ -393,14 +477,16 @@
                     dataType: "json",
                     data: JSON.stringify(financeStatement.VerifyParams),
                     success: function (result) {
+                        __close(null, null, 'cfm_2', null);
+                        let message = "";
                         if (result.ErrorCode == 0) {
-                            window.alert("Delete successfully");
-                            //                            var timeOutId = setTimeout(function () { },)
+                            message = "<div style='color:green'>" + result.ErrorMessage + "</div>";
+                            __showMessage("", "Reverse successfully", 350, 250);
                             setTimeout(financeStatement.getFinanceStatement(), 80000);
-
                         }
                         else {
-                            window.alert("Cannot Delete data! Please contact Adminstrator");
+                            message = "<div style='color:red'>" + result.ErrorMessage + "</div>";
+                            __showMessage("", message, 350, 250);
                             parent.jQuery.unblockUI();
                         }
                     },
@@ -412,8 +498,8 @@
                     }
                 });
 
-            }
-        }
+            });
+        });
     },
     Template: function () {
 

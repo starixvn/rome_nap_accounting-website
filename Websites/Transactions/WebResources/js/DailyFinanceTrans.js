@@ -1,13 +1,13 @@
 ﻿var fromcache = 0;
 var transdate = '', type = '', creator = '', status = '', verifyBy = '';
-jQuery(document).ready(function() {
+jQuery(document).ready(function () {
     GetDailyTransaction(1, 0);
     $.historyInit(pageload, "DailyTransaction.aspx");
-    
+
     //add enter event
-    $('#bannerFilter').bind('keypress', function(e) {
+    $('#bannerFilter').bind('keypress', function (e) {
         var code = (e.keyCode ? e.keyCode : e.which);
-        if(code==13){
+        if (code == 13) {
             GetDailyTransaction(1, 0);
         }
     });
@@ -37,7 +37,7 @@ function BindData(rs) {
     }
 
     //bind event for pager
-    $(".pagenav_ibtn").click(function() {
+    $(".pagenav_ibtn").click(function () {
         if (isNumberNotNull("txtpage")) {
             var pageIndex = $("#txtpage").val();
             if (parseInt(pageIndex) <= parseInt(rsvalue.Totalpages)) {
@@ -52,14 +52,14 @@ function BindData(rs) {
         }
     });
 
-    $(".pagerlink").click(function() {
+    $(".pagerlink").click(function () {
         var hash = this.href;
         hash = hash.replace(/^.*#/, '');
         $.historyLoad(hash);
         return false;
     });
     try { parent.jQuery.unblockUI(); } catch (e) { }
-    
+
 }
 
 function callAjax(postdata) {
@@ -78,17 +78,17 @@ function callAjax(postdata) {
 function CreateParams(pageIndex, fromcache) {
     transdate = $("#txndate").val();
     status = $("#ddlStatus option:selected").val();
-    creator =  $("#txtCreator").val();
+    creator = $("#txtCreator").val();
     type = $("#txtType").val();
     verifyBy = $("#txtVerifyBy").val();
     var params = '{"pageIndex":' + pageIndex.toString() +
-                 ',"fromcache":' + fromcache.toString() +
-				 ',"date":"' + transdate +
-				 '","type":"' + type +
-				 '","status":' + status +
-				 ',"creator":"' + creator +
-				 '","verifyBy":"' + verifyBy +
-				 '"}';
+        ',"fromcache":' + fromcache.toString() +
+        ',"date":"' + transdate +
+        '","type":"' + type +
+        '","status":' + status +
+        ',"creator":"' + creator +
+        '","verifyBy":"' + verifyBy +
+        '"}';
     transdate = $("#txndate").val();
     return params;
 }
@@ -97,11 +97,11 @@ function GetSelectedRefNo() {
     var refNos;
     refNos = "";
 
-    $("input[type='checkbox'][id!='chkAll']").each(function() {
-        
-        if (this.checked == true && !this.disabled) {                  
+    $("input[type='checkbox'][id!='chkAll']").each(function () {
+
+        if (this.checked == true && !this.disabled) {
             refNos += this.id + ",";
-         }
+        }
     });
 
 
@@ -110,46 +110,43 @@ function GetSelectedRefNo() {
 
 
 function VerifyTrans(btn) {
+    __confirm("Verify transaction", "Are you sure you want to verify the selected transaction(s)?", 400, 250, 'cfm_1', function () {
+        __close(null, null, 'cfm_1', null);
 
-    var bCconfirm = window.confirm("Are you sure you want to verify selected transaction(s)?");
-    if (!bCconfirm)
-        return bCconfirm;
+        let selectedRefNo;
+        if (btn.id.toLowerCase() == "btnverify") {
+            //verify multiple
+            selectedRefNo = '{"refNoList":"' + GetSelectedRefNo() + '"}';
+        }
+        else {
+            selectedRefNo = '{"refNoList":"' + btn.id + '"}';
+        }
 
-    var selectedRefNo;
-    if (btn.id.toLowerCase() == "btnverify") {
-        //verify multiple
-        selectedRefNo = '{"refNoList":"' + GetSelectedRefNo() + '"}';
-    }
-    else {
-        selectedRefNo = '{"refNoList":"' + btn.id + '"}';
-    }
-    
-    try { parent.BlockUI(); } catch (e) { }
-    $.ajax({
-        type: "POST",
-        url: "../Services/WCF/ServiceDailyTran.svc/VerifyTransaction",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        data: selectedRefNo,
-        success: VerifyTransCallBack
+        try { parent.BlockUI(); } catch (e) { }
+        $.ajax({
+            type: "POST",
+            url: "../Services/WCF/ServiceDailyTran.svc/VerifyTransaction",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: selectedRefNo,
+            success: VerifyTransCallBack
+        });
     });
 }
 
 function UnVerifyTrans(trans) {
-
-    var bCconfirm = window.confirm("Are you sure you want to unverify selected transaction(s)?");
-    if (!bCconfirm)
-        return bCconfirm;
-
-    var selectedRefNo = '{"refNo":' + trans.id + '}';
-    try { parent.BlockUI(); } catch (e) { }
-    $.ajax({
-        type: "POST",
-        url: "../Services/WCF/ServiceDailyTran.svc/UnVerifyTransaction",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        data: selectedRefNo,
-        success: VerifyTransCallBack
+    __confirm("Unverify transaction", "Are you sure you want to unverify the selected transaction(s)?", 400, 250, 'cfm_1', function () {
+        __close(null, null, 'cfm_1', null);
+        let selectedRefNo = '{"refNo":' + trans.id + '}';
+        try { parent.BlockUI(); } catch (e) { }
+        $.ajax({
+            type: "POST",
+            url: "../Services/WCF/ServiceDailyTran.svc/UnVerifyTransaction",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: selectedRefNo,
+            success: VerifyTransCallBack
+        });
     });
 }
 
@@ -157,11 +154,13 @@ function VerifyTransCallBack(data) {
 
     //request to process data successful
     if (data == true) {
-        window.alert("Update data successfully");
-        GetDailyTransaction(1, 0);
+        setTimeout(() => {
+            GetDailyTransaction(1, 0);
+            __showMessage("", "Update data successfully", 350, 250);
+        }, 3000);
     }
     else {
-        window.alert("Cannot update data! Please contact Adminstrator");
+        __showMessage("", "Cannot update data! Please contact Adminstrator", 350, 250);
         parent.jQuery.unblockUI();
     }
 }
@@ -248,7 +247,7 @@ function CheckSelectAll() {
 
     var flag = true;
     //explore all check box except chkAll
-    $("input[type='checkbox'][id!='chkAll']").each(function() {
+    $("input[type='checkbox'][id!='chkAll']").each(function () {
         if (this.checked == false && !this.disabled)
             flag = false;
     });
@@ -256,15 +255,14 @@ function CheckSelectAll() {
     $("#chkAll").attr('checked', flag);
 }
 
-function ExportExcel(){
+function ExportExcel() {
     try { parent.BlockUI(); } catch (e) { }
     /*var url = 'DailyTransaction.aspx?IsExport=1&transDate=' +  $("#txndate").val() + '&type=' +
-          $("#txtType").val() + '&status' + $("#ddlStatus option:selected").val() +'&creator'  + $("#txtCreator").val() + '&verifyBy='  + $("#txtVerifyBy").val();*/   
+          $("#txtType").val() + '&status' + $("#ddlStatus option:selected").val() +'&creator'  + $("#txtCreator").val() + '&verifyBy='  + $("#txtVerifyBy").val();*/
     var url = 'DailyTransaction.aspx?IsExport=1&transDate=' + transdate + '&type=' +
-          type + '&status' + status +'&creator'  + creator + '&verifyBy=' + verifyBy; 
+        type + '&status' + status + '&creator' + creator + '&verifyBy=' + verifyBy;
 
     $('#frm').attr('src', url);
     try { parent.jQuery.unblockUI(); } catch (e) { }
 }
 
-        

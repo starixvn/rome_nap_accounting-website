@@ -269,7 +269,7 @@ namespace Sunplus.Accounting.Business.Transaction
             var userService = CommonBootStrapper.Locator.GetInstance<IUserService>();
             /*List<DailyTransaction> entityList = userService
                 .GetDailyTransaction(transDate, PageIndex, PAGE_SIZE, status,
-                                     type, creator, ref TotalPages, verifyBy);*/            
+                                     type, creator, ref TotalPages, verifyBy);*/
 
             var strBuilder = new StringBuilder();
 
@@ -320,13 +320,13 @@ namespace Sunplus.Accounting.Business.Transaction
 
                     itemContent = itemTemplate;
 
-                 
+
                     #region Assign to template data
 
                     TemplateHandler.Assign(ref itemContent, "{date}",
                                            entity.transDate);
 
-                   
+
                     //change row style for transaction group
                     //use ref no to seperate row style
                     if (prevRefNo != entity.RefNo || rowIndexOnCurrentPage == 1)
@@ -373,37 +373,44 @@ namespace Sunplus.Accounting.Business.Transaction
                                            ((CastAide.AsDateTime(entity.CheckedTime) != DateTime.MinValue)
                                                 ? entity.CheckedTime
                                                 : string.Empty));
-
-                    if (entity.CheckerId > 0)
+                    if (entity.IsAllowVerify)
                     {
-                        /*
-                     * the transaction had already VERIFIED
-                     * disable verify checkbox, and set checked
-                     * show Unverify button.
-                     * But hide all action button if user doest not have permission
-                     */
-                        TemplateHandler.Assign(ref itemContent, "{checked}", "checked=checked");
-                        TemplateHandler.Assign(ref itemContent, "{disabled}", "disabled=disabled");
+                        if (entity.CheckerId > 0)
+                        {
+                            /*
+                         * the transaction had already VERIFIED
+                         * disable verify checkbox, and set checked
+                         * show Unverify button.
+                         * But hide all action button if user doest not have permission
+                         */
+                            TemplateHandler.Assign(ref itemContent, "{checked}", "checked=checked");
+                            TemplateHandler.Assign(ref itemContent, "{disabled}", "disabled=disabled");
 
-                        actionTemplate = (hasUpdateTransPermission)
-                                             ? string.Format(TEMPLATE_UNVERIFIED_BUTTON, entity.RefNo)
-                                             : string.Empty;
+                            actionTemplate = (hasUpdateTransPermission)
+                                                 ? string.Format(TEMPLATE_UNVERIFIED_BUTTON, entity.RefNo)
+                                                 : string.Empty;
+                        }
+                        else
+                        {
+                            /*
+                         *  the transaction has NOT VERIFIED yet
+                         *  enable checkbox for select
+                         *  show verify button
+                         */
+
+                            TemplateHandler.Assign(ref itemContent, "{checked}", string.Empty);
+                            TemplateHandler.Assign(ref itemContent, "{disabled}", string.Empty);
+
+                            actionTemplate = (hasUpdateTransPermission)
+                                                 ? string.Format(TEMPLATE_VERIFIED_BUTTON, entity.RefNo)
+                                                 : string.Empty;
+
+                            totalVeirfyAllow++;
+                        }
                     }
                     else
                     {
-                        /*
-                     *  the transaction has NOT VERIFIED yet
-                     *  enable checkbox for select
-                     *  show verify button
-                     */
-
-                        TemplateHandler.Assign(ref itemContent, "{checked}", string.Empty);
-                        TemplateHandler.Assign(ref itemContent, "{disabled}", string.Empty);
-                        actionTemplate = (hasUpdateTransPermission)
-                                             ? string.Format(TEMPLATE_VERIFIED_BUTTON, entity.RefNo)
-                                             : string.Empty;
-
-                        totalVeirfyAllow++;
+                        TemplateHandler.RemoveBlock(ref itemContent, "CheckBoxInputBlock");
                     }
 
                     TemplateHandler.Assign(ref itemContent, "{action}", actionTemplate);

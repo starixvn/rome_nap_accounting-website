@@ -31,3 +31,10 @@ input .verified
 {
     background: #F4F7F9 !important;
 }
+#cfm_1 span {
+    word-wrap: break-word;
+}
+
+#cfm_2 span {
+    word-wrap: break-word;
+}

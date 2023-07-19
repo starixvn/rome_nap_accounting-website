@@ -80,9 +80,9 @@ function ExportToExcel()
 
 function DelTrans(refno)  
 {
-    if(confirm("Do you want to delete the transaction with Ref.No: "+refno +"?"))
+    if (confirm("Do you want to revert the transaction with Ref.No: "+refno +"?"))
     {
-        if (confirm("To double check, do you want to delete the transaction with Ref.No: "+refno +"?"))
+        if (confirm("To double check, do you want to revert the transaction with Ref.No: "+refno +"?"))
         {
             try{parent.BlockUI();}catch(e){}
             $.ajax({
@@ -95,6 +95,7 @@ function DelTrans(refno)
                         parent.jQuery.unblockUI();
                     }
                     else {
+                        window.alert("Reverse successfully");
                         setTimeout("GetDataReport()", 3000);
                     }
 
