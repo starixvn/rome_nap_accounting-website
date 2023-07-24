@@ -35,6 +35,8 @@ namespace Sunplus.Accounting.Business.LogDisplay
 
         private readonly NewCurrencyForLicenseeLogFormatter _newCurrencyForLicenseeLogFormatter;
 
+        private readonly SimplifyCreateCustomerLogFormatter _simplifyCreateCustomerLogFormatter;
+
         private int[] listBetsettingActionIDLicensee = new int[] { 2012, 2013, 2019, 2036 };
 
         private int[] listStatusActionIDHasRNGKeno = new int[] { 1100, 1101, 1102, 1103 };
@@ -43,12 +45,14 @@ namespace Sunplus.Accounting.Business.LogDisplay
             ILogDisplayDAO logDAO,
             CN88LogFormatter cn88LogFormatter,
             NewLicenseeLogFormatter newLicenseeLogFormatter,
-            NewCurrencyForLicenseeLogFormatter newCurrencyForLicenseeLogFormatter)
+            NewCurrencyForLicenseeLogFormatter newCurrencyForLicenseeLogFormatter,
+            SimplifyCreateCustomerLogFormatter simplifyCreateCustomerLogFormatter)
         {
             _logDAO = logDAO;
             _cn88LogFormatter = cn88LogFormatter ?? new CN88LogFormatter();
             _newLicenseeLogFormatter = newLicenseeLogFormatter ?? new NewLicenseeLogFormatter();
             _newCurrencyForLicenseeLogFormatter = newCurrencyForLicenseeLogFormatter ?? new NewCurrencyForLicenseeLogFormatter();
+            _simplifyCreateCustomerLogFormatter = simplifyCreateCustomerLogFormatter ?? new SimplifyCreateCustomerLogFormatter();
         }
 
         public Sunplus.Accounting.Entities.LogDisplay.ResultLog GetLogDisplay(LogParam param)
@@ -385,6 +389,11 @@ namespace Sunplus.Accounting.Business.LogDisplay
             if (_newCurrencyForLicenseeLogFormatter.IsNewCurrencyForLicenseeActionId(actionId))
             {
                 return _newCurrencyForLicenseeLogFormatter.GenerateDetail(trackingValue, spName, actionName);
+            }
+
+            if (_simplifyCreateCustomerLogFormatter.IsSimplifyCreateCustomerActionId(actionId))
+            {
+                return _simplifyCreateCustomerLogFormatter.GenerateDetail(actionId, trackingValue, spName, actionName);
             }
 
             return _ParseTrackingValue(trackingValue, actionId, actionName, spName);

@@ -152,7 +152,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
                 param = param + action.Prefix;
             return param;
         }
-        private static string FormatDecimalTrailingZeros(string strValue)
+        internal static string FormatDecimalTrailingZeros(string strValue)
         {
             decimal value;
             if (Decimal.TryParse(strValue, out value))
