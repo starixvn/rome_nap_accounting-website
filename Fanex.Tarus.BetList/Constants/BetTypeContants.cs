@@ -98,6 +98,8 @@
         public const int MinSpadeGamingBettype = 4301;
         public const int MaxSpadeGamingBettype = 4600;
 
+        public const int FootballCup = 5301;
+
         public static bool IsJackpotContribution(int betType)
             => betType == 2198 || betType == 2398 || betType == 2998;
     }

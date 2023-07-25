@@ -1263,9 +1263,15 @@
         private string GetSportNameSuffixByBetType(int betTypeId)
         {
             var sportName = string.Empty;
+
             if (ReportService.IsVirtualSportBetType(betTypeId))
             {
                 sportName = BetListResources.Virtual_Sports;
+            }
+            else if (betTypeId == BetTypeContants.FootballCup)
+            {
+                const int VirtualSports3ProductId = 49;
+                sportName = GetProductName(VirtualSports3ProductId);
             }
             else if (ReportService.IsAGCasino(betTypeId))
             {
