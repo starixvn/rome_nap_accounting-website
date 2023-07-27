@@ -134,19 +134,6 @@
                         <tr id="additionalaction">
                             <td class="l" colspan="@tableColumnCount">
                                 <ul class="l vroptions">
-                                    <li>Unlock VR for:</li>
-                                    @if (roleId > 3)
-                                    {
-                                        <li><input id="chk-lockVRMaster" type="checkbox" value="false" /><lable>All Masters</lable></li>
-                                    }
-                                    @if (roleId > 2)
-                                    {
-                                        <li><input id="chk-lockVRAgent" type="checkbox" value="false" /><lable>All Agents</lable></li>
-                                    }
-                                    <li><input id="chk-lockVRMember" type="checkbox" value="false" /><lable>All Members</lable></li>
-
-                                </ul>
-                                <ul class="l vroptions">
                                     <li>Enable VR for:</li>
                                     @if (roleId > 3)
                                     {
@@ -157,6 +144,46 @@
                                         <li><input id="chk-enableVRAgent" type="checkbox" value="false" /><lable>All Agents</lable></li>
                                     }
                                     <li><input id="chk-enableVRMember" type="checkbox" value="false" /><lable>All Members</lable></li>
+                                </ul>
+
+                                <ul class="l vroptions">
+                                    <li>Unlock VR for:</li>
+                                </ul>
+                                <ul class="l vroptions">
+                                    <li class="r">Soccer</li>
+                                    @if (roleId > 3)
+                                    {
+                                        <li><input id="chk-lockSoccerVRMaster" type="checkbox" value="false" /><lable>All Masters</lable></li>
+                                    }
+                                    @if (roleId > 2)
+                                    {
+                                        <li><input id="chk-lockSoccerVRAgent" type="checkbox" value="false" /><lable>All Agents</lable></li>
+                                    }
+                                    <li><input id="chk-lockSoccerVRMember" type="checkbox" value="false" /><lable>All Members</lable></li>
+                                </ul>
+                                <ul class="l vroptions">
+                                    <li class="r">Basketball</li>
+                                    @if (roleId > 3)
+                                    {
+                                        <li><input id="chk-lockBasketballVRMaster" type="checkbox" value="false" /><lable>All Masters</lable></li>
+                                    }
+                                    @if (roleId > 2)
+                                    {
+                                        <li><input id="chk-lockBasketballVRAgent" type="checkbox" value="false" /><lable>All Agents</lable></li>
+                                    }
+                                    <li><input id="chk-lockBasketballVRMember" type="checkbox" value="false" /><lable>All Members</lable></li>
+                                </ul>
+                                <ul class="l vroptions">
+                                    <li class="r">Other Sports</li>
+                                    @if (roleId > 3)
+                                    {
+                                        <li><input id="chk-lockOtherSportsVRMaster" type="checkbox" value="false" /><lable>All Masters</lable></li>
+                                    }
+                                    @if (roleId > 2)
+                                    {
+                                        <li><input id="chk-lockOtherSportsVRAgent" type="checkbox" value="false" /><lable>All Agents</lable></li>
+                                    }
+                                    <li><input id="chk-lockOtherSportsVRMember" type="checkbox" value="false" /><lable>All Members</lable></li>
                                 </ul>
                             </td>
                         </tr>
