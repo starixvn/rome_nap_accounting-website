@@ -64,7 +64,7 @@
         @*Cust Infor Section*@
         @Html.Partial("~/Views/Customer/CreditCustomer/CustInfoPartialView.cshtml", Model)
         @*position taking*@
-        @Html.Partial("~/Views/Customer/CreditCustomer/MinMaxPositionTakingPartialView.cshtml")
+        @Html.Partial("~/Views/Customer/CreditCustomer/MinMaxPositionTakingPartialView.cshtml", Model.CustId)
         @*submit button section*@
         <table cellspacing="0" cellpadding="0" border="0">
             <tbody>

@@ -71,7 +71,7 @@
         @*Cust Infor Section*@
         @Html.Partial("~/Views/Customer/CreditCustomer/CustInfoPartialView.cshtml", Model)
         @*betting limit and position taking*@
-        @Html.Partial("~/Views/Customer/CreditCustomer/BettingLimitAndPositionTakingPartialView.cshtml")
+        @Html.Partial("~/Views/Customer/CreditCustomer/BettingLimitAndPositionTakingPartialView.cshtml", Model.CustId)
         @*submit button section*@
         <table cellspacing="0" cellpadding="0" border="0">
             <tbody>
