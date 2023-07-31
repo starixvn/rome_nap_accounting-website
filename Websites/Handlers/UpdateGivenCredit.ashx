@@ -3,13 +3,10 @@
 using System;
 using System.Web;
 using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.DataAccess;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using System.Text;
 using IBCUtils;
-using Sunplus.Accounting.Core.Configurations;
-
-
+using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
 public class UpdateGivenCredit : BaseHandler
 {
 
@@ -37,7 +34,16 @@ public class UpdateGivenCredit : BaseHandler
             bool isallowupdategivencredit = Sunplus.Accounting.Business.Security.Permissions.GetHostPermission(Enumerations.Functions.Customer.Credit);
             if (isallowupdategivencredit == true)
             {
-                Sunplus.Accounting.DataAccess.IBCDLL.Accounting.Credit.CustomerUpdateCredit(_accid, _custid, amount);
+                var roleid = context.Request["roleid"];
+                if (roleid == "1")
+                {
+                    var totalAmt = UpdateCustomer.GetTotalAmount(_custid);
+                    Credit.UpdateMemberCredit(_accid, _custid, amount, totalAmt);
+                }
+                else
+                {
+                    Credit.UpdateSMACredit(_accid, _custid, amount);
+                }
                 StringBuilder s = new StringBuilder();
                 s.Append("parent.document.getElementById('spanGivenCredit').innerHTML ='" + string.Format("{0:n}", amount) + "';");
                 s.Append("parent.ChangeGivenCredit();");

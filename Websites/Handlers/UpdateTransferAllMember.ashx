@@ -5,6 +5,7 @@ using System.Web;
 using DNAide.Core;
 using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
+using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
 
 public class UpdateTransferAllMember : BaseHandler
 {
@@ -21,13 +22,19 @@ public class UpdateTransferAllMember : BaseHandler
 
             string type = CastAide.AsString(context.Request["type"]);
             var result = new Sunplus.Accounting.Entities.Result();
+            var custInfo = UpdateCustomer.GetCustInfo(agentName);
+            if (custInfo == null || custInfo.CustId == 0)
+            {
+                context.Response.Write("0|" + AlertMessage.GetMsg("User name not found", AlertMessage.MsgType.Error));
+                return;
+            }
             if (type == "members")
             {
-                result = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.Transfer.TransferAllMember(custID, agentName, context.Request.UserHostAddress);
+                result = Transfer.TransferAllMember(custID, agentName, custInfo.CustId, context.Request.UserHostAddress);
             }
             else
             {
-                result = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.Transfer.TransferAllDownlines(custID, agentName, context.Request.UserHostAddress);
+                result = Transfer.TransferAllDownlines(custID, agentName, custInfo.CustId, context.Request.UserHostAddress);
             }
             if (result.ErrorCode > 0)
             {

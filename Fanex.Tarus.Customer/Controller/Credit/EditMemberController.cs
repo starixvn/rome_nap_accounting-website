@@ -6,6 +6,7 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
     using Fanex.PTEngine.BusinessObjects;
     using Fanex.Tarus.Customer.CreditCustomer.Business;
     using Fanex.Tarus.Customer.CreditCustomer.Entities;
+    using Fanex.Tarus.Infrastructure.Extensions;
     using Fanex.Tarus.Web.Controllers.Filters;
     using Newtonsoft.Json;
     using Sunplus.Accounting.Core.Common;
@@ -106,6 +107,9 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
                 currentContext.IP = System.Web.HttpContext.Current.Request.UserHostAddress;
                 currentContext.SystemId = SystemId;
 
+                var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(customer.SRecommend);
+                customer.DBServerIp = siteDB.AGIP;
+                customer.SiteDBGroupId = siteDB.SiteDBGroupID;
                 result = _customerService.AgentUpdateMember(customer, currentContext);
 
                 int tempErrorCode = 0;

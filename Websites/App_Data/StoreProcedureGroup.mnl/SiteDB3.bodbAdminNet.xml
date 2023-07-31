@@ -1,5 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Functions SiteId="104" SiteName="NAP - Accounting">  
+<Functions SiteId="104" SiteName="NAP - Accounting">
+  <Function Name ="Add member">
+    <Setting Key="SiteDB3_Dot_BalanceDebitInitialize" SpName="Dot_BalanceDebitInitialize" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="SiteDB3_Dot_BalanceCreditInitialize" SpName="Dot_BalanceCreditInitialize" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="SiteDB3_Dot_BalanceDebitRemove" SpName="Dot_BalanceDebitRemove" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="SiteDB3_Dot_BalanceCreditRemove" SpName="Dot_BalanceCreditRemove" DbName="DBTXN.bodb02.bodbAdminNet" />
+  </Function>
+
   <Function Name="Statement">   
     <Setting Key="SiteDB3_Statement_Report_GetList" SpName="SiteDB_Acc_StatementSel" DbName="DBACC.bodb02.bodbAdminNet" Plain="0" />
     <Setting Key="SiteDB3_Statement_Report_TransferDetails" SpName="SiteDB_Acc_StatementSelTransfer" DbName="DBACC.bodb02.bodbAdminNet" Plain="0" />
@@ -21,10 +28,19 @@
     <Setting Key="SiteDB3_SiteDB_Acc_Transfer_Rollback" SpName="SiteDB_Acc_Transfer_Rollback" DbName="DBTXN.bodb02.bodbAdminNet" />
     <Setting Key="SiteDB3_Acc_DailyTxn_UpdChecker" SpName="Acc_DailyTxn_UpdChecker" DbName="DBTXN.bodb02.bodbAdminNet" />
     <Setting Key="SiteDB3_SiteDB_Acc_ReverseTransfer_Rollback" SpName="SiteDB_Acc_ReverseTransfer_Rollback" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="SiteDB3_Acc_BettransInsTransferAllMembers" SpName="Acc_BettransInsTransferAllMembers" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="SiteDB3_Acc_ClearBalanceAllDownlines" SpName="Acc_ClearBalanceAllDownlines" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Left Panel - BalanceInfo">
     <Setting Key="SiteDB3_Acc_CustomerSelBalanceCashInfo" SpName="Acc_CustomerSelBalanceCashInfo" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
     <Setting Key="SiteDB3_Acc_OutstandingMemberSel" SpName="Acc_OutstandingMemberSel" DbName="DBBOF.bodb02.bodbAdminNet" Plain="0" />
     <Setting Key="SiteDB3_Acc_BalanceMemberSel" SpName="Acc_BalanceMemberSel" DbName="DBTXN.BODB02.bodbAdminNet" Plain="0" />
+    <Setting Key="SiteDB3_Acc_CustomerTotalAmountSel" SpName="Acc_CustomerTotalAmountSel" DbName="DBTXN.BODB02.bodbAdminNet" Plain="0" />
+  </Function>
+  <Function Name="ResetWinning">
+    <Setting Key="SiteDB3_Task_ResetWinning_Non3rdParty_Add" SpName="Task_ResetWinning_Non3rdParty_Add" DbName="DBTXN.bodb02.bodbAdminNet" TimeOut="0" />
+  </Function>
+  <Function Name="PT Setting Information">
+    <Setting Key="SiteDB3_PositionTaking_RefSportTypeAndBetType" SpName="Acc_CustomerSelRefSport_Bettype" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
 </Functions>

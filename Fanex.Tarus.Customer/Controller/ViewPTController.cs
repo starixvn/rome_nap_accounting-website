@@ -20,9 +20,10 @@ namespace Fanex.Tarus.Customer.Controller
     using Infrastructure.Constants;
     using Sunplus.Accounting.Business.Security;
     using Sunplus.Accounting.Core.Common;
+    using Sunplus.Accounting.Core.Extensions;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", 
-        "SA1600:ElementsMustBeDocumented", 
+    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules",
+        "SA1600:ElementsMustBeDocumented",
         Justification = "Reviewed. Suppression is OK here.")]
     public class ViewPTController : BaseController
     {
@@ -46,7 +47,7 @@ namespace Fanex.Tarus.Customer.Controller
             return Json(isDepositCustomer, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult GetBettypesReference()
+        public ActionResult GetBettypesReference(int custId)
         {
             if (!Permissions.HasPermission(Enumerations.Functions.AccessSpecialSites))
             {
@@ -59,7 +60,10 @@ namespace Fanex.Tarus.Customer.Controller
 
                 ViewData["ExclusiveRefSportIds"] = exclusiveRefSportIds.ToArray();
             }
+            var centerDB = ObjectDbExtensions.GetAllSiteDBConfig().FirstOrDefault(i => !i.IsSiteDB);
+            var siteDb = custId != 0 ? ObjectDbExtensions.GetSiteDBConfigByCustId(custId) : centerDB;
 
+            ViewData["SiteDB"] = siteDb;
             return View("~/Views/PTInformation/Index.cshtml");
         }
     }

@@ -1,8 +1,10 @@
 ﻿@using Fanex.PTSetting.BettypeReference
 @using Sunplus.Accounting.Core.Common;
+@using Sunplus.Accounting.Core.Extensions;
 
 @{ 
     var exclusiveRefSportIds = ViewData["ExclusiveRefSportIds"] as int[];
+    var siteDB = ViewData["SiteDB"] as SiteDB;
 }
 
 <!DOCTYPE html>
@@ -15,6 +17,6 @@
     <link href="@Url.Content("~/Views/PTInformation/Styles/style.less")" rel="stylesheet" type="text/css" />
 </head>
 <body>
-    <div class="container">@Html.RenderBetTypeReference(AccCommon.IsLocalTest, exclusiveRefSportIds)</div>
+    <div class="container">@Html.RenderBetTypeReference(AccCommon.IsLocalTest, siteDB.AGIP, siteDB.SiteDBGroupID, exclusiveRefSportIds)</div>
 </body>
 </html>
