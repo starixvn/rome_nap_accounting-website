@@ -34,6 +34,6 @@
     <Setting Key="SiteDB1_Task_ResetWinning_Non3rdParty_Add" SpName="Task_ResetWinning_Non3rdParty_Add_UAT1" DbName="DBTXN.bodb02.bodbAdminNet" TimeOut="0" />
   </Function>
   <Function Name="PT Setting Information">
-    <Setting Key="SiteDB3_PositionTaking_RefSportTypeAndBetType" SpName="Acc_CustomerSelRefSport_Bettype" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="SiteDB1_PositionTaking_RefSportTypeAndBetType" SpName="Acc_CustomerSelRefSport_Bettype" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
 </Functions>
