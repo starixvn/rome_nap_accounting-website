@@ -2242,4 +2242,7 @@ Max Keno (20+1) 2</value>
   <data name="Disable159_3151" xml:space="preserve">
     <value>Disabled YeeBet</value>
   </data>
+  <data name="Disable9911_2400" xml:space="preserve">
+    <value>Disabled Live Casino</value>
+  </data>
 </root>

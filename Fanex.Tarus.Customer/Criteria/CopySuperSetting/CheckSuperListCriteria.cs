@@ -1,6 +1,7 @@
 ﻿namespace Fanex.Tarus.Customer.Criteria.CopySuperSetting
 {
     using Fanex.NAP.Framework.Data;
+    using Sunplus.Accounting.Core.Configurations;
 
     public class CheckSuperListCriteria : CriteriaBase
     {
@@ -11,6 +12,8 @@
         public string ProductList { get; set; }
 
         public int CustId { get; set; }
+
+        public byte SettingStatus => WebSettings.SettingStatus;
 
         public int ErrCode { get; set; }
 
