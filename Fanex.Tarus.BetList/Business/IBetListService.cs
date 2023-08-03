@@ -5,9 +5,12 @@
     using Fanex.Tarus.BetList.Param;
     using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
 
     public interface IBetListService
     {
+        Task AssignCountry(IEnumerable<TicketDetail> tickets);
+
         IList<TicketDetail> GetMixParlayTickets(long transId, long refNo, int custId);
 
         IList<TicketDetail> GetBetListByRefNo(BetListByRefNoParam param);

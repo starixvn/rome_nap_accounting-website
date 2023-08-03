@@ -48,7 +48,8 @@ namespace Fanex.Tarus.BetList.Extensions
 
         public static BetListExcelBuilder AddCreator(this BetListExcelBuilder factory, TicketDetail ticketDetail, ITicketHelper ticketHelper)
         {
-            IRichTextString rtfCreator = new HSSFRichTextString(ticketDetail.Creator + "\n" + ticketDetail.Ticket.IP);
+            string country = string.IsNullOrWhiteSpace(ticketDetail.Country) ? "" : "\n" + ticketDetail.Country;
+            IRichTextString rtfCreator = new HSSFRichTextString(ticketDetail.Creator + "\n" + ticketDetail.Ticket.IP + country);
             factory.AddCell(rtfCreator, ticketHelper.Index % 2 == 0 ? factory.OddCellStyleCenterAligned : factory.EvenCellStyleCenterAligned);
 
             return factory;

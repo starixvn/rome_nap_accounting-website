@@ -80,6 +80,11 @@
                 <span>@betdetail.Creator</span>
                 <br />
                 <span>@betdetail.Ticket.IP</span>
+                @if (!string.IsNullOrWhiteSpace(betdetail.Country))
+                {
+                    <br />
+                    @betdetail.Country
+                }
             </div>
         </td>
     </tr>

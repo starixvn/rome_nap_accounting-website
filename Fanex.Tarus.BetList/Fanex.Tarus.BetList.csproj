@@ -46,6 +46,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Alpha.IPInfo, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Alpha.IPInfo.1.0.0\lib\netstandard2.0\Alpha.IPInfo.dll</HintPath>
+    </Reference>
     <Reference Include="BetListNPOI, Version=2.6.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <HintPath>..\packages\BetListNPOI.2.6.0\lib\netstandard2.0\BetListNPOI.dll</HintPath>
     </Reference>
@@ -178,6 +181,9 @@
     <Reference Include="Fanex.BetList.VirtualGames, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.VirtualGames.2.0.0\lib\net461\Fanex.BetList.VirtualGames.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.Caching, Version=2.2.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Caching.2.2.2\lib\net461\Fanex.Caching.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.Common, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Common.1.1.0.1\lib\net40\Fanex.Common.dll</HintPath>
       <Private>True</Private>
@@ -200,8 +206,8 @@
     <Reference Include="Fanex.Logging.Extensions.Web, Version=1.0.6.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Logging.Extensions.Web.1.0.6\lib\net40\Fanex.Logging.Extensions.Web.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Module.RNGCasino, Version=2.0.1.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Module.RNGCasino.2.0.1.6\lib\net461\Fanex.Module.RNGCasino.dll</HintPath>
+    <Reference Include="Fanex.Module.RNGCasino, Version=2.0.1.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Module.RNGCasino.2.0.1.7-AddCountry05\lib\net461\Fanex.Module.RNGCasino.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.NAP.Framework, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
@@ -270,7 +276,7 @@
       <HintPath>..\packages\Fanex.Tarus.Entities.1.0.0.6\lib\net40\Fanex.Tarus.Entities.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.4.8, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.4.8\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.4.10-CountryInfo\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Security, Version=1.0.1.9, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Security.1.0.1.9\lib\net40\Fanex.Tarus.Security.dll</HintPath>
@@ -577,6 +583,9 @@
     <Compile Include="Criteria\BetTypeByDateInSiteDBCriteria.cs" />
     <Compile Include="Criteria\GetAGCasinoBetDetailsInSiteDBCriteria.cs" />
     <Compile Include="Criteria\GetCashOutHistoryInSiteDBCriteria.cs" />
+    <Compile Include="Criteria\IPInfo\GetIPV4InfoByTopCountryCriteria.cs" />
+    <Compile Include="Criteria\IPInfo\GetIPV4InfoCriteria.cs" />
+    <Compile Include="Criteria\IPInfo\GetIPV6InfoCriteria.cs" />
     <Compile Include="Criteria\SiteDB_MixParlayDetailCriteria.cs" />
     <Compile Include="Criteria\SiteDB_BetListByCustInfoByRefnoCriteria.cs" />
     <Compile Include="Criteria\BetListByCustInfoByRefnoCriteria.cs" />
@@ -626,6 +635,7 @@
     <Compile Include="DataAccess\ReportDataAccess.cs" />
     <Compile Include="DataAccess\Results\IAGCasinoResultDataAccess.cs" />
     <Compile Include="DataAccess\Results\AGCasinoResultDataAccess.cs" />
+    <Compile Include="DataAccess\Results\IPInfoDataAccess.cs" />
     <Compile Include="DataAccess\Results\IVirtualTennisResultDataAccess.cs" />
     <Compile Include="DataAccess\Results\MetricGamingResultDataAccess.cs" />
     <Compile Include="DataAccess\Results\IMetricGamingResultDataAccess.cs" />

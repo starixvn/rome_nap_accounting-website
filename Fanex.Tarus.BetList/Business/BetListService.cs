@@ -8,6 +8,10 @@
     using System.Linq;
     using System.Text;
     using System.Text.RegularExpressions;
+    using System.Threading.Tasks;
+    using Alpha.IPInfo.DataAccess;
+    using Alpha.IPInfo.Models;
+    using Alpha.IPInfo.Services;
     using Constants;
     using Core;
     using Criteria;
@@ -17,12 +21,18 @@
     using Fanex.BetList.Core.Entities;
     using Fanex.BetList.Core.Factories;
     using Fanex.BetList.Core.TicketHelper;
+    using Fanex.Caching;
     using Fanex.Common;
     using Fanex.CustomerSetting.Module.Core;
     using Fanex.Data;
+    using Fanex.Logging.Extensions.Web;
+    using Fanex.Tarus.BetList.DataAccess.Results;
     using Fanex.Tarus.BetList.Param;
+    using Fanex.Tarus.Infrastructure.Configurations;
     using Models;
     using Resources;
+    using Sunplus.Accounting.Business;
+    using Sunplus.Accounting.Core.Common;
     using Sunplus.Accounting.Core.Extensions;
     using Sunplus.Accounting.DataAccess.Report;
 
@@ -33,7 +43,9 @@
         private readonly ITicketHelper ticketHelper = new TicketHelper();
         private const int DefaultBetdaqId = -1;
         private readonly List<int> SabaclubProductIdList = new List<int> { 42, 66 };
-
+        private readonly IIPInfoService _ipInfoService;
+        private readonly ICacheService _cacheService;
+        private readonly IIPInfoDataAccess _iPInfoDataAccess;
         private readonly Func<DataRow, TicketDetail> mapTicketObjectFunction = r => new TicketDetail
         {
             Ticket = new Ticket
@@ -117,6 +129,7 @@
             SuperPositionTaking2 = r.Table.Columns.Contains("spositiontaking2") ? Converter.ToDecimal(r["spositiontaking2"]) : 0,
             IsChinaView = r.Table.Columns.Contains("IsChinaView") && Converter.ToBool(r["IsChinaView"]),
             LeagueGroupId = r.Table.Columns.Contains("LeagueGroupId") ? Converter.ToInt(r["LeagueGroupId"]) : 0,
+            IP = Converter.ToString2(r["ip"])
         };
 
         private readonly Func<DataRow, TicketDetail> mapTicketObjectFunctionForMixParlay = r => new TicketDetail
@@ -153,11 +166,53 @@
             OddHtml = string.Empty,
             StakeHtml = string.Empty,
             IsChinaView = r.Table.Columns.Contains("IsChinaView") && Converter.ToBool(r["IsChinaView"]),
-            LeagueGroupId = r.Table.Columns.Contains("LeagueGroupId") ? Converter.ToInt(r["LeagueGroupId"]) : 0
+            LeagueGroupId = r.Table.Columns.Contains("LeagueGroupId") ? Converter.ToInt(r["LeagueGroupId"]) : 0,
         };
         public BetListService()
         {
+            _cacheService = new CacheService();
+            _iPInfoDataAccess = new IPInfoDataAccess();
+            _ipInfoService = new IPInfoService(new IPInformationConfig
+            {
+                IPV4TopCountries = AppSettings.IPV4TopCountries,
+                IPV4TopCountriesCacheInMinutes = AppSettings.IPV4TopCountriesCacheInMinutes,
+                IPV4CacheInMinutes = AppSettings.IPV4CacheInMinutes,
+                IPV6CacheInMinutes = AppSettings.IPV6CacheInMinutes
+            }, _cacheService, _iPInfoDataAccess);
             _betListRepository = new BetListRepository();
+        }
+
+        public async Task AssignCountry(IEnumerable<TicketDetail> tickets)
+        {
+            var ipList = tickets
+             .Where(t => !string.IsNullOrWhiteSpace(t.IP) && (AppSession.ViewIPVN || !IpManagement.IsVNIP(t.IP.Trim())))
+             .Select(t => t.IP.Trim())
+             .Distinct();
+            var countryDictionary = await GetCountries(ipList);
+
+            string country;
+            foreach (var item in tickets)
+            {
+                if (!string.IsNullOrWhiteSpace(item.IP)
+                    && countryDictionary.TryGetValue(item.IP.Trim(), out country))
+                {
+                    ((TicketDetail)item).Country = country;
+                }
+            }
+        }
+
+        private async Task<IDictionary<string, string>> GetCountries(IEnumerable<string> ipList)
+        {
+            try
+            {
+                return await _ipInfoService.GetCountries(ipList);
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.Handle(ex);
+            }
+
+            return new Dictionary<string, string>();
         }
 
         public IList<TicketDetail> GetMixParlayTickets(long transId, long refNo, int custId)
@@ -190,6 +245,7 @@
 
                 var mainTickets = _betListRepository.Fetch<TicketDetail>(mainCriteria, mapTicketObjectFunctionForMixParlay);
                 var tickets = siteDBTickets.Concat(mainTickets).Distinct().ToList();
+                AssignCountry(tickets).GetAwaiter().GetResult();
                 var factory = new BetListHTMLFactory();
                 var builder = factory.CreateBuilder();
                 ticketHelper.IsShowOddsWithChoice = true;
@@ -241,6 +297,7 @@
                         betDetail.OddHtml = builder.BuildOdds(betDetail.Ticket, outputLiveCasino, funcGetOddsTypeName);
                         betDetail.StatusHtml = betListHelper.BuildStatus(betDetail.Ticket, ticketHelper, outputLiveCasino, factory, builder);
                     }
+                    AssignCountry(betDetails).GetAwaiter().GetResult();
 
                     return betDetails;
                 }
@@ -304,6 +361,7 @@
 
                 RemoveSabaWord(betDetail);
             }
+            AssignCountry(tickets).GetAwaiter().GetResult();
 
             return tickets;
         }
@@ -502,9 +560,11 @@
                         betDetail.StakeHtml = BetListExtension.BuildStake(betDetail, ref builder, ticketHelper);
                         betDetail.OddHtml = builder.BuildOdds(betDetail.Ticket, ticketData, funcGetOddsTypeName);
                         betDetail.StatusHtml = betlistHelper.BuildStatus(betDetail.Ticket, ticketHelper, ticketData, factory, builder);
+                        betDetail.IP = betDetail.Ticket.IP;
                         newTickets.Add(betDetail);
 
                     }
+                    AssignCountry(newTickets).GetAwaiter().GetResult();
 
                     return new KeyValuePair<string, IList<TicketDetail>>(string.Empty, newTickets);
                 }
@@ -558,7 +618,9 @@
                     ticket.StakeHtml = BetListExtension.BuildStake(ticket, ref builder, ticketHelper);
                     ticket.OddHtml = builder.BuildOdds(ticket.Ticket, outputLiveCasino, funcGetOddsTypeName);
                     ticket.StatusHtml = betListHelper.BuildStatus(ticket.Ticket, ticketHelper, outputLiveCasino, factory, builder);
+                    ticket.IP = ticket.Ticket.IP;
                 }
+                AssignCountry(tickets).GetAwaiter().GetResult();
 
                 return new KeyValuePair<string, IList<TicketDetail>>(string.Empty, tickets);
             }
@@ -603,7 +665,9 @@
                     {
                         systempParlayModel.HideCombinationDetail = true;
                     }
+                    betDetail.IP = betDetail.Ticket.IP;
                 }
+                AssignCountry(systempParlayModel.TicketsDetailList).GetAwaiter().GetResult();
 
                 if (systempParlayModel.SystemParlayChoice != null)
                 {
@@ -623,6 +687,8 @@
                             "<div class=\"hide\" id=\"combinationTypeComboNames\">{0}</div><div class=\"line\"></div>",
                             combinationTypeComboNames
                         );
+                        firstTicketDetail.IP = firstTicketDetail.Ticket.IP;
+
                     }
 
                     var factoryParlayDetaily = new BetListHTMLFactory();
@@ -641,7 +707,9 @@
                             + (totalItem > 0 ? "</div>" + "<div class=\"line\"></div>" : "</div>");
 
                         firstTicketDetail.ChoiceHtml += betDetail.ChoiceHtml;
+                        betDetail.IP = betDetail.Ticket.IP;
                     }
+                    AssignCountry(systempParlayModel.SystemParlayChoice).GetAwaiter().GetResult();
                 }
 
                 systempParlayModel.SystemParlayDetail.EventList = systempParlayModel.SystemParlayDetail.EventList.OrderBy(i => SystemParlayConstants.GetStatusOrderId(i.Status)).ToList();
@@ -910,7 +978,8 @@
                             ChoiceHtml = string.Empty,
                             OddHtml = string.Empty,
                             StakeHtml = string.Empty,
-                            Creator = Converter.ToString2(r["creator"])
+                            Creator = Converter.ToString2(r["creator"]),
+                            IP = Converter.ToString2(r["ip"])
                         };
 
                         betDetails.Add(ticketDetailTmp);
@@ -955,7 +1024,9 @@
                         betDetail.StakeHtml = BetListExtension.BuildStake(betDetail, ref builder, ticketHelper);
                         betDetail.OddHtml = builder.BuildOdds(betDetail.Ticket, outputLiveCasino, funcGetOddsTypeName);
                         betDetail.StatusHtml = betlistHelper.BuildStatus(betDetail.Ticket, ticketHelper, outputLiveCasino, factory, builder);
+                        betDetail.IP = betDetail.Ticket.IP;
                     }
+                    AssignCountry(betDetails).GetAwaiter().GetResult();
 
                     return betDetailsModel;
                 }
@@ -1101,7 +1172,8 @@
                             FinalHomeScore = Converter.ToString2(r["finalhomescore"]),
                             FinalAwayScore = Converter.ToString2(r["finalawayscore"]),
                             HTHomeScore = Converter.ToString2(r["hthomescore"]),
-                            HTAwayScore = Converter.ToString2(r["htawayscore"])
+                            HTAwayScore = Converter.ToString2(r["htawayscore"]),
+                            IP = Converter.ToString2(r["ip"])
                         };
 
                         foreach (DataRow row in ticketEventTable.Rows)
@@ -1148,8 +1220,9 @@
                         betDetail.StakeHtml = BetListExtension.BuildStake(betDetail, ref builder, ticketHelper);
                         betDetail.OddHtml = builder.BuildOdds(betDetail.Ticket, outputLiveCasino, funcGetOddsTypeName);
                         betDetail.StatusHtml = betListHelper.BuildStatus(betDetail.Ticket, ticketHelper, outputLiveCasino, factory, builder);
+                        betDetail.IP = betDetail.Ticket.IP;
                     }
-
+                    AssignCountry(betDetails).GetAwaiter().GetResult();
                     return betDetails;
                 }
             }
@@ -1317,7 +1390,7 @@
             else if (ReportService.IsPP(betTypeId))
             {
                 sportName += ticketHelper.GetSportNameById(SportContants.PP);
-            }           
+            }
             else if (ReportService.IsVirtualSports2(betTypeId))
             {
                 const int VirtualSports2ProductId = 27;
