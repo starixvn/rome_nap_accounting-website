@@ -18,7 +18,7 @@
     padding: 4px;
 }
 
-#ckbGlobalValue {
+#ckbGlobalValue, #ckbIsUAT {
     margin: auto;
     vertical-align: middle;
 }

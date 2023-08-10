@@ -11,6 +11,7 @@
         public BetLimitInsCriteria()
         {
             BetLimits = new List<BetLimitModel>();
+            SettingStatus = WebSettings.SettingStatus;
         }
 
         [SpParam(Ignored = true)]
@@ -58,7 +59,7 @@
 
         public string ErrMsg { get; set; }
 
-        public byte SettingStatus => WebSettings.SettingStatus;
+        public byte SettingStatus { get; set; }
 
         public override string GetSettingKey()
             => "Acc_InitializingGlobal_BetLimitIns";
