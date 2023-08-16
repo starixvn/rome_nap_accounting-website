@@ -55,6 +55,8 @@ var VirtualRateController = function () {
         $("#chk-lockVRBasketball").attr("checked", customerVirtualRateModel.LockVirtualRateBasketballStatus ? "checked" : null);
         $("#chk-lockVROther").attr("checked", customerVirtualRateModel.LockVirtualRateOtherStatus ? "checked" : null);
 
+        $("#chk-enable-accumulate-balance").attr("checked", customerVirtualRateModel.IsApplyVRPlushAccumulateBanlance ? "checked" : null);
+
         self.bindingEvent();
         self.enableEditSetting(customerVirtualRateModel.EnableVirtualRate);
 
@@ -484,9 +486,10 @@ var VirtualRateController = function () {
         } else {
             $("#result-message").empty();
         }
+
         var url = window.rootUrl + "VirtualRate/GetConfirmUpdateMessage";
         var params = {
-            custId: custId
+            CustId: custId
         };
         $.ajax({
             type: "POST",
@@ -505,6 +508,8 @@ var VirtualRateController = function () {
                         criteria.LockVirtualRateStatus = $("#chk-lockVR").attr("checked") ? true : false;
                         criteria.LockVirtualRateBasketballStatus = $("#chk-lockVRBasketball").attr("checked") ? true : false;
                         criteria.LockVirtualRateOtherStatus = $("#chk-lockVROther").attr("checked") ? true : false;
+                        criteria.IsApplyAccumulateBalance = $("#chk-enable-accumulate-balance").is(":checked");
+                        criteria.IsApplyDownlineAccumulateBalance = $("#chk-apply-downline-accumulate-balance") !== undefined && $("#chk-apply-downline-accumulate-balance").is(":checked");
 
                         var chkLockMaster, chkLockAgent, chkLockMember = 0;
                         var chkEnableMaster, chkEnableAgent, chkEnableMember = 0;
@@ -516,6 +521,7 @@ var VirtualRateController = function () {
                         chkEnableMaster = ($("#chk-enableVRMaster") !== undefined && $("#chk-enableVRMaster").attr("checked")) ? 1 : 0;
                         chkEnableAgent = ($("#chk-enableVRAgent") !== undefined && $("#chk-enableVRAgent").attr("checked")) ? 1 : 0;
                         chkEnableMember = ($("#chk-enableVRMember") !== undefined && $("#chk-enableVRMember").attr("checked")) ? 1 : 0;
+
 
                         var additionalAction = '<ROOT><VR Unlock3="{0}"  Unlock2="{1}" Unlock1="{2}" Enable3="{3}"  Enable2="{4}" Enable1="{5}" /></ROOT>';
                         criteria.AdditionalActions = additionalAction.format(chkLockMaster, chkLockAgent, chkLockMember, chkEnableMaster, chkEnableAgent, chkEnableMember);

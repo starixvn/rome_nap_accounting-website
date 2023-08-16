@@ -447,4 +447,16 @@
   <data name="VRLockBasketball" xml:space="preserve">
     <value>Basketball Virtual Rate Lock</value>
   </data>
+  <data name="ApplyVRAccumulatedBalance" xml:space="preserve">
+    <value>Apply VR Accumulated Balance</value>
+  </data>
+  <data name="ApplyVRAccumulateBalanceNote" xml:space="preserve">
+    <value>Apply only VR+ (Except E-Sports)</value>
+  </data>
+  <data name="ApplyToAllDownlines" xml:space="preserve">
+    <value>Apply to all downlines</value>
+  </data>
+  <data name="VRPlushAccBalance" xml:space="preserve">
+    <value>VR Accumulated Balance</value>
+  </data>
 </root>

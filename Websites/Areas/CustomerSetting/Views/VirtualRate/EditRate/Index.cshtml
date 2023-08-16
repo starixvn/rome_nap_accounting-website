@@ -103,6 +103,20 @@
                     </tr>
                     <tr>
                         <td nowrap="true" class="r" colspan="@leftColumn">
+                            @Customer_Labels.ApplyVRAccumulatedBalance
+                        </td>
+                        <td nowrap="true" class="l" colspan="@rightColumn">
+                            <input id="chk-enable-accumulate-balance" type="checkbox" value="false" />
+                            <label style="vertical-align:top;">@Customer_Labels.ApplyVRAccumulateBalanceNote</label>
+                            @if (roleId > 1)
+                            {
+                                <input id="chk-apply-downline-accumulate-balance" type="checkbox" value="false" />
+                                <label style="vertical-align:top;">@Customer_Labels.ApplyToAllDownlines</label>
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td nowrap="true" class="r" colspan="@leftColumn">
                             @Customer_Labels.VirtualRate_LockVRLabel
                         </td>
                         <td nowrap="true" class="l" colspan="@rightColumn">
@@ -182,6 +196,7 @@
         var tableColumnCount = @tableColumnCount;
         var isManageVirtualRateAccess = @isManageVirtualRateAccess;
         var custId = @Model.CustId;
+        var roleId = @roleId;
         var viewResources = {
             Live: '@Customer_Labels.Live',
             Non_Live: '@Customer_Labels.Non_Live',
@@ -197,7 +212,7 @@
             VirtualRate_CopyBasketballToAllSportTypeBettypeFromHDP: '@Customer_Labels.VirtualRate_CopyBasketballToAllSportTypeBettypeFromHDP'
         };
 
-        $('.additionalaction').click(function () {   
+        $('.additionalaction').click(function () {
             $(this).toggleClass('additionalexpanded');
             $('#additionalaction').toggle();
         });

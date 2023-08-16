@@ -42,6 +42,7 @@
                     result.LockVirtualRateStatus = Converter.ToDecimal(reader["VRLockedStatus_Soccer"]) != 0;
                     result.LockVirtualRateBasketballStatus = Converter.ToDecimal(reader["VRLockedStatus_Basketball"]) != 0;
                     result.LockVirtualRateOtherStatus = Converter.ToDecimal(reader["VRLockedStatus_OS"]) != 0;
+                    result.IsApplyVRPlushAccumulateBanlance = Converter.ToDecimal(reader["VRAccumulated_Balance"]) != 0;
                 }
 
                 if (reader.NextResult())

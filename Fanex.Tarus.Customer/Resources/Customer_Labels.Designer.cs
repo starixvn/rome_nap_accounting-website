@@ -133,6 +133,33 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Apply to all downlines.
+        /// </summary>
+        public static string ApplyToAllDownlines {
+            get {
+                return ResourceManager.GetString("ApplyToAllDownlines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Apply only VR+ (Except E-Sports).
+        /// </summary>
+        public static string ApplyVRAccumulateBalanceNote {
+            get {
+                return ResourceManager.GetString("ApplyVRAccumulateBalanceNote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Apply VR Accumulated Balance.
+        /// </summary>
+        public static string ApplyVRAccumulatedBalance {
+            get {
+                return ResourceManager.GetString("ApplyVRAccumulatedBalance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Basketball.
         /// </summary>
         public static string Basketball {
@@ -1047,6 +1074,15 @@ namespace Fanex.Tarus.Customer.Resources {
         public static string VRLockSoccer {
             get {
                 return ResourceManager.GetString("VRLockSoccer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to VR Accumulated Balance.
+        /// </summary>
+        public static string VRPlushAccBalance {
+            get {
+                return ResourceManager.GetString("VRPlushAccBalance", resourceCulture);
             }
         }
     }

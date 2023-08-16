@@ -24,6 +24,8 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
 
         public const int VRLockOther = 830;
 
+        public const int VRPlushAccBalance = 839;
+
         public const int LicenseeStatus = 2802;
 
         public const int LicenseeRate = 2800;

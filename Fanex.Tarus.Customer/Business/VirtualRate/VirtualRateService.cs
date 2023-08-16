@@ -232,6 +232,14 @@
                     EnableVirtualRate = Converter.ToInt(xmlLoad.Attribute("EnableVirtualrate").Value) != 0
                 });
             }
+            else if (historyLog.ActionId == UpdateTypeConstants.VRPlushAccBalance)
+            {
+                historyLogDetailList.Add(new HistoryLogDetailModel
+                {
+                    UpdateType = historyLog.ActionId,
+                    VRPlushAccBalance = Converter.ToInt(xmlLoad.Attribute("VRAccumulatedBalance").Value) != 0
+                });
+            }
             else
             {
                 var logBySportList = new List<LogBySportEntity>();
