@@ -38,6 +38,8 @@ namespace Fanex.Tarus.Customer.Entities.VirtualRate
 
         public string ActualExchangeRate { get; set; }
 
+        public bool IsApplyVRPlushAccumulateBanlance { get; set; }
+
         public List<SportVirtualRateModel> SportVirtualRateList { get; set; }
 
         public List<int> VirtualRateValueRange { get; set; }

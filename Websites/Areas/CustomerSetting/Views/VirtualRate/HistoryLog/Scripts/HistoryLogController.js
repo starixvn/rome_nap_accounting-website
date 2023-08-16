@@ -12,6 +12,7 @@ var HistoryLogController = function () {
             VRLockOther: 830,
             VRLockBasketball: 837,
             Rate: 801,
+            VRPlushAccBlance: 839,
             LicenseeStatus: 2802,
             LicenseeRate: 2800
         },
@@ -132,7 +133,8 @@ var HistoryLogController = function () {
                         detailHistoryLog.UpdateType == self.Constants.UpdateType.VRLock ||
                         detailHistoryLog.UpdateType == self.Constants.UpdateType.VRLockBasketball ||
                         detailHistoryLog.UpdateType == self.Constants.UpdateType.VRLockOther ||
-                        detailHistoryLog.UpdateType == self.Constants.UpdateType.LicenseeStatus) {
+                        detailHistoryLog.UpdateType == self.Constants.UpdateType.LicenseeStatus ||
+                        detailHistoryLog.UpdateType == self.Constants.UpdateType.VRPlushAccBlance) {
                         if (isFirstRow) {
                             firstInfo = {
                                 detail: detailHistoryLog,
@@ -164,6 +166,14 @@ var HistoryLogController = function () {
                                     Name: "ColSport",
                                     Value: viewResources.VRLockOther + ": " +
                                         (detailHistoryLog.VRLockOther ? viewResources.Enabled : viewResources.Disabled),
+                                    MergeColNumber: maxColumnNumber - 3
+                                });
+                            }
+                            else if (detailHistoryLog.UpdateType == self.Constants.UpdateType.VRPlushAccBlance) {
+                                columns.push({
+                                    Name: "ColSport",
+                                    Value: viewResources.VRPlushAccBalance + ": " +
+                                        (detailHistoryLog.VRPlushAccBalance ? viewResources.Enabled : viewResources.Disabled),
                                     MergeColNumber: maxColumnNumber - 3
                                 });
                             }
@@ -265,7 +275,16 @@ var HistoryLogController = function () {
                 MergeColNumber: (maxColumnNumber - 3)
             });
 
-        } else {
+        }
+        else if (logInfo.UpdateType == self.Constants.UpdateType.VRPlushAccBlance) {
+            columns.push({
+                Name: "ColSport",
+                Value: viewResources.VRPlushAccBalance + ": " +
+                    (logInfo.VRPlushAccBalance ? viewResources.Enabled : viewResources.Disabled),
+                MergeColNumber: maxColumnNumber - 3
+            });
+        }
+        else {
             columns.push({
                 Name: "ColSport",
                 Value: logInfo.SportName
