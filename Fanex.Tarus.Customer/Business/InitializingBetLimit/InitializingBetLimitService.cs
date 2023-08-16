@@ -32,7 +32,7 @@
 
         IWorkbook GetExcelFile();
 
-        ValidateBetLimitResponse ValidateSetting(HttpPostedFileBase uploadFile, bool isGlobalValue);
+        ValidateBetLimitResponse ValidateSetting(HttpPostedFileBase uploadFile, bool isGlobalValue, byte settingStatus);
 
         Result InsertSetting(IEnumerable<BetLimitModel> betLimitModels, int userId, string ip);
 
@@ -188,7 +188,7 @@
             return excelFile;
         }
 
-        public ValidateBetLimitResponse ValidateSetting(HttpPostedFileBase uploadFile, bool isGlobalValue)
+        public ValidateBetLimitResponse ValidateSetting(HttpPostedFileBase uploadFile, bool isGlobalValue, byte settingStatus)
         {
             var betLimits = new List<BetLimitModel>();
             var siteIds = new List<int>();
@@ -276,7 +276,8 @@
                 var criteria = new BetLimitCheckCriteria
                 {
                     BetLimits = betLimits,
-                    IsCheck = isGlobalValue
+                    IsCheck = isGlobalValue,
+                    SettingStatus = settingStatus
                 };
 
                 var result = dataAccess.CheckSetting(criteria);
