@@ -189,7 +189,8 @@
             return (4101 <= betTypeId && betTypeId <= 4300) ||
                 (6701 <= betTypeId && betTypeId <= 7000);
         }
-        
+        public static bool IsVirtualSports3(int betTypeId)
+            => 5302 <= betTypeId && betTypeId <= 5399;
 
         public static bool IsVirtualSports2(int betTypeId)
         {
@@ -264,9 +265,7 @@
             if (3801 <= betTypeId && betTypeId <= 3899)
                 return SportContants.VGaming;
             if (6401 <= betTypeId && betTypeId <= 6700)
-                return SportContants.Joker;
-            if (5302 <= betTypeId && betTypeId <= 5399)
-                return SportContants.VirtualSports3;
+                return SportContants.Joker;            
             if (5701 <= betTypeId && betTypeId <= 5799)
                 return SportContants.GDG;
             if (5401 <= betTypeId && betTypeId <= 5499)
