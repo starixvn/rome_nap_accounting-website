@@ -19,6 +19,7 @@ function SearchSBSM(pageSize, pageIndex) {
         },
         success: function (data) {
             cachedSBSMData = data;
+            RenderDummyProduct();
             RenderSBSMData(data, pageSize, pageIndex);
         },
         complete: function () {
@@ -193,6 +194,16 @@ function EditSBSM(index) {
         modal: true,
         width: 1000,
         height: 'auto'
+    });
+}
+
+function RenderDummyProduct() {
+    $("#SBSMDummyProductId").html("");
+    var data = cachedSBSMData.DummyProducts.map(p => ({ id: p.Value, text: p.Text })).sort(compareNumbers);
+    data.unshift({ id: "", text: "N/A" });
+    $("#SBSMDummyProductId").select2({
+        data: data,
+        width: "185px"
     });
 }
 
@@ -380,6 +391,10 @@ function GetBetType() {
     });
 }
 
+function compareNumbers(a, b) {
+    return a - b;
+}
+
 $(document).ready(function () {
     try {
         $("#edit-SBSM-form").dialog('destroy').remove();
@@ -387,7 +402,6 @@ $(document).ready(function () {
 
     RenderProductDdl();
     $("#SBSMRealProductId").select2({ width: "185px" });
-    $("#SBSMDummyProductId").select2({ width: "185px" });
     $("#SBSMTablePT").select2({ width: "185px", dropdownAutoWidth: true, placeholder: "N/A" });
     $("#SBSMTableBetSetting").select2({ width: "185px", dropdownAutoWidth: true, placeholder: "N/A" });
     $("#SBSMTableBettrans").select2({ width: "185px", dropdownAutoWidth: true, placeholder: "N/A" });

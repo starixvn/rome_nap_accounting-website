@@ -1,10 +1,6 @@
 ﻿@using Fanex.Tarus.Admin.ManageProductSetting.ViewModel;
 
 @model ManageProductSettingViewModel
-@{ 
-    var dummyProducts = Model.Products.ToList();
-    dummyProducts.Insert(0, new SelectListItem { Value = "", Text = "N/A" });
-}
 <style>
     .setting-edit {
         width: 180px;
@@ -39,7 +35,7 @@
         <tr>
             <td><label for="SBSMProduct">DummyProduct</label></td>
             <td>
-                @Html.DropDownList("SBSMDummyProductId", dummyProducts, new { id = "SBSMDummyProductId", @class = "setting-edit" })
+                <select id="SBSMDummyProductId" class="setting-edit"></select>
             </td>
             <td style="width: 40px;"></td>
             <td><label for="SBSMBetTypeRefPT">BetTypeRefPT</label></td>
