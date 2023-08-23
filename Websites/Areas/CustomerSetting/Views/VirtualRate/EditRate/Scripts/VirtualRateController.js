@@ -511,20 +511,30 @@ var VirtualRateController = function () {
                         criteria.IsApplyAccumulateBalance = $("#chk-enable-accumulate-balance").is(":checked");
                         criteria.IsApplyDownlineAccumulateBalance = $("#chk-apply-downline-accumulate-balance") !== undefined && $("#chk-apply-downline-accumulate-balance").is(":checked");
 
-                        var chkLockMaster, chkLockAgent, chkLockMember = 0;
+                        var chkSCLockMaster, chkSCLockAgent, chkSCLockMember = 0;
+                        var chkBBLockMaster, chkBBLockAgent, chkBBLockMember = 0;
+                        var chkOSLockMaster, chkOSLockAgent, chkOSLockMember = 0;
                         var chkEnableMaster, chkEnableAgent, chkEnableMember = 0;
 
-                        chkLockMaster = ($("#chk-lockVRMaster") !== undefined && $("#chk-lockVRMaster").attr("checked")) ? 1 : 0;
-                        chkLockAgent = ($("#chk-lockVRAgent") !== undefined && $("#chk-lockVRAgent").attr("checked")) ? 1 : 0;
-                        chkLockMember = ($("#chk-lockVRMember") !== undefined && $("#chk-lockVRMember").attr("checked")) ? 1 : 0;
+                        chkSCLockMaster = $("#chk-lockSoccerVRMaster") !== undefined && $("#chk-lockSoccerVRMaster").attr("checked") ? 1 : 0;
+                        chkSCLockAgent = $("#chk-lockSoccerVRAgent") !== undefined && $("#chk-lockSoccerVRAgent").attr("checked") ? 1 : 0;
+                        chkSCLockMember = $("#chk-lockSoccerVRMember") !== undefined && $("#chk-lockSoccerVRMember").attr("checked") ? 1 : 0;
 
-                        chkEnableMaster = ($("#chk-enableVRMaster") !== undefined && $("#chk-enableVRMaster").attr("checked")) ? 1 : 0;
-                        chkEnableAgent = ($("#chk-enableVRAgent") !== undefined && $("#chk-enableVRAgent").attr("checked")) ? 1 : 0;
-                        chkEnableMember = ($("#chk-enableVRMember") !== undefined && $("#chk-enableVRMember").attr("checked")) ? 1 : 0;
+                        chkBBLockMaster = $("#chk-lockBasketballVRMaster") !== undefined && $("#chk-lockBasketballVRMaster").attr("checked") ? 1 : 0;
+                        chkBBLockAgent = $("#chk-lockBasketballVRAgent") !== undefined && $("#chk-lockBasketballVRAgent").attr("checked") ? 1 : 0;
+                        chkBBLockMember = $("#chk-locBasketballkVRMember") !== undefined && $("#chk-lockBasketballVRMember").attr("checked") ? 1 : 0;
 
 
-                        var additionalAction = '<ROOT><VR Unlock3="{0}"  Unlock2="{1}" Unlock1="{2}" Enable3="{3}"  Enable2="{4}" Enable1="{5}" /></ROOT>';
-                        criteria.AdditionalActions = additionalAction.format(chkLockMaster, chkLockAgent, chkLockMember, chkEnableMaster, chkEnableAgent, chkEnableMember);
+                        chkOSLockMaster = $("#chk-lockOtherSportsVRMaster") !== undefined && $("#chk-lockOtherSportsVRMaster").attr("checked") ? 1 : 0;
+                        chkOSLockAgent = $("#chk-lockOtherSportsVRAgent") !== undefined && $("#chk-lockOtherSportsVRAgent").attr("checked") ? 1 : 0;
+                        chkOSLockMember = $("#chk-lockOtherSportsVRMember") !== undefined && $("#chk-lockOtherSportsVRMember").attr("checked") ? 1 : 0;
+
+                        chkEnableMaster = $("#chk-enableVRMaster") !== undefined && $("#chk-enableVRMaster").attr("checked") ? 1 : 0;
+                        chkEnableAgent = $("#chk-enableVRAgent") !== undefined && $("#chk-enableVRAgent").attr("checked") ? 1 : 0;
+                        chkEnableMember = $("#chk-enableVRMember") !== undefined && $("#chk-enableVRMember").attr("checked") ? 1 : 0;
+
+                        var additionalAction = '<ROOT><VR UnlockSC3="{0}"  UnlockSC2="{1}" UnlockSC1="{2}" UnlockBB3="{3}"  UnlockBB2="{4}" UnlockBB1="{5}" UnlockOS3="{6}"  UnlockOS2="{7}" UnlockOS1="{8}" Enable3="{9}"  Enable2="{10}" Enable1="{11}" /></ROOT>';
+                        criteria.AdditionalActions = additionalAction.format(chkSCLockMaster, chkSCLockAgent, chkSCLockMember, chkBBLockMaster, chkBBLockAgent, chkBBLockMember, chkOSLockMaster, chkOSLockAgent, chkOSLockMember, chkEnableMaster, chkEnableAgent, chkEnableMember);
 
                         var sportLength = customerVirtualRateModel.SportVirtualRateList.length;
 
