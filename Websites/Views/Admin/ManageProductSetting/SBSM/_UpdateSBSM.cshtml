@@ -21,9 +21,9 @@
     </div>
     <table style="line-height: 28px; margin-top: 10px; border-collapse: collapse;">
         <tr>
-            <td><label for="SBSMProduct">Product</label></td>
+            <td><label for="SBSMProduct">RealProduct</label></td>
             <td>
-                @Html.DropDownList("SBSMProductId", Model.Products, new { id = "SBSMProductId", @class = "setting-edit" })
+                @Html.DropDownList("SBSMRealProductId", Model.Products, new { id = "SBSMRealProductId", @class = "setting-edit" })
             </td>
             <td style="width: 40px;"></td>
             <td><label for="SBSMSportTypeRefPT">SportTypeRefPT</label></td>
@@ -33,8 +33,10 @@
             <td><input id="SBSMSportTypeRefBetSetting" type="text" class="w180 edit_input_txt" /></td>
         </tr>
         <tr>
-            <td><label for="SBSMSportType">SportType</label></td>
-            <td><input id="SBSMSportType" type="text" class="w180 edit_input_txt" disabled /></td>
+            <td><label for="SBSMProduct">DummyProduct</label></td>
+            <td>
+                <select id="SBSMDummyProductId" class="setting-edit"></select>
+            </td>
             <td style="width: 40px;"></td>
             <td><label for="SBSMBetTypeRefPT">BetTypeRefPT</label></td>
             <td><input id="SBSMBetTypeRefPT" type="text" class="w180 edit_input_txt" /></td>
@@ -43,8 +45,8 @@
             <td><input id="SBSMBetTypeRefBetSetting" type="text" class="w180 edit_input_txt" /></td>
         </tr>
         <tr>
-            <td><label for="SBSMBetType">BetType</label></td>
-            <td><input id="SBSMBetType" type="text" class="w180 edit_input_txt" disabled /></td>
+            <td><label for="SBSMSportType">SportType</label></td>
+            <td><input id="SBSMSportType" type="text" class="w180 edit_input_txt" disabled /></td>
             <td style="width: 40px;"></td>
             <td><label for="ddlSBSMTablePT">TablePT</label></td>
             <td>
@@ -57,8 +59,8 @@
             </td>
         </tr>
         <tr>
-            <td><label for="SBSMIsLicensee">IsLicensee</label></td>
-            <td><input id="SBSMIsLicensee" type="checkbox" disabled /></td>
+            <td><label for="SBSMBetType">BetType</label></td>
+            <td><input id="SBSMBetType" type="text" class="w180 edit_input_txt" disabled /></td>
             <td style="width: 40px;"></td>
             <td><label for="SBSMIsLivePT">IsLivePT</label></td>
             <td><input id="SBSMIsLivePT" type="checkbox" /></td>
@@ -69,8 +71,8 @@
             </td>
         </tr>
         <tr>
-            <td><label for="SBSMIsLive">IsLive</label></td>
-            <td><input id="SBSMIsLive" type="checkbox" disabled /></td>
+            <td><label for="SBSMIsLicensee">IsLicensee</label></td>
+            <td><input id="SBSMIsLicensee" type="checkbox" disabled /></td>
             <td style="width: 40px;"></td>
             <td><label for="SBSMSportTypeRefComm">SportTypeRefComm</label></td>
             <td><input id="SBSMSportTypeRefComm" type="text" class="w180 edit_input_txt" /></td>
@@ -79,8 +81,8 @@
             <td><input id="SBSMSportTypeRefWinlossLimit" type="text" class="w180 edit_input_txt" /></td>
         </tr>
         <tr>
-            <td><label for="SBSMSite">Site</label></td>
-            <td><input id="SBSMSite" type="text" class="w180 edit_input_txt" disabled /></td>
+            <td><label for="SBSMIsLive">IsLive</label></td>
+            <td><input id="SBSMIsLive" type="checkbox" disabled /></td>
             <td style="width: 40px;"></td>
             <td><label for="SBSMBetTypeRefComm">BetTypeRefComm</label></td>
             <td><input id="SBSMBetTypeRefComm" type="text" class="w180 edit_input_txt" /></td>
@@ -89,8 +91,8 @@
             <td><input id="SBSMBetTypeRefWinlossLimit" type="text" class="w180 edit_input_txt" /></td>
         </tr>
         <tr>
-            <td></td>
-            <td></td>
+            <td><label for="SBSMSite">Site</label></td>
+            <td><input id="SBSMSite" type="text" class="w180 edit_input_txt" disabled /></td>
             <td style="width: 40px;"></td>
             <td><label for="ddlSBSMTableComm">TableComm</label></td>
             <td>

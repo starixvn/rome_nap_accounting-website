@@ -19,6 +19,7 @@ function SearchSBSM(pageSize, pageIndex) {
         },
         success: function (data) {
             cachedSBSMData = data;
+            RenderDummyProduct();
             RenderSBSMData(data, pageSize, pageIndex);
         },
         complete: function () {
@@ -49,7 +50,8 @@ function RenderSBSMData(data, pageSize, pageIndex) {
         row.Columns.push({ Name: 'TableBettrans', Value: data.SbsmEntities[i].TableBettrans });
         row.Columns.push({ Name: 'SportTypeRefWinlossLimit', Value: data.SbsmEntities[i].SporttypeRefWinlossLimit });
         row.Columns.push({ Name: 'BetTypeRefWinlossLimit', Value: data.SbsmEntities[i].BettypeRefWinlossLimit });
-        row.Columns.push({ Name: 'Product', Value: '[' + data.SbsmEntities[i].ProductId + '] ' + data.SbsmEntities[i].ProductName });
+        row.Columns.push({ Name: 'RealProduct', Value: '[' + data.SbsmEntities[i].RealProductId + '] ' + data.SbsmEntities[i].RealProductName });
+        row.Columns.push({ Name: 'DummyProduct', Value: data.SbsmEntities[i].DummyProductId !== "" ? '[' + data.SbsmEntities[i].DummyProductId + '] ' + data.SbsmEntities[i].DummyProductName : "" });
         row.Columns.push({ Name: 'Edit', Value: '<img class="edit-entity" alt="Edit" title="Edit" src="../App_Themes/Images/icn_edit.png" style="cursor: pointer" onclick="EditSBSM(' + i + ')" >' });
         row.Columns.push({
             Name: 'Delete',
@@ -74,7 +76,8 @@ function RenderSBSMData(data, pageSize, pageIndex) {
                 { HeaderText: "Table Bettrans", Width: 100, Name: "TableBettrans", HeaderAlign: "center", CellAlign: "center" },
                 { HeaderText: "SportType RefWinlossLimit", Width: 100, Name: "SportTypeRefWinlossLimit", HeaderAlign: "center", CellAlign: "center" },
                 { HeaderText: "BetType RefWinlossLimit", Width: 100, Name: "BetTypeRefWinlossLimit", HeaderAlign: "center", CellAlign: "center" },
-                { HeaderText: "Product", Width: 100, Name: "Product", HeaderAlign: "center", CellAlign: "center" },
+                { HeaderText: "RealProduct", Width: 100, Name: "RealProduct", HeaderAlign: "center", CellAlign: "center" },
+                { HeaderText: "DummyProduct", Width: 100, Name: "DummyProduct", HeaderAlign: "center", CellAlign: "center" },
                 { HeaderText: "Edit", Width: 50, Name: "Edit", HeaderAlign: "center", CellAlign: "center" },
                 {
                     HeaderText: 'Delete <br/> <img class="edit-entity" title="Delete All" src="../App_Themes/Images/icn_del.png" style="cursor: pointer" onclick="DeleteAllSBSMSetting()" >' +
@@ -164,7 +167,8 @@ function CallDeleteRequest(request) {
 
 function EditSBSM(index) {
     $('#updateSBSMErrMsg').html('');
-    $('#SBSMProductId').val(cachedSBSMData.SbsmEntities[index].ProductId).trigger('change');
+    $('#SBSMRealProductId').val(cachedSBSMData.SbsmEntities[index].RealProductId).trigger('change');
+    $('#SBSMDummyProductId').val(cachedSBSMData.SbsmEntities[index].DummyProductId).trigger('change');
     $('#SBSMSportType').val(cachedSBSMData.SbsmEntities[index].SportType);
     $('#SBSMBetType').val(cachedSBSMData.SbsmEntities[index].BetType);
     $('#SBSMIsLive').prop('checked', cachedSBSMData.SbsmEntities[index].IsLive === 'True' || cachedSBSMData.SbsmEntities[index].IsLive === '1' ? true : false);
@@ -193,10 +197,21 @@ function EditSBSM(index) {
     });
 }
 
+function RenderDummyProduct() {
+    $("#SBSMDummyProductId").html("");
+    var data = cachedSBSMData.DummyProducts.map(p => ({ id: p.Value, text: p.Text })).sort(compareNumbers);
+    data.unshift({ id: "", text: "N/A" });
+    $("#SBSMDummyProductId").select2({
+        data: data,
+        width: "185px"
+    });
+}
+
 function UpdateSBSM(index) {
     parent.BlockUI();
     var request = { ...cachedSBSMData.SbsmEntities[index] };
-    request.ProductId = $('#SBSMProductId').val();
+    request.RealProductId = $('#SBSMRealProductId').val();
+    request.DummyProductId = $('#SBSMDummyProductId').val();
     request.SportTypeRefPT = $('#SBSMSportTypeRefPT').val();
     request.BetTypeRefPT = $('#SBSMBetTypeRefPT').val();
     request.IsLivePT = $('#SBSMIsLivePT').is(":checked") ? 1 : 0;
@@ -376,13 +391,17 @@ function GetBetType() {
     });
 }
 
+function compareNumbers(a, b) {
+    return a - b;
+}
+
 $(document).ready(function () {
     try {
         $("#edit-SBSM-form").dialog('destroy').remove();
     } catch { }
 
     RenderProductDdl();
-    $("#SBSMProductId").select2({ width: "185px" });
+    $("#SBSMRealProductId").select2({ width: "185px" });
     $("#SBSMTablePT").select2({ width: "185px", dropdownAutoWidth: true, placeholder: "N/A" });
     $("#SBSMTableBetSetting").select2({ width: "185px", dropdownAutoWidth: true, placeholder: "N/A" });
     $("#SBSMTableBettrans").select2({ width: "185px", dropdownAutoWidth: true, placeholder: "N/A" });

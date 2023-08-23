@@ -111,6 +111,7 @@
   </Function>
   <Function Name="Admin - Manage Product Setting - Sport Bettype Setting Matrix">
     <Setting Key="Acc_ReferenceSetting_ProductSel" SpName="Acc_ReferenceSetting_ProductSel" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_ReferenceSetting_ProductDummySel" SpName="Acc_ReferenceSetting_ProductDummySel" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="Acc_ReferenceSetting_SportTypeSel" SpName="Acc_ReferenceSetting_SportTypeSel" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="Acc_ReferenceSetting_BetTypeSel" SpName="Acc_ReferenceSetting_BetTypeSel" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="Acc_ReferenceSetting_TableSel" SpName="Acc_ReferenceSetting_TableSel" DbName="DBACC.bodb02.bodbAdminNet" />
