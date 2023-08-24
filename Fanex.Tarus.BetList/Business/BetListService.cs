@@ -1323,6 +1323,11 @@
                 const int VirtualSports2ProductId = 27;
                 sportName = GetProductName(VirtualSports2ProductId);
             }
+            else if (ReportService.IsVirtualSports3(betTypeId))
+            {
+                const int VirtualSports3ProductId = 77;
+                sportName = GetProductName(VirtualSports3ProductId);
+            }
             else if (ReportService.IsSabaclub(betTypeId))
             {
                 sportName = ticketHelper.GetSportNameById(SportContants.Sabaclub);

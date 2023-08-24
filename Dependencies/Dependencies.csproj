@@ -197,8 +197,8 @@
     <Reference Include="Fanex.BetList.KenoLottery, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.KenoLottery.2.0.0\lib\net461\Fanex.BetList.KenoLottery.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.LeapGaming, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.LeapGaming.2.0.0\lib\net461\Fanex.BetList.LeapGaming.dll</HintPath>
+    <Reference Include="Fanex.BetList.LeapGaming, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.LeapGaming.2.0.0.1\lib\net461\Fanex.BetList.LeapGaming.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.MaxGame, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.MaxGame.2.0.0\lib\net461\Fanex.BetList.MaxGame.dll</HintPath>
@@ -260,8 +260,8 @@
     <Reference Include="Fanex.BetList.VirtualGames, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.VirtualGames.2.0.0\lib\net461\Fanex.BetList.VirtualGames.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.VirtualSports, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.VirtualSports.2.0.0\lib\net461\Fanex.BetList.VirtualSports.dll</HintPath>
+    <Reference Include="Fanex.BetList.VirtualSports, Version=2.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.VirtualSports.2.0.0.2\lib\net461\Fanex.BetList.VirtualSports.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.VoidBridge, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.VoidBridge.2.0.0\lib\net461\Fanex.BetList.VoidBridge.dll</HintPath>
@@ -392,8 +392,8 @@
     <Reference Include="Fanex.RemotingRef, Version=1.5.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.RemotingRef.1.5.0.1\lib\net461\Fanex.RemotingRef.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Result.Core, Version=2.2.0.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core-NPOI.2.0.6.2.3.9.2\lib\net40\Fanex.Result.Core.dll</HintPath>
+    <Reference Include="Fanex.Result.Core, Version=2.2.0.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Result.Core-NPOI.2.0.6.2.3.9.3\lib\net40\Fanex.Result.Core.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Result.Core.AGCasino, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.AGCasino.1.0.1\lib\net40\Fanex.Result.Core.AGCasino.dll</HintPath>
@@ -403,7 +403,7 @@
       <HintPath>..\packages\Fanex.Result.Core.AllBetCasino.1.0.2\lib\net40\Fanex.Result.Core.AllBetCasino.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Result.Core.Base, Version=2.3.9.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core-NPOI.2.0.6.2.3.9.2\lib\net40\Fanex.Result.Core.Base.dll</HintPath>
+      <HintPath>..\packages\Fanex.Result.Core-NPOI.2.0.6.2.3.9.3\lib\net40\Fanex.Result.Core.Base.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Result.Core.Bitcoin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core-Bitcoin.1.0.0\lib\net40\Fanex.Result.Core.Bitcoin.dll</HintPath>
@@ -445,8 +445,8 @@
     <Reference Include="Fanex.Result.Core.SexyGaming, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.SexyGaming.1.0.0.4\lib\net40\Fanex.Result.Core.SexyGaming.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Result.Core.Sportsbook, Version=1.2.9.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core-Sportsbook.1.2.9.6\lib\net40\Fanex.Result.Core.Sportsbook.dll</HintPath>
+    <Reference Include="Fanex.Result.Core.Sportsbook, Version=1.2.9.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Result.Core-Sportsbook.1.2.9.7\lib\net40\Fanex.Result.Core.Sportsbook.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Result.Core.ThirdParty, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.ThirdPartyResult.1.0.0.3\lib\net461\Fanex.Result.Core.ThirdParty.dll</HintPath>

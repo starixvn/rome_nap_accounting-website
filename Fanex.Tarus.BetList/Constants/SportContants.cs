@@ -95,5 +95,6 @@
         public const int PlayerTips = 157;
         public const int Jili = 158;
         public const int YeeBet = 159;
+        public const int VirtualSports3 = 178;
     }
 }
