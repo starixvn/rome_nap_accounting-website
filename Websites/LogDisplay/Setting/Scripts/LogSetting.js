@@ -210,7 +210,7 @@
                                     for (var r1 = 0; r1 < 3; r1++) {
                                         var _elm, _etmp = { N: "", Val: "", P: "" };
                                         _elm = (typeof group.Vals[ind_g] != 'undefined') ? group.Vals[ind_g] : _etmp;
-                                        tpl_tracking += '<td class="collabel ' + (r1 == 0 ? 'first_column ': '') + '"><div class="colW1sp">' + _elm.N + '</div></td><td><div class="colW2sp ' + tbl + '-' + (i + 1) + '-' + _elm.P + clsDiff + '">' + _elm.Val + '</div></td>';
+                                        tpl_tracking += '<td class="collabel ' + (r1 == 0 ? 'first_column ' : '') + '"><div class="colW1sp">' + _elm.N + '</div></td><td><div class="colW2sp ' + tbl + '-' + (i + 1) + '-' + _elm.P + clsDiff + '">' + _elm.Val + '</div></td>';
                                         ind_g++;
                                     }
                                     tpl_tracking += '</tr>';
@@ -235,7 +235,7 @@
                                         tpl_tracking += '<tr>';
                                         var isFirst = true;
                                         for (let value of row) {
-                                            tpl_tracking += '<td' + (isFirst ? ' class="collabel first_column"' : '') + '><div class="c">' + (value == undefined ? '' : value) + '</div></td>';
+                                            tpl_tracking += '<td' + (isFirst ? ' class="collabel first_column"' : '') + '><div class="' + (isFirst ? '' : 'c') + '">' + (value == undefined ? '' : value) + '</div></td>';
                                             isFirst = false;
                                         }
 

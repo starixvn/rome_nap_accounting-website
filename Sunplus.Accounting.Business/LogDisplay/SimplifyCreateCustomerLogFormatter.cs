@@ -25,6 +25,8 @@ namespace Sunplus.Accounting.Business.LogDisplay
 
         private const int CompactLogActionId_Member = 95096;
 
+        private const int SabaCasinoProductId = 6;
+
         private readonly int[] ActionIds = {
             SettingsLogActionId_Master,
             CompactLogActionId_Master,
@@ -320,7 +322,8 @@ namespace Sunplus.Accounting.Business.LogDisplay
             {
                 var row = new List<string>();
                 var sportType = int.Parse(item.Attribute("SportType").Value);
-                var sportName = CacheRef.GetSportName(sportType);
+                var betType = int.Parse(item.Attribute("BetType").Value);
+                var sportName = IsSabaCasino(sportType, betType) ? CacheRef.GetProductName(SabaCasinoProductId) : CacheRef.GetSportName(sportType);
                 var isLive = int.Parse(item.Attribute("IsLive").Value) > 0;
                 row.Add((isLive ? "Live " : string.Empty) + sportName);
 
@@ -466,5 +469,8 @@ namespace Sunplus.Accounting.Business.LogDisplay
                     throw new ArgumentOutOfRangeException("actionId");
             }
         }
+
+        private bool IsSabaCasino(int sportType, int betType)
+            => sportType == 208 && betType == 2101;
     }
 }
