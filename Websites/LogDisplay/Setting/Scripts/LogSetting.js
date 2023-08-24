@@ -225,7 +225,7 @@
                                     tpl_tracking += '<tr style="' + (isMultiTables ? 'background-color: #ebf4fa' : '') + '">';
                                     var isFirst = true;
                                     for (let value of table.HeaderColumns) {
-                                        tpl_tracking += '<td class="' + (isMultiTables ? '' : 'collabel') + ' ' + (isFirst ? 'first_column ' : '') + '"><div class="c">' + value + '</div></td>';
+                                        tpl_tracking += '<td class="' + (isMultiTables ? '' : 'collabel') + ' ' + (isFirst ? 'first_column ' : '') + '"><div class="' + (isFirst ? 'b' : 'c') + '">' + value + '</div></td>';
                                         isFirst = false;
                                     }
 

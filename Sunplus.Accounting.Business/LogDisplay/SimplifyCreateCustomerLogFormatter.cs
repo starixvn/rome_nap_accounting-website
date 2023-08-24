@@ -118,9 +118,9 @@ namespace Sunplus.Accounting.Business.LogDisplay
                             var trackingTable = new TrackingTable();
                             trackingTable.HeaderColumns = new List<string>();
                             trackingTable.Rows = new List<List<string>>();
-                            var row = new List<string>();
                             foreach (var subGroupEle in subGroupsEles)
                             {
+                                var row = new List<string>();
                                 foreach (var subGroupItem in subGroupEle.Elements())
                                 {
                                     if (subGroupItem.Name.LocalName == "Name") // Row's label
@@ -139,9 +139,10 @@ namespace Sunplus.Accounting.Business.LogDisplay
                                         }
                                     }
                                 }
+
+                                trackingTable.Rows.Add(row);
                             }
 
-                            trackingTable.Rows.Add(row);
                             trackingGroup.Tables.Add(trackingTable);
                         }
 
