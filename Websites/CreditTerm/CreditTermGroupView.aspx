@@ -10,10 +10,13 @@
     <link href="../App_Themes/Public/table.css" rel="stylesheet" type="text/css" />
     <link href="../App_Themes/Public/input.css" rel="stylesheet" type="text/css" />
     <link href="../App_Themes/Public/common.css" rel="stylesheet" type="text/css" />
+    <link href="../js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css" rel="stylesheet" type="text/css" />
     <link href="css/style.css" rel="stylesheet" type="text/css" />
     <script src="../js/jQuery/jquery.js" type="text/javascript"></script>
+    <script src="../js/jQuery/UI/jquery-ui-1.8.10.custom.min.js" type="text/javascript"></script>
     <script src="../js/jQuery/Template/jquery.tmpl.js" type="text/javascript"></script>
     <script src="../js/Common/Functions.js" type="text/javascript"></script>
+    <script src="../js/Popup/confirmbox.js" type="text/javascript"></script>
     <script src="js/CreditTerm_V2.js?vs=135" type="text/javascript"></script>
     <script type="text/javascript">
         jQuery(document).ready(function () {

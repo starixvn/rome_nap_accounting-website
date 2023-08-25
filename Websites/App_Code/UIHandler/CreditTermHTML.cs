@@ -170,7 +170,7 @@ namespace Sunplus.Accounting.Presentation
                                 headline = string.Empty;
                                 removeitem = "<input type='checkbox' value='" + member.CustId + "|" + member.Username +
                                              "' name='chkuser' id='chkuser' />";
-                                jsheadline = "ExecuteCreditTerm('2','" + member.CustId + "');";
+                                jsheadline = "ExecuteCreditTerm('2','" + member.CustId + "|" + member.Username + "');";
                             }
 
                             roweven = roweven == string.Empty ? "evenrow" : string.Empty;
