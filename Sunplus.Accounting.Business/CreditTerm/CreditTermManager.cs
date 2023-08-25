@@ -20,9 +20,6 @@ namespace Sunplus.Accounting.Business.CreditTerm
 {
     public class CreditTermManager : ICreditTermManager
     {
-        private const string ALL_GROUPS_SESSION_KEY = "SelAllGroups";
-        private const string GROUPS_BY_ID_SESSION_KEY = "SelGroupsById";
-
         private ICreditTermGroupDAO _creditTermDAO = null;
 
         public CreditTermManager(ICreditTermGroupDAO creditTermDAO)
@@ -56,9 +53,6 @@ namespace Sunplus.Accounting.Business.CreditTerm
                                            });
 
                     listGroup = listGroup.OrderBy(m => m.Currency).ThenBy(m => m.HeadUsername).ToList();
-
-                    // add to Session
-                    SessionExtension.AddSession(HttpContext.Current.Session, ALL_GROUPS_SESSION_KEY, listGroup);
                 }
             }
             catch (Exception ex)
@@ -77,14 +71,10 @@ namespace Sunplus.Accounting.Business.CreditTerm
 
         public void ExportExcelAllGroup(string searchKey, string sortOrder, string sortName)
         {
-            List<Group> listGroup = (List<Group>)SessionExtension.GetSession(HttpContext.Current.Session, ALL_GROUPS_SESSION_KEY);
+            var listGroup = GetAllGroup();
             if (listGroup == null)
             {
-                listGroup = GetAllGroup();
-                if (listGroup == null)
-                {
-                    return;
-                }
+                return;
             }
 
             // clone new list for seaching and sorting
@@ -328,9 +318,6 @@ namespace Sunplus.Accounting.Business.CreditTerm
                         IsGroupHeadline = false
                     });
                 }
-
-                // add to Session
-                SessionExtension.AddSession(HttpContext.Current.Session, GROUPS_BY_ID_SESSION_KEY, memberList);
             }
 
             return memberList;
@@ -338,16 +325,11 @@ namespace Sunplus.Accounting.Business.CreditTerm
 
         public void ExportExcelMemberByGroupId(int groupId)
         {
-            List<GroupEditing> memberList = (List<GroupEditing>)SessionExtension.GetSession(HttpContext.Current.Session, GROUPS_BY_ID_SESSION_KEY);
+            var memberList = GetMemberByGroupId(groupId);
 
             if (memberList == null)
             {
-                memberList = GetMemberByGroupId(groupId);
-
-                if (memberList == null)
-                {
-                    return;
-                }
+                return;
             }
 
             #region ExcelTypes
