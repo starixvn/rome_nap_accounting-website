@@ -167,7 +167,6 @@
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Voidbridge");
             }        
-            }
 
             if (customerInfoViewModel.HideRNGLottery)
             {
