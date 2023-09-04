@@ -251,21 +251,6 @@
                 TemplateHandler.RemoveBlock(ref htmlcontent, "Macau");
             }
 
-            if (customerInfoViewModel.HideEnabledCheckBoxLiveCasino)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "EnableLiveCasino");
-            }
-            else
-            {
-                TemplateHandler.Assign(ref htmlcontent, "{liveCasinoOnClickFunction}", _renderLeftPanelService.GetProductStatusJsFunction(
-                    customerInfoViewModel.IsDeposit,
-                    customerInfoViewModel.CustId,
-                    customerInfoViewModel.UserName,
-                    customerInfoViewModel.SearchAccountRoleId,
-                    41,
-                    "Update Live Casino Status"));
-            }
-
             if (customerInfoViewModel.HideSabaclub)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "EnableSabaclub");
@@ -522,6 +507,20 @@
                                                renderLeftPanelParameter,
                                                "Update Virtual Sports 2 Status",
                                                27);
+                            break;
+
+                        case "41":
+                            _renderLeftPanelService.RenderEnableProductBoxDCS2(
+                                               row1,
+                                               productRow,
+                                               sg,
+                                               ref htmlcontent,
+                                               isManageCustomerAccess,
+                                               "LiveCasino",
+                                               renderLeftPanelParameter.IsShowLiveCasinoForCredit,
+                                               renderLeftPanelParameter,
+                                               "Update Live Casino Status",
+                                               41);
                             break;
 
                         case "54":
