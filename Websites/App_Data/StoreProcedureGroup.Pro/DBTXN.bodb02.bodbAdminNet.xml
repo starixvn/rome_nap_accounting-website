@@ -69,4 +69,7 @@
   <Function Name="ResetWinning">
     <Setting Key="Task_ResetWinning_Non3rdParty_Add" SpName="Task_ResetWinning_Non3rdParty_Add" DbName="DBTXN.bodb02.bodbAdminNet" TimeOut="0" />
   </Function>
+  <Function Name="Update ABDT">
+    <Setting Key="Age_ClearBalanceCust_Job_StatusCheck" SpName="Age_ClearBalanceCust_Job_StatusCheck" DbName="DBTXN.bodb02.bodbAdminNet" />
+  </Function>
 </Functions>

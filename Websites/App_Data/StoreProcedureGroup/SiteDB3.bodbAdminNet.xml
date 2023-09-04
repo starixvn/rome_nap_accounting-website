@@ -44,4 +44,7 @@
   <Function Name="PT Setting Information">
     <Setting Key="SiteDB3_PositionTaking_RefSportTypeAndBetType" SpName="Acc_CustomerSelRefSport_Bettype" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
+  <Function Name="Update ABDT">
+    <Setting Key="SiteDB3_Age_ClearBalanceCust_Job_StatusCheck" SpName="Age_ClearBalanceCust_Job_StatusCheck" DbName="DBTXN.bodb02.bodbAdminNet" />
+  </Function>
 </Functions>

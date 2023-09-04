@@ -7,6 +7,11 @@
 
 namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Linq;
     using Customer.DataAccess;
     using Customer.Entities.CN88;
     using CustomerSetting.Module.Core;
@@ -15,17 +20,11 @@ namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
     using Fanex.Tarus.Admin.Entities;
     using Fanex.Tarus.Admin.ViewModel;
     using Fanex.Tarus.Customer.CreditCustomer.Entities;
-    using Fanex.Tarus.Customer.Entities;
+    using Fanex.Tarus.Customer.Criteria.CreditCustomer;
     using NAP.Framework.Data;
     using Sunplus.Accounting.Core.Common;
-    using Sunplus.Accounting.Core.Configurations;
     using Sunplus.Accounting.Core.Extensions;
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Data;
-    using System.Linq;
-    using ViewModels.CN88;
+
 
     /// <summary>
     /// TODO: Update summary.
@@ -273,6 +272,49 @@ namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
 
                 }
             }
+        }
+
+        public string TurnOffAutoTransfer(ICriteria criteria)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                db.ExecuteNonQuery(criteria.GetSpParams());
+
+                var outputParams = db.GetOuputParams();
+
+                if (outputParams != null)
+                {
+                    return outputParams["targetids"].ToString();
+                }
+            }
+
+            return string.Empty;
+        }
+
+        public void InsertToastMessage(ICriteria criteria)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                db.ExecuteNonQuery(criteria.GetSpParams());
+
+                var outputParams = db.GetOuputParams();
+            }
+        }
+
+        public bool GetAutoTransferJobStatus(int custId)
+        {
+            bool result = false;
+            var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(custId);
+            var criteria = new GetAutoTransferJobStatusCriteria();
+            var key = siteDB.IsSiteDB ? $"SiteDB{siteDB.SiteDBGroupID}_{criteria.GetSettingKey()}" : criteria.GetSettingKey();
+
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                db.ExecuteNonQueryScaleoutDB(criteria.GetSpParams(), siteDB.AGIP);
+                result = CastAide.AsBoolean(db.GetParameterValue("IsAutoJobRunning"));
+            }
+
+            return result;
         }
     }
 }

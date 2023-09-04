@@ -106,6 +106,87 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The Auto Transfer process is currently taking place. Kindly wait for the process to complete within a few minutes before changing the Transfer Mode..
+        /// </summary>
+        public static string ADBTChangeFailed_AutoJobRunning {
+            get {
+                return ResourceManager.GetString("ADBTChangeFailed_AutoJobRunning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 您的賬號已啟用全天餘額轉賬。以確保數據準確性，您為下線設置的自動轉賬配置將被禁用。.
+        /// </summary>
+        public static string ADBTChangeToastMessage_ch {
+            get {
+                return ResourceManager.GetString("ADBTChangeToastMessage_ch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 您的账号已启用全天余额转账。以确保数据准确性，您为下线设置的自动转账配置将被禁用。.
+        /// </summary>
+        public static string ADBTChangeToastMessage_cs {
+            get {
+                return ResourceManager.GetString("ADBTChangeToastMessage_cs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your account has been enabled for All Day Balance Transfer. The Auto Transfer configuration you set for downlines will be disabled to ensure data accuracy..
+        /// </summary>
+        public static string ADBTChangeToastMessage_en {
+            get {
+                return ResourceManager.GetString("ADBTChangeToastMessage_en", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to บัญชีของคุณได้เปิดใช้งานการโอนยอดคงเหลือทั้งวันแล้ว การโอนอัตโนมัติสำหรับดาวน์ไลน์ของคุณจะถูกปิดใช้งานเพื่อความถูกต้องของการดำเนินงาน.
+        /// </summary>
+        public static string ADBTChangeToastMessage_th {
+            get {
+                return ResourceManager.GetString("ADBTChangeToastMessage_th", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 自動轉賬配置.
+        /// </summary>
+        public static string ADBTChangeToastTitle_ch {
+            get {
+                return ResourceManager.GetString("ADBTChangeToastTitle_ch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 自动转账配置.
+        /// </summary>
+        public static string ADBTChangeToastTitle_cs {
+            get {
+                return ResourceManager.GetString("ADBTChangeToastTitle_cs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto Transfer Config.
+        /// </summary>
+        public static string ADBTChangeToastTitle_en {
+            get {
+                return ResourceManager.GetString("ADBTChangeToastTitle_en", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ตั้งค่าโอนอัตโนมัติ.
+        /// </summary>
+        public static string ADBTChangeToastTitle_th {
+            get {
+                return ResourceManager.GetString("ADBTChangeToastTitle_th", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Agent.
         /// </summary>
         public static string Agent {

@@ -12,7 +12,7 @@
     <Setting Key="Acc_CustomerUpdAGCasinoSetting" SpName="Acc_AGC_UpdSuperSetting" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
     <Setting Key="Acc_CustomerUpdAGCasinoStatus" SpName="Acc_AGC_UpdSuperStatus" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
     <Setting Key="Customer_AGCasino_GetCustomerSetting" SpName="Acc_AGC_SelSuperSetting" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
-  </Function> 
+  </Function>
   <Function Name="Helper">
     <Setting Key="Age_LoginAdminVerifyTicket" SpName="Age_LoginAdminVerifyTicket" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
@@ -27,7 +27,7 @@
     <Setting Key="Acc_CustSetting_DCSSettingCopyInsertMember" SpName="Acc_CustSetting_DCSSettingCopyInsertMember" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_SiteDBConfigSel" SpName="Acc_SiteDBConfigSel" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
-  <Function Name="Customer Status">  
+  <Function Name="Customer Status">
     <Setting Key="Acc_CustomerUpdLocked" SpName="Acc_CustomerUpdLocked" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
   </Function>
   <Function Name="Sportbook">
@@ -115,6 +115,7 @@
     <Setting Key="Acc_CustomerUpdAllDayBalTransfer" SpName="Acc_CustomerUpdAllDayBalTransfer" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpd_IsAutoEnableADBMaster" SpName="Acc_CustomerUpd_IsAutoEnableADBMaster" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerSelSuperAutoTransfer" SpName="Acc_CustomerSelSuperAutoTransfer" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Age_ClearBalanceCust_SettingUpdate_Downline" SpName="Age_ClearBalanceCust_SettingUpdate_Downline_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Credit Term">
     <Setting Key="Acc_CreditTermUpdAddToGroup" SpName="Acc_CreditTermUpdAddToGroup" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -201,7 +202,7 @@
   </Function>
   <Function Name="Colossus Bets Bet List - Get SiteId">
     <Setting Key="Acc_CustomerSelSiteByCustId" SpName="Acc_CustomerSelSiteByCustId" DbName="DBCust.CustDB.bodbAdminNet" />
-  </Function> 
+  </Function>
   <Function Name="OTP">
     <Setting Key="RemoveCustomerOTP" SpName="Age_OTP_CustomerOTPDel" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
@@ -272,10 +273,10 @@
     <Setting Key="Acc_AdminSelStatusByProductId" SpName="Acc_AdminSelStatusByProductID" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_Admin_DisableGameStatusSelect" SpName="Acc_Admin_DisableGameStatusSelect" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_Admin_DisableNewProductStatusSelect" SpName="Acc_Admin_DisableNewProductStatusSelect" DbName="DBCust.CustDB.bodbAdminNet" />
-  
+
     <Setting Key="Acc_AdminCheckAllowedDownlinesByLevel" SpName="Acc_AdminCheckAllowedDownlinesByLevel" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_AdminUpdCSStatus_Cust" SpName="Acc_AdminUpdCSStatus_Cust" DbName="DBCust.CustDB.bodbAdminNet" />
-   
+
     <Setting Key="Acc_AdminUpdDisableColossusBet" SpName="Acc_AdminUpdDisableColossusBet" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_Admin_DisableGameStatusUpd" SpName="Acc_Admin_DisableGameStatusUpd" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_Admin_DisableNewProductStatusUpd" SpName="Acc_Admin_DisableNewProductStatusUpd" DbName="DBCust.CustDB.bodbAdminNet" />

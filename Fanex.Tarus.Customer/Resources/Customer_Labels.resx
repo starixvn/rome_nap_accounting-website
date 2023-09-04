@@ -459,4 +459,31 @@
   <data name="VRPlushAccBalance" xml:space="preserve">
     <value>VR Accumulated Balance</value>
   </data>
+  <data name="ADBTChangeToastTitle_en" xml:space="preserve">
+    <value>Auto Transfer Config</value>
+  </data>
+  <data name="ADBTChangeToastTitle_ch" xml:space="preserve">
+    <value>自動轉賬配置</value>
+  </data>
+  <data name="ADBTChangeToastTitle_cs" xml:space="preserve">
+    <value>自动转账配置</value>
+  </data>
+  <data name="ADBTChangeToastTitle_th" xml:space="preserve">
+    <value>ตั้งค่าโอนอัตโนมัติ</value>
+  </data>
+  <data name="ADBTChangeToastMessage_en" xml:space="preserve">
+    <value>Your account has been enabled for All Day Balance Transfer. The Auto Transfer configuration you set for downlines will be disabled to ensure data accuracy.</value>
+  </data>
+  <data name="ADBTChangeToastMessage_ch" xml:space="preserve">
+    <value>您的賬號已啟用全天餘額轉賬。以確保數據準確性，您為下線設置的自動轉賬配置將被禁用。</value>
+  </data>
+  <data name="ADBTChangeToastMessage_cs" xml:space="preserve">
+    <value>您的账号已启用全天余额转账。以确保数据准确性，您为下线设置的自动转账配置将被禁用。</value>
+  </data>
+  <data name="ADBTChangeToastMessage_th" xml:space="preserve">
+    <value>บัญชีของคุณได้เปิดใช้งานการโอนยอดคงเหลือทั้งวันแล้ว การโอนอัตโนมัติสำหรับดาวน์ไลน์ของคุณจะถูกปิดใช้งานเพื่อความถูกต้องของการดำเนินงาน</value>
+  </data>
+  <data name="ADBTChangeFailed_AutoJobRunning" xml:space="preserve">
+    <value>The Auto Transfer process is currently taking place. Kindly wait for the process to complete within a few minutes before changing the Transfer Mode.</value>
+  </data>
 </root>

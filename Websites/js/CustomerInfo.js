@@ -803,7 +803,9 @@ function ChangeAllDayBalTransfer(roleId) {
         ShowDisablePop(document.getElementById('AllDayBalTransfer'));
     }
     else {
-        if (confirm("Are you sure you want to change Transfer Mode for " + GetCustName() + " ?")) {
+        var confirmMessage = getChangeADBTConfirmMessage(GetCustName(), checked, true);
+
+        if (confirm(confirmMessage)) {
             UpdateAllDayBalTransfer({ custid: GetCustId(), status: !checked, isIncludedDownline: true });
         }
     }
@@ -823,6 +825,12 @@ function UpdateAllDayBalTransfer(params) {
         data: JSON.stringify(params),
         contentType: "application/json; charset=utf-8",
         success: function (rs) {
+            if (rs.ErrorCode === 100) {
+                alert(rs.ErrorMessage);
+                if (PTUnBlockUI) PTUnBlockUI();
+                return;
+            }
+
             changeDisplayStatus();
             if (PTUnBlockUI) PTUnBlockUI();
         },
@@ -846,4 +854,19 @@ function UpdateAllDayBalTransferOnMaster(params) {
             if (PTUnBlockUI) PTUnBlockUI();
         }
     });
+}
+
+function getChangeADBTConfirmMessage(username, currentEnabled, chkDownlines, isFromSettingBox) {
+    var confirmMessage = "Are you sure you want to change Transfer Mode for " + username +
+        (isFromSettingBox && chkDownlines ? " and all downlines " : "") + "?";
+
+    if (currentEnabled) {
+        return confirmMessage;
+    }
+
+    confirmMessage += chkDownlines
+        ? "\nNote: Activating All Day Balance Transfer will turn OFF Auto Transfer configured by " + username + " and its all downlines."
+        : "\nNote: Activating All Day Balance Transfer will turn OFF Auto Transfer configuration set by " + username + " for its downlines.";
+
+    return confirmMessage;
 }

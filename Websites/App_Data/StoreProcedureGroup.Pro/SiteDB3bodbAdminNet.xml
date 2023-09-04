@@ -7,7 +7,7 @@
     <Setting Key="SiteDB3_Dot_BalanceCreditRemove" SpName="Dot_BalanceCreditRemove" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
 
-  <Function Name="Statement">   
+  <Function Name="Statement">
     <Setting Key="SiteDB3_Statement_Report_GetList" SpName="SiteDB_Acc_StatementSel" DbName="DBACC.bodb02.bodbAdminNet" Plain="0" />
     <Setting Key="SiteDB3_Statement_Report_TransferDetails" SpName="SiteDB_Acc_StatementSelTransfer" DbName="DBACC.bodb02.bodbAdminNet" Plain="0" />
   </Function>
@@ -44,5 +44,8 @@
   </Function>
   <Function Name="PT Setting Information">
     <Setting Key="SiteDB3_PositionTaking_RefSportTypeAndBetType" SpName="Acc_CustomerSelRefSport_Bettype" DbName="DBTXN.bodb02.bodbAdminNet" />
+  </Function>
+  <Function Name="Update ABDT">
+    <Setting Key="SiteDB3_Age_ClearBalanceCust_Job_StatusCheck" SpName="Age_ClearBalanceCust_Job_StatusCheck" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
 </Functions>
