@@ -8,6 +8,6 @@
     {
         IEnumerable<TicketDetail> BetDetails(GetAGCasinoBetDetailsCriteria criteria);
 
-        IEnumerable<TicketDetail> BetDetails(GetBBinBetDetailsCriteria criteria);        
+        IEnumerable<TicketDetail> BetDetails(GetBBinBetDetailsCriteria criteria);
     }
 }

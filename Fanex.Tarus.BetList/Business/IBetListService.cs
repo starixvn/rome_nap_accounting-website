@@ -9,7 +9,7 @@
 
     public interface IBetListService
     {
-        Task AssignCountry(IEnumerable<TicketDetail> tickets);
+        void AssignCountry(IEnumerable<TicketDetail> tickets);
 
         IList<TicketDetail> GetMixParlayTickets(long transId, long refNo, int custId);
 

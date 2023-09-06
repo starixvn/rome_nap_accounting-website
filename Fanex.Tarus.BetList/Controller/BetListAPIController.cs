@@ -39,7 +39,7 @@
             {
                 param.UserId = Converter.To<int>(ConfigurationManager.AppSettings["BetListApi_UserId"]);
                 var result = _betListService.GetBetListByRefNo(param);
-                _betListService.AssignCountry(result).GetAwaiter().GetResult();
+                _betListService.AssignCountry(result);
 
                 var firstTicket = result.FirstOrDefault();
                 if (firstTicket != null)

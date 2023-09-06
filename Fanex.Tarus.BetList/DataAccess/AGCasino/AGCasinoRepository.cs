@@ -71,7 +71,8 @@
                             },
                             ChoiceHtml = string.Empty,
                             OddHtml = string.Empty,
-                            StakeHtml = string.Empty
+                            StakeHtml = string.Empty,
+                            IP = Converter.ToString2(reader["ip"]),
                         });
                     }
                 }

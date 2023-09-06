@@ -182,13 +182,13 @@
             _betListRepository = new BetListRepository();
         }
 
-        public async Task AssignCountry(IEnumerable<TicketDetail> tickets)
+        public void AssignCountry(IEnumerable<TicketDetail> tickets)
         {
             var ipList = tickets
              .Where(t => !string.IsNullOrWhiteSpace(t.IP) && (AppSession.ViewIPVN || !IpManagement.IsVNIP(t.IP.Trim())))
              .Select(t => t.IP.Trim())
              .Distinct();
-            var countryDictionary = await GetCountries(ipList);
+            var countryDictionary = GetCountries(ipList);
 
             string country;
             foreach (var item in tickets)
@@ -201,11 +201,11 @@
             }
         }
 
-        private async Task<IDictionary<string, string>> GetCountries(IEnumerable<string> ipList)
+        private IDictionary<string, string> GetCountries(IEnumerable<string> ipList)
         {
             try
             {
-                return await _ipInfoService.GetCountries(ipList);
+                return _ipInfoService.GetCountries(ipList).GetAwaiter().GetResult();
             }
             catch (Exception ex)
             {
@@ -245,7 +245,7 @@
 
                 var mainTickets = _betListRepository.Fetch<TicketDetail>(mainCriteria, mapTicketObjectFunctionForMixParlay);
                 var tickets = siteDBTickets.Concat(mainTickets).Distinct().ToList();
-                AssignCountry(tickets).GetAwaiter().GetResult();
+                AssignCountry(tickets);
                 var factory = new BetListHTMLFactory();
                 var builder = factory.CreateBuilder();
                 ticketHelper.IsShowOddsWithChoice = true;
@@ -297,7 +297,7 @@
                         betDetail.OddHtml = builder.BuildOdds(betDetail.Ticket, outputLiveCasino, funcGetOddsTypeName);
                         betDetail.StatusHtml = betListHelper.BuildStatus(betDetail.Ticket, ticketHelper, outputLiveCasino, factory, builder);
                     }
-                    AssignCountry(betDetails).GetAwaiter().GetResult();
+                    AssignCountry(betDetails);
 
                     return betDetails;
                 }
@@ -361,7 +361,7 @@
 
                 RemoveSabaWord(betDetail);
             }
-            AssignCountry(tickets).GetAwaiter().GetResult();
+            AssignCountry(tickets);
 
             return tickets;
         }
@@ -564,7 +564,7 @@
                         newTickets.Add(betDetail);
 
                     }
-                    AssignCountry(newTickets).GetAwaiter().GetResult();
+                    AssignCountry(newTickets);
 
                     return new KeyValuePair<string, IList<TicketDetail>>(string.Empty, newTickets);
                 }
@@ -620,7 +620,7 @@
                     ticket.StatusHtml = betListHelper.BuildStatus(ticket.Ticket, ticketHelper, outputLiveCasino, factory, builder);
                     ticket.IP = ticket.Ticket.IP;
                 }
-                AssignCountry(tickets).GetAwaiter().GetResult();
+                AssignCountry(tickets);
 
                 return new KeyValuePair<string, IList<TicketDetail>>(string.Empty, tickets);
             }
@@ -667,7 +667,7 @@
                     }
                     betDetail.IP = betDetail.Ticket.IP;
                 }
-                AssignCountry(systempParlayModel.TicketsDetailList).GetAwaiter().GetResult();
+                AssignCountry(systempParlayModel.TicketsDetailList);
 
                 if (systempParlayModel.SystemParlayChoice != null)
                 {
@@ -709,7 +709,7 @@
                         firstTicketDetail.ChoiceHtml += betDetail.ChoiceHtml;
                         betDetail.IP = betDetail.Ticket.IP;
                     }
-                    AssignCountry(systempParlayModel.SystemParlayChoice).GetAwaiter().GetResult();
+                    AssignCountry(systempParlayModel.SystemParlayChoice);
                 }
 
                 systempParlayModel.SystemParlayDetail.EventList = systempParlayModel.SystemParlayDetail.EventList.OrderBy(i => SystemParlayConstants.GetStatusOrderId(i.Status)).ToList();
@@ -1026,7 +1026,7 @@
                         betDetail.StatusHtml = betlistHelper.BuildStatus(betDetail.Ticket, ticketHelper, outputLiveCasino, factory, builder);
                         betDetail.IP = betDetail.Ticket.IP;
                     }
-                    AssignCountry(betDetails).GetAwaiter().GetResult();
+                    AssignCountry(betDetails);
 
                     return betDetailsModel;
                 }
@@ -1222,7 +1222,7 @@
                         betDetail.StatusHtml = betListHelper.BuildStatus(betDetail.Ticket, ticketHelper, outputLiveCasino, factory, builder);
                         betDetail.IP = betDetail.Ticket.IP;
                     }
-                    AssignCountry(betDetails).GetAwaiter().GetResult();
+                    AssignCountry(betDetails);
                     return betDetails;
                 }
             }
