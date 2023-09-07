@@ -17,7 +17,6 @@
     using Fanex.Common;
     using Fanex.Tarus.BetList.Authentication;
     using Fanex.Tarus.BetList.Constants;
-    using Fanex.Tarus.BetList.Criteria;
     using Fanex.Tarus.BetList.DataAccess;
     using Fanex.Tarus.BetList.Models;
     using Fanex.Tarus.BetList.Param;
@@ -40,6 +39,7 @@
             {
                 param.UserId = Converter.To<int>(ConfigurationManager.AppSettings["BetListApi_UserId"]);
                 var result = _betListService.GetBetListByRefNo(param);
+                _betListService.AssignCountry(result);
 
                 var firstTicket = result.FirstOrDefault();
                 if (firstTicket != null)

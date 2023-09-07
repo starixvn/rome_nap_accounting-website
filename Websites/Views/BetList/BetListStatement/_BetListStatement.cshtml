@@ -49,8 +49,8 @@
 }
 @helper renderContent(TicketDetail betdetail, int NumberBegining)
 {
-var liveRow = betdetail.Ticket.IsLive ? "event-live" : string.Empty;
-BetListHelper _betlistHelper = new BetListHelper();
+    var liveRow = betdetail.Ticket.IsLive ? "event-live" : string.Empty;
+    var _betlistHelper = new BetListHelper();
     <tr class="c @liveRow">
         <td>
             <div class="c width30">
@@ -118,6 +118,11 @@ BetListHelper _betlistHelper = new BetListHelper();
                 @if (ip != "-")
                 {
                     <a class="status-col" href="@Url.RouteUrl("Default", new { controller = "TarusBetList", action = "BetListByIP", IsLink = true, FromDate = betdetail.Ticket.WinlostDate.ToString("MM/dd/yyyy"), IP = betdetail.Ticket.IP })">@ip</a>
+                }
+                @if (!string.IsNullOrWhiteSpace(betdetail.Country))
+                {
+                    <br />
+                    @betdetail.Country
                 }
             </div>
         </td>

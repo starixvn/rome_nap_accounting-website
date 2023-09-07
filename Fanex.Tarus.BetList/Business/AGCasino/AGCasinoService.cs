@@ -17,6 +17,7 @@
     public class AGCasinoService : IBBinService
     {
         private readonly IAGCasinoRepository _agCasinoRepository;
+        private readonly BetListService _betListService;
 
         public AGCasinoService()
             : this(null)
@@ -26,6 +27,7 @@
         public AGCasinoService(IAGCasinoRepository agCasinoRepository)
         {
             _agCasinoRepository = agCasinoRepository ?? new AGCasinoRepository();
+            _betListService = new BetListService();
         }
 
         public IEnumerable<TicketDetail> BetDetails(GetAGCasinoBetDetailsCriteria criteria)
@@ -73,7 +75,9 @@
                     betDetail.StakeHtml = BetListExtension.BuildStake(betDetail, ref builder, ticketHelper);
                     betDetail.OddHtml = builder.BuildOdds(betDetail.Ticket, outputLiveCasino, funcGetOddsTypeName);
                     betDetail.StatusHtml = betListHelper.BuildStatus(betDetail.Ticket, ticketHelper, outputLiveCasino, factory, builder);
+                    betDetail.IP = betDetail.Ticket.IP;
                 }
+                _betListService.AssignCountry(tickets);
             }
 
             return tickets;
@@ -99,7 +103,9 @@
                     betDetail.StakeHtml = BetListExtension.BuildStake(betDetail, ref builder, ticketHelper);
                     betDetail.OddHtml = builder.BuildOdds(betDetail.Ticket, outputLiveCasino, funcGetOddsTypeName);
                     betDetail.StatusHtml = betListHelper.BuildStatus(betDetail.Ticket, ticketHelper, outputLiveCasino, factory, builder);
+                    betDetail.IP = betDetail.Ticket.IP;
                 }
+                _betListService.AssignCountry(detailsTickets);
             }
 
             return detailsTickets;

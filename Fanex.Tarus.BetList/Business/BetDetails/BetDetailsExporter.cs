@@ -24,6 +24,7 @@
     using System.IO;
     using System.Linq;
     using CellAddress = Fanex.BetList.Core.Entities.CellAddress;
+    using Fanex.Tarus.BetList.Extensions;
 
     public class BetDetailsExporter : IBetDetailsExporter
     {
@@ -87,7 +88,7 @@
             {
                 return GetBBinTickets(refNo, custId, transType);
             }
-          
+
             if (sportType == SportContants.FishingWorld ||
                 sportType == SportContants.RNG_RNGGame ||
                 sportType == SportContants.RNG_MiniGame ||
@@ -99,7 +100,7 @@
                 sportType == SportContants.CG ||
                 sportType == SportContants.VGaming ||
                 sportType == SportContants.AdvantPlay ||
-                sportType == SportContants.AdvantPlayMini||
+                sportType == SportContants.AdvantPlayMini ||
                 sportType == SportContants.Voidbridge ||
                 sportType == SportContants.PP ||
                 sportType == SportContants.CardClub ||
@@ -161,7 +162,7 @@
                         .AddOdds(ticket, ticketData, funcGetOddsTypeName)
                         .AddStake(ticket, ticketHelper)
                         .AddWinLoss(ticket)
-                        .AddStatus(ticket, ticketHelper, ticketData, AppSession.ViewIPVN || WebSettings.IPVNReplace == "1")
+                        .AddStatisWithIP(ticket, item, ticketHelper)
                         .AddPTComm(ticket, ticketData, RoleIdConstants.Super)
                         .AddPTComm(ticket, ticketData, RoleIdConstants.Master)
                         .AddPTComm(ticket, ticketData, RoleIdConstants.Agent);
@@ -266,9 +267,9 @@
                 PageSize = int.MaxValue
             };
 
-            IAGCasinoRepository repository = new AGCasinoRepository();
+            var service = new AGCasinoService();
 
-            return repository.BetDetails(criteria);
+            return service.BetDetails(criteria);
         }
 
 
@@ -286,7 +287,12 @@
 
             var service = new RNGCasinoService();
 
-            return service.BetDetails(criteria).Select(t => new TicketDetail { Ticket = t.Ticket });
+            return service.BetDetails(criteria).Select(t => new TicketDetail
+            {
+                Ticket = t.Ticket,
+                IP = t.IP,
+                Country = t.Country
+            });
         }
 
         #endregion Get Data functions

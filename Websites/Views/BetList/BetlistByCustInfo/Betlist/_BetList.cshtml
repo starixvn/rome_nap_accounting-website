@@ -81,6 +81,11 @@
                     <br />
                     <a class="status-col" href="@Url.RouteUrl("Default", new { controller = "TarusBetList", action = "BetListByIP", IsLink = true, FromDate = betdetail.Ticket.WinlostDate.ToString("MM/dd/yyyy"), IP = betdetail.Ticket.IP })">@ip</a>
                 }
+                @if (!string.IsNullOrWhiteSpace(betdetail.Country))
+                {
+                    <br />
+                    @betdetail.Country
+                }
             </div>
         </td>
         <td class="r">

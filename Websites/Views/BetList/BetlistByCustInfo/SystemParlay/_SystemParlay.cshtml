@@ -61,14 +61,19 @@
         </td>
         <td class="c">
             <div id="stautus_@betdetail.Ticket.TransId" class="width100 table-cell">
-             @Html.Raw(betdetail.StatusHtml)
-                 @{
-                     var ip = @Sunplus.Accounting.Business.IpManagement.ReplaceVNIP(betdetail.Ticket.IP);
+                @Html.Raw(betdetail.StatusHtml)
+                @{
+                    var ip = @Sunplus.Accounting.Business.IpManagement.ReplaceVNIP(betdetail.Ticket.IP);
                 }
                 @if (ip != "-" && !betdetail.Ticket.BetTypeId.Equals(500))
                 {
                     <br />
                     <a class="status-col" href="@Url.RouteUrl("Default", new { controller = "TarusBetList", action = "BetListByIP", IsLink = true, FromDate = betdetail.Ticket.WinlostDate.ToString("MM/dd/yyyy"), IP = betdetail.Ticket.IP })">@ip</a>
+                }
+                @if (!string.IsNullOrWhiteSpace(betdetail.Country))
+                {
+                    <br />
+                    @betdetail.Country
                 }
             </div>
         </td>

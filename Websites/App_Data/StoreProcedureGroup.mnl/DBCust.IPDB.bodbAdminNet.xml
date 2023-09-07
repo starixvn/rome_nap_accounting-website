@@ -3,5 +3,8 @@
   <Function Name="IP">
     <Setting Key="GetIPVN" SpName="GetIPVN" DbName="DBCust.IPDB.bodbAdminNet" />
     <Setting Key="Acc_GetIPInfo_Full" SpName="Acc_GetIPInfo_Full" DbName="DBCust.IPDB.bodbAdminNet" />
+    <Setting Key="Age_IPRangesByCountrySel" SpName="Age_IPRangesByCountrySel" DbName="DBCust.IPDB.bodbAdminNet" Plain="0" />
+    <Setting Key="Age_IPRangesByCountrySelByIPList" SpName="Age_IPRangesByCountrySelByIPList" DbName="DBCust.IPDB.bodbAdminNet" Plain="0" />
+    <Setting Key="Age_IPRangesByCountrySelByIPV6List" SpName="Age_IPRangesByCountrySelByIPV6List" DbName="DBCust.IPDB.bodbAdminNet" Plain="0" />
   </Function>
 </Functions>

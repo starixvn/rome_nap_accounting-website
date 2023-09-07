@@ -27,12 +27,20 @@
     <Setting Key="Acc_BetList_SelMatchResult2" SpName="Acc_BetList_SelMatchResult2" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="Acc_BetList_HRSelMatchResult2" SpName="Acc_BetList_HRSelMatchResult2" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="SelMatchResultNumberGame" SpName="Age_BetList_SelMatchResultNumberGame" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="BetList_CustInfo_SystemParlay" SpName="Acc_BetlistCombinationParlay_ByTransID" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="SiteDB_Acc_BetList_Parlay_SelByRefNo" SpName="SiteDB_Acc_BetList_Parlay_SelByRefNo" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="BetList_MixParlayBetsSel" SpName="Acc_BetsSelBetCheckM_All" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="BetList_CustInfo_SystemParlay" SpName="Acc_BetlistCombinationParlay_ByTransID" DbName="DBAGE.bodb02.bodbAdminNet" >
+      <Mapping DataField="ip" ObjectProperty="IP" />
+    </Setting>
+    <Setting Key="SiteDB_Acc_BetList_Parlay_SelByRefNo" SpName="SiteDB_Acc_BetList_Parlay_SelByRefNo" DbName="DBAGE.bodb02.bodbAdminNet" >
+      <Mapping DataField="ip" ObjectProperty="IP" />
+    </Setting>
+    <Setting Key="BetList_MixParlayBetsSel" SpName="Acc_BetsSelBetCheckM_All" DbName="DBAGE.bodb02.bodbAdminNet" >
+      <Mapping DataField="ip" ObjectProperty="IP" />
+    </Setting>
     <Setting Key="SiteDB_Acc_BetList_SelParlayDetail" SpName="SiteDB_Acc_BetList_SelParlayDetail" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="BetList_SelByRefNo" SpName="Acc_BetList_SelByRefNo" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="SiteDB_Acc_BetList_SelByRefNo" SpName="SiteDB_Acc_BetList_SelByRefNo" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="SiteDB_Acc_BetList_SelByRefNo" SpName="SiteDB_Acc_BetList_SelByRefNo" DbName="DBACC.bodb02.bodbAdminNet" >
+      <Mapping DataField="ip" ObjectProperty="IP" />
+    </Setting>
     <Setting Key="BetList_SelByProduct" SpName="Acc_BetList_SelByProduct" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="All_BetList_MatchResultGDSel" SpName="All_BetList_MatchResultGDSel" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="Acc_BetList_Match3rdResultSel" SpName="Acc_BetList_Match3rdResultSel" DbName="DBAGE.bodb02.bodbAdminNet" />

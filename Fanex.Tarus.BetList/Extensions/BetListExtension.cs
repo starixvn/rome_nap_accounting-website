@@ -18,6 +18,8 @@ namespace Fanex.Tarus.BetList.Extensions
     using BetListNPOI.HSSF.UserModel;
     using BetListNPOI.SS.UserModel;
     using Resources;
+    using Sunplus.Accounting.Core.Common;
+    using Sunplus.Accounting.Core.Configurations;
 
     /// <summary>
     /// TODO: Update summary.
@@ -46,9 +48,20 @@ namespace Fanex.Tarus.BetList.Extensions
             return stakeBuilder;
         }
 
+        public static BetListExcelBuilder AddStatisWithIP(this BetListExcelBuilder factory, ITicket ticket, TicketDetail ticketDetail, ITicketHelper ticketHelper)
+        {
+            string country = string.IsNullOrWhiteSpace(ticketDetail.Country) ? "" : "\n" + ticketDetail.Country;
+            IRichTextString rtfCreator = new HSSFRichTextString(ticket.Status + "\n" + ticketDetail.Ticket.IP + country);
+            factory.AddCell(rtfCreator, ticketHelper.Index % 2 == 0 ? factory.OddCellStyleCenterAligned : factory.EvenCellStyleCenterAligned);
+
+            return factory;
+        }
+
+
         public static BetListExcelBuilder AddCreator(this BetListExcelBuilder factory, TicketDetail ticketDetail, ITicketHelper ticketHelper)
         {
-            IRichTextString rtfCreator = new HSSFRichTextString(ticketDetail.Creator + "\n" + ticketDetail.Ticket.IP);
+            string country = string.IsNullOrWhiteSpace(ticketDetail.Country) ? "" : "\n" + ticketDetail.Country;
+            IRichTextString rtfCreator = new HSSFRichTextString(ticketDetail.Creator + "\n" + ticketDetail.Ticket.IP + country);
             factory.AddCell(rtfCreator, ticketHelper.Index % 2 == 0 ? factory.OddCellStyleCenterAligned : factory.EvenCellStyleCenterAligned);
 
             return factory;

@@ -130,6 +130,11 @@
                                                     <a class="status-col" onclick="viewBetListByIP('@betDetail.Ticket.WinlostDate.ToString("MM/dd/yyyy")','@betDetail.Ticket.IP');"
                                                        href="">@ip</a>
                                                 }
+                                                @if (!string.IsNullOrWhiteSpace(betDetail.Country))
+                                                {
+                                                    <br />
+                                                    @betDetail.Country
+                                                }
                                             </div>
                                         </td>
                                         <td class="r">
