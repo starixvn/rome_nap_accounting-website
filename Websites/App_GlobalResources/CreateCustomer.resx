@@ -219,4 +219,16 @@
   <data name="uM2" xml:space="preserve">
     <value>Master Auto PT</value>
   </data>
+  <data name="GroupType_155" xml:space="preserve">
+    <value>Win Loss Limit</value>
+  </data>
+  <data name="IsAutoReset" xml:space="preserve">
+    <value>Daily Auto Reset</value>
+  </data>
+  <data name="MaxLossLimit" xml:space="preserve">
+    <value>Maximum Loss</value>
+  </data>
+  <data name="MaxWinLimit" xml:space="preserve">
+    <value>Maximum Win</value>
+  </data>
 </root>

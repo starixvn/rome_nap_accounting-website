@@ -932,7 +932,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
                         continue;
                     }
 
-                    listVal.Add(attr.Name.ToString(), LogFormater.FormatValue(attr));
+                    listVal.Add(attr.Name.ToString(), LogFormater.FormatTrackingValue(attr));
                     hasAttr = true;
                 }
 
@@ -952,7 +952,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
                             continue;
                         }
 
-                        listVal.Add(attrName, LogFormater.FormatValue(attr, isCN88SettingLog ? $"cn88_{sporttype}_{bettype}_{inplay}_" : string.Empty));
+                        listVal.Add(attrName, LogFormater.FormatTrackingValue(attr, isCN88SettingLog ? $"cn88_{sporttype}_{bettype}_{inplay}_" : string.Empty));
                     }
 
                     if (!isCN88SettingLog || sporttype == null || previousSporttype != sporttype)

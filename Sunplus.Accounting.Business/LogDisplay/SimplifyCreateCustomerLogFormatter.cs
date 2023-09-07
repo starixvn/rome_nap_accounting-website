@@ -13,6 +13,16 @@ namespace Sunplus.Accounting.Business.LogDisplay
 {
     public class SimplifyCreateCustomerLogFormatter
     {
+        private enum DisplayType
+        {
+            Product = 1,
+            SportType = 2,
+            Bettype = 3,
+            SportTypeBettype = 4,
+            G_GT_SportType_Bettype = 5,
+            SB_Com = 6
+        }
+
         private const int SettingsLogActionId_Master = 95088;
 
         private const int CompactLogActionId_Master = 95089;
@@ -25,6 +35,24 @@ namespace Sunplus.Accounting.Business.LogDisplay
 
         private const int CompactLogActionId_Member = 95096;
 
+        private const int PTTemplateIns_Master = 475;
+
+        private const int PTTemplateUpd_Master = 476;
+
+        private const int PTTemplateDel_Master = 477;
+
+        private const int PTTemplateIns_Agent = 480;
+
+        private const int PTTemplateUpd_Agent = 481;
+
+        private const int PTTemplateDel_Agent = 482;
+
+        private const int PTTemplateIns_Member = 483;
+
+        private const int PTTemplateUpd_Member = 484;
+
+        private const int PTTemplateDel_Member = 485;
+
         private const int SabaCasinoProductId = 6;
 
         private readonly int[] ActionIds = {
@@ -33,7 +61,17 @@ namespace Sunplus.Accounting.Business.LogDisplay
             SettingsLogActionId_Agent,
             CompactLogActionId_Agent,
             SettingsLogActionId_Member,
-            CompactLogActionId_Member };
+            CompactLogActionId_Member,
+            PTTemplateIns_Master,
+            PTTemplateUpd_Master,
+            PTTemplateDel_Master,
+            PTTemplateIns_Agent,
+            PTTemplateUpd_Agent,
+            PTTemplateDel_Agent,
+            PTTemplateIns_Member,
+            PTTemplateUpd_Member,
+            PTTemplateDel_Member
+        };
 
         public bool IsSimplifyCreateCustomerActionId(int actionId)
             => ActionIds.Contains(actionId);
@@ -60,7 +98,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
                         }
                         else
                         {
-                            detail.Vals.Add(ParseSettingsLog(ele, GetUplineCustLevelByActionId(actionId)));
+                            detail.Vals.Add(ParseSettingsLog(ele, GetCustLevelByActionId(actionId)));
                         }
                     }
                 }
@@ -79,6 +117,26 @@ namespace Sunplus.Accounting.Business.LogDisplay
             return actionId == CompactLogActionId_Master
                 || actionId == CompactLogActionId_Agent
                 || actionId == CompactLogActionId_Member;
+        }
+
+        private static bool IsPTTemplateLogActionId(int actionId)
+        {
+            return actionId == PTTemplateIns_Master
+                || actionId == PTTemplateUpd_Master
+                || actionId == PTTemplateDel_Master
+                || actionId == PTTemplateIns_Agent
+                || actionId == PTTemplateUpd_Agent
+                || actionId == PTTemplateDel_Agent
+                || actionId == PTTemplateIns_Member
+                || actionId == PTTemplateUpd_Member
+                || actionId == PTTemplateDel_Member;
+        }
+
+        private TrackingNode ParsePTTemplateLog(XElement element, int custLevel)
+        {
+            var trackingNode = new TrackingNode();
+
+            return trackingNode;
         }
 
         private TrackingNode ParseCompactLog(XElement element)
@@ -169,17 +227,20 @@ namespace Sunplus.Accounting.Business.LogDisplay
                 TrackingGroup trackingGroup = new TrackingGroup();
                 switch (groupTypeId)
                 {
-                    case 150:
-                    case 156:
+                    case 150: // SB Comm
+                    case 156: // Comm
                         trackingGroup = ParseCommSettingLog(groupType, groupId, IsMember(custLevel));
                         break;
-                    case 151:
-                    case 152:
-                    case 154:
-                    case 157:
-                        trackingGroup = ParseTrackingTable(groupType, groupId);
+                    case 155: // Win Loss Limit
+                        trackingGroup = ParseTrackingTable(groupType, groupId, DisplayType.SportType);
                         break;
-                    case 153:
+                    case 151: // SB Bet Setting
+                    case 152: // Parlay Max Payout
+                    case 154: // Bet Setting
+                    case 157: // Bet Setting
+                        trackingGroup = ParseTrackingTable(groupType, groupId, DisplayType.G_GT_SportType_Bettype);
+                        break;
+                    case 153: // PT
                         trackingGroup = groupId == 1 ?
                             ParseSBPositionTakingTrackingTable(groupType, groupId, custLevel) :
                             ParsePositionTakingTrackingTable(groupType, custLevel);
@@ -192,7 +253,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
             return trackingNode;
         }
 
-        private TrackingGroup ParseTrackingTable(IGrouping<string, XElement> groupType, int groupId)
+        private TrackingGroup ParseTrackingTable(IGrouping<string, XElement> groupType, int groupId, DisplayType displayType)
         {
             TrackingGroup trackingGroup = new TrackingGroup();
             var groupTypeId = int.Parse(groupType.Key);
@@ -208,7 +269,15 @@ namespace Sunplus.Accounting.Business.LogDisplay
                 var row = new List<string>();
                 var sportType = int.Parse(item.Attribute("SportType").Value);
                 var betType = int.Parse(item.Attribute("BetType").Value);
-                row.Add(CacheRef.GetNameByGroupSubGroup(groupId, groupTypeId, sportType, betType));
+                if (displayType == DisplayType.SportType)
+                {
+                    row.Add(IsSabaCasino(sportType, betType) ? CacheRef.GetProductName(SabaCasinoProductId) : CacheRef.GetSportName(sportType));
+                }
+                else
+                {
+                    row.Add(CacheRef.GetNameByGroupSubGroup(groupId, groupTypeId, sportType, betType));
+                }
+
                 foreach (var attr in item.Attributes().Where(i => !i.Name.LocalName.Equals("SportType") && !i.Name.LocalName.Equals("BetType")))
                 {
                     var headerColumnName = GetCreateCustomerResource(attr.Name.LocalName);
@@ -217,7 +286,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
                         trackingTable.HeaderColumns.Add(headerColumnName);
                     }
 
-                    row.Add(LogFormater.FormatDecimalTrailingZeros(attr.Value));
+                    row.Add(LogFormater.FormatValue(attr));
                 }
 
                 trackingTable.Rows.Add(row);
@@ -289,7 +358,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
 
                     foreach (var attr in item.Attributes().Where(i => !i.Name.LocalName.Equals("SportType") && !i.Name.LocalName.Equals("BetType") && !i.Name.LocalName.Equals("IsLive")))
                     {
-                        var headerColumnName = GetCreateCustomerResourceByCustomerLevel(attr.Name.LocalName, custLevel);
+                        var headerColumnName = GetCreateCustomerResourceByCustomerLevel(attr.Name.LocalName, custLevel + 1);
                         if (!trackingTable.HeaderColumns.Contains(headerColumnName))
                         {
                             trackingTable.HeaderColumns.Add(headerColumnName);
@@ -330,7 +399,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
 
                 foreach (var attr in item.Attributes().Where(i => !i.Name.LocalName.Equals("SportType") && !i.Name.LocalName.Equals("BetType") && !i.Name.LocalName.Equals("IsLive")))
                 {
-                    var headerColumnName = GetCreateCustomerResourceByCustomerLevel(attr.Name.LocalName, custLevel);
+                    var headerColumnName = GetCreateCustomerResourceByCustomerLevel(attr.Name.LocalName, custLevel + 1);
                     if (!trackingTable.HeaderColumns.Contains(headerColumnName))
                     {
                         trackingTable.HeaderColumns.Add(headerColumnName);
@@ -448,7 +517,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
             }
         }
 
-        private int GetUplineCustLevelByActionId(int actionId)
+        private int GetCustLevelByActionId(int actionId)
         {
             if (!ActionIds.Contains(actionId))
             {
@@ -459,13 +528,13 @@ namespace Sunplus.Accounting.Business.LogDisplay
             {
                 case SettingsLogActionId_Master:
                 case CompactLogActionId_Master:
-                    return 4;
+                    return 3;
                 case SettingsLogActionId_Agent:
                 case CompactLogActionId_Agent:
-                    return 3;
+                    return 2;
                 case SettingsLogActionId_Member:
                 case CompactLogActionId_Member:
-                    return 2;
+                    return 1;
                 default:
                     throw new ArgumentOutOfRangeException("actionId");
             }
