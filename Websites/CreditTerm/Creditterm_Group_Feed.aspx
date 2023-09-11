@@ -50,7 +50,6 @@
     <form id="form" method="post" action="Creditterm_Group_Feed.aspx">
         <input type="hidden" id="IsExport" name="IsExport" value="0" />
         <input type="hidden" id="groupid" name="groupid" value="<%=selectedGroupId%>" />
-        <input type="hidden" id="headline" name="headline" value="<%=selectedHeadline%>" />
     </form>
     <div id="confirmAddUsername" class="hidden">
         <p>Beside adding super(s) into the selected Headline Group, the following super(s) will be added into External Group with Primary Extra PT Group indicated.</p>

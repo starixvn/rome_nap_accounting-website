@@ -145,6 +145,7 @@ namespace Sunplus.Accounting.Presentation
                             }
                             if (member.IsGroupHeadline)
                             {
+                                TemplateHandler.Assign(ref formHtml, "{headlineName}", member.Username);
                                 jsheadline = string.Empty;
                                 headline = "(HEAD LINE)";
                                 headlineclass = "../App_Themes/Images/headlineH.gif";

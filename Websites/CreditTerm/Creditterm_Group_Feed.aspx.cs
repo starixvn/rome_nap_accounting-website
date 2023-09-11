@@ -14,7 +14,6 @@ public partial class CreditTerm_Creditterm_Group_Feed : PageBase
     public string strContent = string.Empty;
     public string strfilter = string.Empty;
     public int selectedGroupId = 0;
-    public string selectedHeadline = string.Empty;
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -26,7 +25,6 @@ public partial class CreditTerm_Creditterm_Group_Feed : PageBase
         hl.Attributes.Add("rel", "stylesheet");
 
         int.TryParse(Request["groupid"], out selectedGroupId);
-        selectedHeadline = Request["headline"];
 
         if (Request["IsExport"] == "1") // export excel
 		{
