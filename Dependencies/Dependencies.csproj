@@ -200,8 +200,8 @@
     <Reference Include="Fanex.BetList.LeapGaming, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.LeapGaming.2.0.0.1\lib\net461\Fanex.BetList.LeapGaming.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.MaxGame, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.MaxGame.2.0.0\lib\net461\Fanex.BetList.MaxGame.dll</HintPath>
+    <Reference Include="Fanex.BetList.MaxGame, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.MaxGame.2.0.0.1\lib\net461\Fanex.BetList.MaxGame.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.MetricGaming, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.MetricGaming.2.0.0\lib\net461\Fanex.BetList.MetricGaming.dll</HintPath>
@@ -230,6 +230,9 @@
     <Reference Include="Fanex.BetList.RnGCasino, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.RnGCasino.2.0.0\lib\net461\Fanex.BetList.RnGCasino.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.BetList.RNGCore, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.RNGCore.1.0.0\lib\net461\Fanex.BetList.RNGCore.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.BetList.RNGWar, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.RNGWar.2.0.0\lib\net461\Fanex.BetList.RNGWar.dll</HintPath>
     </Reference>
@@ -254,8 +257,8 @@
     <Reference Include="Fanex.BetList.TableGames, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.TableGames.2.0.0\lib\net461\Fanex.BetList.TableGames.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.VGaming, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.VGaming.2.0.0\lib\net461\Fanex.BetList.VGaming.dll</HintPath>
+    <Reference Include="Fanex.BetList.VGaming, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.VGaming.2.0.0.1\lib\net461\Fanex.BetList.VGaming.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.VirtualGames, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.VirtualGames.2.0.0\lib\net461\Fanex.BetList.VirtualGames.dll</HintPath>
