@@ -88,6 +88,15 @@ function EditBettype(index) {
     $('#ParentTypeid').val(cachedBettypeData.BettypeEntities[index].ParentTypeid);
     $('#TypeNameMMR').val(cachedBettypeData.BettypeEntities[index].TypeNameMMR);
     $('#TypeNameHI').val(cachedBettypeData.BettypeEntities[index].TypeNameHI);
+    $('#TypeNamePTBR').val(cachedBettypeData.BettypeEntities[index].TypeNamePTBR);
+    $('#TypeNameDE').val(cachedBettypeData.BettypeEntities[index].TypeNameDE);
+    $('#TypeNameBENG').val(cachedBettypeData.BettypeEntities[index].TypeNameBENG);
+    $('#TypeNameURD').val(cachedBettypeData.BettypeEntities[index].TypeNameURD);
+    $('#TypeNameMSA').val(cachedBettypeData.BettypeEntities[index].TypeNameMSA);
+    $('#TypeNameKH').val(cachedBettypeData.BettypeEntities[index].TypeNameKH);
+    $('#TypeNameLAO').val(cachedBettypeData.BettypeEntities[index].TypeNameLAO);
+    $('#TypeNameAR').val(cachedBettypeData.BettypeEntities[index].TypeNameAR);
+    $('#TypeNameTAM').val(cachedBettypeData.BettypeEntities[index].TypeNameTAM);
     $('#DisplayedTypeID').val(cachedBettypeData.BettypeEntities[index].DisplayedTypeID);
     $('#LicSpreadBetTypeGroupId').val(cachedBettypeData.BettypeEntities[index].LicSpreadBetTypeGroupId);
     $('#Is3rdParty').prop('checked', cachedBettypeData.BettypeEntities[index].Is3rdParty === 'True' ? true : false);
@@ -95,7 +104,7 @@ function EditBettype(index) {
         title: 'Edit Bettype',
         modal: true,
         width: 'auto',
-        height: 700
+        height: 580
     });
 }
 
@@ -134,6 +143,15 @@ function UpdateBettype() {
             TypeNameMMR: $('#TypeNameMMR').val().escapeHTML(),
             TypeNameHI: $('#TypeNameHI').val().escapeHTML(),
             DisplayedTypeID: $('#DisplayedTypeID ').val(),
+            TypeNamePTBR: $('#TypeNamePTBR').val().escapeHTML(),
+            TypeNameDE: $('#TypeNameDE').val().escapeHTML(),
+            TypeNameBENG: $('#TypeNameBENG').val().escapeHTML(),
+            TypeNameURD: $('#TypeNameURD').val().escapeHTML(),
+            TypeNameMSA: $('#TypeNameMSA').val().escapeHTML(),
+            TypeNameKH: $('#TypeNameKH').val().escapeHTML(),
+            TypeNameLAO: $('#TypeNameLAO').val().escapeHTML(),
+            TypeNameAR: $('#TypeNameAR').val().escapeHTML(),
+            TypeNameTAM: $('#TypeNameTAM').val().escapeHTML(),
             LicSpreadBetTypeGroupId: $('#LicSpreadBetTypeGroupId ').val(),
             Is3rdParty: $('#Is3rdParty').is(":checked")
         },
