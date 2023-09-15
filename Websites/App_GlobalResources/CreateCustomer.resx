@@ -231,4 +231,22 @@
   <data name="MaxWinLimit" xml:space="preserve">
     <value>Maximum Win</value>
   </data>
+  <data name="AgentDiscount" xml:space="preserve">
+    <value>Comm For Agent</value>
+  </data>
+  <data name="PlayerDiscount" xml:space="preserve">
+    <value>Comm For Member</value>
+  </data>
+  <data name="AgentPT" xml:space="preserve">
+    <value>Agent PT</value>
+  </data>
+  <data name="GroupType_158" xml:space="preserve">
+    <value>Bet Limit</value>
+  </data>
+  <data name="GroupType_159" xml:space="preserve">
+    <value>Bet Limit</value>
+  </data>
+  <data name="StakeLevelList" xml:space="preserve">
+    <value>Stake Level List</value>
+  </data>
 </root>

@@ -232,6 +232,8 @@ namespace Sunplus.Accounting.Business.LogDisplay
                         trackingGroup = ParseCommSettingLog(groupType, groupId, IsMember(custLevel));
                         break;
                     case 155: // Win Loss Limit
+                    case 158: // Stake Levels
+                    case 159: // Group Stake Levels
                         trackingGroup = ParseTrackingTable(groupType, groupId, DisplayType.SportType);
                         break;
                     case 151: // SB Bet Setting
@@ -264,6 +266,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
             trackingTable.HeaderColumns = new List<string>();
             trackingTable.HeaderColumns.Add(string.Empty);
             trackingTable.Rows = new List<List<string>>();
+            bool isAddedVirtualGamesHeaderRow = false;
             foreach (var item in groupType.Elements())
             {
                 var row = new List<string>();
@@ -284,6 +287,67 @@ namespace Sunplus.Accounting.Business.LogDisplay
                     if (!trackingTable.HeaderColumns.Contains(headerColumnName))
                     {
                         trackingTable.HeaderColumns.Add(headerColumnName);
+                    }
+
+                    row.Add(LogFormater.FormatValue(attr));
+                }
+
+                trackingTable.Rows.Add(row);
+            }
+
+            trackingGroup.Tables.Add(trackingTable);
+            return trackingGroup;
+        }
+
+        private TrackingGroup ParseBetLimitTrackingTable(IGrouping<string, XElement> groupType, int groupId, DisplayType displayType)
+        {
+            TrackingGroup trackingGroup = new TrackingGroup();
+            var groupTypeId = int.Parse(groupType.Key);
+            trackingGroup.N = GetCreateCustomerResource($"GroupType_{groupTypeId}");
+            trackingGroup.Vals = new List<TrackingElement>();
+            trackingGroup.Tables = new List<TrackingTable>();
+            var trackingTable = new TrackingTable();
+            trackingTable.HeaderColumns = new List<string>();
+            trackingTable.HeaderColumns.Add(string.Empty);
+            trackingTable.Rows = new List<List<string>>();
+            bool isAddedVirtualGamesHeaderRow = false;
+            foreach (var item in groupType.Elements())
+            {
+                var row = new List<string>();
+                var sportType = int.Parse(item.Attribute("SportType").Value);
+                var betType = int.Parse(item.Attribute("BetType").Value);
+                if (displayType == DisplayType.SportType)
+                {
+                    if (IsVirtualGame(sportType))
+                    {
+                        row.Add(CacheRef.GetBettype(betType));
+                    }
+                    else if (IsSabaCasino(sportType, betType))
+                    {
+                        row.Add(CacheRef.GetProductName(SabaCasinoProductId));
+                    }
+                    else
+                    {
+                        row.Add(CacheRef.GetSportName(sportType));
+                    }
+                }
+                else
+                {
+                    row.Add(CacheRef.GetNameByGroupSubGroup(groupId, groupTypeId, sportType, betType));
+                }
+
+                foreach (var attr in item.Attributes().Where(i => !i.Name.LocalName.Equals("SportType") && !i.Name.LocalName.Equals("BetType")))
+                {
+                    var headerColumnName = GetCreateCustomerResource(attr.Name.LocalName);
+                    if (!trackingTable.HeaderColumns.Contains(headerColumnName))
+                    {
+                        trackingTable.HeaderColumns.Add(headerColumnName);
+                    }
+
+                    if (groupId == 3 && groupTypeId == 158 && sportType == 245 && !isAddedVirtualGamesHeaderRow)
+                    {
+                        trackingTable.Rows.Add(new List<string>() { "Virtual Games" });
+                        isAddedVirtualGamesHeaderRow = true;
                     }
 
                     row.Add(LogFormater.FormatValue(attr));
@@ -422,7 +486,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
             trackingGroup.N = GetCreateCustomerResource($"GroupType_{groupTypeId}");
             trackingGroup.Vals = new List<TrackingElement>();
 
-            if (isMember)
+            if (isMember && groupId == 1)
             {
                 trackingGroup.Tables = new List<TrackingTable>();
                 var trackingTable = new TrackingTable();
@@ -542,5 +606,8 @@ namespace Sunplus.Accounting.Business.LogDisplay
 
         private bool IsSabaCasino(int sportType, int betType)
             => sportType == 208 && betType == 2101;
+
+        private bool IsVirtualGame(int sportType)
+            => sportType == 245;
     }
 }
