@@ -145,9 +145,9 @@ $.extend(CreditTerm, { Group: {
     },
     updateConsolidationReportAllowStatus: function (custId, groupId, headlineUsername, element) {
         var isViewReport = $(element).hasClass('allow-button');
-        var message = `Are you sure you want to allow ${headlineUsername} (Group ID: ${groupId}) to view the consolidated report?`;
+        var message = `Are you sure you want to allow ${headlineUsername} (Group ID: ${groupId}) to view the Consolidation report?`;
         if (isViewReport) {
-            message = `Are you sure you want to forbid ${headlineUsername} (Group ID: ${groupId}) from viewing the consolidated report?`;
+            message = `Are you sure you want to disallow ${headlineUsername} (Group ID: ${groupId}) to view the Consolidation report?`;
         }
         __confirm("Please Confirm", message, 325, 'auto', null,
             function () {

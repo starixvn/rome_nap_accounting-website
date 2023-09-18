@@ -213,7 +213,7 @@
             var groupId = $('#groupid').val();
 
             if (type == 3 && !isshowConfirm) {
-                var message = `Are you sure you want to remove the following account(s) from Group ${groupId} of ${headline}?</br>${listusername.join(", ")}`;
+                var message = `Are you sure you want to remove the following account(s) from GroupID ${groupId} of ${headline}?</br>${listusername.join(", ")}`;
                 __confirm("Please Confirm", message, 325, 'auto', null,
                     function () { ProcessGetData(type, listuser); },
                     function () {
