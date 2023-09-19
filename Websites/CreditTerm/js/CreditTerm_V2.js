@@ -31,7 +31,7 @@ $.extend(CreditTerm, { Group: {
                         + '<div class="members">${$value.Members}</div>'
                         + '<div class="checker">${$value.Checker}</div>'
                         + '<div class="consolidationreport">'
-                        + '{{if $value.RoleId != 1}}<span onmouseover="" onmouseout="" onclick="CreditTerm.Group.updateConsolidationReportAllowStatus(${$value.CustId}, \'#allow_${$value.GroupId}\')" class="{{if $value.ConsolidationReport}}allow-button{{else}}disallow-button{{/if}} c" id="allow_${$value.GroupId}"></span>{{/if}}'
+                + '{{if $value.RoleId != 1}}<span onmouseover="" onmouseout="" onclick="CreditTerm.Group.updateConsolidationReportAllowStatus(${$value.CustId}, ${$value.GroupId}, \'${$value.HeadUsername}\', \'#allow_${$value.GroupId}\')" class="{{if $value.ConsolidationReport}}allow-button{{else}}disallow-button{{/if}} c" id="allow_${$value.GroupId}"></span>{{/if}}'
                         + '</div>'
                 + '<div class="edit"><img rel="${$value.GroupId}" headline="${$value.HeadUsername}" class="edit_group" style="cursor: pointer;" src="../App_Themes/Images/icn_edit.png" alt="Edit" title="Edit Group"></div>'
                     + '</div>{{/each}}';
@@ -143,26 +143,39 @@ $.extend(CreditTerm, { Group: {
             }
         });
     },
-    updateConsolidationReportAllowStatus: function (custId, element) {
+    updateConsolidationReportAllowStatus: function (custId, groupId, headlineUsername, element) {
         var isViewReport = $(element).hasClass('allow-button');
-        JAjax.call({
-            url: '../Services/WCF/CreditTerm/Handler.svc/UpdateConsolidationReportAllowStatus',
-            data: { custId: custId, isViewReport: !isViewReport },
-            success: function (result) {
-                if (result.ErrorCode == 0) {
-                    if (isViewReport) {
-                        $(element).addClass('disallow-button');
-                        $(element).removeClass('allow-button');
-                    } else {
-                        $(element).removeClass('disallow-button');
-                        $(element).addClass('allow-button');
-                    }
-                } else {
-                    alert(result.ErrorMessage);
-                }
+        var message = `Are you sure you want to allow ${headlineUsername} (Group ID: ${groupId}) to view the Consolidation report?`;
+        if (isViewReport) {
+            message = `Are you sure you want to disallow ${headlineUsername} (Group ID: ${groupId}) to view the Consolidation report?`;
+        }
+        __confirm("Please Confirm", message, 325, 'auto', null,
+            function () {
+                __close(false, null, null, null);
+                JAjax.call({
+                    url: '../Services/WCF/CreditTerm/Handler.svc/UpdateConsolidationReportAllowStatus',
+                    data: { custId: custId, isViewReport: !isViewReport },
+                    success: function (result) {
+                        if (result.ErrorCode == 0) {
+                            if (isViewReport) {
+                                $(element).addClass('disallow-button');
+                                $(element).removeClass('allow-button');
+                            } else {
+                                $(element).removeClass('disallow-button');
+                                $(element).addClass('allow-button');
+                            }
+                        } else {
+                            alert(result.ErrorMessage);
+                        }
+                    },
+                    isRefresh: true
+                });
             },
-            isRefresh: true
-        });
+            function () {
+                __close(false, null, null, null);
+            },
+            null, false);
+        
     }
 }
 });

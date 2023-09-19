@@ -145,6 +145,7 @@ namespace Sunplus.Accounting.Presentation
                             }
                             if (member.IsGroupHeadline)
                             {
+                                TemplateHandler.Assign(ref formHtml, "{headlineName}", member.Username);
                                 jsheadline = string.Empty;
                                 headline = "(HEAD LINE)";
                                 headlineclass = "../App_Themes/Images/headlineH.gif";
@@ -170,7 +171,7 @@ namespace Sunplus.Accounting.Presentation
                                 headline = string.Empty;
                                 removeitem = "<input type='checkbox' value='" + member.CustId + "|" + member.Username +
                                              "' name='chkuser' id='chkuser' />";
-                                jsheadline = "ExecuteCreditTerm('2','" + member.CustId + "');";
+                                jsheadline = "ExecuteCreditTerm('2','" + member.CustId + "|" + member.Username + "');";
                             }
 
                             roweven = roweven == string.Empty ? "evenrow" : string.Empty;

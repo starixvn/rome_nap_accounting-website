@@ -50,7 +50,6 @@
     <form id="form" method="post" action="Creditterm_Group_Feed.aspx">
         <input type="hidden" id="IsExport" name="IsExport" value="0" />
         <input type="hidden" id="groupid" name="groupid" value="<%=selectedGroupId%>" />
-        <input type="hidden" id="headline" name="headline" value="<%=selectedHeadline%>" />
     </form>
     <div id="confirmAddUsername" class="hidden">
         <p>Beside adding super(s) into the selected Headline Group, the following super(s) will be added into External Group with Primary Extra PT Group indicated.</p>
@@ -62,6 +61,7 @@
     <script src="../Scripts/_Libs/jQuery/jquery-ui-1.9.1.min.js" type="text/javascript"></script>
     <script src="../js/jQuery/jquery.json-1.3.js" type="text/javascript"></script>
     <script src="../js/common.js" type="text/javascript"></script>
+    <script src="../js/Popup/confirmbox.js" type="text/javascript"></script>
     <script type="text/javascript" src="../Scripts/_Libs/FanexGrid/Fanex.Grid.js?v=<%= AccCommon.Version() %>"></script>
     <script type="text/javascript">
         window.rootUrl = '<%=Page.ResolveUrl("~/")%>';
@@ -175,6 +175,8 @@
         function ExecuteCreditTerm(type, userid, isshowConfirm) {
             $("#errMsg,#errMsg1").html('');
             var listuser = "";
+            var listusername = [];
+            var headline = $("#headline").val();
             switch (type) {
                 case '1':
                     if (!ValidateUsername()) {
@@ -182,12 +184,15 @@
                     }
                     break;
                 case '2':
-                    listuser = userid;
+                    listuser = userid.split('|')[0];
+                    listusername.push(userid.split('|')[1])
                     break;
                 case '3':
                     $('input[name=chkuser]:checked').each(
                         function () {
                             listuser += $(this).val() + ",";
+                            var username = $(this).val().split('|')[1];
+                            listusername.push(username)
                         });
                     if (listuser == "") {
                         showAlertMessage("errMsg", "Please select user.", 1);
@@ -195,12 +200,46 @@
                         break;
                     }
             }
-            if (type == 3 && isshowConfirm && !confirm('The group has only 1 member (is Headline). Are you sure you want to remove this group?')) {
+            if (type == 3 && isshowConfirm) {
+                var message = `The group has only 1 member (is Headline). Are you sure you want to remove this group?`;
+                __confirm("Please Confirm", message, 325, 210, null,
+                    function () { ProcessGetData(type, listuser); },
+                    function () {
+                        __close(false, null, null, null);
+                    },
+                    null, false);
                 return;
             }
-            else {
-                try { parent.BlockUI(); } catch (e) { }
+            var groupId = $('#groupid').val();
 
+            if (type == 3 && !isshowConfirm) {
+                var message = `Are you sure you want to remove the following account(s) from GroupID ${groupId} of ${headline}?</br>${listusername.join(", ")}`;
+                __confirm("Please Confirm", message, 325, 'auto', null,
+                    function () { ProcessGetData(type, listuser); },
+                    function () {
+                        __close(false, null, null, null);
+                    },
+                    null, false);
+                return;
+            }
+
+            if (type == 2) {
+                var message = `Are you sure you want to set ${listusername.join()} as Group Headline?`;
+                __confirm("Please Confirm", message, 325, 'auto', null,
+                    function () { ProcessGetData(type, listuser); },
+                    function () {
+                        __close(false, null, null, null);
+                    },
+                    null, false);
+                return;
+            }
+
+            ProcessGetData(type, listuser);
+        }
+
+        function ProcessGetData(type, listuser) {
+            try { parent.BlockUI(); } catch (e) { }
+                __close(false, null, null, null);
                 var param = '';
                 param += '&mode=9';
                 param += '&type=' + type;
@@ -214,7 +253,6 @@
                         success: GetJSONResult
                     }
                 );
-            }
         }
 
         function GetJSONResult(resContent) {
