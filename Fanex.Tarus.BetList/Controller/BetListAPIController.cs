@@ -87,17 +87,18 @@
                         }
                     }
 
+                    var odds = $"{builder.BuildOddsValue(ticket, null, ticketHelper.GetOddsTypeNameById)} {builder.BuildOddsTypeName(ticket, null, ticketHelper.GetOddsTypeNameById)}";
                     outPut.AppendFormat("{0}</br>{1}",
                         builder.BuildTrans(ticket),
                         RemoveDetailLink(choiceHtml.ToString()));
 
-                    return Json(new ResponseBetListApi("0", outPut.ToString()), JsonRequestBehavior.AllowGet);
+                    return Json(new ResponseBetListApi("0", outPut.ToString(), odds), JsonRequestBehavior.AllowGet);
                 }
 
-                return Json(new ResponseBetListApi("020", "No information is available"), JsonRequestBehavior.AllowGet);
+                return Json(new ResponseBetListApi("020", "No information is available", string.Empty), JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new ResponseBetListApi("010", "RefNo is invalid"), JsonRequestBehavior.AllowGet);
+            return Json(new ResponseBetListApi("010", "RefNo is invalid", string.Empty), JsonRequestBehavior.AllowGet);
         }
 
         private ParlayTicket GetMixParlayDetail(long transId, string refNo, decimal? hdp1, decimal? hdp2, string betCheck, string betTeam, long custId)
@@ -146,14 +147,17 @@
 
     public class ResponseBetListApi
     {
-        public ResponseBetListApi(string code, string description)
+        public ResponseBetListApi(string code, string description, string odds)
         {
             ErrorCode = code;
             Description = description;
+            Odds = odds;
         }
 
         public string ErrorCode { get; set; }
 
         public string Description { get; set; }
+
+        public string Odds { get; set; }
     }
 }
