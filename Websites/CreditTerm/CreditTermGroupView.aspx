@@ -17,7 +17,7 @@
     <script src="../js/jQuery/Template/jquery.tmpl.js" type="text/javascript"></script>
     <script src="../js/Common/Functions.js" type="text/javascript"></script>
     <script src="../js/Popup/confirmbox.js" type="text/javascript"></script>
-    <script src="js/CreditTerm_V2.js?vs=135" type="text/javascript"></script>
+    <script src="js/CreditTerm_V2.js?vs=<%= AccCommon.Version()%>" type="text/javascript"></script>
     <script type="text/javascript">
         jQuery(document).ready(function () {
             CreditTerm.Group.getAllView();
