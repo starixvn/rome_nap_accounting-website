@@ -4,8 +4,6 @@ using Sunplus.Accounting.Entities.LogDisplay.SettingPT;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 using System.Xml.Linq;
 
@@ -39,19 +37,19 @@ namespace Sunplus.Accounting.Business.LogDisplay
 
         private const int PTTemplateUpd_Master = 476;
 
-        private const int PTTemplateDel_Master = 477;
+        //private const int PTTemplateDel_Master = 477;
 
         private const int PTTemplateIns_Agent = 480;
 
         private const int PTTemplateUpd_Agent = 481;
 
-        private const int PTTemplateDel_Agent = 482;
+        //private const int PTTemplateDel_Agent = 482;
 
         private const int PTTemplateIns_Member = 483;
 
         private const int PTTemplateUpd_Member = 484;
 
-        private const int PTTemplateDel_Member = 485;
+        //private const int PTTemplateDel_Member = 485;
 
         private const int SabaCasinoProductId = 6;
 
@@ -62,19 +60,72 @@ namespace Sunplus.Accounting.Business.LogDisplay
             CompactLogActionId_Agent,
             SettingsLogActionId_Member,
             CompactLogActionId_Member,
-            PTTemplateIns_Master,
-            PTTemplateUpd_Master,
-            PTTemplateDel_Master,
-            PTTemplateIns_Agent,
-            PTTemplateUpd_Agent,
-            PTTemplateDel_Agent,
-            PTTemplateIns_Member,
-            PTTemplateUpd_Member,
-            PTTemplateDel_Member
+            //PTTemplateIns_Master,
+            //PTTemplateUpd_Master,
+            ////PTTemplateDel_Master,
+            //PTTemplateIns_Agent,
+            //PTTemplateUpd_Agent,
+            ////PTTemplateDel_Agent,
+            //PTTemplateIns_Member,
+            //PTTemplateUpd_Member,
+            ////PTTemplateDel_Member
         };
 
         public bool IsSimplifyCreateCustomerActionId(int actionId)
             => ActionIds.Contains(actionId);
+
+        public List<List<TrackingValue>> GeneratePTTemplateDiffsTrackingValue(
+            string trackingValue, 
+            string trackingValue2, 
+            Func<string, (List<Dictionary<string, TrackingValue>> trackingParams, bool hasAttr)> generateDetailFunction)
+        {
+            var result = new List<List<TrackingValue>>();
+            var diffs = new List<TrackingValue>();
+            if (!trackingValue.Equals(trackingValue2) && !string.IsNullOrEmpty(trackingValue2))
+            {
+                trackingValue = trackingValue.Replace("\a", "");
+                trackingValue2 = trackingValue2.Replace("\a", "");
+                var (listVal, hasAttr) = generateDetailFunction(trackingValue);
+                var (listVal2, hasAttr2) = generateDetailFunction(trackingValue2);
+
+                if (listVal.Count == listVal2.Count && hasAttr == hasAttr2)
+                {
+                    var index = 0;
+                    foreach (var elms in listVal)
+                    {
+                        var isDiff = false;
+                        diffs = new List<TrackingValue>();
+                        foreach (var elm in elms)
+                        {
+                            try
+                            {
+                                var elm2 = listVal2.ElementAt(index)[elm.Key];
+                                if (!elm.Value.Val.Equals(elm2.Val, StringComparison.CurrentCultureIgnoreCase))
+                                {
+                                    isDiff = true;
+                                    elm2.DiffRowIndex = index + (hasAttr ? 1 : 0);
+                                    elm2.P = "";
+                                    diffs.Add(elm2);
+                                }
+                            }
+                            catch
+                            {
+                                continue;
+                            }
+                        }
+
+                        ++index;
+
+                        if (isDiff)
+                        {
+                            result.Add(diffs);
+                        }
+                    }
+                }
+            }
+
+            return result;
+        }
 
         public TrackingLog GenerateDetail(int actionId, string trackingValue, string spName, string actionName)
         {
@@ -87,20 +138,29 @@ namespace Sunplus.Accounting.Business.LogDisplay
                 detail.SP = spName;
                 detail.Attrs = new List<TrackingElement>();
                 detail.Vals = new List<TrackingNode>();
-                var isMember = actionId == CompactLogActionId_Member || actionId == SettingsLogActionId_Member;
-                if (xmlLoad.HasElements)
-                {
-                    foreach (var ele in xmlLoad.Elements().Distinct())
+                //if (IsPTTemplateLogActionId(actionId))
+                //{
+                //    detail.Vals.Add(ParsePTTemplateLog(actionName, xmlLoad, GetCustLevelByActionId(actionId)));
+                //}
+                //else
+                //{
+                    if (xmlLoad.HasElements)
                     {
-                        if (IsCompactLogActionId(actionId))
+                        foreach (var ele in xmlLoad.Elements().Distinct())
                         {
-                            detail.Vals.Add(ParseCompactLog(ele));
+                            if (HasData(ele))
+                            {
+                                if (IsCompactLogActionId(actionId))
+                                {
+                                    detail.Vals.Add(ParseCompactLog(ele));
+                                }
+                                else
+                                {
+                                    detail.Vals.Add(ParseSettingsLog(ele, GetCustLevelByActionId(actionId)));
+                                }
+                            }
                         }
-                        else
-                        {
-                            detail.Vals.Add(ParseSettingsLog(ele, GetCustLevelByActionId(actionId)));
-                        }
-                    }
+                    //}
                 }
             }
             catch (Exception ex)
@@ -119,23 +179,72 @@ namespace Sunplus.Accounting.Business.LogDisplay
                 || actionId == CompactLogActionId_Member;
         }
 
-        private static bool IsPTTemplateLogActionId(int actionId)
+        public bool IsPTTemplateLogActionId(int actionId)
         {
             return actionId == PTTemplateIns_Master
                 || actionId == PTTemplateUpd_Master
-                || actionId == PTTemplateDel_Master
+                //|| actionId == PTTemplateDel_Master
                 || actionId == PTTemplateIns_Agent
                 || actionId == PTTemplateUpd_Agent
-                || actionId == PTTemplateDel_Agent
+                //|| actionId == PTTemplateDel_Agent
                 || actionId == PTTemplateIns_Member
-                || actionId == PTTemplateUpd_Member
-                || actionId == PTTemplateDel_Member;
+                || actionId == PTTemplateUpd_Member;
+            //|| actionId == PTTemplateDel_Member;
         }
 
-        private TrackingNode ParsePTTemplateLog(XElement element, int custLevel)
+        private TrackingNode ParsePTTemplateLog(string actionName, XElement element, int custLevel)
         {
             var trackingNode = new TrackingNode();
+            trackingNode.Groups = new List<TrackingGroup>();
+            trackingNode.N = actionName;
+            var trackingGroup = new TrackingGroup();
+            trackingGroup.N = actionName;
+            trackingGroup.Vals = new List<TrackingElement>();
+            trackingGroup.Tables = new List<TrackingTable>();
+            var trackingTable = new TrackingTable();
+            trackingTable.HeaderRows = new List<List<string>>();
+            trackingTable.Rows = new List<List<string>>();
+            var headerRow1 = new List<string>() { "Template Name" };
+            var headerRow2 = new List<string>() { "Template Name" };
+            var tableRow = new List<string>() { element.Attribute("TemplateName").Value };
+            foreach (var productGroup in element.Elements().GroupBy(e => e.Attribute("GroupID")))
+            {
+                if (productGroup.Count() == 1)
+                {
+                    var xmlRow = productGroup.First();
+                    var groupName = CacheRef.GetProductGroupName(int.Parse(xmlRow.Attribute("GroupID").Value));
+                    var PTValue = xmlRow.Attribute("PT").Value;
+                    headerRow1.Add(GetCustomerLevelText(custLevel) + " PT");
+                    headerRow2.Add(groupName);
+                    tableRow.Add(PTValue);
+                }
+                else
+                {
+                    foreach (var pt in productGroup)
+                    {
+                        var subGroupName = CacheRef.GetSubGroupName(int.Parse(pt.Attribute("SubGroupID").Value));
+                        var PTValue = pt.Attribute("PT").Value;
+                        headerRow1.Add(GetCustomerLevelText(custLevel) + " PT");
+                        headerRow2.Add(subGroupName);
+                        tableRow.Add(PTValue);
+                    }
+                }
+            }
 
+            headerRow1.Add("Selected by Default");
+            headerRow2.Add("Selected by Default");
+            tableRow.Add(element.Attribute("IsDefault").Value);
+            headerRow1.Add("Sub Acc Name");
+            headerRow2.Add("Sub Acc Name");
+            tableRow.Add(element.Attribute("SubAccName").Value);
+            headerRow1.Add("IP");
+            headerRow2.Add("IP");
+            tableRow.Add(element.Attribute("IP").Value);
+            //trackingTable.HeaderRows.Add(headerRow1);
+            trackingTable.HeaderRows.Add(headerRow2);
+            trackingTable.Rows.Add(tableRow);
+            trackingGroup.Tables.Add(trackingTable);
+            trackingNode.Groups.Add(trackingGroup);
             return trackingNode;
         }
 
@@ -174,7 +283,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
                         else
                         {
                             var trackingTable = new TrackingTable();
-                            trackingTable.HeaderColumns = new List<string>();
+                            trackingTable.HeaderRows = new List<List<string>>();
                             trackingTable.Rows = new List<List<string>>();
                             foreach (var subGroupEle in subGroupsEles)
                             {
@@ -184,16 +293,16 @@ namespace Sunplus.Accounting.Business.LogDisplay
                                     if (subGroupItem.Name.LocalName == "Name") // Row's label
                                     {
                                         row.Add(subGroupItem.Value);
-                                        trackingTable.HeaderColumns.Add(string.Empty);
+                                        trackingTable.HeaderRows.Add(new List<string> { string.Empty });
                                     }
                                     else if (subGroupItem.Name.LocalName == "Attributes") // Row's values
                                     {
                                         var key = GetCreateCustomerResource(subGroupItem.Element("Key").Value);
                                         var value = subGroupItem.Element("Value").Value;
                                         row.Add(value);
-                                        if (!trackingTable.HeaderColumns.Contains(key))
+                                        if (!trackingTable.HeaderRows[0].Contains(key))
                                         {
-                                            trackingTable.HeaderColumns.Add(key);
+                                            trackingTable.HeaderRows[0].Add(key);
                                         }
                                     }
                                 }
@@ -263,97 +372,86 @@ namespace Sunplus.Accounting.Business.LogDisplay
             trackingGroup.Vals = new List<TrackingElement>();
             trackingGroup.Tables = new List<TrackingTable>();
             var trackingTable = new TrackingTable();
-            trackingTable.HeaderColumns = new List<string>();
-            trackingTable.HeaderColumns.Add(string.Empty);
+            trackingTable.HeaderRows = new List<List<string>>();
+            trackingTable.HeaderRows.Add(new List<string> { string.Empty });
             trackingTable.Rows = new List<List<string>>();
-            bool isAddedVirtualGamesHeaderRow = false;
+            List<string> existedSporttypeRow = new List<string>();
+            int columnCount = 0;
             foreach (var item in groupType.Elements())
             {
+                if (HasData(item))
+                {
+                    continue;
+                }
+
                 var row = new List<string>();
                 var sportType = int.Parse(item.Attribute("SportType").Value);
                 var betType = int.Parse(item.Attribute("BetType").Value);
+                var settingLevel = item.Attribute("SettingLevel") == null ? 0 : int.Parse(item.Attribute("SettingLevel").Value);
+                var productId = item.Attribute("ProductID") == null ? 0 : int.Parse(item.Attribute("ProductID").Value);
+                var rowLabel = string.Empty;
                 if (displayType == DisplayType.SportType)
                 {
-                    row.Add(IsSabaCasino(sportType, betType) ? CacheRef.GetProductName(SabaCasinoProductId) : CacheRef.GetSportName(sportType));
+                    switch (settingLevel)
+                    {
+                        case 1:
+                            rowLabel = CacheRef.GetProductName(productId);
+                            break;
+                        case 2:
+                            rowLabel = CacheRef.GetSportName(sportType);
+                            break;
+                        case 3:
+                            rowLabel = CacheRef.GetBettype(betType);
+                            break;
+                        case 4:
+                            rowLabel = "&emsp;" + CacheRef.GetBettype(betType);
+                            var sportName = CacheRef.GetSportName(sportType);
+                            if (!existedSporttypeRow.Contains(sportName))
+                            {
+                                trackingTable.Rows.Add(new List<string> { sportName });
+                                existedSporttypeRow.Add(sportName);
+                            }
+
+                            break;
+                        default:
+                            rowLabel = CacheRef.GetSportName(sportType);
+                            break;
+                    }
                 }
                 else
                 {
-                    row.Add(CacheRef.GetNameByGroupSubGroup(groupId, groupTypeId, sportType, betType));
+                    rowLabel = CacheRef.GetNameByGroupSubGroup(groupId, groupTypeId, sportType, betType);
                 }
 
-                foreach (var attr in item.Attributes().Where(i => !i.Name.LocalName.Equals("SportType") && !i.Name.LocalName.Equals("BetType")))
+                row.Add(rowLabel);
+                foreach (var attr in item.Attributes().Where(i => !i.Name.LocalName.Equals("SportType")
+                    && !i.Name.LocalName.Equals("BetType")
+                    && !i.Name.LocalName.Equals("SettingLevel")
+                    && !i.Name.LocalName.Equals("ProductID")))
                 {
                     var headerColumnName = GetCreateCustomerResource(attr.Name.LocalName);
-                    if (!trackingTable.HeaderColumns.Contains(headerColumnName))
+                    if (!trackingTable.HeaderRows[0].Contains(headerColumnName))
                     {
-                        trackingTable.HeaderColumns.Add(headerColumnName);
+                        trackingTable.HeaderRows[0].Add(headerColumnName);
                     }
 
                     row.Add(LogFormater.FormatValue(attr));
                 }
 
                 trackingTable.Rows.Add(row);
+                columnCount = Math.Max(columnCount, row.Count);
             }
 
-            trackingGroup.Tables.Add(trackingTable);
-            return trackingGroup;
-        }
-
-        private TrackingGroup ParseBetLimitTrackingTable(IGrouping<string, XElement> groupType, int groupId, DisplayType displayType)
-        {
-            TrackingGroup trackingGroup = new TrackingGroup();
-            var groupTypeId = int.Parse(groupType.Key);
-            trackingGroup.N = GetCreateCustomerResource($"GroupType_{groupTypeId}");
-            trackingGroup.Vals = new List<TrackingElement>();
-            trackingGroup.Tables = new List<TrackingTable>();
-            var trackingTable = new TrackingTable();
-            trackingTable.HeaderColumns = new List<string>();
-            trackingTable.HeaderColumns.Add(string.Empty);
-            trackingTable.Rows = new List<List<string>>();
-            bool isAddedVirtualGamesHeaderRow = false;
-            foreach (var item in groupType.Elements())
+            foreach (var row in trackingTable.Rows)
             {
-                var row = new List<string>();
-                var sportType = int.Parse(item.Attribute("SportType").Value);
-                var betType = int.Parse(item.Attribute("BetType").Value);
-                if (displayType == DisplayType.SportType)
+                var gapCols = columnCount - row.Count;
+                if (gapCols > 0)
                 {
-                    if (IsVirtualGame(sportType))
+                    for (int i = 0; i < gapCols; i++)
                     {
-                        row.Add(CacheRef.GetBettype(betType));
-                    }
-                    else if (IsSabaCasino(sportType, betType))
-                    {
-                        row.Add(CacheRef.GetProductName(SabaCasinoProductId));
-                    }
-                    else
-                    {
-                        row.Add(CacheRef.GetSportName(sportType));
+                        row.Add(string.Empty);
                     }
                 }
-                else
-                {
-                    row.Add(CacheRef.GetNameByGroupSubGroup(groupId, groupTypeId, sportType, betType));
-                }
-
-                foreach (var attr in item.Attributes().Where(i => !i.Name.LocalName.Equals("SportType") && !i.Name.LocalName.Equals("BetType")))
-                {
-                    var headerColumnName = GetCreateCustomerResource(attr.Name.LocalName);
-                    if (!trackingTable.HeaderColumns.Contains(headerColumnName))
-                    {
-                        trackingTable.HeaderColumns.Add(headerColumnName);
-                    }
-
-                    if (groupId == 3 && groupTypeId == 158 && sportType == 245 && !isAddedVirtualGamesHeaderRow)
-                    {
-                        trackingTable.Rows.Add(new List<string>() { "Virtual Games" });
-                        isAddedVirtualGamesHeaderRow = true;
-                    }
-
-                    row.Add(LogFormater.FormatValue(attr));
-                }
-
-                trackingTable.Rows.Add(row);
             }
 
             trackingGroup.Tables.Add(trackingTable);
@@ -370,27 +468,40 @@ namespace Sunplus.Accounting.Business.LogDisplay
             var previousSportType = 0;
 
             var trackingTable = new TrackingTable();
-            trackingTable.HeaderColumns = new List<string>();
+            trackingTable.HeaderRows = new List<List<string>>();
+            trackingTable.HeaderRows.Add(new List<string>());
             trackingTable.Rows = new List<List<string>>();
 
             var mixSportParlayTrackingTable = new TrackingTable();
-            mixSportParlayTrackingTable.HeaderColumns = new List<string>();
+            mixSportParlayTrackingTable.HeaderRows = new List<List<string>>();
+            mixSportParlayTrackingTable.HeaderRows.Add(new List<string>());
             mixSportParlayTrackingTable.Rows = new List<List<string>>();
 
             foreach (var item in groupType.Elements())
             {
+                if (HasData(item))
+                {
+                    continue;
+                }
+
                 var row = new List<string>();
                 var sportType = int.Parse(item.Attribute("SportType").Value);
                 var sportName = CacheRef.GetSportName(sportType);
                 var betType = int.Parse(item.Attribute("BetType").Value);
                 var isLive = int.Parse(item.Attribute("IsLive").Value) > 0;
+                var settingLevel = item.Attribute("SettingLevel") == null ? 0 : int.Parse(item.Attribute("SettingLevel").Value);
+                var productId = item.Attribute("ProductID") == null ? 0 : int.Parse(item.Attribute("ProductID").Value);
                 if (IsMixSportsParlay(sportType, betType))
                 {
                     var mixSportParlayRow = new List<string>();
                     mixSportParlayRow.Add((isLive ? "Live " : string.Empty) + CacheRef.GetBettype(betType));
-                    mixSportParlayTrackingTable.HeaderColumns = trackingTable.HeaderColumns.Select(col => col).ToList();
-                    mixSportParlayTrackingTable.HeaderColumns[0] = CacheRef.GetNameByGroupSubGroup(groupId, groupTypeId, sportType, betType);
-                    foreach (var attr in item.Attributes().Where(i => !i.Name.LocalName.Equals("SportType") && !i.Name.LocalName.Equals("BetType") && !i.Name.LocalName.Equals("IsLive")))
+                    mixSportParlayTrackingTable.HeaderRows = new List<List<string>>(trackingTable.HeaderRows);
+                    mixSportParlayTrackingTable.HeaderRows[0][0] = CacheRef.GetNameByGroupSubGroup(groupId, groupTypeId, sportType, betType);
+                    foreach (var attr in item.Attributes().Where(i => !i.Name.LocalName.Equals("SportType")
+                        && !i.Name.LocalName.Equals("BetType")
+                        && !i.Name.LocalName.Equals("IsLive")
+                        && !i.Name.LocalName.Equals("SettingLevel")
+                        && !i.Name.LocalName.Equals("ProductID")))
                     {
                         mixSportParlayRow.Add(LogFormater.FormatDecimalTrailingZeros(attr.Value));
                     }
@@ -405,7 +516,8 @@ namespace Sunplus.Accounting.Business.LogDisplay
                     {
                         trackingGroup.Tables.Add(trackingTable);
                         trackingTable = new TrackingTable();
-                        trackingTable.HeaderColumns = new List<string>();
+                        trackingTable.HeaderRows = new List<List<string>>();
+                        trackingTable.HeaderRows.Add(new List<string>());
                         trackingTable.Rows = new List<List<string>>();
                         previousSportType = sportType;
                         if (mixSportParlayTrackingTable != null && mixSportParlayTrackingTable.Rows.Any())
@@ -415,17 +527,21 @@ namespace Sunplus.Accounting.Business.LogDisplay
                         }
                     }
 
-                    if (!trackingTable.HeaderColumns.Any())
+                    if (!trackingTable.HeaderRows.Any(headerRow => headerRow.Any()))
                     {
-                        trackingTable.HeaderColumns.Add(sportName);
+                        trackingTable.HeaderRows[0].Add(sportName);
                     }
 
-                    foreach (var attr in item.Attributes().Where(i => !i.Name.LocalName.Equals("SportType") && !i.Name.LocalName.Equals("BetType") && !i.Name.LocalName.Equals("IsLive")))
+                    foreach (var attr in item.Attributes().Where(i => !i.Name.LocalName.Equals("SportType")
+                        && !i.Name.LocalName.Equals("BetType")
+                        && !i.Name.LocalName.Equals("IsLive")
+                        && !i.Name.LocalName.Equals("SettingLevel")
+                        && !i.Name.LocalName.Equals("ProductID")))
                     {
                         var headerColumnName = GetCreateCustomerResourceByCustomerLevel(attr.Name.LocalName, custLevel + 1);
-                        if (!trackingTable.HeaderColumns.Contains(headerColumnName))
+                        if (!trackingTable.HeaderRows[0].Contains(headerColumnName))
                         {
-                            trackingTable.HeaderColumns.Add(headerColumnName);
+                            trackingTable.HeaderRows[0].Add(headerColumnName);
                         }
 
                         row.Add(LogFormater.FormatDecimalTrailingZeros(attr.Value));
@@ -448,25 +564,36 @@ namespace Sunplus.Accounting.Business.LogDisplay
             trackingGroup.Tables = new List<TrackingTable>();
 
             var trackingTable = new TrackingTable();
-            trackingTable.HeaderColumns = new List<string>();
-            trackingTable.HeaderColumns.Add(string.Empty);
+            trackingTable.HeaderRows = new List<List<string>>();
+            trackingTable.HeaderRows.Add(new List<string> { string.Empty });
             trackingTable.Rows = new List<List<string>>();
 
             foreach (var item in groupType.Elements())
             {
+                if (HasData(item))
+                {
+                    continue;
+                }
+
                 var row = new List<string>();
                 var sportType = int.Parse(item.Attribute("SportType").Value);
                 var betType = int.Parse(item.Attribute("BetType").Value);
-                var sportName = IsSabaCasino(sportType, betType) ? CacheRef.GetProductName(SabaCasinoProductId) : CacheRef.GetSportName(sportType);
                 var isLive = int.Parse(item.Attribute("IsLive").Value) > 0;
-                row.Add((isLive ? "Live " : string.Empty) + sportName);
+                var settingLevel = item.Attribute("SettingLevel") == null ? 0 : int.Parse(item.Attribute("SettingLevel").Value);
+                var productId = item.Attribute("ProductID") == null ? 0 : int.Parse(item.Attribute("ProductID").Value);
+                var labelName = settingLevel == 1 ? CacheRef.GetProductName(productId) : CacheRef.GetSportName(sportType);
+                row.Add((isLive ? "Live " : string.Empty) + labelName);
 
-                foreach (var attr in item.Attributes().Where(i => !i.Name.LocalName.Equals("SportType") && !i.Name.LocalName.Equals("BetType") && !i.Name.LocalName.Equals("IsLive")))
+                foreach (var attr in item.Attributes().Where(i => !i.Name.LocalName.Equals("SportType")
+                    && !i.Name.LocalName.Equals("BetType")
+                    && !i.Name.LocalName.Equals("IsLive")
+                    && !i.Name.LocalName.Equals("SettingLevel")
+                    && !i.Name.LocalName.Equals("ProductID")))
                 {
                     var headerColumnName = GetCreateCustomerResourceByCustomerLevel(attr.Name.LocalName, custLevel + 1);
-                    if (!trackingTable.HeaderColumns.Contains(headerColumnName))
+                    if (!trackingTable.HeaderRows[0].Contains(headerColumnName))
                     {
-                        trackingTable.HeaderColumns.Add(headerColumnName);
+                        trackingTable.HeaderRows[0].Add(headerColumnName);
                     }
 
                     row.Add(LogFormater.FormatDecimalTrailingZeros(attr.Value));
@@ -490,11 +617,16 @@ namespace Sunplus.Accounting.Business.LogDisplay
             {
                 trackingGroup.Tables = new List<TrackingTable>();
                 var trackingTable = new TrackingTable();
-                trackingTable.HeaderColumns = new List<string>();
-                trackingTable.HeaderColumns.Add(string.Empty);
+                trackingTable.HeaderRows = new List<List<string>>();
+                trackingTable.HeaderRows.Add(new List<string> { string.Empty });
                 trackingTable.Rows = new List<List<string>>();
                 foreach (var item in groupType.Elements())
                 {
+                    if (HasData(item))
+                    {
+                        continue;
+                    }
+
                     var row = new List<string>();
                     var sportType = int.Parse(item.Attribute("SportType").Value);
                     var betType = int.Parse(item.Attribute("BetType").Value);
@@ -504,9 +636,9 @@ namespace Sunplus.Accounting.Business.LogDisplay
                     foreach (var attr in item.Attributes().Where(i => !i.Name.LocalName.Equals("SportType") && !i.Name.LocalName.Equals("BetType")))
                     {
                         var headerColumnName = GetCreateCustomerResource(attr.Name.LocalName);
-                        if (!trackingTable.HeaderColumns.Contains(headerColumnName))
+                        if (!trackingTable.HeaderRows[0].Contains(headerColumnName))
                         {
-                            trackingTable.HeaderColumns.Add(headerColumnName);
+                            trackingTable.HeaderRows[0].Add(headerColumnName);
                         }
 
                         row.Add(LogFormater.FormatDecimalTrailingZeros(attr.Value));
@@ -521,9 +653,14 @@ namespace Sunplus.Accounting.Business.LogDisplay
             {
                 foreach (var item in groupType.Elements())
                 {
+                    if (HasData(item))
+                    {
+                        continue;
+                    }
+
                     var sportType = int.Parse(item.Attribute("SportType").Value);
                     var betType = int.Parse(item.Attribute("BetType").Value);
-                    trackingGroup.Vals.Add(FormatSMACommElement(item.Attribute("Discount"), groupId, groupTypeId, sportType, betType));
+                    trackingGroup.Vals.Add(FormatSMACommElement(item.Attribute(isMember ? "PlayerDiscount" : "Discount"), groupId, groupTypeId, sportType, betType));
                 }
             }
 
@@ -592,22 +729,41 @@ namespace Sunplus.Accounting.Business.LogDisplay
             {
                 case SettingsLogActionId_Master:
                 case CompactLogActionId_Master:
+                case PTTemplateIns_Master:
+                case PTTemplateUpd_Master:
+                    //case PTTemplateDel_Master:
                     return 3;
                 case SettingsLogActionId_Agent:
                 case CompactLogActionId_Agent:
+                case PTTemplateIns_Agent:
+                case PTTemplateUpd_Agent:
+                    //case PTTemplateDel_Agent:
                     return 2;
                 case SettingsLogActionId_Member:
                 case CompactLogActionId_Member:
+                case PTTemplateIns_Member:
+                case PTTemplateUpd_Member:
+                    //case PTTemplateDel_Member:
                     return 1;
                 default:
                     throw new ArgumentOutOfRangeException("actionId");
             }
         }
 
-        private bool IsSabaCasino(int sportType, int betType)
-            => sportType == 208 && betType == 2101;
+        private bool HasData(XElement ele)
+        {
+            if (ele.HasElements)
+            {
+                foreach (var item in ele.Elements())
+                {
+                    if (item.HasElements)
+                    {
+                        return true;
+                    }
+                }
+            }
 
-        private bool IsVirtualGame(int sportType)
-            => sportType == 245;
+            return false;
+        }
     }
 }

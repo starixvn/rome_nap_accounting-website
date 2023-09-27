@@ -222,20 +222,21 @@
                                 tpl_tracking += '<tr><td colspan="6"><div class="' + rel_group + '"><table class="tblDesc"><tbody>';
                                 var isMultiTables = group.Tables.length > 1;
                                 for (let table of group.Tables) {
+                                    var isComplexHeader = table.HeaderRows.length > 1;
                                     tpl_tracking += '<tr style="' + (isMultiTables ? 'background-color: #ebf4fa' : '') + '">';
-                                    var isFirst = true;
-                                    for (let value of table.HeaderColumns) {
+                                    let isFirst = true;
+                                    for (let value of table.HeaderRows[0]) {
                                         tpl_tracking += '<td class="' + (isMultiTables ? '' : 'collabel') + ' ' + (isFirst ? 'first_column ' : '') + '"><div class="' + (isFirst ? 'b' : 'c') + '">' + value + '</div></td>';
                                         isFirst = false;
                                     }
 
                                     tpl_tracking += '</tr>';
 
-                                    for (var row of table.Rows) {
+                                    for (var [rowIndex, row] of table.Rows.entries()) {
                                         tpl_tracking += '<tr>';
-                                        var isFirst = true;
-                                        for (let value of row) {
-                                            tpl_tracking += '<td' + (isFirst ? ' class="collabel first_column"' : '') + '><div class="' + (isFirst ? '' : 'c') + '">' + (value == undefined ? '' : value) + '</div></td>';
+                                        isFirst = true;
+                                        for (let [colIndex, value] of row.entries()) {
+                                            tpl_tracking += '<td class="' + ((isFirst && value.indexOf("&emsp;") < 0) ? " collabel" : "") + (isFirst ? ' first_column' : '') + '"><div class="' + tbl + '-' + rowIndex + '-' + colIndex + clsDiff + (isFirst ? '' : ' c') + '">' + (value == undefined ? '' : value) + '</div></td>';
                                             isFirst = false;
                                         }
 
