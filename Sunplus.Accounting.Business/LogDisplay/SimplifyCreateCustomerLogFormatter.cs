@@ -152,7 +152,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
                             {
                                 if (IsCompactLogActionId(actionId))
                                 {
-                                    detail.Vals.Add(ParseCompactLog(ele));
+                                    detail.Vals.Add(ParseSnapshootLog(ele));
                                 }
                                 else
                                 {
@@ -248,14 +248,14 @@ namespace Sunplus.Accounting.Business.LogDisplay
             return trackingNode;
         }
 
-        private TrackingNode ParseCompactLog(XElement element)
+        private TrackingNode ParseSnapshootLog(XElement element)
         {
             var trackingNode = new TrackingNode();
             trackingNode.Vals = new List<TrackingElement>();
             if (element.HasElements)
             {
-                var groupName = element.Element("Name");
-                trackingNode.N = groupName.Value;
+                var groupId = int.Parse(element.Element("Id").Value);
+                trackingNode.N = CacheRef.GetProductGroupName(groupId);
                 var groupTypesEles = element.Elements("GroupTypes");
                 trackingNode.Groups = new List<TrackingGroup>();
                 foreach (var groupType in groupTypesEles)
@@ -263,9 +263,9 @@ namespace Sunplus.Accounting.Business.LogDisplay
                     if (groupType.HasElements)
                     {
                         var groupTypeId = int.Parse(groupType.Element("Id").Value);
-                        var groupTypeName = groupType.Element("Name");
+                        var groupTypeName = GetCreateCustomerResource($"GroupType_{groupTypeId}");
                         var trackingGroup = new TrackingGroup();
-                        trackingGroup.N = groupTypeName.Value;
+                        trackingGroup.N = groupTypeName;
                         trackingGroup.Vals = new List<TrackingElement>();
                         trackingGroup.Tables = new List<TrackingTable>();
                         var subGroupsEles = groupType.Elements("SubGroups");
@@ -275,7 +275,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
                             {
                                 trackingGroup.Vals.Add(new TrackingElement()
                                 {
-                                    N = subGroupEle.Element("Name").Value,
+                                    N = CacheRef.GetSubGroupName(int.Parse(subGroupEle.Element("Id").Value)),
                                     Val = subGroupEle.Element("Attributes").Element("Value").Value
                                 });
                             }
@@ -290,9 +290,9 @@ namespace Sunplus.Accounting.Business.LogDisplay
                                 var row = new List<string>();
                                 foreach (var subGroupItem in subGroupEle.Elements())
                                 {
-                                    if (subGroupItem.Name.LocalName == "Name") // Row's label
+                                    if (subGroupItem.Name.LocalName == "Id") // Row's label
                                     {
-                                        row.Add(subGroupItem.Value);
+                                        row.Add(CacheRef.GetSubGroupName(int.Parse(subGroupItem.Value)));
                                         trackingTable.HeaderRows.Add(new List<string> { string.Empty });
                                     }
                                     else if (subGroupItem.Name.LocalName == "Attributes") // Row's values
