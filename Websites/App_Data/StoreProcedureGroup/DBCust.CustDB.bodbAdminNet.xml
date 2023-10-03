@@ -115,7 +115,7 @@
     <Setting Key="Acc_CustomerUpdAllDayBalTransfer" SpName="Acc_CustomerUpdAllDayBalTransfer" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpd_IsAutoEnableADBMaster" SpName="Acc_CustomerUpd_IsAutoEnableADBMaster" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerSelSuperAutoTransfer" SpName="Acc_CustomerSelSuperAutoTransfer" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Age_ClearBalanceCust_SettingUpdate_Downline" SpName="Age_ClearBalanceCust_SettingUpdate_Downline_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Age_ClearBalanceCust_SettingUpdate_Downline" SpName="Age_ClearBalanceCust_SettingUpdate_Downline" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Credit Term">
     <Setting Key="Acc_CreditTermUpdAddToGroup" SpName="Acc_CreditTermUpdAddToGroup" DbName="DBCust.CustDB.bodbAdminNet" />
