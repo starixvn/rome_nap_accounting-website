@@ -57,5 +57,9 @@ namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
         IEnumerable<SuperPrefix> GetSuperPrefixes(ICriteria criteria);
 
         IEnumerable<HeadlineBelongSiteInfo> GetHeadlineBelongSite(ICriteria criteria);
+
+        string TurnOffAutoTransfer(ICriteria criteria);
+        void InsertToastMessage(ICriteria criteria);
+        bool GetAutoTransferJobStatus(int custId);
     }
 }

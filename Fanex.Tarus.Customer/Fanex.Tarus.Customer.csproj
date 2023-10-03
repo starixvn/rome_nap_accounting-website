@@ -411,9 +411,12 @@
     <Compile Include="Criteria\AutoTransferAll\SelectTransferAgentCriteria.cs" />
     <Compile Include="Criteria\CopySuperSetting\CheckSuperListCriteria.cs" />
     <Compile Include="Criteria\CopyVRSetting\CopyVRSettingCriteria.cs" />
+    <Compile Include="Criteria\CreditCustomer\GetAutoTransferJobStatusCriteria.cs" />
     <Compile Include="Criteria\CreditCustomer\GetHeadlineBelongSiteCriteria.cs" />
     <Compile Include="Criteria\CreditCustomer\SuperPrefixCriteria.cs" />
+    <Compile Include="Criteria\CreditCustomer\InsertToastMessageCriteria.cs" />
     <Compile Include="Criteria\CreditCustomer\UnlockAccessCriteria.cs" />
+    <Compile Include="Criteria\CreditCustomer\TurnOffAutoTransferCriteria.cs" />
     <Compile Include="Criteria\CreditCustomer\UpdateAllDayBalTransferOnMasterCriteria.cs" />
     <Compile Include="Criteria\CreditCustomer\UpdateAllDayBalTransferCriteria.cs" />
     <Compile Include="Criteria\CreditCustomer\UpdateProtectedStatusCriteria.cs" />
@@ -623,6 +626,7 @@
     <Compile Include="Entities\CopySuperSetting\CopyWinLostLimitResult.cs" />
     <Compile Include="Entities\CopySuperSetting\SportType.cs" />
     <Compile Include="Entities\CopyVRSetting\CopyResultEntity.cs" />
+    <Compile Include="Entities\CreditCustomer\ToastContentModel.cs" />
     <Compile Include="Entities\CreditCustomer\Currency.cs" />
     <Compile Include="Entities\CreditCustomer\CustomerInfo.cs" />
     <Compile Include="Entities\CreditCustomer\CustomerSettingView.cs" />

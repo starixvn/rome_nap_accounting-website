@@ -43,7 +43,12 @@ function overlay(id) {
 
 function UpdateSettingStatus(chk1, chk2, type) {
     if (type == 'AllDayBalTransfer') {
-        if (confirm('Are you sure you want to change Transfer Mode for ' + $('#custName').val() + ($("#" + chk2).attr("checked") ? ' and all downlines' : '') + '?')) {
+        var cName = $('#custName').val();
+        var checked = $("#" + chk1).attr("checked");
+        var chkDownlines = $("#" + chk2).attr("checked");
+        var confirmMessage = getChangeADBTConfirmMessage(cName, !checked, chkDownlines, true);
+
+        if (confirm(confirmMessage)) {
             $("#" + chk1.replace(/chk/, "Pop")).css('display', ($("#" + chk1.replace(/chk/, "Pop")).css('display') == 'none') ? 'inline' : 'none');
             overlay(chk1.replace(/chk/, "overlay"));
             return UpdateAllDayBalTransfer({ custid: GetCustId(), status: $("#" + chk1).attr("checked"), isIncludedDownline: $("#" + chk2).attr("checked") });
@@ -171,7 +176,7 @@ function changeDisable(obj, type) {
 
         return;
     }
-   
+
     if (type == "VS") {
         if (($("#" + chk1).attr('checked') == true && $('#chkOldValueVirtualSport').val() == '1') ||
             ($("#" + chk1).attr('checked') == false && $('#chkOldValueVirtualSport').val() == '0')) {

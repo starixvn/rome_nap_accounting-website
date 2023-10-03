@@ -10,6 +10,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
     using Criteria.CN88;
     using Criteria.CreditCustomer;
     using Customer.Entities.CN88;
+    using DNAide.Core;
     using DNAide.Utils;
     using Fanex.Data;
     using Fanex.PTEngine.BusinessObjects;
@@ -149,6 +150,12 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
 
         public Tarus.Customer.Entities.Result UpdateAllDayBalTransfer(int custId, bool isAllDayBalTransfer, bool isIncludedDownline, int userId, string ip)
         {
+            var autoTransferStatus = _customerSettingDataAccess.GetAutoTransferJobStatus(custId);
+            if (autoTransferStatus)
+            {
+                return new Tarus.Customer.Entities.Result(100, Resources.Customer_Labels.ADBTChangeFailed_AutoJobRunning);
+            }
+
             ICriteria criteria = new UpdateAllDayBalTransferCriteria
             {
                 CustId = custId,
@@ -158,7 +165,10 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
                 IP = ip
             };
 
-            return _customerSettingDataAccess.UpdateAllDayBalTransfer(criteria);
+            var result = _customerSettingDataAccess.UpdateAllDayBalTransfer(criteria);
+            TurnOffAutoTransfer(custId, isAllDayBalTransfer, isIncludedDownline, userId, ip);
+
+            return result;
         }
 
         public Tarus.Customer.Entities.Result UpdateAllDayBalTransferOnMaster(int custId, bool isAllDayBalTransfer, int userId, string ip)
@@ -283,7 +293,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
                 Site = site,
                 Headline = string.Join(", ", headline)
             });
-        
+
         public dynamic GetSuperPrefixes(SuperPrefixCriteria criteria)
             => _customerSettingDataAccess.GetSuperPrefixes(criteria)
             .GroupBy(item => item.GroupName, item => item.Prefix, (groupName, prefixes) => new
@@ -307,6 +317,37 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
             }
 
             return result;
+        }
+
+        public void TurnOffAutoTransfer(int custId, bool isAllDayBalTransfer, bool isIncludedDownline, int userId, string ip)
+        {
+            if (!isAllDayBalTransfer)
+            {
+                return;
+            }
+
+            var turnOffCriteria = new TurnOffAutoTransferCriteria
+            {
+                UplineId = custId,
+                Creator = userId,
+                IsAllDownline = isIncludedDownline,
+                IP = ip
+            };
+
+            var targetIds = _customerSettingDataAccess.TurnOffAutoTransfer(turnOffCriteria);
+            if (string.IsNullOrWhiteSpace(targetIds))
+            {
+                return;
+            }
+
+            var ids = targetIds.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(i => int.Parse(i));
+
+            foreach (var id in ids)
+            {
+                var toastMessageCriteria = new InsertToastMessageCriteria(id, userId);
+                _customerSettingDataAccess.InsertToastMessage(toastMessageCriteria);
+            }
         }
     }
 }
