@@ -136,7 +136,7 @@
     <value>Bet Setting</value>
   </data>
   <data name="GroupType_152" xml:space="preserve">
-    <value>Parlay Max Payout</value>
+    <value>Parlay Max Payout Per Bet</value>
   </data>
   <data name="GroupType_153" xml:space="preserve">
     <value>Position Taking</value>
