@@ -47,7 +47,6 @@ namespace Fanex.Tarus.Customer.Entities.CustomerList
         public bool IsHideSportsbook2 { get; set; }       
         public bool IsHideLiveCasino { get; set; }
         public bool IsHideVoidbridge { get; set; }
-        public bool IsHideFishingWorld { get; set; }
         public bool IsHideVirtualSports { get; set; }
 
         public bool IsHideVirtualGames { get; set; }

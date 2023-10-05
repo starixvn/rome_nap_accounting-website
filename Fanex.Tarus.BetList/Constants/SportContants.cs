@@ -60,7 +60,6 @@
         public const int SaGaming = 244;
         public const int SexyGaming = 243;
         public const int Voidbridge = 212;
-        public const int FishingWorld = 219;
         public const int PP = 248;
 
         public const int Happy5 = 164;
@@ -80,7 +79,6 @@
         public const int WM = 233;
         public const int BigGame = 239;
         public const int Joker = 234;
-        public const int GDG = 236;
         public const int MaxGame = 237;
         public const int SportsLottery = 169;
         public const int PPLiveCasino = 170;

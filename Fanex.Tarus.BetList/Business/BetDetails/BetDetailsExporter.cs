@@ -44,7 +44,6 @@
                 {SportContants.SexyGaming, "AESexy_Details"},
                 {SportContants.GTCasino, "IBCBetLiveCasino_Details"},
                 {SportContants.Voidbridge, "MacauGames_Details"},
-                {SportContants.FishingWorld, "FishingWorld_Details"},
                 {SportContants.PP, "PP_Details"},
                 {SportContants.CardClub, "ArcadiaGaming_Details"},
                 {SportContants.Spadegaming, "Spadegaming_Details"},
@@ -53,7 +52,6 @@
                 {SportContants.RNG_Mobile, "SabaCasino_Details"},
                 {SportContants.Sabaclub, "Saba.games_Details"},
                 {SportContants.IonCasino, "IONLiveCasino_Details"},
-                {SportContants.GDG, "GDG_Details"},
                 {SportContants.PPLiveCasino, "PPLiveCasino_Details"}
             };
 
@@ -75,7 +73,6 @@
                 sportType == SportContants.GTCasino ||
                 sportType == SportContants.IonCasino ||
                 sportType == SportContants.WM ||
-                sportType == SportContants.GDG ||
                 sportType == SportContants.BigGame ||
                 sportType == SportContants.PPLiveCasino ||
                 sportType == SportContants.FGG ||
@@ -89,8 +86,7 @@
                 return GetBBinTickets(refNo, custId, transType);
             }
 
-            if (sportType == SportContants.FishingWorld ||
-                sportType == SportContants.RNG_RNGGame ||
+            if (sportType == SportContants.RNG_RNGGame ||
                 sportType == SportContants.RNG_MiniGame ||
                 sportType == SportContants.RNG_Mobile ||
                 sportType == SportContants.Joker ||
@@ -111,7 +107,7 @@
                 sportType == SportContants.MGRNG ||
                 sportType == SportContants.Jili)
             {
-                return GetRNGCasinoOrFishingWorldTickets(refNo, custId, transType, winlostDate);
+                return GetRNGCasinoTickets(refNo, custId, transType, winlostDate);
             }
 
             return Enumerable.Empty<TicketDetail>();
@@ -190,7 +186,7 @@
             cellAddr = builder.AddCell(new HSSFRichTextString(BetListResources.No), headerStyle);
             builder.SetColumnWidth(cellAddr.ColumnIndex, 1200);
 
-            cellAddr = builder.AddCell(new HSSFRichTextString(sportType == SportContants.AllBet || sportType == SportContants.SaGaming || sportType == SportContants.GDG ? BetListResources.Trans_Time : BetListResources.Date), headerStyle);
+            cellAddr = builder.AddCell(new HSSFRichTextString(sportType == SportContants.AllBet || sportType == SportContants.SaGaming ? BetListResources.Trans_Time : BetListResources.Date), headerStyle);
             builder.SetColumnWidth(cellAddr.ColumnIndex, 5400);
 
             cellAddr = builder.AddCell(new HSSFRichTextString(BetListResources.Choice), headerStyle);
@@ -273,7 +269,7 @@
         }
 
 
-        private static IEnumerable<TicketDetail> GetRNGCasinoOrFishingWorldTickets(long refNo, int custId, byte transType, DateTime winlostDate)
+        private static IEnumerable<TicketDetail> GetRNGCasinoTickets(long refNo, int custId, byte transType, DateTime winlostDate)
         {
             var criteria = new GetRNGCasinoBetDetailsCriteria
             {

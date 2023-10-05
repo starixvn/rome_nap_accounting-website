@@ -546,18 +546,6 @@ function showIONCasinoBetDetails(refno, winlossDate, custId, transType) {
     openResultsPopUp(param);
 }
 
-function showGlobalGaming(transId, winlossDate, custId, transType) {
-    var globalGamingParam = {
-        url: "RNGCasinoBetList/BetDetails",
-        title: "Fishing World Details",
-        jsonParam: { TransId: transId, WinLossDate: winlossDate, TransType: transType, CustId: custId, SportType: 219, PageSize: 500 },
-        width: 1170,
-        height: 600
-    };
-
-    openResultsPopUp(globalGamingParam);
-}
-
 function showTodayRunningBetsDetails(refno, winlossDate, custId, transType) {
     var params = {
         url: "AGCasinoBetList/BetDetails",
@@ -694,17 +682,6 @@ function showWMBetDetails(refno, winlossDate, custId, transType) {
         url: "AGCasinoBetList/BetDetails",
         title: "WM - Detailed Bet list - " + winlossDate.split(" ")[0],
         jsonParam: { Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 233, PageSize: 500 },
-        width: 1110,
-        height: 600
-    };
-
-    openResultsPopUp(params);
-}
-function showGDGBetDetails(refno, winlossDate, custId, transType) {
-    var params = {
-        url: "AGCasinoBetList/BetDetails",
-        title: "GDG - Detailed Bet list - " + winlossDate.split(" ")[0],
-        jsonParam: { Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 236, PageSize: 500 },
         width: 1110,
         height: 600
     };
@@ -905,107 +882,6 @@ function showYeeBetBetDetails(refno, winlossDate, custId, transType) {
 
     openResultsPopUp(params);
 }
-// -------------------- Functions whose name must name by Fanex.Toco
-function ViewRNGCasinoResult(matchId, race, betType, sportType, refNo, winlostDate, custId) {
-    var params = $.param({
-        Refno: refNo,
-        RoleId: 0,
-        MatchId: matchId,
-        Race: race,
-        BetType: betType,
-        SportType: sportType,
-        WinLostDate: winlostDate
-    });
-
-    var isFw = betType >= 1011 && betType <= 1020;
-
-    var title = isFw ? "Fishing World Result" : "Saba Casino Result";
-
-    if (isFw === true) {
-        ViewGlobalGamingResult(custId, refNo);
-    } else {
-        parent.OpenNextPopup(
-            "RNGCasinoResult",
-            'RNGCasinoBetList/GetHandHistory?' + params,
-            title,
-            835,
-            675,
-            true,
-            false,
-            window,
-            0,
-            null,
-            null);
-    }
-}
-
-function ViewRNGCasinoBrokenGame(matchId, race, betType, sportType, refNo, winlostDate) {
-    var rngCasinoBrokenGameParam = {
-        url: "RNGCasinoBetList/GetHandHistory",
-        title: "Saba Casino Result",
-        jsonParam: {
-            Refno: refNo,
-            RoleId: 0,
-            MatchId: matchId,
-            Race: race,
-            BetType: betType,
-            SportType: sportType,
-            WinLostDate: winlostDate
-        },
-        width: 835,
-        height: 675
-    };
-
-    openResultsPopUp(rngCasinoBrokenGameParam);
-}
-
-function ViewGlobalGamingResult(custId, betCheck) {
-    var url = "../Report/ViewGlobalGamingResult.aspx?custId=" + custId + "&gameId=" + betCheck;
-    $.ajax({
-        url: url,
-        beforeSend: function () { parent.OpenNextPopup("ViewGlobalGamingResult", '_loading.htm', 'Fishing World Result', 945, 500, true, false, window, 0) }
-    }).complete(function (result) {
-        if (result.responseText.indexOf("<table") < 0) {
-            parent.document.getElementById('innerFrameViewGlobalGamingResult').src = result.responseText;
-        }
-        else {
-            parent.document.getElementById('innerFrameViewGlobalGamingResult').contentDocument.write(result.responseText);
-        }
-    });
-}
-
-function ViewVoidbridgeBrokenGame(custId, betCheck) {
-    var params = $.param({
-        custId: custId,
-        betCheck: betCheck
-    });
-
-    var url = '../Report/ViewVoidbridgeResult.aspx?';
-    $.ajax({ url: url + params, beforeSend: function () { parent.OpenNextPopup("ViewVoidbridgeResult", '_loading.htm', 'Macau Games Result', 945, 500, true, false, window, 0) } }).complete(function (result) {
-        if (result.responseText.indexOf("<table") < 0) {
-            parent.document.getElementById('innerFrameViewVoidbridgeResult').src = result.responseText;
-        }
-        else {
-            parent.document.getElementById('innerFrameViewVoidbridgeResult').contentDocument.write(result.responseText);
-        }
-    });
-}
-
-function ViewVoidbridgeResult(custId, betCheck) {
-    var url = '../Report/ViewVoidbridgeResult.aspx?custId=' + custId + '&betCheck=' + betCheck;
-    $.ajax({ url: url, beforeSend: function () { parent.OpenNextPopup("ViewVoidbridgeResult", '_loading.htm', 'Macau Games Result', 945, 500, true, false, window, 0) } }).complete(function (result) {
-        if (result.responseText.indexOf("<table") < 0) {
-            parent.document.getElementById('innerFrameViewVoidbridgeResult').src = result.responseText;
-        }
-        else {
-            parent.document.getElementById('innerFrameViewVoidbridgeResult').contentDocument.write(result.responseText);
-        }
-    });
-}
-
-function ViewFishingWorldResult(custId, betCheck) {
-    ViewGlobalGamingResult(custId, betCheck);
-}
 
 function ViewCashOutHistory(transId, refNo, betType, originalTransId, title) {
     var cashoutParam = {
@@ -1159,9 +1035,6 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
         case 232: // PG Soft
             return getPGSoftCasinoParam(custId, transId3rd, gameId3rd, currencyId, siteId);
 
-        case 236: // GDG
-            return getGDGParam(custId, transId3rd, gameId3rd, currencyId, siteId);
-
         case 239: // BG
             return getBGParam(custId, transId3rd, gameId3rd, currencyId, siteId);
 
@@ -1178,9 +1051,6 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
 
         case 212: // Macau Games.
             return getMacauGamesParam(custId, transId3rd, gameId3rd, currencyId, siteId);
-
-        case 219: // Fishing World.
-            return getFishingWorldParam(gameId3rd, custId);
 
         case 245: //Virtual Games
             return getVirtualGamesParam(custId, transId3rd, gameId3rd, currencyId, siteId);
@@ -1434,16 +1304,6 @@ function getFGGParam(custId, transId3rd, gameId3rd, currencyId, siteId, endTime)
     };
 }
 
-function getGDGParam(custId, transId3rd, gameId3rd, currencyId, siteId) {
-    return {
-        url: "ThirdParty/GDGResult",
-        title: "GDG Result",
-        jsonParam: { custId: custId, TransId3rd: transId3rd, GameId3rd: gameId3rd, productId: 59, siteId: siteId, currencyid: currencyId },
-        width: 850,
-        height: 800
-    };
-}
-
 function getHabaneroParam(custId, transId3rd, gameId3rd, currencyId, siteId) {
     return {
         url: "ThirdParty/HabaneroResult",
@@ -1668,18 +1528,6 @@ function getJokerParam(custId, transId3rd, gameId3rd, currencyId, siteId) {
         height: 800
     };
 }
-
-function getFishingWorldParam(matchcode, betcheck) {
-    return {
-        url: "../Report/ViewGlobalGamingResult.aspx",
-        title: "Fishing World Result",
-        jsonParam: { custId: betcheck, gameId: matchcode },
-        width: 945,
-        height: 500,
-        iframe: "innerFrameFishingWorldResult"
-    };
-}
-
 function getSystemParlayParam(matchid, refno, bettype, betid) {
     return {
         url: "Report/ViewMixParlayResult.aspx",

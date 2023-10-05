@@ -30,7 +30,6 @@
                 IsShowColossusBetsForDeposit = WebSettings.IsShowColossusBets && customerInfoViewModel.IsDeposit,
                 IsShowLiveCasinoForCredit = !customerInfoViewModel.HideEnabledCheckBoxLiveCasino,
                 IsShowVoidbridge = !customerInfoViewModel.HideEnabledCheckBoxVoidbridge,
-                IsShowFishingWorld = !customerInfoViewModel.HideEnableAndEditFishingWorld,
                 IsShowVirtualSport = !customerInfoViewModel.HideCheckBoxVirtualSports,
                 IsShowVirtualSport2 = !customerInfoViewModel.HideVirtualSports2,
                 ParentId = customerInfoViewModel.ParentId,
@@ -466,19 +465,6 @@
                                                "Update Saba Casino Status",
                                                6);
                             break;
-
-                        case "24":
-                            _renderLeftPanelService.RenderEnableProductBoxDCS2(
-                                               row1,
-                                               productRow,
-                                               sg,
-                                               ref htmlcontent,
-                                               isManageCustomerAccess,
-                                               "FishingWorld",
-                                               renderLeftPanelParameter.IsShowFishingWorld,
-                                               renderLeftPanelParameter,
-                                               "Update Fishing World Status",
-                                               24);
                             break;
 
                         case "25":

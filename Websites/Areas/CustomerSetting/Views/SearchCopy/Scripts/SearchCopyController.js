@@ -212,7 +212,6 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         $("#frmSportsbook2").attr('src', "");
         $("#frmLiveCasino").attr('src', "");
         $("#frmVoidbridge").attr('src', "");      
-        $("#frmFishingWorld").attr('src', "");
         $("#frmRNGLottery").attr('src', "");
         $("#frmBitcoin").attr('src', "");
     };
@@ -265,10 +264,6 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             case 'tabVoidbridge': url += "DCS/ViewCustomerSetting?productId=18&customerLevel=4&IsReadOnly=true&customerId=" + $scope.existedUser.userid;
                 $scope.loadData("#frmVoidbridge", url);
                 $scope.resize("#frmVoidbridge");
-                break;
-            case 'tabFishingWorld': url += "DCS/ViewCustomerSetting?productId=24&customerLevel=4&IsReadOnly=true&customerId=" + $scope.existedUser.userid;
-                $scope.loadData("#frmFishingWorld", url);
-                $scope.resize("#frmFishingWorld");
                 break;
             case 'tabRNGLottery': url += "DCS/ViewCustomerSetting?productId=44&customerLevel=4&IsReadOnly=true&customerId=" + $scope.existedUser.userid;
                 $scope.loadData("#frmRNGLottery", url);

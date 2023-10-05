@@ -507,7 +507,6 @@ var ViewPT = {
             case 224: // Funky Games
             case 225: // ION
             case 233: // WM
-            case 236: // GDG
             case 237: // MaxGame
             case 239: // BigGame
             case 238: // Habanero
@@ -526,9 +525,6 @@ var ViewPT = {
                 break;
             case 9906: // RNG Slot
                 ViewPT.viewPTBasedOnKindOfCustomer(userName, 0, 0, isLive, 18);
-                break;
-            case 219: // Fishing World
-                ViewPT.viewPTBasedOnKindOfCustomer(userName, 0, 0, isLive, 24);
                 break;
             case 245://Virtual Games
             case 176: // FGG

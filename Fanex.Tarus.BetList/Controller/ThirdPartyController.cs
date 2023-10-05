@@ -89,8 +89,6 @@
             return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(ProductResultTitle, result));
         }
 
-        public ActionResult GDGResult(ThirdPartyResultRequest request) => BaseResult(request, "GDGResultConfigs");
-
         public ActionResult IONResult(ThirdPartyResultRequest request) => BaseResult(request, "IONCasinoResultConfigs");
 
         public ActionResult RNGWarResult(ThirdPartyResultRequest request) => BaseResult(request, "RNGWarResultConfigs");

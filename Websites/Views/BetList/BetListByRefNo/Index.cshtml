@@ -10,10 +10,8 @@
     var allowedProducts = new System.Text.StringBuilder();
     allowedProducts.Append("Casino/Keno/Metricgaming/Colossus Bets/AG Casino/Macau Games/Allbet/ION/AE Sexy/IBCBet Live Casino")
         .Append("/WM")
-        .Append("/GDG")
         .Append("/BG")
         .Append("/PP Live Casino")
-        .Append("/Fishing World")
         .Append("/Lottery/Table Game");
 
     var productIdPP = Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdPP;
@@ -154,7 +152,6 @@
                                     <option value="45">AE Sexy</option>
                                     <option value="47">BBIN</option>
                                     <option value="46">IBCBet Live Casino</option>
-                                    <option value="24">Fishing World</option>
                                     @if (productIdPP != 0)
                                     {
                                         <option value="@productIdPP">@CacheRef.GetProductName(productIdPP)</option>
@@ -175,7 +172,6 @@
                                     <option value="55">@CacheRef.GetProductName(55)</option>
                                     <option value="51">@CacheRef.GetProductName(51)</option>
                                     <option value="56">@CacheRef.GetProductName(56)</option>
-                                    <option value="59">@CacheRef.GetProductName(59)</option>
                                     <option value="57">@CacheRef.GetProductName(57)</option>
                                     <option value="60">@CacheRef.GetProductName(60)</option>
                                     <option value="63">@CacheRef.GetProductName(63)</option>
@@ -262,7 +258,7 @@
     </div>
     <form id="noteMessage" style="display:none;">
         @allowedProducts.ToString() tickets with win loss dates from @Model.BalanceUpDay.ToShortDateString() are supported.
-        For Allbet/SA Gaming/AE Sexy/IBCBet Live Casino/BBIN/WM/GDG/BG/PP Live Casino/FGG/YeeBet, the search result includes the related tickets with the same GameID.<br />
+        For Allbet/SA Gaming/AE Sexy/IBCBet Live Casino/BBIN/WM/BG/PP Live Casino/FGG/YeeBet, the search result includes the related tickets with the same GameID.<br />
         For Sportsbook, the search result includes the related Bonus/Cash tickets.
     </form>
     <script type="text/javascript">

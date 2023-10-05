@@ -83,8 +83,6 @@
 
         public bool DisableOutright => Utils.ToBoolean(customerInfoRow["DisableOutright"]);
 
-        public bool HideEnableAndEditFishingWorld { get; private set; } = true;
-
         public bool HideVirtualGames { get; private set; } = true;
 
         public bool HideBitcoin { get; private set; } = true;
@@ -164,12 +162,6 @@
                                 HideVoidbridgeUpline = Utils.ToBoolean(row["IsHiddenUpline"]) && SearchAccountRoleId < 4;
                                 SyncVoidbridgeUpline = Utils.ToBoolean(row["IsSyncedUpline"]);
                                 break;
-
-                            case "24":
-                                bool isHideUplineFishingWorld = Utils.ToBoolean(row["IsHiddenUpline"]);
-                                bool isSyncUplineFishingWorld = Utils.ToBoolean(row["IsSyncedUpline"]);
-
-                                HideEnableAndEditFishingWorld = (SearchAccountRoleId < 4 && isHideUplineFishingWorld) || !isSyncUplineFishingWorld;
 
                                 break;
 
