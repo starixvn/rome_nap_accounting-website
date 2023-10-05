@@ -125,8 +125,8 @@ function UpdateProduct() {
         dataType: 'json',
         data: {
             ProductId: $('#ProductId').text(),
-            ProductName: $('#ProductName').val(),
-            Description: $('#Description').val(),
+            ProductName: $('#ProductName').val().escapeHTML(),
+            Description: $('#Description').val().escapeHTML(),
             ProductPrefix: $('#ProductPrefix').val(),
             Enabled: $('#Enabled').is(":checked"),
             EndOfSupportDate: $('#EndOfSupportDate ').val(),
