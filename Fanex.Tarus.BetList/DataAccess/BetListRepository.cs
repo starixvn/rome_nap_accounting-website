@@ -497,6 +497,7 @@
                                 RefNo = Converter.ToString2(r["refno"]),
                                 WinlostDate = Convert.ToDateTime(r["transdate"]),
                                 Odds = Converter.ToDecimal(r["odds"]),
+                                OddsSpread = Converter.ToDecimal(r["oddsspread"]),
                                 MasterOdds = Converter.ToDecimal(r["modds"]),
                                 Stake = Converter.To<decimal>(r["stake"]),
                                 ActualStake = Converter.To<decimal>(r["actual_stake"]),
@@ -523,7 +524,8 @@
                                 Handicap1 = Converter.ToDecimal(r["hdp1"]),
                                 Handicap2 = Converter.ToDecimal(r["hdp2"]),
                                 BetCheck = Converter.ToString2(r["BetCheck"]),
-                                ExtraInfo = Converter.ToString2(r["ExtraInfo"])
+                                ExtraInfo = Converter.ToString2(r["ExtraInfo"]),
+                                TransDesc = Converter.ToString2(r["transdesc"])
                             },
                             ChoiceHtml = string.Empty,
                             OddHtml = string.Empty,
@@ -601,16 +603,21 @@
                             systemParlayModel.SystemParlayDetail.EventList.Add(new Event
                             {
                                 WinLossDate = Converter.ToDateTime(r["winlostdate"]),
-                                Odds = Converter.To<decimal>(r["modds"]),
+                                Odds = Converter.To<decimal>(r["odds"]),
                                 Stake = Converter.To<decimal>(r["stake"]),
                                 WinLoss = Converter.To<decimal>(r["winlost"]),
                                 Status = r["status"].ToString(),
-                                MatchList = matchList
+                                MatchList = matchList,
+                                BoostOdds = Converter.To<decimal>(r["modds"]),
+                                BoostRate = Converter.To<decimal>(r["extravalue"]),
                             });
 
                             systemParlayModel.SystemParlayDetail.SubTotal += Converter.To<decimal>(r["winlost"]);
                         }
                     }
+
+                    var outputParams = db.GetOuputParams();
+                    systemParlayModel.IsParlayBoost = Converter.ToBool(outputParams["isparlayboost"]);
                 }
             }
 

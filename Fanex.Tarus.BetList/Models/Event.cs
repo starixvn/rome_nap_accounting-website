@@ -9,6 +9,7 @@
 
 namespace Fanex.Tarus.BetList.Models
 {
+    using Fanex.BetList.Core.Utils;
     using System;
     using System.Collections.Generic;
 
@@ -27,6 +28,16 @@ namespace Fanex.Tarus.BetList.Models
         public List<Match> MatchList { get; set; }
 
         public decimal Odds { get; set; }
+
+        public string OddsText => ConvertByBetType.CommValue(Odds);
+
+        public decimal BoostOdds { get; set; }
+
+        public string BoostOddsText => ConvertByBetType.CommValue(BoostOdds);
+
+        public decimal BoostRate { get; set; }
+
+        public string BoostRateText => ConvertByBetType.FormatBoostRate(BoostRate);
 
         public decimal Stake { get; set; }
 

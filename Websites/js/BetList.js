@@ -75,13 +75,13 @@ function showCMP(event, refno, listType) {
     }
 }
 
-function showDetailsCMP(refno, title, transid, betid, custid) {
+function showDetailsCMP(refno, title, custid) {
     //OpenPopup(url, title, width, height, modal, resizable, currWindow, duration, fnRecall, fnOnClose) {
     if (custid == null) {
-        parent.OpenNextPopup("systemPartlay", "BetList/CombinationMPDetail.aspx?refno=" + refno + "&transid=" + transid + "&betid=" + betid, title, 720, 570, true, false, window, 0, null, null);
+        parent.OpenNextPopup("systemPartlay", "BetList/CombinationMPDetail.aspx?refno=" + refno, title, 770, 570, true, false, window, 0, null, null);
     }
     else {
-        parent.OpenNextPopup("systemPartlay", "BetList/CombinationMPDetail.aspx?refno=" + refno + "&transid=" + transid + "&betid=" + betid + "&custid=" + custid, title, 720, 500, true, false, window, 0, null, null);
+        parent.OpenNextPopup("systemPartlay", "BetList/CombinationMPDetail.aspx?refno=" + refno + "&custid=" + custid, title, 770, 500, true, false, window, 0, null, null);
     }
 }
 

@@ -9,5 +9,7 @@
         public decimal Total { get; set; }
 
         public decimal Outstanding { get; set; }
+
+        public bool IsParlayBoost { get; set; }
     }
 }

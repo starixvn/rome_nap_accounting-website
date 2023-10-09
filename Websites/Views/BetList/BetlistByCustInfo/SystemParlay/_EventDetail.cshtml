@@ -34,7 +34,7 @@
                             </div>
                         </th>
                         <th>
-                            <div class="width60 height34 table-cell">
+                            <div class="width120 height34 table-cell">
                                 Odds
                             </div>
                         </th>
@@ -74,7 +74,7 @@
                             </div>
                         </th>
                         <th>
-                            <div class="width60 height34 table-cell">
+                            <div class="width120 height34 table-cell">
                                 Odds
                             </div>
                         </th>
@@ -125,8 +125,22 @@
                                 </div>
                             </td>
                             <td>
-                                <div class="width60 height34 table-cell r">
-                                    @String.Format("{0:0.0000}", eventTmp.Odds)
+                                <div class="width120 height34 table-cell r">
+                                    <span class="underdog @(Model.IsParlayBoost? "strikethrough": string.Empty)">
+                                        @eventTmp.OddsText
+                                        @if (Model.IsParlayBoost)
+                                        {
+                                            <br />
+                                            <span class="oddstype">
+                                                <span class="underdog">@eventTmp.BoostOddsText</span>
+                                                <br />
+                                                <span class="boostrate">
+                                                    <span class="icon-boost"></span>
+                                                    @eventTmp.BoostRateText
+                                                </span>
+                                            </span>
+                                        }
+                                    </span>
                                 </div>
                             </td>
                             <td>
@@ -156,17 +170,17 @@
                 <thead>
                     <tr>
                         <th colspan="4">
-                            <div style="width: 485px;" class=" table-cell r">
+                            <div style="width: 480px;" class=" table-cell r">
                                 Sub total
                             </div>
                         </th>
                         <th>
-                            <div class="width60  table-cell r @betlistHelper.IsNegative(systemParlayDetail.SubTotal)">
+                            <div class="width100  table-cell r @betlistHelper.IsNegative(systemParlayDetail.SubTotal)">
                                 @subtotal.Format(2)
                             </div>
                         </th>
                         <th>
-                            <div class="width100  table-cell">
+                            <div class="width60  table-cell">
                                 &nbsp;
                             </div>
                         </th>

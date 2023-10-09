@@ -18,6 +18,8 @@
 
         public DateTime BalanceUpDay { get; set; }
 
+        public bool IsParlayBoost { get; set; }
+
         public override string GetSettingKey()
             => IsSiteDB ? "SiteDB_Acc_BetList_Parlay_SelByRefNo" : "BetList_CustInfo_SystemParlay";
 

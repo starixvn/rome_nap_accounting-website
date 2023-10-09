@@ -19,6 +19,8 @@
 
         public decimal Outstanding { get; set; }
 
+        public bool IsParlayBoost { get; set; }
+
         public override string GetSettingKey()
         {
             return "Acc_BetlistCombinationParlay_Details";

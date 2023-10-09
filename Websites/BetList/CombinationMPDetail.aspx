@@ -1,4 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="CombinationMPDetail.aspx.cs" Inherits="BetList_CombinationMPDetail" %>
+<%@ Import Namespace="Sunplus.Accounting.Core.Common" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -6,7 +7,7 @@
 <head runat="server">
     <title>Combination Mix Parlay BetList</title>
     <link href="../App_Themes/Public/common.css" rel="stylesheet" type="text/css" />
-    <link type="text/css" href="../App_Themes/BetList/grid.css" rel="stylesheet" />
+    <link type="text/css" href="../App_Themes/BetList/grid.css?v=<%=AccCommon.Version()%>" rel="stylesheet" />
     <script type="text/javascript" src="../js/jQuery/jquery.js"></script>
     <script type="text/javascript" src="JS/CombinationMPDetail.js"></script>
 </head>

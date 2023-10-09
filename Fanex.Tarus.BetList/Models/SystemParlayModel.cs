@@ -30,5 +30,7 @@ namespace Fanex.Tarus.BetList.Models
         public IList<TicketDetail> SystemParlayChoice { get; set; }
 
         public bool HideCombinationDetail { get; set; }
+
+        public bool IsParlayBoost { get; set; }
     }
 }
