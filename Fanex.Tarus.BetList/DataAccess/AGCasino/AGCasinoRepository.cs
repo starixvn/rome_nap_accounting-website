@@ -138,7 +138,7 @@
                                 SiteId = HasColumn(reader, "SiteId") ? Converter.ToString2(reader["SiteId"]) : "",
                                 LeagueId = Converter.ToInt(reader["leagueid"]),
                                 EventDate = HasColumn(reader, "EventDate") ? Converter.ToDateTime(reader["EventDate"]) : (DateTime?)null,
-                                JackpotInfo = Converter.ToString2(reader["JackpotInfo"]),
+                                ExtraInfo = Converter.ToString2(reader["ExtraInfo"])
                             },
                             ChoiceHtml = string.Empty,
                             OddHtml = string.Empty,
