@@ -92,7 +92,7 @@ public partial class Others_Menu : System.Web.UI.Page
         this.RenderSettingTab("livecasino", "{liveCasinoLinkSetting}", string.Format(creditDCSLink, (int)products.livecasino), hideLiveCasino);
         this.RenderSettingTab("voidbridge", "{voidbridgeLinkSetting}", string.Format(creditDCSLink, (int)products.voidbridge), hideVoidbridge);
         this.RenderSettingTab("RNGLottery", "{rngLotteryLinkSetting}", string.Format(creditDCSLink, Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdRNGLottery), hideRNGLottery);
-        this.RenderSettingTab("virtualGames", "{virtualGamesLinkSetting}", string.Format(creditDCSLink, Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdVirtualGames), hideVirtualGames);
+        this.RenderSettingTab("VirtualGames", "{virtualGamesLinkSetting}", string.Format(creditDCSLink, Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdVirtualGames), hideVirtualGames);
         this.RenderSettingTab("sabaclub", "{sabaclubLinkSetting}", string.Format(creditDCSLink, (int)products.sabaclub), hideSabaclub);
         this.RenderSettingTab("vgaming", "{vgamingLinkSetting}", string.Format(creditDCSLink, (int)products.vgaming), hideVGaming);
         this.RenderSettingTab("Bitcoin", "{BitcoinLinkSetting}", string.Format(creditDCSLink, (int)products.Bitcoin), hideBitcoin);
