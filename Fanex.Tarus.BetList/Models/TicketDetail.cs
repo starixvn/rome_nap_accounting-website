@@ -10,7 +10,9 @@
 namespace Fanex.Tarus.BetList.Models
 {
     using System;
+    using System.Resources;
     using Fanex.BetList.Core.Entities;
+    using Fanex.Tarus.BetList.Resources;
 
     /// <summary>
     /// TODO: Update summary.
@@ -64,5 +66,16 @@ namespace Fanex.Tarus.BetList.Models
 
         public string IP { get; set; }
 
+        public int? DeviceType { get; set; }
+
+        public string Platform {
+            get
+            {
+                ResourceManager rm = new ResourceManager(typeof(BetListResources));
+                var deviceInfo = rm.GetString(string.Format("Platform_{0}", DeviceType ?? 0));
+
+                return deviceInfo ?? BetListResources.Platform_Uncategorized;
+            }
+        }
     }
 }

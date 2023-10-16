@@ -115,6 +115,11 @@
                 @Html.Partial("~/Views/BetList/_AgentPTCom.cshtml", betdetail)
             </div>
         </td>
+        <td class="c">
+            <div class="width80 table-cell">
+                @Html.Raw(betdetail.Platform)
+            </div>
+        </td>
     </tr>
 }
 
@@ -195,6 +200,11 @@
                         <th>
                             <div class="width60 height34 table-cell">
                                 @Resources.NewBetList.AgentPT
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width80 height34 table-cell">
+                                @Resources.NewBetList.Platform
                             </div>
                         </th>
                     </tr>

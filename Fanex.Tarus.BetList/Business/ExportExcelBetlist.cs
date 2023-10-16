@@ -58,6 +58,8 @@
 
                     builder.AddStatusStatement(betdetail.Ticket, ticketHelper, outputLiveCasino);
 
+                    builder.AddPlatform(ticketHelper, betdetail.Platform);
+
                     builder.AddCreator(betdetail, ticketHelper);
                     tickets.Add(betdetail.Ticket);
                 }

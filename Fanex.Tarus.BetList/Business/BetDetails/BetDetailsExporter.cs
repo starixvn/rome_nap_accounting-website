@@ -130,7 +130,7 @@
 
         public void Export(IEnumerable<TicketDetail> ticketDetails, Stream stream, int sportType)
         {
-            short excelColumns = 10;
+            short excelColumns = 11;
 
             var factory = new BetListExcelFactory();
             var builder = factory.CreateBuilder();
@@ -161,7 +161,8 @@
                         .AddStatisWithIP(ticket, item, ticketHelper)
                         .AddPTComm(ticket, ticketData, RoleIdConstants.Super)
                         .AddPTComm(ticket, ticketData, RoleIdConstants.Master)
-                        .AddPTComm(ticket, ticketData, RoleIdConstants.Agent);
+                        .AddPTComm(ticket, ticketData, RoleIdConstants.Agent)
+                        .AddPlatform(ticketHelper, item.Platform);
                 }
             }
             else
@@ -217,6 +218,9 @@
             cellAddr = builder.AddCell(
                 new HSSFRichTextString(string.Format("{0}\n{1}/{2}", BetListResources.Agent, BetListResources.PT, BetListResources.Comm)),
                 headerStyle);
+            builder.SetColumnWidth(cellAddr.ColumnIndex, 3400);
+
+            cellAddr = builder.AddCell(new HSSFRichTextString(BetListResources.Platform), headerStyle);
             builder.SetColumnWidth(cellAddr.ColumnIndex, 3400);
         }
 

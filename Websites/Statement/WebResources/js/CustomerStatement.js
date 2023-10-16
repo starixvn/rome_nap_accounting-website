@@ -85,7 +85,7 @@ function completeUpdateIsInternal(rs) {
                 jQuery.param(criteria);
             parent.OpenPopup(url,
                 options.title,
-                1080,
+                1180,
                 options.height,
                 true,
                 true,
@@ -411,7 +411,7 @@ jQuery(document).ready(function () {
 function viewDetail(fdate, transtypeid) {
     var username = $('#txtCustName').val();
     url = 'BetList/GetBetListStatement?Username=' + unescape(username) + '&TransType=' + transtypeid + '&FromDate=' + fdate;
-    parent.OpenNextPopup("popupStatement", url, "Bet list", 1050, 700, true, true, window, 2000, null, null);
+    parent.OpenNextPopup("popupStatement", url, "Bet list", 1180, 700, true, true, window, 2000, null, null);
 }
 
 function viewGuidelines() {

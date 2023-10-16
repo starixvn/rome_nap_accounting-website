@@ -385,6 +385,69 @@ namespace Fanex.Tarus.BetList.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Platform.
+        /// </summary>
+        public static string Platform {
+            get {
+                return ResourceManager.GetString("Platform", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to N/A.
+        /// </summary>
+        public static string Platform_0 {
+            get {
+                return ResourceManager.GetString("Platform_0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Desktop.
+        /// </summary>
+        public static string Platform_1 {
+            get {
+                return ResourceManager.GetString("Platform_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mobile.
+        /// </summary>
+        public static string Platform_2 {
+            get {
+                return ResourceManager.GetString("Platform_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to APP.
+        /// </summary>
+        public static string Platform_3 {
+            get {
+                return ResourceManager.GetString("Platform_3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uncategorized.
+        /// </summary>
+        public static string Platform_4 {
+            get {
+                return ResourceManager.GetString("Platform_4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uncategorized.
+        /// </summary>
+        public static string Platform_Uncategorized {
+            get {
+                return ResourceManager.GetString("Platform_Uncategorized", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Saba Casino.
         /// </summary>
         public static string Product_6 {

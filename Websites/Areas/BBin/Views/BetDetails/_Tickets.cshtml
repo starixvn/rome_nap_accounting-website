@@ -36,7 +36,7 @@
                 @Html.Raw(betdetail.TransDateHtml)
             </div>
         </td>
-        <td id ="td_right_@betdetail.Ticket.TransId"  class='r bl_evt'>
+        <td id="td_right_@betdetail.Ticket.TransId" class='r bl_evt'>
             <div id="choice_right_@betdetail.Ticket.TransId" class="column-choice table-cell">
                 @Html.Raw(betdetail.ChoiceHtml)
                 @if (betdetail.Ticket.BetTypeId == 9 ||
@@ -96,6 +96,11 @@
                 @Html.Partial("~/Views/BetList/_AgentPTCom.cshtml", betdetail)
             </div>
         </td>
+        <td class="c">
+            <div class="width80 table-cell">
+                @Html.Raw(betdetail.Platform)
+            </div>
+        </td>
     </tr>
 }
 
@@ -104,13 +109,12 @@
     @MvcHtmlString.Create(renderResult[1])
 }
 else
-{ 
+{
     <tr class="c">
-        <td colspan="10" class="r column-no-data">
+        <td colspan="11" class="r column-no-data">
             <div class="c b">
                 There is no data
             </div>
         </td>
     </tr>
 }
-              

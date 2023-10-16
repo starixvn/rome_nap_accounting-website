@@ -195,6 +195,11 @@ var isShowWinLoss = statusTemp != "running";
                 }
             </div>
         </td>
+        <td class="c">
+            <div class="width80 table-cell">
+                @Html.Raw(betdetail.Platform)
+            </div>
+        </td>
     </tr>
 }
 @helper FormatWinLoss(int betType, decimal value)
@@ -218,7 +223,7 @@ switch (betType)
 else
 {
     <tr class="c">
-        <td colspan="10" class="r column-no-data">
+        <td colspan="11" class="r column-no-data">
             <div class="c b">
                 There is no data
             </div>

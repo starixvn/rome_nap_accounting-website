@@ -436,7 +436,7 @@ function showRnGCasinoDetails(transId, winlossDate, custId, transType) {
         url: "RNGCasinoBetList/BetDetails",
         title: "Saba Casino Details",
         jsonParam: { TransId: transId, WinLossDate: winlossDate, TransType: transType, CustId: custId, SportType: 209,/*[208,209,210]*/ PageSize: 500 },
-        width: 1170,
+        width: 1250,
         height: 600
     };
 
@@ -448,7 +448,7 @@ function showRNGWARBetDetails(transId, winlossDate, custId, transType) {
         url: "RNGCasinoBetList/BetDetails",
         title: "Funky Games - Detailed Bet list -" + winlossDate.split(" ")[0],
         jsonParam: { TransId: transId, WinLossDate: winlossDate, TransType: transType, CustId: custId, SportType: 224, PageSize: 500 },
-        width: 1170,
+        width: 1250,
         height: 600
     };
 
@@ -472,7 +472,7 @@ function showVoidBridgeDetails(transId, winlossDate, custId, transType) {
         url: "RNGCasinoBetList/BetDetails",
         title: "Macau Games Details",
         jsonParam: { TransId: transId, WinLossDate: winlossDate, TransType: transType, CustId: custId, SportType: 212, PageSize: 500 },
-        width: 1170,
+        width: 1250,
         height: 600,
         resizable: false
     };
@@ -485,7 +485,7 @@ function showPPDetails(transId, winlossDate, custId, transType) {
         url: "RNGCasinoBetList/BetDetails",
         title: "PP Details",
         jsonParam: { TransId: transId, WinLossDate: winlossDate, TransType: transType, CustId: custId, SportType: 248, PageSize: 500 },
-        width: 1170,
+        width: 1250,
         height: 600,
         resizable: false
     };
@@ -498,7 +498,7 @@ function showSGDetails(transId, winlossDate, custId, transType) {
         url: "RNGCasinoBetList/BetDetails",
         title: "Spadegaming Details",
         jsonParam: { TransId: transId, WinLossDate: winlossDate, TransType: transType, CustId: custId, SportType: 247, PageSize: 500 },
-        width: 1170,
+        width: 1250,
         height: 600,
         resizable: false
     };
@@ -511,7 +511,7 @@ function showPGSoftDetails(transId, winlossDate, custId, transType) {
         url: "RNGCasinoBetList/BetDetails",
         title: "PG Soft Details",
         jsonParam: { TransId: transId, WinLossDate: winlossDate, TransType: transType, CustId: custId, SportType: 232, PageSize: 500 },
-        width: 1170,
+        width: 1250,
         height: 600,
         resizable: false
     };
@@ -525,7 +525,7 @@ function showVideoPokerGameDetails(transId, winlossDate, custId, transType) {
         url: "RNGCasinoBetList/BetDetails",
         title: "Arcadia Gaming - Detail Tickets - " + winlossDate.split(" ")[0],
         jsonParam: { TransId: transId, WinLossDate: winlossDate, TransType: transType, CustId: custId, SportType: 165, PageSize: 500 },
-        width: 1170,
+        width: 1250,
         height: 600,
         resizable: false
     };
@@ -538,7 +538,7 @@ function showIONCasinoBetDetails(refno, winlossDate, custId, transType) {
         url: "AGCasinoBetList/BetDetails",
         title: "ION - Detail Tickets - " + winlossDate.split(" ")[0],
         jsonParam: { Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 225, PageSize: 500 },
-        width: 1110,
+        width: 1190,
         height: 600,
         resizable: false
     };
@@ -551,7 +551,7 @@ function showTodayRunningBetsDetails(refno, winlossDate, custId, transType) {
         url: "AGCasinoBetList/BetDetails",
         title: "Allbet - Detailed Bet list - " + winlossDate.split(" ")[0],
         jsonParam: { Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 211, PageSize: 500 },
-        width: 1110,
+        width: 1190,
         height: 600
     };
 
@@ -563,7 +563,7 @@ function showCGBetDetails(transId, winlossDate, custId, transType) {
         url: "RNGCasinoBetList/BetDetails",
         title: "CG - Detailed Bet list - " + winlossDate.split(" ")[0],
         jsonParam: { TransId: transId, WinLossDate: winlossDate, TransType: transType, CustId: custId, SportType: 167, PageSize: 500 },
-        width: 1170,
+        width: 1250,
         height: 600
     };
 
@@ -575,7 +575,7 @@ function showAdvantPlayBetDetails(transId, winlossDate, custId, transType) {
         url: "RNGCasinoBetList/BetDetails",
         title: "AdvantPlay - Detailed Bet list - " + winlossDate.split(" ")[0],
         jsonParam: { TransId: transId, WinLossDate: winlossDate, TransType: transType, CustId: custId, SportType: 172, PageSize: 500 },
-        width: 1170,
+        width: 1250,
         height: 600
     };
 
@@ -587,7 +587,7 @@ function showAdvantPlayMiniBetDetails(transId, winlossDate, custId, transType) {
         url: "RNGCasinoBetList/BetDetails",
         title: "AdvantPlay Mini - Detailed Bet list - " + winlossDate.split(" ")[0],
         jsonParam: { TransId: transId, WinLossDate: winlossDate, TransType: transType, CustId: custId, SportType: 174, PageSize: 500 },
-        width: 1170,
+        width: 1250,
         height: 600
     };
 
@@ -599,7 +599,7 @@ function showMaxGameBetDetails(transId, winlossDate, custId, transType) {
         url: "RNGCasinoBetList/BetDetails",
         title: "MaxGame - Detailed Bet list - " + winlossDate.split(" ")[0],
         jsonParam: { TransId: transId, WinLossDate: winlossDate, TransType: transType, CustId: custId, SportType: 237, PageSize: 500 },
-        width: 1170,
+        width: 1250,
         height: 600
     };
 
@@ -611,7 +611,7 @@ function showJokerBetDetails(transId, winlossDate, custId, transType) {
         url: "RNGCasinoBetList/BetDetails",
         title: "Joker - Detailed Bet list - " + winlossDate.split(" ")[0],
         jsonParam: { TransId: transId, WinLossDate: winlossDate, TransType: transType, CustId: custId, SportType: 234, PageSize: 500 },
-        width: 1170,
+        width: 1250,
         height: 600
     };
 
@@ -623,7 +623,7 @@ function showHabaneroBetDetails(transId, winlossDate, custId, transType) {
         url: "RNGCasinoBetList/BetDetails",
         title: "Habanero - Detailed Bet list - " + winlossDate.split(" ")[0],
         jsonParam: { TransId: transId, WinLossDate: winlossDate, TransType: transType, CustId: custId, SportType: 238, PageSize: 500 },
-        width: 1170,
+        width: 1250,
         height: 600
     };
 
@@ -635,7 +635,7 @@ function showSexyGamingBetDetails(refno, winlossDate, custId, transType) {
         url: "AGCasinoBetList/BetDetails",
         title: "AE Sexy - Detailed Bet list - " + winlossDate.split(" ")[0],
         jsonParam: { Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 243, PageSize: 500 },
-        width: 1110,
+        width: 1190,
         height: 600
     };
 
@@ -647,7 +647,7 @@ function showSAGamingDetails(refno, winlossDate, custId, transType) {
         url: "AGCasinoBetList/BetDetails",
         title: "SA Gaming - Detailed Bet list - " + winlossDate.split(" ")[0],
         jsonParam: { Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 244, PageSize: 500 },
-        width: 1110,
+        width: 1190,
         height: 600
     };
 
@@ -659,7 +659,7 @@ function showGTCasinoBetsDetails(refno, winlossDate, custId, transType) {
         url: "AGCasinoBetList/BetDetails",
         title: "IBCBet Live Casino - Detailed Bet list - " + winlossDate.split(" ")[0],
         jsonParam: { Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 242, PageSize: 500 },
-        width: 1110,
+        width: 1190,
         height: 600
     };
 
@@ -671,7 +671,7 @@ function showAGCasinoDetails(refno, winlossDate, custId, transType) {
         url: "AGCasinoBetList/BetDetails",
         title: "AG Casino Details",
         jsonParam: { Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType },
-        width: 1110,
+        width: 1190,
         height: 600
     };
 
@@ -682,7 +682,7 @@ function showWMBetDetails(refno, winlossDate, custId, transType) {
         url: "AGCasinoBetList/BetDetails",
         title: "WM - Detailed Bet list - " + winlossDate.split(" ")[0],
         jsonParam: { Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 233, PageSize: 500 },
-        width: 1110,
+        width: 1190,
         height: 600
     };
 
@@ -693,7 +693,7 @@ function showBGBetDetails(refno, winlossDate, custId, transType) {
         url: "AGCasinoBetList/BetDetails",
         title: "BG - Detailed Bet list - " + winlossDate.split(" ")[0],
         jsonParam: { Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 239, PageSize: 500 },
-        width: 1110,
+        width: 1190,
         height: 600
     };
 
@@ -705,7 +705,7 @@ function showSabaClubDetails(refno, winlossDate, custId, transType) {
         url: "RNGCasinoBetList/BetDetails",
         title: "Saba.games Details",
         jsonParam: { TransId: refno, Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 200, PageSize: 500 },
-        width: 1170,
+        width: 1250,
         height: 600
     };
 
@@ -717,7 +717,7 @@ function showVGamingDetails(refno, winlossDate, custId, transType) {
         url: "RNGCasinoBetList/BetDetails",
         title: "Vgaming Details",
         jsonParam: { TransId: refno, Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 171, PageSize: 500 },
-        width: 1170,
+        width: 1250,
         height: 600
     };
 
@@ -729,7 +729,7 @@ function showBBINBetDetails(refno, winlossDate, custId, transType) {
         url: "BBinBetList/BetDetails",
         title: "BBIN - Detailed Bet list - " + winlossDate.split(" ")[0],
         jsonParam: { TransId: refno, Refno: refno, CustId: custId, TransType: transType, SportType: 241, PageSize: 500 },
-        width: 1110,
+        width: 1190,
         height: 600
     };
 
@@ -747,7 +747,7 @@ function showProgressiveJackpotWonDetails(transId, custId, betType, winlostdate)
         url: "RNGCasinoBetList/JackpotDetails",
         title: title,
         jsonParam: { TransId: transId, CustId: custId, BetType: betType, WinLostDate: winlostdate, Title: title },
-        width: 1110,
+        width: 1190,
         height: 600
     };
 
@@ -760,7 +760,7 @@ function showPPJackpotWonDetails(transId, custId, betType, winlostdate) {
         url: "RNGCasinoBetList/JackpotDetails",
         title: title,
         jsonParam: { TransId: transId, CustId: custId, BetType: betType, WinLostDate: winlostdate, Title: title },
-        width: 1110,
+        width: 1190,
         height: 600
     };
 
@@ -773,7 +773,7 @@ function showSGJackpotWonDetails(transId, custId, betType, winlostdate) {
         url: "RNGCasinoBetList/JackpotDetails",
         title: title,
         jsonParam: { TransId: transId, CustId: custId, BetType: betType, WinLostDate: winlostdate, Title: title },
-        width: 1110,
+        width: 1190,
         height: 600
     };
 
@@ -786,7 +786,7 @@ function showVGamingJackpotWonDetails(transId, custId, betType, winlostdate) {
         url: "RNGCasinoBetList/JackpotDetails",
         title: title,
         jsonParam: { TransId: transId, CustId: custId, BetType: betType, WinLostDate: winlostdate, Title: title },
-        width: 1110,
+        width: 1190,
         height: 600
     };
 
@@ -799,7 +799,7 @@ function showSabaClubJackpotWonDetails(transId, custId, betType, winlostdate) {
         url: "RNGCasinoBetList/JackpotDetails",
         title: title,
         jsonParam: { TransId: transId, CustId: custId, BetType: betType, WinLostDate: winlostdate, Title: title },
-        width: 1110,
+        width: 1190,
         height: 600
     };
 
@@ -816,7 +816,7 @@ function showBetDetailsOnBettransLC(sportTypeId, refno, winlossDate, custId, tra
         url: "AGCasinoBetList/BetDetails",
         title: title,
         jsonParam: { Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: sportTypeId, PageSize: 500 },
-        width: 1110,
+        width: 1190,
         height: 600
     };
 
@@ -828,7 +828,7 @@ function showFGGBetDetails(refno, winlossDate, custId, transType) {
         url: "AGCasinoBetList/BetDetails",
         title: "FGG - Detailed Bet list - " + winlossDate.split(" ")[0],
         jsonParam: { Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 176, PageSize: 500 },
-        width: 1110,
+        width: 1190,
         height: 600
     };
 
@@ -840,7 +840,7 @@ function showSealEntertainmentBetDetails(transId, winlossDate, custId, transType
         url: "RNGCasinoBetList/BetDetails",
         title: "SEAL Entertainment - Detailed Bet list - " + winlossDate.split(" ")[0],
         jsonParam: { TransId: transId, WinLossDate: winlossDate, TransType: transType, CustId: custId, SportType: 156, PageSize: 500 },
-        width: 1170,
+        width: 1250,
         height: 600
     };
 
@@ -852,7 +852,7 @@ function showSealEntertainmentBetDetails(transId, winlossDate, custId, transType
         url: "RNGCasinoBetList/BetDetails",
         title: "MG-RNG - Detailed Bet list - " + winlossDate.split(" ")[0],
         jsonParam: { TransId: transId, WinLossDate: winlossDate, TransType: transType, CustId: custId, SportType: 155, PageSize: 500 },
-        width: 1170,
+        width: 1250,
         height: 600
     };
 
@@ -864,7 +864,7 @@ function showJiliBetDetails(transId, winlossDate, custId, transType) {
         url: "RNGCasinoBetList/BetDetails",
         title: "Jili - Detailed Bet list - " + winlossDate.split(" ")[0],
         jsonParam: { TransId: transId, WinLossDate: winlossDate, TransType: transType, CustId: custId, SportType: 158, PageSize: 500 },
-        width: 1170,
+        width: 1250,
         height: 600
     };
 
@@ -876,7 +876,7 @@ function showYeeBetBetDetails(refno, winlossDate, custId, transType) {
         url: "AGCasinoBetList/BetDetails",
         title: "YeeBet - Detailed Bet list - " + winlossDate.split(" ")[0],
         jsonParam: { Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 159, PageSize: 500 },
-        width: 1110,
+        width: 1190,
         height: 600
     };
 

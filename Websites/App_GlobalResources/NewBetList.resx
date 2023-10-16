@@ -169,13 +169,16 @@
   </data>
   <data name="NoInformation" xml:space="preserve">
     <value>No information is available</value></data>
-  <data name="Stake" xml:space="preserve">
+  <data name="Stake_Duplicate[1]" xml:space="preserve">
     <value>Stake</value>
   </data>
-  <data name="Status" xml:space="preserve">
+  <data name="Status_Duplicate[1]" xml:space="preserve">
     <value>Status</value>
   </data>
-  <data name="WinLoss" xml:space="preserve">
+  <data name="WinLoss_Duplicate[1]" xml:space="preserve">
     <value>Win / Loss</value>
+  </data>
+  <data name="Platform" xml:space="preserve">
+    <value>Platform</value>
   </data>
 </root>
