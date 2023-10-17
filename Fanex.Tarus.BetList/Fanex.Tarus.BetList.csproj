@@ -158,7 +158,7 @@
       <HintPath>..\packages\Fanex.BetList.RNGWar.2.0.0\lib\net461\Fanex.BetList.RNGWar.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.SabaClub, Version=2.0.0.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.SabaClub.2.0.0.2-MaxPayout-01\lib\net461\Fanex.BetList.SabaClub.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.SabaClub.2.0.0.2-MaxPayout-02\lib\net461\Fanex.BetList.SabaClub.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.SAGaming, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.SAGaming.2.0.0\lib\net461\Fanex.BetList.SAGaming.dll</HintPath>
