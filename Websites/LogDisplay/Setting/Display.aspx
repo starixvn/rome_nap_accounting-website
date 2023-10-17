@@ -33,7 +33,7 @@
 
     <script src="../../js/jQuery/Template/jquery.tmpl.js" type="text/javascript"></script>
     <script src="../../js/Common/Functions.js" type="text/javascript"></script>
-    <script src="Scripts/LogSetting.js?v=<%=Sunplus.Accounting.Core.Configurations.WebSettings.Version%>" type="text/javascript"></script>
+    <script src="Scripts/LogSetting.js?v=12<%=Sunplus.Accounting.Core.Configurations.WebSettings.Version%>" type="text/javascript"></script>
     <script type="text/javascript">
         function getQuerystring(key, default_) {
             if (default_ == null) default_ = "";
@@ -88,6 +88,7 @@
         .diffhead .close { float: right; width: 16px; background: url(../../App_Themes/Images/close_16_16.gif) no-repeat scroll 0 0 transparent;cursor: pointer;height: 16px; display: inline; }
         .tbl-popup {padding: 2px 3px; border: 1px solid #7C98A4;}
         .r-tbl-popup { padding: 2px 3px; border: 1px solid #7C98A4;}
+        .first_column {width: 20%;}
     </style>
 </head>
 <body>

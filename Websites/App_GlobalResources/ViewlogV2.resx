@@ -2242,4 +2242,7 @@ Max Keno (20+1) 2</value>
   <data name="Disable9911_2400" xml:space="preserve">
     <value>Disabled Live Casino</value>
   </data>
+  <data name="TemplateName" xml:space="preserve">
+    <value>Template Name</value>
+  </data>
 </root>

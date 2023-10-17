@@ -9,7 +9,7 @@
     logType: 'setting',
     Rows: null,
     doSearch: function (_page, _size) {
-       // $("#logPopUp").dialog("close");
+        // $("#logPopUp").dialog("close");
         var _custName = "", _custId = custId, _fromDate = "", _toDate = "", _viewBy = "";
         if (typeof _page == 'undefined') {
             _page = this.page;
@@ -197,25 +197,57 @@
                     if (node.Groups != null && node.Groups.length > 0) {
                         tpl_tracking += '<tr><td colspan="6">';
                         tpl_tracking += '<div class="' + rel + '" style="display:' + trShow + ';"><table class="tblDesc"><tbody>';
+
                         for (var g = 0; g < node.Groups.length; g++) {
                             var group = node.Groups[g], class_group = rel.concat(' group '), rel_group = class_group.concat('g' + (g + 1));
-                            if (group.Vals.length == 0) { continue; }
-                            tpl_tracking += '<tr class="headerSportTypeDetail"><td colspan="6" style="cursor: pointer;" onclick="LogPT.showHide(\'' + rel_group + '\')">' + group.N + '</td></tr>';
-                            tpl_tracking += '<tr><td colspan="6"><div class="' + rel_group + '"><table class="tblDesc"><tbody>';
-                            var total_val = Math.ceil(group.Vals.length / 3); // 6 columns = 3 x N:Val
-                            var ind_g = 0;
-                            for (var r = 0; r < total_val; r++) {
-                                tpl_tracking += '<tr>';
-                                for (var r1 = 0; r1 < 3; r1++) {
-                                    var _elm, _etmp = { N: "", Val: "", P: "" };
-                                    _elm = (typeof group.Vals[ind_g] != 'undefined') ? group.Vals[ind_g] : _etmp;
-                                    tpl_tracking += '<td class="collabel"><div class="colW1sp">' + _elm.N + '</div></td><td><div class="colW2sp ' + tbl + '-' + (i + 1) + '-' + _elm.P + clsDiff + '">' + _elm.Val + '</div></td>';
-                                    ind_g++;
+                            if (group.Vals != undefined && group.Vals.length > 0) {
+                                tpl_tracking += '<tr class="headerSportTypeDetail"><td colspan="6" style="cursor: pointer;" onclick="LogPT.showHide(\'' + rel_group + '\')">' + group.N + '</td></tr>';
+                                tpl_tracking += '<tr><td colspan="6"><div class="' + rel_group + '"><table class="tblDesc"><tbody>';
+                                var total_val = Math.ceil(group.Vals.length / 3); // 6 columns = 3 x N:Val
+                                var ind_g = 0;
+                                for (var r = 0; r < total_val; r++) {
+                                    tpl_tracking += '<tr>';
+                                    for (var r1 = 0; r1 < 3; r1++) {
+                                        var _elm, _etmp = { N: "", Val: "", P: "" };
+                                        _elm = (typeof group.Vals[ind_g] != 'undefined') ? group.Vals[ind_g] : _etmp;
+                                        tpl_tracking += '<td class="collabel ' + (r1 == 0 ? 'first_column ' : '') + '"><div class="colW1sp">' + _elm.N + '</div></td><td><div class="colW2sp ' + tbl + '-' + (i + 1) + '-' + _elm.P + clsDiff + '">' + _elm.Val + '</div></td>';
+                                        ind_g++;
+                                    }
+                                    tpl_tracking += '</tr>';
                                 }
-                                tpl_tracking += '</tr>';
+                                tpl_tracking += '</tbody></table></div></td></tr>';
                             }
-                            tpl_tracking += '</tbody></table></div></td></tr>';
+                            else if (group.Tables != undefined && group.Tables.length > 0) {
+                                tpl_tracking += '<tr class="headerSportTypeDetail"><td colspan="6" style="cursor: pointer;" onclick="LogPT.showHide(\'' + rel_group + '\')">' + group.N + '</td></tr>';
+                                tpl_tracking += '<tr><td colspan="6"><div class="' + rel_group + '"><table class="tblDesc"><tbody>';
+                                var isMultiTables = group.Tables.length > 1;
+                                for (let table of group.Tables) {
+                                    var isComplexHeader = table.HeaderRows.length > 1;
+                                    tpl_tracking += '<tr style="' + (isMultiTables ? 'background-color: #ebf4fa' : '') + '">';
+                                    let isFirst = true;
+                                    for (let value of table.HeaderRows[0]) {
+                                        tpl_tracking += '<td class="' + (isMultiTables ? '' : 'collabel') + ' ' + (isFirst ? 'first_column ' : '') + '"><div class="' + (isFirst ? 'b' : 'c') + '">' + value + '</div></td>';
+                                        isFirst = false;
+                                    }
+
+                                    tpl_tracking += '</tr>';
+
+                                    for (var [rowIndex, row] of table.Rows.entries()) {
+                                        tpl_tracking += '<tr>';
+                                        isFirst = true;
+                                        for (let [colIndex, value] of row.entries()) {
+                                            tpl_tracking += '<td class="' + ((isFirst && value.indexOf("&emsp;") < 0) ? " collabel" : "") + (isFirst ? ' first_column' : '') + '"><div class="' + tbl + '-' + rowIndex + '-' + colIndex + clsDiff + (isFirst ? '' : ' c') + '">' + (value == undefined ? '' : value) + '</div></td>';
+                                            isFirst = false;
+                                        }
+
+                                        tpl_tracking += '</tr>';
+                                    }
+                                }
+
+                                tpl_tracking += '</tbody></table></div></td></tr>';
+                            }
                         }
+
                         tpl_tracking += '</tbody></table></div>';
                         tpl_tracking += '</td></tr>';
                     }

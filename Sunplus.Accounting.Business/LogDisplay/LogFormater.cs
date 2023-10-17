@@ -24,7 +24,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
             var elm = new TrackingElement();
             if (attr != null)
             {
-                var elmVal = FormatValue(attr);
+                var elmVal = FormatTrackingValue(attr);
                 var param = prefixP + elmVal.P;
                 elm.P = param;
                 elm.Val = elmVal.Val;
@@ -35,12 +35,12 @@ namespace Sunplus.Accounting.Business.LogDisplay
             return elm;
         }
 
-        public static TrackingValue FormatValue(XAttribute attr)
+        public static TrackingValue FormatTrackingValue(XAttribute attr)
         {
-            return FormatValue(attr, string.Empty);
+            return FormatTrackingValue(attr, string.Empty);
         }
 
-        public static TrackingValue FormatValue(XAttribute attr, string prefixP)
+        public static TrackingValue FormatTrackingValue(XAttribute attr, string prefixP)
         {
             var elm = new TrackingValue();
             if (attr != null)
@@ -61,6 +61,19 @@ namespace Sunplus.Accounting.Business.LogDisplay
             return elm;
         }
 
+        public static string FormatValue(XAttribute attr)
+        {
+            var logFormater = LogSection.Instance.Formater.Cast<ParamElement>().Where(format => format.Name.ToLower().Equals(attr.Name.ToString().ToLower())).SingleOrDefault<ParamElement>();
+            var val = HttpUtility.HtmlEncode(attr.Value);
+            if (logFormater != null && CastAide.AsInt32(logFormater.Value, 0) > 0)
+            {
+                var formatId = CastAide.AsInt32(logFormater.Value);
+                return GetValue(formatId, val);
+            }
+
+            return FormatDecimalTrailingZeros(val);
+        }
+
         public static string GetValue(int formatId, string val)
         {           
             switch (formatId)
@@ -77,6 +90,8 @@ namespace Sunplus.Accounting.Business.LogDisplay
                     return GetAccountType(val);
                 case 6:
                     return ReplaceLeagueGroup(val);
+                case 7:
+                    return ReplaceZeroWithUnlimited(val);
                 default:
                     break;
             }          
@@ -152,7 +167,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
                 param = param + action.Prefix;
             return param;
         }
-        private static string FormatDecimalTrailingZeros(string strValue)
+        internal static string FormatDecimalTrailingZeros(string strValue)
         {
             decimal value;
             if (Decimal.TryParse(strValue, out value))
@@ -177,6 +192,17 @@ namespace Sunplus.Accounting.Business.LogDisplay
             {
                 return leagueGroupString;
             }
+        }
+
+        public static string ReplaceZeroWithUnlimited(string val)
+        {
+            decimal value;
+            if (Decimal.TryParse(val, out value))
+            {
+                return value == 0 ? "Unlimited" : FormatDecimalTrailingZeros(val);
+            }
+
+            return val;
         }
     }
 }

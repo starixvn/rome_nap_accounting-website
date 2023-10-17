@@ -35,6 +35,8 @@ namespace Sunplus.Accounting.Business.LogDisplay
 
         private readonly NewCurrencyForLicenseeLogFormatter _newCurrencyForLicenseeLogFormatter;
 
+        private readonly SimplifyCreateCustomerLogFormatter _simplifyCreateCustomerLogFormatter;
+
         private int[] listBetsettingActionIDLicensee = new int[] { 2012, 2013, 2019, 2036 };
 
         private int[] listStatusActionIDHasRNGKeno = new int[] { 1100, 1101, 1102, 1103 };
@@ -43,12 +45,14 @@ namespace Sunplus.Accounting.Business.LogDisplay
             ILogDisplayDAO logDAO,
             CN88LogFormatter cn88LogFormatter,
             NewLicenseeLogFormatter newLicenseeLogFormatter,
-            NewCurrencyForLicenseeLogFormatter newCurrencyForLicenseeLogFormatter)
+            NewCurrencyForLicenseeLogFormatter newCurrencyForLicenseeLogFormatter,
+            SimplifyCreateCustomerLogFormatter simplifyCreateCustomerLogFormatter)
         {
             _logDAO = logDAO;
             _cn88LogFormatter = cn88LogFormatter ?? new CN88LogFormatter();
             _newLicenseeLogFormatter = newLicenseeLogFormatter ?? new NewLicenseeLogFormatter();
             _newCurrencyForLicenseeLogFormatter = newCurrencyForLicenseeLogFormatter ?? new NewCurrencyForLicenseeLogFormatter();
+            _simplifyCreateCustomerLogFormatter = simplifyCreateCustomerLogFormatter ?? new SimplifyCreateCustomerLogFormatter();
         }
 
         public Sunplus.Accounting.Entities.LogDisplay.ResultLog GetLogDisplay(LogParam param)
@@ -387,6 +391,11 @@ namespace Sunplus.Accounting.Business.LogDisplay
                 return _newCurrencyForLicenseeLogFormatter.GenerateDetail(trackingValue, spName, actionName);
             }
 
+            if (_simplifyCreateCustomerLogFormatter.IsSimplifyCreateCustomerActionId(actionId))
+            {
+                return _simplifyCreateCustomerLogFormatter.GenerateDetail(actionId, trackingValue, spName, actionName);
+            }
+
             return _ParseTrackingValue(trackingValue, actionId, actionName, spName);
         }
 
@@ -456,47 +465,10 @@ namespace Sunplus.Accounting.Business.LogDisplay
                         trackingVal = trackingVal.Replace("AddFrom=\"4\"", string.Format("AddFrom=\"{0}\"", ResourceExtension.GetResourceValue(ResourceExtension.Resources.ViewlogV2, "addfrom04")));
                     }
 
-                    #region bettypes
-
-                    Regex regxBettype = new Regex("bettype=\"[0-9]+\"", RegexOptions.IgnoreCase);
-                    var bettypeMatchs = regxBettype.Matches(trackingVal);
-                    if (bettypeMatchs.Count > 0)
-                    {
-                        foreach (Match bettypeMatch in bettypeMatchs)
-                        {
-                            var regxBettypeId = new Regex("[0-9]+");
-                            var matchBettypeId = regxBettypeId.Match(bettypeMatch.Value);
-                            var bettypeText = string.Format("bettype=\"{0}\"", matchBettypeId.Value);
-                            var bettypeId = Converter.To<int>(matchBettypeId.Value);
-                            var replaceText = string.Format("bettype=\"{0}\"", GetBettypeName(bettypeId));
-
-                            // trackingVal = trackingVal.Replace(bettypeText, replaceText);
-                            trackingVal = ReplaceIgnoreCase(trackingVal, bettypeText, replaceText);
-                        }
-                    }
-
-                    #endregion bettypes
-
-                    #region sporttypes
-
-                    Regex regxSporttype = new Regex("sporttype=\"[0-9]+\"", RegexOptions.IgnoreCase);
-                    var sporttypeMatchs = regxSporttype.Matches(trackingVal);
-                    if (sporttypeMatchs.Count > 0)
-                    {
-                        foreach (Match sporttypeMatch in sporttypeMatchs)
-                        {
-                            var regxSporttypeId = new Regex("[0-9]+");
-                            var matchSporttypeId = regxSporttypeId.Match(sporttypeMatch.Value);
-                            var sporttypeText = string.Format("sporttype=\"{0}\"", matchSporttypeId.Value);
-                            var sportTypeId = Converter.To<int>(matchSporttypeId.Value);
-                            var replaceText = string.Format("sporttype=\"{0}\"", GetSportTypeName(sportTypeId));
-
-                            // trackingVal = trackingVal.Replace(sporttypeText, replaceText);
-                            trackingVal = ReplaceIgnoreCase(trackingVal, sporttypeText, replaceText);
-                        }
-                    }
-
-                    #endregion sporttypes
+                    trackingVal = ReplaceIdByName(trackingVal, "bettype", GetBettypeName);
+                    trackingVal = ReplaceIdByName(trackingVal, "sporttype", GetSportTypeName);
+                    trackingVal = ReplaceIdByName(trackingVal, "groupid", GetProductGroupName);
+                    trackingVal = ReplaceIdByName(trackingVal, "subgroupid", GetSubGroupName);
 
                     #region SystemId
 
@@ -565,6 +537,28 @@ namespace Sunplus.Accounting.Business.LogDisplay
             return tracking;
         }
 
+        private string ReplaceIdByName(string trackingVal, string id, Func<int, string> GetRefFunction)
+        {
+            Regex regxSporttype = new Regex($" {id}=\"[0-9]+\"", RegexOptions.IgnoreCase);
+            var sporttypeMatchs = regxSporttype.Matches(trackingVal);
+            if (sporttypeMatchs.Count > 0)
+            {
+                foreach (Match sporttypeMatch in sporttypeMatchs)
+                {
+                    var regxSporttypeId = new Regex("[0-9]+");
+                    var matchSporttypeId = regxSporttypeId.Match(sporttypeMatch.Value);
+                    var sporttypeText = $"{id}=\"{matchSporttypeId.Value}\"";
+                    var sportTypeId = Converter.To<int>(matchSporttypeId.Value);
+                    var replaceText = $"{id}=\"{System.Web.HttpUtility.HtmlEncode(GetRefFunction(sportTypeId))}\"";
+
+                    // trackingVal = trackingVal.Replace(sporttypeText, replaceText);
+                    trackingVal = ReplaceIgnoreCase(trackingVal, sporttypeText, replaceText);
+                }
+            }
+
+            return trackingVal;
+        }
+
         private string GetBettypeName(int bettype)
         {
             var bettypeShowProductName = new Dictionary<int, string>
@@ -588,6 +582,12 @@ namespace Sunplus.Accounting.Business.LogDisplay
 
             return sportTypeName.ContainsKey(sportTypeId) ? sportTypeName[sportTypeId] : CacheRef.GetSportName(sportTypeId);
         }
+
+        private string GetProductGroupName(int groupId)
+            => CacheRef.GetProductGroupName(groupId);
+
+        private string GetSubGroupName(int subGroupId)
+            => CacheRef.GetSubGroupName(subGroupId);
 
         private List<TrackingGroup> _GetSportGroup(
             IEnumerable<XAttribute> attrs,
@@ -857,14 +857,27 @@ namespace Sunplus.Accounting.Business.LogDisplay
             return trackingNode;
         }
 
+        private List<List<TrackingValue>> DiffsTrackingValue(int actionId, string trackingValue, string trackingValue2)
+        {
+            if (string.IsNullOrEmpty(trackingValue2) || trackingValue.Equals(trackingValue2))
+            {
+                return null;
+            }
+
+            if (_simplifyCreateCustomerLogFormatter.IsPTTemplateLogActionId(actionId))
+            {
+                return _simplifyCreateCustomerLogFormatter.GeneratePTTemplateDiffsTrackingValue(trackingValue, trackingValue2, _GetTrackingParams);
+            }
+
+            return _DiffsTrackingValue(trackingValue, trackingValue2);
+        }
+
         private List<List<TrackingValue>> _DiffsTrackingValue(string trackingValue, string trackingValue2)
         {
             var result = new List<List<TrackingValue>>();
             var diffs = new List<TrackingValue>();
             if (!trackingValue.Equals(trackingValue2) && !string.IsNullOrEmpty(trackingValue2))
             {
-                trackingValue = trackingValue.Replace("\a", "");
-                trackingValue2 = trackingValue2.Replace("\a", "");
                 var (listVal, hasAttr) = _GetTrackingParams(trackingValue);
                 var (listVal2, hasAttr2) = _GetTrackingParams(trackingValue2);
 
@@ -894,7 +907,6 @@ namespace Sunplus.Accounting.Business.LogDisplay
                         }
 
                         ++index;
-
                         if (isDiff)
                         {
                             result.Add(diffs);
@@ -908,9 +920,11 @@ namespace Sunplus.Accounting.Business.LogDisplay
 
         private (List<Dictionary<string, TrackingValue>> trackingParams, bool hasAttr) _GetTrackingParams(string trackingValue)
         {
+
             var result = new List<Dictionary<string, TrackingValue>>();
             var listVal = new Dictionary<string, TrackingValue>();
             var hasAttr = false;
+            trackingValue = trackingValue.Replace("\a", "");
             try
             {
                 // parse XML
@@ -923,7 +937,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
                         continue;
                     }
 
-                    listVal.Add(attr.Name.ToString(), LogFormater.FormatValue(attr));
+                    listVal.Add(attr.Name.ToString(), LogFormater.FormatTrackingValue(attr));
                     hasAttr = true;
                 }
 
@@ -943,7 +957,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
                             continue;
                         }
 
-                        listVal.Add(attrName, LogFormater.FormatValue(attr, isCN88SettingLog ? $"cn88_{sporttype}_{bettype}_{inplay}_" : string.Empty));
+                        listVal.Add(attrName, LogFormater.FormatTrackingValue(attr, isCN88SettingLog ? $"cn88_{sporttype}_{bettype}_{inplay}_" : string.Empty));
                     }
 
                     if (!isCN88SettingLog || sporttype == null || previousSporttype != sporttype)
