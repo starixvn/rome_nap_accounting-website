@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 using Fanex.CustomerSetting.Module.Core.Attributes;
 using Fanex.Tarus.Customer.CreditCustomer.Business;
+using Fanex.Tarus.Customer.ViewModels.Customer;
 using Fanex.Tarus.Web.Controllers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -33,6 +34,6 @@ namespace Fanex.Tarus.Customer.Controller
                 new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }));
 
         public ActionResult Create()
-            => View("~/Views/Customer/Create.cshtml");
+            => View("~/Views/Customer/Create.cshtml", new CustomerViewModel($"{Response.ApplyAppPathModifier(Request.ApplicationPath)}Customer"));
     }
 }

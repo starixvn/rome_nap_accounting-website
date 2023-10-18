@@ -793,6 +793,7 @@
     <Compile Include="ViewModels\CustomerSetting\Suspend\SingleUpdateViewModel.cs" />
     <Compile Include="ViewModels\CustomerSetting\Suspend\SuspendedCustomerDetailViewModel.cs" />
     <Compile Include="ViewModels\CustomerSetting\Suspend\SuspendMatrixViewModel.cs" />
+    <Compile Include="ViewModels\Customer\CustomerViewModel.cs" />
     <Compile Include="ViewModels\InitializingCustomerSetting\ConfigCustomerSettingViewModel.cs" />
     <Compile Include="ViewModels\InitializingCustomerSetting\ConfigSettingViewModel.cs" />
     <Compile Include="ViewModels\InitializingCustomerSetting\InitializingCustomerSettingViewModel.cs" />
