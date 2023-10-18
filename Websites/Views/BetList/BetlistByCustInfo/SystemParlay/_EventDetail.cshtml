@@ -126,21 +126,28 @@
                             </td>
                             <td>
                                 <div class="width120 height34 table-cell r">
-                                    <span class="underdog @(Model.IsParlayBoost? "strikethrough": string.Empty)">
-                                        @eventTmp.OddsText
-                                        @if (Model.IsParlayBoost)
-                                        {
+                                    @if (Model.IsParlayBoost)
+                                    {
+                                        <span class="underdog strikethrough">
+                                            @eventTmp.OddsText
+                                        </span>
+                                        <br />
+                                        <span class="oddstype">
+                                            <span class="underdog">@eventTmp.MasterOddsText</span>
                                             <br />
-                                            <span class="oddstype">
-                                                <span class="underdog">@eventTmp.BoostOddsText</span>
-                                                <br />
-                                                <span class="boostrate">
-                                                    <span class="icon-boost"></span>
-                                                    @eventTmp.BoostRateText
-                                                </span>
+                                            <span class="boostrate">
+                                                <span class="icon-boost"></span>
+                                                @eventTmp.BoostRateText
                                             </span>
-                                        }
-                                    </span>
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="underdog">
+                                            @eventTmp.MasterOddsText
+                                        </span>
+                                    }
+
                                 </div>
                             </td>
                             <td>

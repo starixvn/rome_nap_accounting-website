@@ -139,12 +139,16 @@ public partial class BetList_CombinationMPDetail : RequiredAuthorizationPage
 
                 #region odds
 
-                TemplateHandler.Assign(ref rowTemp, "{cssClassName}", isParlayBoost ? "strikethrough" : string.Empty);
-                TemplateHandler.Assign(ref rowTemp, "{Odds}", ConvertByBetType.CommValue(rowMaster["odds"]));
+                TemplateHandler.Assign(ref rowTemp, "{cssClassName}", isParlayBoost ? "strikethrough" : string.Empty);                
                 if (isParlayBoost)
                 {
+                    TemplateHandler.Assign(ref rowTemp, "{Odds}", ConvertByBetType.CommValue(rowMaster["odds"]));
                     TemplateHandler.Assign(ref oddsTypeTemp, "{boostOdds}", ConvertByBetType.CommValue(rowMaster["modds"]));
                     TemplateHandler.Assign(ref oddsTypeTemp, "{boostRate}", ConvertByBetType.FormatBoostRate(Cast.AsDecimal(rowMaster["extravalue"])));
+                }
+                else
+                {
+                    TemplateHandler.Assign(ref rowTemp, "{Odds}", ConvertByBetType.CommValue(rowMaster["modds"]));
                 }
 
                 #endregion odds

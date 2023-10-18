@@ -31,9 +31,9 @@ namespace Fanex.Tarus.BetList.Models
 
         public string OddsText => ConvertByBetType.CommValue(Odds);
 
-        public decimal BoostOdds { get; set; }
+        public decimal MasterOdds { get; set; }
 
-        public string BoostOddsText => ConvertByBetType.CommValue(BoostOdds);
+        public string MasterOddsText => ConvertByBetType.CommValue(MasterOdds);
 
         public decimal BoostRate { get; set; }
 

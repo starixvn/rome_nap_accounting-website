@@ -608,7 +608,7 @@
                                 WinLoss = Converter.To<decimal>(r["winlost"]),
                                 Status = r["status"].ToString(),
                                 MatchList = matchList,
-                                BoostOdds = Converter.To<decimal>(r["modds"]),
+                                MasterOdds = Converter.To<decimal>(r["modds"]),
                                 BoostRate = Converter.To<decimal>(r["extravalue"]),
                             });
 
