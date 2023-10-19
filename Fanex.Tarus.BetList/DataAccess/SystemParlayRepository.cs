@@ -119,6 +119,7 @@
 
                     var outputParams = db.GetOuputParams();
                     model.Outstanding = Converter.ToDecimal(outputParams["outstanding"]);
+                    model.IsParlayBoost = Converter.ToBool(outputParams["isparlayboost"]);
                 }
             }
 

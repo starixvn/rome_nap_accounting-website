@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Functions SiteId="104" SiteName="NAP - Accounting"> 
+<Functions SiteId="104" SiteName="NAP - Accounting">
   <Function Name="BetList">
     <Setting Key="BetListByDayAll" SpName="Acc_BetListByDayAll" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="SiteDB_Acc_BetList_Statement" SpName="SiteDB_Acc_BetList_Statement" DbName="DBAGE.bodb02.bodbAdminNet" />
@@ -26,18 +26,18 @@
     <Setting Key="Acc_BetList_SelMatchResult2" SpName="Acc_BetList_SelMatchResult2" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="Acc_BetList_HRSelMatchResult2" SpName="Acc_BetList_HRSelMatchResult2" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="SelMatchResultNumberGame" SpName="Age_BetList_SelMatchResultNumberGame" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="BetList_CustInfo_SystemParlay" SpName="Acc_BetlistCombinationParlay_ByTransID" DbName="DBAGE.bodb02.bodbAdminNet" >
+    <Setting Key="BetList_CustInfo_SystemParlay" SpName="Acc_BetlistCombinationParlay_ByTransID" DbName="DBAGE.bodb02.bodbAdminNet">
       <Mapping DataField="ip" ObjectProperty="IP" />
     </Setting>
-    <Setting Key="SiteDB_Acc_BetList_Parlay_SelByRefNo" SpName="SiteDB_Acc_BetList_Parlay_SelByRefNo" DbName="DBAGE.bodb02.bodbAdminNet" >
+    <Setting Key="SiteDB_Acc_BetList_Parlay_SelByRefNo" SpName="SiteDB_Acc_BetList_Parlay_SelByRefNo" DbName="DBAGE.bodb02.bodbAdminNet">
       <Mapping DataField="ip" ObjectProperty="IP" />
     </Setting>
-    <Setting Key="BetList_MixParlayBetsSel" SpName="Acc_BetsSelBetCheckM_All" DbName="DBAGE.bodb02.bodbAdminNet" >
+    <Setting Key="BetList_MixParlayBetsSel" SpName="Acc_BetsSelBetCheckM_All" DbName="DBAGE.bodb02.bodbAdminNet">
       <Mapping DataField="ip" ObjectProperty="IP" />
     </Setting>
     <Setting Key="SiteDB_Acc_BetList_SelParlayDetail" SpName="SiteDB_Acc_BetList_SelParlayDetail" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="BetList_SelByRefNo" SpName="Acc_BetList_SelByRefNo" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="SiteDB_Acc_BetList_SelByRefNo" SpName="SiteDB_Acc_BetList_SelByRefNo" DbName="DBACC.bodb02.bodbAdminNet" >
+    <Setting Key="SiteDB_Acc_BetList_SelByRefNo" SpName="SiteDB_Acc_BetList_SelByRefNo" DbName="DBACC.bodb02.bodbAdminNet">
       <Mapping DataField="ip" ObjectProperty="IP" />
     </Setting>
     <Setting Key="BetList_SelByProduct" SpName="Acc_BetList_SelByProduct" DbName="DBAGE.bodb02.bodbAdminNet" />
@@ -97,7 +97,7 @@
   </Function>
   <Function Name="Helper">
     <Setting Key="CheckAllowedShow" SpName="Acc_CheckAllowedShow" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="SiteSel_Report_Licensee" SpName="Acc_ActivelicenseeSel" DbName="DBAGE.bodb02.bodbAdminNet" />    
+    <Setting Key="SiteSel_Report_Licensee" SpName="Acc_ActivelicenseeSel" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="P2P Control">
     <Setting Key="SelectEnableCustomer" SpName="Acc_CustomerSelCheckEnable" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -210,7 +210,8 @@
     <Setting Key="BetList_ColossusBets_BetDetails" SpName="Acc_BetListCB_Details" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
   </Function>
   <Function Name="">
-    <Setting Key="Acc_ExchangeSel_byCurrencyName" SpName="Acc_ExchangeSel_byCurrencyName" DbName="DBCust.CustDB.bodbAdminNet" />  </Function>
+    <Setting Key="Acc_ExchangeSel_byCurrencyName" SpName="Acc_ExchangeSel_byCurrencyName" DbName="DBCust.CustDB.bodbAdminNet" />
+  </Function>
   <Function Name="View Pt/Comm CN88">
     <Setting Key="CS_PTMatrix_Sel" SpName="CS_PTMatrix_Sel" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CS_CommMatrix_Sel" SpName="CS_CommMatrix_Sel" DbName="DBCust.CustDB.bodbAdminNet" />

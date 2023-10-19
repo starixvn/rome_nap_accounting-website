@@ -19,26 +19,25 @@ public partial class BetList_CombinationMPDetail : RequiredAuthorizationPage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        string refno = CastAide.AsString(Request.QueryString["refno"]);
-        string transid = CastAide.AsString(Request.QueryString["transid"]);
-        string betid = CastAide.AsString(Request.QueryString["betid"]);
+        string refno = CastAide.AsString(Request.QueryString["refno"]);        
 
         int custId = Request.QueryString["custid"] != null ? CastAide.AsInt32(Request.QueryString["custid"]) : CastAide.AsInt32(HttpContext.Current.Session["CustId"]);
         DateTime movebetDay = ReportUtils.BalanceUp.MoveBetsDay;
         DateTime balanceUpDay = ReportUtils.BalanceUp.BalanceUpDay;
-        ltrContent.Text = GenCombinationMP(custId, refno, transid, betid, movebetDay, balanceUpDay);
+        ltrContent.Text = GenCombinationMP(custId, refno, movebetDay, balanceUpDay);
     }
 
-    private string GenCombinationMP(int custid, string refno, string transid, string betid, DateTime movebetday, DateTime balanceupday)
+    private string GenCombinationMP(int custid, string refno, DateTime movebetday, DateTime balanceupday)
     {
         double outStanding = 0;
+        var isParlayBoost = false;
         DataSet ds = null;
         var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(custid);
         if (siteDB != null)
         {
             ds = siteDB.IsSiteDB ?
-                Betlist.SiteDB_BetList_SelDetailCombinationMP(custid, refno, transid, betid, movebetday, balanceupday, ref outStanding) :
-                Betlist.BetList_SelDetailCombinationMP(custid, refno, transid, betid, movebetday, balanceupday, ref outStanding);
+                Betlist.SiteDB_BetList_SelDetailCombinationMP(custid, refno, movebetday, balanceupday, ref outStanding, ref isParlayBoost) :
+                Betlist.BetList_SelDetailCombinationMP(custid, refno, movebetday, balanceupday, ref outStanding, ref isParlayBoost);
         }
 
         if (ds != null && ds.Tables.Count != 2)
@@ -63,9 +62,11 @@ public partial class BetList_CombinationMPDetail : RequiredAuthorizationPage
         string body = WebUtils.LoadTemplate("BetList\\CombinationMP\\body.htm");
         string footer = WebUtils.LoadTemplate("BetList\\CombinationMP\\footer.htm");
         string row = WebUtils.LoadTemplate("BetList\\CombinationMP\\row.htm");
+        string oddsType = WebUtils.LoadTemplate("BetList\\CombinationMP\\oddsType.htm");
         var subtotal = WebUtils.LoadTemplate("BetList\\CombinationMP\\subtotal.htm");
         var note = WebUtils.LoadTemplate("BetList\\CombinationMP\\note.htm");
         string rowTemp = string.Empty;
+        var oddsTypeTemp = string.Empty;
         var subtotalTemp = string.Empty;
 
         var tblDetail = ds.Tables[1];
@@ -103,7 +104,7 @@ public partial class BetList_CombinationMPDetail : RequiredAuthorizationPage
 
                 status = CastAide.AsString(rowMaster["status"]);
                 rowTemp = CastAide.AsString(row.Clone());
-
+                oddsTypeTemp = CastAide.AsString(oddsType.Clone());
                 #region date
 
                 if (isFirstRows)
@@ -138,9 +139,12 @@ public partial class BetList_CombinationMPDetail : RequiredAuthorizationPage
 
                 #region odds
 
-                if (status.ToLower().Contains("running"))
+                TemplateHandler.Assign(ref rowTemp, "{cssClassName}", isParlayBoost ? "strikethrough" : string.Empty);                
+                if (isParlayBoost)
                 {
-                    TemplateHandler.Assign(ref rowTemp, "{Odds}", "-");
+                    TemplateHandler.Assign(ref rowTemp, "{Odds}", ConvertByBetType.CommValue(rowMaster["odds"]));
+                    TemplateHandler.Assign(ref oddsTypeTemp, "{boostOdds}", ConvertByBetType.CommValue(rowMaster["modds"]));
+                    TemplateHandler.Assign(ref oddsTypeTemp, "{boostRate}", ConvertByBetType.FormatBoostRate(Cast.AsDecimal(rowMaster["extravalue"])));
                 }
                 else
                 {
@@ -170,6 +174,7 @@ public partial class BetList_CombinationMPDetail : RequiredAuthorizationPage
                 #endregion status
 
                 //----------------------------------------------------
+                TemplateHandler.Assign(ref rowTemp, "{OddsType}", isParlayBoost ? oddsTypeTemp : string.Empty);
                 strBody.Append(rowTemp);
             }
 

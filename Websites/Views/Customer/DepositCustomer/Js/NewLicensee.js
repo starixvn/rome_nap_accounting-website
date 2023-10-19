@@ -220,7 +220,8 @@ newLic.GenerateSampleName = function () {
                           siteName + "Bonus" + currencyName + suffix + "," +
                           siteName + "Bonus02" + currencyName + "," +
                           siteName + "Dummy3rd" + currencyName + "," +
-                          siteName + "Withdrawal" + currencyName + suffix;
+                          siteName + "Withdrawal" + currencyName + suffix + "," + 
+                          siteName + "ParlayBoostAdj" + currencyName;
 
     $("#tbxDummyMemberName").val(dummyMemberName);
 

@@ -219,15 +219,15 @@ function showDetail(id) {
     $("#BetlistByIP_Soccer").gridScroller(BetListByIP_SportType.gridOpts_Soccer);
 }
 
-function showCombMPDetail(tranid, date, refno, betid, matchid, betteam) {
+function showCombMPDetail(tranid, date, matchid, betteam) {
     var title = betteam === "1" ? "Mix Parlay" : "System Parlay";
-    var combinationOfferNameContainer = $("#combinationOfferName_" + refno + "0");
+    var combinationOfferNameContainer = $("#combinationOfferName_" + tranid + "0");
 
     if (combinationOfferNameContainer.is("span")) {
         title += combinationOfferNameContainer.html();
     }
 
-    showDetailsCMP(tranid, title, parseFloat(refno), parseInt(betid), _custid);
+    showDetailsCMP(tranid, title, _custid);
 }
 
 function showMP(transid, refno, custId, transIndex) {
