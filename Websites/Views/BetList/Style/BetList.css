@@ -681,7 +681,6 @@ span.strikethrough {
 span.icon-boost {
     background: url(Images/ico_parlay_boost.svg) no-repeat center center/100%;
     display: inline-block;
-}
     height: 15px;
     width: 15px;
     position: relative;
