@@ -8,7 +8,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-    <link rel="stylesheet" href=@($"{Model.CdnUri}create-super/index.css?version={Model.AssetsVersion}") />
+    <link rel="stylesheet" href="@(Model.CdnUri)create-super/index.css?version=@(Model.AssetsVersion)" />
 </head>
 <body>
 
@@ -17,6 +17,6 @@
     <script>
         const Base_URL = "@Model.BaseUrl";
     </script>
-    <script type="module" src=@($"{Model.CdnUri}create-super/index.js?version={Model.AssetsVersion}")></script>
+    <script type="module" src="@(Model.CdnUri)create-super/index.js?version=@(Model.AssetsVersion)"></script>
 </body>
 </html>
