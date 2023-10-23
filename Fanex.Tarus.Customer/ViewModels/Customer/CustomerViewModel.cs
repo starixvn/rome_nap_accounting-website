@@ -1,18 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Fanex.Tarus.Customer.ViewModels.Customer
+﻿namespace Fanex.Tarus.Customer.ViewModels.Customer
 {
     public class CustomerViewModel
     {
-        public CustomerViewModel(string baseUrl)
+        public CustomerViewModel(string baseUrl, string cndUri, string assetsVersion)
         {
             BaseUrl = baseUrl;
+            CdnUri = cndUri;
+            AssetsVersion = assetsVersion;
         }
 
         public string BaseUrl { get; }
+
+        public string CdnUri { get; }
+
+        public string AssetsVersion { get; }
     }
 }
