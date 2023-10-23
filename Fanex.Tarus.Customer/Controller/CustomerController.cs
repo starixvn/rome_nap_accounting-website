@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -25,8 +26,8 @@ namespace Fanex.Tarus.Customer.Controller
         public CustomerController()
             : this(null)
         {
-            cdnUri = ConfigurationManager.AppSettings["customer:cdnUri"];
-            assetsVersion = ConfigurationManager.AppSettings["customer:assetsVersions"];
+            cdnUri = ConfigurationManager.AppSettings["Customer:CdnUri"];
+            assetsVersion = ConfigurationManager.AppSettings["Customer:AssetsVersion"];
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             httpClient = new HttpClient
             {
