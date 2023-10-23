@@ -78,7 +78,29 @@ $.fn.forceNumber = function () {
         $fax = $("#txtFax"),
         $internalUser = $("#chkInternalUser"),
         $tblProgress = $("#tblProgress"),
-        $btnSubmit = $("#btnSubmit");
+        $btnSubmit = $("#btnSubmit"),
+        $siteRow = $("#siteRow"),
+        $superCreditRow = $("#superCreditRow"),
+        $memberCreditRow = $("#memberCreditRow"),
+        $passwordRow = $("#passwordRow");
+
+    var userid = -1;
+    var parentId = 0;
+    var MEMBER = 1;
+    var SUPER = 4;
+    var MAX_ACCOUNTS_PER_REQUEST = 50;
+
+    var existedUser = {
+        userid: -1,
+        username: '',
+        selectedSite: {},
+        sites: [],
+        site: "",
+        selectedCurrencyId: 0,
+        maxCredit: '',
+        roleId: 0,
+    };
+
     var isProcessing = false;
 
     function showError(message) {
@@ -115,8 +137,8 @@ $.fn.forceNumber = function () {
         }
 
         var usernamesArray = usernamesValue.split(",");
-        if (usernamesArray.length > vm.maxInputUsernames) {
-            showError("The function can only create up to " + vm.maxInputUsernames + " accounts per request.");
+        if (usernamesArray.length > MAX_ACCOUNTS_PER_REQUEST) {
+            showError("The function can only create up to " + MAX_ACCOUNTS_PER_REQUEST + " accounts per request.");
             return;
         }
 
@@ -143,7 +165,7 @@ $.fn.forceNumber = function () {
             url: vm.rootUrl + "Super/CheckAvailableUsernames",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
-            data: JSON.stringify({ custId: vm.existingCustId, parentId: vm.uplineId, usernames: usernamesArray.join(",") }),
+            data: JSON.stringify({ custId: existedUser.userid, parentId: parentId, usernames: usernamesArray.join(",") }),
             async: false
         }).responseText.replace(/\"/g, "");
 
@@ -162,9 +184,9 @@ $.fn.forceNumber = function () {
             return;
         }
 
-        var isSuper = vm.maxGivenCredit.length === 0;
+        var isSuper = existedUser.roleId === SUPER;
 
-        var creditValue = $credit.val();
+        var creditValue = $("#txtCredit").val();
         if (creditValue.length === 0) {
             showError("The " + (isSuper ? "Max" : "Given") + " Credit is required.");
             return;
@@ -177,7 +199,7 @@ $.fn.forceNumber = function () {
         }
 
         var credit = parseInt(creditValue);
-        if (!isSuper && usernameCount * credit > parseInt(vm.maxGivenCredit)) {
+        if (!isSuper && usernameCount * credit > parseInt(existedUser.maxCredit)) {
             showError("Insufficient Given Credit.");
             return;
         }
@@ -188,14 +210,14 @@ $.fn.forceNumber = function () {
             lastName: $.trim($lastName.val()),
             phone: $.trim($phone.val()),
             mobilePhone: $.trim($mobilePhone.val()),
-            site: $site.length ? $site.val() : "",
+            site: $("#ddSite").val(),
             fax: $.trim($fax.val()),
             credit: credit,
             isInternal: $internalUser.is(":checked"),
-            currencyId: vm.currencyId,
-            existingCustId: vm.existingCustId,
-            custLevel: vm.custLevel,
-            uplineId: vm.uplineId,
+            currencyId: existedUser.selectedCurrencyId,
+            existingCustId: userid,
+            custLevel: existedUser.roleId,
+            uplineId: parentId,
             code: vm.code
         };
     }
@@ -293,15 +315,96 @@ $.fn.forceNumber = function () {
         });
     }
 
-    function initialize() {
-        $credit.forceNumber();
+    function renderCreateSuperView() {
+        $passwordRow.append(`
+            <td class="w90">
+                <label for= "chkInternalUser"> Internal User</label>
+            </td>`);
+        $passwordRow.append(`
+            <td>
+                <input type="checkbox" id="chkInternalUser"/>
+            </td>`);
+        $siteRow.show();
+        $siteRow.append(`
+            <td>
+                <label for="ddSite">Site</label>
+            </td>
+            <td>
+                <select id="ddSite" title="Site"></select>
+            </td>
+            <td>
+                <label for="txtFax">Fax</label>
+            </td>
+            <td>
+                <input type="text" id="txtFax" />
+            </td>`);
+        $superCreditRow.show();
+        $superCreditRow.append(`
+            <td class="w90">
+                <label for="txtCredit">Max Credit</label>
+            </td>
+            <td>
+                <input type="text" id="txtCredit" maxlength="18" />
+            </td>
+            <td>
+                <label>Currency</label>
+            </td>
+            <td>
+                <label id="currency"></label>
+            </td>`);
+    }
+
+    function renderCreateMemberView() {
+        $passwordRow.append('<td colspan="2"></td>');
+        $memberCreditRow.show();
+        $memberCreditRow.append(`
+            <td class="w90">
+                <label for="txtCredit">Given Credit</label>
+            </td>
+            <td>
+                <input type="text" id="txtCredit" maxlength="18" />
+                <span id="memberMaxCredit"></span>
+            </td>
+            <td>
+                <label for="txtFax">Fax</label>
+            </td>
+            <td>
+                <input type="text" id="txtFax" />
+            </td>`);
+    }
+
+    function renderViewByLevel() {
+        if (parent.level == "super") {
+            renderCreateSuperView();
+        } else {
+            renderCreateMemberView();
+        }
+        $("#txtCredit").forceNumber();
+    }
+
+    function registerSearchEvent() {
+        $("#existedUserName").focus(function () {
+            hideMessage();
+            $("#checkExisted").hide();
+            userid = "-1";
+        });
+
+        $("#existedUserName").focusout(function () {
+            if (userid == "-1") {
+                searchExistingUser(this.value, null);
+            }
+            $("#checkExisted").show();
+        });
+    }
+
+    function handleSubmit() {
         $btnSubmit.click(function () {
             BlockUI();
             emptyAndHideProgressTable();
             var usernames = validateUsernames();
             if (usernames) {
                 var formData = validateOthers(usernames.length);
-                if (formData && confirm("Please REVIEW the Source " + (vm.isSuper? "Super ": "Member ") + vm.userName + "(" + vm.existingCustId +") once again.")) {
+                if (formData && confirm("Please REVIEW the Source " + (existedUser.roleId == SUPER ? "Super " : "Member ") + existedUser.username + "(" + existedUser.userid + ") once again.")) {
                     hideMessage();
                     disableFormData(true);
                     showDataOnProgressTable(usernames);
@@ -320,21 +423,17 @@ $.fn.forceNumber = function () {
                 return confirmationMessage;
             }
         });
-
-        getHeadlineBelongSite();
-        RenderSite();
-        getNotAllowedNewSuperPrefixes();
     }
 
-    function RenderSite(){
+    function RenderSite(sites){
         var htmlOptions = [];
-        jsonSites.forEach(function (item, index) {
+        sites.forEach(function (item, index) {
             if(item.IsParent){
                 htmlOptions.push('<optgroup label="' + item.SiteName + '">');
                 item.ChildSites.forEach(function(child, i){
                     htmlOptions.push('<option value="');
                     htmlOptions.push(child.SiteName + '"');
-                    if(vm.site == child.SiteName){
+                    if (existedUser.site == child.SiteName) {
                         htmlOptions.push('selected="selected"');
                     }
                     htmlOptions.push('>');
@@ -345,7 +444,7 @@ $.fn.forceNumber = function () {
             }else{
                 htmlOptions.push('<option value="');
                 htmlOptions.push(item.SiteName + '"');
-                if(vm.site == child.SiteName){    
+                if (existedUser.site == child.SiteName) {    
                     htmlOptions.push('selected="selected"');
                 }
                 htmlOptions.push('>');
@@ -355,8 +454,10 @@ $.fn.forceNumber = function () {
         });
         $("#ddSite").html(htmlOptions.join(""));
     }
+
     function getNotAllowedNewSuperPrefixes() {
-        if (!vm.isSuper) { return; }
+        var isSuper = parent.level === "super";
+        if (!isSuper) { return; }
 
         $.ajax({
             type: "POST",
@@ -384,7 +485,8 @@ $.fn.forceNumber = function () {
     }
 
     function getHeadlineBelongSite() {
-        if (!vm.isSuper) { return; }
+        var isSuper = parent.level === "super";
+        if (!isSuper) { return; }
 
         $.ajax({
             type: "POST",
@@ -406,5 +508,161 @@ $.fn.forceNumber = function () {
         });
     };
 
+    function getAllSites() {
+        $.ajax({
+            type: "POST",
+            url: toUrl("Super/GetSites"),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: null,
+            success: function (data) {
+                hideMessage();     
+                existedUser.sites = data;
+                RenderSite(data);
+            }
+            , error: function (xhr, ajaxOptions, thrownError) {
+                showError("Error for getting sites of existing user !");
+            }
+        });
+    }
+
+    function renderCurrency(currency) {
+        $("#currency").text(currency);
+    }
+
+    function renderMemberMaxCredit(memberMaxCredit) {
+        $("#memberMaxCredit").text(`<= ${memberMaxCredit}`);
+    }
+
+    function getCustomerInfoByUserId(custid) {
+        var param = {
+            custid: custid,
+            level: parent.level
+        };
+
+        $.ajax({
+            type: "POST",
+            url: toUrl("Super/GetCustomerInfoByUserId"),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(param),
+            success: function (custInfo) {
+                hideMessage();
+
+                if (existedUser.selectedSite) {
+                    existedUser.selectedSite = custInfo.Site || "";
+                }
+                else {
+                    existedUser.selectedSite = {};
+                    existedUser.selectedSite = custInfo.Site || "";
+                }
+            
+                existedUser.userid = userid;
+                existedUser.roleId = custInfo.RoleId;
+                existedUser.username = custInfo.UserName;
+                existedUser.maxCredit = custInfo.CreditMax;
+                existedUser.site = custInfo.Site;
+                existedUser.selectedCurrencyId = custInfo.CurrencyId;
+                existedUser.isDirectCustomer = custInfo.IsDirectCustomer;
+
+                renderCurrency(custInfo.Currency);
+
+                if (custInfo.RoleId == MEMBER) {
+                    renderMemberMaxCredit(custInfo.CreditMax);
+                }
+
+                getAllSites();
+            }
+            , error: function (xhr, ajaxOptions, thrownError) {
+                showError("Error for getting site by user id !");
+            }
+        });
+    }
+
+    function searchExistingUser(username, callback) {
+        if (username == undefined || username == "") {
+            $("#checkExisted").removeClass('success');
+            $("#checkExisted").removeClass('not_success');
+            return;
+        }
+
+        userid = -1;
+
+        var param = {
+            username: username,
+            level: parent.level
+        };
+
+        try { parent.BlockUI(); } catch (e) { }
+        try { parent.parent.BlockUI(); } catch (e) { }
+        try { parent.parent.parent.BlockUI(); } catch (e) { }
+        $("body").addClass("wait");
+        $.ajax({
+            type: "POST",
+            url: toUrl("Super/SearchExistingSuper"),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(param),
+            success: function (customerSettingView) {
+                if (customerSettingView.ErrorCode > 0) {
+                    $("#checkExisted").removeClass('success');
+                    $("#checkExisted").addClass('not_success');
+                    showError(customerSettingView.ErrorMessage)
+                }
+                else {
+                    var custid = customerSettingView.UserId;
+                    userid = custid;
+                    parentId = customerSettingView.ParentId;
+                    if (custid != "-1") {
+                        hideMessage();
+                        $("#checkExisted").removeClass('not_success');
+                        $("#checkExisted").addClass('success');
+
+                        getCustomerInfoByUserId(custid);
+
+                        if (callback) {
+                            callback();
+                        }
+                    }
+                    else {
+                        $("#checkExisted").removeClass('success');
+                        $("#checkExisted").addClass('not_success');
+                        showError("The " + parent.level + " doesn’t exist !", 1);
+                    }
+                }
+
+                try { parent.jQuery.unblockUI(); } catch (e) { }
+                try { parent.parent.jQuery.unblockUI(); } catch (e) { }
+                try { parent.parent.parent.jQuery.unblockUI(); } catch (e) { }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                var errorMessage = xhr.status === 403
+                    ? $.parseJSON(xhr.responseText).ErrorMessage
+                    : "Error for searching existing user !";
+                showError(errorMessage)
+                try { parent.jQuery.unblockUI(); } catch (e) { }
+                try { parent.parent.jQuery.unblockUI(); } catch (e) { }
+                try { parent.parent.parent.jQuery.unblockUI(); } catch (e) { }
+            }
+        });
+    };
+
+    function renderTableNote() {
+        getNotAllowedNewSuperPrefixes();
+        getHeadlineBelongSite();
+        var isSuper = parent.level === "super";
+        if (isSuper) {
+            $("#tableNote").show();
+        }
+    }
+
+    function initialize() {
+        renderTableNote();
+        renderViewByLevel();
+        registerSearchEvent();
+        handleSubmit();
+    }
+
     initialize();
+
 })(jQuery, viewModel, window);
