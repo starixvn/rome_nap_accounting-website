@@ -1,0 +1,24 @@
+﻿@model Fanex.Tarus.Customer.ViewModels.Customer.CustomerViewModel
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Create Super</title>
+    <base href="/" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="stylesheet" href="@(Model.CdnUri)create-customer/index.css?version=@(Model.AssetsVersion)" />
+</head>
+<body>
+
+    <div id="root"></div>
+
+    <script>
+          const Base_URL = "@Model.BaseUrl";
+          const CustId = "@Model.CustId";
+          const RoleId = "@Model.RoleId";
+    </script>
+    <script type="module" src="@(Model.CdnUri)create-customer/index.js?version=@(Model.AssetsVersion)"></script>
+</body>
+</html>

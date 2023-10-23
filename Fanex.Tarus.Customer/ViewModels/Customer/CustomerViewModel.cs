@@ -14,5 +14,11 @@
         public string CdnUri { get; }
 
         public string AssetsVersion { get; }
+        
+        public int CustId { get; set; }
+        
+        public int RoleId { get; set; }
+        
+        public string SiteName { get; set; }
     }
 }

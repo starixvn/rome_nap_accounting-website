@@ -51,23 +51,61 @@ namespace Fanex.Tarus.Customer.Controller
 
         public ActionResult CreateSuper()
         {
-            var viewModel = new CustomerViewModel($"{Response.ApplyAppPathModifier(Request.ApplicationPath)}Customer", cdnUri, assetsVersion);
-            return View(HttpContext.IsDebuggingEnabled ? "~/Views/Customer/Create-Debug.cshtml" : "~/Views/Customer/CreateSuper.cshtml", viewModel);
+            var applicationPath = Response.ApplyAppPathModifier(Request.ApplicationPath);
+            if (!applicationPath.EndsWith("/"))
+            {
+                applicationPath += "/";
+            }
+
+            var viewModel = new CustomerViewModel($"{applicationPath}Customer", cdnUri, assetsVersion);
+            return View(
+                HttpContext.IsDebuggingEnabled
+                    ? "~/Views/Customer/Create-Debug.cshtml"
+                    : "~/Views/Customer/CreateSuper.cshtml", viewModel);
         }
 
-        public ActionResult Create()
-            => View("~/Views/Customer/Create.cshtml", new CustomerViewModel($"{Response.ApplyAppPathModifier(Request.ApplicationPath)}Customer", cdnUri, assetsVersion));
+        public ActionResult CreateCustomer(int custId, int roleId,  string siteName)
+        {
+            //debug cho nay
+            var applicationPath = Response.ApplyAppPathModifier(Request.ApplicationPath);
+            if (!applicationPath.EndsWith("/"))
+            {
+                applicationPath += "/";
+            }
 
+            var viewModel = new CustomerViewModel($"{applicationPath}Customer", cdnUri, assetsVersion);
+            viewModel.CustId = custId;
+            viewModel.RoleId = roleId;
+            viewModel.SiteName = siteName;
+            
+            return View(
+                HttpContext.IsDebuggingEnabled
+                    ? "~/Views/Customer/Create-Debug.cshtml"
+                    : "~/Views/Customer/CreateCustomer.cshtml", viewModel);
+        }
+        
         public async Task<ActionResult> GetProductSetting(string site, int currency)
-            => Content(await PostAsStringAsync("customer-settings/create-super/query", new { site, currency, language = "en-US" }));
+            => Content(await PostAsStringAsync("customer-settings/create-super/query",
+                new { site, currency, language = "en-US" }));
+
+        public async Task<ActionResult> GetProductSettingDownLine(int upLineCusId, int upLineRoleId)
+            => Content(await PostAsStringAsync("customer-settings/create-downline/query",
+                new
+                {
+                    uplineCustId = upLineCusId,
+                    uplineRoleId = upLineRoleId,
+                    language = "en-US"
+                }));
 
         public static async Task<string> PostAsStringAsync(string requestUri, object payload = null)
         {
-            using (var stringContent = new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json"))
+            using (var stringContent =
+                   new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json"))
             {
                 using (var request = new HttpRequestMessage(HttpMethod.Post, requestUri) { Content = stringContent })
                 {
-                    using (var response = await httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false))
+                    using (var response = await httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
+                               .ConfigureAwait(false))
                     {
                         response.EnsureSuccessStatusCode();
                         return await response.Content.ReadAsStringAsync();
