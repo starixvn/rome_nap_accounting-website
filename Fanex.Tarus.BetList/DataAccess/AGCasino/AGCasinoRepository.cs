@@ -207,7 +207,7 @@
                                 Currency = HasColumn(reader, "Currency") ? Converter.ToString2(reader["currency"]) : string.Empty,
                                 SiteId = Converter.ToString2(reader["SiteId"]),
                                 CurrencyId = Converter.ToInt(reader["CurrencyId"]),
-                                JackpotInfo = Converter.ToString2(reader["JackpotInfo"])
+                                JackpotInfo = HasColumn(reader, "JackpotInfo") ? Converter.ToString2(reader["JackpotInfo"]) : string.Empty
                             },
                             ChoiceHtml = string.Empty,
                             OddHtml = string.Empty,
