@@ -179,7 +179,9 @@ namespace Fanex.Tarus.BetList.DataAccess.Results
                 GameDetails = new List<GameDetail>(),
                 Bettype = GetBetTypeFromToken(reader),
                 BetID = GetBetIDFromToken(reader),
-                SettlementStatus = reader["SettlementStatus"] != DBNull.Value ? Convert.ToByte(reader["SettlementStatus"]) : default(byte)
+                SettlementStatus = reader["SettlementStatus"] != DBNull.Value ? Convert.ToByte(reader["SettlementStatus"]) : default(byte),
+                LiveHomeScore = reader["livehomescore"] != DBNull.Value ? int.Parse(reader["livehomescore"].ToString()) : new int?(),
+                LiveAwayScore = reader["liveawayscore"] != DBNull.Value ? int.Parse(reader["liveawayscore"].ToString()) : new int?()
             };
 
             return item;
