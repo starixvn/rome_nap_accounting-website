@@ -96,7 +96,7 @@
         var f = document.getElementById("frmSearchCopyAddNewSuper");
 
         document.body.rows = tfHeigth + ",*";
-        f.src = "../AddNewMember/AddNewMemberPage?agentId=" + parentId + "&username=" + document.getElementById("txtUsername").value + "&siteName=" + siteName;
+        f.src = `../Customer/CreateCustomer?custId=${parentId}&roleId=${roleId}&siteName=${siteName}`;
     }
 
     function showAlertMessage(id, message) {
