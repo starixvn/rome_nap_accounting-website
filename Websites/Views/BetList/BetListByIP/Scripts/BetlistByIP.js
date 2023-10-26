@@ -307,6 +307,7 @@ function showNewCombMP(transId, transIndex, refNo, handicap1, handicap2, betchec
     var divChoiceRight = $("#choice_right_" + transId);
     var divCombinationOfferName = divChoiceRight.find("#combinationOfferName_" + transId + transIndex);
     var divParlay = divChoiceRight.find("#divEvent_" + transId + transIndex);
+    var divMaxPayout = divChoiceRight.find("#maxPayout_" + transId + transIndex);
 
     if (divParlay.css("display") === "none") {
         if ($.trim(divParlay.html()) === "") {
@@ -322,6 +323,12 @@ function showNewCombMP(transId, transIndex, refNo, handicap1, handicap2, betchec
                 success: function (result) {
                     divParlay.html(result).css("display", "block");
                     divCombinationOfferName.addClass("hide");
+                    if (divMaxPayout.length > 0) {
+                        divMaxPayout.addClass("hide");
+                        divParlay.find(".max-payout").each(function () {
+                            $(this).removeClass("hide");
+                        });
+                    }
                     $("#BetlistByIP_Soccer").gridScroller(BetListByIP_SportType.gridOpts_Soccer);
                 },
                 error: function () {
@@ -334,12 +341,18 @@ function showNewCombMP(transId, transIndex, refNo, handicap1, handicap2, betchec
         }
         else {
             divParlay.css("display", "block");
+            if (divMaxPayout.length > 0) {
+                divMaxPayout.toggleClass("hide");
+            }
             divCombinationOfferName.toggleClass("hide");
             $("#BetlistByIP_Soccer").gridScroller(BetListByIP_SportType.gridOpts_Soccer);
         }
     }
     else {
         divParlay.css("display", "none");
+        if (divMaxPayout.length > 0) {
+            divMaxPayout.toggleClass("hide");
+        }
         divCombinationOfferName.toggleClass("hide");
         $("#BetlistByIP_Soccer").gridScroller(BetListByIP_SportType.gridOpts_Soccer);
     }

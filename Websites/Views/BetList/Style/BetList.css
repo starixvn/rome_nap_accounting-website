@@ -687,3 +687,23 @@ span.icon-boost {
     top: 1px;
     margin-right: 4px;
 }
+
+.icon-max-payout {
+    background: url(Images/icon-info-circle.png) no-repeat scroll center center transparent;
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    position: relative;
+    top: 3px;
+    margin-right: 2px;
+    cursor: pointer;
+}
+
+.max-payout {
+    color: #B50000;
+    font-style: italic;
+}
+    
+.max-payout > span {
+    margin-left: 4px;
+}

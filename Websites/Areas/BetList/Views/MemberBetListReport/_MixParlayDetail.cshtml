@@ -5,14 +5,15 @@
 }
 
 <div>
-  @if (!string.IsNullOrEmpty(combinationTypeComboNames))
-  {
-    @Html.Raw(combinationTypeComboNames)
-    <div class="line"></div>
-  }
-  
-  @foreach (TicketDetail ticketdetail in Model)
-  {
-    @Html.Raw(ticketdetail.ChoiceHtml)
-  }
+    @if (!string.IsNullOrEmpty(combinationTypeComboNames))
+    {
+        @Html.Raw(combinationTypeComboNames)
+        <div class="max-payout hide">(Reached Company Max Payout)<span class="icon-max-payout" title="This ticket has reached Max Payout set by company. See the Rules and Regulations for more information."></span></div>
+        <div class="line"></div>
+    }
+
+    @foreach (TicketDetail ticketdetail in Model)
+    {
+        @Html.Raw(ticketdetail.ChoiceHtml)
+    }
 </div>
