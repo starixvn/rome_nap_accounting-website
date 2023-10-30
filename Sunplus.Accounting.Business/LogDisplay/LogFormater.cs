@@ -75,7 +75,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
         }
 
         public static string GetValue(int formatId, string val)
-        {           
+        {
             switch (formatId)
             {
                 case 1:
@@ -92,10 +92,12 @@ namespace Sunplus.Accounting.Business.LogDisplay
                     return ReplaceLeagueGroup(val);
                 case 7:
                     return ReplaceZeroWithUnlimited(val);
+                case 8:
+                    return FormatAutoTransferSchedule(val);
                 default:
                     break;
-            }          
-              
+            }
+
             return FormatDecimalTrailingZeros(val);
         }
 
@@ -172,7 +174,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
             decimal value;
             if (Decimal.TryParse(strValue, out value))
             {
-                return  string.Format("{0:G29}", value);
+                return string.Format("{0:G29}", value);
             }
             return strValue;
         }
@@ -181,14 +183,15 @@ namespace Sunplus.Accounting.Business.LogDisplay
         {
             return GetResourceName("AccountType_" + strValue);
         }
-        
+
         public static string ReplaceLeagueGroup(string leagueGroupString)
         {
             var leagueGroups = leagueGroupString.Split(',');
             if (leagueGroups.Length > 2)
             {
                 return string.Format("<a href='#' data-league-group='{0}' onclick='LogPT.openPopupLeagueGroup(this, event);'>{1}</a>", leagueGroupString, leagueGroups.Length);
-            } else
+            }
+            else
             {
                 return leagueGroupString;
             }
@@ -203,6 +206,24 @@ namespace Sunplus.Accounting.Business.LogDisplay
             }
 
             return val;
+        }
+
+        public static string FormatAutoTransferSchedule(string str)
+        {
+            var dates = str.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            if (dates.Length == 7)
+            {
+                return "[Daily]";
+            }
+
+            if (dates.Length == 0)
+            {
+                return "_";
+            }
+
+            var days = new string[] { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
+            var result = dates.Select(d => "[" + days[(int.Parse(d) - 1)] + "]");
+            return string.Join(string.Empty, result);
         }
     }
 }

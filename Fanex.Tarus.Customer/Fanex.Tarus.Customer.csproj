@@ -340,11 +340,14 @@
     <Compile Include="Business\VirtualRate\UpdateTypeConstants.cs" />
     <Compile Include="Business\VirtualRate\VirtualRateSectionService.cs" />
     <Compile Include="Business\VirtualRate\VirtualRateService.cs" />
+    <Compile Include="Constants\MessageTypeConstants.cs" />
     <Compile Include="Constants\PagingConstants.cs" />
     <Compile Include="Constants\SelfDestructionPeriodConstants.cs" />
     <Compile Include="Constants\LiveTypeConstants.cs" />
     <Compile Include="Constants\LiveTypeNameConstants.cs" />
     <Compile Include="Constants\RoleIdConstants.cs" />
+    <Compile Include="Constants\ToastMessageSiteFunctionIdConstants.cs" />
+    <Compile Include="Constants\ToastMessageTypeConstants.cs" />
     <Compile Include="Controller\AGCasinoController.cs" />
     <Compile Include="Controller\AutoTransferAll\AutoTransferAllController.cs" />
     <Compile Include="Controller\BetCreditHistoryController.cs" />
@@ -385,6 +388,8 @@
     <Compile Include="Criteria\AutoTransferAll\CheckValidAgentsFromFileCriteria.cs" />
     <Compile Include="Criteria\AutoTransferAll\ClearBalanceDownlineCriteria.cs" />
     <Compile Include="Criteria\AutoTransferAll\InsertAgentsFromFileCriteria.cs" />
+    <Compile Include="Criteria\AutoTransfer\AssignPersonalMessageCriteria.cs" />
+    <Compile Include="Criteria\AutoTransfer\InsertPersonalMessageCriteria.cs" />
     <Compile Include="Criteria\BetCreditHistory\GetBetCreditHistoryCriteria.cs" />
     <Compile Include="Criteria\BetTrade\GetBetTradeStatusCriteria.cs" />
     <Compile Include="Criteria\BetTrade\UpdateBetTradeStatusCriteria.cs" />
@@ -411,12 +416,12 @@
     <Compile Include="Criteria\AutoTransferAll\SelectTransferAgentCriteria.cs" />
     <Compile Include="Criteria\CopySuperSetting\CheckSuperListCriteria.cs" />
     <Compile Include="Criteria\CopyVRSetting\CopyVRSettingCriteria.cs" />
-    <Compile Include="Criteria\CreditCustomer\GetAutoTransferJobStatusCriteria.cs" />
+    <Compile Include="Criteria\AutoTransfer\GetAutoTransferJobStatusCriteria.cs" />
     <Compile Include="Criteria\CreditCustomer\GetHeadlineBelongSiteCriteria.cs" />
     <Compile Include="Criteria\CreditCustomer\SuperPrefixCriteria.cs" />
-    <Compile Include="Criteria\CreditCustomer\InsertToastMessageCriteria.cs" />
+    <Compile Include="Criteria\AutoTransfer\InsertToastMessageCriteria.cs" />
     <Compile Include="Criteria\CreditCustomer\UnlockAccessCriteria.cs" />
-    <Compile Include="Criteria\CreditCustomer\TurnOffAutoTransferCriteria.cs" />
+    <Compile Include="Criteria\AutoTransfer\TurnOffAutoTransferCriteria.cs" />
     <Compile Include="Criteria\CreditCustomer\UpdateAllDayBalTransferOnMasterCriteria.cs" />
     <Compile Include="Criteria\CreditCustomer\UpdateAllDayBalTransferCriteria.cs" />
     <Compile Include="Criteria\CreditCustomer\UpdateProtectedStatusCriteria.cs" />
@@ -528,6 +533,7 @@
     <Compile Include="DataAccess\AGCasino\IAGCasinoRepository.cs" />
     <Compile Include="DataAccess\AutoTransferAll\AutoTransferAllAccess.cs" />
     <Compile Include="DataAccess\AutoTransferAll\IAutoTransferAllAccess.cs" />
+    <Compile Include="DataAccess\AutoTransfer\AutoTransferDatalAccess.cs" />
     <Compile Include="DataAccess\BetCreditHistory\BetCreditHistoryDataAccess.cs" />
     <Compile Include="DataAccess\CN88\MoveSuper\IMoveSuperDataAccess.cs" />
     <Compile Include="DataAccess\CN88\MoveSuper\MoveSuperDataAccess.cs" />
@@ -614,6 +620,8 @@
     <Compile Include="Entities\AutoTransferAll\AutoTransferAll.cs" />
     <Compile Include="Entities\AutoTransferAll\ValidAgents.cs" />
     <Compile Include="Entities\AutoTransferAll\ValidAgent.cs" />
+    <Compile Include="Entities\AutoTransfer\AffectedDownlinesInfoModel.cs" />
+    <Compile Include="Entities\AutoTransfer\TurnOffAutoTransferResultModel.cs" />
     <Compile Include="Entities\BaseModel.cs" />
     <Compile Include="Entities\BetCreditHistory\BetCreditHistoryItem.cs" />
     <Compile Include="Entities\CN88\CreditRangeModel.cs" />
@@ -683,6 +691,7 @@
     <Compile Include="Entities\SettingCustomer\Suspend\Multiple\MultipleUpdateViewModel.cs" />
     <Compile Include="Entities\SettingCustomer\Suspend\UnsuspendDownlineDetail.cs" />
     <Compile Include="Entities\SettingCustomer\Suspend\Single\SingleUpdateAffectedDownline.cs" />
+    <Compile Include="Entities\UpdateTransferOptionResult.cs" />
     <Compile Include="Entities\ViewPeriodsCN88\HeadlinePeriods.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Helpers\HmacAuthenticator.cs" />

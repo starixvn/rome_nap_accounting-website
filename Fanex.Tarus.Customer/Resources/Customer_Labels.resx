@@ -472,18 +472,84 @@
     <value>ตั้งค่าโอนอัตโนมัติ</value>
   </data>
   <data name="ADBTChangeToastMessage_en" xml:space="preserve">
-    <value>Your account has been enabled for All Day Balance Transfer. The Auto Transfer configuration you set for downlines will be disabled to ensure data accuracy.</value>
+    <value>All Day Balance Transfer is now enabled for your account. As a result, Auto Transfer schedule has been cleared, and the Auto Transfer configuration you set for downlines will be disabled to ensure data accuracy.</value>
   </data>
   <data name="ADBTChangeToastMessage_ch" xml:space="preserve">
-    <value>您的賬號已啟用全天餘額轉賬。以確保數據準確性，您為下線設置的自動轉賬配置將被禁用。</value>
+    <value>您的賬號現已啓用全天余額轉賬。 因此，自動轉賬日程已被清除，並且您爲下線設置的自動轉賬配置將被禁用，以確保數據准確性。</value>
   </data>
   <data name="ADBTChangeToastMessage_cs" xml:space="preserve">
-    <value>您的账号已启用全天余额转账。以确保数据准确性，您为下线设置的自动转账配置将被禁用。</value>
+    <value>您的账号现已启用全天余额转账。 因此，自动转账日程已被清除，并且您为下线设置的自动转账配置将被禁用，以确保数据准确性。</value>
   </data>
   <data name="ADBTChangeToastMessage_th" xml:space="preserve">
-    <value>บัญชีของคุณได้เปิดใช้งานการโอนยอดคงเหลือทั้งวันแล้ว การโอนอัตโนมัติสำหรับดาวน์ไลน์ของคุณจะถูกปิดใช้งานเพื่อความถูกต้องของการดำเนินงาน</value>
+    <value>ตอนนี้เปิดใช้งานการโอนยอดคงเหลือทั้งวันสำหรับบัญชีของคุณแล้ว ด้วยเหตุนี้ ตารางการโอนอัตโนมัติจึงถูกล้างออกไป และการกำหนดค่าการโอนอัตโนมัติที่คุณตั้งค่าไว้สำหรับดาวน์ไลน์จะถูกปิดใช้งานเพื่อให้มั่นใจในความถูกต้องของข้อมูล</value>
   </data>
   <data name="ADBTChangeFailed_AutoJobRunning" xml:space="preserve">
     <value>The Auto Transfer process is currently taking place. Kindly wait for the process to complete within a few minutes before changing the Transfer Mode.</value>
+  </data>
+  <data name="ADBTChange_PersonalMessage_en" xml:space="preserve">
+    <value>All Day Balance Transfer is now enabled for your account. As a result, Auto Transfer schedule has been cleared, and the Auto Transfer for downlines will be disabled for the following customers: {0}. Details can be found in Transfer function.</value>
+  </data>
+  <data name="ADBTChange_PersonalMessage_ch" xml:space="preserve">
+    <value>您的帳號現已啟用全天餘額轉帳。 因此，自動轉帳日程已被清除，並且以下客戶：{0} 的下線自動轉帳已禁用。 內容可以在轉帳功能查詢。</value>
+  </data>
+  <data name="ADBTChange_PersonalMessage_cs" xml:space="preserve">
+    <value>您的账号现已启用全天余额转账。 因此，自动转账日程已被清除，并且以下客户：{0} 的下线自动转账已禁用。內容可以在转账功能查询。</value>
+  </data>
+  <data name="ADBTChange_PersonalMessage_th" xml:space="preserve">
+    <value>ตอนนี้เปิดใช้งานการโอนยอดคงเหลือทั้งวันสำหรับบัญชีของคุณแล้ว ด้วยเหตุนี้ กำหนดการการโอนอัตโนมัติจึงถูกล้างออกไป และการโอนอัตโนมัติสำหรับดาวน์ไลน์จะถูกปิดใช้งานสำหรับลูกค้าต่อไปนี้: {0} รายละเอียดสามารถพบได้ในฟังก์ชั่นการโอน</value>
+  </data>
+  <data name="ConditionChangeFailed_AutoJobRunning" xml:space="preserve">
+    <value>The Auto Transfer process is currently in progress for this line. Please wait a few minutes for the process to complete before making any changes to the Transfer Condition.</value>
+  </data>
+  <data name="TransferConditionChange_PersonalMessage_th" xml:space="preserve">
+    <value>เงื่อนไขการโอนของคุณถูกเปลี่ยนแปลงโดยอัพไลน์ สถานะและกำหนดการการโอนอัตโนมัติได้รับการปรับเปลี่ยนสำหรับลูกค้าต่อไปนี้: {0} รายละเอียดสามารถพบได้ในฟังก์ชั่นการโอน</value>
+  </data>
+  <data name="TransferConditionChange_PersonalMessage_cs" xml:space="preserve">
+    <value>您的转账设定已被上线更改。 以下客户已调整自动转账状态和日程表： {0} 。 详细可以在转账功能查询。</value>
+  </data>
+  <data name="TransferConditionChange_PersonalMessage_ch" xml:space="preserve">
+    <value>您的轉賬設定已被上線更改。 以下客戶已調整自動轉賬狀態和日程表： {0} 。 詳細信息可以在轉賬功能查詢。</value>
+  </data>
+  <data name="TransferConditionChange_PersonalMessage_en" xml:space="preserve">
+    <value>Your Transfer Condition was changed by upline. The Auto Transfer status and schedule have been adjusted for the following customers: {0}. Details can be found in Transfer function.</value>
+  </data>
+  <data name="TransferConditionChangeToastTitle_th" xml:space="preserve">
+    <value>ตั้งค่าโอนอัตโนมัติ</value>
+  </data>
+  <data name="TransferConditionChangeToastTitle_ch" xml:space="preserve">
+    <value>自動轉賬配置</value>
+  </data>
+  <data name="TransferConditionChangeToastTitle_cs" xml:space="preserve">
+    <value>自动转账配置</value>
+  </data>
+  <data name="TransferConditionChangeToastTitle_en" xml:space="preserve">
+    <value>Auto Transfer Config</value>
+  </data>
+  <data name="TransferConditionChangeToastMessage_th" xml:space="preserve">
+    <value>เงื่อนไขการโอนของคุณถูกเปลี่ยนแปลงโดยอัพไลน์ สถานะและกำหนดการการโอนอัตโนมัติสำหรับดาวน์ไลน์ของคุณได้รับการปรับเปลี่ยนตามนั้น คลิก {0} เพื่อดูรายละเอียด</value>
+  </data>
+  <data name="TransferConditionChangeToastMessage_ch" xml:space="preserve">
+    <value>您的轉賬設定已被上線更改。 您的下線的自動轉賬狀態和日程表已相應調整。 點擊{0}查看詳細信息。</value>
+  </data>
+  <data name="TransferConditionChangeToastMessage_cs" xml:space="preserve">
+    <value>您的转账设定已被上线更改。 您的下线的自动转账状态和日程表已相应调整。 点击{0}查看详细信息。</value>
+  </data>
+  <data name="TransferConditionChangeToastMessage_en" xml:space="preserve">
+    <value>Your Transfer Condition was changed by upline. The Auto Transfer status and schedule for your downlines have been adjusted accordingly. Click {0} to view details.</value>
+  </data>
+  <data name="TransferConditionChangeToastMessage_vn" xml:space="preserve">
+    <value>Điều Kiện Chuyển Khoản của bạn đã được cấp trên thay đổi. Trạng thái và lịch Chuyển Khoản Tự Động cho cấp dưới của bạn đã được điều chỉnh tương ứng. Nhấn vào {0} để xem chi tiết.</value>
+  </data>
+  <data name="TransferConditionChange_PersonalMessage_vn" xml:space="preserve">
+    <value>Điều Kiện Chuyển Khoản của bạn đã được cấp trên thay đổi. Trạng thái và lịch Chuyển Khoản Tự Động đã được điều chỉnh cho các tài khoản sau: {0}. Chi tiết có thể được tìm thấy trong chức năng Chuyển Khoản.</value>
+  </data>
+  <data name="ADBTChangeToastTitle_vn" xml:space="preserve">
+    <value>Cấu Hình Chuyển Khoản Tự Động</value>
+  </data>
+  <data name="ADBTChangeToastMessage_vn" xml:space="preserve">
+    <value>Chuyển Khoản Tổng Số Dư đã bật cho tài khoản của bạn. Vì vậy, lịch Chuyển Khoản Tự Động đã bị xóa, và cài đặt Chuyển Khoản Tự Động cho cấp dưới của bạn sẽ bị tắt để đảm bảo tính chính xác của dữ liệu.</value>
+  </data>
+  <data name="ADBTChange_PersonalMessage_vn" xml:space="preserve">
+    <value>Chuyển Khoản Tổng Số Dư đã bật cho tài khoản của bạn. Vì vậy, lịch Chuyển Khoản Tự Động đã bị xóa, và Chuyển Khoản Tự Động cho cấp dưới của bạn sẽ bị tắt cho các tài khoản sau: {0}. Chi tiết có thể được tìm thấy trong chức năng Chuyển Khoản.</value>
   </data>
 </root>

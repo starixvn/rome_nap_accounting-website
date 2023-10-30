@@ -4,12 +4,12 @@
     </tr>
     {TransferConditions_Message}
     <tr>
-        <td width="30%" class="l m"><input type="radio" style=" vertical-align:middle;" {daily-chk} onclick="selectTranferTime(this);" name="tranfer" id="rdDaily" value="daily"></input>{daily}</td>
+        <td width="30%" class="l m"><input type="radio" style=" vertical-align:middle;" {daily-chk} onclick="selectTranferTime(this); toggleConditionNote(false);" name="tranfer" id="rdDaily" value="daily"></input>{daily}</td>
     </tr>
     <tr>
         <td class="l m" id="alldays">
-            <input type="radio" name="tranfer" onclick="selectTranferTime(this);" {weekly-chk} id="rdWeekly" value="weekly"></input>{weekly} &nbsp;
-            <input type="checkbox" name="chkMon" id="chkMon" {mon-chk} onclick="return ChooseDate();"></input>{mon}&nbsp;
+            <input type="radio" name="tranfer" onclick="selectTranferTime(this); toggleConditionNote(true);" {weekly-chk} id="rdWeekly" value="weekly"></input>{weekly} &nbsp;
+            <input type="checkbox" name="chkMon" id="chkMon" {mon-chk} onclick=" return ChooseDate();"></input>{mon}&nbsp;
             <input type="checkbox" name="chkTue" id="chkTue" {tue-chk} onclick="return ChooseDate();"></input>{tue}&nbsp;
             <input type="checkbox" name="chkWed" id="chkWed" {wed-chk} onclick="return ChooseDate();"></input>{wed}&nbsp;
             <input type="checkbox" name="chkThurs" id="chkThurs" {thurs-chk} onclick="return ChooseDate();"></input>{thurs}&nbsp;
@@ -18,10 +18,25 @@
             <input type="checkbox" name="chkSun" id="chkSun" {sun-chk} onclick="return ChooseDate();"></input>{sun}
         </td>
     </tr>
+    <tr class=" row-note {note-class}">
+        <td class="l">
+            <div>
+                Note: Changing the Transfer Condition will affect the Auto Transfer status and schedule of all downlines under this account. Please select an action:
+            </div>
+            <div>
+                <input id="rad-on-auto-transfer" type="radio" name="rad-change-affect" class=" rad-change-affect" value="0" checked="checked" onclick="updateAutoTransferCondition(0);" />
+                <label for="rad-on-auto-transfer">Keep Auto Transfer enabled with the current schedule adjusted to the new transfer condition.</label>
+            </div>
+            <div>
+                <input id="rad-off-auto-transfer" type="radio" name="rad-change-affect" class=" rad-change-affect" value="1" onclick="updateAutoTransferCondition(1);" />
+                <label for="rad-off-auto-transfer">Disable Auto Transfer for all downlines and CLEAR the Auto Transfer schedule.</label>
+            </div>
+        </td>
+    </tr>
     <!--none-add-->
     <tr>
         <td class="c">
-            <input type="submit" class="btn" name="btnSubmit" id="btnSubmit" value="{submit-text}" {submit-disabled}></input>
+            <input type="submit" class="btn" name="btnSubmit" id="btnSubmit" value="{submit-text}" {submit-disabled} />
         </td>
     </tr>
     <!--/none-add-->

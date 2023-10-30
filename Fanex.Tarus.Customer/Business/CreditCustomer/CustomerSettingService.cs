@@ -7,51 +7,49 @@
 
 namespace Fanex.Tarus.Customer.CreditCustomer.Business
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Linq;
     using Criteria.CN88;
     using Criteria.CreditCustomer;
     using Customer.Entities.CN88;
-    using DNAide.Core;
     using DNAide.Utils;
     using Fanex.Data;
     using Fanex.PTEngine.BusinessObjects;
     using Fanex.Tarus.Admin.ViewModel;
+    using Fanex.Tarus.Customer.Constants;
     using Fanex.Tarus.Customer.CreditCustomer.DataAccess;
     using Fanex.Tarus.Customer.CreditCustomer.Entities;
+    using Fanex.Tarus.Customer.Criteria.AutoTransfer;
     using Fanex.Tarus.Customer.Criteria.CN88.Headline;
     using Fanex.Tarus.Customer.Criteria.CN88.HeadlinePossess;
+    using Fanex.Tarus.Customer.DataAccess.AutoTransfer;
     using Fanex.Tarus.Customer.ViewModels.CN88;
     using NAP.Framework.Data;
     using Resources;
     using Sunplus.Accounting.Business.Security;
     using Sunplus.Accounting.Core.Common;
     using Sunplus.Accounting.Core.Configurations;
-    using Sunplus.Accounting.Core.Extensions;
     using Sunplus.Accounting.Core.Helper;
-    using Sunplus.Accounting.DataAccess;
-    using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
-    using Sunplus.Accounting.Entities.Customer;
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Data;
-    using System.Linq;
     using static Infrastructure.Common.Enumerations;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class CustomerSettingService : ICustomerSettingService
     {
         private ICustomerSettingDataAccess _customerSettingDataAccess;
+        private IAutoTransferDatalAccess _autoTransferDataAccess;
 
-        public CustomerSettingService()
-            : this(null)
+        public CustomerSettingService() : this(null, null)
         {
         }
 
-        public CustomerSettingService(ICustomerSettingDataAccess customerSettingDataAccess)
+        public CustomerSettingService(
+            ICustomerSettingDataAccess customerSettingDataAccess,
+            IAutoTransferDatalAccess autoTransferDataAccess)
         {
             _customerSettingDataAccess = customerSettingDataAccess ?? new CustomerSettingDataAccess();
+            _autoTransferDataAccess = autoTransferDataAccess ?? new AutoTransferDatalAccess();
         }
 
         /// <summary>
@@ -150,13 +148,13 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
 
         public Tarus.Customer.Entities.Result UpdateAllDayBalTransfer(int custId, bool isAllDayBalTransfer, bool isIncludedDownline, int userId, string ip)
         {
-            var autoTransferStatus = _customerSettingDataAccess.GetAutoTransferJobStatus(custId);
+            var autoTransferStatus = _autoTransferDataAccess.GetAutoTransferJobStatus(custId);
             if (autoTransferStatus)
             {
                 return new Tarus.Customer.Entities.Result(100, Resources.Customer_Labels.ADBTChangeFailed_AutoJobRunning);
             }
 
-            ICriteria criteria = new UpdateAllDayBalTransferCriteria
+            var criteria = new UpdateAllDayBalTransferCriteria
             {
                 CustId = custId,
                 IsAllDayBalTransfer = isAllDayBalTransfer,
@@ -334,19 +332,40 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
                 IP = ip
             };
 
-            var targetIds = _customerSettingDataAccess.TurnOffAutoTransfer(turnOffCriteria);
-            if (string.IsNullOrWhiteSpace(targetIds))
+            var turnOffResult = _autoTransferDataAccess.TurnOffAutoTransfer(turnOffCriteria);
+            if (!turnOffResult.AffectedDownlines.Any())
             {
                 return;
             }
 
-            var ids = targetIds.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
-                .Select(i => int.Parse(i));
-
-            foreach (var id in ids)
+            foreach (var aff in turnOffResult.AffectedDownlines)
             {
-                var toastMessageCriteria = new InsertToastMessageCriteria(id, userId);
-                _customerSettingDataAccess.InsertToastMessage(toastMessageCriteria);
+                var toastMessageCriteria = new InsertToastMessageCriteria(
+                    ToastMessageTypeConstants.Warning,
+                    ToastMessageSiteFunctionIdConstants.ADBTChange,
+                    aff.CustId,
+                    userId,
+                    new ToastContentModel(Resources.Customer_Labels.ResourceManager, "ADBTChange", "en"),
+                    new ToastContentModel(Resources.Customer_Labels.ResourceManager, "ADBTChange", "ch"),
+                    new ToastContentModel(Resources.Customer_Labels.ResourceManager, "ADBTChange", "cs"),
+                    new ToastContentModel(Resources.Customer_Labels.ResourceManager, "ADBTChange", "th"),
+                    new ToastContentModel(Resources.Customer_Labels.ResourceManager, "ADBTChange", "vn"));
+
+                _autoTransferDataAccess.InsertToastMessage(toastMessageCriteria);
+
+                var dowlines = aff.Downlines;
+                var personalMessageCriteria = new InsertPersonalMessageCriteria(
+                    string.Format(Resources.Customer_Labels.ADBTChange_PersonalMessage_en, dowlines),
+                    string.Format(Resources.Customer_Labels.ADBTChange_PersonalMessage_ch, dowlines),
+                    string.Format(Resources.Customer_Labels.ADBTChange_PersonalMessage_cs, dowlines),
+                    string.Format(Resources.Customer_Labels.ADBTChange_PersonalMessage_th, dowlines),
+                    string.Format(Resources.Customer_Labels.ADBTChange_PersonalMessage_vn, dowlines));
+
+                var messageId = _autoTransferDataAccess.InsertPersonalMessage(personalMessageCriteria);
+                if (messageId > 0)
+                {
+                    _autoTransferDataAccess.AssignPersonalMessage(messageId, aff.CustId, aff.Name);
+                }
             }
         }
     }

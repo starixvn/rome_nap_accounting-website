@@ -1,26 +1,32 @@
-﻿using System.Globalization;
-using Fanex.NAP.Framework.Data;
+﻿using Fanex.NAP.Framework.Data;
 using Fanex.Tarus.Customer.CreditCustomer.Entities;
 using Newtonsoft.Json;
 
-namespace Fanex.Tarus.Customer.Criteria.CreditCustomer
+namespace Fanex.Tarus.Customer.Criteria.AutoTransfer
 {
     public sealed class InsertToastMessageCriteria : CriteriaBase
     {
-        private const int WarningTypeId = 3;
-        private const int SiteFunctionId_ADBTChange = 2;
-
-        public InsertToastMessageCriteria(int targetId, int creator)
+        public InsertToastMessageCriteria(
+            int typeId,
+            int siteFunctionId,
+            int targetId,
+            int creator,
+            ToastContentModel contentEN,
+            ToastContentModel contentCH,
+            ToastContentModel contentCS,
+            ToastContentModel contentTH,
+            ToastContentModel contentVN)
         {
-            TypeId = WarningTypeId;
-            SiteFunctionId = SiteFunctionId_ADBTChange;
+            TypeId = typeId;
+            SiteFunctionId = siteFunctionId;
             TargetId = targetId;
             Creator = creator;
 
-            ContentEN = GetContent("en");
-            ContentCH = GetContent("ch");
-            ContentCS = GetContent("cs");
-            ContentTH = GetContent("th");
+            ContentEN = JsonConvert.SerializeObject(contentEN, Formatting.None);
+            ContentCH = JsonConvert.SerializeObject(contentCH, Formatting.None);
+            ContentCS = JsonConvert.SerializeObject(contentCS, Formatting.None);
+            ContentTH = JsonConvert.SerializeObject(contentTH, Formatting.None);
+            ContentVN = JsonConvert.SerializeObject(contentVN, Formatting.None);
         }
 
         public int TypeId { get; set; }
@@ -67,18 +73,5 @@ namespace Fanex.Tarus.Customer.Criteria.CreditCustomer
         public override string GetSettingKey() => "Age_ToastMessage_Ins";
 
         public override bool IsValid() => true;
-
-        private string GetContent(string langue)
-        {
-            var culture = CultureInfo.GetCultureInfo(langue);
-
-            var content = new ToastContentModel
-            {
-                Title = Resources.Customer_Labels.ResourceManager.GetString("ADBTChangeToastTitle_" + langue),
-                Body = Resources.Customer_Labels.ResourceManager.GetString("ADBTChangeToastMessage_" + langue)
-            };
-
-            return JsonConvert.SerializeObject(content, Formatting.None);
-        }
     }
 }

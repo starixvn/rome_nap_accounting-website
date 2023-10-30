@@ -9,6 +9,8 @@ using Sunplus.Accounting.Core.Helper;
 
 public partial class Customer_v2_EditTransferTime : RequiredAuthorizationPage
 {
+    private bool isDaily = true;
+
     protected void Page_Load(object sender, EventArgs e)
     {
         try
@@ -37,6 +39,9 @@ public partial class Customer_v2_EditTransferTime : RequiredAuthorizationPage
         {
             script += " var lblConfirm='Are you sure that you want to update this transfer condition for all of its downlines?';" + Environment.NewLine;
         }
+
+        script += "var isDailyCondition = " + (isDaily ? 1 : 0) + ";" + Environment.NewLine;
+        script += "var autoTransferCondition = 0;" + Environment.NewLine;
         script += "</script>";
         return script;
     }
@@ -68,13 +73,17 @@ public partial class Customer_v2_EditTransferTime : RequiredAuthorizationPage
                     }
                     if (arrChar[7].ToString().Equals("1"))
                     {
+                        isDaily = false;
                         TemplateHandler.Assign(ref strHtml, "{weekly-chk}", "checked");
                         TemplateHandler.Assign(ref strHtml, "{daily-chk}", "");
+                        TemplateHandler.Assign(ref strHtml, "{note-class}", "");
                     }
                     else
                     {
+                        isDaily = true;
                         TemplateHandler.Assign(ref strHtml, "{weekly-chk}", "");
                         TemplateHandler.Assign(ref strHtml, "{daily-chk}", "checked");
+                        TemplateHandler.Assign(ref strHtml, "{note-class}", "hidden");
                     }
                 }
             }

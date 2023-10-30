@@ -907,7 +907,7 @@
     <value>Wed</value>
   </data>
   <data name="lblThurs" xml:space="preserve">
-    <value>Thur</value>
+    <value>Thu</value>
   </data>
   <data name="lblFri" xml:space="preserve">
     <value>Fri</value>
@@ -2475,5 +2475,11 @@
   </data>
   <data name="enableSabaCasino" xml:space="preserve">
     <value>Saba Casino</value>
+  </data>
+  <data name="changeTransferCondition_NoteOff" xml:space="preserve">
+    <value>Note: Changing Transfer Condition will Disable Auto Transfer for all downlines and CLEAR the Auto Transfer schedule</value>
+  </data>
+  <data name="changeTransferCondition_NoteOn" xml:space="preserve">
+    <value>Note: Changing Transfer Condition will Keep Auto Transfer enabled with the current schedule adjusted to the new transfer condition</value>
   </data>
 </root>

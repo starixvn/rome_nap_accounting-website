@@ -13,6 +13,7 @@
 
     <script src="../../js/showhidepopup.js" type="text/javascript"></script>
     <script type="text/javascript" src="../../js/common.js?v=<%=AccCommon.Version()%>"></script>
+    <script type="text/javascript" src="../../js/EditTransferCondition.js?v=<%=AccCommon.Version()%>"></script>
     <%=GetLanguage()%>
 </head>
 <body onload="selectTranferTime();">    
@@ -23,7 +24,7 @@
                 <div id="clear2"></div>
                  <div>
                     <input type="hidden" id="isEdit" name="isEdit" value="1" />
-                    <form id="fUpdate" name="fUpdate" onsubmit="return CheckTime();" action="UpdateTransferTime.aspx" method="post" target="frUpdate">
+                    <form id="fUpdate" name="fUpdate" onsubmit="return confirmUpdateTransferCondition();" action="UpdateTransferTime.aspx" method="post" target="frUpdate">
                     <input type="hidden" id="set" name="set" value="<%=Request["set"]%>" />
                     <input type="hidden" id="custId" name="custId" runat="server" />
                     <asp:Literal ID="htmlTransferTime" runat="server"></asp:Literal></form>
@@ -32,6 +33,8 @@
             </div>
         </div>
     </div>
+     <input type="hidden" id="MessageConfirmUpdate_NoteOff" value="<%= Resources.Language.changeTransferCondition_NoteOff %>" />
+     <input type="hidden" id="MessageConfirmUpdate_NoteOn" value="<%= Resources.Language.changeTransferCondition_NoteOn %>" />                
 </body>
 </html>
 

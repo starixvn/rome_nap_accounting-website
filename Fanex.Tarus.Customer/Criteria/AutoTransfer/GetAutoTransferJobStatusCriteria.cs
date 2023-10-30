@@ -1,4 +1,4 @@
-﻿namespace Fanex.Tarus.Customer.Criteria.CreditCustomer
+﻿namespace Fanex.Tarus.Customer.Criteria.AutoTransfer
 {
     using Fanex.NAP.Framework.Data;
 
