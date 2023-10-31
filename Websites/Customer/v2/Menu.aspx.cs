@@ -19,7 +19,6 @@ public partial class Others_Menu : System.Web.UI.Page
     private enum products
     {
         virtualsport = 5,
-        sportsbook2 = 16,
         livecasino = 41,
         voidbridge = 18,
         lottery = 28,
@@ -88,7 +87,6 @@ public partial class Others_Menu : System.Web.UI.Page
             creditDCSLink = Page.ResolveUrl("~/DCS/ViewCustomerSetting?productId={0}&customerLevel=4&customerId=" + custID);        }
       
         this.RenderSettingTab("VirtualSports", "{urlVirtualSports}", string.Format(creditDCSLink, (int)products.virtualsport), hideVirtualSports);      
-        this.RenderSettingTab("sportsbook2", "{sportsbook2LinkSetting}", string.Format(creditDCSLink, (int)products.sportsbook2), !WebSettings.IsShowSportsbook2);
         this.RenderSettingTab("livecasino", "{liveCasinoLinkSetting}", string.Format(creditDCSLink, (int)products.livecasino), hideLiveCasino);
         this.RenderSettingTab("voidbridge", "{voidbridgeLinkSetting}", string.Format(creditDCSLink, (int)products.voidbridge), hideVoidbridge);
         this.RenderSettingTab("RNGLottery", "{rngLotteryLinkSetting}", string.Format(creditDCSLink, Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdRNGLottery), hideRNGLottery);
