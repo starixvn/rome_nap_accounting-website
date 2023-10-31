@@ -109,7 +109,7 @@ namespace Fanex.Tarus.Customer.Controller
                 applicationPath += "/";
             }
 
-            var viewModel = new CustomerViewModel($"{applicationPath}Customer", cdnUri, assetsVersion);
+            var viewModel = new CustomerViewModel(applicationPath, cdnUri, assetsVersion);
             return View(
                 HttpContext.IsDebuggingEnabled
                     ? "~/Views/Customer/Create-Debug.cshtml"
@@ -174,7 +174,7 @@ namespace Fanex.Tarus.Customer.Controller
             var generalInfo = request.GeneralInfo;
             generalInfo.Password = encryptor.CfsEnCode(generalInfo.Password);
 
-            var response = await PostAsStringAsync("customer-settings/create-super/create", new
+            var response = await PostAsStringAsync("customer-settings/super/create", new
             {
                 context = new { creatorId = AppSession.AccId, systemId = 1 },
                 settings = new { generalInfo, productGroups = JArray.Parse(request.ProductGroups) }
