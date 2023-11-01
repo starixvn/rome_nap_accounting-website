@@ -1,5 +1,4 @@
-﻿using System;
-using System.Configuration;
+﻿using System.Configuration;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -15,7 +14,6 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Agent.Utilities;
-using TelegramBot.Client.Extensions;
 
 namespace Fanex.Tarus.Customer.Controller
 {
@@ -125,10 +123,12 @@ namespace Fanex.Tarus.Customer.Controller
                 applicationPath += "/";
             }
 
-            var viewModel = new CustomerViewModel($"{applicationPath}Customer", cdnUri, assetsVersion);
-            viewModel.CustId = custId;
-            viewModel.RoleId = roleId;
-            viewModel.SiteName = siteName;
+            var viewModel = new CustomerViewModel($"{applicationPath}Customer", cdnUri, assetsVersion)
+            {
+                CustId = custId,
+                RoleId = roleId,
+                SiteName = siteName
+            };
 
             return View(
                 HttpContext.IsDebuggingEnabled
@@ -137,9 +137,8 @@ namespace Fanex.Tarus.Customer.Controller
         }
 
         [AuthenticateRead]
-        public async Task<ActionResult> GetProductSetting(string site, int currency)
-            => Content(await PostAsStringAsync("customer-settings/create-super/query",
-                new { site, currency, language = "en-US" }));
+        public async Task<ActionResult> GetGlobalSetting(string site, int currency, int productGroupId = 1, string language = "en-US")
+            => Content(await httpClient.GetStringAsync($"customer/globalsetting?site={site}&currency={currency}&productGroupId={productGroupId}&language={language}"));
 
         public async Task<ActionResult> GetProductSettingDownLine(int upLineCusId, int upLineRoleId)
             => Content(await PostAsStringAsync("customer-settings/create-downline/query",
@@ -174,7 +173,7 @@ namespace Fanex.Tarus.Customer.Controller
             var generalInfo = request.GeneralInfo;
             generalInfo.Password = encryptor.CfsEnCode(generalInfo.Password);
 
-            var response = await PostAsStringAsync("customer-settings/super/create", new
+            var response = await PostAsStringAsync("customer", new
             {
                 context = new { creatorId = AppSession.AccId, systemId = 1 },
                 settings = new { generalInfo, productGroups = JArray.Parse(request.ProductGroups) }
