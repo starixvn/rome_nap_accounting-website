@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Fanex.CustomerSetting.Module.Core;
 using Fanex.CustomerSetting.Module.Core.Attributes;
 using Fanex.Tarus.Customer.CreditCustomer.Business;
 using Fanex.Tarus.Customer.ViewModels.Customer;
@@ -175,7 +176,7 @@ namespace Fanex.Tarus.Customer.Controller
 
             var response = await PostAsStringAsync("customer", new
             {
-                context = new { creatorId = AppSession.AccId, systemId = 1 },
+                context = new { creatorId = AppSession.AccId, systemId = 1, ip = Utils.GetClientIP(), isFullMode = true },
                 settings = new { generalInfo, productGroups = JArray.Parse(request.ProductGroups) }
             });
             return Content(response);
