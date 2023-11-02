@@ -172,6 +172,10 @@ namespace Fanex.Tarus.BetList.Extensions
                 factory.SetColumnWidth(cellAddr.ColumnIndex, 4800);
             }
 
+
+            cellAddr = factory.AddCell(new HSSFRichTextString(BetListResources.Platform), headerStyle);
+            factory.SetColumnWidth(cellAddr.ColumnIndex, 3400);
+
             return factory;
         }
 
