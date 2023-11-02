@@ -7,6 +7,8 @@ using System.Web.Mvc;
 using Fanex.CustomerSetting.Module.Core;
 using Fanex.CustomerSetting.Module.Core.Attributes;
 using Fanex.Tarus.Customer.CreditCustomer.Business;
+using Fanex.Tarus.Customer.CreditCustomer.Requests;
+using Fanex.Tarus.Customer.Criteria.CreditCustomer;
 using Fanex.Tarus.Customer.ViewModels.Customer;
 using Fanex.Tarus.Web.Controllers;
 using Fanex.Tarus.Web.Controllers.Filters;
@@ -88,6 +90,19 @@ namespace Fanex.Tarus.Customer.Controller
             _customerSettingService = customerSettingService ?? new CustomerSettingService();
             encryptor = new EncryptorImpl();
         }
+
+        public ActionResult GetHeadlineBelongSite()
+            => Content(JsonConvert.SerializeObject(
+                _customerSettingService.GetHeadlineBelongSite(new GetHeadlineBelongSiteCriteria()),
+                new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }));
+
+        public ActionResult GetNotAllowedSuperPrefixes()
+            => Content(JsonConvert.SerializeObject(_customerSettingService.GetSuperPrefixes(new SuperPrefixCriteria
+            {
+                GroupName = null,
+                Prefix = null,
+                AllowNewSuper = false
+            }), new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }));
 
         [AuthenticateRead]
         public ActionResult GetSitesAndCurrencies()
