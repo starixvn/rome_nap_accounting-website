@@ -565,7 +565,7 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enabled Virtual Rate.
+        ///   Looks up a localized string similar to Enabling/Disabling this status does not affect E-Sports.
         /// </summary>
         public static string Enabled_Virtual_Rate {
             get {

@@ -1,117 +1,137 @@
 ﻿
-#virtual-rate-setting-container
-{
+#virtual-rate-setting-container {
     margin: 10px 0 10px 10px;
+
+    .table-header td.padding-column,
+    .padding-column {
+        background-color: #fff !important;
+        border-bottom: medium none;
+        border-top: medium none;
+    }
+
+    .padding-row {
+        td, th {
+            border-left: solid 1px #FFF;
+            border-right: solid 1px #FFF;
+        }
+    }
 }
 
-#virtual-rate-setting
-{
-    width: 805px;
+#virtual-rate-setting {
+    width: 830px;
     border-spacing: 0;
     background-color: #FFFFFF;
-    border-collapse: collapse;    
+    border-collapse: collapse;
     border: none;
-    
-    th, td
-    {
+
+    th, td {
         border: solid 1px #7c98a4;
     }
-    
-    .sport-title
-    {    
-       font-weight: bold;
-       td
-       {
+
+    .sport-title {
+        font-weight: bold;
+
+        td {
             background-color: #b5c4d0;
         }
     }
-    
-    .table-header
-    {
-        td, th
-        {
+
+    .table-header {
+        td, th {
             background-color: #CADCEB;
             font-weight: bold;
         }
     }
 
-    th.first-column, td.first-column
-    {
-        width: 120px;
+    th.first-column, td.first-column {
+        width: 145px;
         background-color: #FFFFFF;
         font-weight: bold;
     }
-    
-    td.subsport-first-column
-    {
+
+    td.subsport-first-column {
         width: 80px;
         background-color: #FFFFFF;
         font-weight: bold;
     }
-    
-    td.subsport-livetype-column
-    {
+
+    td.subsport-livetype-column {
         width: 40px;
         background-color: #FFFFFF;
         font-weight: bold;
     }
-    
-    .bettype-separator-column
-    {
+
+    .bettype-separator-column {
         width: 20px;
     }
-    
-    .bettypevalue-column
-    {
+
+    .bettypevalue-column {
         width: 85px;
-        &[disabled="disabled"]
-        {
+
+        &[disabled="disabled"] {
             background-color: #C3C3C3;
-            select
-            {
+
+            select {
                 background-color: #C3C3C3;
             }
         }
     }
-    
-    .padding-row
-    {
-        td, th{
-            border-left: solid 1px #FFF;
-            border-right: solid 1px #FFF;
+
+    .end-row {
+        line-height: 0px;
+
+        td {
+            border-bottom: medium none;
         }
     }
-    
-    .end-row
-    {
-        line-height: 0px;   
-        td{
+
+    .end-row {
+        line-height: 0px;
+
+        td {
             border-bottom: medium none;
-        }     
+        }
     }
-    
-    .table-header td.padding-column,
-    .padding-column
-    {
-        background-color: #fff !important;
-        border-bottom: medium none;
-        border-top: medium none;
+
+    .borderless {
+        border: medium none;
     }
-    
-    .end-row
-    {
-        line-height: 0px;   
-        td{
-            border-bottom: medium none;
-        }     
+
+    .status-column {
+        width: 85px;
+        padding: 2px;
     }
-    
-    .table-header td.padding-column,
-    .padding-column
-    {
-        background-color: #fff !important;
-        border-bottom: medium none;
-        border-top: medium none;
+
+    .status-title {
+        background-color: #CADCEB !important;
+    }
+
+    .enable-status {
+        color: #1E84C4;
+    }
+
+    .disable-status {
+        color: #D9534F;
+    }
+
+    .btn-status {
+        border-radius: 4px;
+        display: inline-block;
+        font-weight: normal;
+        padding: 2.5px 4px;
+        min-width: 70px;
+        height: 18px;
+        cursor: pointer;
+    }
+
+    .btn-enable {
+        background-color: #1E84C4;
+        color: #fff;
+    }
+
+    .btn-disable {
+        background-color: #D9534F;
+        color: #fff;
     }
 }
 
@@ -148,11 +168,72 @@
     font-size: 11px;
 }
 
-.infoIcon {
-    background: rgba(0, 0, 0, 0) url("Images/info.png") no-repeat scroll right center;
-    cursor: pointer;
+.additionalaction {
+    width: 180px;
+    margin-left: 12px;
+    font-size: 14px;
+    line-height: 32px;
+}
+
+.additionalaction:after {
+    margin-left: 12px;
+    content: "\276F";
+}
+
+.additionalexpanded:after {
+    transform: rotate(90deg);
+    content: "\276F";
     display: inline-block;
-    height: 16px;
-    width: 16px;
+}
+
+#additionalaction {
+    display: none;
+}
+
+.vroptions {
+    padding: 2px;
+    margin: 2px;
+}
+
+ul.vroptions > li {
+    list-style-type: none;
+    display: inline-block;
+    /* You can also add some margins here to make it look prettier */
+    padding: 2px;
+    width: 100px;
+    *display: inline;
+    /* this fix is needed for IE7- */
+}
+
+.p-l5 {
+    padding-left: 5px !important;
+}
+
+.note {
+    display: block;
+}
+
+.checkbox-hide, .note-hide {
+    display: none;
+}
+
+.note-info {
+    font-weight: normal;
     float: right;
 }
+
+#noteInfo {
+    margin-top: -2px;
+    margin-left: -116px;
+    position: absolute;
+    width: 160px;
+    background-color: #fff;
+    padding-left: 16px;
+    border: solid 1px #000;
+    list-style-type: disc;
+
+    a {
+        cursor: pointer;
+    }
+}
+

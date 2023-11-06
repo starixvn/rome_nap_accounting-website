@@ -9,11 +9,11 @@
     ViewBag.Title = Customer_Labels.Virtual_Rate;
     Layout = "";
     var customerVirtualRateModel = JsonConvert.SerializeObject(Model);
-    var maxBetTypeColumn = 6;
-    var tableColumnCount = maxBetTypeColumn + 2;
+    var maxBetTypeColumns = 6;
+    var maxColumns = 9;
 
-    var leftColumn = 4;
-    var rightColumn = 4;
+    var leftColumn = 2;
+    var rightColumn = 7;
     int isManageVirtualRateAccess = Permissions.GetHostPermission(Enumerations.Functions.ExRates.VirtualRate) ? 1 : 0;
     var roleId = 0;
     if (Model.RoleName == "Super")
@@ -23,52 +23,26 @@
     else if (Model.RoleName == "Master")
     {
         roleId = 3;
+        rightColumn = 5;
     }
     else if (Model.RoleName == "Agent")
     {
         roleId = 2;
+        rightColumn = 3;
     }
-}
-<style>
-    .additionalaction {
-        width: 180px;
-        margin-left: 12px;
-        font-size: 14px;
-        line-height: 32px;
-    }
-    .additionalaction:after {
-        margin-left:12px;
-        content: "\276F";
-    }
-    .additionalexpanded:after {
-        transform: rotate(90deg);
-        content: "\276F";
-        display: inline-block;
+    else
+    {
+        rightColumn = 2;
     }
 
-    #additionalaction {
-        display: none;
-    }
-    .vroptions {
-        padding: 2px;
-        margin: 2px;
-    }
-    ul.vroptions > li {
-        list-style-type: none;
-        display: inline-block;
-        /* You can also add some margins here to make it look prettier */
-        padding: 2px;
-        width: 100px;
-        *display: inline;
-        /* this fix is needed for IE7- */
-    }
-    
-</style>
+    var spanColumns = maxColumns - (leftColumn + rightColumn);
+    var spanRows = 9;
+}
 <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/common.css" />
 <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/table.css" />
 <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/input.css" />
 <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/Message.css" />
-<link rel="stylesheet" type="text/css" href="~/Areas/CustomerSetting/Views/VirtualRate/EditRate/Styles/VirtualRate.less" />
+<link rel="stylesheet" type="text/css" href="~/Areas/CustomerSetting/Views/VirtualRate/EditRate/Styles/VirtualRate.less?v=@WebSettings.Version" />
 <link href="~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css" rel="stylesheet" type="text/css" />
 <div class="main">
     <div class="maincontent">
@@ -77,128 +51,359 @@
         <div id="virtual-rate-setting-container">
             <table id="virtual-rate-setting" class="tbllayout" cellspacing="1" border="0">
                 <thead>
-                    <tr class="title">
-                        <td colspan="@tableColumnCount">
-                            @Model.RoleName: @Model.Username
-                            <a class="infoIcon" title="@Customer_Labels.VirtualRate_ViewSetting_Title" target="_blank">
-                            </a>
-                        </td>
-                    </tr>
                     <tr>
-                        <td class="r" colspan="@leftColumn">
-                            @Customer_Labels.Actual_Exchange_Rate
-                        </td>
-                        <td nowrap="true" class="b l" colspan="@rightColumn">
-                            @Model.ActualExchangeRate
-                        </td>
-                    </tr>
-                    <tr>
-                        <td nowrap="true" class="r" colspan="@leftColumn">
-                            @Customer_Labels.Apply_Virtual_Rate
-                        </td>
-                        <td nowrap="true" class="l" colspan="@rightColumn">
-                            <input id="chk-enable" type="checkbox" value="false" />
-                            <label style="vertical-align:top;">@Customer_Labels.Apply_Virtual_Rate_Notes</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td nowrap="true" class="r" colspan="@leftColumn">
-                            @Customer_Labels.ApplyVRAccumulatedBalance
-                        </td>
-                        <td nowrap="true" class="l" colspan="@rightColumn">
-                            <input id="chk-enable-accumulate-balance" type="checkbox" value="false" />
-                            <label style="vertical-align:top;">@Customer_Labels.ApplyVRAccumulateBalanceNote</label>
-                            @if (roleId > 1)
-                            {
-                                <input id="chk-apply-downline-accumulate-balance" type="checkbox" value="false" />
-                                <label style="vertical-align:top;">@Customer_Labels.ApplyToAllDownlines</label>
-                            }
-                        </td>
-                    </tr>
-                    <tr>
-                        <td nowrap="true" class="r" colspan="@leftColumn">
-                            @Customer_Labels.VirtualRate_LockVRLabel
-                        </td>
-                        <td nowrap="true" class="l" colspan="@rightColumn">
-                            <input id="chk-lockVR" type="checkbox" value="false" /><lable>Soccer</lable>
-                            <input id="chk-lockVRBasketball" type="checkbox" value="false" /><lable>Basketball</lable><br />
-                            <input id="chk-lockVROther" type="checkbox" value="false" /><label>Other Sports (Except E-Sports)</label><br />
-                            <label style="vertical-align:top;">@Customer_Labels.VirtualRate_LockVRNotes</label>
-                        </td>
-                    </tr>
-                    @if (roleId > 1)
-                    {
-                        <tr>
-                            <td class="l" colspan="@tableColumnCount"><a href="javascript:void(0);" class="additionalaction">Additional actions</a></td>
-                        </tr>
-                        <tr id="additionalaction">
-                            <td class="l" colspan="@tableColumnCount">
-                                <ul class="l vroptions">
-                                    <li>Enable VR for:</li>
-                                    @if (roleId > 3)
-                                    {
-                                        <li><input id="chk-enableVRMaster" type="checkbox" value="false" /><lable>All Masters</lable></li>
-                                    }
-                                    @if (roleId > 2)
-                                    {
-                                        <li><input id="chk-enableVRAgent" type="checkbox" value="false" /><lable>All Agents</lable></li>
-                                    }
-                                    <li><input id="chk-enableVRMember" type="checkbox" value="false" /><lable>All Members</lable></li>
-                                </ul>
-
-                                <ul class="l vroptions">
-                                    <li>Unlock VR for:</li>
-                                </ul>
-                                <ul class="l vroptions">
-                                    <li class="r">Soccer</li>
-                                    @if (roleId > 3)
-                                    {
-                                        <li><input id="chk-lockSoccerVRMaster" type="checkbox" value="false" /><lable>All Masters</lable></li>
-                                    }
-                                    @if (roleId > 2)
-                                    {
-                                        <li><input id="chk-lockSoccerVRAgent" type="checkbox" value="false" /><lable>All Agents</lable></li>
-                                    }
-                                    <li><input id="chk-lockSoccerVRMember" type="checkbox" value="false" /><lable>All Members</lable></li>
-                                </ul>
-                                <ul class="l vroptions">
-                                    <li class="r">Basketball</li>
-                                    @if (roleId > 3)
-                                    {
-                                        <li><input id="chk-lockBasketballVRMaster" type="checkbox" value="false" /><lable>All Masters</lable></li>
-                                    }
-                                    @if (roleId > 2)
-                                    {
-                                        <li><input id="chk-lockBasketballVRAgent" type="checkbox" value="false" /><lable>All Agents</lable></li>
-                                    }
-                                    <li><input id="chk-lockBasketballVRMember" type="checkbox" value="false" /><lable>All Members</lable></li>
-                                </ul>
-                                <ul class="l vroptions">
-                                    <li class="r">Other Sports</li>
-                                    @if (roleId > 3)
-                                    {
-                                        <li><input id="chk-lockOtherSportsVRMaster" type="checkbox" value="false" /><lable>All Masters</lable></li>
-                                    }
-                                    @if (roleId > 2)
-                                    {
-                                        <li><input id="chk-lockOtherSportsVRAgent" type="checkbox" value="false" /><lable>All Agents</lable></li>
-                                    }
-                                    <li><input id="chk-lockOtherSportsVRMember" type="checkbox" value="false" /><lable>All Members</lable></li>
-                                </ul>
-                            </td>
-                        </tr>
-                    }
-                    <tr class="padding-row">
-                        <td colspan="@tableColumnCount">
-                            &nbsp;
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="@tableColumnCount">
+                        <td colspan="@maxColumns" class="l borderless">
                             <input id="btnSubmit1" type="button" value="@Customer_Labels.Update" name="btnSubmit" class="btn" />
                         </td>
                     </tr>
 
+                    <tr class="title">
+                        <td colspan="@(leftColumn + rightColumn)">
+                            @Model.RoleName: @Model.Username
+                            <div class="note-info">
+                                [<span class="canchange" onmouseover="virtualRateController.openNote()" onmouseout="virtualRateController.closeNote()">Note Info</span>]
+                                <ul onmouseout="virtualRateController.closeNote()" onmouseover="virtualRateController.cancelCloseNote()" id="noteInfo" class="l note note-hide">
+                                    <li class="infoIcon"><a href="#">Sport Bet Type References</a></li>
+                                    <li><a onclick="ViewLogs('Status','{FullUserName}')">Update VR flow</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                        @if (spanColumns > 0)
+                        {
+                            <td class="padding-column borderless" colspan="@spanColumns" rowspan="@spanRows"></td>
+                        }
+                    </tr>
+                    <tr>
+                        <td nowrap="true" class="l b p-l5" colspan="@leftColumn">
+                            @Customer_Labels.Apply_Virtual_Rate
+                        </td>
+                        <td class="l" colspan="@rightColumn">
+                            <input id="chk-apply-downline-accumulate-balance" type="checkbox" checked=@(Model.EnableVirtualRate ? "checked" : null)/>
+                            <label for="chk-apply-downline-accumulate-balance" style="vertical-align:top;word-break: break-word;">@Customer_Labels.Enabled_Virtual_Rate</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="padding-column" colspan="@leftColumn"></td>
+                        <td class="c b status-title status-title">
+                            @Model.RoleName
+                        </td>
+                        @if (roleId >= 4)
+                        {
+                            <td class="c b status-title" colspan="2">
+                                Master
+                            </td>
+                        }
+                        @if (roleId >= 3)
+                        {
+                            <td class="c b status-title" colspan="2">
+                                Agent
+                            </td>
+                        }
+                        @if (roleId >= 2)
+                        {
+                            <td class="c b status-title" colspan="2">
+                                Member
+                            </td>
+                        }
+                        @if (roleId < 2)
+                        {
+                            <td class="padding-row" rowspan="7"></td>
+                        }
+                    </tr>
+                    <tr>
+                        <td nowrap="true" class="l b p-l5 status-title" colspan="@leftColumn" title="Apply only VR+ (Except E-Sports)">
+                            @Customer_Labels.ApplyVRAccumulatedBalance
+                        </td>
+                        <td class="padding-column status-title"></td>
+                        @if (roleId >= 4)
+                        {
+                            <td class="c b status-column status-title enable-status">
+                                Enable
+                            </td>
+                            <td class="c b status-column status-title disable-status">
+                                Disable
+                            </td>
+                        }
+                        @if (roleId >= 3)
+                        {
+                            <td class="c b status-column status-title enable-status">
+                                Enable
+                            </td>
+                            <td class="c b status-column status-title disable-status">
+                                Disable
+                            </td>
+                        }
+                        @if (roleId >= 2)
+                        {
+                            <td class="c b status-column status-title enable-status">
+                                Enable
+                            </td>
+                            <td class="c b status-column status-title disable-status">
+                                Disable
+                            </td>
+                        }
+                    </tr>
+                    <tr>
+                        <td class="padding-column" colspan="@leftColumn"></td>
+                        <td class="c status-column">
+                            <input type="checkbox" class="checkbox-hide" id="chk_enableAccumulateBalance" checked=@(Model.IsApplyVRPlushAccumulateBanlance ? "checked" : null)>
+                            <label for="chk_enableAccumulateBalance" class="btn-status btn-parent @(Model.IsApplyVRPlushAccumulateBanlance ? "btn-enable" : "btn-disable")" title="Click to apply/not apply VR+" data-btn-type="ab" data-value-enable="Enabled" data-value-disable="Disabled">
+                                @(Model.IsApplyVRPlushAccumulateBanlance ? "Enabled" : "Disabled")
+                            </label>
+                        </td>
+                        @if (roleId >= 4)
+                        {
+                            <td class="c status-column">
+                                <input type="checkbox" class="checkbox-hide" id="chk_enable_master_AB" data-downlines="1800" data-origin-downlines="1500" data-opposite-id="chk_disable_master_AB" checked="">
+                                <label for="chk_enable_master_AB" class="btn-status btn-child btn-enable" title="Click to apply all Masters">
+                                    1500
+                                </label>
+                            </td>
+                            <td class="c status-column">
+                                <input type="checkbox" class="checkbox-hide" id="chk_disable_master_AB" data-downlines="1800" data-origin-downlines="300" data-opposite-id="chk_enable_master_AB" checked="">
+                                <label for="chk_disable_master_AB" class="btn-status btn-child btn-disable btn-ab-disable-child" title="Click to not apply all Masters">
+                                    300
+                                </label>
+                            </td>
+                        }
+                        @if (roleId >= 3)
+                        {
+                            <td class="c status-column">
+                                <input type="checkbox" class="checkbox-hide" id="chk_enable_agent_AB" data-downlines="1800" data-origin-downlines="1500" data-level="agent" data-opposite-id="chk_disable_agent_AB" checked="">
+                                <label for="chk_enable_agent_AB" class="btn-status btn-child btn-enable" title="Click to apply all Agents">
+                                    1500
+                                </label>
+                            </td>
+                            <td class="c status-column">
+                                <input type="checkbox" class="checkbox-hide" id="chk_disable_agent_AB" data-downlines="1800" data-origin-downlines="300" data-level="agent" data-opposite-id="chk_enable_agent_AB" checked="">
+                                <label for="chk_disable_agent_AB" class="btn-status btn-child btn-disable btn-ab-disable-child" title="Click to not apply all Agents">
+                                    300
+                                </label>
+                            </td>
+                        }
+                        @if (roleId >= 2)
+                        {
+                            <td class="c status-column">
+                                <input type="checkbox" class="checkbox-hide" id="chk_enable_member_AB" data-downlines="1800" data-origin-downlines="1500" data-level="member" data-opposite-id="chk_disable_member_AB" checked="">
+                                <label for="chk_enable_member_AB" class="btn-status btn-child btn-enable" title="Click to apply all Members">
+                                    1500
+                                </label>
+                            </td>
+                            <td class="c status-column">
+                                <input type="checkbox" class="checkbox-hide" id="chk_disable_member_AB" data-downlines="1800" data-origin-downlines="300" data-level="member" data-opposite-id="chk_enable_member_AB" checked="">
+                                <label for="chk_disable_member_AB" class="btn-status btn-child btn-disable btn-ab-disable-child" title="Click to not apply all Members">
+                                    300
+                                </label>
+                            </td>
+                        }
+                    </tr>
+
+                    <tr>
+                        <td nowrap="true" class="l b p-l5 status-title" colspan="@leftColumn">
+                            @Customer_Labels.VirtualRate_LockVRLabel
+                        </td>
+                        <td class="padding-column status-title"></td>
+                        @if (roleId >= 4)
+                        {
+                            <td class="c b status-column status-title enable-status">
+                                Unlock
+                            </td>
+                            <td class="c b status-column status-title disable-status">
+                                Lock
+                            </td>
+                        }
+                        @if (roleId >= 3)
+                        {
+                            <td class="c b status-column status-title enable-status">
+                                Unlock
+                            </td>
+                            <td class="c b status-column status-title disable-status">
+                                Lock
+                            </td>
+                        }
+                        @if (roleId >= 2)
+                        {
+                            <td class="c b status-column status-title enable-status">
+                                Unlock
+                            </td>
+                            <td class="c b status-column status-title disable-status">
+                                Lock
+                            </td>
+                        }
+                    </tr>
+                    <tr>
+                        <td colspan="@leftColumn" class="l p-l5">
+                            Soccer
+                        </td>
+                        <td class="c status-column">
+                            <input type="checkbox" class="checkbox-hide" id="ckb_unlockSoccerVR" checked=@(Model.LockVirtualRateStatus ? null : "checked")>
+                            <label for="ckb_unlockSoccerVR" class="btn-status btn-parent @(Model.LockVirtualRateStatus ? "btn-disable" : "btn-enable")" title="Click lock/unlock Soccer VR" data-btn-type="soccer" data-value-enable="Unlocked" data-value-disable="Locked">
+                                @(Model.LockVirtualRateStatus ? "Locked" : "Unlocked")
+                            </label>
+                        </td>
+                        @if (roleId >= 4)
+                        {
+                            <td class="c status-column">
+                                <input type="checkbox" class="checkbox-hide" id="ckb_unlockSoccerVRMaster" data-downlines="2000" data-origin-downlines="600" data-level="master" data-opposite-id="ckb_lockSoccerVRMaster" checked="">
+                                <label for="ckb_unlockSoccerVRMaster" class="btn-status btn-child btn-enable" title="Click to unlock all Masters" data-selected="Click to unlock all Masters" data-unselected="Click to revert selection">
+                                    600
+                                </label>
+                            </td>
+                            <td class="c status-column">
+                                <input type="checkbox" class="checkbox-hide" id="ckb_lockSoccerVRMaster" data-downlines="2000" data-origin-downlines="1400" data-level="master" data-opposite-id="ckb_unlockSoccerVRMaster" checked="">
+                                <label for="ckb_lockSoccerVRMaster" class="btn-status btn-child btn-disable btn-soccer-disable-child" title="Click to lock all Masters" data-selected="Click to lock all Masters" data-unselected="Click to revert selection">
+                                    1400
+                                </label>
+                            </td>
+                        }
+                        @if (roleId >= 3)
+                        {
+                            <td class="c status-column">
+                                <input type="checkbox" class="checkbox-hide" id="ckb_unlockSoccerVRAgent" data-downlines="2000" data-origin-downlines="600" data-level="agent" data-opposite-id="ckb_lockSoccerVRAgent" checked="">
+                                <label for="ckb_unlockSoccerVRAgent" class="btn-status btn-child btn-enable" title="Click to unlock all Agents" data-selected="Click to unlock all Agents" data-unselected="Click to revert selection">
+                                    600
+                                </label>
+                            </td>
+                            <td class="c status-column">
+                                <input type="checkbox" class="checkbox-hide" id="ckb_lockSoccerVRAgent" data-downlines="2000" data-origin-downlines="1400" data-level="agent" data-opposite-id="ckb_unlockSoccerVRAgent" checked="">
+                                <label for="ckb_lockSoccerVRAgent" class="btn-status btn-child btn-disable btn-soccer-disable-child" title="Click to lock all Agents" data-selected="Click to lock all Agents" data-unselected="Click to revert selection">
+                                    1400
+                                </label>
+                            </td>
+                        }
+                        @if (roleId >= 2)
+                        {
+                            <td class="c status-column">
+                                <input type="checkbox" class="checkbox-hide" id="ckb_unlockSoccerVRMember" data-downlines="2000" data-origin-downlines="600" data-level="member" data-opposite-id="ckb_lockSoccerVRMember" checked="">
+                                <label for="ckb_unlockSoccerVRMember" class="btn-status btn-child btn-enable" title="Click to unlock all Members" data-selected="Click to unlock all Members" data-unselected="Click to revert selection">
+                                    600
+                                </label>
+                            </td>
+                            <td class="c status-column">
+                                <input type="checkbox" class="checkbox-hide" id="ckb_lockSoccerVRMember" data-downlines="2000" data-origin-downlines="1400" data-level="member" data-opposite-id="ckb_unlockSoccerVRMember" checked="">
+                                <label for="ckb_lockSoccerVRMember" class="btn-status btn-child btn-disable btn-soccer-disable-child" title="Click to lock all Members" data-selected="Click to lock all Members" data-unselected="Click to revert selection">
+                                    1400
+                                </label>
+                            </td>
+                        }
+                    </tr>
+                    <tr>
+                        <td colspan="@leftColumn" class="l p-l5">
+                            Basketball
+                        </td>
+                        <td class="c status-column">
+                            <input type="checkbox" class="checkbox-hide" id="ckb_unlockBasketballVR" @(Model.LockVirtualRateBasketballStatus ? "" : "checked")>
+                            <label for="ckb_unlockBasketballVR" class="btn-status btn-parent @(Model.LockVirtualRateBasketballStatus ? "btn-disable" : "btn-enable")" title="Click lock/unlock Basketball VR" data-btn-type="basketball" data-value-enable="Unlocked" data-value-disable="Locked">
+                                @(Model.LockVirtualRateBasketballStatus ? "Locked" : "Unlocked")
+                            </label>
+                        </td>
+                        @if (roleId >= 4)
+                        {
+                            <td class="c status-column">
+                                <input type="checkbox" class="checkbox-hide" id="ckb_unlockBasketballVRMaster" data-downlines="2000" data-origin-downlines="600" data-level="master" data-opposite-id="ckb_lockBasketballVRMaster" checked="">
+                                <label for="ckb_unlockBasketballVRMaster" class="btn-status btn-child btn-enable" title="Click to unlock all Masters" data-selected="Click to unlock all Masters" data-unselected="Click to revert selection">
+                                    600
+                                </label>
+                            </td>
+                            <td class="c status-column">
+                                <input type="checkbox" class="checkbox-hide" id="ckb_lockBasketballVRMaster" data-downlines="2000" data-origin-downlines="1400" data-level="master" data-opposite-id="ckb_unlockBasketballVRMaster" checked="">
+                                <label for="ckb_lockBasketballVRMaster" class="btn-status btn-child btn-disable btn-basketball-disable-child" title="Click to lock all Masters" data-selected="Click to lock all Masters" data-unselected="Click to revert selection">
+                                    1400
+                                </label>
+                            </td>
+                        }
+                        @if (roleId >= 3)
+                        {
+                            <td class="c status-column">
+                                <input type="checkbox" class="checkbox-hide" id="ckb_unlockBasketballVRAgent" data-downlines="2000" data-origin-downlines="600" data-level="agent" data-opposite-id="ckb_lockBasketballVRAgent" checked="">
+                                <label for="ckb_unlockBasketballVRAgent" class="btn-status btn-child btn-enable" title="Click to unlock all Agents" data-selected="Click to unlock all Agents" data-unselected="Click to revert selection">
+                                    600
+                                </label>
+                            </td>
+                            <td class="c status-column">
+                                <input type="checkbox" class="checkbox-hide" id="ckb_lockBasketballVRAgent" data-downlines="2000" data-origin-downlines="1400" data-level="agent" data-opposite-id="ckb_unlockBasketballVRAgent" checked="">
+                                <label for="ckb_lockBasketballVRAgent" class="btn-status btn-child btn-disable btn-basketball-disable-child" title="Click to lock all Agents" data-selected="Click to lock all Agents" data-unselected="Click to revert selection">
+                                    1400
+                                </label>
+                            </td>
+                        }
+                        @if (roleId >= 2)
+                        {
+                            <td class="c status-column">
+                                <input type="checkbox" class="checkbox-hide" id="ckb_unlockBasketballVRMember" data-downlines="2000" data-origin-downlines="600" data-level="member" data-opposite-id="ckb_lockBasketballVRMember" checked="">
+                                <label class="btn-status btn-child btn-enable" title="Click to unlock all Members" data-selected="Click to unlock all Members" data-unselected="Click to revert selection">
+                                    600
+                                </label>
+                            </td>
+                            <td class="c status-column">
+                                <input type="checkbox" class="checkbox-hide" id="ckb_lockBasketballVRMember" data-downlines="2000" data-origin-downlines="1400" data-level="member" data-opposite-id="ckb_unlockBasketballVRMember" checked="">
+                                <label for="ckb_lockBasketballVRMember" class="btn-status btn-child btn-disable btn-basketball-disable-child" title="Click to lock all Members" data-selected="Click to lock all Members" data-unselected="Click to revert selection">
+                                    1400
+                                </label>
+                            </td>
+                        }
+                    </tr>
+                    <tr>
+                        <td colspan="@leftColumn" class="l p-l5">
+                            Other Sports
+                        </td>
+                        <td class="c status-column">
+                            <input type="checkbox" class="checkbox-hide" id="ckb_unlockOtherSportsVR" checked=@(Model.LockVirtualRateOtherStatus ? null : "checked")>
+                            <label for="ckb_unlockOtherSportsVR" class="btn-status btn-parent @(Model.LockVirtualRateOtherStatus ? "btn-disable" : "btn-enable")" title="Click lock/unlock Other Sports VR" data-btn-type="os" data-value-enable="Unlocked" data-value-disable="Locked">
+                                @(Model.LockVirtualRateOtherStatus ? "Locked" : "Unlocked")
+                            </label>
+                        </td>
+                        @if (roleId >= 4)
+                        {
+                            <td class="c status-column">
+                                <input type="checkbox" class="checkbox-hide" id="ckb_unlockOtherSportsVRMaster" data-downlines="2000" data-origin-downlines="600" data-level="master" data-opposite-id="ckb_lockOtherSportsVRMaster" checked="">
+                                <label for="ckb_unlockOtherSportsVRMaster" class="btn-status btn-child btn-enable" title="Click to unlock all Masters" data-selected="Click to unlock all Masters" data-unselected="Click to revert selection">
+                                    600
+                                </label>
+                            </td>
+                            <td class="c status-column">
+                                <input type="checkbox" class="checkbox-hide" id="ckb_lockOtherSportsVRMaster" data-downlines="2000" data-origin-downlines="1400" data-level="master" data-opposite-id="ckb_unlockOtherSportsVRMaster" checked="">
+                                <label for="ckb_lockOtherSportsVRMaster" class="btn-status btn-child btn-disable btn-os-disable-child" title="Click to lock all Masters" data-selected="Click to lock all Masters" data-unselected="Click to revert selection">
+                                    1400
+                                </label>
+                            </td>
+                        }
+                        @if (roleId >= 3)
+                        {
+                            <td class="c status-column">
+                                <input type="checkbox" class="checkbox-hide" id="ckb_unlockOtherSportsVRAgent" data-downlines="2000" data-origin-downlines="600" data-level="agent" data-opposite-id="ckb_lockOtherSportsVRAgent" checked="">
+                                <label for="ckb_unlockOtherSportsVRAgent" class="btn-status btn-child btn-enable" title="Click to unlock all Agents" data-selected="Click to unlock all Agents" data-unselected="Click to revert selection">
+                                    600
+                                </label>
+                            </td>
+                            <td class="c status-column">
+                                <input type="checkbox" class="checkbox-hide" id="ckb_lockOtherSportsVRAgent" data-downlines="2000" data-origin-downlines="1400" data-level="agent" data-opposite-id="ckb_unlockOtherSportsVRAgent" checked="">
+                                <label for="ckb_lockOtherSportsVRAgent" class="btn-status btn-child btn-disable btn-os-disable-child" title="Click to lock all Agents" data-selected="Click to lock all Agents" data-unselected="Click to revert selection">
+                                    1400
+                                </label>
+                            </td>
+                        }
+                        @if (roleId >= 2)
+                        {
+                            <td class="c status-column">
+                                <input type="checkbox" class="checkbox-hide ckb-child ckb-os-enable-child" id="ckb_unlockOtherSportsVRMember" data-downlines="2000" data-origin-downlines="600" data-level="member" data-opposite-id="ckb_lockOtherSportsVRMember" checked="">
+                                <label for="ckb_unlockOtherSportsVRMember" class="btn-status btn-child btn-enable" title="Click to unlock all Members" data-selected="Click to unlock all Members" data-unselected="Click to revert selection">
+                                    600
+                                </label>
+                            </td>
+                            <td class="c status-column">
+                                <input type="checkbox" class="checkbox-hide" id="ckb_lockOtherSportsVRMember" data-downlines="2000" data-origin-downlines="1400" data-level="member" data-opposite-id="ckb_unlockOtherSportsVRMember" checked="">
+                                <label for="ckb_lockOtherSportsVRMember" class="btn-status btn-child btn-disable btn-os-disable-child" title="Click to lock all Members" data-selected="Click to lock all Members" data-unselected="Click to revert selection">
+                                    1400
+                                </label>
+                            </td>
+                        }
+                    </tr>
+                    <tr class="padding-row">
+                        <td class="borderless" colspan="@maxColumns">
+                            &nbsp;
+                        </td>
+                    </tr>
                 </thead>
                 <tbody></tbody>
             </table>
@@ -219,8 +424,8 @@
         window.rootUrl = '@Url.Content("~")';
         var customerVirtualRateModel= @Html.Raw(customerVirtualRateModel);
         var oldCustomerVirtualRateModel= @Html.Raw(customerVirtualRateModel);
-        var maxBetTypeColumn = @maxBetTypeColumn;
-        var tableColumnCount = @tableColumnCount;
+        var maxBetTypeColumn = @maxBetTypeColumns;
+        var tableColumnCount = @maxColumns;
         var isManageVirtualRateAccess = @isManageVirtualRateAccess;
         var custId = @Model.CustId;
         var roleId = @roleId;

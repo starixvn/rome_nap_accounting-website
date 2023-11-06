@@ -178,7 +178,7 @@
     <value>Direct Account Template</value>
   </data>
   <data name="Enabled_Virtual_Rate" xml:space="preserve">
-    <value>Enabled Virtual Rate</value>
+    <value>Enabling/Disabling this status does not affect E-Sports</value>
   </data>
   <data name="Error_NoPermission" xml:space="preserve">
     <value>You are not authorized on this function.</value>

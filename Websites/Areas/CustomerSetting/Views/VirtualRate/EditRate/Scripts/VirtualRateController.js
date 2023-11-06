@@ -37,25 +37,13 @@ var VirtualRateController = function () {
     self.cachedData = {
         copyFromSportId: 0,
         copyFromBetTypeId: 0,
-        oldSettings: null
+        oldSettings: null,
+        closetimer: null
     };
 
     self.initPage = function () {
         self.cachedData.oldSettings = oldCustomerVirtualRateModel;
         self.renderVirtualRateSetting();
-
-        var checkboxEnable = $("#chk-enable");
-        checkboxEnable.attr("checked", customerVirtualRateModel.EnableVirtualRate ? "checked" : null);
-        checkboxEnable.click(function () {
-            var isEnable = checkboxEnable.attr("checked") ? 1 : 0;
-            self.enableEditSetting(isEnable);
-        });
-
-        $("#chk-lockVR").attr("checked", customerVirtualRateModel.LockVirtualRateStatus ? "checked" : null);
-        $("#chk-lockVRBasketball").attr("checked", customerVirtualRateModel.LockVirtualRateBasketballStatus ? "checked" : null);
-        $("#chk-lockVROther").attr("checked", customerVirtualRateModel.LockVirtualRateOtherStatus ? "checked" : null);
-
-        $("#chk-enable-accumulate-balance").attr("checked", customerVirtualRateModel.IsApplyVRPlushAccumulateBanlance ? "checked" : null);
 
         self.bindingEvent();
         self.enableEditSetting(customerVirtualRateModel.EnableVirtualRate);
@@ -124,7 +112,7 @@ var VirtualRateController = function () {
                 ' sport-id="' + sport.Id + '"/>';
 
         var titleHtml = '<tr class="table-header">';
-        titleHtml += '<td class="first-column" colspan="2">&nbsp;</td>';
+        titleHtml += '<td class="first-column" colspan="3">&nbsp;</td>';
         var betTypeLength = betTypeList.length;
         var i;
         for (i = startBetTypeIndex; i < endBetTypeIndex && i < betTypeLength; i++) {
@@ -150,7 +138,7 @@ var VirtualRateController = function () {
         var endBetTypeIndex = startBetTypeIndex + maxBetTypeColumn;
         var betTypeLength = sport.BetTypeList.length;
         var liveHtml = '<tr>';
-        liveHtml += '<td class="first-column l" colspan="2">' + self.getLiveTypeName(liveType) + '</td>';
+        liveHtml += '<td class="first-column l p-l5" colspan="3">' + self.getLiveTypeName(liveType) + '</td>';
         var i = 0;
         for (i = startBetTypeIndex; i < endBetTypeIndex && i < betTypeLength;) {
             var liveRate = liveVirtualRate[i];
@@ -182,10 +170,10 @@ var VirtualRateController = function () {
         var betTypeLength = sport.BetTypeList.length;
         var liveHtml = '<tr>';
         if (liveType === self.Constants.LiveType.Live) {
-            liveHtml += '<td class="subsport-first-column r" rowspan="2">' + subSport.Name + '</td>';
+            liveHtml += '<td class="subsport-first-column r" rowspan="3">' + subSport.Name + '</td>';
         }
 
-        liveHtml += '<td class="subsport-livetype-column l">' + self.getLiveTypeName(liveType) + '</td>';
+        liveHtml += '<td class="subsport-livetype-column l p-l5">' + self.getLiveTypeName(liveType) + '</td>';
         var i = 0;
         for (i = startBetTypeIndex; i < endBetTypeIndex && i < betTypeLength;) {
             var liveRate = liveVirtualRate[i];
@@ -237,6 +225,48 @@ var VirtualRateController = function () {
         }
     };
     self.bindingEvent = function () {
+
+        var checkboxEnable = $("#chk-apply-downline-accumulate-balance");
+        checkboxEnable.click(function () {
+            var isEnable = checkboxEnable.attr("checked") ? 1 : 0;
+            self.enableEditSetting(isEnable);
+        });
+
+        $(".btn-child").each(function () {
+            $(this).click(function () {
+                event.preventDefault();
+                var ckbInput = $(this).parent().find("input").first();
+                ckbInput.attr('checked', true);
+                $(this).html(ckbInput.data("downlines"));
+                let oppositeCkb = $(`#${ckbInput.data("opposite-id")}`);
+                let ckbLabelOpposite = oppositeCkb.parent().find("label").first();
+                oppositeCkb.attr('checked', false);
+                ckbLabelOpposite.html("0");
+            });
+        });
+
+        $(".btn-parent").each(function () {
+            $(this).click(function () {
+                event.preventDefault();
+                let ckbLabel = $(this);
+                var ckbInput = ckbLabel.parent().find("input").first();
+                let isEnable = ckbInput.is(":checked") ? false : true;
+                ckbInput.attr('checked', isEnable);
+                if (isEnable) {
+                    ckbLabel.removeClass("btn-disable");
+                    ckbLabel.addClass("btn-enable");
+                    ckbLabel.html(ckbLabel.data("value-enable"));
+                } else {
+                    ckbLabel.removeClass("btn-enable");
+                    ckbLabel.addClass("btn-disable");
+                    ckbLabel.html(ckbLabel.data("value-disable"));
+                    let ckbType = ckbLabel.data("btn-type");
+                    $(`.btn-${ckbType}-disable-child`).each(function () {
+                        $(this).trigger("click");
+                    });
+                }
+            });
+        });
         var buttonCopy = $("#button-copy-sport-settings-" + self.Constants.SportType.Soccer);
         var buttonCopyBasketball = $("#button-copy-sport-settings-" + self.Constants.SportType.Basketball);
 
@@ -266,7 +296,9 @@ var VirtualRateController = function () {
             var sportId = parseInt($(this).attr("sport-id"));
             self.copySettingFromBetType(sportId, $(this));
         });
+
     };
+
     self.enableEditSetting = function (isEnable) {
         var iconCopySetting = $(".icon-copy-setting");
         var betTypeColumn = $(".bettypevalue-column");
@@ -280,7 +312,6 @@ var VirtualRateController = function () {
             var bettypeSelect = betTypeColumn.find('select[disable-level="1"]');
             bettypeSelect.attr("disabled", null);
             bettypeSelect.removeAttr("disable-level");
-            self.bindingEvent();
         }
         else {
             var iconCopySettingAvailable = iconCopySetting.find(":not([disabled])");
@@ -716,6 +747,22 @@ var VirtualRateController = function () {
         }
 
         return "";
+    };
+
+    self.openNote = function (id) {
+        $(`#noteInfo`).removeClass("note-hide");
+    };
+
+    self.closeNote = function (id) {
+        self.cachedData.closetimer = window.setTimeout(function () { $(`#noteInfo`).addClass("note-hide"); }, 300);
+        
+    };
+
+    self.cancelCloseNote = function (id) {
+        if (self.cachedData.closetimer) {
+            window.clearTimeout(self.cachedData.closetimer);
+            self.cachedData.closetimer = null;
+        }
     };
 };
 
