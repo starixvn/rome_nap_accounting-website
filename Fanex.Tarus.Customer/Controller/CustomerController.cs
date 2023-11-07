@@ -194,7 +194,7 @@ namespace Fanex.Tarus.Customer.Controller
 
             var response = await PostAsStringAsync("customer", new
             {
-                context = new { creatorId = AppSession.AccId, systemId = 1, ip = Utils.GetClientIP(), isFullMode = true },
+                context = new { creatorId = AppSession.AccId, systemId = 1, ip = Utils.GetClientIP(), Mode = 1 },
                 settings = new { generalInfo, productGroups = JArray.Parse(request.ProductGroups) }
             });
             return Content(response);
