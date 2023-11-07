@@ -271,6 +271,7 @@
       <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
     </Reference>
     <Reference Include="System.Net" />
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
@@ -793,6 +794,7 @@
     <Compile Include="ViewModels\CustomerSetting\Suspend\SingleUpdateViewModel.cs" />
     <Compile Include="ViewModels\CustomerSetting\Suspend\SuspendedCustomerDetailViewModel.cs" />
     <Compile Include="ViewModels\CustomerSetting\Suspend\SuspendMatrixViewModel.cs" />
+    <Compile Include="ViewModels\Customer\AppConfiguration.cs" />
     <Compile Include="ViewModels\Customer\CustomerViewModel.cs" />
     <Compile Include="ViewModels\InitializingCustomerSetting\ConfigCustomerSettingViewModel.cs" />
     <Compile Include="ViewModels\InitializingCustomerSetting\ConfigSettingViewModel.cs" />

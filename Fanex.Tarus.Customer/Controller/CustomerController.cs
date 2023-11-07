@@ -1,13 +1,14 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
 using System.Net;
 using System.Net.Http;
+using System.Runtime.Caching;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Fanex.CustomerSetting.Module.Core;
 using Fanex.CustomerSetting.Module.Core.Attributes;
 using Fanex.Tarus.Customer.CreditCustomer.Business;
-using Fanex.Tarus.Customer.CreditCustomer.Requests;
 using Fanex.Tarus.Customer.Criteria.CreditCustomer;
 using Fanex.Tarus.Customer.ViewModels.Customer;
 using Fanex.Tarus.Web.Controllers;
@@ -67,9 +68,9 @@ namespace Fanex.Tarus.Customer.Controller
     [SpecialSiteFilter]
     public class CustomerController : BaseController
     {
+        private const string AssetsVersionCacheKey = "Customer:AssetsVersion";
         private readonly HttpClient httpClient;
         private readonly string cdnUri;
-        private readonly string assetsVersion;
         private readonly ICustomerSettingService _customerSettingService;
         private readonly Encryptor encryptor;
 
@@ -81,7 +82,6 @@ namespace Fanex.Tarus.Customer.Controller
         public CustomerController(ICustomerSettingService customerSettingService)
         {
             cdnUri = ConfigurationManager.AppSettings["Customer:CdnUri"];
-            assetsVersion = ConfigurationManager.AppSettings["Customer:AssetsVersion"];
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             httpClient = new HttpClient
             {
@@ -89,6 +89,18 @@ namespace Fanex.Tarus.Customer.Controller
             };
             _customerSettingService = customerSettingService ?? new CustomerSettingService();
             encryptor = new EncryptorImpl();
+        }
+
+        private string GetAssetsVersion()
+        {
+            ObjectCache cache = MemoryCache.Default;
+            var version = cache.Get(AssetsVersionCacheKey) as string;
+            if (string.IsNullOrWhiteSpace(version))
+            {
+                version = DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString();
+                cache.Set(AssetsVersionCacheKey, version, DateTime.Now.AddHours(4));
+            }
+            return version;
         }
 
         public ActionResult GetHeadlineBelongSite()
@@ -123,7 +135,7 @@ namespace Fanex.Tarus.Customer.Controller
                 applicationPath += "/";
             }
 
-            var viewModel = new CustomerViewModel(applicationPath, cdnUri, assetsVersion);
+            var viewModel = new CustomerViewModel(new AppConfiguration(applicationPath), cdnUri, GetAssetsVersion());
             return View(
                 HttpContext.IsDebuggingEnabled
                     ? "~/Views/Customer/Create-Debug.cshtml"
@@ -134,17 +146,8 @@ namespace Fanex.Tarus.Customer.Controller
         {
             //debug cho nay
             var applicationPath = Response.ApplyAppPathModifier(Request.ApplicationPath);
-            if (!applicationPath.EndsWith("/"))
-            {
-                applicationPath += "/";
-            }
 
-            var viewModel = new CustomerViewModel($"{applicationPath}Customer", cdnUri, assetsVersion)
-            {
-                CustId = custId,
-                RoleId = roleId,
-                SiteName = siteName
-            };
+            var viewModel = new CustomerViewModel(new AppConfiguration(applicationPath), cdnUri, GetAssetsVersion());
 
             return View(
                 HttpContext.IsDebuggingEnabled

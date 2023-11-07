@@ -1,24 +1,22 @@
-﻿namespace Fanex.Tarus.Customer.ViewModels.Customer
+﻿using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json;
+using RabbitMQ.Client.Framing.Impl;
+
+namespace Fanex.Tarus.Customer.ViewModels.Customer
 {
     public class CustomerViewModel
     {
-        public CustomerViewModel(string baseUrl, string cndUri, string assetsVersion)
+        public CustomerViewModel(AppConfiguration appConfig, string cndUri, string assetsVersion)
         {
-            BaseUrl = baseUrl;
+            AppConfig = JsonConvert.SerializeObject(appConfig, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
             CdnUri = cndUri;
             AssetsVersion = assetsVersion;
         }
 
-        public string BaseUrl { get; }
+        public string AppConfig { get; }
 
         public string CdnUri { get; }
 
         public string AssetsVersion { get; }
-        
-        public int CustId { get; set; }
-        
-        public int RoleId { get; set; }
-        
-        public string SiteName { get; set; }
     }
 }
