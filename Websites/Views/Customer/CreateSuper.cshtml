@@ -16,7 +16,7 @@
     <div id="root"></div>
 
     <script>
-        const Base_URL = "@Model.BaseUrl";
+        const appConfig = @Html.Raw(Model.AppConfig);
     </script>
     <script type="module" src="@(Model.CdnUri)create-super/index.js?version=@(Model.AssetsVersion)"></script>
 </body>
