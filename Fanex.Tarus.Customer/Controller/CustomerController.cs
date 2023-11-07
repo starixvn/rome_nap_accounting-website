@@ -10,6 +10,7 @@ using Fanex.CustomerSetting.Module.Core;
 using Fanex.CustomerSetting.Module.Core.Attributes;
 using Fanex.Tarus.Customer.CreditCustomer.Business;
 using Fanex.Tarus.Customer.Criteria.CreditCustomer;
+using Fanex.Tarus.Customer.Requests;
 using Fanex.Tarus.Customer.ViewModels.Customer;
 using Fanex.Tarus.Web.Controllers;
 using Fanex.Tarus.Web.Controllers.Filters;
@@ -21,50 +22,6 @@ using Sunplus.Agent.Utilities;
 
 namespace Fanex.Tarus.Customer.Controller
 {
-    public class GeneralInfo
-    {
-        public string Username { get; set; }
-
-        public int UpLineRoleId { get; set; }
-
-        public string Password { get; set; }
-
-        public string Firstname { get; set; }
-
-        public string LastName { get; set; }
-
-        public string Phone { get; set; }
-
-        public string MobilePhone { get; set; }
-
-        public decimal MaxCredit { get; set; }
-
-        public decimal MemberMaxCredit { get; set; }
-
-        public string Fax { get; set; }
-
-        public bool DisableAutoMPT { get; set; }
-
-        public string TransferOption { get; set; }
-
-        public bool IsAutomateTransfer { get; set; }
-
-        public string Site { get; set; }
-
-        public string SiteLabel { get; set; }
-
-        public int Currency { get; set; }
-
-        public string Group { get; set; }
-    }
-
-    public class CreateCustomerRequest
-    {
-        public GeneralInfo GeneralInfo { get; set; }
-
-        public string ProductGroups { get; set; }
-    }
-
     [SpecialSiteFilter]
     public class CustomerController : BaseController
     {
