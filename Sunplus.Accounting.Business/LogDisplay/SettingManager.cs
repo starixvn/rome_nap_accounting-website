@@ -467,7 +467,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
 
                     trackingVal = ReplaceIdByName(trackingVal, "bettype", GetBettypeName);
                     trackingVal = ReplaceIdByName(trackingVal, "sporttype", GetSportTypeName);
-                    trackingVal = ReplaceIdByName(trackingVal, "groupid", GetProductGroupName);
+                    trackingVal = ReplaceIdByName(trackingVal, "GroupID", GetProductGroupName);
                     trackingVal = ReplaceIdByName(trackingVal, "subgroupid", GetSubGroupName);
 
                     #region SystemId
