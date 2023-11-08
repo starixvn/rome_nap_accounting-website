@@ -1,4 +1,4 @@
-﻿@model Fanex.Tarus.Customer.ViewModels.Customer.CustomerViewModel
+﻿@model Fanex.Tarus.Customer.ViewModels.Customer.CreateCustomerViewModel
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,6 +23,7 @@
     <div id="root"></div>
     <script>
         const appConfig = @Html.Raw(Model.AppConfig);
+        const params = @Html.Raw(Model.Params);
     </script>
     <script type="module" src="http://localhost:4200/src/main.tsx"></script>
 </body>

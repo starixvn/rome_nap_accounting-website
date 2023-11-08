@@ -740,6 +740,7 @@
     <Compile Include="Requests\Casino\GetUnsyncedListRequest.cs" />
     <Compile Include="Requests\CopySuperSetting\CheckSuperListRequest.cs" />
     <Compile Include="Requests\CopySuperSetting\UpdateWinLossLimitRequest.cs" />
+    <Compile Include="Requests\CreateCustomerRequest.cs" />
     <Compile Include="Requests\CreditCustomer\SuperPrefixQuery.cs" />
     <Compile Include="Requests\CustomerSetting\OpenCustomer\GetSingleOpenDownlinesInfoQuery.cs" />
     <Compile Include="Requests\CustomerSetting\OpenCustomer\GetSingleOpenCustomerInfoQuery.cs" />
@@ -795,7 +796,9 @@
     <Compile Include="ViewModels\CustomerSetting\Suspend\SuspendedCustomerDetailViewModel.cs" />
     <Compile Include="ViewModels\CustomerSetting\Suspend\SuspendMatrixViewModel.cs" />
     <Compile Include="ViewModels\Customer\AppConfiguration.cs" />
+    <Compile Include="ViewModels\Customer\CreateCustomerViewModel.cs" />
     <Compile Include="ViewModels\Customer\CustomerViewModel.cs" />
+    <Compile Include="ViewModels\Customer\GeneralInfo.cs" />
     <Compile Include="ViewModels\InitializingCustomerSetting\ConfigCustomerSettingViewModel.cs" />
     <Compile Include="ViewModels\InitializingCustomerSetting\ConfigSettingViewModel.cs" />
     <Compile Include="ViewModels\InitializingCustomerSetting\InitializingCustomerSettingViewModel.cs" />
@@ -896,9 +899,7 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Requests\ViewPeriodsCN88\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

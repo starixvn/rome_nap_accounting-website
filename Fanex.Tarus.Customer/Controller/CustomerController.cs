@@ -92,25 +92,28 @@ namespace Fanex.Tarus.Customer.Controller
                 applicationPath += "/";
             }
 
-            var viewModel = new CustomerViewModel(new AppConfiguration(applicationPath), cdnUri, GetAssetsVersion());
+            var viewModel = new CreateCustomerViewModel(new AppConfiguration(applicationPath), cdnUri, GetAssetsVersion());
             return View(
                 HttpContext.IsDebuggingEnabled
                     ? "~/Views/Customer/Create-Debug.cshtml"
                     : "~/Views/Customer/CreateSuper.cshtml", viewModel);
         }
 
-        public ActionResult CreateCustomer(int custId, int roleId, string siteName)
+        public ActionResult CreateCustomer(int uplineId, byte uplineRoleId)
         {
             //debug cho nay
             var applicationPath = Response.ApplyAppPathModifier(Request.ApplicationPath);
 
-            var viewModel = new CustomerViewModel(new AppConfiguration(applicationPath), cdnUri, GetAssetsVersion());
+            var viewModel = new CreateCustomerViewModel(new AppConfiguration(applicationPath), cdnUri, GetAssetsVersion(), uplineId, uplineRoleId);
 
             return View(
                 HttpContext.IsDebuggingEnabled
                     ? "~/Views/Customer/Create-Debug.cshtml"
                     : "~/Views/Customer/CreateCustomer.cshtml", viewModel);
         }
+
+        public async Task<ActionResult> GetSetting(int custId, int roleId, int productGroupId = 1, string language = "en-US")
+            => Content(await httpClient.GetStringAsync($"customer?custId={custId}&roleId={roleId}&productGroupId={productGroupId}&language={language}"));
 
         [AuthenticateRead]
         public async Task<ActionResult> GetGlobalSetting(string site, int currency, int productGroupId = 1, string language = "en-US")

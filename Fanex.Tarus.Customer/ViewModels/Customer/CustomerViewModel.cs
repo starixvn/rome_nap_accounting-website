@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
-using RabbitMQ.Client.Framing.Impl;
 
 namespace Fanex.Tarus.Customer.ViewModels.Customer
 {

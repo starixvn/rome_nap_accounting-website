@@ -1,4 +1,4 @@
-﻿using Fanex.Tarus.Customer.Controller;
+﻿using Fanex.Tarus.Customer.ViewModels.Customer;
 
 namespace Fanex.Tarus.Customer.Requests
 {
