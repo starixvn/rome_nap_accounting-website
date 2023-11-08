@@ -22,7 +22,7 @@
     else if (roleId == '3') {
         parent.document.body.rows = tfHeigth + ",*";
         //f.location.href = "v2/AddNewAgent.aspx?masterId=" + parentId + "&username=" + obj("txtUsername").value; ;
-        f.location.href = "../AddNewAgent/AddNewAgentPage?masterId=" + parentId + "&username=" + obj("txtUsername").value + "&siteName=" + siteName;
+        f.location.href = "../Customer/CreateCustomer?uplineId=" + parentId + "&uplineRoleId=" + roleId + "&username=" + obj("txtUsername").value;
     }
     else if (roleId == '4') {
         parent.document.body.rows = tfHeigth + ",*";
