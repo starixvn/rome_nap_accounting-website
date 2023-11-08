@@ -11,13 +11,10 @@
     <link rel="stylesheet" href="@(Model.CdnUri)create-customer/index.css?version=@(Model.AssetsVersion)" />
 </head>
 <body>
-
     <div id="root"></div>
-
     <script>
-          const Base_URL = "@Model.BaseUrl";
-          const CustId = "@Model.CustId";
-          const RoleId = "@Model.RoleId";
+        const appConfig = @Html.Raw(Model.AppConfig);
+        const params = @Html.Raw(Model.Params);
     </script>
     <script type="module" src="@(Model.CdnUri)create-customer/index.js?version=@(Model.AssetsVersion)"></script>
 </body>

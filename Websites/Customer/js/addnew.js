@@ -40,7 +40,7 @@
                 var custId_siteName = obj("listSuper").options[obj("listSuper").selectedIndex].value;
                 custId = custId_siteName.split('_')[0];
                 siteNameFromSuperList = custId_siteName.split('_')[1];
-                url += "uplineId=" + custId + "&uplineRoleId=" + roleId;
+                url += "uplineId=" + custId + "&uplineRoleId=" + roleId + "&username=" + uname;
                 f.location.href = url;
                 return;
             }
@@ -48,7 +48,7 @@
                 uname = obj("listCurrency").options[obj("listCurrency").selectedIndex].text;
                 custId = obj("listCurrency").options[obj("listCurrency").selectedIndex].value;
                 var site = obj("listSite").value;
-                url += "uplineId=" + custId + "&uplineRoleId=" + roleId;
+                url += "uplineId=" + custId + "&uplineRoleId=" + roleId + "&username=" + uname;
                 f.location.href = url;
                 return;
             }

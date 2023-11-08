@@ -99,12 +99,12 @@ namespace Fanex.Tarus.Customer.Controller
                     : "~/Views/Customer/CreateSuper.cshtml", viewModel);
         }
 
-        public ActionResult CreateCustomer(int uplineId, byte uplineRoleId)
+        public ActionResult CreateCustomer(int uplineId, byte uplineRoleId, string username)
         {
             //debug cho nay
             var applicationPath = Response.ApplyAppPathModifier(Request.ApplicationPath);
 
-            var viewModel = new CreateCustomerViewModel(new AppConfiguration(applicationPath), cdnUri, GetAssetsVersion(), uplineId, uplineRoleId);
+            var viewModel = new CreateCustomerViewModel(new AppConfiguration(applicationPath), cdnUri, GetAssetsVersion(), uplineId, uplineRoleId, username);
 
             return View(
                 HttpContext.IsDebuggingEnabled
