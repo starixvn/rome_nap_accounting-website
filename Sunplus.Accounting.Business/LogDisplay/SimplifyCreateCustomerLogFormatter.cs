@@ -53,6 +53,10 @@ namespace Sunplus.Accounting.Business.LogDisplay
 
         private const int SabaCasinoProductId = 6;
 
+        private const int CreateSuperPTActionId = 263000;
+        private const int CreateSuperCommActionId = 263000;
+        private const int CreateSuperBetSettingActionId = 262000;
+
         private readonly int[] ActionIds = {
             SettingsLogActionId_Master,
             CompactLogActionId_Master,
@@ -60,6 +64,9 @@ namespace Sunplus.Accounting.Business.LogDisplay
             CompactLogActionId_Agent,
             SettingsLogActionId_Member,
             CompactLogActionId_Member,
+            CreateSuperPTActionId,
+            CreateSuperCommActionId,
+            CreateSuperBetSettingActionId
             //PTTemplateIns_Master,
             //PTTemplateUpd_Master,
             ////PTTemplateDel_Master,
@@ -75,8 +82,8 @@ namespace Sunplus.Accounting.Business.LogDisplay
             => ActionIds.Contains(actionId);
 
         public List<List<TrackingValue>> GeneratePTTemplateDiffsTrackingValue(
-            string trackingValue, 
-            string trackingValue2, 
+            string trackingValue,
+            string trackingValue2,
             Func<string, (List<Dictionary<string, TrackingValue>> trackingParams, bool hasAttr)> generateDetailFunction)
         {
             var result = new List<List<TrackingValue>>();
@@ -144,28 +151,27 @@ namespace Sunplus.Accounting.Business.LogDisplay
                 //}
                 //else
                 //{
-                    if (xmlLoad.HasElements)
+                if (xmlLoad.HasElements)
+                {
+                    foreach (var ele in xmlLoad.Elements().Distinct())
                     {
-                        foreach (var ele in xmlLoad.Elements().Distinct())
+                        if (HasData(ele))
                         {
-                            if (HasData(ele))
+                            if (IsCompactLogActionId(actionId))
                             {
-                                if (IsCompactLogActionId(actionId))
-                                {
-                                    detail.Vals.Add(ParseSnapshootLog(ele));
-                                }
-                                else
-                                {
-                                    detail.Vals.Add(ParseSettingsLog(ele, GetCustLevelByActionId(actionId)));
-                                }
+                                detail.Vals.Add(ParseSnapshootLog(ele));
+                            }
+                            else
+                            {
+                                detail.Vals.Add(ParseSettingsLog(ele, GetCustLevelByActionId(actionId)));
                             }
                         }
+                    }
                     //}
                 }
             }
             catch (Exception ex)
             {
-
                 LogExtensions.ExceptionHandler(ex);
             }
 
@@ -340,17 +346,20 @@ namespace Sunplus.Accounting.Business.LogDisplay
                     case 156: // Comm
                         trackingGroup = ParseCommSettingLog(groupType, groupId, IsMember(custLevel));
                         break;
+
                     case 155: // Win Loss Limit
                     case 158: // Stake Levels
                     case 159: // Group Stake Levels
                         trackingGroup = ParseTrackingTable(groupType, groupId, DisplayType.SportType);
                         break;
+
                     case 151: // SB Bet Setting
                     case 152: // Parlay Max Payout
                     case 154: // Bet Setting
                     case 157: // Bet Setting
                         trackingGroup = ParseTrackingTable(groupType, groupId, DisplayType.G_GT_SportType_Bettype);
                         break;
+
                     case 153: // PT
                         trackingGroup = groupId == 1 ?
                             ParseSBPositionTakingTrackingTable(groupType, groupId, custLevel) :
@@ -397,12 +406,15 @@ namespace Sunplus.Accounting.Business.LogDisplay
                         case 1:
                             rowLabel = CacheRef.GetProductName(productId);
                             break;
+
                         case 2:
                             rowLabel = CacheRef.GetSportName(sportType);
                             break;
+
                         case 3:
                             rowLabel = CacheRef.GetBettype(betType);
                             break;
+
                         case 4:
                             rowLabel = "&emsp;" + CacheRef.GetBettype(betType);
                             var sportName = CacheRef.GetSportName(sportType);
@@ -413,6 +425,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
                             }
 
                             break;
+
                         default:
                             rowLabel = CacheRef.GetSportName(sportType);
                             break;
@@ -689,12 +702,16 @@ namespace Sunplus.Accounting.Business.LogDisplay
             {
                 case 1:
                     return "Member";
+
                 case 2:
                     return "Agent";
+
                 case 3:
                     return "Master";
+
                 case 4:
                     return "Super";
+
                 default:
                     return custLevel.ToString();
             }
@@ -733,18 +750,21 @@ namespace Sunplus.Accounting.Business.LogDisplay
                 case PTTemplateUpd_Master:
                     //case PTTemplateDel_Master:
                     return 3;
+
                 case SettingsLogActionId_Agent:
                 case CompactLogActionId_Agent:
                 case PTTemplateIns_Agent:
                 case PTTemplateUpd_Agent:
                     //case PTTemplateDel_Agent:
                     return 2;
+
                 case SettingsLogActionId_Member:
                 case CompactLogActionId_Member:
                 case PTTemplateIns_Member:
                 case PTTemplateUpd_Member:
                     //case PTTemplateDel_Member:
                     return 1;
+
                 default:
                     throw new ArgumentOutOfRangeException("actionId");
             }
