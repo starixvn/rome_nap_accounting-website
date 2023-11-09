@@ -116,7 +116,7 @@ namespace Fanex.Tarus.Customer.Controller
             => Content(await httpClient.GetStringAsync($"customer?custId={custId}&roleId={roleId}&productGroupId={productGroupId}&language={language}"));
 
         public async Task<ActionResult> CheckExistedCustomer(string username)
-            => Content(await httpClient.GetStringAsync($"/customer/{username}/exist"));
+            => Content(await httpClient.GetStringAsync($"customer/{username}/exist"));
         
         [AuthenticateRead]
         public async Task<ActionResult> GetGlobalSetting(string site, int currency, int productGroupId = 1, string language = "en-US")
