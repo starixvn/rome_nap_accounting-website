@@ -41,5 +41,7 @@ namespace Fanex.Tarus.Customer.ViewModels.Customer
         public int Currency { get; set; }
 
         public string Group { get; set; }
+
+        public int UplineCustId { get; set; }
     }
 }
