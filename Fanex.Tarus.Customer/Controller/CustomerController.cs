@@ -86,25 +86,17 @@ namespace Fanex.Tarus.Customer.Controller
         [AuthenticateRead]
         public ActionResult CreateSuper()
         {
-            var applicationPath = Response.ApplyAppPathModifier(Request.ApplicationPath);
-            if (!applicationPath.EndsWith("/"))
-            {
-                applicationPath += "/";
-            }
-
-            var viewModel = new CreateCustomerViewModel(new AppConfiguration(applicationPath), cdnUri, GetAssetsVersion());
+            var viewModel = new CreateCustomerViewModel(new AppConfiguration(GetApplicationPath()), cdnUri, GetAssetsVersion());
             return View(
                 HttpContext.IsDebuggingEnabled
                     ? "~/Views/Customer/Create-Debug.cshtml"
                     : "~/Views/Customer/CreateSuper.cshtml", viewModel);
         }
 
+        [AuthenticateRead]
         public ActionResult CreateCustomer(int uplineId, byte uplineRoleId, string username)
         {
-            //debug cho nay
-            var applicationPath = Response.ApplyAppPathModifier(Request.ApplicationPath);
-
-            var viewModel = new CreateCustomerViewModel(new AppConfiguration(applicationPath), cdnUri, GetAssetsVersion(), uplineId, uplineRoleId, username);
+            var viewModel = new CreateCustomerViewModel(new AppConfiguration(GetApplicationPath()), cdnUri, GetAssetsVersion(), uplineId, uplineRoleId, username);
 
             return View(
                 HttpContext.IsDebuggingEnabled
@@ -112,24 +104,14 @@ namespace Fanex.Tarus.Customer.Controller
                     : "~/Views/Customer/CreateCustomer.cshtml", viewModel);
         }
 
-        public async Task<ActionResult> GetSetting(int custId, int roleId, int productGroupId = 1, string language = "en-US")
+        public async Task<ActionResult> GetCustomerSetting(int custId, int roleId, int productGroupId = 1, string language = "en-US")
             => Content(await httpClient.GetStringAsync($"customer?custId={custId}&roleId={roleId}&productGroupId={productGroupId}&language={language}"));
 
         public async Task<ActionResult> CheckExistedCustomer(string username)
             => Content(await httpClient.GetStringAsync($"customer/{username}/exist"));
-        
-        [AuthenticateRead]
+
         public async Task<ActionResult> GetGlobalSetting(string site, int currency, int productGroupId = 1, string language = "en-US")
             => Content(await httpClient.GetStringAsync($"customer/globalsetting?site={site}&currency={currency}&productGroupId={productGroupId}&language={language}"));
-
-        public async Task<ActionResult> GetProductSettingDownLine(int upLineCusId, int upLineRoleId)
-            => Content(await PostAsStringAsync("customer-settings/create-downline/query",
-                new
-                {
-                    uplineCustId = upLineCusId,
-                    uplineRoleId = upLineRoleId,
-                    language = "en-US"
-                }));
 
         public async Task<string> PostAsStringAsync(string requestUri, object payload = null)
         {
@@ -161,6 +143,17 @@ namespace Fanex.Tarus.Customer.Controller
                 settings = new { generalInfo, productGroups = JArray.Parse(request.ProductGroups) }
             });
             return Content(response);
+        }
+
+        private string GetApplicationPath()
+        {
+            var applicationPath = Response.ApplyAppPathModifier(Request.ApplicationPath);
+            if (!applicationPath.EndsWith("/"))
+            {
+                applicationPath += "/";
+            }
+
+            return applicationPath;
         }
     }
 }
