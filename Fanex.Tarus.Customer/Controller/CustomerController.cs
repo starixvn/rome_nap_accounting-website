@@ -32,11 +32,11 @@ namespace Fanex.Tarus.Customer.Controller
         private readonly Encryptor encryptor;
 
         public CustomerController()
-            : this(null)
+            : this(null, null)
         {
         }
 
-        public CustomerController(ICustomerSettingService customerSettingService)
+        internal CustomerController(ICustomerSettingService customerSettingService, Encryptor encryptor)
         {
             cdnUri = ConfigurationManager.AppSettings["Customer:CdnUri"];
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
@@ -45,7 +45,7 @@ namespace Fanex.Tarus.Customer.Controller
                 BaseAddress = new System.Uri(ConfigurationManager.AppSettings["Customer:ApiUri"])
             };
             _customerSettingService = customerSettingService ?? new CustomerSettingService();
-            encryptor = new EncryptorImpl();
+            this.encryptor = encryptor ?? new EncryptorImpl();
         }
 
         private string GetAssetsVersion()
