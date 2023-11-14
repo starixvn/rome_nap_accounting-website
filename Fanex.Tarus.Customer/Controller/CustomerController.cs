@@ -132,7 +132,7 @@ namespace Fanex.Tarus.Customer.Controller
 
         [HttpPost]
         [AuthenticateHost]
-        public async Task<ActionResult> CreateSuper(CreateCustomerRequest request)
+        public async Task<ActionResult> Create(CreateCustomerRequest request)
         {
             var generalInfo = request.GeneralInfo;
             generalInfo.Password = encryptor.CfsEnCode(generalInfo.Password);
