@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Fanex.Tarus.Customer.ViewModels.Customer
+﻿namespace Fanex.Tarus.Customer.ViewModels.Customer
 {
     public class GeneralInfo
     {

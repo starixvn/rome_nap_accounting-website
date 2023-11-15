@@ -1,4 +1,7 @@
 ﻿@model Fanex.Tarus.Customer.ViewModels.Customer.CreateCustomerViewModel
+@{
+    var version = Sunplus.Accounting.Core.Configurations.WebSettings.Version;
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,11 +16,14 @@
     <link rel="stylesheet" href="@(Model.CdnUri)create-super/index.css?version=@(Model.AssetsVersion)" />
 </head>
 <body>
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="SecretKey" id="SecretKey" value="@Model.SecretKey" />
     <div id="root"></div>
 
     <script>
         const appConfig = @Html.Raw(Model.AppConfig);
     </script>
+    <script type="text/javascript" src="@Url.Content("~/js/encode.js?v=" + version)"></script>
     <script type="module" src="@(Model.CdnUri)create-super/index.js?version=@(Model.AssetsVersion)"></script>
 </body>
 </html>

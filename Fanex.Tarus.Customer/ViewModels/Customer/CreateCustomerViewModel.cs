@@ -5,13 +5,13 @@ namespace Fanex.Tarus.Customer.ViewModels.Customer
 {
     public class CreateCustomerViewModel
     {
-        public CreateCustomerViewModel(AppConfiguration appConfig, string cndUri, string assetsVersion, int uplineId = 0, byte uplineRoleId = 0, string username = "")
+        public CreateCustomerViewModel(AppConfiguration appConfig, string cndUri, string assetsVersion, string secretKey, int uplineId = 0, byte uplineRoleId = 0)
         {
             CdnUri = cndUri;
             AssetsVersion = assetsVersion;
+            SecretKey = secretKey;
             AppConfig = JsonConvert.SerializeObject(appConfig, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
             Params = JsonConvert.SerializeObject(new { uplineId, uplineRoleId }, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
-            Username = username;
         }
 
         public string AppConfig { get; }
@@ -22,6 +22,6 @@ namespace Fanex.Tarus.Customer.ViewModels.Customer
 
         public string Params { get; }
 
-        public string Username { get; }
+        public string SecretKey { get; }
     }
 }

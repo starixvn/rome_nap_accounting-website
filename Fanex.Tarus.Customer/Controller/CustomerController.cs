@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using Fanex.CustomerSetting.Module.Core;
 using Fanex.CustomerSetting.Module.Core.Attributes;
+using Fanex.Tarus.Business.Implement;
 using Fanex.Tarus.Customer.CreditCustomer.Business;
 using Fanex.Tarus.Customer.Criteria.CreditCustomer;
 using Fanex.Tarus.Customer.Requests;
@@ -25,6 +26,7 @@ namespace Fanex.Tarus.Customer.Controller
     [SpecialSiteFilter]
     public class CustomerController : BaseController
     {
+        private const string HashKeySessionKey = "Fanex.Tarus.Customer.Controller.CustomerController.PasswordHash";
         private const string AssetsVersionCacheKey = "Customer:AssetsVersion";
         private readonly HttpClient httpClient;
         private readonly string cdnUri;
@@ -42,10 +44,18 @@ namespace Fanex.Tarus.Customer.Controller
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             httpClient = new HttpClient
             {
-                BaseAddress = new System.Uri(ConfigurationManager.AppSettings["Customer:ApiUri"])
+                BaseAddress = new Uri(ConfigurationManager.AppSettings["Customer:ApiUri"])
             };
             _customerSettingService = customerSettingService ?? new CustomerSettingService();
             this.encryptor = encryptor ?? new EncryptorImpl();
+        }
+
+        private string GetHashKey()
+        {
+            var hashKey = encryptor.RandomString(4);
+            HttpContext.Session.Add(HashKeySessionKey, hashKey);
+
+            return hashKey;
         }
 
         private string GetAssetsVersion()
@@ -86,7 +96,7 @@ namespace Fanex.Tarus.Customer.Controller
         [AuthenticateRead]
         public ActionResult CreateSuper()
         {
-            var viewModel = new CreateCustomerViewModel(new AppConfiguration(GetApplicationPath()), cdnUri, GetAssetsVersion());
+            var viewModel = new CreateCustomerViewModel(new AppConfiguration(GetApplicationPath()), cdnUri, GetAssetsVersion(), GetHashKey());
             return View(
                 HttpContext.IsDebuggingEnabled
                     ? "~/Views/Customer/Create-Debug.cshtml"
@@ -96,7 +106,7 @@ namespace Fanex.Tarus.Customer.Controller
         [AuthenticateRead]
         public ActionResult CreateCustomer(int uplineId, byte uplineRoleId, string username)
         {
-            var viewModel = new CreateCustomerViewModel(new AppConfiguration(GetApplicationPath()), cdnUri, GetAssetsVersion(), uplineId, uplineRoleId, username);
+            var viewModel = new CreateCustomerViewModel(new AppConfiguration(GetApplicationPath()), cdnUri, GetAssetsVersion(), GetHashKey(), uplineId, uplineRoleId);
 
             return View(
                 HttpContext.IsDebuggingEnabled
@@ -135,7 +145,7 @@ namespace Fanex.Tarus.Customer.Controller
         public async Task<ActionResult> Create(CreateCustomerRequest request)
         {
             var generalInfo = request.GeneralInfo;
-            generalInfo.Password = encryptor.CfsEnCode(generalInfo.Password);
+            generalInfo.Password = Security.Services.Encryptor.Decrypt(generalInfo.Password, HttpContext.Session[HashKeySessionKey].ToString());
 
             var response = await PostAsStringAsync("customer", new
             {
