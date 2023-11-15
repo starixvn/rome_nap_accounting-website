@@ -22,7 +22,7 @@
     else if (roleId == '3') {
         parent.document.body.rows = tfHeigth + ",*";
         //f.location.href = "v2/AddNewAgent.aspx?masterId=" + parentId + "&username=" + obj("txtUsername").value; ;
-        f.location.href = "../Customer/CreateCustomer?uplineId=" + parentId + "&uplineRoleId=" + roleId + "&username=" + obj("txtUsername").value;
+        f.location.href = "../Customer/CreateCustomer?uplineId=" + parentId + "&uplineRoleId=" + roleId + "&username=" + obj("txtUsername").value + "&theme=nap";
     }
     else if (roleId == '4') {
         parent.document.body.rows = tfHeigth + ",*";
@@ -54,6 +54,7 @@
             }
         }
         //url += "&set=1";
+        url += "theme=nap";
         f.location.href = url;
     }
 }

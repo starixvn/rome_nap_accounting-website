@@ -145,7 +145,8 @@ namespace Fanex.Tarus.Customer.Controller
         public async Task<ActionResult> Create(CreateCustomerRequest request)
         {
             var generalInfo = request.GeneralInfo;
-            generalInfo.Password = Security.Services.Encryptor.Decrypt(generalInfo.Password, HttpContext.Session[HashKeySessionKey].ToString());
+            var rawPassword = Security.Services.Encryptor.Decrypt(generalInfo.Password, HttpContext.Session[HashKeySessionKey].ToString());
+            generalInfo.Password = encryptor.CfsEnCode(rawPassword);
 
             var response = await PostAsStringAsync("customer", new
             {
