@@ -20,6 +20,10 @@
     <script>
         const appConfig = @Html.Raw(Model.AppConfig);
         const params = @Html.Raw(Model.Params);
+        window.getRedirectUrl = (response) => {
+            const custId = response.custId;
+            return appConfig.applicationPath + "Customer/V2/UpdatePT.aspx?custid=" + custId + "&insert=" + "true" + "&roleid=" + param.uplineRoleId - 1 + "&uplineid=" + param.uplineRoleId;
+        };
     </script>
     <script type="text/javascript" src="@Url.Content("~/js/encode.js?v=" + version)"></script>
     <script type="module" src="@(Model.CdnUri)create-customer/index.js?version=@(Model.AssetsVersion)"></script>
