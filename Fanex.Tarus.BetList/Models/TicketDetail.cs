@@ -71,8 +71,10 @@ namespace Fanex.Tarus.BetList.Models
         public string Platform {
             get
             {
+                if (DeviceType == null) return BetListResources.Platform_NA;
+
                 ResourceManager rm = new ResourceManager(typeof(BetListResources));
-                var deviceInfo = rm.GetString(string.Format("Platform_{0}", DeviceType ?? 0));
+                var deviceInfo = rm.GetString(string.Format("Platform_{0}", DeviceType.ToString()));
 
                 return deviceInfo ?? BetListResources.Platform_Uncategorized;
             }

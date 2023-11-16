@@ -131,7 +131,7 @@
             IsChinaView = r.Table.Columns.Contains("IsChinaView") && Converter.ToBool(r["IsChinaView"]),
             LeagueGroupId = r.Table.Columns.Contains("LeagueGroupId") ? Converter.ToInt(r["LeagueGroupId"]) : 0,
             IP = Converter.ToString2(r["ip"]),
-            DeviceType = r.Table.Columns.Contains("DeviceType") ? Converter.To<int>(r["DeviceType"]) : 0
+            DeviceType = r.Table.Columns.Contains("DeviceType") && !r.IsNull("DeviceType") ? Converter.To<int>(r["DeviceType"]) : (int?)null
         };
 
         private readonly Func<DataRow, TicketDetail> mapTicketObjectFunctionForMixParlay = r => new TicketDetail
@@ -169,7 +169,7 @@
             StakeHtml = string.Empty,
             IsChinaView = r.Table.Columns.Contains("IsChinaView") && Converter.ToBool(r["IsChinaView"]),
             LeagueGroupId = r.Table.Columns.Contains("LeagueGroupId") ? Converter.ToInt(r["LeagueGroupId"]) : 0,
-            DeviceType = r.Table.Columns.Contains("DeviceType") ? Converter.To<int>(r["DeviceType"]) : 0
+            DeviceType = r.Table.Columns.Contains("DeviceType") && !r.IsNull("DeviceType") ? Converter.To<int>(r["DeviceType"]) : (int?)null
         };
         public BetListService()
         {
@@ -983,7 +983,7 @@
                             StakeHtml = string.Empty,
                             Creator = Converter.ToString2(r["creator"]),
                             IP = Converter.ToString2(r["ip"]),
-                            DeviceType = r.Table.Columns.Contains("DeviceType") ? Converter.ToInt(r["DeviceType"]) : 0
+                            DeviceType = r.Table.Columns.Contains("DeviceType") && !r.IsNull("DeviceType") ? Converter.To<int>(r["DeviceType"]) : (int?)null
                         };
 
                         betDetails.Add(ticketDetailTmp);
@@ -1178,7 +1178,7 @@
                             HTHomeScore = Converter.ToString2(r["hthomescore"]),
                             HTAwayScore = Converter.ToString2(r["htawayscore"]),
                             IP = Converter.ToString2(r["ip"]),
-                            DeviceType = r.Table.Columns.Contains("DeviceType") ? Converter.ToInt(r["DeviceType"]) : 0
+                            DeviceType = r.Table.Columns.Contains("DeviceType") && !r.IsNull("DeviceType") ? Converter.To<int>(r["DeviceType"]) : (int?)null
                         };
 
                         foreach (DataRow row in ticketEventTable.Rows)

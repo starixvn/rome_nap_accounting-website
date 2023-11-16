@@ -336,9 +336,6 @@
   <data name="BetlistMaxTotalRowMessageError" xml:space="preserve">
     <value>Your report contains {0} tickets but the page can only show up to {1}. Please select a shorter date range.</value>
   </data>
-  <data name="Platform_0" xml:space="preserve">
-    <value>N/A</value>
-  </data>
   <data name="Platform_1" xml:space="preserve">
     <value>Desktop</value>
   </data>
@@ -356,5 +353,8 @@
   </data>
   <data name="Platform" xml:space="preserve">
     <value>Platform</value>
+  </data>
+  <data name="Platform_NA" xml:space="preserve">
+    <value>N/A</value>
   </data>
 </root>
