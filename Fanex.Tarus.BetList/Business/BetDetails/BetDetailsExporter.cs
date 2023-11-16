@@ -125,7 +125,7 @@
 
             var service = new RNGCasinoService();
 
-            return service.JackpotDetails(criteria).Select(t => new TicketDetail { Ticket = t.Ticket });
+            return service.JackpotDetails(criteria).Select(t => new TicketDetail { Ticket = t.Ticket, DeviceType = t.DeviceType });
         }
 
         public void Export(IEnumerable<TicketDetail> ticketDetails, Stream stream, int sportType)
@@ -291,7 +291,8 @@
             {
                 Ticket = t.Ticket,
                 IP = t.IP,
-                Country = t.Country
+                Country = t.Country,
+                DeviceType = t.DeviceType
             });
         }
 
