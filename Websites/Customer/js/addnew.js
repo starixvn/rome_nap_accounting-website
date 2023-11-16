@@ -17,12 +17,12 @@
         //f.location.href="AddNewMember.aspx?agentId="+parentId + "&username="+obj("txtUsername").value;
         //Khoa.tran add new member (Original code from IBCAgent)
         //f.location.href = "v2/AddNewMember.aspx?agentId=" + parentId + "&username=" + obj("txtUsername").value;
-        f.location.href = "../AddNewMember/AddNewMemberPage?agentId=" + parentId + "&username=" + obj("txtUsername").value + "&siteName=" + siteName;
+        f.location.href = "../Customer/CreateCustomer?uplineId=" + parentId + "&uplineRoleId=" + roleId + "&uplineUsername=" + obj("txtUsername").value + "&siteName=" + siteName;
     }
     else if (roleId == '3') {
         parent.document.body.rows = tfHeigth + ",*";
         //f.location.href = "v2/AddNewAgent.aspx?masterId=" + parentId + "&username=" + obj("txtUsername").value; ;
-        f.location.href = "../Customer/CreateCustomer?uplineId=" + parentId + "&uplineRoleId=" + roleId + "&username=" + obj("txtUsername").value + "&theme=nap";
+        f.location.href = "../Customer/CreateCustomer?uplineId=" + parentId + "&uplineRoleId=" + roleId + "&uplineUsername=" + obj("txtUsername").value + "&theme=nap";
     }
     else if (roleId == '4') {
         parent.document.body.rows = tfHeigth + ",*";
@@ -32,7 +32,7 @@
         var uname = "";
         var custId = "";
         if (!parentRoleId) {
-            url += "superId=" + parentId;
+            url += "uplineId=" + parentId + "&uplineRoleId=" + roleId + "&theme=nap";
         }
         else {
             if (obj("exSuper").checked) {
@@ -40,7 +40,7 @@
                 var custId_siteName = obj("listSuper").options[obj("listSuper").selectedIndex].value;
                 custId = custId_siteName.split('_')[0];
                 siteNameFromSuperList = custId_siteName.split('_')[1];
-                url += "uplineId=" + custId + "&uplineRoleId=" + roleId + "&username=" + uname;
+                url += "uplineId=" + custId + "&uplineRoleId=" + roleId + "&uplineUsername=" + uname + "&theme=nap";
                 f.location.href = url;
                 return;
             }
@@ -48,13 +48,12 @@
                 uname = obj("listCurrency").options[obj("listCurrency").selectedIndex].text;
                 custId = obj("listCurrency").options[obj("listCurrency").selectedIndex].value;
                 var site = obj("listSite").value;
-                url += "uplineId=" + custId + "&uplineRoleId=" + roleId + "&username=" + uname;
+                url += "uplineId=" + custId + "&uplineRoleId=" + roleId + "&uplineUsername=" + uname + "&theme=nap";
                 f.location.href = url;
                 return;
             }
         }
         //url += "&set=1";
-        url += "theme=nap";
         f.location.href = url;
     }
 }

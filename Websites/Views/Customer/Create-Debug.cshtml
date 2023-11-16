@@ -2,38 +2,41 @@
 @{
     var version = Sunplus.Accounting.Core.Configurations.WebSettings.Version;
 }
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <script type="module">
-        import RefreshRuntime from "http://localhost:4200/@@react-refresh";
-        RefreshRuntime.injectIntoGlobalHook(window);
-        window.$RefreshReg$ = () => { };
-        window.$RefreshSig$ = () => (type) => type;
-        window.__vite_plugin_react_preamble_installed__ = true;
-    </script>
-    <script type="module" src=@("http://localhost:4200/@vite/client")></script>
-    <meta charset="utf-8" />
-    <title>CreateAccount</title>
-    <base href="/" />
 
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-    <link rel="stylesheet" href="http://localhost:4200/src/styles.scss" />
-</head>
-<body>
-    @Html.AntiForgeryToken()
-    <input type="hidden" name="SecretKey" id="SecretKey" value="@Model.SecretKey" />
-    <div id="root"></div>
-    <script>
+<script type="module">
+    import RefreshRuntime from "http://localhost:4200/@@react-refresh";
+    RefreshRuntime.injectIntoGlobalHook(window);
+    window.$RefreshReg$ = () => { };
+    window.$RefreshSig$ = () => (type) => type;
+    window.__vite_plugin_react_preamble_installed__ = true;
+</script>
+<script type="module" src=@("http://localhost:4200/@vite/client")></script>
+
+<link rel="stylesheet" href="http://localhost:4200/src/styles.scss" />
+<div class="maincontent">
+    <table border="0" cellpadding="0px" cellspacing="0px" class="maincontent_header">
+        <tr>
+            <td class="maincontent_headerL">
+            </td>
+            <td class="maincontent_headerC fixfont">@Model.PageTitle</td>
+            <td class="maincontent_headerR">
+            </td>
+        </tr>
+    </table>
+    <div class="bg_table" style="width: 844px;">
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="SecretKey" id="SecretKey" value="@Model.SecretKey" />
+        <div id="root"></div>
+    </div>
+</div>
+
+<script>
         const appConfig = @Html.Raw(Model.AppConfig);
         const params = @Html.Raw(Model.Params);
         window.getRedirectUrl = (response) => {
             const custId = response.custId;
             return appConfig.applicationPath + "Customer/V2/UpdatePT.aspx?custid=" + custId + "&insert=" + "true" + "&roleid=" + (params.uplineRoleId - 1) + "&uplineid=" + params.uplineRoleId;
         };
-    </script>
-    <script type="text/javascript" src="@Url.Content("~/js/encode.js?v=" + version)"></script>
-    <script type="module" src="http://localhost:4200/src/main.tsx"></script>
-</body>
-</html>
+</script>
+<script type="text/javascript" src="@Url.Content("~/js/encode.js?v=" + version)"></script>
+<script type="module" src="http://localhost:4200/src/main.tsx"></script>

@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using Fanex.CustomerSetting.Module.Core;
 using Fanex.CustomerSetting.Module.Core.Attributes;
-using Fanex.Tarus.Business.Implement;
 using Fanex.Tarus.Customer.CreditCustomer.Business;
 using Fanex.Tarus.Customer.Criteria.CreditCustomer;
 using Fanex.Tarus.Customer.Requests;
@@ -104,9 +103,13 @@ namespace Fanex.Tarus.Customer.Controller
         }
 
         [AuthenticateRead]
-        public ActionResult CreateCustomer(int uplineId, byte uplineRoleId, string username)
+        public ActionResult CreateCustomer(int uplineId, byte uplineRoleId, string uplineUsername)
         {
-            var viewModel = new CreateCustomerViewModel(new AppConfiguration(GetApplicationPath()), cdnUri, GetAssetsVersion(), GetHashKey(), uplineId, uplineRoleId);
+            if (string.IsNullOrWhiteSpace(uplineUsername))
+            {
+                uplineUsername = AppSession.CustUName;
+            }
+            var viewModel = new CreateCustomerViewModel(new AppConfiguration(GetApplicationPath()), cdnUri, GetAssetsVersion(), GetHashKey(), uplineId, uplineRoleId, uplineUsername);
 
             return View(
                 HttpContext.IsDebuggingEnabled

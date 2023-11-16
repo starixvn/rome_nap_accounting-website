@@ -2,28 +2,26 @@
 @{
     var version = Sunplus.Accounting.Core.Configurations.WebSettings.Version;
 }
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <title>Create Super</title>
-    <base href="/" />
+<link rel="stylesheet" href="@(Model.CdnUri)create-super/index.css?version=@(Model.AssetsVersion)" />
+<div class="maincontent">
+    <table border="0" cellpadding="0px" cellspacing="0px" class="maincontent_header">
+        <tr>
+            <td class="maincontent_headerL">
+            </td>
+            <td class="maincontent_headerC fixfont">@Model.PageTitle</td>
+            <td class="maincontent_headerR">
+            </td>
+        </tr>
+    </table>
+    <div class="bg_table" style="width: 844px;">
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="SecretKey" id="SecretKey" value="@Model.SecretKey" />
+        <div id="root"></div>
+    </div>
+</div>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-    <link rel="stylesheet" href="~/App_Themes/Public/common.css" />
-    <link href="~/App_Themes/Public/table.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="@(Model.CdnUri)create-super/index.css?version=@(Model.AssetsVersion)" />
-</head>
-<body>
-    @Html.AntiForgeryToken()
-    <input type="hidden" name="SecretKey" id="SecretKey" value="@Model.SecretKey" />
-    <div id="root"></div>
-
-    <script>
+<script>
         const appConfig = @Html.Raw(Model.AppConfig);
-    </script>
-    <script type="text/javascript" src="@Url.Content("~/js/encode.js?v=" + version)"></script>
-    <script type="module" src="@(Model.CdnUri)create-super/index.js?version=@(Model.AssetsVersion)"></script>
-</body>
-</html>
+</script>
+<script type="text/javascript" src="@Url.Content("~/js/encode.js?v=" + version)"></script>
+<script type="module" src="@(Model.CdnUri)create-super/index.js?version=@(Model.AssetsVersion)"></script>

@@ -22,7 +22,7 @@
             CustomerInfoViewModel customerInfoViewModel)
         {
             var renderLeftPanelParameter = new RenderLeftPanelParameter
-            {              
+            {
                 IsShowMacau = customerInfoViewModel.ShowMacauDeposit,
                 IsShowEnableBetTrade = customerInfoViewModel.ShowEnableBetTradeDeposit,
                 IsShowAutoSuspend = customerInfoViewModel.HasReadPermission_AutoSuspend,
@@ -36,7 +36,7 @@
                 RoleId = customerInfoViewModel.SearchAccountRoleId,
                 CustId = customerInfoViewModel.CustId,
                 Username = customerInfoViewModel.UserName,
-                AccId = AppSession.AccId,             
+                AccId = AppSession.AccId,
                 IsShowRNGLottery = !customerInfoViewModel.HideRNGLottery,
                 IsShowVirtualGames = !customerInfoViewModel.HideVirtualGames,
                 IsShowSabaclub = !customerInfoViewModel.HideSabaclub,
@@ -206,8 +206,6 @@
             TemplateHandler.Assign(ref htmlcontent, "{uplineStatusMacau}", "1");
             TemplateHandler.Assign(ref htmlcontent, "{macauId}", Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdMacau);
 
-            TemplateHandler.Assign(ref htmlcontent, "{uplineStatusSportsbook2}", "1");
-            TemplateHandler.Assign(ref htmlcontent, "{Sportsbook2Id}", "16");
             TemplateHandler.Assign(ref htmlcontent, "{settingType}", "4");
 
             TemplateHandler.Assign(ref htmlcontent, "{livecasino}", "41");
@@ -217,19 +215,6 @@
 
         private string RemoveEnableLinks(string htmlcontent, CustomerInfoViewModel customerInfoViewModel, RenderLeftPanelParameter renderLeftPanelParameter)
         {
-            if (customerInfoViewModel.HideSportsbook2)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "Sportsbook2");
-            }
-            else
-            {
-                TemplateHandler.Assign(ref htmlcontent, "{Sportbook2OnClickFunction}", _renderLeftPanelService.GetSportbook2StatusJsFunction(
-                    customerInfoViewModel.CustId,
-                    customerInfoViewModel.UserName,
-                    customerInfoViewModel.SearchAccountRoleId,
-                    "Update Sportbook2 Status"));
-            }
-
             if (!customerInfoViewModel.HasReadPermission_AutoSuspend)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "autosuspendstatus");
@@ -521,6 +506,7 @@
                                                "Update Saba Virtual Sports Status",
                                                Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdSabaVirtualSports);
                             break;
+
                         case "69":
                             _renderLeftPanelService.RenderEnableProductBoxDCS2(
                                                row1,

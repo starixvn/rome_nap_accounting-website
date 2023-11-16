@@ -36,7 +36,6 @@
 <%@ Import Namespace="ONEbook.UM.Transport" %>
 <%@ Import Namespace="Fanex.MailDeliver.MailClient" %>
 
-
 <script RunAt="server">
 
     void Application_Start(object sender, EventArgs e)
@@ -56,7 +55,6 @@
            .UseCacheService(new UMCacheService(new CacheService()))
            .UseRestClient(new UMRestClient(umConfig))
            .UseHttpContext(new HttpContextHelper());
-
 
         RegisterRouteMiscController(RouteTable.Routes);
 
@@ -90,7 +88,7 @@
         {
             ConnectionOptions = StackExchange.Redis.ConfigurationOptions.Parse(ConfigurationManager.AppSettings["Redis:ConnectionString"])
         }));
-        
+
         AppSettings.AppMailId = ConfigurationManager.AppSettings["app_mail_id"];
         AppSettings.AppMailAddress = ConfigurationManager.AppSettings["app_mail_address"];
     }

@@ -400,6 +400,7 @@
     <Compile Include="Controller\AGCasinoController.cs" />
     <Compile Include="Controller\AutoTransferAll\AutoTransferAllController.cs" />
     <Compile Include="Controller\BetCreditHistoryController.cs" />
+    <Compile Include="Controller\Credit\AddNewSuperController.cs" />
     <Compile Include="Controller\CustomerController.cs" />
     <Compile Include="Controller\InitializingBetLimit\InitBetLimitController.cs" />
     <Compile Include="Controller\InitializingCustomerSetting\InitDepSettingController.cs" />
@@ -602,10 +603,6 @@
     <Compile Include="DataAccess\Player3rd\Player3rdDataAccess.cs" />
     <Compile Include="DataAccess\ReplicateLicenseeSettings\IReplicateLicenseeSettingsRepository.cs" />
     <Compile Include="DataAccess\ReplicateLicenseeSettings\ReplicateLicenseeSettingsRepository.cs" />
-    <Compile Include="Controller\Credit\AddNewAgentController.cs" />
-    <Compile Include="Controller\Credit\AddNewMasterController.cs" />
-    <Compile Include="Controller\Credit\AddNewMemberController.cs" />
-    <Compile Include="Controller\Credit\AddNewSuperController.cs" />
     <Compile Include="Controller\Credit\EditMasterOnMemberController.cs" />
     <Compile Include="Controller\Credit\EditSuperOnMemberController.cs" />
     <Compile Include="Controller\Credit\EditAgentMinMaxPtController.cs" />
