@@ -1,6 +1,7 @@
 ﻿namespace Sunplus.Accounting.Business.Customer
 {
     using DNAide.Web;
+    using Fanex.Tarus.Infrastructure.Constants;
 
     public partial class CustomerManager
     {
@@ -9,14 +10,15 @@
             CustomerInfoViewModel customerInfoViewModel,
             RenderLeftPanelParameter renderLeftPanelParameter)
         {
-            switch (customerInfoViewModel.SearchAccountRoleId)
+            if (customerInfoViewModel.SearchAccountRoleId == RoleIdConstants.Member)
             {
-                case 1: // member
-                    htmlcontent = AssignMemberSetting(htmlcontent, customerInfoViewModel, renderLeftPanelParameter);
-                    break;
-
-                default:
-                    break;
+                htmlcontent = AssignMemberSetting(htmlcontent, customerInfoViewModel, renderLeftPanelParameter);
+            }
+            else
+            {
+                TemplateHandler.Assign(ref htmlcontent, "{isHiddenMember}", "none");
+                TemplateHandler.Assign(ref htmlcontent, "{lblMinMax}", string.Empty);
+                TemplateHandler.Assign(ref htmlcontent, "{lblMinMax1}", string.Empty);
             }
 
             return htmlcontent;
