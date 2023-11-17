@@ -532,7 +532,7 @@ var StatementReportManager = function () {
                 title: statementResources.Bet_List,
                 left: 400,
                 top: 100,
-                width: 900,
+                width: 1250,
                 height: 600,
                 custId: self.cachedData.statementReportCriteria.custId,
                 statementDate: statement.StatementDateString,
