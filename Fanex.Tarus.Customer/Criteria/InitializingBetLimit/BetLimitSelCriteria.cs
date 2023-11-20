@@ -2,6 +2,7 @@
 {
     using Fanex.NAP.Framework.Data;
     using Fanex.Tarus.Customer.Requests.InitializingBetLimit;
+    using Sunplus.Accounting.Core.Configurations;
 
     public class BetLimitSelCriteria : CriteriaBase
     {
@@ -15,6 +16,7 @@
             PageSize = request.PageSize;
             PageIndex = request.PageIndex;
             ExportData = 0;
+            SettingStatus = WebSettings.SettingStatus;
         }
         public int ProductID { get; set; }
 
@@ -31,6 +33,8 @@
         public string CreditCurrencies { get; set; }
 
         public int ExportData { get; set; }
+
+        public int SettingStatus { get; set; }
 
         public int PageSize { get; set; }
 

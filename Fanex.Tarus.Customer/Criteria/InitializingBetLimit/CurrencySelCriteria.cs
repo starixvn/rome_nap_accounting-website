@@ -11,6 +11,7 @@
 
         public int Mode { get; set; }
 
+
         public override string GetSettingKey()
             => "Acc_InitializingGlobal_CurrencySel";
     }
