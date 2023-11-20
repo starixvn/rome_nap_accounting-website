@@ -146,7 +146,7 @@
   <data name="WinLoss" xml:space="preserve">
     <value>贏/輸</value>
   </data>
-    <data name="Username" xml:space="preserve">
+  <data name="Username" xml:space="preserve">
     <value>帳戶</value>
   </data>
   <data name="Date" xml:space="preserve">
@@ -155,13 +155,13 @@
   <data name="Odds" xml:space="preserve">
     <value>賠率</value>
   </data>
-  <data name="Stake" xml:space="preserve">
+  <data name="Stake_Duplicate[1]" xml:space="preserve">
     <value>投注額</value>
   </data>
-  <data name="WinLoss" xml:space="preserve">
+  <data name="WinLoss_Duplicate[1]" xml:space="preserve">
     <value>輸贏</value>
   </data>
-  <data name="Status" xml:space="preserve">
+  <data name="Status_Duplicate[1]" xml:space="preserve">
     <value>狀態</value>
   </data>
   <data name="Choice" xml:space="preserve">
@@ -178,5 +178,23 @@
   </data>
   <data name="NoInformation" xml:space="preserve">
     <value>没资料显示</value>
+  </data>
+  <data name="Platform" xml:space="preserve">
+    <value>平台</value>
+  </data>
+  <data name="Platform_1" xml:space="preserve">
+    <value>桌機</value>
+  </data>
+  <data name="Platform_2" xml:space="preserve">
+    <value>手機</value>
+  </data>
+  <data name="Platform_3" xml:space="preserve">
+    <value>應用程式</value>
+  </data>
+  <data name="Platform_4" xml:space="preserve">
+    <value>未分類</value>
+  </data>
+  <data name="Platform_Uncategorized" xml:space="preserve">
+    <value>未分類</value>
   </data>
 </root>

@@ -1,0 +1,16 @@
+﻿@using Fanex.Tarus.BetList.Models
+@using System.Resources;
+@{
+    var betdetail = Model;
+    var platform = Resources.NewBetList.Platform_NA;
+    if (betdetail.DeviceType != null)
+    {
+
+        ResourceManager rm = new ResourceManager(typeof(Resources.NewBetList));
+        var deviceInfo = rm.GetString(string.Format("Platform_{0}", betdetail.DeviceType.ToString()));
+
+        platform = deviceInfo ?? Resources.NewBetList.Platform_Uncategorized;
+    }
+
+}
+<span>@platform</span>
