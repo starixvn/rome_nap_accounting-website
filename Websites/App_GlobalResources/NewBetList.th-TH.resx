@@ -129,10 +129,10 @@
   <data name="Platform_3" xml:space="preserve">
     <value>แอป</value>
   </data>
-  <data name="Platform_4" xml:space="preserve">
+  <data name="Platform_Uncategorized" xml:space="preserve">
     <value>ไม่มีหมวดหมู่</value>
   </data>
-  <data name="Platform_Uncategorized" xml:space="preserve">
+  <data name="Platform_99" xml:space="preserve">
     <value>ไม่มีหมวดหมู่</value>
   </data>
 </root>
