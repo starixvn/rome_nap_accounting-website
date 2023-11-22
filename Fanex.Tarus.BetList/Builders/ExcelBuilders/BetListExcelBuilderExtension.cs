@@ -131,6 +131,14 @@
             return builder;
         }
 
+        public static BetListExcelBuilder AddPlatform(this BetListExcelBuilder builder, ITicketHelper ticketHelper, string platform)
+        {
+            var rtfString = new HSSFRichTextString(platform);
+            builder.AddCell(rtfString, IsEvenRow(ticketHelper.Index + 1) ? builder.EvenCellStyleCenterAligned : builder.OddCellStyleCenterAligned);
+
+            return builder;
+        }
+
         private static void RenderRacingPtValue(RTFNumber rtfNumber, RTFHelper rtfHelper, PTComm33 ptComm)
         {
             rtfHelper.RTFRenderer.AddText($"{BetListResources.win}: ", rtfHelper.PosFont);
@@ -181,6 +189,13 @@
             cellStyle.SetFont(builder.RTFHelper.PosFont);
 
             return cellStyle;
+        }
+
+        private static bool IsEvenRow(int rowNumber)
+        {
+            const int even = 2;
+
+            return rowNumber % even == 0;
         }
     }
 }

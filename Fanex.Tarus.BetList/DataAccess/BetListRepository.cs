@@ -529,7 +529,8 @@
                             },
                             ChoiceHtml = string.Empty,
                             OddHtml = string.Empty,
-                            StakeHtml = string.Empty
+                            StakeHtml = string.Empty,
+                            DeviceType = r.Table.Columns.Contains("DeviceType") && !r.IsNull("DeviceType") ? Converter.To<int>(r["DeviceType"]) : (int?)null
                         });
                     }
 

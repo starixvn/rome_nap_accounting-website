@@ -74,6 +74,7 @@
                             OddHtml = string.Empty,
                             StakeHtml = string.Empty,
                             IP = Converter.ToString2(reader["ip"]),
+                            DeviceType = HasColumn(reader, "DeviceType") && DBNull.Value != reader["DeviceType"] ? Converter.ToInt(reader["DeviceType"]) : (int?)null
                         });
                     }
                 }
@@ -143,7 +144,8 @@
                             },
                             ChoiceHtml = string.Empty,
                             OddHtml = string.Empty,
-                            StakeHtml = string.Empty
+                            StakeHtml = string.Empty,
+                            DeviceType = HasColumn(reader, "DeviceType") && DBNull.Value != reader["DeviceType"] ? Converter.ToInt(reader["DeviceType"]) : (int?)null
                         });
                     }
                 }
@@ -211,7 +213,8 @@
                             },
                             ChoiceHtml = string.Empty,
                             OddHtml = string.Empty,
-                            StakeHtml = string.Empty
+                            StakeHtml = string.Empty,
+                            DeviceType = HasColumn(reader, "DeviceType") && DBNull.Value != reader["DeviceType"] ? Converter.ToInt(reader["DeviceType"]) : (int?)null
                         });
                     }
                 }

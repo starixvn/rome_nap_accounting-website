@@ -39,8 +39,8 @@
                 int index = 0;
                 ticketHelper.HideStatusCashOutHistory = true;
 
-                builder.BuildWorksheet("BetList", 8);
-                builder.AddCaption(reportTitle, 8);
+                builder.BuildWorksheet("BetList", 9);
+                builder.AddCaption(reportTitle, 9);
                 builder.AddHeaderStatement(true, false, false, false, true);
                 foreach (var betdetail in betDetails)
                 {
@@ -57,15 +57,17 @@
                     builder.AddWinLoss(betdetail.Ticket);
 
                     builder.AddStatusStatement(betdetail.Ticket, ticketHelper, outputLiveCasino);
-
+                    
                     builder.AddCreator(betdetail, ticketHelper);
+                    builder.AddPlatform(ticketHelper, betdetail.Platform);
+
                     tickets.Add(betdetail.Ticket);
                 }
 
                 if (tickets.Count > 0)
                 {
                     builder.AddFooterHeader(isShowMember: false);
-                    builder.AddFooter(new Footer(tickets), false, 8);
+                    builder.AddFooter(new Footer(tickets), false, 9);
                 }
 
                 var ms = new MemoryStream();

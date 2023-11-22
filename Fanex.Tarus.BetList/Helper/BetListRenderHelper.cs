@@ -19,6 +19,7 @@
             result.Append("<th><div class=\"width60 height34 table-cell\">" + BetListResources.Super + "<br />" + BetListResources.PT + "/" + BetListResources.Comm + "</div></th>");
             result.Append("<th><div class=\"width60 height34 table-cell\">" + BetListResources.Master + "<br />" + BetListResources.PT + "/" + BetListResources.Comm + "</div></th>");
             result.Append("<th><div class=\"width60 height34 table-cell\">" + BetListResources.Agent + "<br />" + BetListResources.PT + "/" + BetListResources.Comm + "</div></th>");
+            result.Append("<th><div class=\"width80 height34 table-cell\">" + BetListResources.Platform + "</div></th>");
             result.Append("</tr>");
             return result.ToString();
         }

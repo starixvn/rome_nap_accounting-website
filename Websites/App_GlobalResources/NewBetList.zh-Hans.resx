@@ -159,13 +159,31 @@
   </data>
   <data name="NoInformation" xml:space="preserve">
     <value>没资料显示</value></data>
-  <data name="Stake" xml:space="preserve">
+  <data name="Stake_Duplicate[1]" xml:space="preserve">
     <value>下注金额</value>
   </data>
-  <data name="Status" xml:space="preserve">
+  <data name="Status_Duplicate[1]" xml:space="preserve">
     <value>状态</value>
   </data>
-  <data name="WinLoss" xml:space="preserve">
+  <data name="WinLoss_Duplicate[1]" xml:space="preserve">
     <value>赢/输</value>
+  </data>
+  <data name="Platform" xml:space="preserve">
+    <value>平台</value>
+  </data>
+  <data name="Platform_1" xml:space="preserve">
+    <value>桌机</value>
+  </data>
+  <data name="Platform_2" xml:space="preserve">
+    <value>手机</value>
+  </data>
+  <data name="Platform_3" xml:space="preserve">
+    <value>应用程式</value>
+  </data>
+  <data name="Platform_Uncategorized" xml:space="preserve">
+    <value>未分类</value>
+  </data>
+  <data name="Platform_99" xml:space="preserve">
+    <value>未分类</value>
   </data>
 </root>

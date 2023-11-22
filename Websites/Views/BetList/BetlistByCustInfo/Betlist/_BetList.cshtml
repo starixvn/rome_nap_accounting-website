@@ -103,6 +103,11 @@
                 @Html.Partial("~/Views/BetList/_AgentPTCom.cshtml", betdetail)
             </div>
         </td>
+        <td class="c">
+            <div class="width80 table-cell">
+                @Html.Raw(betdetail.Platform)
+            </div>
+        </td>
     </tr>
 
 }
@@ -166,6 +171,11 @@
                                 Agent
                                 <br />
                                 PT/Comm
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width80 height34 table-cell">
+                                Platform
                             </div>
                         </th>
                     </tr>
@@ -234,6 +244,11 @@
                                 PT/Comm
                             </div>
                         </th>
+                        <th>
+                            <div class="width80 height34 table-cell">
+                                Platform
+                            </div>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -245,7 +260,7 @@
                     else
                     {
                         <tr class="c">
-                            <td colspan="11" class='r'>
+                            <td colspan="12" class='r'>
                                 <div class="c b">
                                     There is no data
                                 </div>
