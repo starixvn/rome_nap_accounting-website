@@ -109,6 +109,7 @@ namespace Fanex.Tarus.Customer.Controller
             {
                 uplineUsername = AppSession.CustUName;
             }
+
             var viewModel = new CreateCustomerViewModel(new AppConfiguration(GetApplicationPath()), cdnUri, GetAssetsVersion(), GetHashKey(), uplineId, uplineRoleId, uplineUsername);
 
             return View(

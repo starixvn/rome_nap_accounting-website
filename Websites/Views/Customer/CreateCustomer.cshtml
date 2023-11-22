@@ -20,12 +20,13 @@
     </div>
 </div>
 <script>
-        const appConfig = @Html.Raw(Model.AppConfig);
-        const params = @Html.Raw(Model.Params);
-        window.getRedirectUrl = (response) => {
-            const custId = response.custId;
-            return appConfig.applicationPath + "Customer/V2/UpdatePT.aspx?custid=" + custId + "&insert=" + "true" + "&roleid=" + (params.uplineRoleId - 1) + "&uplineid=" + params.uplineRoleId;
-        };
+    const appConfig = @Html.Raw(Model.AppConfig);
+    const params = @Html.Raw(Model.Params);
+    window.redirectToSettingPage = (response) => {
+        const custId = response.custId;
+        const redirectUrl = appConfig.applicationPath + "Customer/V2/UpdatePT.aspx?custid=" + custId + "&insert=" + "true" + "&roleid=" + (params.uplineRoleId - 1) + "&uplineid=" + params.uplineRoleId;
+        window.location.replace(redirectUrl);
+    };
 </script>
 <script type="text/javascript" src="@Url.Content("~/js/encode.js?v=" + version)"></script>
 <script type="module" src="@(Model.CdnUri)create-customer/index.js?version=@(Model.AssetsVersion)"></script>
