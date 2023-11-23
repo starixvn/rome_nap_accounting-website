@@ -71,18 +71,11 @@ namespace Fanex.Tarus.BetList.Models
         public string Platform {
             get
             {
-                if (DeviceType == null) return BetListResources.Platform_NA;
-                var device = DeviceType.ToString();
-                if (device == "0")
-                    return BetListResources.Platform_0;
-                else if (device == "1")
-                    return BetListResources.Platform_1;
-                else if (device == "2")
-                    return BetListResources.Platform_2;
-                else if (device == "3")
-                    return BetListResources.Platform_3;
+                if (DeviceType == null) return Platforms.Platform_NA;
+                
+                var deviceInfo = Platforms.ResourceManager.GetString(string.Format("Platform_{0}", DeviceType.ToString()));
 
-                return BetListResources.Platform_99;
+                return deviceInfo ?? Platforms.Platform_Uncategorized;
             }
         }
     }
