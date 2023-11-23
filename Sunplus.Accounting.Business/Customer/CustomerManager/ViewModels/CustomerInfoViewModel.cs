@@ -92,13 +92,11 @@
 
         public bool HideSabaVirtualSports { get; private set; } = true;
 
-        public bool ShowSettingLinkAGCasinoDeposit => WebSettings.EnableAGCasino && IsDeposit;      
+        public bool ShowSettingLinkAGCasinoDeposit => WebSettings.EnableAGCasino && IsDeposit;
 
         public bool ShowEnableBetTradeDeposit => WebSettings.EnableBetTrade && SearchAccountRoleId.Equals(4) && IsDeposit;
 
         public bool ShowMacauDeposit => WebSettings.EnableMacau && SearchAccountRoleId.Equals(4) && IsDeposit;
-
-        public bool HideSportsbook2 { get; private set; } = true;
 
         public bool HideSettingLinkVirtualSports { get; private set; } = true;
 
@@ -141,11 +139,7 @@
                                 HideSabaCasino = (Utils.ToBoolean(row["IsHidden"]) && SearchAccountRoleId < 4) || !WebSettings.IsShowSabaCasino;
                                 break;
 
-                            case "16":
-                                HideSportsbook2 = (Utils.ToBoolean(row["IsHidden"]) && SearchAccountRoleId < 4) || !WebSettings.IsShowSportsbook2 || IsDeposit;
-                                break;
-
-                            case "41":                             
+                            case "41":
                                 HideLiveCasinoUpline = HideLiveCasinoUpline && Utils.ToBoolean(row["IsHiddenUpline"]) && SearchAccountRoleId < 4;
                                 HideLiveCasino = HideLiveCasino && Utils.ToBoolean(row["IsHidden"]);
                                 break;
@@ -158,7 +152,6 @@
 
                             case "25":
                                 HideCashout = (Utils.ToBoolean(row["IsHidden"]) && SearchAccountRoleId < 4) || !WebSettings.EnableCashOut;
-
                                 break;
 
                             case "27":

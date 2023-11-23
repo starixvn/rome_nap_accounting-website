@@ -26,28 +26,6 @@
     var getSuperPrefixesUrl = '@Url.Content("~/AddNewSuper/GetSuperPrefixes")';
     var getHeadlineBelongSiteUrl = '@Url.Content("~/AddNewSuper/GetHeadlineBelongSite")';
     var level = '@level';
-    var sports = [
-            { sportname: '-- choose sport --', sportvalue: 'choosesport' },
-            { sportname: 'Sportsbook', sportvalue: 'tabSportsbook' },
-            { sportname: 'Sportsbook Min PT', sportvalue: 'tabSportsbookMinPT' },
-            { sportname: 'Virtual Sports', sportvalue: 'tabVirtualSports' },
-            { sportname: 'Sportsbook 2', sportvalue: 'tabSportsbook2' },
-            { sportname: 'Live Casino', sportvalue: 'tabLiveCasino' },
-            { sportname: 'RNG Slot', sportvalue: 'tabVoidbridge' },
-            { sportname: 'RNG Lottery', sportvalue: 'tabRNGLottery' },
-            { sportname: 'Virtual Games', sportvalue: 'tabVirtualGames' },
-            { sportname: 'Saba.games', sportvalue: 'tabSabaclub' },
-            { sportname: 'Vgaming', sportvalue: 'tabVGaming' },
-            { sportname: 'Bitcoin', sportvalue: 'tabBitcoin' },
-            { sportname: 'Saba Casino', sportvalue: 'tabSabaCasino' }
-    ];
-
-    if ('@level' == 'member') {
-        sports = [
-            { sportname: '-- choose sport --', sportvalue: 'choosesport' },
-            { sportname: 'Sportsbook', sportvalue: 'tabSportsbook' }
-        ];
-    }
 
     jQuery(document).ready(function () {
 

@@ -88,9 +88,9 @@
 }
 @helper renderRowHeader(Fanex.Tarus.Customer.Entities.CustomerList.CustomerList masterItem, Hashtable hash)
 {
-var bg = rowCSS(masterItem);
-var idAllow = masterItem.ChildID.ToString() + '_' + masterItem.UserName;
-string siteName = masterItem.IsMyanmarOdds ? "76666B" : string.Empty;
+    var bg = rowCSS(masterItem);
+    var idAllow = masterItem.ChildID.ToString() + '_' + masterItem.UserName;
+    string siteName = masterItem.IsMyanmarOdds ? "76666B" : string.Empty;
 
     <tr name="tr_@masterItem.ChildID" class="@bg">
         <td>
@@ -131,13 +131,6 @@ string siteName = masterItem.IsMyanmarOdds ? "76666B" : string.Empty;
                     {
                         <li class="canchange" onclick="EditDCSByProduct('@masterItem.ChildID', 5, 'Virtual Sports');">
                             Virtual Sports
-                        </li>
-                    }                  
-
-                    @if (!masterItem.IsHideSportsbook2)
-                    {
-                        <li class="canchange" onclick="EditDCSByProduct('@masterItem.ChildID', 16, 'Sportsbook 2');">
-                            Sportsbook 2
                         </li>
                     }
 
@@ -203,7 +196,7 @@ string siteName = masterItem.IsMyanmarOdds ? "76666B" : string.Empty;
 }
 @helper renderContent(Fanex.Tarus.Customer.Entities.CustomerList.CustomerList masterItem, Hashtable hash)
 {
-var bg = rowCSS(masterItem);
+    var bg = rowCSS(masterItem);
     string discountMyanmarOdss = masterItem.IsMyanmarOdds ? masterItem.DiscountMyanmarOdds.ToString() : "N/A";
     <tr name="tr_@masterItem.ChildID" class="@bg" style="height: 20px;">
         <td>

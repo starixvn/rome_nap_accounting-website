@@ -25,7 +25,7 @@
     if (IsVisibleVirtualRate)
     {
         colspan++;
-    } 
+    }
 
     Hashtable hash = new Hashtable();
 
@@ -68,9 +68,9 @@
 }
 @helper renderRowHeader(Fanex.Tarus.Customer.Entities.CustomerList.CustomerList superItem, Hashtable hash)
 {
-var bg = rowCSS(superItem);
-var idAllow = superItem.ChildID.ToString() + '_' + superItem.UserName;
-string siteName = superItem.IsMyanmarOdds ? "76666B" : string.Empty;
+    var bg = rowCSS(superItem);
+    var idAllow = superItem.ChildID.ToString() + '_' + superItem.UserName;
+    string siteName = superItem.IsMyanmarOdds ? "76666B" : string.Empty;
 
     <tr name="tr_@superItem.ChildID" class="@bg">
         <td>
@@ -111,18 +111,12 @@ string siteName = superItem.IsMyanmarOdds ? "76666B" : string.Empty;
                             Virtual Sports
                         </li>
                     }
-                 
+
                     @if (superItem.IsLicensee)
                     {
                         <li class="canchange" onclick="SuperList.asianGamingCasino('@superItem.ChildID');">
                             AG
                             Casino
-                        </li>
-                    }
-                    @if (!superItem.IsHideSportsbook2)
-                    {
-                        <li class="canchange" onclick="EditDCSByProduct('@superItem.ChildID', 16, 'Sportsbook 2');">
-                            Sportsbook 2
                         </li>
                     }
 
@@ -169,7 +163,7 @@ string siteName = superItem.IsMyanmarOdds ? "76666B" : string.Empty;
 }
 @helper renderContent(Fanex.Tarus.Customer.Entities.CustomerList.CustomerList superItem, Hashtable hash)
 {
-var bg = rowCSS(superItem);
+    var bg = rowCSS(superItem);
     string discountMyanmarOdss = superItem.IsMyanmarOdds ? superItem.DiscountMyanmarOdds.ToString() : "N/A";
     <tr name="tr_@superItem.ChildID" class="@bg" style="height: 20px;">
         <td>
@@ -267,7 +261,7 @@ var bg = rowCSS(superItem);
             </div>
         </td>
         <td>
-            <div class="table-cell c" style="width: 70px; height: 18px;">             
+            <div class="table-cell c" style="width: 70px; height: 18px;">
             </div>
         </td>
         <td>
@@ -279,7 +273,7 @@ var bg = rowCSS(superItem);
             <div class="table-cell c" style="width: 90px; height: 18px;">
                 <a onclick="ViewIP('@superItem.LastLoginIP')">@superItem.LastLoginIP</a>
             </div>
-        </td>       
+        </td>
     </tr>
 }
 <div id="SuperListgrid" class="freegrid hidden">

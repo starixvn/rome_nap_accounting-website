@@ -8,7 +8,6 @@
 
     var IsVisibleVirtualRate = Functions.Customer.IsVisibleVirtualRate;
 
-
     var EnableVirtualSports = WebSettings.EnableVirtualSports;
 
     var adminID = AppSession.AccId;
@@ -80,9 +79,9 @@
 }
 @helper renderRowHeader(Fanex.Tarus.Customer.Entities.CustomerList.CustomerList memberItem, Hashtable hash)
 {
-var bg = rowCSS(memberItem);
-var idAllow = memberItem.ChildID.ToString() + '_' + memberItem.UserName;
-string siteName = memberItem.IsMyanmarOdds ? "76666B" : string.Empty;
+    var bg = rowCSS(memberItem);
+    var idAllow = memberItem.ChildID.ToString() + '_' + memberItem.UserName;
+    string siteName = memberItem.IsMyanmarOdds ? "76666B" : string.Empty;
     <tr name="tr_@memberItem.ChildID" class="@bg" style="height: 20px;">
         <td>
             <div class="table-cell c " style="width: 40px; height: 18px;">
@@ -109,12 +108,6 @@ string siteName = memberItem.IsMyanmarOdds ? "76666B" : string.Empty;
                     {
                         <li class="canchange" onclick="EditDCSByProduct('@memberItem.ChildID', 5, 'Virtual Sports');">
                             Virtual Sports
-                        </li>
-                    }                  
-                    @if (!memberItem.IsHideSportsbook2)
-                    {
-                        <li class="canchange" onclick="EditDCSByProduct('@memberItem.ChildID', 16, 'Sportsbook 2');">
-                            Sportsbook 2
                         </li>
                     }
                     @if (!memberItem.IsHideLiveCasino)
@@ -178,7 +171,7 @@ string siteName = memberItem.IsMyanmarOdds ? "76666B" : string.Empty;
 }
 @helper renderContent(Fanex.Tarus.Customer.Entities.CustomerList.CustomerList memberItem, Hashtable hash)
 {
-var bg = rowCSS(memberItem);
+    var bg = rowCSS(memberItem);
     <tr name="tr_@memberItem.ChildID" class="@bg" style="height: 20px;">
         <td>
             <div class="table-cell c " style="width: 40px; height: 18px;">

@@ -98,7 +98,6 @@
 
             TemplateHandler.Assign(ref htmlcontent, "{linkSettingInfo}", infoUrl);
             TemplateHandler.Assign(ref htmlcontent, "{virtualSportLinkSetting}", string.Format(creditDCSLink, 5));
-            TemplateHandler.Assign(ref htmlcontent, "{sportsbook2LinkSetting}", string.Format(creditDCSLink, 16));
             TemplateHandler.Assign(ref htmlcontent, "{liveCasinoLinkSetting}", string.Format(creditDCSLink, 41));
             TemplateHandler.Assign(ref htmlcontent, "{voidbridgeLinkSetting}", string.Format(creditDCSLink, 18));
             TemplateHandler.Assign(ref htmlcontent, "{rngLotteryLinkSetting}", string.Format(creditDCSLink, Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdRNGLottery));
@@ -133,11 +132,6 @@
             if (!customerInfoViewModel.ShowSettingLinkAGCasinoDeposit)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-agcasino");
-            }
-
-            if (customerInfoViewModel.HideSportsbook2)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "edit-sportsbook2");
             }
 
             if (customerInfoViewModel.HideSettingLinkLiveCasino)

@@ -112,8 +112,7 @@
                 customerInfoViewModel.CustParent,
                 customerInfoViewModel.ManageCustomerAccess,
                 renderLeftPanelParameter,
-                sg,
-                customerInfoViewModel.HasDownline);
+                sg);
 
             htmlcontent = RenderDCSControl(
                 htmlcontent,
@@ -533,8 +532,7 @@
             CustomerDetail CustParent,
             bool isManageCustomerAccess,
             RenderLeftPanelParameter renderLeftPanelParameter,
-            SettingGroup sg,
-            bool hasDownline)
+            SettingGroup sg)
         {
             _renderLeftPanelService.RenderEnableProductBox2(
                row1,
@@ -542,7 +540,6 @@
                ref htmlcontent,
                isManageCustomerAccess,
                CustParent.IsDisableColossusBets,
-               hasDownline,
                "ColossusBet",
                renderLeftPanelParameter.IsShowColossusBetsForDeposit,
                renderLeftPanelParameter,

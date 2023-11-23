@@ -81,9 +81,9 @@
 }
 @helper renderRowHeader(Fanex.Tarus.Customer.Entities.CustomerList.CustomerList agentItem, Hashtable hash)
 {
-var bg = rowCSS(agentItem);
-var idAllow = agentItem.ChildID.ToString() + '_' + agentItem.UserName;
-string siteName = agentItem.IsMyanmarOdds ? "76666B" : string.Empty;
+    var bg = rowCSS(agentItem);
+    var idAllow = agentItem.ChildID.ToString() + '_' + agentItem.UserName;
+    string siteName = agentItem.IsMyanmarOdds ? "76666B" : string.Empty;
     <tr name="tr_@agentItem.ChildID" class="@bg">
         <td>
             <div class="table-cell c " style="width: 40px; height: 18px;">
@@ -119,13 +119,6 @@ string siteName = agentItem.IsMyanmarOdds ? "76666B" : string.Empty;
                     {
                         <li class="canchange" onclick="EditDCSByProduct('@agentItem.ChildID', 5, 'Virtual Sports');">
                             Virtual Sports
-                        </li>
-                    }
-                    
-                    @if (!agentItem.IsHideSportsbook2)
-                    {
-                        <li class="canchange" onclick="EditDCSByProduct('@agentItem.ChildID', 16, 'Sportsbook 2');">
-                            Sportsbook 2
                         </li>
                     }
 
@@ -187,7 +180,7 @@ string siteName = agentItem.IsMyanmarOdds ? "76666B" : string.Empty;
 }
 @helper renderContent(Fanex.Tarus.Customer.Entities.CustomerList.CustomerList agentItem, Hashtable hash)
 {
-var bg = rowCSS(agentItem);
+    var bg = rowCSS(agentItem);
     <tr name="tr_@agentItem.ChildID" class="@bg" style="height: 20px;">
         <td>
             <div class="table-cell c" style="width: 40px; height: 18px;">
