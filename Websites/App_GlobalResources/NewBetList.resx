@@ -178,28 +178,4 @@
   <data name="WinLoss_Duplicate[1]" xml:space="preserve">
     <value>Win / Loss</value>
   </data>
-  <data name="Platform" xml:space="preserve">
-    <value>Platform</value>
-  </data>
-  <data name="Platform_NA" xml:space="preserve">
-    <value>N/A</value>
-  </data>
-  <data name="Platform_1" xml:space="preserve">
-    <value>Desktop</value>
-  </data>
-  <data name="Platform_2" xml:space="preserve">
-    <value>Mobile</value>
-  </data>
-  <data name="Platform_3" xml:space="preserve">
-    <value>APP</value>
-  </data>
-  <data name="Platform_Uncategorized" xml:space="preserve">
-    <value>Uncategorized</value>
-  </data>
-  <data name="Platform_0" xml:space="preserve">
-    <value>N/A</value>
-  </data>
-  <data name="Platform_99" xml:space="preserve">
-    <value>Uncategorized</value>
-  </data>
 </root>

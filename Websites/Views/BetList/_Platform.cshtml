@@ -2,28 +2,12 @@
 @using System.Resources;
 @{
     var betdetail = Model;
-    var platform = Resources.NewBetList.Platform_NA;
-    if(betdetail.DeviceType != null)
+    var platform = Resources.Platforms.Platform_NA;
+    if (betdetail.DeviceType != null)
     {
+        var deviceInfo = Resources.Platforms.ResourceManager.GetString(string.Format("Platform_{0}", betdetail.DeviceType.ToString()));
 
-        switch ((int)betdetail.DeviceType)
-        {
-            case 0:
-                platform = Resources.NewBetList.Platform_NA;
-                break;
-            case 1:
-                platform = Resources.NewBetList.Platform_1;
-                break;
-            case 2:
-                platform = Resources.NewBetList.Platform_2;
-                break;
-            case 3:
-                platform = Resources.NewBetList.Platform_3;
-                break;
-            default:
-                platform = Resources.NewBetList.Platform_99;
-                break;
-        }
+        platform = deviceInfo ?? Resources.Platforms.Platform_Uncategorized;
     }
 
 }
