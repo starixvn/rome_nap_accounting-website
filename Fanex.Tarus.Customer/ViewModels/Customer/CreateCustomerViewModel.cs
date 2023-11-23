@@ -6,13 +6,22 @@ namespace Fanex.Tarus.Customer.ViewModels.Customer
 {
     public class CreateCustomerViewModel
     {
-        public CreateCustomerViewModel(AppConfiguration appConfig, string cndUri, string assetsVersion, string secretKey, int uplineId = 0, byte uplineRoleId = 0, string uplineUsername = "")
+        public CreateCustomerViewModel(
+            AppConfiguration appConfig,
+            string cndUri,
+            string assetsVersion,
+            string secretKey,
+            int uplineId = 0,
+            byte uplineRoleId = 0,
+            string uplineUsername = "",
+            string site = "",
+            string siteLabel = "")
         {
             CdnUri = cndUri;
             AssetsVersion = assetsVersion;
             SecretKey = secretKey;
             AppConfig = JsonConvert.SerializeObject(appConfig, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
-            Params = JsonConvert.SerializeObject(new { uplineId, uplineRoleId }, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+            Params = JsonConvert.SerializeObject(new { uplineId, uplineRoleId, site, siteLabel }, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
             switch (uplineRoleId)
             {
                 case RoleIdConstants.SUPER:

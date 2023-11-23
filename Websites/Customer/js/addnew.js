@@ -47,8 +47,12 @@
             else if (obj("inSuper").checked) {
                 uname = obj("listCurrency").options[obj("listCurrency").selectedIndex].text;
                 custId = obj("listCurrency").options[obj("listCurrency").selectedIndex].value;
-                var site = obj("listSite").value;
-                url += "uplineId=" + custId + "&uplineRoleId=" + roleId + "&uplineUsername=" + uname + "&theme=nap";
+                var listSite = obj("listSite");
+                const selectedIndex = listSite.selectedIndex;
+                const selectedItem = listSite.options[selectedIndex];
+                const site = selectedItem.value;
+                const siteLabel = (selectedItem).closest("optgroup").label;
+                url += "uplineId=" + custId + "&uplineRoleId=" + roleId + "&uplineUsername=" + uname + "&site=" + site + "&siteLabel=" + siteLabel + "&theme=nap";
                 f.location.href = url;
                 return;
             }

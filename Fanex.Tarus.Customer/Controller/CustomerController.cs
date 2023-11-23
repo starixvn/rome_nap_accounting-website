@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using Fanex.CustomerSetting.Module.Core;
 using Fanex.CustomerSetting.Module.Core.Attributes;
+using Fanex.Tarus.Customer.Constants;
 using Fanex.Tarus.Customer.CreditCustomer.Business;
 using Fanex.Tarus.Customer.Criteria.CreditCustomer;
 using Fanex.Tarus.Customer.Requests;
@@ -103,14 +104,30 @@ namespace Fanex.Tarus.Customer.Controller
         }
 
         [AuthenticateRead]
-        public ActionResult CreateCustomer(int uplineId, byte uplineRoleId, string uplineUsername)
+        public ActionResult CreateCustomer(int uplineId, byte uplineRoleId, string uplineUsername, string site, string siteLabel)
         {
+            if (!string.IsNullOrWhiteSpace(site)
+                && uplineRoleId == RoleIdConstants.SUPER
+                && (site.Equals("76666B", StringComparison.OrdinalIgnoreCase) || site.Equals("IBCIndo", StringComparison.OrdinalIgnoreCase)))
+            {
+                return View("~/Views/Customer/NotAllowAddDirectMaster.cshtml");
+            }
+
             if (string.IsNullOrWhiteSpace(uplineUsername))
             {
                 uplineUsername = AppSession.CustUName;
             }
 
-            var viewModel = new CreateCustomerViewModel(new AppConfiguration(GetApplicationPath()), cdnUri, GetAssetsVersion(), GetHashKey(), uplineId, uplineRoleId, uplineUsername);
+            var viewModel = new CreateCustomerViewModel(
+                new AppConfiguration(GetApplicationPath()),
+                cdnUri,
+                GetAssetsVersion(),
+                GetHashKey(),
+                uplineId,
+                uplineRoleId,
+                uplineUsername,
+                site,
+                siteLabel);
 
             return View(
                 HttpContext.IsDebuggingEnabled
