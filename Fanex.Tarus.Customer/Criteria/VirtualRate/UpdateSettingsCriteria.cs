@@ -207,10 +207,11 @@ namespace Fanex.Tarus.Customer.Criteria.VirtualRate
             string virtualMultiplierFormat)
         {
             var paramXML = string.Empty;
-            if (liveRate.PercentRate == oldLiveRate.PercentRate)
-            {
-                return paramXML;
-            }
+            /// Undo this comment to prevent update old value
+            //if (liveRate.PercentRate == oldLiveRate.PercentRate)
+            //{
+            //    return paramXML;
+            //}
 
             paramXML += string.Format(virtualMultiplierFormat, sportId, betType.Id, liveType, liveRate.PercentRate);
             if (betType.MultiBetTypes != null && betType.MultiBetTypes.Length > 0)

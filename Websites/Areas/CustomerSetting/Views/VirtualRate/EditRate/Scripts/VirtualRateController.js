@@ -38,7 +38,26 @@ var VirtualRateController = function () {
         copyFromSportId: 0,
         copyFromBetTypeId: 0,
         oldSettings: null,
-        closetimer: null
+        closetimer: null,
+        vrSettings: {
+            isApplyVRAB: -1,
+            isApplyVRABMaster: -1,
+            isApplyVRABAgent: -1,
+            isApplyVRABMember: -1,
+            isApplyVRLSSoccer: -1,
+            isApplyVRLSSoccerMaster: -1,
+            isApplyVRLSSoccerAgent: -1,
+            isApplyVRLSSoccerMember: -1,
+            isApplyVRLSBasketball: -1,
+            isApplyVRLSBasketballMaster: -1,
+            isApplyVRLSBasketballAgent: -1,
+            isApplyVRLSBasketballMember: -1,
+            isApplyVRLSOther: -1,
+            isApplyVRLSOtherMaster: -1,
+            isApplyVRLSOtherAgent: -1,
+            isApplyVRLSOtherMember: -1
+
+        }
     };
 
     self.initPage = function () {
