@@ -7,8 +7,10 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
     using Fanex.PTEngine.BusinessObjects;
     using Fanex.Tarus.Customer.CreditCustomer.Business;
     using Fanex.Tarus.Customer.CreditCustomer.Entities;
+    using Fanex.Tarus.Customer.ViewModels.Customer;
     using Fanex.Tarus.Web.Controllers.Filters;
     using Newtonsoft.Json;
+    using Newtonsoft.Json.Serialization;
     using Sunplus.Accounting.Core.Common;
     using Sunplus.Accounting.Core.Helper;
 
@@ -51,7 +53,8 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
                 CustId = custId,
                 CustUserName = uname,
                 CanEditCredit = _customerSettingService.CheckPermissionEditCredit(),
-                SiteName = siteName
+                SiteName = siteName, 
+                AppConfig = JsonConvert.SerializeObject(new AppConfiguration(GetApplicationPath()), new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }),
             };
             return View("~/Views/Customer/CreditCustomer/EditSuper.cshtml", customerSettingView);
         }
@@ -130,6 +133,17 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
 
             // Return result
             return Json(result);
+        }
+
+        private string GetApplicationPath()
+        {
+            var applicationPath = Response.ApplyAppPathModifier(Request.ApplicationPath);
+            if (!applicationPath.EndsWith("/"))
+            {
+                applicationPath += "/";
+            }
+
+            return applicationPath;
         }
     }
 }

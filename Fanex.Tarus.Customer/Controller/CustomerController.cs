@@ -135,8 +135,8 @@ namespace Fanex.Tarus.Customer.Controller
                     : "~/Views/Customer/CreateCustomer.cshtml", viewModel);
         }
 
-        public async Task<ActionResult> GetCustomerSetting(int custId, int roleId, int productGroupId = 1, string language = "en-US")
-            => Content(await httpClient.GetStringAsync($"customer?custId={custId}&roleId={roleId}&productGroupId={productGroupId}&language={language}"));
+        public async Task<ActionResult> GetCustomerSetting(int custId, int roleId, int productGroupId = 1, string language = "en-US", bool isGetUpLine = false)
+      => Content(await httpClient.GetStringAsync($"customer?custId={custId}&roleId={roleId}&productGroupId={productGroupId}&language={language}&isGetUpLine={isGetUpLine}"));
 
         public async Task<ActionResult> CheckExistedCustomer(string username)
             => Content(await httpClient.GetStringAsync($"customer/{username}/exist"));
