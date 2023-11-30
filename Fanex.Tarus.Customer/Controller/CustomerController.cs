@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Configuration;
 using System.Net;
-using System.Net.Http;
 using System.Runtime.Caching;
-using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Fanex.Customer.Client.Configurations;
+using Fanex.Customer.Client.Constants;
+using Fanex.Customer.Client.NETFramework;
+using Fanex.Customer.Client.Params;
+using Fanex.Customer.Client.Services;
 using Fanex.CustomerSetting.Module.Core;
 using Fanex.CustomerSetting.Module.Core.Attributes;
 using Fanex.Tarus.Customer.Constants;
@@ -16,7 +19,6 @@ using Fanex.Tarus.Customer.ViewModels.Customer;
 using Fanex.Tarus.Web.Controllers;
 using Fanex.Tarus.Web.Controllers.Filters;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Agent.Utilities;
@@ -27,27 +29,24 @@ namespace Fanex.Tarus.Customer.Controller
     public class CustomerController : BaseController
     {
         private const string HashKeySessionKey = "Fanex.Tarus.Customer.Controller.CustomerController.PasswordHash";
-        private const string AssetsVersionCacheKey = "Customer:AssetsVersion";
-        private readonly HttpClient httpClient;
+        private const string AssetsVersionCacheKey = "Fanex.Customer:AssetsVersion";
         private readonly string cdnUri;
         private readonly ICustomerSettingService _customerSettingService;
         private readonly Encryptor encryptor;
+        private readonly ICustomerService customerService;
 
         public CustomerController()
-            : this(null, null)
+            : this(null, null, null)
         {
         }
 
-        internal CustomerController(ICustomerSettingService customerSettingService, Encryptor encryptor)
+        internal CustomerController(ICustomerSettingService customerSettingService, Encryptor encryptor, ICustomerService customerService)
         {
-            cdnUri = ConfigurationManager.AppSettings["Customer:CdnUri"];
+            cdnUri = ConfigurationManager.AppSettings["Fanex.Customer:CdnUri"];
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-            httpClient = new HttpClient
-            {
-                BaseAddress = new Uri(ConfigurationManager.AppSettings["Customer:ApiUri"])
-            };
             _customerSettingService = customerSettingService ?? new CustomerSettingService();
             this.encryptor = encryptor ?? new EncryptorImpl();
+            this.customerService = customerService ?? new CustomerService(new CustomerClientConfiguration().Initialize());
         }
 
         private string GetHashKey()
@@ -135,31 +134,14 @@ namespace Fanex.Tarus.Customer.Controller
                     : "~/Views/Customer/CreateCustomer.cshtml", viewModel);
         }
 
-        public async Task<ActionResult> GetCustomerSetting(int custId, int roleId, int productGroupId = 1, string language = "en-US", bool isGetUpLine = false)
-      => Content(await httpClient.GetStringAsync($"customer?custId={custId}&roleId={roleId}&productGroupId={productGroupId}&language={language}&isGetUpLine={isGetUpLine}"));
+        public async Task<ActionResult> GetCustomerSetting(int custId, byte roleId)
+            => Content(await customerService.GetCustomerSetting(custId, roleId));
 
         public async Task<ActionResult> CheckExistedCustomer(string username)
-            => Content(await httpClient.GetStringAsync($"customer/{username}/exist"));
+            => Json(await customerService.CheckExistedCustomer(username), JsonRequestBehavior.AllowGet);
 
-        public async Task<ActionResult> GetGlobalSetting(string site, int currency, int productGroupId = 1, string language = "en-US")
-            => Content(await httpClient.GetStringAsync($"customer/globalsetting?site={site}&currency={currency}&productGroupId={productGroupId}&language={language}"));
-
-        public async Task<string> PostAsStringAsync(string requestUri, object payload = null)
-        {
-            using (var stringContent =
-                   new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json"))
-            {
-                using (var request = new HttpRequestMessage(HttpMethod.Post, requestUri) { Content = stringContent })
-                {
-                    using (var response = await httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
-                               .ConfigureAwait(false))
-                    {
-                        response.EnsureSuccessStatusCode();
-                        return await response.Content.ReadAsStringAsync();
-                    }
-                }
-            }
-        }
+        public async Task<ActionResult> GetGlobalSetting(string site, int currency)
+            => Content(await customerService.GetGlobalSetting(site, currency));
 
         [HttpPost]
         [AuthenticateHost]
@@ -169,11 +151,14 @@ namespace Fanex.Tarus.Customer.Controller
             var rawPassword = Security.Services.Encryptor.Decrypt(generalInfo.Password, HttpContext.Session[HashKeySessionKey].ToString());
             generalInfo.Password = encryptor.CfsEnCode(rawPassword);
 
-            var response = await PostAsStringAsync("customer", new
-            {
-                context = new { creatorId = AppSession.AccId, systemId = 1, ip = Utils.GetClientIP(), Mode = 1 },
-                settings = new { generalInfo, productGroups = JArray.Parse(request.ProductGroups) }
-            });
+            var response = await customerService.CreateCustomer(new CreateCustomerParam(
+                request.GeneralInfo,
+                request.ProductGroups,
+                AppSession.AccId,
+                0,
+                Utils.GetClientIP(),
+                CreationModes.FullMode));
+
             return Content(response);
         }
 
