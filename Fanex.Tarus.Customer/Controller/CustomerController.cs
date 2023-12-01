@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using Fanex.Customer.Client.Configurations;
 using Fanex.Customer.Client.Constants;
+using Fanex.Customer.Client.Models;
 using Fanex.Customer.Client.NETFramework;
 using Fanex.Customer.Client.Params;
 using Fanex.Customer.Client.Services;
@@ -148,6 +149,19 @@ namespace Fanex.Tarus.Customer.Controller
         public async Task<ActionResult> Create(CreateCustomerRequest request)
         {
             var generalInfo = request.GeneralInfo;
+
+            if (generalInfo.IsInternal)
+            {
+                var result = CheckPermissionInsert(generalInfo.IsInternal);
+                if (result.Code != 0)
+                {
+                    return Content(JsonConvert.SerializeObject(result, new JsonSerializerSettings
+                    {
+                        ContractResolver = new CamelCasePropertyNamesContractResolver()
+                    }));
+                }
+            }
+            
             var rawPassword = Security.Services.Encryptor.Decrypt(generalInfo.Password, HttpContext.Session[HashKeySessionKey].ToString());
             generalInfo.Password = encryptor.CfsEnCode(rawPassword);
 
@@ -171,6 +185,31 @@ namespace Fanex.Tarus.Customer.Controller
             }
 
             return applicationPath;
+        }
+        
+        [NonAction]
+        public Result CheckPermissionInsert(bool isInternal)
+        {
+            var result = new Result
+            {
+                Code = 0,
+                Message = "Success"
+            }; 
+            
+            if (!string.Equals(AppSession.SYSTEM, Enumerations.AccountingSystem.Accounting.ToString(), StringComparison.CurrentCultureIgnoreCase))
+            {
+                result.Code = 1000;
+                result.Message = "You are not authorized on this function";
+                return result;
+            }
+            
+            if (isInternal && !_customerSettingService.CheckPermissionFinance())
+            {
+                result.Code = 1000;
+                result.Message = "You're not authorized to create Finance (Internal) account.";
+            }
+
+            return result;
         }
     }
 }
