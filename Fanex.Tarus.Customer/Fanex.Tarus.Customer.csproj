@@ -104,8 +104,8 @@
       <HintPath>..\packages\Fanex.PTVirtualSports.1.0.0.3\lib\net40\Fanex.PTVirtualSports.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Tarus.Admin, Version=1.0.5.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Admin.1.0.5.10\lib\net461\Fanex.Tarus.Admin.dll</HintPath>
+    <Reference Include="Fanex.Tarus.Admin, Version=1.0.5.8, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Admin.1.0.5.9-Add777Site01\lib\net461\Fanex.Tarus.Admin.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Business.Implement, Version=1.0.1.10, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Business.Implement.1.0.1.10\lib\net40\Fanex.Tarus.Business.Implement.dll</HintPath>
@@ -120,7 +120,7 @@
       <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.4.14\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Security, Version=1.0.1.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Security.1.0.1.9\lib\net40\Fanex.Tarus.Security.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.Security.1.0.2.2-Add777Site01\lib\net40\Fanex.Tarus.Security.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Web.Controllers, Version=1.0.1.7, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Web.Controller.1.0.1.7\lib\net40\Fanex.Tarus.Web.Controllers.dll</HintPath>
@@ -224,13 +224,13 @@
       <HintPath>..\packages\Sunplus.Accounting.Core.2.0.4.28\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.7.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.7\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
+      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.7.1-Add777Site01\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.Entities, Version=2.0.2.10, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Accounting.Entities.2.0.2.10\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.Services, Version=1.0.2.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.Services.1.0.2.9\lib\net40\Sunplus.Accounting.Services.dll</HintPath>
+      <HintPath>..\packages\Sunplus.Accounting.Services.1.0.2.11-Add777Site01\lib\net40\Sunplus.Accounting.Services.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Agent.Utilities, Version=3.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Agent.Utilities.3.0.2\lib\net461\Sunplus.Agent.Utilities.dll</HintPath>
@@ -329,8 +329,6 @@
     <Compile Include="Business\AutoTransferAll\AutoTransferAllService.cs" />
     <Compile Include="Business\AutoTransferAll\IAutoTransferAllService.cs" />
     <Compile Include="Business\BetCreditHistory\BetCreditHistoryService.cs" />
-    <Compile Include="Business\CN88\MoveSuper\IMoveSuperService.cs" />
-    <Compile Include="Business\CN88\MoveSuper\MoveSuperService.cs" />
     <Compile Include="Business\ConfigureDirectAccount\ConfigureDirectAccountExcelService.cs" />
     <Compile Include="Business\ConfigureDirectAccount\IConfigureDirectAccountService.cs" />
     <Compile Include="Business\ConfigureDirectAccount\ConfigureDirectAccountService.cs" />
@@ -357,7 +355,6 @@
     <Compile Include="Business\SettingCustomer\OpenCustomer\OpenCustomerService.cs" />
     <Compile Include="Business\SettingCustomer\OpenCustomer\OpenCustomerServiceImpl.cs" />
     <Compile Include="Business\ViewMaxPayoutSettingInformation\ViewMaxPayoutSettingInformationService.cs" />
-    <Compile Include="Business\ViewPeriodsCN88\ViewPeriodsCN88Service.cs" />
     <Compile Include="Business\CreditCustomer\CustomerSettingService.cs" />
     <Compile Include="Business\CreditCustomer\ICustomerSettingService.cs" />
     <Compile Include="Business\CustomerCoreService.cs" />
@@ -392,7 +389,6 @@
     <Compile Include="Controller\AutoTransferAll\AutoTransferAllController.cs" />
     <Compile Include="Controller\BetCreditHistoryController.cs" />
     <Compile Include="Controller\Chatbot\ChatbotController.cs" />
-    <Compile Include="Controller\CN88Customer\MoveCN88SuperController.cs" />
     <Compile Include="Controller\InitializingBetLimit\InitBetLimitController.cs" />
     <Compile Include="Controller\InitializingCustomerSetting\InitDepSettingController.cs" />
     <Compile Include="Controller\LicenseeMemberController.cs" />
@@ -405,7 +401,6 @@
     <Compile Include="Controller\Player3rdController.cs" />
     <Compile Include="Controller\Setting\OpenCustomerController.cs" />
     <Compile Include="Controller\ViewMaxPayoutSettingInformationController.cs" />
-    <Compile Include="Controller\ViewPeriodsCN88Controller.cs" />
     <Compile Include="Controller\ConfigureDirectAccountController.cs" />
     <Compile Include="Controller\CustomerLogin\CustomerOTPController.cs" />
     <Compile Include="Controller\ExtraPtGroup\ExtraPtController.cs" />
@@ -433,17 +428,6 @@
     <Compile Include="Criteria\BetCreditHistory\GetBetCreditHistoryCriteria.cs" />
     <Compile Include="Criteria\BetTrade\GetBetTradeStatusCriteria.cs" />
     <Compile Include="Criteria\BetTrade\UpdateBetTradeStatusCriteria.cs" />
-    <Compile Include="Criteria\CN88\CN88UnlockCustomerCriteria.cs" />
-    <Compile Include="Criteria\CN88\CN88CustomerSettingCriteria.cs" />
-    <Compile Include="Criteria\CN88\HeadlinePossess\GetHeadlinePossessCriteria.cs" />
-    <Compile Include="Criteria\CN88\HeadlinePossess\UpdateHeadlinePossessCriteria.cs" />
-    <Compile Include="Criteria\CN88\Headline\AddNewHeadlineCriteria.cs" />
-    <Compile Include="Criteria\CN88\MoveSuper\GetHeadlineUserNameSuggestionCriteria.cs" />
-    <Compile Include="Criteria\CN88\MoveSuper\MoveSuperCriteria.cs" />
-    <Compile Include="Criteria\CN88\MoveSuper\SearchSuperCriteria.cs" />
-    <Compile Include="Criteria\CN88\SelectCreditRangeCriteria.cs" />
-    <Compile Include="Criteria\CN88\SelectMemberUsedCreditCriteria.cs" />
-    <Compile Include="Criteria\CN88\UpdateCreditCriteria.cs" />
     <Compile Include="Criteria\ConfigureDirectAccount\UpdateImportDirectAccountCriteria.cs" />
     <Compile Include="Criteria\ConfigureDirectAccount\CheckImportDirectAccountFileCriteria.cs" />
     <Compile Include="Criteria\ConfigureDirectAccount\UpdateDirectAccountStatusCriteria.cs" />
@@ -546,8 +530,6 @@
     <Compile Include="Criteria\Suspend\GetSuspendInfoMatrixCriteria.cs" />
     <Compile Include="Criteria\Suspend\GetMultipleSuspendCustomerInfoCriteria.cs" />
     <Compile Include="Criteria\Suspend\GetSingleSuspendCustomerInfoCriteria.cs" />
-    <Compile Include="Criteria\ViewPeriodsCN88\SearchHeadlineCriteria.cs" />
-    <Compile Include="Criteria\ViewPeriodsCN88\UpdateHeadlinePeriodCriteria.cs" />
     <Compile Include="Criteria\ViewPT\IsDepositCustomerCriteria.cs" />
     <Compile Include="Criteria\VirtualRate\GetSportBetTypeReferencesCriteria.cs" />
     <Compile Include="Criteria\VirtualRate\GetVRAutoAdjustSporttypeCriteria.cs" />
@@ -575,8 +557,6 @@
     <Compile Include="DataAccess\AutoTransferAll\IAutoTransferAllAccess.cs" />
     <Compile Include="DataAccess\AutoTransfer\AutoTransferDatalAccess.cs" />
     <Compile Include="DataAccess\BetCreditHistory\BetCreditHistoryDataAccess.cs" />
-    <Compile Include="DataAccess\CN88\MoveSuper\IMoveSuperDataAccess.cs" />
-    <Compile Include="DataAccess\CN88\MoveSuper\MoveSuperDataAccess.cs" />
     <Compile Include="DataAccess\ConfigureDirectAccount\ConfigureDirectAccountRepository.cs" />
     <Compile Include="DataAccess\ConfigureDirectAccount\IConfigureDirectAccountRepository.cs" />
     <Compile Include="DataAccess\CopySuperSetting\CopySuperSettingDataAccess.cs" />
@@ -641,7 +621,6 @@
     <Compile Include="DataAccess\SettingCustomer\OpenCustomer\OpenCustomerDataAccess.cs" />
     <Compile Include="DataAccess\SettingCustomer\OpenCustomer\OpenCustomerDataAccessImpl.cs" />
     <Compile Include="DataAccess\SettingCustomer\Suspend\SuspendStatusService.cs" />
-    <Compile Include="DataAccess\ViewPeriodsCN88\ViewPeriodsCN88DataAccess.cs" />
     <Compile Include="DataAccess\ViewPT\IViewPTRepository.cs" />
     <Compile Include="DataAccess\ViewPT\ViewPTRepository.cs" />
     <Compile Include="DataAccess\VirtualRate\IVirtualRateRepository.cs" />
@@ -664,9 +643,6 @@
     <Compile Include="Entities\AutoTransfer\TurnOffAutoTransferResultModel.cs" />
     <Compile Include="Entities\BaseModel.cs" />
     <Compile Include="Entities\BetCreditHistory\BetCreditHistoryItem.cs" />
-    <Compile Include="Entities\CN88\CreditRangeModel.cs" />
-    <Compile Include="Entities\CN88\MoveSuper\HeadlineUsernameSuggestion.cs" />
-    <Compile Include="Entities\CN88\MoveSuper\SearchSuperModel.cs" />
     <Compile Include="Entities\ConfigureDirectAccount\DirectAccountStatusInfo.cs" />
     <Compile Include="Entities\ConfigureDirectAccount\ImportDirectAccountResult.cs" />
     <Compile Include="Entities\ConfigureDirectAccount\UpdateDirectAccountStatusEffectInfo.cs" />
@@ -732,7 +708,6 @@
     <Compile Include="Entities\SettingCustomer\Suspend\UnsuspendDownlineDetail.cs" />
     <Compile Include="Entities\SettingCustomer\Suspend\Single\SingleUpdateAffectedDownline.cs" />
     <Compile Include="Entities\UpdateTransferOptionResult.cs" />
-    <Compile Include="Entities\ViewPeriodsCN88\HeadlinePeriods.cs" />
     <Compile Include="Entities\VirtualRate\DownlineVirtualRateModel.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Helpers\HmacAuthenticator.cs" />
@@ -752,9 +727,6 @@
     <Compile Include="ManageLicenseeCode\Request\UpdNewLicenseeCodeRequest.cs" />
     <Compile Include="ManageLicenseeCode\Service.cs" />
     <Compile Include="Requests\Casino\GetUnsyncedListRequest.cs" />
-    <Compile Include="Requests\CN88\AddNewHeadlineRequest.cs" />
-    <Compile Include="Requests\CN88\MoveSuper\MoveSuperRequest.cs" />
-    <Compile Include="Requests\CN88\UpdateCreditParam.cs" />
     <Compile Include="Requests\CopySuperSetting\CheckSuperListRequest.cs" />
     <Compile Include="Requests\CopySuperSetting\UpdateWinLossLimitRequest.cs" />
     <Compile Include="Requests\CreditCustomer\SuperPrefixQuery.cs" />
@@ -806,10 +778,6 @@
       <DependentUpon>LicenseeSubsidiaryLabels.resx</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\Chatbot\ChatbotViewModel.cs" />
-    <Compile Include="ViewModels\CN88\CN88CustomerStatusViewModel.cs" />
-    <Compile Include="ViewModels\CN88\CreditRangeViewModel.cs" />
-    <Compile Include="ViewModels\CN88\HeadlinePossessViewModel.cs" />
-    <Compile Include="ViewModels\CN88\MoveSuper\MoveSuperViewModel.cs" />
     <Compile Include="ViewModels\CustomerSetting\OpenCustomer\ClosedMatrixViewModel.cs" />
     <Compile Include="ViewModels\CustomerSetting\OpenCustomer\SingleOpenDownlinesViewModel.cs" />
     <Compile Include="ViewModels\CustomerSetting\OpenCustomer\SingleOpenCustomerViewModel.cs" />
@@ -872,7 +840,6 @@
     <Compile Include="ViewModels\MultipleUpdateSuperStatus\UpdateResultEntity.cs" />
     <Compile Include="ViewModels\ParlayMaxPayout\ParlayMaxPayoutViewModel.cs" />
     <Compile Include="ViewModels\ViewMaxPayoutSettingInformation\SabaSportViewModel.cs" />
-    <Compile Include="ViewModels\ViewPeriodsCN88\ViewPeriodsCN88ViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Sunplus.Accounting.Business\Sunplus.Accounting.Business.csproj">

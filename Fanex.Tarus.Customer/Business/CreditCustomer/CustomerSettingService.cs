@@ -12,9 +12,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
     using System.Collections.Generic;
     using System.Data;
     using System.Linq;
-    using Criteria.CN88;
     using Criteria.CreditCustomer;
-    using Customer.Entities.CN88;
     using DNAide.Utils;
     using Fanex.Data;
     using Fanex.PTEngine.BusinessObjects;
@@ -23,10 +21,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
     using Fanex.Tarus.Customer.CreditCustomer.DataAccess;
     using Fanex.Tarus.Customer.CreditCustomer.Entities;
     using Fanex.Tarus.Customer.Criteria.AutoTransfer;
-    using Fanex.Tarus.Customer.Criteria.CN88.Headline;
-    using Fanex.Tarus.Customer.Criteria.CN88.HeadlinePossess;
     using Fanex.Tarus.Customer.DataAccess.AutoTransfer;
-    using Fanex.Tarus.Customer.ViewModels.CN88;
     using NAP.Framework.Data;
     using Resources;
     using Sunplus.Accounting.Business.Security;
@@ -180,108 +175,6 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
             };
 
             return _customerSettingDataAccess.UpdateAllDayBalTransfer(criteria);
-        }
-
-        public CreditRangeModel GetCreditRangeModel(int searchAccountId, bool isMember)
-        {
-            var credit = _customerSettingDataAccess.GetCreditRangeModel(new SelectCreditRangeCriteria(searchAccountId));
-            if (!isMember)
-            {
-                return credit;
-            }
-
-            var memberUsedCredit = _customerSettingDataAccess.GetMemberCreditRangeModel(new SelectMemberUsedCreditCriteria(searchAccountId));
-            return new CreditRangeModel(
-                credit.GivenCredit - memberUsedCredit.UsedCredit,
-                credit.UsedCredit,
-                memberUsedCredit.UsedCredit,
-                credit.MaxCredit);
-        }
-
-        public Result UpdateCredit(int searchAccountId, int roleId, decimal updCredit)
-        {
-            var credit = GetCreditRangeModel(searchAccountId, roleId == (int)Role.Member);
-            if (updCredit < credit.MinCredit || (roleId != (int)Role.Super && updCredit > credit.MaxCredit))
-            {
-                return new Result("101", Customer_Labels.InvalidCredit);
-            }
-
-            var command = new UpdateCreditCriteria(
-                    searchAccountId,
-                    updCredit,
-                    AppSession.AccId,
-                    Utils.GetClientIP());
-
-            _customerSettingDataAccess.ExecuteNonQuery(command);
-
-            return command.ErrCode.Equals(0)
-               ? new Result()
-               : new Result(command.ErrCode.ToString(), command.ErrMsg);
-        }
-
-        public HeadlinePossessViewModel GetHeadlinePossess(GetHeadlinePossessCriteria criteria, bool isAfterCreateNewSuper)
-        {
-            HeadlinePossessViewModel result = new HeadlinePossessViewModel(isAfterCreateNewSuper);
-            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
-            {
-                var reader = objDb.ExecuteReader(criteria.GetSpParams());
-                while (reader.Read())
-                {
-                    var type = Fanex.CustomerSetting.Module.Core.Utils.ToString(reader["Type"]);
-                    var productId = Fanex.CustomerSetting.Module.Core.Utils.ToInt32(reader["ProductID"]);
-                    var effectiveDate = Fanex.CustomerSetting.Module.Core.Utils.ToDateTime(reader["EffectiveDate"]);
-                    var extraPT = (int)(100 * Fanex.CustomerSetting.Module.Core.Utils.ToDecimal(reader["ExtraPT"]));
-                    if (type.Equals("Current"))
-                    {
-                        result.CurrentEffectiveDate = effectiveDate;
-                        if (productId == 1)
-                        {
-                            result.CurrentSportbookPossess = result.NewSportbookPossess = extraPT;
-
-                        }
-                        else
-                        {
-                            result.CurrentNonSportPossess = result.NewNonSportPossess = extraPT;
-                        }
-                    }
-                    else
-                    {
-                        result.NewEffectiveDate = effectiveDate;
-                        if (productId == 1)
-                        {
-                            result.NewSportbookPossess = extraPT;
-
-                        }
-                        else
-                        {
-                            result.NewNonSportPossess = extraPT;
-                        }
-                    }
-                }
-
-                reader.Close();
-                var outputs = objDb.GetOuputParams();
-                result.CustId = criteria.CustId;
-                result.UserName = Fanex.CustomerSetting.Module.Core.Utils.ToString(outputs["username"]);
-                result.HasMember = Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(outputs["hasmember"]);
-
-                return result;
-            };
-        }
-
-        public CustomerSetting.Module.Core.Models.Result UpdateHeadlinePossess(UpdateHeadlinePossessCriteria criteria)
-        {
-            criteria.UserID = AppSession.AccId;
-            criteria.IP = Utils.GetClientIP();
-            return _customerSettingDataAccess.ExecuteNonQuery(criteria);
-        }
-
-        public CustomerSetting.Module.Core.Models.Result AddNewHeadline(AddNewHeadlineCriteria criteria)
-        {
-            criteria.Creator = AppSession.AccId;
-            criteria.IP = Utils.GetClientIP();
-            criteria.Password = Encryption.CfsEnCode(criteria.Password);
-            return _customerSettingDataAccess.ExecuteNonQuery(criteria);
         }
 
         public dynamic GetHeadlineBelongSite(GetHeadlineBelongSiteCriteria criteria)

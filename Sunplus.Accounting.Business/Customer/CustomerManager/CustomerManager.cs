@@ -151,10 +151,7 @@
                         var IsInternalUser = customerInfoRow.Table.Columns.Contains("IsInternal") && 
                             Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(customerInfoRow["IsInternal"]);
 
-                        if (roleId == (int)Role.Member && 
-                            !AppSettings.IsCN88SiteName(
-                                ConverterCommon.ToString2(customerInfoRow["membersite"])) &&
-                                !IsInternalUser)
+                        if (roleId == (int)Role.Member && !IsInternalUser)
                         {                          
                             memberOutstandingMBC = _customerDAO.GetMemberOustandingMBC(searchAccountId);
                             var memberMBCBalanceModel = _customerDAO.GetMemberMBCBalanceModel(searchAccountId);
@@ -169,8 +166,6 @@
                             cashRow, 
                             downlineStatusInfoRow, 
                             dynamicSettingtable,
-                            null,
-                            null,
                             memberOutstandingMBC,
                             memberBalanceMBC,
                             memberNetPositionMBC,
@@ -206,7 +201,6 @@
                         htmlcontent = RenderCustomerInfoTabs(htmlcontent, customerInfoViewModel);
                         htmlcontent = RenderExtraCustomerInfoTabs(htmlcontent, customerInfoViewModel);
                         htmlcontent = RenderSettingTabs(htmlcontent, customerInfoRow, dynamicSettingtable, customerInfoViewModel);
-                        RenderCN88Customer(ref htmlcontent, customerInfoViewModel);
                         RenderCommonInfo(ref htmlcontent, customerInfoViewModel);
                     }
                 }
@@ -297,7 +291,7 @@
             htmlcontent = RenderCustomerDetail(htmlcontent, customerInfoViewModel);
             htmlcontent = GenUplineBox(htmlcontent, customerInfoViewModel);
 
-            if (!customerInfoViewModel.IsCN88 && !customerInfoViewModel.ViewFiAcc)
+            if (!customerInfoViewModel.ViewFiAcc)
             {
                 htmlcontent = AlertMessage.GetMsg(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "thereisnodata"), AlertMessage.MsgType.Error);
             }
@@ -316,10 +310,6 @@
 
         private string RenderSettingTabs(string htmlcontent, DataRow customerInfoRow, DataTable dynamicSettingtable, CustomerInfoViewModel customerInfoViewModel)
         {
-            if (!customerInfoViewModel.Closed)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "CN88CustomerUnlock");
-            }
 
             if (customerInfoViewModel.SearchAccountRoleId == (int)Role.Headline)
             {
@@ -338,21 +328,6 @@
             htmlcontent = GenLoginDetail(htmlcontent, customerInfoViewModel);
 
             return htmlcontent;
-        }
-
-        private void RenderCN88Customer(ref string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
-        {
-            var isCN88 = AppSettings.IsCN88SiteName(customerInfoViewModel.CustomerSite);
-
-            ShowHideBlock(ref htmlcontent, customerInfoViewModel.SearchAccountRoleId == (int)Role.Headline, "CN88HeadlineVisibleItem", "CN88HeadlineHiddenItem");
-            ShowHideBlock(ref htmlcontent, isCN88, "CN88VisibleItem", "CN88HiddenItem");
-            ShowHideBlock(ref htmlcontent, customerInfoViewModel.ManageCustomerAccess, "CN88CustomerStatus", "CN88CustomerStatusDisabled");
-            ShowHideBlock(ref htmlcontent, customerInfoViewModel.SearchAccountRoleId == (int)Role.Super, "CN88HeadlinePossessOnSuper", string.Empty);
-
-            if (!isCN88 || customerInfoViewModel.SearchAccountRoleId == (int)Role.Headline)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "CN88ViewPT");
-            }
         }
 
         private void ShowHideBlock(ref string htmlContent, bool isShow, string visibleBlockName, string hiddenBlockName)

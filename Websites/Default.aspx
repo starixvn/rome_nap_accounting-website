@@ -318,15 +318,7 @@
                 submitSearch(uname);
             }
         });
-
-        var cn88SuccessfulUpdatingCallback = function (isNew, customerLevel, customerId) {
-            if (isNew && customerLevel == 4) {
-                window.frames["leftPanel"].leftPanelManager.CN88HeadlinePossess(customerId, true);
-            }
-            else {
-                this.$window.location.reload();
-            }
-        }
+        
     </script>
 </body>
 </html>

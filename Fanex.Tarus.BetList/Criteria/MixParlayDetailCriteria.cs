@@ -5,7 +5,6 @@
 
     public class MixParlayDetailCriteria
     {
-        public bool IsCN88 { get; set; }
 
         [SpParam(SqlParamName = "transid")]
         public long TransId { get; set; }

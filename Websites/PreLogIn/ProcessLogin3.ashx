@@ -68,29 +68,6 @@ public class ProcessLogin3 : IHttpHandler, IRequiresSessionState
                     AppSession.AccPwd = pwd;
                     AuthManager.AssignRoles(custIdInt);
                     succ = true;
-
-                    //IMenuManager menuService = CommonBootStrapper.Locator.GetInstance<IMenuManager>();
-                    //menuService.GetUserMenu();
-
-                    //bool isShowNap = (new LoginRepository()).CheckUserSiteAccess(new CheckUserSiteAccessCriteria());
-                    //if (isShowNap)
-                    //{
-                    //    AppSession.UserMenu.Add(new Sunplus.Accounting.Entities.MenuBO
-                    //    {
-                    //        Id = 0,
-                    //        Name = "Nap",
-                    //        Url = System.Configuration.ConfigurationManager.AppSettings["NapHomeSSOController"],
-                    //        System = "accounting",
-                    //        ParentId = 0,
-                    //        FunctionName = "",
-                    //        Target = "_blank",
-                    //        IsHide = false
-                    //    });
-                    //}
-
-                    // Progressive Bonus
-                    //Fanex.CustomerSetting.Module.Core.Web.AppSession.AdminId = custIdInt;
-                    //Fanex.CustomerSetting.Module.Core.Web.AppSession.AdminUsername = username;
                 }
             }
 
@@ -109,9 +86,9 @@ public class ProcessLogin3 : IHttpHandler, IRequiresSessionState
                     var isDeposit = Utils.ToBoolean(dsCustAllInfo.ResultSet.Tables[0].Rows[0]["isDeposit"]);
                     var roleid = Utils.ToInt32(dsCustAllInfo.ResultSet.Tables[0].Rows[0]["roleid"]);
                     var site = roleid != 1 ? Utils.ToString(dsCustAllInfo.ResultSet.Tables[0].Rows[0]["site"]) : Utils.ToString(dsCustAllInfo.ResultSet.Tables[0].Rows[0]["membersite"]);
-                    var isCN88 = AppSettings.IsCN88SiteName(site);
+                   
                     context.Response.Write("<html><head><script type='text/javascript'>\n");
-                    context.Response.Write("window.location.href='../TarusBetList/BetListByCustInfo?custId=" + Converter.ToInt(context.Request["targetCustId"]) + "&isDeposit=" + isDeposit + "&isCN88=" + isCN88 + "';\n");
+                    context.Response.Write("window.location.href='../TarusBetList/BetListByCustInfo?custId=" + Converter.ToInt(context.Request["targetCustId"]) + "&isDeposit=" + isDeposit + "';\n");
                     context.Response.Write("\n</script></head><body></body>");
                 }
             }

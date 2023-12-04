@@ -176,17 +176,10 @@
                     $("#BetlistByCustInfo").initGrid(BetListByCustInfo.gridOpts);
                     $('#BetlistByCustInfo').removeClass("display-none").gridScroller(BetListByCustInfo.gridOpts);
                     if (!isByDateRange) {
-                        if (isCN88 == "1") {
-                            $(".cn88-mix-parlay a").each(function () {
-                                this.click();
-                                $(this).remove();
-                            });
-                        } else {
-                            $("a:[id^='hidden']").each(function () {
-                                this.click();
-                                $(this).removeAttr("href");
-                            });
-                        }
+                        $("a:[id^='hidden']").each(function () {
+                            this.click();
+                            $(this).removeAttr("href");
+                        });
                     }
 
                     BetListByCustInfo.initPager(_length,
@@ -228,7 +221,7 @@
             BetListByCustInfo.paramGetBetBetlist.betType = bettypeTmp;
             BetListByCustInfo.paramGetBetBetlist.statusIds = BetListByCustInfo.getSelectedStatus();
             BetListByCustInfo.paramGetBetBetlist.language = $("#languageCodeHidden").val();
-            BetListByCustInfo.URL = isCN88 == "1" ? "CN88BetList/GetBetListByCustInfo_DateRange" : "TarusBetList/GetBetListByCustInfo_DateRange";
+            BetListByCustInfo.URL =  "TarusBetList/GetBetListByCustInfo_DateRange";
             return BetListByCustInfo.paramGetBetBetlist;
         }
         else {
@@ -236,7 +229,7 @@
             BetListByCustInfo.paramGetBetBetlistbyRefno.transactionId = $('#txtRefNo').val();
             BetListByCustInfo.paramGetBetBetlistbyRefno.language = $("#languageCodeHidden").val();
 
-            BetListByCustInfo.URL = isCN88 == "1" ? "CN88BetList/GetBetListByCustInfo_Refno" : "BetList/GetBetListByCustInfo_Refno";
+            BetListByCustInfo.URL =  "BetList/GetBetListByCustInfo_Refno";
             return BetListByCustInfo.paramGetBetBetlistbyRefno;
         }
     },
@@ -587,41 +580,6 @@ function showNewCombMP(transId, transIndex, refNo, handicap1, handicap2, betchec
             divMaxPayout.toggleClass("hide");
         }
         divCombinationOfferName.toggleClass("hide");
-        $("#BetlistByCustInfo").gridScroller(BetListByCustInfo.gridOpts);
-    }
-}
-
-function showParlaySubBetsCN88(transId, transIndex, refNo, handicap1, handicap2, betcheck, betteam, custId) {
-    var divParlay = $("#cn88-sub-tickets-" + transId + "-" + transIndex);
-    var language = $("#languageCodeHidden").val();
-    if (divParlay.css("display") === "none") {
-        try { parent.BlockUI(); } catch (e) { }
-        var params = [
-            "transid=", transId, "&refno=", refNo, "&hdp1=", handicap1, "&hdp2=", handicap2, "&betcheck=", betcheck, "&betteam=", betteam, "&custId=", custId, "&language=", language
-        ];
-
-        $.ajax({
-            type: "POST",
-            url: window.rootUrl + "CN88BetList/GetMixParlayDetail",
-            data: params.join(""),
-            success: function (result) {
-                divParlay.html(result).css("display", "block");
-                $("#cn88-betlist-row-" + transId + " .cn88-mix-parlay").addClass("cn88-mix-parlay-collapse");
-                $("#offer-name-cn88-" + transId + "-" + transIndex).css("display", "none");
-                $("#BetlistByCustInfo").gridScroller(BetListByCustInfo.gridOpts);
-            },
-            error: function () {
-                try { parent.jQuery.unblockUI(); } catch (e) { }
-            },
-            complete: function () {
-                try { parent.jQuery.unblockUI(); } catch (e) { }
-            }
-        });
-    }
-    else {
-        divParlay.css("display", "none");
-        $("#cn88-betlist-row-" + transId + " .cn88-mix-parlay").removeClass("cn88-mix-parlay-collapse");
-        $("#offer-name-cn88-" + transId + "-" + transIndex).css("display", "block");
         $("#BetlistByCustInfo").gridScroller(BetListByCustInfo.gridOpts);
     }
 }

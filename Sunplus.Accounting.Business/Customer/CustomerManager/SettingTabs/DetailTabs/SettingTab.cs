@@ -46,13 +46,10 @@
             var agCasinoLinkSetting = string.Empty;
 
             var creditDCSLink = string.Empty;
-            var cn88EditSettingLink = string.Empty;
-            var cn88AddnewDownlineLink = string.Empty;
 
             switch (roleId)
             {
-                case 0: // CN88 Headline
-                    infoUrl = "Customer/EditCustomerInfo.aspx?custId=" + custId + "&type=Headline";
+                case 0:
                     break;
                 case 1: // member
                     detailUrl = customerInfoViewModel.IsDeposit ? "DepositCustomer/EditSettingAgent" : "EditMember/EditMemberPage?custId=" + custId + "&agentId=" + agentId + "&uname=" + userName + "&siteName=" + customerInfoViewModel.CustomerSite;
@@ -61,7 +58,6 @@
                     TemplateHandler.Assign(ref htmlcontent, "{IsHidden1}", "hidden");
                     TemplateHandler.Assign(ref htmlcontent, "{IsShow1}", "");
                     creditDCSLink = "DCS/ViewCustomerSetting?productId={0}&language=en-US&customerLevel=1&uplinelevel=2&customerId=" + custId;
-                    cn88EditSettingLink = $"CN88CustomerSetting/ViewCN88CustomerSetting/Edit?language=en-US&productId=1&customerLevel=1&uplineId={parentId}&customerId={custId}";
                     break;
 
                 case 2: // agent
@@ -73,8 +69,6 @@
                     TemplateHandler.Assign(ref htmlcontent, "{type}", "Agent");
                     if (!CustomerUtils.IsTransferDaily(Convert.ToString(masterId))) TemplateHandler.RemoveBlock(ref htmlcontent, "editTransferTime");
                     creditDCSLink = "DCS/ViewCustomerSetting?productId={0}&language=en-US&customerLevel=2&customerId=" + custId;
-                    cn88EditSettingLink = $"CN88CustomerSetting/ViewCN88CustomerSetting/Edit?language=en-US&productId=1&customerLevel=2&uplineId={parentId}&customerId={custId}";
-                    cn88AddnewDownlineLink = $"CN88CustomerSetting/ViewCN88CustomerSetting/Create?language=en-US&productId=1&customerLevel=1&uplineId={custId}";
                     break;
 
                 case 3: // master
@@ -85,8 +79,6 @@
                     agCasinoLinkSetting = string.Format("AGCasino/EditAGCasinoGameSetting?customerId={0}&uplineId={1}&roleId={2}", custId, superId, roleId);                  
                     TemplateHandler.Assign(ref htmlcontent, "{type}", "Master");
                     creditDCSLink = "DCS/ViewCustomerSetting?productId={0}&language=en-US&customerLevel=3&customerId=" + custId;
-                    cn88EditSettingLink = $"CN88CustomerSetting/ViewCN88CustomerSetting/Edit?language=en-US&productId=1&customerLevel=3&uplineId={parentId}&customerId={custId}";
-                    cn88AddnewDownlineLink = $"CN88CustomerSetting/ViewCN88CustomerSetting/Create?language=en-US&productId=1&customerLevel=2&uplineId={custId}";
                     break;
 
                 case 4: // super
@@ -98,8 +90,6 @@
                     TemplateHandler.Assign(ref htmlcontent, "{type}", "Super");
                     if (custId < 100) TemplateHandler.RemoveBlock(ref htmlcontent, "editTransferTime"); // for dummy super
                     creditDCSLink = "DCS/ViewCustomerSetting?productId={0}&language=en-US&customerLevel=4&customerId=" + custId;
-                    cn88EditSettingLink = $"CN88CustomerSetting/ViewCN88CustomerSetting/Edit?language=en-US&productId=1&customerLevel=4&customerId={custId}";
-                    cn88AddnewDownlineLink = $"CN88CustomerSetting/ViewCN88CustomerSetting/Create?language=en-US&productId=1&customerLevel=3&uplineId={custId}";
                     break;
 
                 default:
@@ -116,17 +106,13 @@
             TemplateHandler.Assign(ref htmlcontent, "{BitcoinLinkSetting}", string.Format(creditDCSLink, 69));
             TemplateHandler.Assign(ref htmlcontent, "{sabaclubLinkSetting}", string.Format(creditDCSLink, 42));
             TemplateHandler.Assign(ref htmlcontent, "{agcasinoLinkSetting}", agCasinoLinkSetting);
-            TemplateHandler.Assign(ref htmlcontent, "{vgamingLinkSetting}", string.Format(creditDCSLink, 66));
-            TemplateHandler.Assign(ref htmlcontent, "{linkEditSettingCN88}", cn88EditSettingLink);
-            TemplateHandler.Assign(ref htmlcontent, "{linkAddnewDownlineCN88}", cn88AddnewDownlineLink);
-            TemplateHandler.Assign(ref htmlcontent, "{CustomerStatus}", customerInfoViewModel.CN88CustStatusName);
-            TemplateHandler.Assign(ref htmlcontent, "{CustomerStatusId}", customerInfoViewModel.CN88CustStatus);                 
+            TemplateHandler.Assign(ref htmlcontent, "{vgamingLinkSetting}", string.Format(creditDCSLink, 66));     
             TemplateHandler.Assign(ref htmlcontent, "{SabaCasinoLinkSetting}", string.Format(creditDCSLink, 6));
 
             //---- for menu details -----------
             TemplateHandler.Assign(ref htmlcontent, "{linkSettingDetail}", detailUrl);
             TemplateHandler.Assign(ref htmlcontent, "{linkDownlineList}", downlineListURL);
-            TemplateHandler.Assign(ref htmlcontent, "{linkAddnewDownline}", addDownlineURL);
+            TemplateHandler.Assign(ref htmlcontent, "{linkAddnewDownline}", addDownlineURL); 
             TemplateHandler.Assign(ref htmlcontent, "{IsShow1}", "hidden");
 
             //Chatbot

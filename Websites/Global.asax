@@ -27,7 +27,6 @@
 <%@ Import Namespace="Chatbot.Client" %>
 <%@ Import Namespace="Chatbot.Client.Configurations" %>
 <%@ Import Namespace="Fanex.Tarus.Customer.Helpers" %>
-<%@ Import Namespace="CN88.CustomerSetting.Client" %>
 <%@ Import Namespace="System.Globalization" %>
 <%@ Import Namespace="System.Threading" %>
 <%@ Import Namespace="Fanex.Tarus.BetList.Constants" %>
@@ -66,7 +65,6 @@
         AreaRegistration.RegisterAllAreas();
 
         Fanex.Data.Configuration.DbSettingProviderManager.Current.Start();
-        CN88CustomerSettingRegistration.Init();
         CustomerSettingRegistration.Init();
         SettingMatrixRegistration.Init();
 
@@ -231,7 +229,6 @@
         if (!url.Contains("BetList/GetBetListByRefNo") &&
             !url.Contains("BetList/GetBetListByProduct") &&
             !url.Contains("BetList/GetMixParlayDetail") &&
-            !url.Contains("/CN88BetList/") &&
             Thread.CurrentThread.CurrentCulture.Name != Language.Default)
         {
             Thread.CurrentThread.CurrentCulture = new CultureInfo(Language.Default);

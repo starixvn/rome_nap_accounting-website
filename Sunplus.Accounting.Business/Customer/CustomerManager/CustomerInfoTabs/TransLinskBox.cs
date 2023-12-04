@@ -28,8 +28,7 @@
 
             TemplateHandler.Assign(ref tplTransLink, "statementLink", statementLink);
             bool enableDeposit = WebSettings.IsApplySplitingDepositeCustomer;
-            if ((accLevel != Globals.AccountType.Member && Fanex.Tarus.Infrastructure.Configurations.AppSettings.IsCN88SiteName(customerInfoViewModel.CustomerSite))
-                || (enableDeposit && customerInfoViewModel.IsDeposit && accLevel != Globals.AccountType.Member))
+            if (enableDeposit && customerInfoViewModel.IsDeposit && accLevel != Globals.AccountType.Member)
             {
                 TemplateHandler.RemoveBlock(ref tplTransLink, "downlinelistbtn");
             }
@@ -91,7 +90,7 @@
                     lblDownlineList = "Member List";
                     break;
                 case Globals.AccountType.Member:
-                    downlineListURL = "TarusBetList/BetListByCustInfo?CustID=" + customerInfoViewModel.CustId + "&isDeposit=" + customerInfoViewModel.IsDeposit + "&isCN88=" + customerInfoViewModel.IsCN88;
+                    downlineListURL = "TarusBetList/BetListByCustInfo?CustID=" + customerInfoViewModel.CustId + "&isDeposit=" + customerInfoViewModel.IsDeposit;
                     lblDownlineList = "Bet List";
                     TemplateHandler.RemoveBlock(ref tplTransLink, "balance");
                     break;

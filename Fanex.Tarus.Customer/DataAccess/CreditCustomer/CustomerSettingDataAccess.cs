@@ -7,13 +7,7 @@
 
 namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Data;
-    using System.Linq;
     using Customer.DataAccess;
-    using Customer.Entities.CN88;
     using CustomerSetting.Module.Core;
     using DNAide.Core;
     using Fanex.Data;
@@ -25,6 +19,11 @@ namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
     using NAP.Framework.Data;
     using Sunplus.Accounting.Core.Common;
     using Sunplus.Accounting.Core.Extensions;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Linq;
 
 
     /// <summary>
@@ -204,36 +203,6 @@ namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
             }
 
             return new Fanex.Tarus.Customer.Entities.Result(500, string.Empty);
-        }
-
-        public CreditRangeModel GetCreditRangeModel(ICriteria criteria)
-        {
-            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
-            {
-                objDb.AssignParamValues(criteria.GetSpParams());
-                var reader = objDb.ExecuteReader();
-                reader.Read();
-                return new CreditRangeModel(
-                    Utils.ToDecimal(reader["GivenCredit"]),
-                    Utils.ToDecimal(reader["UsedCredit"]),
-                    Utils.ToDecimal(reader["MinCredit"]),
-                    Utils.ToDecimal(reader["MaxCredit"]));
-            }
-        }
-
-        public CreditRangeModel GetMemberCreditRangeModel(ICriteria criteria)
-        {
-            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
-            {
-                objDb.AssignParamValues(criteria.GetSpParams());
-                var reader = objDb.ExecuteReader();
-                reader.Read();
-                return new CreditRangeModel(
-                    0,
-                    Utils.ToDecimal(reader["TotalBetStake"]),
-                    0,
-                    0);
-            }
         }
 
         public IEnumerable<HeadlineBelongSiteInfo> GetHeadlineBelongSite(ICriteria criteria)

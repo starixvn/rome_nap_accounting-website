@@ -66,7 +66,7 @@ public class EditUsername : BaseHandler
             var username = _context.Request["txtOldUname"];
 
             return CheckSpecialPermission(username)
-                && CheckCN88SiteCreditSiteDepositSitePermission(username);
+                && CheckCreditSiteDepositSitePermission(username);
         }
 
         return false;

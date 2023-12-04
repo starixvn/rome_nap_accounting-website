@@ -98,60 +98,6 @@ var LeftPanelManager = function () {
 
         parent.OpenNextPopup("ProductStatusSetting", url, title, width, height, true, false, window, 0, null, null);
     };
-
-    self.CN88EditCustStatus = function (custId, userName, status) {
-        var param = {
-            custId: custId,
-            userName: userName,
-            status: status
-        };
-        var url = "CustomerSetting/ViewCN88CustomerStatus?" + $.param(param);
-        parent.OpenNextPopup("CN88CustomerStatusSetting", url, "Update Account Status", 400, 200, true, false, window, 0, null, null);
-    }
-
-    self.CN88EditCustCredit = function (searchAccountId, roleId, userName) {
-        var param = {
-            searchAccountId: searchAccountId,
-            roleId: roleId
-        };
-        var url = "CustomerSetting/CreditPopup?" + $.param(param);
-        parent.OpenNextPopup("CN88EditCustCredit", url, 'Update Credits - ' + userName, 400, 250, true, false, window, 0, null, null);
-    }
-
-    self.CN88UnlockCust = function (custId) {
-        if (confirm('Do you want to unlock this account?')) {
-            parent.BlockUI();
-            $.ajax({
-                type: "POST",
-                url: "CustomerSetting/UpdateCN88UnlockAccess",
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                data: JSON.stringify({ custId: custId }),
-                success: function (result) {
-                    if (result.IsSuccess) {
-                        setTimeout(function () {
-                            top.window.frames['content'].submitSearch();
-                        }, 3000)
-                    }
-                    else {
-                        alert(result.ErrorMessage);
-                    }
-                },
-                complete: function () {
-                    try { parent.jQuery.unblockUI(); } catch (e) { }
-                }
-            });
-        }
-    }
-
-    self.CN88HeadlinePossess = function (custId, isAfterCreateNewSuper) {
-        var param = {
-            custId: custId,
-            isAfterCreateNewSuper: isAfterCreateNewSuper
-        };
-        var url = "CustomerSetting/ViewHeadlinePossessOnSuper?" + $.param(param);
-        parent.OpenNextPopup("CN88HeadlinePossessOnSuper", url, 'Edit Headline Possess on Super', 500, isAfterCreateNewSuper ? 400 : 300, true, false, window, 0, null, null);
-    }
 };
 
 window.top.reloadLeftPanel = function () {

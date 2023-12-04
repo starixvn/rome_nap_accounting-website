@@ -54,15 +54,10 @@ public partial class InternalView : System.Web.UI.Page
             }
         }
         string strParams = string.Empty;
-        if (checkCustomerBelongToSpecialSiteResult.Site.IndexOf("CN88") >= 0)
-        {
-            strParams = AccountingCoreUtils.EncryptString(JsonConvert.SerializeObject(internalLoginModel), 1024, strPath);
-        }
-        else
-        {
-            strParams = Request["custName"] + "&" + Request["accId"] + "&" + Sunplus.Accounting.DataAccess.IBCDLL.SystemInfo.GetDBTime().Ticks;
-            strParams = AccountingCoreUtils.EncryptString(strParams, 1024, strPath);
-        }
+       
+        strParams = Request["custName"] + "&" + Request["accId"] + "&" + Sunplus.Accounting.DataAccess.IBCDLL.SystemInfo.GetDBTime().Ticks;
+        strParams = AccountingCoreUtils.EncryptString(strParams, 1024, strPath);
+       
 
         string internalAgentUrl = InternalLoginManager.GetInternalLoginUrl(checkCustomerBelongToSpecialSiteResult.Site, roleType);
         string url = string.Format("{0}?{1}params={2}&isVpn={3}",

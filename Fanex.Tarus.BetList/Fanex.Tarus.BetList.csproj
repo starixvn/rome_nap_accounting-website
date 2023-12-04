@@ -67,27 +67,6 @@
     <Reference Include="BouncyCastle.Cryptography, Version=2.0.0.0, Culture=neutral, PublicKeyToken=072edcf4a5328938, processorArchitecture=MSIL">
       <HintPath>..\packages\BouncyCastle.Cryptography.2.2.1\lib\net461\BouncyCastle.Cryptography.dll</HintPath>
     </Reference>
-    <Reference Include="CN88.BetList.Core, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CN88.BetList.Core.1.0.1\lib\net461\CN88.BetList.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="CN88.BetList.ESports, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CN88.BetList.ESports.1.0.0.4\lib\net461\CN88.BetList.ESports.dll</HintPath>
-    </Reference>
-    <Reference Include="CN88.BetList.Keno, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CN88.BetList.Keno.1.0.0.1\lib\net461\CN88.BetList.Keno.dll</HintPath>
-    </Reference>
-    <Reference Include="CN88.BetList.Lottery, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CN88.BetList.Lottery.1.0.0.2\lib\net461\CN88.BetList.Lottery.dll</HintPath>
-    </Reference>
-    <Reference Include="CN88.BetList.NumberGame, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CN88.BetList.NumberGame.1.0.0.3\lib\net461\CN88.BetList.NumberGame.dll</HintPath>
-    </Reference>
-    <Reference Include="CN88.BetList.Sportsbook, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CN88.BetList.Sportsbook.1.0.3\lib\net461\CN88.BetList.Sportsbook.dll</HintPath>
-    </Reference>
-    <Reference Include="CN88.BetList.VirtualSports, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CN88.BetList.VirtualSports.1.0.0.4\lib\net461\CN88.BetList.VirtualSports.dll</HintPath>
-    </Reference>
     <Reference Include="DNAide, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.DNAide.2.1.0.0\lib\net40\DNAide.dll</HintPath>
       <Private>True</Private>
@@ -276,7 +255,7 @@
       <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.4.14\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Security, Version=1.0.1.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Security.1.0.1.9\lib\net40\Fanex.Tarus.Security.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.Security.1.0.2.2-Add777Site01\lib\net40\Fanex.Tarus.Security.dll</HintPath>
     </Reference>
     <Reference Include="IBCCrypt, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Crypt.1.1.0.0\lib\net40\IBCCrypt.dll</HintPath>
@@ -390,13 +369,13 @@
       <HintPath>..\packages\Sunplus.Accounting.Core.2.0.4.28\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.7.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.7\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
+      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.7.1-Add777Site01\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.Entities, Version=2.0.2.10, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Accounting.Entities.2.0.2.10\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.Services, Version=1.0.2.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.Services.1.0.2.9\lib\net40\Sunplus.Accounting.Services.dll</HintPath>
+      <HintPath>..\packages\Sunplus.Accounting.Services.1.0.2.11-Add777Site01\lib\net40\Sunplus.Accounting.Services.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Libraries.AOP, Version=1.0.4218.28561, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Libraries.AOP.1.0.4218.28561\lib\net40\Sunplus.Libraries.AOP.dll</HintPath>
@@ -542,12 +521,10 @@
     <Compile Include="Business\BetDetails\BetDetailsExporter.cs" />
     <Compile Include="Business\BetDetails\IBetDetailsExporter.cs" />
     <Compile Include="Business\BetListDetailService.cs" />
-    <Compile Include="Business\CN88BetListService.cs" />
     <Compile Include="Business\BetListService.cs" />
     <Compile Include="Business\ExchangeBetListService.cs" />
     <Compile Include="Business\ExportExcelBetlist.cs" />
     <Compile Include="Business\IBetListDetailService.cs" />
-    <Compile Include="Business\ICN88BetListService.cs" />
     <Compile Include="Business\IBetListService.cs" />
     <Compile Include="Business\IResultService.cs" />
     <Compile Include="Business\ISystemParlayExcel.cs" />
@@ -591,10 +568,8 @@
     <Compile Include="Controller\ExchangeBetListController.cs" />
     <Compile Include="Controller\BetBuilderController.cs" />
     <Compile Include="Controller\AGCasinoBetListController.cs" />
-    <Compile Include="Controller\CN88BetListController.cs" />
     <Compile Include="Controller\TarusBetListController.cs" />
     <Compile Include="Controller\ThirdPartyController.cs" />
-    <Compile Include="Core\CN88BetListHelper.cs" />
     <Compile Include="Core\BetListHelper.cs" />
     <Compile Include="Core\LoggingHandler.cs" />
     <Compile Include="Core\NpoiExcelUtils.cs" />
@@ -680,7 +655,6 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Helper\BetListRenderHelper.cs" />
     <Compile Include="Helper\ChoiceHelper.cs" />
-    <Compile Include="Helper\CN88BetListHelpers.cs" />
     <Compile Include="Helper\ReportServices.cs" />
     <Compile Include="Models\BalanceUp.cs" />
     <Compile Include="Models\SiteModel.cs" />
@@ -690,7 +664,6 @@
     <Compile Include="Models\CashOutHistoryModel.cs" />
     <Compile Include="Models\CashOutDetails.cs" />
     <Compile Include="Models\CashOutTicket.cs" />
-    <Compile Include="Models\CN88\BetListData.cs" />
     <Compile Include="Models\CombinationParlay.cs" />
     <Compile Include="Models\Event.cs" />
     <Compile Include="Models\EventExcel.cs" />
@@ -715,7 +688,6 @@
     <Compile Include="Models\TennisResult\TennisResultEntity.cs" />
     <Compile Include="Models\TennisResult\TennisSetResult.cs" />
     <Compile Include="Models\TicketDetail.cs" />
-    <Compile Include="Models\CN88\TicketDto.cs" />
     <Compile Include="Models\VirtualHRPopupModel.cs" />
     <Compile Include="Models\VirtualTennisModel.cs" />
     <Compile Include="Models\WinLossModel.cs" />
@@ -731,8 +703,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Platforms.resx</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\CN88MixParlayDetailViewModel.cs" />
-    <Compile Include="ViewModel\CN88BetListViewModel.cs" />
     <Compile Include="ViewModel\LanguageViewModel.cs" />
     <Compile Include="ViewModel\BetListByRefNoViewModel.cs" />
     <Compile Include="ViewModel\ThirdPartyResultViewModel.cs" />

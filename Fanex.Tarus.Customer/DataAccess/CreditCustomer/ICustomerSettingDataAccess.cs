@@ -7,12 +7,14 @@
 
 namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
 {
+    using CustomerSetting.Module.Core.Models;
+    using Fanex.Tarus.Admin.ViewModel;
+    using Fanex.Tarus.Customer.CreditCustomer.Entities;
+    using NAP.Framework.Data;
     using System.Collections;
     using System.Collections.Generic;
     using System.Data;
-    using Customer.Entities.CN88;
     using CustomerSetting.Module.Core.Models;
-    using Fanex.Tarus.Admin.ViewModel;
     using Fanex.Tarus.Customer.CreditCustomer.Entities;
     using NAP.Framework.Data;
 
@@ -49,10 +51,6 @@ namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
         Fanex.Tarus.Customer.Entities.Result UpdateAllDayBalTransfer(ICriteria criteria);
 
         Result ExecuteNonQuery(ICriteria criteria);
-
-        CreditRangeModel GetCreditRangeModel(ICriteria criteria);
-
-        CreditRangeModel GetMemberCreditRangeModel(ICriteria criteria);
 
         IEnumerable<SuperPrefix> GetSuperPrefixes(ICriteria criteria);
 

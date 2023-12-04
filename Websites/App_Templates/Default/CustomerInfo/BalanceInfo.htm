@@ -1,27 +1,4 @@
 ﻿<table border="0" align="left" style="width: 240px;" cellspacing="1">
-    <!--CN88HeadlineVisibleItem-->
-    <tr>
-        <td class="dot_left">
-            Yesterday Cash
-        </td>
-        <td class="dot_right b">
-            {CurYesterdayCashBalCur} <span class="{colorYesterdayCash}" onclick="DoTransfer(this, '{YesterdayCashBal}', '{CustName}');">
-                {YesterdayCashBalCur}
-            </span>
-        </td>
-    </tr>
-    <tr class="{hiddenbalance}">
-        <td class="dot_left">
-            Yesterday Balance
-        </td>
-        <td class="dot_right b">
-            {CurYesterdayBalCur}<span class="{colorYesterdayBal}" onclick="DoTransfer(this, '{YesterdayBal}', '{CustName}');">
-                {YesterdayBalCur}
-            </span>
-        </td>
-    </tr>
-    <!--/CN88HeadlineVisibleItem-->
-    <!--CN88HeadlineHiddenItem-->
     <tr>
         <td class="dot_left" style="width: 100px;">
             Total Cash
@@ -76,7 +53,6 @@
         </td>
     </tr>
     <!--/3rdPendingTransfer-->
-    <!--CN88HiddenItem-->
     <!--NetPosition-->
     <tr>
         <td class="dot_left">
@@ -87,13 +63,11 @@
         </td>
     </tr>
     <!--/NetPosition-->
-    <!--/CN88HiddenItem-->
     <tr>
         <td class="dot_left">
             Given Credit
         </td>
         <td class="dot_right b">
-            <!--CN88HiddenItem-->
             <!--AllowGiven-->
             {GivenCreditCurrency}
             <input style="display: none; width: 100px; margin-top: -3px;" class="form_top" maxlength="14"
@@ -103,15 +77,6 @@
                 {GivenCredit}
             </span>
             <!--/AllowGiven-->
-            <!--/CN88HiddenItem-->
-            <!--CN88VisibleItem-->
-            <!--AllowGiven-->
-            {GivenCreditCurrency}
-            <span id="spanGivenCredit" name="spanGivenCredit" class="{givencreditClass}" onclick="leftPanelManager.CN88EditCustCredit({CustId}, {RoleId}, '{CustName}');">
-                {GivenCredit}
-            </span>
-            <!--/AllowGiven-->
-            <!--/CN88VisibleItem-->
             <!--NotAllowGiven-->
             {GivenCreditCurrency} <span id="span1" name="spanGivenCredit" class="{givencreditClass}">
                 {GivenCredit}
@@ -128,16 +93,6 @@
             {BetCredit}
         </td>
     </tr>
-    <!--CN88VisibleItem-->
-    <tr>
-        <td class="dot_left">
-            Yesterday Bet Credit
-        </td>
-        <td class="dot_right b">
-            {GivenCreditCurrency} {YesterdayBetCredit}
-        </td>
-    </tr>
-    <!--/CN88VisibleItem-->
     <!--/betcredit-->
     <tr>
         <td class="dot_left">
@@ -165,7 +120,6 @@
             <span>{UsedCredit}</span>
         </td>
     </tr>
-    <!--/CN88HeadlineHiddenItem-->
     <tr class="{superhidden}">
         <td class="dot_left" onmouseover="Tip('Total Super {statuscounttooltip}', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)"
             onmouseout="UnTip()">
