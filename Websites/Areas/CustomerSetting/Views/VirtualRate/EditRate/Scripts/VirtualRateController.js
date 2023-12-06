@@ -119,7 +119,10 @@ var VirtualRateController = function () {
             }
         }
 
-        settingHtml += '<tr class="padding-row end-row"><td colspan="' + tableColumnCount + '">&nbsp;</td></tr>';
+        if (settingHtml !== '') {
+            settingHtml += '<tr class="padding-row end-row"><td colspan="' + tableColumnCount + '">&nbsp;</td></tr>';
+        }
+
         tableBody.empty().append(settingHtml);
     };
 

@@ -43,5 +43,11 @@ namespace Fanex.Tarus.Customer.Entities.VirtualRate
         public List<SportVirtualRateModel> SportVirtualRateList { get; set; }
 
         public List<int> VirtualRateValueRange { get; set; }
+
+        public DownlineVirtualRateModel MasterVirtualRate { get; set; }
+
+        public DownlineVirtualRateModel AgentVirtualRate { get; set; }
+
+        public DownlineVirtualRateModel MemberVirtualRate { get; set; }
     }
 }

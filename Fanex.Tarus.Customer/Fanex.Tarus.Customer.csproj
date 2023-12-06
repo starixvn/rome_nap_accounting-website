@@ -733,6 +733,7 @@
     <Compile Include="Entities\SettingCustomer\Suspend\Single\SingleUpdateAffectedDownline.cs" />
     <Compile Include="Entities\UpdateTransferOptionResult.cs" />
     <Compile Include="Entities\ViewPeriodsCN88\HeadlinePeriods.cs" />
+    <Compile Include="Entities\VirtualRate\DownlineVirtualRateModel.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Helpers\HmacAuthenticator.cs" />
     <Compile Include="Helpers\NumberFormater.cs" />

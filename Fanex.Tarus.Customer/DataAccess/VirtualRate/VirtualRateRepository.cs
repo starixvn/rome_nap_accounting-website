@@ -11,6 +11,7 @@
     using Fanex.Tarus.Customer.Entities;
     using Fanex.Tarus.Customer.Entities.VirtualRate;
     using Fanex.Tarus.Customer.Entities.VirtualRate.SportBetTypeReferences;
+    using static Sunplus.Accounting.Core.Common.Enumerations;
 
     public class VirtualRateRepository : IVirtualRateRepository
     {
@@ -129,6 +130,38 @@
                     if(targetSport.NonLiveVirtualRate != null)
                     {
                         result.SportVirtualRateList.Add(targetSport);
+                    }
+
+
+                    if (reader.NextResult())
+                    {
+                        while (reader.Read())
+                        {
+                            var downlineVR = new DownlineVirtualRateModel
+                            {
+                                RoleId = Converter.ToInt(reader["roleid"]),
+                                Count = Converter.ToInt(reader["cnt"]),
+                                LockBB = Converter.ToInt(reader["lockBB"]),
+                                LockSC = Converter.ToInt(reader["lockSC"]),
+                                LockOS = Converter.ToInt(reader["lockOS"]),
+                                EnableAB = Converter.ToInt(reader["enableAB"]),
+                            };
+
+                            switch (downlineVR.RoleId)
+                            {
+                                case (int)Role.Master:
+                                    result.MasterVirtualRate = downlineVR;
+                                    break;
+                                case (int)Role.Agent:
+                                    result.AgentVirtualRate = downlineVR;
+                                    break;
+                                case (int)Role.Member:
+                                    result.MemberVirtualRate = downlineVR;
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
                     }
                 }
             }
