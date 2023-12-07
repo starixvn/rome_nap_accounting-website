@@ -22,6 +22,7 @@ using Fanex.Tarus.Web.Controllers.Filters;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Agent.Utilities;
 
 namespace Fanex.Tarus.Customer.Controller
@@ -41,13 +42,15 @@ namespace Fanex.Tarus.Customer.Controller
         {
         }
 
-        internal CustomerController(ICustomerSettingService customerSettingService, Encryptor encryptor, ICustomerService customerService)
+        internal CustomerController(ICustomerSettingService customerSettingService, Encryptor encryptor,
+            ICustomerService customerService)
         {
             cdnUri = ConfigurationManager.AppSettings["Fanex.Customer:CdnUri"];
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             _customerSettingService = customerSettingService ?? new CustomerSettingService();
             this.encryptor = encryptor ?? new EncryptorImpl();
-            this.customerService = customerService ?? new CustomerService(new CustomerClientConfiguration().Initialize());
+            this.customerService =
+                customerService ?? new CustomerService(new CustomerClientConfiguration().Initialize());
         }
 
         private string GetHashKey()
@@ -67,6 +70,7 @@ namespace Fanex.Tarus.Customer.Controller
                 version = DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString();
                 cache.Set(AssetsVersionCacheKey, version, DateTime.Now.AddHours(4));
             }
+
             return version;
         }
 
@@ -96,7 +100,8 @@ namespace Fanex.Tarus.Customer.Controller
         [AuthenticateRead]
         public ActionResult CreateSuper()
         {
-            var viewModel = new CreateCustomerViewModel(new AppConfiguration(GetApplicationPath()), cdnUri, GetAssetsVersion(), GetHashKey());
+            var viewModel = new CreateCustomerViewModel(new AppConfiguration(GetApplicationPath()), cdnUri,
+                GetAssetsVersion(), GetHashKey());
             return View(
                 HttpContext.IsDebuggingEnabled
                     ? "~/Views/Customer/Create-Debug.cshtml"
@@ -104,11 +109,13 @@ namespace Fanex.Tarus.Customer.Controller
         }
 
         [AuthenticateRead]
-        public ActionResult CreateCustomer(int uplineId, byte uplineRoleId, string uplineUsername, string site, string siteLabel)
+        public ActionResult CreateCustomer(int uplineId, byte uplineRoleId, string uplineUsername, string site,
+            string siteLabel)
         {
             if (!string.IsNullOrWhiteSpace(site)
                 && uplineRoleId == RoleIdConstants.SUPER
-                && (site.Equals("76666B", StringComparison.OrdinalIgnoreCase) || site.Equals("IBCIndo", StringComparison.OrdinalIgnoreCase)))
+                && (site.Equals("76666B", StringComparison.OrdinalIgnoreCase) ||
+                    site.Equals("IBCIndo", StringComparison.OrdinalIgnoreCase)))
             {
                 return View("~/Views/Customer/NotAllowAddDirectMaster.cshtml");
             }
@@ -149,20 +156,19 @@ namespace Fanex.Tarus.Customer.Controller
         public async Task<ActionResult> Create(CreateCustomerRequest request)
         {
             var generalInfo = request.GeneralInfo;
-
-            if (generalInfo.IsInternal)
+            
+            var checkResult = CheckRequest(request);
+            
+            if (checkResult.Code != 0)
             {
-                var result = CheckPermissionInsert(generalInfo.IsInternal);
-                if (result.Code != 0)
+                return Content(JsonConvert.SerializeObject(checkResult, new JsonSerializerSettings
                 {
-                    return Content(JsonConvert.SerializeObject(result, new JsonSerializerSettings
-                    {
-                        ContractResolver = new CamelCasePropertyNamesContractResolver()
-                    }));
-                }
+                    ContractResolver = new CamelCasePropertyNamesContractResolver()
+                }));
             }
             
-            var rawPassword = Security.Services.Encryptor.Decrypt(generalInfo.Password, HttpContext.Session[HashKeySessionKey].ToString());
+            var rawPassword = Security.Services.Encryptor.Decrypt(generalInfo.Password,
+                HttpContext.Session[HashKeySessionKey].ToString());
             generalInfo.Password = encryptor.CfsEnCode(rawPassword);
 
             var response = await customerService.CreateCustomer(new CreateCustomerParam(
@@ -186,6 +192,40 @@ namespace Fanex.Tarus.Customer.Controller
 
             return applicationPath;
         }
+
+        [NonAction]
+        public Result CheckRequest(CreateCustomerRequest request)
+        {
+            if (!string.IsNullOrWhiteSpace(request.GeneralInfo.Site))
+            {
+                return new Result
+                {
+                    Code = 1,
+                    Message = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "alertSite")
+                };
+            }
+            
+            if (request.GeneralInfo.Currency == 0)
+            {
+                return new Result()
+                {
+                    Code = 1,
+                    Message = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "alertCurrency")
+                };
+            }
+            
+            if (request.GeneralInfo.IsInternal)
+            {
+                var result = CheckPermissionInsert(request.GeneralInfo.IsInternal);
+                if (result.Code != 0) return result;
+            }
+            
+            return new Result
+            {
+                Code = 0,
+                Message = "Success"
+            };
+        }
         
         [NonAction]
         public Result CheckPermissionInsert(bool isInternal)
@@ -194,15 +234,16 @@ namespace Fanex.Tarus.Customer.Controller
             {
                 Code = 0,
                 Message = "Success"
-            }; 
-            
-            if (!string.Equals(AppSession.SYSTEM, Enumerations.AccountingSystem.Accounting.ToString(), StringComparison.CurrentCultureIgnoreCase))
+            };
+
+            if (!string.Equals(AppSession.SYSTEM, Enumerations.AccountingSystem.Accounting.ToString(),
+                    StringComparison.CurrentCultureIgnoreCase))
             {
                 result.Code = 1000;
                 result.Message = "You are not authorized on this function";
                 return result;
             }
-            
+
             if (isInternal && !_customerSettingService.CheckPermissionFinance())
             {
                 result.Code = 1000;
