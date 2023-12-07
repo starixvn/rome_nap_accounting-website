@@ -1,6 +1,4 @@
-﻿using NPOI.SS.UserModel;
-
-namespace Fanex.Tarus.Customer.Business.InitializingCustomerSetting
+﻿namespace Fanex.Tarus.Customer.Business.InitializingCustomerSetting
 {
     using Fanex.NAP.Framework.Data;
     using Fanex.Tarus.Customer.Criteria.InitializingCustomerSetting.Deposit;
@@ -9,6 +7,7 @@ namespace Fanex.Tarus.Customer.Business.InitializingCustomerSetting
     using Fanex.Tarus.Customer.Entities.InitializingCustomerSetting;
     using Fanex.Tarus.Customer.Requests.InitializingCustomerSetting;
     using Fanex.Tarus.Customer.ViewModels.InitializingCustomerSetting;
+    using Fanex.Tarus.Infrastructure.Common;
     using NPOI.SS.UserModel;
     using System;
     using System.Collections;
@@ -70,7 +69,7 @@ namespace Fanex.Tarus.Customer.Business.InitializingCustomerSetting
         public InitializingCustomerSettingViewModel GetSetting()
         {
             var currencies = dataAccess.GetExchangeCurrency();
-            var sites = dataAccess.GetSites();
+            var sites = dataAccess.GetSites(AppSession.AccId);
 
             return dataAccess.GetSetting(new GetDepositSettingCriteria(), currencies, sites);
         }
@@ -611,7 +610,7 @@ namespace Fanex.Tarus.Customer.Business.InitializingCustomerSetting
                 }
             }
             var sportbettypesetting = GetSportAndBettypeWithSetting(productDcs);
-            var sites = dataAccess.GetSites().ToList();
+            var sites = dataAccess.GetSites(AppSession.AccId).ToList();
             var exchangeCurrencies = dataAccess.GetExchangeCurrency().ToList();
             var groupSettings = config.Settings.OrderBy(st => st.SettingOrder).ThenBy(st => st.SettingType).GroupBy(setting => setting.SettingType);
 
@@ -692,7 +691,7 @@ namespace Fanex.Tarus.Customer.Business.InitializingCustomerSetting
                 Settings = settingInfos
             };
 
-            var sites = dataAccess.GetSites().ToList();
+            var sites = dataAccess.GetSites(AppSession.AccId).ToList();
 
             var exchangeCurrencies = dataAccess.GetExchangeCurrency().ToList();
 

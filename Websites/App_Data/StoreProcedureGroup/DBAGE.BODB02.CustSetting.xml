@@ -8,7 +8,7 @@
   </Function>
   <Function Name="Customer List">
     <Setting Key="Acc_CustomerSelByAg" SpName="Acc_CustomerSelByAg" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerSelByMAg" SpName="Acc_CustomerSelByMAg" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerSelByMAg" SpName="Acc_CustomerSelByMAg_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerSelBySAg" SpName="Acc_CustomerSelBySAg" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerSelMAgByCom" SpName="Acc_CustomerSelMAgByCom" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>

@@ -30,38 +30,7 @@ public partial class CustInfo : PageBase
             return;
         }
 
-        if (IsNotFinanceUserName(username))
-        {
-            var serviceBase = new ServiceBase();
-            var checkCustomerBelongToSpecialSiteResult = serviceBase.CheckCustomerBelongToSpecialSite(new CheckCustomerIsSpecialSiteCriteria
-            {
-                UserName = username,
-                CheckCustId = IsAllowSearchByCustomerId
-            });
-
-            if (checkCustomerBelongToSpecialSiteResult.IsSpecialHeadline &&
-                !Permissions.HasPermission(Enumerations.Functions.AccessSpecialSites))
-            {
-                HtmlHolder.Text = AlertMessage.GetMsg(GetGlobalResourceObject(Constants.Resources.LanguageResources, "DontHavePermission").ToString(), AlertMessage.MsgType.Error);
-                return;
-            }
-
-            var checkSpecialSitePermission = serviceBase.CheckSpecialSitePermission(new CheckSpecialSitePermissionCriteria
-            {
-                UserID = AppSession.AccId,
-                CustName = username,
-                CheckCustId = IsAllowSearchByCustomerId
-            });
-
-            if (checkSpecialSitePermission.ErrorCode > 0)
-            {
-                HtmlHolder.Text = AlertMessage.GetMsg(checkSpecialSitePermission.ErrorMessage, AlertMessage.MsgType.Error);
-                return;
-            }
-        }
-
         CustomerManager customer = new CustomerManager();
-
         try
         {
             Hashtable hash = customer.GetHtmlCustInfoContent(username.Trim(), IsAllowSearchByCustomerId);
@@ -71,12 +40,6 @@ public partial class CustInfo : PageBase
         {
             HtmlHolder.Text = AlertMessage.GetMsg(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "thereisnodata"), AlertMessage.MsgType.Error);
         }
-    }
-
-    private bool IsNotFinanceUserName(string userName)
-    {
-        var customerType = customerAuthorizationService.GetCustomerTypes(userName);
-        return !customerType.Any(c => c.IsInternal);
     }
 }
 

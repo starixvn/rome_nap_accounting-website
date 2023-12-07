@@ -143,6 +143,7 @@
             TemplateHandler.Assign(ref htmlcontent, "{RndStr}", rndStr);
             TemplateHandler.Assign(ref htmlcontent, "{AccKey}", accKey);
             TemplateHandler.Assign(ref htmlcontent, "{AccId}", AppSession.AccId.ToString());
+            TemplateHandler.Assign(ref htmlcontent, "{CustomerSite}", customerInfoViewModel.CustomerSite;
             TemplateHandler.Assign(ref htmlcontent, "{InternalAgent}", WebSettings.InternalAgentUrl);
             return htmlcontent;
         }

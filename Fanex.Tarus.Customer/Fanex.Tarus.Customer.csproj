@@ -105,7 +105,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Admin, Version=1.0.5.8, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Admin.1.0.5.9-Add777Site01\lib\net461\Fanex.Tarus.Admin.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.Admin.1.0.5.9-Add777Site02\lib\net461\Fanex.Tarus.Admin.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Business.Implement, Version=1.0.1.10, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Business.Implement.1.0.1.10\lib\net40\Fanex.Tarus.Business.Implement.dll</HintPath>
