@@ -1,20 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using Fanex.Data;
+﻿using Fanex.Data;
 using Fanex.NAP.Framework.Data;
 using Fanex.Tarus.Customer.Entities;
 using Fanex.Tarus.Customer.Resources;
 using Fanex.Tarus.DataAccess.Implement.Customer;
+using Fanex.Tarus.DataAccess.Interface.Customer;
+using System;
+using System.Collections.Generic;
 
 namespace Fanex.Tarus.Customer.DataAccess.LicenseeSubsidiary
 {
     internal class LicenseeSubsidiaryDataAccess : ILicenseeSubsidiaryDataAccess
     {
-        private readonly DepositCustomerAccess _depositCustomerAccess;
+        private readonly IDepositCustomerAccess _depositCustomerAccess;
 
         public LicenseeSubsidiaryDataAccess() : this(null) { }
 
-        public LicenseeSubsidiaryDataAccess(DepositCustomerAccess depositCustomerAccess)
+        public LicenseeSubsidiaryDataAccess(IDepositCustomerAccess depositCustomerAccess)
         {
             _depositCustomerAccess = depositCustomerAccess ?? new DepositCustomerAccess();
         }
