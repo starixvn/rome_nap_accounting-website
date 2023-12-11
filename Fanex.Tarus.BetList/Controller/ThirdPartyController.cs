@@ -180,6 +180,9 @@
         public ActionResult JiliResult(ThirdPartyResultRequest request)
             => BaseResult(request, "JiliResultConfigs");
 
+        public ActionResult WEResult(ThirdPartyResultRequest request)
+            => BaseResult(request, "WEResultConfigs");
+
         private void SetProductResultTitle(int productId)
             => ProductResultTitle = CacheRef.GetProductName(productId) + " Result";
     }
