@@ -613,13 +613,14 @@ function RenderExcelGrid(BetLimits) {
 
 function InsertExcel() {
     HideError();
+    var settingStatus = $("#ckbIsUAT").prop("checked") ? 3 : 1;
     try { parent.BlockUI(); } catch (e) { }
     var request = {
         BetLimits: excelContent
     };
     $.ajax({
         type: "POST",
-        url: "InsertBetLimits",
+        url: 'InsertBetLimits?settingStatus=' + settingStatus,
         data: request,
         success: function (rs) {
             if (rs && rs.ErrorCode) {

@@ -73,9 +73,9 @@
         }
 
         [HttpPost, AuthenticateHost]
-        public ActionResult InsertBetLimits(InsertBetLimitRequest request)
+        public ActionResult InsertBetLimits(InsertBetLimitRequest request, byte settingStatus)
         {
-            return Json(service.InsertSetting(request.BetLimits, AppSession.AccId, HttpContext.Request.UserHostAddress));
+            return Json(service.InsertSetting(request.BetLimits, AppSession.AccId, HttpContext.Request.UserHostAddress, settingStatus));
         }
 
         [HttpGet, AuthenticateRead]
