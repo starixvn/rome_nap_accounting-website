@@ -24,7 +24,6 @@
     <Setting Key="SiteDB1_Acc_BettransInsTransferAllMembers" SpName="Acc_BettransInsTransferAllMembers" DbName="DBTXN.bodb02.bodbAdminNet" />
     <Setting Key="SiteDB1_Acc_ClearBalanceAllDownlines" SpName="Acc_ClearBalanceAllDownlines" DbName="DBTXN.bodb02.bodbAdminNet" />
     <Setting Key="SiteDB1_Acc_CustomerInsClearBalance" SpName="Acc_CustomerInsClearBalance" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
-
   </Function>
   <Function Name="Left Panel - BalanceInfo">
     <Setting Key="SiteDB1_Acc_CustomerSelBalanceCashInfo" SpName="Acc_CustomerSelBalanceCashInfo" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
@@ -32,6 +31,7 @@
     <Setting Key="SiteDB1_Acc_BalanceMemberSel" SpName="Acc_BalanceMemberSel" DbName="DBTXN.BODB02.bodbAdminNet" Plain="0" />
     <Setting Key="SiteDB1_Acc_CustomerTotalAmountSel" SpName="Acc_CustomerTotalAmountSel" DbName="DBTXN.BODB02.bodbAdminNet" Plain="0" />
   </Function>
+
   <Function Name="ResetWinning">
     <Setting Key="SiteDB1_Task_ResetWinning_Non3rdParty_Add" SpName="Task_ResetWinning_Non3rdParty_Add" DbName="DBTXN.bodb02.bodbAdminNet" TimeOut="0" />
   </Function>

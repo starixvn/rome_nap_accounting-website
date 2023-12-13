@@ -135,7 +135,7 @@
     <Setting Key="Acc_OperatorUpd" SpName="Acc_OperatorUpd" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Customer - Login">
-    <Setting Key="Acc_LoginAdmin" SpName="Acc_LoginAdmin" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_LoginAdmin" SpName="Acc_LoginAdmin_KL" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Exchange Daily">
     <Setting Key="Acc_ExchangeIns" SpName="Acc_ExchangeIns" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -281,6 +281,7 @@
     <Setting Key="Acc_AdminSelStatusByProductId" SpName="Acc_AdminSelStatusByProductId" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_Admin_DisableGameStatusSelect" SpName="Acc_Admin_DisableGameStatusSelect" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_Admin_DisableNewProductStatusSelect" SpName="Acc_Admin_DisableNewProductStatusSelect" DbName="DBCust.CustDB.bodbAdminNet" />
+
     <Setting Key="Acc_AdminCheckAllowedDownlinesByLevel" SpName="Acc_AdminCheckAllowedDownlinesByLevel" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_AdminUpdCSStatus_Cust" SpName="Acc_AdminUpdCSStatus_Cust" DbName="DBCust.CustDB.bodbAdminNet" />
 
@@ -402,7 +403,6 @@
     <Setting Key="Acc_FinanceTransferMulDelTmpExcel" SpName="Acc_FinanceTransferMulDelTmpExcel" DbName="DBCUST.CustDB.bodbAdminNet" />
     <Setting Key="Acc_FinanceTransferMulInsTmpExcel" SpName="Acc_FinanceTransferMulInsTmpExcel" DbName="DBCUST.CustDB.bodbAdminNet" />
   </Function>
-
   <Function Name="Admin - Dormant Account List">
     <Setting Key="Acc_DormantAccountListByHeadline_Sel" SpName="Acc_DormantAccountListByHeadline_Sel" DbName="DBCUST.CustDB.bodbAdminNet" />
     <Setting Key="Acc_DormantDownlineListByHeadline_Sel" SpName="Acc_DormantDownlineListByHeadline_Sel" DbName="DBCUST.CustDB.bodbAdminNet" />
