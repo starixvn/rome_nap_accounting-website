@@ -34,7 +34,7 @@
 
         ValidateBetLimitResponse ValidateSetting(HttpPostedFileBase uploadFile, bool isGlobalValue, byte settingStatus);
 
-        Result InsertSetting(IEnumerable<BetLimitModel> betLimitModels, int userId, string ip);
+        Result InsertSetting(IEnumerable<BetLimitModel> betLimitModels, int userId, string ip, byte settingStatus);
 
         IEnumerable<BaseModel> GetAllCurrency();
 
@@ -367,13 +367,14 @@
             return bettypeName;
         }
 
-        public Result InsertSetting(IEnumerable<BetLimitModel> betLimitModels, int userId, string ip)
+        public Result InsertSetting(IEnumerable<BetLimitModel> betLimitModels, int userId, string ip, byte settingStatus)
         {
             var criteria = new BetLimitInsCriteria
             {
-                BetLimits = betLimitModels,
+                BetLimits = betLimitModels ?? new List<BetLimitModel>(),
                 UserID = userId,
-                IP = ip
+                IP = ip,
+                SettingStatus = settingStatus
             };
 
             return dataAccess.InsertSetting(criteria);
