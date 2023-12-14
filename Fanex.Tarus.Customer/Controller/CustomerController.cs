@@ -142,8 +142,8 @@ namespace Fanex.Tarus.Customer.Controller
                     : "~/Views/Customer/CreateCustomer.cshtml", viewModel);
         }
 
-        public async Task<ActionResult> GetCustomerSetting(int custId, byte roleId)
-            => Content(await customerService.GetCustomerSetting(custId, roleId));
+        public async Task<ActionResult> GetCustomerSetting(int custId, byte roleId, string language = "en-US", bool isGetUpline = false)
+        => Content(await customerService.GetCustomerSetting(custId, roleId, language, isGetUpline));
 
         public async Task<ActionResult> CheckExistedCustomer(string username)
             => Json(await customerService.CheckExistedCustomer(username), JsonRequestBehavior.AllowGet);
@@ -196,7 +196,7 @@ namespace Fanex.Tarus.Customer.Controller
         [NonAction]
         public Result CheckRequest(CreateCustomerRequest request)
         {
-            if (!string.IsNullOrWhiteSpace(request.GeneralInfo.Site))
+            if (string.IsNullOrWhiteSpace(request.GeneralInfo.Site))
             {
                 return new Result
                 {
