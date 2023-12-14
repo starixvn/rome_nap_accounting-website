@@ -110,8 +110,8 @@
     <Reference Include="Fanex.Tarus.DataAccess.Implement, Version=1.0.1.7, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.DataAccess.Implement.1.0.1.7\lib\net40\Fanex.Tarus.DataAccess.Implement.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.4.11, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.4.11\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
+    <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.4.13, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.4.13-MaxPayoutInfo001\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Security, Version=1.0.1.9, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Security.1.0.1.9\lib\net40\Fanex.Tarus.Security.dll</HintPath>
@@ -205,8 +205,8 @@
       <HintPath>..\packages\RestSharp.105.2.3\lib\net4\RestSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Sunplus.Accounting.Core, Version=2.0.4.23, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.Core.2.0.4.23\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
+    <Reference Include="Sunplus.Accounting.Core, Version=2.0.4.25, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Accounting.Core.2.0.4.25-MaxPayoutInfo001\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.7.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.7\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
@@ -317,6 +317,7 @@
     <Compile Include="Business\ParlayMaxPayout\ParlayMaxPayoutService.cs" />
     <Compile Include="Business\SettingCustomer\OpenCustomer\OpenCustomerService.cs" />
     <Compile Include="Business\SettingCustomer\OpenCustomer\OpenCustomerServiceImpl.cs" />
+    <Compile Include="Business\ViewMaxPayoutSettingInformation\ViewMaxPayoutSettingInformationService.cs" />
     <Compile Include="Business\ViewPeriodsCN88\ViewPeriodsCN88Service.cs" />
     <Compile Include="Business\CreditCustomer\CustomerSettingService.cs" />
     <Compile Include="Business\CreditCustomer\ICustomerSettingService.cs" />
@@ -830,6 +831,7 @@
     <Compile Include="ViewModels\MultipleUpdateSuperStatus\SupersStatusViewModel.cs" />
     <Compile Include="ViewModels\MultipleUpdateSuperStatus\UpdateResultEntity.cs" />
     <Compile Include="ViewModels\ParlayMaxPayout\ParlayMaxPayoutViewModel.cs" />
+    <Compile Include="ViewModels\ViewMaxPayoutSettingInformation\SabaSportViewModel.cs" />
     <Compile Include="ViewModels\ViewPeriodsCN88\ViewPeriodsCN88ViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

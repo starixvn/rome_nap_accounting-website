@@ -1,11 +1,21 @@
 ﻿namespace Fanex.Tarus.Customer.Controller
 {
+    using Fanex.Tarus.Customer.Business.ViewMaxPayoutSettingInformation;
     using Fanex.Tarus.Infrastructure.Caching;
     using System.Linq;
     using System.Web.Mvc;
 
     public class ViewMaxPayoutSettingInformationController : Controller
     {
+        private readonly ViewMaxPayoutSettingInformationService service;
+
+        public ViewMaxPayoutSettingInformationController() : this(null) { }
+
+        public ViewMaxPayoutSettingInformationController(ViewMaxPayoutSettingInformationService service)
+        {
+            this.service = service ?? new ViewMaxPayoutSettingInformationService();
+        }
+
         public ActionResult Index()
         {
             var betTypeIds = new[] { 1, 3, 5, 7, 8, 15, 20, 21, 153, 501, 609, 610, 612, 701, 704, 705, 9400, 9404, 9405, 9406, 9407, 9408, 9409 };
@@ -21,7 +31,7 @@
                 return CacheRef.GetBettype(betTypeId.ToString());
             }).ToArray();
             ViewData["SportTypeNames"] = string.Join(" and ", sportTypeIds.Select(sportTypeId => CacheRef.GetSportName(sportTypeId.ToString())));
-
+            ViewData["SabaSports"] = service.GetSabaSports(string.Empty);
             return View("~/Views/MaxPayoutSettingInformation/Index.cshtml");
         }
     }
