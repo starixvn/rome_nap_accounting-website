@@ -36,8 +36,14 @@ function CheckSuper() {
                 showAlertMessage('errMsg', data.Result.ErrorMessage, 1);
             }
         },
-        error: function (err) {
-            showAlertMessage('errMsg', 'Internal server error.', 1);
+        error: function (xhr) {
+            if (xhr.status === 403) {
+                showAlertMessage("errMsg", $.parseJSON(xhr.responseText).ErrorMessage, 1);
+            }
+            else {
+                showAlertMessage('errMsg', 'Internal server error.', 1);
+            }
+            parent.jQuery.unblockUI();
         },
         complete: function () {
             parent.jQuery.unblockUI();
@@ -162,8 +168,13 @@ function ValidateBeforUpdate(request) {
                 parent.jQuery.unblockUI();
             }
         },
-        error: function (err) {
-            showAlertMessage('errMsg', 'Internal server error.', 1);
+        error: function (xhr) {
+            if (xhr.status === 403) {
+                showAlertMessage("errMsg", $.parseJSON(xhr.responseText).ErrorMessage, 1);
+            }
+            else {
+                showAlertMessage('errMsg', 'Internal server error.', 1);
+            }            
             parent.jQuery.unblockUI();
         }
     });
