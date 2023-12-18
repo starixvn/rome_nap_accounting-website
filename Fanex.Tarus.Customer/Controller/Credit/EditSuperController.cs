@@ -56,7 +56,7 @@ namespace Fanex.Tarus.Customer.Credit.Controllers
                 SiteName = siteName, 
                 AppConfig = JsonConvert.SerializeObject(new AppConfiguration(GetApplicationPath()), new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }),
             };
-            return View("~/Views/Customer/CreditCustomer/EditSuper.cshtml", customerSettingView);
+            return View("~/Views/Customer/CreditCustomer/EditCustomer.cshtml", customerSettingView);
         }
 
         /// <summary>
