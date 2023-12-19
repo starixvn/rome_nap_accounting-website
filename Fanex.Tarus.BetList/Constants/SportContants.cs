@@ -95,5 +95,6 @@
         public const int YeeBet = 159;
         public const int VirtualSports3 = 178;
         public const int WE = 228;
+        public const int Live22 = 227;
     }
 }

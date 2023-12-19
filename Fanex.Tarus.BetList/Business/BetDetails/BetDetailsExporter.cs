@@ -106,7 +106,8 @@
                 sportType == SportContants.RNGWar ||
                 sportType == SportContants.SealEntertainment ||
                 sportType == SportContants.MGRNG ||
-                sportType == SportContants.Jili)
+                sportType == SportContants.Jili ||
+                sportType == SportContants.Live22)
             {
                 return GetRNGCasinoTickets(refNo, custId, transType, winlostDate);
             }

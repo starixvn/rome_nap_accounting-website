@@ -284,6 +284,8 @@
                 return SportContants.PlayerTips;
             if (10300 <= betTypeId && betTypeId <= 10399)
                 return SportContants.WE;
+            if (7601 <= betTypeId && betTypeId <= 7700)
+                return SportContants.Live22;
 
             return 0;
         }
