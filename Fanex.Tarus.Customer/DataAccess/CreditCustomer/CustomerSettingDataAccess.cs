@@ -287,24 +287,27 @@ namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
                 db.AssignParamValues(hash);
                 var ds = db.ExecuteDataSet();
 
-                var rows = ds.Tables[0].Rows;
-
-                if (rows.Count > 0)
-                {
-
-                    foreach (DataRow row in rows)
-                    {
-                        result.AffectedDownlinesInfo.Add(new AffectedDownlinesInfoModel
-                        {
-                            CustId = int.Parse(row["custId"].ToString()),
-                            Name = row["username"].ToString(),
-                            Downlines = row["names"].ToString(),
-                        });
-                    }
-                }
-
                 result.ErrorCode = CastAide.AsInt32(db.GetParameterValue("errcode"));
                 result.ErrorMessage = string.Format("{0}", db.GetParameterValue("errmsg"));
+
+                if (result.ErrorCode == 0)
+                {
+                    var rows = ds.Tables[0].Rows;
+
+                    if (rows.Count > 0)
+                    {
+
+                        foreach (DataRow row in rows)
+                        {
+                            result.AffectedDownlinesInfo.Add(new AffectedDownlinesInfoModel
+                            {
+                                CustId = int.Parse(row["custId"].ToString()),
+                                Name = row["username"].ToString(),
+                                Downlines = row["names"].ToString(),
+                            });
+                        }
+                    }
+                }
             }
 
             return result;
