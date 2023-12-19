@@ -20,7 +20,8 @@ namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
     using Fanex.Tarus.Admin.Entities;
     using Fanex.Tarus.Admin.ViewModel;
     using Fanex.Tarus.Customer.CreditCustomer.Entities;
-    using Fanex.Tarus.Customer.Criteria.CreditCustomer;
+    using Fanex.Tarus.Customer.Entities;
+    using Fanex.Tarus.Customer.Entities.AutoTransfer;
     using NAP.Framework.Data;
     using Sunplus.Accounting.Core.Common;
     using Sunplus.Accounting.Core.Extensions;
@@ -274,44 +275,36 @@ namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
             }
         }
 
-        public string TurnOffAutoTransfer(ICriteria criteria)
+        public UpdateTransferOptionResult UpdateTransferOption(Hashtable hash)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            var result = new UpdateTransferOptionResult
             {
-                db.ExecuteNonQuery(criteria.GetSpParams());
+                AffectedDownlinesInfo = new List<AffectedDownlinesInfoModel>()
+            };
 
-                var outputParams = db.GetOuputParams();
+            using (ObjectDb db = new ObjectDb("Acc_CustomerUpdTransferOption", 600))
+            {
+                db.AssignParamValues(hash);
+                var ds = db.ExecuteDataSet();
 
-                if (outputParams != null)
+                var rows = ds.Tables[0].Rows;
+
+                if (rows.Count > 0)
                 {
-                    return outputParams["targetids"].ToString();
+
+                    foreach (DataRow row in rows)
+                    {
+                        result.AffectedDownlinesInfo.Add(new AffectedDownlinesInfoModel
+                        {
+                            CustId = int.Parse(row["custId"].ToString()),
+                            Name = row["username"].ToString(),
+                            Downlines = row["names"].ToString(),
+                        });
+                    }
                 }
-            }
 
-            return string.Empty;
-        }
-
-        public void InsertToastMessage(ICriteria criteria)
-        {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
-            {
-                db.ExecuteNonQuery(criteria.GetSpParams());
-
-                var outputParams = db.GetOuputParams();
-            }
-        }
-
-        public bool GetAutoTransferJobStatus(int custId)
-        {
-            bool result = false;
-            var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(custId);
-            var criteria = new GetAutoTransferJobStatusCriteria();
-            var key = siteDB.IsSiteDB ? $"SiteDB{siteDB.SiteDBGroupID}_{criteria.GetSettingKey()}" : criteria.GetSettingKey();
-
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
-            {
-                db.ExecuteNonQueryScaleoutDB(criteria.GetSpParams(), siteDB.AGIP);
-                result = CastAide.AsBoolean(db.GetParameterValue("IsAutoJobRunning"));
+                result.ErrorCode = CastAide.AsInt32(db.GetParameterValue("errcode"));
+                result.ErrorMessage = string.Format("{0}", db.GetParameterValue("errmsg"));
             }
 
             return result;

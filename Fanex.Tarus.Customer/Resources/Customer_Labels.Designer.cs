@@ -106,6 +106,51 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 您的帳號現已啟用全天餘額轉帳。 因此，自動轉帳日程已被清除，並且以下客戶：{0} 的下線自動轉帳已禁用。 內容可以在轉帳功能查詢。.
+        /// </summary>
+        public static string ADBTChange_PersonalMessage_ch {
+            get {
+                return ResourceManager.GetString("ADBTChange_PersonalMessage_ch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 您的账号现已启用全天余额转账。 因此，自动转账日程已被清除，并且以下客户：{0} 的下线自动转账已禁用。內容可以在转账功能查询。.
+        /// </summary>
+        public static string ADBTChange_PersonalMessage_cs {
+            get {
+                return ResourceManager.GetString("ADBTChange_PersonalMessage_cs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All Day Balance Transfer is now enabled for your account. As a result, Auto Transfer schedule has been cleared, and the Auto Transfer for downlines will be disabled for the following customers: {0}. Details can be found in Transfer function..
+        /// </summary>
+        public static string ADBTChange_PersonalMessage_en {
+            get {
+                return ResourceManager.GetString("ADBTChange_PersonalMessage_en", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ตอนนี้เปิดใช้งานการโอนยอดคงเหลือทั้งวันสำหรับบัญชีของคุณแล้ว ด้วยเหตุนี้ กำหนดการการโอนอัตโนมัติจึงถูกล้างออกไป และการโอนอัตโนมัติสำหรับดาวน์ไลน์จะถูกปิดใช้งานสำหรับลูกค้าต่อไปนี้: {0} รายละเอียดสามารถพบได้ในฟังก์ชั่นการโอน.
+        /// </summary>
+        public static string ADBTChange_PersonalMessage_th {
+            get {
+                return ResourceManager.GetString("ADBTChange_PersonalMessage_th", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chuyển Khoản Tổng Số Dư đã bật cho tài khoản của bạn. Vì vậy, lịch Chuyển Khoản Tự Động đã bị xóa, và Chuyển Khoản Tự Động cho cấp dưới của bạn sẽ bị tắt cho các tài khoản sau: {0}. Chi tiết có thể được tìm thấy trong chức năng Chuyển Khoản..
+        /// </summary>
+        public static string ADBTChange_PersonalMessage_vn {
+            get {
+                return ResourceManager.GetString("ADBTChange_PersonalMessage_vn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The Auto Transfer process is currently taking place. Kindly wait for the process to complete within a few minutes before changing the Transfer Mode..
         /// </summary>
         public static string ADBTChangeFailed_AutoJobRunning {
@@ -115,7 +160,7 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 您的賬號已啟用全天餘額轉賬。以確保數據準確性，您為下線設置的自動轉賬配置將被禁用。.
+        ///   Looks up a localized string similar to 您的賬號現已啓用全天余額轉賬。 因此，自動轉賬日程已被清除，並且您爲下線設置的自動轉賬配置將被禁用，以確保數據准確性。.
         /// </summary>
         public static string ADBTChangeToastMessage_ch {
             get {
@@ -124,7 +169,7 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 您的账号已启用全天余额转账。以确保数据准确性，您为下线设置的自动转账配置将被禁用。.
+        ///   Looks up a localized string similar to 您的账号现已启用全天余额转账。 因此，自动转账日程已被清除，并且您为下线设置的自动转账配置将被禁用，以确保数据准确性。.
         /// </summary>
         public static string ADBTChangeToastMessage_cs {
             get {
@@ -133,7 +178,7 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your account has been enabled for All Day Balance Transfer. The Auto Transfer configuration you set for downlines will be disabled to ensure data accuracy..
+        ///   Looks up a localized string similar to All Day Balance Transfer is now enabled for your account. As a result, Auto Transfer schedule has been cleared, and the Auto Transfer configuration you set for downlines will be disabled to ensure data accuracy..
         /// </summary>
         public static string ADBTChangeToastMessage_en {
             get {
@@ -142,11 +187,20 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to บัญชีของคุณได้เปิดใช้งานการโอนยอดคงเหลือทั้งวันแล้ว การโอนอัตโนมัติสำหรับดาวน์ไลน์ของคุณจะถูกปิดใช้งานเพื่อความถูกต้องของการดำเนินงาน.
+        ///   Looks up a localized string similar to ตอนนี้เปิดใช้งานการโอนยอดคงเหลือทั้งวันสำหรับบัญชีของคุณแล้ว ด้วยเหตุนี้ ตารางการโอนอัตโนมัติจึงถูกล้างออกไป และการกำหนดค่าการโอนอัตโนมัติที่คุณตั้งค่าไว้สำหรับดาวน์ไลน์จะถูกปิดใช้งานเพื่อให้มั่นใจในความถูกต้องของข้อมูล.
         /// </summary>
         public static string ADBTChangeToastMessage_th {
             get {
                 return ResourceManager.GetString("ADBTChangeToastMessage_th", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chuyển Khoản Tổng Số Dư đã bật cho tài khoản của bạn. Vì vậy, lịch Chuyển Khoản Tự Động đã bị xóa, và cài đặt Chuyển Khoản Tự Động cho cấp dưới của bạn sẽ bị tắt để đảm bảo tính chính xác của dữ liệu..
+        /// </summary>
+        public static string ADBTChangeToastMessage_vn {
+            get {
+                return ResourceManager.GetString("ADBTChangeToastMessage_vn", resourceCulture);
             }
         }
         
@@ -183,6 +237,15 @@ namespace Fanex.Tarus.Customer.Resources {
         public static string ADBTChangeToastTitle_th {
             get {
                 return ResourceManager.GetString("ADBTChangeToastTitle_th", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cấu Hình Chuyển Khoản Tự Động.
+        /// </summary>
+        public static string ADBTChangeToastTitle_vn {
+            get {
+                return ResourceManager.GetString("ADBTChangeToastTitle_vn", resourceCulture);
             }
         }
         
@@ -300,6 +363,15 @@ namespace Fanex.Tarus.Customer.Resources {
         public static string ClickToViewPTInfo {
             get {
                 return ResourceManager.GetString("ClickToViewPTInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Auto Transfer process is currently in progress for this line. Please wait a few minutes for the process to complete before making any changes to the Transfer Condition..
+        /// </summary>
+        public static string ConditionChangeFailed_AutoJobRunning {
+            get {
+                return ResourceManager.GetString("ConditionChangeFailed_AutoJobRunning", resourceCulture);
             }
         }
         
@@ -984,6 +1056,132 @@ namespace Fanex.Tarus.Customer.Resources {
         public static string There_is_no_data {
             get {
                 return ResourceManager.GetString("There_is_no_data", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 您的轉賬設定已被上線更改。 以下客戶已調整自動轉賬狀態和日程表： {0} 。 詳細信息可以在轉賬功能查詢。.
+        /// </summary>
+        public static string TransferConditionChange_PersonalMessage_ch {
+            get {
+                return ResourceManager.GetString("TransferConditionChange_PersonalMessage_ch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 您的转账设定已被上线更改。 以下客户已调整自动转账状态和日程表： {0} 。 详细可以在转账功能查询。.
+        /// </summary>
+        public static string TransferConditionChange_PersonalMessage_cs {
+            get {
+                return ResourceManager.GetString("TransferConditionChange_PersonalMessage_cs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your Transfer Condition was changed by upline. The Auto Transfer status and schedule have been adjusted for the following customers: {0}. Details can be found in Transfer function..
+        /// </summary>
+        public static string TransferConditionChange_PersonalMessage_en {
+            get {
+                return ResourceManager.GetString("TransferConditionChange_PersonalMessage_en", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to เงื่อนไขการโอนของคุณถูกเปลี่ยนแปลงโดยอัพไลน์ สถานะและกำหนดการการโอนอัตโนมัติได้รับการปรับเปลี่ยนสำหรับลูกค้าต่อไปนี้: {0} รายละเอียดสามารถพบได้ในฟังก์ชั่นการโอน.
+        /// </summary>
+        public static string TransferConditionChange_PersonalMessage_th {
+            get {
+                return ResourceManager.GetString("TransferConditionChange_PersonalMessage_th", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Điều Kiện Chuyển Khoản của bạn đã được cấp trên thay đổi. Trạng thái và lịch Chuyển Khoản Tự Động đã được điều chỉnh cho các tài khoản sau: {0}. Chi tiết có thể được tìm thấy trong chức năng Chuyển Khoản..
+        /// </summary>
+        public static string TransferConditionChange_PersonalMessage_vn {
+            get {
+                return ResourceManager.GetString("TransferConditionChange_PersonalMessage_vn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 您的轉賬設定已被上線更改。 您的下線的自動轉賬狀態和日程表已相應調整。 點擊{0}查看詳細信息。.
+        /// </summary>
+        public static string TransferConditionChangeToastMessage_ch {
+            get {
+                return ResourceManager.GetString("TransferConditionChangeToastMessage_ch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 您的转账设定已被上线更改。 您的下线的自动转账状态和日程表已相应调整。 点击{0}查看详细信息。.
+        /// </summary>
+        public static string TransferConditionChangeToastMessage_cs {
+            get {
+                return ResourceManager.GetString("TransferConditionChangeToastMessage_cs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your Transfer Condition was changed by upline. The Auto Transfer status and schedule for your downlines have been adjusted accordingly. Click {0} to view details..
+        /// </summary>
+        public static string TransferConditionChangeToastMessage_en {
+            get {
+                return ResourceManager.GetString("TransferConditionChangeToastMessage_en", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to เงื่อนไขการโอนของคุณถูกเปลี่ยนแปลงโดยอัพไลน์ สถานะและกำหนดการการโอนอัตโนมัติสำหรับดาวน์ไลน์ของคุณได้รับการปรับเปลี่ยนตามนั้น คลิก {0} เพื่อดูรายละเอียด.
+        /// </summary>
+        public static string TransferConditionChangeToastMessage_th {
+            get {
+                return ResourceManager.GetString("TransferConditionChangeToastMessage_th", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Điều Kiện Chuyển Khoản của bạn đã được cấp trên thay đổi. Trạng thái và lịch Chuyển Khoản Tự Động cho cấp dưới của bạn đã được điều chỉnh tương ứng. Nhấn vào {0} để xem chi tiết..
+        /// </summary>
+        public static string TransferConditionChangeToastMessage_vn {
+            get {
+                return ResourceManager.GetString("TransferConditionChangeToastMessage_vn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 自動轉賬配置.
+        /// </summary>
+        public static string TransferConditionChangeToastTitle_ch {
+            get {
+                return ResourceManager.GetString("TransferConditionChangeToastTitle_ch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 自动转账配置.
+        /// </summary>
+        public static string TransferConditionChangeToastTitle_cs {
+            get {
+                return ResourceManager.GetString("TransferConditionChangeToastTitle_cs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto Transfer Config.
+        /// </summary>
+        public static string TransferConditionChangeToastTitle_en {
+            get {
+                return ResourceManager.GetString("TransferConditionChangeToastTitle_en", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ตั้งค่าโอนอัตโนมัติ.
+        /// </summary>
+        public static string TransferConditionChangeToastTitle_th {
+            get {
+                return ResourceManager.GetString("TransferConditionChangeToastTitle_th", resourceCulture);
             }
         }
         

@@ -10,11 +10,11 @@ namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
     using System.Collections;
     using System.Collections.Generic;
     using System.Data;
+    using Customer.Entities.CN88;
+    using CustomerSetting.Module.Core.Models;
+    using Fanex.Tarus.Admin.ViewModel;
     using Fanex.Tarus.Customer.CreditCustomer.Entities;
     using NAP.Framework.Data;
-    using CustomerSetting.Module.Core.Models;
-    using Customer.Entities.CN88;
-    using Fanex.Tarus.Admin.ViewModel;
 
     /// <summary>
     /// TODO: Update summary.
@@ -57,9 +57,6 @@ namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
         IEnumerable<SuperPrefix> GetSuperPrefixes(ICriteria criteria);
 
         IEnumerable<HeadlineBelongSiteInfo> GetHeadlineBelongSite(ICriteria criteria);
-
-        string TurnOffAutoTransfer(ICriteria criteria);
-        void InsertToastMessage(ICriteria criteria);
-        bool GetAutoTransferJobStatus(int custId);
+        Customer.Entities.UpdateTransferOptionResult UpdateTransferOption(Hashtable hash);
     }
 }

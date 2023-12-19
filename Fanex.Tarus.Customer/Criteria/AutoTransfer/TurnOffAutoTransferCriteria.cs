@@ -1,6 +1,6 @@
 ﻿using Fanex.NAP.Framework.Data;
 
-namespace Fanex.Tarus.Customer.Criteria.CreditCustomer
+namespace Fanex.Tarus.Customer.Criteria.AutoTransfer
 {
     public sealed class TurnOffAutoTransferCriteria : CriteriaBase
     {

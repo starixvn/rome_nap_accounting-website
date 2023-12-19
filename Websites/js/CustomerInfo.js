@@ -865,8 +865,8 @@ function getChangeADBTConfirmMessage(username, currentEnabled, chkDownlines, isF
     }
 
     confirmMessage += chkDownlines
-        ? "\nNote: Activating All Day Balance Transfer will turn OFF Auto Transfer configured by " + username + " and its all downlines."
-        : "\nNote: Activating All Day Balance Transfer will turn OFF Auto Transfer configuration set by " + username + " for its downlines.";
+        ? "\nNote: Activating All Day Balance Transfer will DISABLE Auto Transfer and CLEAR all Auto Transfer Schedule configured by " + username + " and its all downlines."
+        : "\nNote: Activating All Day Balance Transfer will DISABLE Auto Transfer and CLEAR all Auto Transfer Schedule configuration set by " + username + " for its downlines.";
 
     return confirmMessage;
 }
