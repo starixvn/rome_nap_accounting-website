@@ -71,4 +71,7 @@
   <Function Name="Update ABDT">
     <Setting Key="Age_ClearBalanceCust_Job_StatusCheck" SpName="Age_ClearBalanceCust_Job_StatusCheck" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
+  <Function Name="Parlay Max Payout Info">
+    <Setting Key="Acc_SabaVirtualSportsBetSettingRef_Sel" SpName="Acc_SabaVirtualSportsBetSettingRef_Sel" DbName="DBTXN.bodb02.bodbAdminNet" />
+  </Function>
 </Functions>
