@@ -817,6 +817,7 @@
     <Compile Include="ViewModels\Customer\AppConfiguration.cs" />
     <Compile Include="ViewModels\Customer\CreateCustomerViewModel.cs" />
     <Compile Include="ViewModels\Customer\CustomerViewModel.cs" />
+    <Compile Include="ViewModels\Customer\EditCustomerViewModel.cs" />
     <Compile Include="ViewModels\InitializingCustomerSetting\ConfigCustomerSettingViewModel.cs" />
     <Compile Include="ViewModels\InitializingCustomerSetting\ConfigSettingViewModel.cs" />
     <Compile Include="ViewModels\InitializingCustomerSetting\InitializingCustomerSettingViewModel.cs" />

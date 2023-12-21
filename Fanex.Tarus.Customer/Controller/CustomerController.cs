@@ -14,6 +14,7 @@ using Fanex.CustomerSetting.Module.Core;
 using Fanex.CustomerSetting.Module.Core.Attributes;
 using Fanex.Tarus.Customer.Constants;
 using Fanex.Tarus.Customer.CreditCustomer.Business;
+using Fanex.Tarus.Customer.CreditCustomer.Entities;
 using Fanex.Tarus.Customer.Criteria.CreditCustomer;
 using Fanex.Tarus.Customer.Requests;
 using Fanex.Tarus.Customer.ViewModels.Customer;
@@ -140,6 +141,20 @@ namespace Fanex.Tarus.Customer.Controller
                 HttpContext.IsDebuggingEnabled
                     ? "~/Views/Customer/Create-Debug.cshtml"
                     : "~/Views/Customer/CreateCustomer.cshtml", viewModel);
+        }
+
+        [AuthenticateRead]
+        public ActionResult EditCustomer(int custId, int roleId, string uname, string siteName)
+        {
+            var editCustomerViewModel = new EditCustomerViewModel(
+                  new AppConfiguration(GetApplicationPath()),
+                  cdnUri,
+                  GetAssetsVersion(),
+                  roleId, uname)
+            ;
+            return View(HttpContext.IsDebuggingEnabled
+                    ? "~/Views/Customer/EditCustomer-Debug.cshtml"
+                    : "~/Views/Customer/EditCustomer.cshtml", editCustomerViewModel);
         }
 
         public async Task<ActionResult> GetCustomerSetting(int custId, byte roleId, string language = "en-US", bool isGetUpline = false)
