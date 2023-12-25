@@ -47,8 +47,6 @@ namespace Fanex.Tarus.Customer.Criteria.VirtualRate
 
         public bool IsApplyAccumulateBalance { get; set; }
 
-        public bool IsApplyDownlineAccumulateBalance { get; set; }
-
         public List<SportVirtualRateModel> SportVirtualRateList { get; set; }
 
         public CustomerVirtualRateModel LastSettings { get; set; }
@@ -106,7 +104,6 @@ namespace Fanex.Tarus.Customer.Criteria.VirtualRate
             }
 
             storeProcedureParams.Add("vraccumulate_balance", IsApplyAccumulateBalance);
-            storeProcedureParams.Add("is_vraccumulate_balance", IsApplyDownlineAccumulateBalance);
 
             storeProcedureParams.Add("additionalactions", AdditionalActions);
 
