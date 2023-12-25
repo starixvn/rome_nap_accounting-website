@@ -6,13 +6,13 @@
 
 namespace Fanex.Tarus.Customer.Entities
 {
-    using System;
-    using System.Drawing;
-    using System.Web;
     using NPOI.HSSF.UserModel;
     using NPOI.HSSF.Util;
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
+    using System;
+    using System.Drawing;
+    using System.Web;
 
     /// <summary>
     /// TODO: Update summary.
@@ -66,7 +66,7 @@ namespace Fanex.Tarus.Customer.Entities
             HSSFPalette palette = excelFile.GetCustomPalette();
             IFont font = excelFile.CreateFont();
             palette.SetColorAtIndex(HSSFColor.Pink.Index, (byte)60, (byte)94, (byte)165);
-            font.Boldweight = (short)FontBoldWeight.Bold;
+            font.IsBold = true;
             font.Color = HSSFColor.White.Index;
             font.FontHeightInPoints = FontSize;
             font.FontName = FontName;
@@ -102,12 +102,7 @@ namespace Fanex.Tarus.Customer.Entities
             font.FontHeightInPoints = FontSize;
             font.FontName = FontName;
             font.Color = fontColor;
-
-            if (bold)
-            {
-                font.Boldweight = (short)FontBoldWeight.Bold;
-            }
-
+            font.IsBold = bold;
             cellStyle.FillForegroundColor = cellColor;
             cellStyle.FillPattern = FillPattern.SolidForeground;
 
@@ -204,12 +199,7 @@ namespace Fanex.Tarus.Customer.Entities
             font.FontHeightInPoints = FontSize;
             font.FontName = FontName;
             font.Color = fontColor;
-
-            if (bold)
-            {
-                font.Boldweight = (short)FontBoldWeight.Bold;
-            }
-
+            font.IsBold = bold;
             cellStyle.Alignment = ConvertAlignment(align, cellStyle.Alignment);
             cellStyle.FillForegroundColor = cellColor;
             cellStyle.FillPattern = FillPattern.SolidForeground;
@@ -308,7 +298,7 @@ namespace Fanex.Tarus.Customer.Entities
             response.Clear();
             response.ContentType = "application/vnd.ms-excel";
             response.AddHeader("Content-Disposition", string.Format("attachment; filename={0}.xls", fileName));
-            workbook.Write(response.OutputStream);
+            workbook.Write(response.OutputStream, false);
         }
 
         /// <summary>
@@ -400,7 +390,7 @@ namespace Fanex.Tarus.Customer.Entities
             response.Clear();
             response.ContentType = "application/vnd.ms-excel";
             response.AddHeader("Content-Disposition", string.Format("attachment; filename={0}.xls", fileName));
-            workbook.Write(response.OutputStream);
+            workbook.Write(response.OutputStream, false);
         }
 
         /// <summary>
@@ -448,12 +438,7 @@ namespace Fanex.Tarus.Customer.Entities
             font.FontHeightInPoints = FontSize;
             font.FontName = FontName;
             font.Color = fontColor;
-
-            if (bold)
-            {
-                font.Boldweight = (short)FontBoldWeight.Bold;
-            }
-
+            font.IsBold = bold;
             cellStyle.FillForegroundColor = cellColor;
             cellStyle.FillPattern = FillPattern.SolidForeground;
             cellStyle.Alignment = HorizontalAlignment.Right;

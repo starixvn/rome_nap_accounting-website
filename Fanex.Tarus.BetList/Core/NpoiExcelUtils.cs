@@ -52,7 +52,7 @@
             HSSFPalette palette = excelFile.GetCustomPalette();
             IFont font = excelFile.CreateFont();
             palette.SetColorAtIndex(HSSFColor.Pink.Index, HeaderTitleColor.R, HeaderTitleColor.G, HeaderTitleColor.B);
-            font.Boldweight = (short)FontBoldWeight.Bold;
+            font.IsBold = true;
             font.Color = HSSFColor.Black.Index;
             font.FontHeightInPoints = FontSize;
             font.FontName = FontName;
@@ -79,12 +79,7 @@
             font.FontHeightInPoints = FontSize;
             font.FontName = FontName;
             font.Color = fontColor;
-
-            if (bold)
-            {
-                font.Boldweight = (short)FontBoldWeight.Bold;
-            }
-
+            font.IsBold = bold;
             cellStyle.FillForegroundColor = cellColor;
             cellStyle.FillPattern = FillPattern.SolidForeground;
             cellStyle.Alignment = align;
@@ -125,12 +120,7 @@
             font.FontHeightInPoints = FontSize;
             font.FontName = FontName;
             font.Color = fontColor;
-
-            if (bold)
-            {
-                font.Boldweight = (short)FontBoldWeight.Bold;
-            }
-
+            font.IsBold = bold;
             cellStyle.Alignment = align;
             cellStyle.FillForegroundColor = cellColor;
             cellStyle.FillPattern = FillPattern.SolidForeground;
@@ -172,12 +162,7 @@
             font.FontHeightInPoints = FontSize;
             font.FontName = FontName;
             font.Color = fontColor;
-
-            if (bold)
-            {
-                font.Boldweight = (short)FontBoldWeight.Bold;
-            }
-
+            font.IsBold = bold;
             cellStyle.FillForegroundColor = cellColor;
             cellStyle.FillPattern = FillPattern.SolidForeground;
             cellStyle.Alignment = HorizontalAlignment.Right;

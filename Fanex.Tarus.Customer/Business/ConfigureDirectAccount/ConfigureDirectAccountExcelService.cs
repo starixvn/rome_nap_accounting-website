@@ -9,11 +9,6 @@
 
 namespace Fanex.Tarus.Customer.Business.ConfigureDirectAccount
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Data;
-    using System.Web;
     using Fanex.Common;
     using Fanex.Tarus.Customer.Entities;
     using Fanex.Tarus.Customer.Entities.ConfigureDirectAccount;
@@ -22,6 +17,11 @@ namespace Fanex.Tarus.Customer.Business.ConfigureDirectAccount
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
     using Sunplus.Accounting.Core.Constant;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Web;
 
     /// <summary>
     /// Configure Direct Account Service.
