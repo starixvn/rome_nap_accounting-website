@@ -24,7 +24,7 @@ var BetDetailsManager = function () {
             isShowPager: true,
             fullWidth: true,
             fullHeight: true,
-            gridWidth: 930,
+            gridWidth: 1350,
             gridHeight: 20,
             freezeWidth: 0,
             numberFreezeCol: 0,

@@ -448,7 +448,7 @@ function showRNGWARBetDetails(transId, winlossDate, custId, transType) {
         url: "RNGCasinoBetList/BetDetails",
         title: "Funky Games - Detailed Bet list -" + winlossDate.split(" ")[0],
         jsonParam: { TransId: transId, WinLossDate: winlossDate, TransType: transType, CustId: custId, SportType: 224, PageSize: 500 },
-        width: 1250,
+        width: 1350,
         height: 600
     };
 
