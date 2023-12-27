@@ -492,7 +492,7 @@
       <HintPath>..\packages\Fanex.Tarus.Security.1.0.1.9\lib\net40\Fanex.Tarus.Security.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Statements, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Statements.1.0.0.1-DR001\lib\net40\Fanex.Tarus.Statements.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.Statements.1.0.0.1-DR002\lib\net40\Fanex.Tarus.Statements.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.User, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.User.1.0.0.6\lib\net40\Fanex.Tarus.User.dll</HintPath>
