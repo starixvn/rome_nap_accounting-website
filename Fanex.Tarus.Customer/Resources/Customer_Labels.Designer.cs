@@ -376,114 +376,6 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Direct account status updated successfully!.
-        /// </summary>
-        public static string ConfigureDirectAccount_ChangeStatus_UpdateSuccess {
-            get {
-                return ResourceManager.GetString("ConfigureDirectAccount_ChangeStatus_UpdateSuccess", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Please choose file to upload!.
-        /// </summary>
-        public static string ConfigureDirectAccount_Import_ChooseFile {
-            get {
-                return ResourceManager.GetString("ConfigureDirectAccount_Import_ChooseFile", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The size of file is larger than 1MB.
-        /// </summary>
-        public static string ConfigureDirectAccount_Import_ExceedFileSize {
-            get {
-                return ResourceManager.GetString("ConfigureDirectAccount_Import_ExceedFileSize", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Invalid Accounts, please check!.
-        /// </summary>
-        public static string ConfigureDirectAccount_Import_InvalidAlert {
-            get {
-                return ResourceManager.GetString("ConfigureDirectAccount_Import_InvalidAlert", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sorry, you choose invalid file extension. Please choose an Excel file (.xls).
-        /// </summary>
-        public static string ConfigureDirectAccount_Import_InvalidExtension {
-            get {
-                return ResourceManager.GetString("ConfigureDirectAccount_Import_InvalidExtension", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Data is emty.
-        /// </summary>
-        public static string ConfigureDirectAccount_Import_InvalidFormat {
-            get {
-                return ResourceManager.GetString("ConfigureDirectAccount_Import_InvalidFormat", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to M71CRMB,MK203ABCD,SORM,SA-HK$,EXP-TWN.
-        /// </summary>
-        public static string ConfigureDirectAccount_Import_SampleUserNames {
-            get {
-                return ResourceManager.GetString("ConfigureDirectAccount_Import_SampleUserNames", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Direct_Account_Template.
-        /// </summary>
-        public static string ConfigureDirectAccount_Import_TemplateName {
-            get {
-                return ResourceManager.GetString("ConfigureDirectAccount_Import_TemplateName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to update Direct Status for these customers?.
-        /// </summary>
-        public static string ConfigureDirectAccount_Import_UpdateConfirm {
-            get {
-                return ResourceManager.GetString("ConfigureDirectAccount_Import_UpdateConfirm", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Valid Accounts.
-        /// </summary>
-        public static string ConfigureDirectAccount_Import_ValidAlert {
-            get {
-                return ResourceManager.GetString("ConfigureDirectAccount_Import_ValidAlert", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Successful updated accounts.
-        /// </summary>
-        public static string ConfigureDirectAccount_ImportDirectAccount_UpdateSuccess {
-            get {
-                return ResourceManager.GetString("ConfigureDirectAccount_ImportDirectAccount_UpdateSuccess", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to This action will affect &lt;span id=&quot;number-effected-cust&quot; class=&quot;b&quot;&gt;X&lt;/span&gt; customers.&lt;span id=&quot;view-update-effect&quot; class=&quot;link&quot; &gt;Click here&lt;/span&gt; to view in details!.
-        /// </summary>
-        public static string ConfigureDirectAccount_ViewEffectMessage {
-            get {
-                return ResourceManager.GetString("ConfigureDirectAccount_ViewEffectMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Copy.
         /// </summary>
         public static string Copy {
@@ -507,15 +399,6 @@ namespace Fanex.Tarus.Customer.Resources {
         public static string Date {
             get {
                 return ResourceManager.GetString("Date", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Direct Account Template.
-        /// </summary>
-        public static string Direct_Account_Template {
-            get {
-                return ResourceManager.GetString("Direct_Account_Template", resourceCulture);
             }
         }
         
@@ -651,15 +534,6 @@ namespace Fanex.Tarus.Customer.Resources {
         public static string HDP {
             get {
                 return ResourceManager.GetString("HDP", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Import Direct Account.
-        /// </summary>
-        public static string Import_Direct_Account {
-            get {
-                return ResourceManager.GetString("Import_Direct_Account", resourceCulture);
             }
         }
         

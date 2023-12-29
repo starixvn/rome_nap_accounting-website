@@ -12,7 +12,6 @@ namespace Fanex.Tarus.Customer.Entities
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
-    using Fanex.Tarus.Customer.Entities.ConfigureDirectAccount;
 
     [Serializable]
     [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
@@ -27,9 +26,7 @@ namespace Fanex.Tarus.Customer.Entities
         public string RoleName { get; set; }
 
         public CustomerInfo DirectUplineInfo { get; set; }
-
-        public DirectAccountStatusInfo DirectAccountStatusInfo { get; set; }
-
+      
         public string StatusName { get; set; }
     }
 }
