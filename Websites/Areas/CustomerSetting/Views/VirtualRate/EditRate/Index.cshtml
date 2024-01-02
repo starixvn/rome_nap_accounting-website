@@ -167,7 +167,7 @@
                             </td>
                             <td class="c status-column">
                                 <input type="checkbox" class="checkbox-hide" id="chk_disable_master_AB" data-downlines="@(Model.MasterVirtualRate.Count)" data-origin-downlines="@(Model.MasterVirtualRate.DisableAB)" data-opposite-id="chk_enable_master_AB" >
-                                <label for="chk_disable_master_AB" class="btn-status btn-child btn-disable btn-ab-disable-child" title="Click to not apply all Masters">
+                                <label for="chk_disable_master_AB" class="btn-status btn-child btn-disable btn-ab-disable-child" title="Click to not apply all Masters" data-downline-id="chk_disable_agent_AB">
                                     @(Model.MasterVirtualRate.DisableAB)
                                 </label>
                             </td>
@@ -182,7 +182,7 @@
                             </td>
                             <td class="c status-column">
                                 <input type="checkbox" class="checkbox-hide" id="chk_disable_agent_AB" data-downlines="@(Model.AgentVirtualRate.Count)" data-origin-downlines="@(Model.AgentVirtualRate.DisableAB)" data-level="agent" data-opposite-id="chk_enable_agent_AB" >
-                                <label for="chk_disable_agent_AB" class="btn-status btn-child btn-disable btn-ab-disable-child" title="Click to not apply all Agents">
+                                <label for="chk_disable_agent_AB" class="btn-status btn-child btn-disable btn-ab-disable-child" title="Click to not apply all Agents" data-downline-id="chk_disable_member_AB">
                                     @(Model.AgentVirtualRate.DisableAB)
                                 </label>
                             </td>
@@ -257,7 +257,7 @@
                             </td>
                             <td class="c status-column">
                                 <input type="checkbox" class="checkbox-hide" id="ckb_lockSoccerVRMaster" data-downlines="@(Model.MasterVirtualRate.Count)" data-origin-downlines="@(Model.MasterVirtualRate.LockSC)" data-level="master" data-opposite-id="ckb_unlockSoccerVRMaster" >
-                                <label for="ckb_lockSoccerVRMaster" class="btn-status btn-child btn-disable btn-soccer-disable-child" title="Click to lock all Masters" data-selected="Click to lock all Masters" data-unselected="Click to revert selection">
+                                <label for="ckb_lockSoccerVRMaster" class="btn-status btn-child btn-disable btn-soccer-disable-child" title="Click to lock all Masters" data-selected="Click to lock all Masters" data-unselected="Click to revert selection" data-downline-id="ckb_lockSoccerVRAgent">
                                     @(Model.MasterVirtualRate.LockSC)
                                 </label>
                             </td>
@@ -272,7 +272,7 @@
                             </td>
                             <td class="c status-column">
                                 <input type="checkbox" class="checkbox-hide" id="ckb_lockSoccerVRAgent" data-downlines="@(Model.AgentVirtualRate.Count)" data-origin-downlines="@(Model.AgentVirtualRate.LockSC)" data-level="agent" data-opposite-id="ckb_unlockSoccerVRAgent" >
-                                <label for="ckb_lockSoccerVRAgent" class="btn-status btn-child btn-disable btn-soccer-disable-child" title="Click to lock all Agents" data-selected="Click to lock all Agents" data-unselected="Click to revert selection">
+                                <label for="ckb_lockSoccerVRAgent" class="btn-status btn-child btn-disable btn-soccer-disable-child" title="Click to lock all Agents" data-selected="Click to lock all Agents" data-unselected="Click to revert selection" data-downline-id="ckb_lockSoccerVRMember">
                                     @(Model.AgentVirtualRate.LockSC)
                                 </label>
                             </td>
@@ -313,7 +313,7 @@
                             </td>
                             <td class="c status-column">
                                 <input type="checkbox" class="checkbox-hide" id="ckb_lockBasketballVRMaster" data-downlines="@(Model.MasterVirtualRate.Count)" data-origin-downlines="@(Model.MasterVirtualRate.LockBB)" data-level="master" data-opposite-id="ckb_unlockBasketballVRMaster" >
-                                <label for="ckb_lockBasketballVRMaster" class="btn-status btn-child btn-disable btn-basketball-disable-child" title="Click to lock all Masters" data-selected="Click to lock all Masters" data-unselected="Click to revert selection">
+                                <label for="ckb_lockBasketballVRMaster" class="btn-status btn-child btn-disable btn-basketball-disable-child" title="Click to lock all Masters" data-selected="Click to lock all Masters" data-unselected="Click to revert selection" data-downline-id="ckb_lockBasketballVRAgent">
                                     @(Model.MasterVirtualRate.LockBB)
                                 </label>
                             </td>
@@ -328,7 +328,7 @@
                             </td>
                             <td class="c status-column">
                                 <input type="checkbox" class="checkbox-hide" id="ckb_lockBasketballVRAgent" data-downlines="@(Model.AgentVirtualRate.Count)" data-origin-downlines="@(Model.AgentVirtualRate.LockBB)" data-level="agent" data-opposite-id="ckb_unlockBasketballVRAgent" >
-                                <label for="ckb_lockBasketballVRAgent" class="btn-status btn-child btn-disable btn-basketball-disable-child" title="Click to lock all Agents" data-selected="Click to lock all Agents" data-unselected="Click to revert selection">
+                                <label for="ckb_lockBasketballVRAgent" class="btn-status btn-child btn-disable btn-basketball-disable-child" title="Click to lock all Agents" data-selected="Click to lock all Agents" data-unselected="Click to revert selection" data-downline-id="ckb_lockBasketballVRMember">
                                     @(Model.AgentVirtualRate.LockBB)
                                 </label>
                             </td>
@@ -369,7 +369,7 @@
                             </td>
                             <td class="c status-column">
                                 <input type="checkbox" class="checkbox-hide" id="ckb_lockOtherSportsVRMaster" data-downlines=" @(Model.MasterVirtualRate.Count)" data-origin-downlines=" @(Model.MasterVirtualRate.LockOS)" data-level="master" data-opposite-id="ckb_unlockOtherSportsVRMaster" >
-                                <label for="ckb_lockOtherSportsVRMaster" class="btn-status btn-child btn-disable btn-os-disable-child" title="Click to lock all Masters" data-selected="Click to lock all Masters" data-unselected="Click to revert selection">
+                                <label for="ckb_lockOtherSportsVRMaster" class="btn-status btn-child btn-disable btn-os-disable-child" title="Click to lock all Masters" data-selected="Click to lock all Masters" data-unselected="Click to revert selection" data-downline-id="ckb_lockOtherSportsVRAgent">
                                     @(Model.MasterVirtualRate.LockOS)
                                 </label>
                             </td>
@@ -384,7 +384,7 @@
                             </td>
                             <td class="c status-column">
                                 <input type="checkbox" class="checkbox-hide" id="ckb_lockOtherSportsVRAgent" data-downlines=" @(Model.AgentVirtualRate.Count)" data-origin-downlines=" @(Model.AgentVirtualRate.LockOS)" data-level="agent" data-opposite-id="ckb_unlockOtherSportsVRAgent" >
-                                <label for="ckb_lockOtherSportsVRAgent" class="btn-status btn-child btn-disable btn-os-disable-child" title="Click to lock all Agents" data-selected="Click to lock all Agents" data-unselected="Click to revert selection">
+                                <label for="ckb_lockOtherSportsVRAgent" class="btn-status btn-child btn-disable btn-os-disable-child" title="Click to lock all Agents" data-selected="Click to lock all Agents" data-unselected="Click to revert selection" data-downline-id="ckb_lockOtherSportsVRMember">
                                     @(Model.AgentVirtualRate.LockOS)
                                 </label>
                             </td>

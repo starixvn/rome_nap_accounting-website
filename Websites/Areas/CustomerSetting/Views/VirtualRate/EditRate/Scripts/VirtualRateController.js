@@ -257,13 +257,7 @@ var VirtualRateController = function () {
         $(".btn-child").each(function () {
             $(this).click(function () {
                 event.preventDefault();
-                var ckbInput = $(this).parent().find("input").first();
-                ckbInput.attr('checked', true);
-                $(this).html(ckbInput.data("downlines"));
-                let oppositeCkb = $(`#${ckbInput.data("opposite-id")}`);
-                let ckbLabelOpposite = oppositeCkb.parent().find("label").first();
-                oppositeCkb.attr('checked', false);
-                ckbLabelOpposite.html("0");
+                self.clickDisableVRItemStatus($(this));
             });
         });
 
@@ -325,6 +319,19 @@ var VirtualRateController = function () {
             self.copySettingFromBetType(sportId, $(this));
         });
 
+    };
+
+    self.clickDisableVRItemStatus = function (currentSelected) {
+        var ckbInput = currentSelected.parent().find("input").first();
+        ckbInput.attr('checked', true);
+        currentSelected.html(ckbInput.data("downlines"));
+        let oppositeCkb = $(`#${ckbInput.data("opposite-id")}`);
+        let ckbLabelOpposite = oppositeCkb.parent().find("label").first();
+        oppositeCkb.attr('checked', false);
+        ckbLabelOpposite.html("0");
+        if (currentSelected.data("downline-id")) {
+            self.clickDisableVRItemStatus($(`#${currentSelected.data("downline-id")}`).parent().find("label").first());
+        }
     };
 
     self.enableEditSetting = function (isEnable) {
