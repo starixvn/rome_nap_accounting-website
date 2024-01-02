@@ -10,19 +10,7 @@
 
 namespace Fanex.Tarus.Customer.Business.ViewPT
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Linq;
-    using DNAide.Core;
-    using DNAide.Utils;
-    using Fanex.Tarus.Customer.Criteria.ViewPT;
     using Fanex.Tarus.Customer.DataAccess.ViewPT;
-    using Fanex.Tarus.Customer.Entities;
-    using Fanex.Tarus.Customer.Entities.ViewPT;
-    using Fanex.Tarus.Customer.Resources;
-    using Fanex.Tarus.Infrastructure.Constants;
-    using Sunplus.Accounting.Core.Extensions;
 
     public class ViewPTService : IViewPTService
     {
