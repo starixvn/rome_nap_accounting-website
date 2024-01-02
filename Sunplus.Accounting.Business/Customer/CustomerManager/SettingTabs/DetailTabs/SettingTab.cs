@@ -115,10 +115,6 @@
             TemplateHandler.Assign(ref htmlcontent, "{linkAddnewDownline}", addDownlineURL); 
             TemplateHandler.Assign(ref htmlcontent, "{IsShow1}", "hidden");
 
-            //Chatbot
-            var chatbotLink = $"Chatbot/Index?custid={custId}&username={userName}";
-            TemplateHandler.Assign(ref htmlcontent, "{chatbotLink}", chatbotLink);
-
             return htmlcontent;
         }
 
@@ -177,12 +173,6 @@
             if (customerInfoViewModel.HideVGaming)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-VGaming");
-            }
-
-            // Chatbot
-            if (customerInfoViewModel.IsDeposit || customerInfoViewModel.SearchAccountRoleId == 1)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "chatbot");
             }
 
             if (customerInfoViewModel.HideSabaCasino)

@@ -14,9 +14,6 @@ namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
     using System.Collections;
     using System.Collections.Generic;
     using System.Data;
-    using CustomerSetting.Module.Core.Models;
-    using Fanex.Tarus.Customer.CreditCustomer.Entities;
-    using NAP.Framework.Data;
 
     /// <summary>
     /// TODO: Update summary.

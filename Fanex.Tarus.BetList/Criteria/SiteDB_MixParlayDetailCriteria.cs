@@ -19,7 +19,7 @@
 
         public DateTime BalanceUpDay { get; set; }
 
-        public string GetSettingKey()
+        public override string GetSettingKey()
             => "SiteDB_Acc_BetList_SelParlayDetail";
     }
 }

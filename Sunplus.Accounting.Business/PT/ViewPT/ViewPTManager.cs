@@ -448,7 +448,6 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
 
         private void GetSportsOutOfList(ref SportDTO sports, string userName)
         {
-            BettypeDTO bettype;
 
             var parlayMixsport = new Sport()
             {
@@ -515,10 +514,6 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                     ptCurrent.EnableAutoMaster = !WebSettings.disableAutoM;
                     ptCurrent.DisableFlagCss = (!ptCurrent.PermistionEnableAutoMaster ? "disableFlag" : "OpenFlag");
                     ptCurrent.DisableAutoCss = (!ptCurrent.PermistionEnableAutoMaster ? "disColorMPT" : "");
-
-
-
-                    byte numberOfDecimalDigits = 3;
 
                     if (roleId < (int)Role.Agent)
                     {

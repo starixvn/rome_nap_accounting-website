@@ -465,7 +465,6 @@
                                                "Update Saba Casino Status",
                                                6);
                             break;
-                            break;
 
                         case "25":
                             _renderLeftPanelService.RenderEnableProductBoxDCS2(

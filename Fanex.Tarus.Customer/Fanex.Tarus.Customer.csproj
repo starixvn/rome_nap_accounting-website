@@ -49,9 +49,6 @@
     <Reference Include="BouncyCastle.Cryptography, Version=2.0.0.0, Culture=neutral, PublicKeyToken=072edcf4a5328938, processorArchitecture=MSIL">
       <HintPath>..\packages\BouncyCastle.Cryptography.2.2.1\lib\net461\BouncyCastle.Cryptography.dll</HintPath>
     </Reference>
-    <Reference Include="Chatbot.Client, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Chatbot.Client.1.0.5\lib\net461\Chatbot.Client.dll</HintPath>
-    </Reference>
     <Reference Include="DNAide">
       <HintPath>..\packages\Fanex.Tarus.DNAide.2.1.0.0\lib\net40\DNAide.dll</HintPath>
       <Private>True</Private>
@@ -385,7 +382,6 @@
     <Compile Include="Controller\AGCasinoController.cs" />
     <Compile Include="Controller\AutoTransferAll\AutoTransferAllController.cs" />
     <Compile Include="Controller\BetCreditHistoryController.cs" />
-    <Compile Include="Controller\Chatbot\ChatbotController.cs" />
     <Compile Include="Controller\InitializingBetLimit\InitBetLimitController.cs" />
     <Compile Include="Controller\InitializingCustomerSetting\InitDepSettingController.cs" />
     <Compile Include="Controller\LicenseeMemberController.cs" />
@@ -699,7 +695,6 @@
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Helpers\HmacAuthenticator.cs" />
     <Compile Include="Helpers\NumberFormater.cs" />
-    <Compile Include="Helpers\RestClientHelper.cs" />
     <Compile Include="ManageLicenseeCode\Criterias\LicenseeSelCriteria.cs" />
     <Compile Include="ManageLicenseeCode\Criterias\LicenseeTransferCodeSelCriteria.cs" />
     <Compile Include="ManageLicenseeCode\Criterias\LicenseeTransferCodeInsCriteria.cs" />
@@ -764,7 +759,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>LicenseeSubsidiaryLabels.resx</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\Chatbot\ChatbotViewModel.cs" />
     <Compile Include="ViewModels\CustomerSetting\OpenCustomer\ClosedMatrixViewModel.cs" />
     <Compile Include="ViewModels\CustomerSetting\OpenCustomer\SingleOpenDownlinesViewModel.cs" />
     <Compile Include="ViewModels\CustomerSetting\OpenCustomer\SingleOpenCustomerViewModel.cs" />

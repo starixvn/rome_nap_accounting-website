@@ -31,8 +31,6 @@ namespace Sunplus.Accounting.Business.ExChangeRate
 {
     public class ExChangeRate
     {
-        private readonly string editBaseRate_ErrMsg = "{0} - {1}:";
-
         private readonly CasinoApiService casinoApiService = new CasinoApiService();
 
         #region GenAddContent

@@ -446,11 +446,11 @@
                 {
                     if (settingGroup.Count() > 2)
                     {
-                        var dublicateRowString = settingGroup.Select(setting => $"Row {setting.RowPos}");
+                        var duplicatedRowString = settingGroup.Select(setting => $"Row {setting.RowPos}");
 
                         return new ValidateBetSettingModel()
                         {
-                            ErrorMessage = $"{string.Join(", ", dublicateRowString)} are duplicated. Please check again.",
+                            ErrorMessage = $"{string.Join(", ", duplicatedRowString)} are duplicated. Please check again.",
                             SettingType = group.Key
                         };
                     }

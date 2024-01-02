@@ -156,8 +156,6 @@
                                 SyncVoidbridgeUpline = Utils.ToBoolean(row["IsSyncedUpline"]);
                                 break;
 
-                                break;
-
                             case "25":
                                 HideCashout = (Utils.ToBoolean(row["IsHidden"]) && SearchAccountRoleId < 4) || !WebSettings.EnableCashOut;
 
