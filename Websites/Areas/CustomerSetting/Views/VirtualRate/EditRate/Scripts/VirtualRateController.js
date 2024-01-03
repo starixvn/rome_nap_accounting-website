@@ -247,7 +247,6 @@ var VirtualRateController = function () {
         }
     };
     self.bindingEvent = function () {
-
         var checkboxEnable = $("#chk-enableVR");
         checkboxEnable.click(function () {
             var isEnable = checkboxEnable.attr("checked") ? 1 : 0;
@@ -289,35 +288,6 @@ var VirtualRateController = function () {
                 }
             });
         });
-        var buttonCopy = $("#button-copy-sport-settings-" + self.Constants.SportType.Soccer);
-        var buttonCopyBasketball = $("#button-copy-sport-settings-" + self.Constants.SportType.Basketball);
-
-        buttonCopy
-            .unbind("click")
-            .click(function () {
-                if (buttonCopyBasketball.hasClass("icon-copy-setting-checked")) {
-                    buttonCopyBasketball.trigger("click");
-                }
-
-                self.copySettingFromSport(buttonCopy);
-            });
-
-        buttonCopyBasketball
-            .unbind("click")
-            .click(function () {
-                if (buttonCopy.hasClass("icon-copy-setting-checked")) {
-                    buttonCopy.trigger("click");
-                }
-
-                self.copySettingFromSport(buttonCopyBasketball);
-            });
-
-        var buttonCopyBetType = $(".icon-copy-setting.bettype-setting");
-        buttonCopyBetType.unbind("click");
-        buttonCopyBetType.click(function () {
-            var sportId = parseInt($(this).attr("sport-id"));
-            self.copySettingFromBetType(sportId, $(this));
-        });
 
     };
 
@@ -347,6 +317,36 @@ var VirtualRateController = function () {
             var bettypeSelect = betTypeColumn.find('select[disable-level="1"]');
             bettypeSelect.attr("disabled", null);
             bettypeSelect.removeAttr("disable-level");
+
+            var buttonCopy = $("#button-copy-sport-settings-" + self.Constants.SportType.Soccer);
+            var buttonCopyBasketball = $("#button-copy-sport-settings-" + self.Constants.SportType.Basketball);
+
+            buttonCopy
+                .unbind("click")
+                .click(function () {
+                    if (buttonCopyBasketball.hasClass("icon-copy-setting-checked")) {
+                        buttonCopyBasketball.trigger("click");
+                    }
+
+                    self.copySettingFromSport(buttonCopy);
+                });
+
+            buttonCopyBasketball
+                .unbind("click")
+                .click(function () {
+                    if (buttonCopy.hasClass("icon-copy-setting-checked")) {
+                        buttonCopy.trigger("click");
+                    }
+
+                    self.copySettingFromSport(buttonCopyBasketball);
+                });
+
+            var buttonCopyBetType = $(".icon-copy-setting.bettype-setting");
+            buttonCopyBetType.unbind("click");
+            buttonCopyBetType.click(function () {
+                var sportId = parseInt($(this).attr("sport-id"));
+                self.copySettingFromBetType(sportId, $(this));
+            });
         }
         else {
             var iconCopySettingAvailable = iconCopySetting.find(":not([disabled])");

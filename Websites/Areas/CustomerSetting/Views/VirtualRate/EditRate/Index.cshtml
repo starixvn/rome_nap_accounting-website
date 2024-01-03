@@ -14,6 +14,7 @@
 
     var leftColumn = 2;
     var rightColumn = 2;
+    var spanFirstRow = 1;
     int isManageVirtualRateAccess = Permissions.GetHostPermission(Enumerations.Functions.ExRates.VirtualRate) ? 1 : 0;
     var roleId = 0;
     if (Model.RoleName == "Super")
@@ -35,6 +36,7 @@
     if (Model.MasterVirtualRate == null && Model.AgentVirtualRate == null && Model.MemberVirtualRate == null)
     {
         rightColumn = 2;
+        spanFirstRow = 2;
     }
 
     var spanColumns = maxColumns - (leftColumn + rightColumn);
@@ -90,7 +92,7 @@
                     </tr>
                     <tr>
                         <td class="padding-column" colspan="@leftColumn"></td>
-                        <td class="c b status-title status-title">
+                        <td class="c b status-title status-title" colspan="@spanFirstRow">
                             @Model.RoleName
                         </td>
                         @if (roleId >= 4 && Model.MasterVirtualRate != null)
@@ -111,16 +113,12 @@
                                 Member
                             </td>
                         }
-                        @if (roleId < 2 || rightColumn == 2)
-                        {
-                            <td class="padding-row" rowspan="7"></td>
-                        }
                     </tr>
                     <tr>
                         <td nowrap="true" class="l b p-l5 status-title" colspan="@leftColumn" title="Apply only VR+ (Except E-Sports)">
                             @Customer_Labels.ApplyVRAccumulatedBalance
                         </td>
-                        <td class="padding-column status-title"></td>
+                        <td class="padding-column status-title" colspan="@spanFirstRow"></td>
                         @if (roleId >= 4 && Model.MasterVirtualRate != null)
                         {
                             <td class="c b status-column status-title enable-status">
@@ -151,7 +149,7 @@
                     </tr>
                     <tr>
                         <td class="padding-column" colspan="@leftColumn"></td>
-                        <td class="c status-column">
+                        <td class="c status-column"  colspan="@spanFirstRow">
                             <input type="checkbox" class="checkbox-hide" id="chk_enableAccumulateBalance" checked=@(Model.IsApplyVRPlushAccumulateBanlance ? "checked" : null)>
                             <label for="chk_enableAccumulateBalance" class="btn-status btn-parent @(Model.IsApplyVRPlushAccumulateBanlance ? "btn-enable" : "btn-disable")" title="Click to apply/not apply VR+" data-btn-type="ab" data-value-enable="Enabled" data-value-disable="Disabled">
                                 @(Model.IsApplyVRPlushAccumulateBanlance ? "Enabled" : "Disabled")
@@ -208,7 +206,7 @@
                         <td nowrap="true" class="l b p-l5 status-title" colspan="@leftColumn">
                             @Customer_Labels.VirtualRate_LockVRLabel
                         </td>
-                        <td class="padding-column status-title"></td>
+                        <td class="padding-column status-title" colspan="@spanFirstRow"></td>
                         @if (roleId >= 4 && Model.MasterVirtualRate != null)
                         {
                             <td class="c b status-column status-title enable-status">
@@ -241,7 +239,7 @@
                         <td colspan="@leftColumn" class="l p-l5">
                             Soccer
                         </td>
-                        <td class="c status-column">
+                        <td class="c status-column" colspan="@spanFirstRow">
                             <input type="checkbox" class="checkbox-hide" id="ckb_unlockSoccerVR" checked=@(Model.LockVirtualRateStatus ? null : "checked")>
                             <label for="ckb_unlockSoccerVR" class="btn-status btn-parent @(Model.LockVirtualRateStatus ? "btn-disable" : "btn-enable")" title="Click lock/unlock Soccer VR" data-btn-type="soccer" data-value-enable="Unlocked" data-value-disable="Locked">
                                 @(Model.LockVirtualRateStatus ? "Locked" : "Unlocked")
@@ -297,7 +295,7 @@
                         <td colspan="@leftColumn" class="l p-l5">
                             Basketball
                         </td>
-                        <td class="c status-column">
+                        <td class="c status-column" colspan="@spanFirstRow">
                             <input type="checkbox" class="checkbox-hide" id="ckb_unlockBasketballVR" @(Model.LockVirtualRateBasketballStatus ? "" : "checked")>
                             <label for="ckb_unlockBasketballVR" class="btn-status btn-parent @(Model.LockVirtualRateBasketballStatus ? "btn-disable" : "btn-enable")" title="Click lock/unlock Basketball VR" data-btn-type="basketball" data-value-enable="Unlocked" data-value-disable="Locked">
                                 @(Model.LockVirtualRateBasketballStatus ? "Locked" : "Unlocked")
@@ -353,7 +351,7 @@
                         <td colspan="@leftColumn" class="l p-l5">
                             Other Sports
                         </td>
-                        <td class="c status-column">
+                        <td class="c status-column" colspan="@spanFirstRow">
                             <input type="checkbox" class="checkbox-hide" id="ckb_unlockOtherSportsVR" checked=@(Model.LockVirtualRateOtherStatus ? null : "checked")>
                             <label for="ckb_unlockOtherSportsVR" class="btn-status btn-parent @(Model.LockVirtualRateOtherStatus ? "btn-disable" : "btn-enable")" title="Click lock/unlock Other Sports VR" data-btn-type="os" data-value-enable="Unlocked" data-value-disable="Locked">
                                 @(Model.LockVirtualRateOtherStatus ? "Locked" : "Unlocked")

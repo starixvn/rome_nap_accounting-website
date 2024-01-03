@@ -14,7 +14,11 @@ var HistoryLogController = function () {
             Rate: 801,
             VRPlushAccBlance: 839,
             LicenseeStatus: 2802,
-            LicenseeRate: 2800
+            LicenseeRate: 2800,
+            VRLockV2: 844,
+            VRLockOtherV2: 845,
+            VRLockBasketballV2: 846,
+            VRPlushAccBlanceV2: 847
         },
         LiveType: {
             Live: 1,
@@ -134,7 +138,11 @@ var HistoryLogController = function () {
                         detailHistoryLog.UpdateType == self.Constants.UpdateType.VRLockBasketball ||
                         detailHistoryLog.UpdateType == self.Constants.UpdateType.VRLockOther ||
                         detailHistoryLog.UpdateType == self.Constants.UpdateType.LicenseeStatus ||
-                        detailHistoryLog.UpdateType == self.Constants.UpdateType.VRPlushAccBlance) {
+                        detailHistoryLog.UpdateType == self.Constants.UpdateType.VRPlushAccBlance ||
+                        detailHistoryLog.UpdateType == self.Constants.UpdateType.VRLockV2 ||
+                        detailHistoryLog.UpdateType == self.Constants.UpdateType.VRLockBasketballV2 ||
+                        detailHistoryLog.UpdateType == self.Constants.UpdateType.VRLockOtherV2 ||
+                        detailHistoryLog.UpdateType == self.Constants.UpdateType.VRPlushAccBlanceV2) {
                         if (isFirstRow) {
                             firstInfo = {
                                 detail: detailHistoryLog,
@@ -145,7 +153,7 @@ var HistoryLogController = function () {
                             isFirstRow = false;
                             continue;
                         } else {
-                            if (detailHistoryLog.UpdateType == self.Constants.UpdateType.VRLock) {
+                            if (detailHistoryLog.UpdateType == self.Constants.UpdateType.VRLock || detailHistoryLog.UpdateType == self.Constants.UpdateType.VRLockV2) {
                                 columns.push({
                                     Name: "ColSport",
                                     Value: viewResources.VRLock + ": " +
@@ -153,7 +161,7 @@ var HistoryLogController = function () {
                                     MergeColNumber: maxColumnNumber - 3
                                 });
                             }
-                            else if (detailHistoryLog.UpdateType == self.Constants.UpdateType.VRLockBasketball) {
+                            else if (detailHistoryLog.UpdateType == self.Constants.UpdateType.VRLockBasketball || detailHistoryLog.UpdateType == self.Constants.UpdateType.VRLockBasketballV2) {
                                 columns.push({
                                     Name: "ColSport",
                                     Value: viewResources.VRLockBasketball + ": " +
@@ -161,7 +169,7 @@ var HistoryLogController = function () {
                                     MergeColNumber: maxColumnNumber - 3
                                 });
                             }
-                            else if (detailHistoryLog.UpdateType == self.Constants.UpdateType.VRLockOther) {
+                            else if (detailHistoryLog.UpdateType == self.Constants.UpdateType.VRLockOther || detailHistoryLog.UpdateType == self.Constants.UpdateType.VRLockOtherV2) {
                                 columns.push({
                                     Name: "ColSport",
                                     Value: viewResources.VRLockOther + ": " +
@@ -169,7 +177,7 @@ var HistoryLogController = function () {
                                     MergeColNumber: maxColumnNumber - 3
                                 });
                             }
-                            else if (detailHistoryLog.UpdateType == self.Constants.UpdateType.VRPlushAccBlance) {
+                            else if (detailHistoryLog.UpdateType == self.Constants.UpdateType.VRPlushAccBlance || detailHistoryLog.UpdateType == self.Constants.UpdateType.VRPlushAccBlanceV2) {
                                 columns.push({
                                     Name: "ColSport",
                                     Value: viewResources.VRPlushAccBalance + ": " +
@@ -242,7 +250,7 @@ var HistoryLogController = function () {
             columns.push({ Name: "ColNo", Value: (firstInfo.index + 1), MergeRowNumber: rowSpan });
             columns.push({ Name: "ColDate", Value: historyLog.EditDateString, MergeRowNumber: rowSpan });
         }
-        if (logInfo.UpdateType == self.Constants.UpdateType.VRLock) {
+        if (logInfo.UpdateType == self.Constants.UpdateType.VRLock || logInfo.UpdateType == self.Constants.UpdateType.VRLockV2) {
             columns.push({
                 Name: "ColSport",
                 Value: viewResources.VRLock + ": " +
@@ -250,7 +258,7 @@ var HistoryLogController = function () {
                 MergeColNumber: (maxColumnNumber - 3)
             });
         }
-        else if (logInfo.UpdateType == self.Constants.UpdateType.VRLockBasketball) {
+        else if (logInfo.UpdateType == self.Constants.UpdateType.VRLockBasketball || logInfo.UpdateType == self.Constants.UpdateType.VRLockBasketballV2) {
             columns.push({
                 Name: "ColSport",
                 Value: viewResources.VRLockBasketball + ": " +
@@ -258,7 +266,7 @@ var HistoryLogController = function () {
                 MergeColNumber: (maxColumnNumber - 3)
             });
         }
-        else if (logInfo.UpdateType == self.Constants.UpdateType.VRLockOther) {
+        else if (logInfo.UpdateType == self.Constants.UpdateType.VRLockOther || logInfo.UpdateType == self.Constants.UpdateType.VRLockOtherV2) {
             columns.push({
                 Name: "ColSport",
                 Value: viewResources.VRLockOther + ": " +
@@ -276,7 +284,7 @@ var HistoryLogController = function () {
             });
 
         }
-        else if (logInfo.UpdateType == self.Constants.UpdateType.VRPlushAccBlance) {
+        else if (logInfo.UpdateType == self.Constants.UpdateType.VRPlushAccBlance || logInfo.UpdateType == self.Constants.UpdateType.VRPlushAccBlanceV2) {
             columns.push({
                 Name: "ColSport",
                 Value: viewResources.VRPlushAccBalance + ": " +

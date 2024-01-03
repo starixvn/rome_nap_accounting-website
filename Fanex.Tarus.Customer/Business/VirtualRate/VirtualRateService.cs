@@ -200,14 +200,14 @@
         {
             var historyLogDetailList = new List<HistoryLogDetailModel>();
             var xmlLoad = XElement.Parse(historyLog.TrackingValue);
-            if (historyLog.ActionId == UpdateTypeConstants.VRLockOther) {
+            if (historyLog.ActionId == UpdateTypeConstants.VRLockOther || historyLog.ActionId == UpdateTypeConstants.VRLockOtherV2) {
                 historyLogDetailList.Add(new HistoryLogDetailModel
                 {
                     UpdateType = historyLog.ActionId,
                     VRLockOther = Converter.ToInt(xmlLoad.Attribute("VRLock").Value) != 0
                 });
             }
-            else if (historyLog.ActionId == UpdateTypeConstants.VRLock)
+            else if (historyLog.ActionId == UpdateTypeConstants.VRLock || historyLog.ActionId == UpdateTypeConstants.VRLockV2)
             {
                 historyLogDetailList.Add(new HistoryLogDetailModel
                 {
@@ -215,7 +215,7 @@
                     VRLock = Converter.ToInt(xmlLoad.Attribute("VRLock").Value) != 0
                 });
             }
-            else if (historyLog.ActionId == UpdateTypeConstants.VRLockBasketball)
+            else if (historyLog.ActionId == UpdateTypeConstants.VRLockBasketball || historyLog.ActionId == UpdateTypeConstants.VRLockBasketballV2)
             {
                 historyLogDetailList.Add(new HistoryLogDetailModel
                 {
@@ -232,7 +232,7 @@
                     EnableVirtualRate = Converter.ToInt(xmlLoad.Attribute("EnableVirtualrate").Value) != 0
                 });
             }
-            else if (historyLog.ActionId == UpdateTypeConstants.VRPlushAccBalance)
+            else if (historyLog.ActionId == UpdateTypeConstants.VRPlushAccBalance || historyLog.ActionId == UpdateTypeConstants.VRPlushAccBalanceV2)
             {
                 historyLogDetailList.Add(new HistoryLogDetailModel
                 {
