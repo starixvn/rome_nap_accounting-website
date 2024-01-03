@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Functions> 
+<Functions>
   <Function Name="User - Account Management">
     <Setting Key="UserLog_UserControlSel" SpName="Acc_UserLog_UserControlSel" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
     <Setting Key="UserLog_UserControlSelTotalRecords" SpName="Acc_UserLog_UserControlSelTotalRecords" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />

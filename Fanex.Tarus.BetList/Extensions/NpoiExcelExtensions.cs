@@ -81,7 +81,7 @@ namespace Fanex.Tarus.BetList.Extensions
             HSSFPalette palette = excelFile.GetCustomPalette();
             IFont font = excelFile.CreateFont();
             palette.SetColorAtIndex(HSSFColor.Pink.Index, (byte)60, (byte)94, (byte)165);
-            font.Boldweight = (short)FontBoldWeight.Bold;
+            font.IsBold = true;
             font.Color = HSSFColor.White.Index;
             font.FontHeightInPoints = FontSize;
             font.FontName = FontName;
@@ -117,12 +117,7 @@ namespace Fanex.Tarus.BetList.Extensions
             font.FontHeightInPoints = FontSize;
             font.FontName = FontName;
             font.Color = fontColor;
-
-            if (bold)
-            {
-                font.Boldweight = (short)FontBoldWeight.Bold;
-            }
-
+            font.IsBold = bold;
             cellStyle.FillForegroundColor = cellColor;
             cellStyle.FillPattern = FillPattern.SolidForeground;
 
@@ -166,12 +161,7 @@ namespace Fanex.Tarus.BetList.Extensions
             font.FontHeightInPoints = FontSize;
             font.FontName = FontName;
             font.Color = fontColor;
-
-            if (bold)
-            {
-                font.Boldweight = (short)FontBoldWeight.Bold;
-            }
-
+            font.IsBold = bold;
             cellStyle.FillForegroundColor = cellColor;
             cellStyle.FillPattern = FillPattern.SolidForeground;
             cellStyle.Alignment = HorizontalAlignment.Right;
@@ -203,12 +193,7 @@ namespace Fanex.Tarus.BetList.Extensions
             font.FontHeightInPoints = FontSize;
             font.FontName = FontName;
             font.Color = fontColor;
-
-            if (bold)
-            {
-                font.Boldweight = (short)FontBoldWeight.Bold;
-            }
-
+            font.IsBold = bold;
             cellStyle.FillForegroundColor = cellColor;
             cellStyle.FillPattern = FillPattern.SolidForeground;
             cellStyle.Alignment = HorizontalAlignment.Right;
@@ -242,12 +227,7 @@ namespace Fanex.Tarus.BetList.Extensions
             font.FontHeightInPoints = FontSize;
             font.FontName = FontName;
             font.Color = fontColor;
-
-            if (bold)
-            {
-                font.Boldweight = (short)FontBoldWeight.Bold;
-            }
-
+            font.IsBold = bold;
             switch (align)
             {
                 case Alignment.Right:
@@ -376,11 +356,11 @@ namespace Fanex.Tarus.BetList.Extensions
             cellStyle.BorderTop = BorderStyle.Thin;
 
             cellStyle.BottomBorderColor = HSSFColor.Grey80Percent.Index;
-            cellStyle.LeftBorderColor = HSSFColor.Grey80Percent.Index; 
-            cellStyle.RightBorderColor = HSSFColor.Grey80Percent.Index; 
-            cellStyle.TopBorderColor = HSSFColor.Grey80Percent.Index; 
+            cellStyle.LeftBorderColor = HSSFColor.Grey80Percent.Index;
+            cellStyle.RightBorderColor = HSSFColor.Grey80Percent.Index;
+            cellStyle.TopBorderColor = HSSFColor.Grey80Percent.Index;
 
             return cellStyle;
-        }      
+        }
     }
 }

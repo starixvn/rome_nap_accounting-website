@@ -38,6 +38,7 @@
     <Setting Key="SiteDB3_Acc_BalanceMemberSel" SpName="Acc_BalanceMemberSel" DbName="DBTXN.BODB02.bodbAdminNet" Plain="0" />
     <Setting Key="SiteDB3_Acc_CustomerTotalAmountSel" SpName="Acc_CustomerTotalAmountSel" DbName="DBTXN.BODB02.bodbAdminNet" Plain="0" />
   </Function>
+
   <Function Name="ResetWinning">
     <Setting Key="SiteDB3_Task_ResetWinning_Non3rdParty_Add" SpName="Task_ResetWinning_Non3rdParty_Add" DbName="DBTXN.bodb02.bodbAdminNet" TimeOut="0" />
   </Function>

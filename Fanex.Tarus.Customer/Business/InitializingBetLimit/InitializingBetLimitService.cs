@@ -1,10 +1,5 @@
 ﻿namespace Fanex.Tarus.Customer.Business.InitializingBetLimit
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Web;
     using Fanex.Caching;
     using Fanex.Caching.Memory;
     using Fanex.Tarus.Customer.Criteria.InitializingBetLimit;
@@ -19,6 +14,11 @@
     using NPOI.HSSF.Util;
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web;
 
     public interface IInitializingBetLimitService
     {
@@ -112,7 +112,7 @@
             var boldFont = excelFile.CreateFont();
             boldFont.FontName = "Tahoma";
             boldFont.FontHeightInPoints = 8;
-            boldFont.Boldweight = (short)FontBoldWeight.Bold;
+            boldFont.IsBold = true;
             boldFont.Color = HSSFColor.White.Index;
 
             #region Header
@@ -455,7 +455,7 @@
             var boldFont = excelFile.CreateFont();
             boldFont.FontName = "Tahoma";
             boldFont.FontHeightInPoints = 8;
-            boldFont.Boldweight = (short)FontBoldWeight.Bold;
+            boldFont.IsBold = true;
             boldFont.Color = HSSFColor.White.Index;
 
             #region Header
