@@ -282,6 +282,8 @@
                 return SportContants.AdvantPlayMini;
             if (8700 <= betTypeId && betTypeId <= 8709)
                 return SportContants.PlayerTips;
+            if (10300 <= betTypeId && betTypeId <= 10399)
+                return SportContants.WE;
 
             return 0;
         }

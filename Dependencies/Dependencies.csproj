@@ -159,7 +159,7 @@
       <HintPath>..\packages\Fanex.BetList.ColossusBets.2.0.0\lib\net461\Fanex.BetList.ColossusBets.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.Core, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Core.3.0.1.5\lib\net461\Fanex.BetList.Core.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.Core.3.0.1.7\lib\net461\Fanex.BetList.Core.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.Core.RemotingRef, Version=1.1.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Core.RemotingRef.2.0.0\lib\net461\Fanex.BetList.Core.RemotingRef.dll</HintPath>
@@ -196,6 +196,9 @@
     </Reference>
     <Reference Include="Fanex.BetList.LeapGaming, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.LeapGaming.2.0.0.1\lib\net461\Fanex.BetList.LeapGaming.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.BetList.LiveCasinoCore, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.LiveCasinoCore.1.0.0\lib\net461\Fanex.BetList.LiveCasinoCore.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.MaxGame, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.MaxGame.2.0.0.1\lib\net461\Fanex.BetList.MaxGame.dll</HintPath>
@@ -265,6 +268,9 @@
     </Reference>
     <Reference Include="Fanex.BetList.VoidBridge, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.VoidBridge.2.0.0\lib\net461\Fanex.BetList.VoidBridge.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.BetList.WE, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.WE.1.0.0\lib\net461\Fanex.BetList.WE.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.WM, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.WM.2.0.0.1\lib\net461\Fanex.BetList.WM.dll</HintPath>

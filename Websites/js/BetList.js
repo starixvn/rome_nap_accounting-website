@@ -883,6 +883,18 @@ function showYeeBetBetDetails(refno, winlossDate, custId, transType) {
     openResultsPopUp(params);
 }
 
+function showWELiveCasinoBetDetails(refno, winlossDate, custId, transType) {
+    var params = {
+        url: "AGCasinoBetList/BetDetails",
+        title: "WE Live Casino - Detailed Bet list - " + winlossDate.split(" ")[0],
+        jsonParam: { Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 228, PageSize: 500 },
+        width: 1250,
+        height: 600
+    };
+
+    openResultsPopUp(params);
+}
+
 function ViewCashOutHistory(transId, refNo, betType, originalTransId, title) {
     var cashoutParam = {
         url: "BetList/GetCashOutDetails",
@@ -1029,6 +1041,8 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
         case 225: // ION Casino
             return getIONCasinoParam(custId, transId3rd, gameId3rd, currencyId, siteId);
 
+        case 228:
+            return getWEParam(custId, transId3rd, gameId3rd, currencyId, bettype, siteId);
         case 231: // Leap Gaming
             return getLeapGamingParam(transId3rd);
 
@@ -1359,6 +1373,16 @@ function getJiliParam(custId, transId3rd, gameId3rd, currencyId, betType, siteId
         url: "ThirdParty/JiliResult",
         title: "Jili Result",
         jsonParam: { custId: custId, transId3rd: transId3rd, siteId: siteId, gameId3rd: gameId3rd, currencyId: currencyId, BetTypeId: betType, productId: 75 },
+        width: 850,
+        height: 800
+    };
+}
+
+function getWEParam(custId, transId3rd, gameId3rd, currencyId, betType, siteId) {
+    return {
+        url: "ThirdParty/WEResult",
+        title: "WE Live Casino Result",
+        jsonParam: { custId: custId, transId3rd: transId3rd, siteId: siteId, gameId3rd: gameId3rd, currencyId: currencyId, BetTypeId: betType, productId: 80 },
         width: 850,
         height: 800
     };
