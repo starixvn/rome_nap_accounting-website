@@ -2,6 +2,8 @@
 {
     public class CopyCustomerRequest
     {
+        public int UplineId { get; set; }
+
         public byte CustLevel { get; set; }
 
         public string UserName { get; set; }

@@ -80,6 +80,7 @@ namespace Fanex.Tarus.Customer.Controller
             var param = new CopyCustomerParam(
                 AppSession.AccId,
                 0,
+                request.UplineId,
                 request.CustLevel,
                 string.Empty,
                 request.UserName,
