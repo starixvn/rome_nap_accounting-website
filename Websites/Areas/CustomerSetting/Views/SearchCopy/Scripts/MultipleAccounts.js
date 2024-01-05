@@ -209,7 +209,7 @@ $.fn.forceNumber = function () {
             lastName: $.trim($lastName.val()),
             phone: $.trim($phone.val()),
             mobilePhone: $.trim($mobilePhone.val()),
-            site: $("#ddSite").val(),
+            site: isSuper ? $("#ddSite").val() : existedUser.site,
             fax: $.trim($fax.val()),
             credit: credit,
             isInternal: $internalUser.is(":checked"),
