@@ -106,6 +106,8 @@
 
         public bool HideSabaCasino { get; private set; } = true;
 
+        public bool HideMuayThai { get; private set; } = true;
+
         public CustomerDetail CustParent
         {
             get
@@ -130,6 +132,10 @@
                         var productId = row["productID"].ToString();
                         switch (productId)
                         {
+                            case "1":
+                                HideMuayThai = (Utils.ToBoolean(row["IsHidden"]) && SearchAccountRoleId < 4);
+                                break;
+
                             case "5":
                                 HideCheckBoxVirtualSports = (Utils.ToBoolean(row["IsHiddenUpline"]) && SearchAccountRoleId < 4) || !WebSettings.EnableVirtualSports;
                                 HideSettingLinkVirtualSports = (Utils.ToBoolean(row["IsHiddenUpline"]) && SearchAccountRoleId < 4) || !WebSettings.EnableVirtualSports || IsDeposit;

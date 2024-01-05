@@ -80,10 +80,7 @@ function OpenInputParent() {
     else if (selectType == "super" || selectType == "member") {
         document.getElementById('uid-upline').style.display = 'none';
         parent.document.body.rows = "30,*";
-        //f.location.href="AddNewSuper.aspx";
-        //f.location.href = "V2/AddNewSuper.aspx"; //<-- Khoa.Tran add new v2
-        //f.location.href = "../AddNewSuper/AddNewSuperPage";// <-- Thai.Tran remove this one to add Search_Copy function
-        f.location.href = "../AddNewSuper/SearchCopyAddNewSuperPage?level=" + selectType; // <-- Thai.Tran add this one
+        f.location.href = "../Customer/NewCustomer?level=" + selectType;
     }
 }
 function CheckUserName() {

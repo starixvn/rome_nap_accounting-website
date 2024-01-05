@@ -1,6 +1,5 @@
 ﻿namespace Sunplus.Accounting.Business.Customer
 {
-    using System;
     using System.Data;
     using ConfigureDirectAccount;
     using Core.Common;
@@ -44,7 +43,8 @@
                 IsShowSabaVirtualSports = !customerInfoViewModel.HideSabaVirtualSports,
                 IsShowBitcoin = !customerInfoViewModel.HideBitcoin,
                 IsShowCashout = !customerInfoViewModel.HideCashout,
-                IsShowSabaCasino = !customerInfoViewModel.HideSabaCasino
+                IsShowSabaCasino = !customerInfoViewModel.HideSabaCasino,
+                IsShowMuayThai = !customerInfoViewModel.HideMuayThai,
             };
 
             htmlcontent = RenderClosedStatus(htmlcontent, customerInfoViewModel);
@@ -105,14 +105,6 @@
                 renderLeftPanelParameter,
                 sg,
                 customerInfoViewModel.HasDownline);
-
-            htmlcontent = RenderColossusBetControl(
-                htmlcontent,
-                row1,
-                customerInfoViewModel.CustParent,
-                customerInfoViewModel.ManageCustomerAccess,
-                renderLeftPanelParameter,
-                sg);
 
             htmlcontent = RenderDCSControl(
                 htmlcontent,
@@ -422,6 +414,20 @@
                     var productId = productRow["productID"].ToString();
                     switch (productId)
                     {
+                        case "1":
+                            _renderLeftPanelService.RenderEnableProductBoxDCS2(
+                                               row1,
+                                               productRow,
+                                               sg,
+                                               ref htmlcontent,
+                                               isManageCustomerAccess,
+                                               "MuayThai",
+                                               renderLeftPanelParameter.IsShowMuayThai,
+                                               renderLeftPanelParameter,
+                                               "Update Muay Thai Status",
+                                               1);
+                            break;
+
                         case "5":
                             _renderLeftPanelService.RenderEnableProductBoxDCS2(
                                                row1,
@@ -523,28 +529,6 @@
                 }
             }
 
-            return htmlcontent;
-        }
-
-        private string RenderColossusBetControl(
-            string htmlcontent,
-            DataRow row1,
-            CustomerDetail CustParent,
-            bool isManageCustomerAccess,
-            RenderLeftPanelParameter renderLeftPanelParameter,
-            SettingGroup sg)
-        {
-            _renderLeftPanelService.RenderEnableProductBox2(
-               row1,
-               sg,
-               ref htmlcontent,
-               isManageCustomerAccess,
-               CustParent.IsDisableColossusBets,
-               "ColossusBet",
-               renderLeftPanelParameter.IsShowColossusBetsForDeposit,
-               renderLeftPanelParameter,
-               "Update Colossus Bets Status",
-               15);
             return htmlcontent;
         }
 

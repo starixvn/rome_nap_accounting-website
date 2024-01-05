@@ -96,7 +96,6 @@ $.fn.forceNumber = function () {
         selectedSite: {},
         sites: [],
         site: "",
-        selectedCurrencyId: 0,
         maxCredit: '',
         roleId: 0,
     };
@@ -162,7 +161,7 @@ $.fn.forceNumber = function () {
 
         var unavailableUsernames = $.ajax({
             type: "POST",
-            url: vm.rootUrl + "Super/CheckAvailableUsernames",
+            url: toUrl("Super/CheckAvailableUsernames"),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             data: JSON.stringify({ custId: existedUser.userid, parentId: parentId, usernames: usernamesArray.join(",") }),
@@ -205,7 +204,7 @@ $.fn.forceNumber = function () {
         }
 
         return {
-            userpwd: passwordValue.encrypt(vm.code),
+            password: passwordValue.encrypt(vm.code),
             firstName: $.trim($firstName.val()),
             lastName: $.trim($lastName.val()),
             phone: $.trim($phone.val()),
@@ -214,8 +213,7 @@ $.fn.forceNumber = function () {
             fax: $.trim($fax.val()),
             credit: credit,
             isInternal: $internalUser.is(":checked"),
-            currencyId: existedUser.selectedCurrencyId,
-            existingCustId: userid,
+            sourceCustId: userid,
             custLevel: existedUser.roleId,
             uplineId: parentId,
             code: vm.code
@@ -294,7 +292,7 @@ $.fn.forceNumber = function () {
             .html("In progress");
         $.ajax({
             type: "POST",
-            url: vm.rootUrl + "Super/CopyExistingSuper",
+            url: "../Customer/Copy",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             data: JSON.stringify(formData)
@@ -425,12 +423,12 @@ $.fn.forceNumber = function () {
         });
     }
 
-    function RenderSite(sites){
+    function RenderSite(sites) {
         var htmlOptions = [];
         sites.forEach(function (item, index) {
-            if(item.IsParent){
+            if (item.IsParent) {
                 htmlOptions.push('<optgroup label="' + item.SiteName + '">');
-                item.ChildSites.forEach(function(child, i){
+                item.ChildSites.forEach(function (child, i) {
                     htmlOptions.push('<option value="');
                     htmlOptions.push(child.SiteName + '"');
                     if (existedUser.site == child.SiteName) {
@@ -441,10 +439,10 @@ $.fn.forceNumber = function () {
                     htmlOptions.push('</option>');
                 });
                 htmlOptions.push('</optgroup>');
-            }else{
+            } else {
                 htmlOptions.push('<option value="');
                 htmlOptions.push(item.SiteName + '"');
-                if (existedUser.site == child.SiteName) {    
+                if (existedUser.site == child.SiteName) {
                     htmlOptions.push('selected="selected"');
                 }
                 htmlOptions.push('>');
@@ -460,21 +458,16 @@ $.fn.forceNumber = function () {
         if (!isSuper) { return; }
 
         $.ajax({
-            type: "POST",
+            type: "GET",
             url: vm.getSuperPrefixesUrl,
             contentType: "application/json; charset=utf-8",
             dataType: "json",
-            data: JSON.stringify({
-                groupName: null,
-                prefix: null,
-                allowNewSuper: false
-            }),
             success: function (data) {
                 var $notAllowedSuperPrefixesMultiple = $("#notAllowedSuperPrefixes_multiple");
                 if (data && data.length > 0) {
                     var warning = "For 789y site, the following username prefixes are not allowed for new accounts anymore";
                     $.each(data, function (index, item) {
-                        warning += `<br />- ${item.GroupName}: ${item.Prefixes}`;
+                        warning += `<br />- ${item.groupName}: ${item.prefixes}`;
                     });
                     $notAllowedSuperPrefixesMultiple.addClass("headlineBelongSiteMsg");
                     $notAllowedSuperPrefixesMultiple.html(warning);
@@ -489,7 +482,7 @@ $.fn.forceNumber = function () {
         if (!isSuper) { return; }
 
         $.ajax({
-            type: "POST",
+            type: "GET",
             url: vm.getHeadlineBelongSiteUrl,
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -497,8 +490,8 @@ $.fn.forceNumber = function () {
                 var $messageHtml = $("#headlineBelongSite");
                 if (data && data.length > 0) {
                     var message = "For 789y site group, the following headlines belong to site:";
-                    $.each(data, function (index, item) {                    
-                        message += `<br />- ${item.Site}: ${item.Headline}`;
+                    $.each(data, function (index, item) {
+                        message += `<br />- ${item.site}: ${item.headline}`;
                     });
                     $messageHtml.addClass("headlineBelongSiteMsg");
                     $messageHtml.html(message);
@@ -516,7 +509,7 @@ $.fn.forceNumber = function () {
             dataType: "json",
             data: null,
             success: function (data) {
-                hideMessage();     
+                hideMessage();
                 existedUser.sites = data;
                 RenderSite(data);
             }
@@ -537,12 +530,11 @@ $.fn.forceNumber = function () {
     function getCustomerInfoByUserId(custid) {
         var param = {
             custid: custid,
-            level: parent.level
         };
 
         $.ajax({
             type: "POST",
-            url: toUrl("Super/GetCustomerInfoByUserId"),
+            url: "../Customer/GetCustomerInfoByUserId",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             data: JSON.stringify(param),
@@ -556,16 +548,15 @@ $.fn.forceNumber = function () {
                     existedUser.selectedSite = {};
                     existedUser.selectedSite = custInfo.Site || "";
                 }
-            
+
                 existedUser.userid = userid;
                 existedUser.roleId = custInfo.RoleId;
                 existedUser.username = custInfo.UserName;
                 existedUser.maxCredit = custInfo.CreditMax;
                 existedUser.site = custInfo.Site;
-                existedUser.selectedCurrencyId = custInfo.CurrencyId;
                 existedUser.isDirectCustomer = custInfo.IsDirectCustomer;
 
-                renderCurrency(custInfo.Currency);
+                renderCurrency(custInfo.CurrencyName);
 
                 if (custInfo.RoleId == MEMBER) {
                     renderMemberMaxCredit(custInfo.CreditMax);
@@ -664,5 +655,4 @@ $.fn.forceNumber = function () {
     }
 
     initialize();
-
 })(jQuery, viewModel, window);

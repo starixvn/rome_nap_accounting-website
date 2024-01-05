@@ -33,7 +33,7 @@
                         </tr>
                     </tbody>
                 </table>
-            </div>  
+            </div>
             <div style="margin-top: 8px">
                 <span>Source Account</span>
                 <input id="existedUserName" type="text"
@@ -130,8 +130,8 @@
         var viewModel = {
             rootUrl: "@ViewBag.RootUrl",
             code: "@Fanex.Tarus.Security.Services.Encryptor.Code",
-            getSuperPrefixesUrl: "@Url.Content("~/AddNewSuper/GetSuperPrefixes")",
-            getHeadlineBelongSiteUrl: "@Url.Content("~/AddNewSuper/GetHeadlineBelongSite")"
+            getSuperPrefixesUrl: "@Url.Content("~/Customer/GetNotAllowedSuperPrefixes")",
+            getHeadlineBelongSiteUrl: "@Url.Content("~/Customer/GetHeadlineBelongSite")"
         };
     </script>
     <script type="text/javascript" src="@Url.Content("~/js/encode.js?v=" + version)"></script>

@@ -14,7 +14,6 @@ using Fanex.CustomerSetting.Module.Core;
 using Fanex.CustomerSetting.Module.Core.Attributes;
 using Fanex.Tarus.Customer.Constants;
 using Fanex.Tarus.Customer.CreditCustomer.Business;
-using Fanex.Tarus.Customer.CreditCustomer.Entities;
 using Fanex.Tarus.Customer.Criteria.CreditCustomer;
 using Fanex.Tarus.Customer.Requests;
 using Fanex.Tarus.Customer.ViewModels.Customer;
@@ -54,27 +53,6 @@ namespace Fanex.Tarus.Customer.Controller
                 customerService ?? new CustomerService(new CustomerClientConfiguration().Initialize());
         }
 
-        private string GetHashKey()
-        {
-            var hashKey = encryptor.RandomString(4);
-            HttpContext.Session.Add(HashKeySessionKey, hashKey);
-
-            return hashKey;
-        }
-
-        private string GetAssetsVersion()
-        {
-            ObjectCache cache = MemoryCache.Default;
-            var version = cache.Get(AssetsVersionCacheKey) as string;
-            if (string.IsNullOrWhiteSpace(version))
-            {
-                version = DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString();
-                cache.Set(AssetsVersionCacheKey, version, DateTime.Now.AddHours(4));
-            }
-
-            return version;
-        }
-
         public ActionResult GetHeadlineBelongSite()
             => Content(JsonConvert.SerializeObject(
                 _customerSettingService.GetHeadlineBelongSite(new GetHeadlineBelongSiteCriteria()),
@@ -87,6 +65,51 @@ namespace Fanex.Tarus.Customer.Controller
                 Prefix = null,
                 AllowNewSuper = false
             }), new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }));
+
+        [AuthenticateRead]
+        public ActionResult NewCustomer()
+            => View("~/Views/Customer/NewCustomer.cshtml");
+
+        [AuthenticateRead]
+        public ActionResult Copy()
+            => View("~/Areas/CustomerSetting/Views/SearchCopy/Super/Index.cshtml");
+
+        [HttpPost]
+        public async Task<ActionResult> Copy(CopyCustomerRequest request, string code)
+        {
+            var param = new CopyCustomerParam(
+                AppSession.AccId,
+                0,
+                request.CustLevel,
+                string.Empty,
+                request.UserName,
+                IBCUtils.Encryption.CfsEnCode(Security.Services.Encryptor.Decrypt(request.Password, code)),
+                request.Credit,
+                0,
+                request.SourceCustId,
+                request.Site,
+                true,
+                Utils.GetClientIP(),
+                isInternal: request.IsInternal)
+            {
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                Phone = request.Phone,
+                Fax = request.Fax,
+                MobilePhone = request.MobilePhone
+            };
+
+            var result = await customerService.CopyCustomer(param);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public async Task<ActionResult> GetCustomerInfoByUserId(int custid)
+        {
+            var custInfo = await customerService.GetCustomerInfo(custid);
+
+            return Json(custInfo, JsonRequestBehavior.AllowGet);
+        }
 
         [AuthenticateRead]
         public ActionResult GetSitesAndCurrencies()
@@ -171,9 +194,9 @@ namespace Fanex.Tarus.Customer.Controller
         public async Task<ActionResult> Create(CreateCustomerRequest request)
         {
             var generalInfo = request.GeneralInfo;
-            
+
             var checkResult = CheckRequest(request);
-            
+
             if (checkResult.Code != 0)
             {
                 return Content(JsonConvert.SerializeObject(checkResult, new JsonSerializerSettings
@@ -181,7 +204,7 @@ namespace Fanex.Tarus.Customer.Controller
                     ContractResolver = new CamelCasePropertyNamesContractResolver()
                 }));
             }
-            
+
             var rawPassword = Security.Services.Encryptor.Decrypt(generalInfo.Password,
                 HttpContext.Session[HashKeySessionKey].ToString());
             generalInfo.Password = encryptor.CfsEnCode(rawPassword);
@@ -208,8 +231,7 @@ namespace Fanex.Tarus.Customer.Controller
             return applicationPath;
         }
 
-        [NonAction]
-        public Result CheckRequest(CreateCustomerRequest request)
+        private Result CheckRequest(CreateCustomerRequest request)
         {
             if (string.IsNullOrWhiteSpace(request.GeneralInfo.Site))
             {
@@ -219,7 +241,7 @@ namespace Fanex.Tarus.Customer.Controller
                     Message = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "alertSite")
                 };
             }
-            
+
             if (request.GeneralInfo.Currency == 0)
             {
                 return new Result()
@@ -228,22 +250,21 @@ namespace Fanex.Tarus.Customer.Controller
                     Message = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "alertCurrency")
                 };
             }
-            
+
             if (request.GeneralInfo.IsInternal)
             {
                 var result = CheckPermissionInsert(request.GeneralInfo.IsInternal);
                 if (result.Code != 0) return result;
             }
-            
+
             return new Result
             {
                 Code = 0,
                 Message = "Success"
             };
         }
-        
-        [NonAction]
-        public Result CheckPermissionInsert(bool isInternal)
+
+        private Result CheckPermissionInsert(bool isInternal)
         {
             var result = new Result
             {
@@ -266,6 +287,27 @@ namespace Fanex.Tarus.Customer.Controller
             }
 
             return result;
+        }
+
+        private string GetHashKey()
+        {
+            var hashKey = encryptor.RandomString(4);
+            HttpContext.Session.Add(HashKeySessionKey, hashKey);
+
+            return hashKey;
+        }
+
+        private string GetAssetsVersion()
+        {
+            ObjectCache cache = MemoryCache.Default;
+            var version = cache.Get(AssetsVersionCacheKey) as string;
+            if (string.IsNullOrWhiteSpace(version))
+            {
+                version = DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString();
+                cache.Set(AssetsVersionCacheKey, version, DateTime.Now.AddHours(4));
+            }
+
+            return version;
         }
     }
 }

@@ -23,8 +23,8 @@
             name="frmSearchCopyAddNewSuper"></iframe>
 </div>
 <script type="text/javascript">
-    var getSuperPrefixesUrl = '@Url.Content("~/AddNewSuper/GetSuperPrefixes")';
-    var getHeadlineBelongSiteUrl = '@Url.Content("~/AddNewSuper/GetHeadlineBelongSite")';
+    var getSuperPrefixesUrl = '@Url.Content("~/Customer/GetNotAllowedSuperPrefixes")';
+    var getHeadlineBelongSiteUrl = '@Url.Content("~/Customer/GetHeadlineBelongSite")';
     var level = '@level';
 
     jQuery(document).ready(function () {
@@ -102,7 +102,7 @@
     function ShowSearchCopy() {
         $("#tabSearchCopy").addClass("current");
         $("#tabFullMode").removeClass("current");
-        $("#frmSearchCopyAddNewSuper").attr('src', "../customersetting/searchcopy/super/index");
+        $("#frmSearchCopyAddNewSuper").attr('src', "../Customer/Copy");
 
         $("#agent-name").hide();
         $("#frmSearchCopyAddNewSuper").show(500);
