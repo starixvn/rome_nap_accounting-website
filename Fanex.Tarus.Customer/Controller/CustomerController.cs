@@ -88,7 +88,7 @@ namespace Fanex.Tarus.Customer.Controller
                 0,
                 request.SourceCustId,
                 request.Site,
-                true,
+                false,
                 Utils.GetClientIP(),
                 isInternal: request.IsInternal)
             {

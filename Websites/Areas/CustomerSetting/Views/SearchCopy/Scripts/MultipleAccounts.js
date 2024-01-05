@@ -552,14 +552,14 @@ $.fn.forceNumber = function () {
                 existedUser.userid = userid;
                 existedUser.roleId = custInfo.RoleId;
                 existedUser.username = custInfo.UserName;
-                existedUser.maxCredit = custInfo.CreditMax;
+                existedUser.maxCredit = custInfo.MaxCredit;
                 existedUser.site = custInfo.Site;
                 existedUser.isDirectCustomer = custInfo.IsDirectCustomer;
 
                 renderCurrency(custInfo.CurrencyName);
 
                 if (custInfo.RoleId == MEMBER) {
-                    renderMemberMaxCredit(custInfo.CreditMax);
+                    renderMemberMaxCredit(custInfo.MaxCredit);
                 }
 
                 getAllSites();
