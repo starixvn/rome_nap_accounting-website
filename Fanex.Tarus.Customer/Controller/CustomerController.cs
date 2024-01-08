@@ -180,6 +180,18 @@ namespace Fanex.Tarus.Customer.Controller
                     ? "~/Views/Customer/EditCustomer-Debug.cshtml"
                     : "~/Views/Customer/EditCustomer.cshtml", editCustomerViewModel);
         }
+        //SportBookInformationPage-Debug
+        [AuthenticateRead]
+        public ActionResult SportBookInformation()
+        {
+            var viewModel = new SportBookInformationViewModel(
+                new AppConfiguration(GetApplicationPath()),
+                cdnUri,
+                GetAssetsVersion());
+            return View(HttpContext.IsDebuggingEnabled
+                ? "~/Views/Customer/SportBookInformation-Debug.cshtml"
+                : "~/Views/Customer/SportBookInformation.cshtml",viewModel);
+        }
 
         public async Task<ActionResult> GetCustomerSetting(int custId, byte roleId, string language = "en-US", bool isGetUpline = false)
         => Content(await customerService.GetCustomerSetting(custId, roleId, language, isGetUpline));

@@ -1,0 +1,32 @@
+@model Fanex.Tarus.Customer.ViewModels.Customer.CreateCustomerViewModel
+@{
+    var version = Sunplus.Accounting.Core.Configurations.WebSettings.Version;
+}
+<link rel="stylesheet" href="@(Model.CdnUri)create-customer/index.css?version=@(Model.AssetsVersion)" />
+<div class="maincontent">
+    <table border="0" cellpadding="0px" cellspacing="0px" class="maincontent_header">
+        <tr>
+            <td class="maincontent_headerL">
+            </td>
+            <td class="maincontent_headerC fixfont">@Model.PageTitle</td>
+            <td class="maincontent_headerR">
+            </td>
+        </tr>
+    </table>
+    <div class="bg_table" style="width: 844px;">
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="SecretKey" id="SecretKey" value="@Model.SecretKey" />
+        <div id="root"></div>
+    </div>
+</div>
+<script>
+    const appConfig = @Html.Raw(Model.AppConfig);
+    const params = @Html.Raw(Model.Params);
+    window.redirectToSettingPage = (response) => {
+        const custId = response.custId;
+        const redirectUrl = appConfig.applicationPath + "Customer/V2/UpdatePT.aspx?custid=" + custId + "&insert=" + "true" + "&roleid=" + (params.uplineRoleId - 1) + "&uplineid=" + params.uplineRoleId;
+        window.location.replace(redirectUrl);
+    };
+</script>
+<script type="text/javascript" src="@Url.Content("~/js/encode.js?v=" + version)"></script>
+<script type="module" src="@(Model.CdnUri)create-customer/index.js?version=@(Model.AssetsVersion)"></script>
