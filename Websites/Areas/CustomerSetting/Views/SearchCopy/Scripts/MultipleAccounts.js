@@ -212,7 +212,7 @@ $.fn.forceNumber = function () {
             site: isSuper ? $("#ddSite").val() : existedUser.site,
             fax: $.trim($fax.val()),
             credit: credit,
-            isInternal: $internalUser.is(":checked"),
+            isInternal: $("#chkInternalUser").is(":checked"),
             sourceCustId: userid,
             custLevel: existedUser.roleId,
             uplineId: parentId,
@@ -384,29 +384,45 @@ $.fn.forceNumber = function () {
         $("#existedUserName").focus(function () {
             hideMessage();
             $("#checkExisted").hide();
-            userid = "-1";
+            userid = -1;
         });
 
         $("#existedUserName").focusout(function () {
-            if (userid == "-1") {
+            if (userid === -1) {
                 searchExistingUser(this.value, null);
             }
             $("#checkExisted").show();
         });
     }
 
+    function validateSourceAccount() {
+        var sourceAccount = $("#existedUserName").val();
+        if (sourceAccount.length === 0) {
+            showError("The Source Account is required.");
+            return false;
+        }
+
+        if (userid === -1) {
+            return false;
+        }
+
+        return true;
+    }
+
     function handleSubmit() {
         $btnSubmit.click(function () {
             BlockUI();
             emptyAndHideProgressTable();
-            var usernames = validateUsernames();
-            if (usernames) {
-                var formData = validateOthers(usernames.length);
-                if (formData && confirm("Please REVIEW the Source " + (existedUser.roleId == SUPER ? "Super " : "Member ") + existedUser.username + "(" + existedUser.userid + ") once again.")) {
-                    hideMessage();
-                    disableFormData(true);
-                    showDataOnProgressTable(usernames);
-                    copyMultipleAccounts(usernames, formData);
+            if (validateSourceAccount()) {
+                var usernames = validateUsernames();
+                if (usernames) {
+                    var formData = validateOthers(usernames.length);
+                    if (formData && confirm("Please REVIEW the Source " + (existedUser.roleId == SUPER ? "Super " : "Member ") + existedUser.username + "(" + existedUser.userid + ") once again.")) {
+                        hideMessage();
+                        disableFormData(true);
+                        showDataOnProgressTable(usernames);
+                        copyMultipleAccounts(usernames, formData);
+                    }
                 }
             }
             $.unblockUI();
