@@ -707,3 +707,7 @@ span.icon-boost {
 .max-payout > span {
     margin-left: 4px;
 }
+
+span.underdog, span.favorite {
+    line-break: anywhere;
+}
