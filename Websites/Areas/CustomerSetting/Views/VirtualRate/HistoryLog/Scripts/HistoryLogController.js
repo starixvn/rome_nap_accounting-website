@@ -8,17 +8,14 @@ var HistoryLogController = function () {
     self.Constants = {
         UpdateType: {
             Status: 806,
-            VRLock: 829,
-            VRLockOther: 830,
-            VRLockBasketball: 837,
+            VRLock: [829, 844],
+            VRLockOther: [830, 845],
+            VRLockBasketball: [837, 846],
             Rate: 801,
-            VRPlushAccBlance: 839,
+            VRPlushAccBlance: [839, 847],
             LicenseeStatus: 2802,
             LicenseeRate: 2800,
-            VRLockV2: 844,
-            VRLockOtherV2: 845,
-            VRLockBasketballV2: 846,
-            VRPlushAccBlanceV2: 847
+            UpdateVR: [95116, 95117, 95118, 2803, 2804, 2805]
         },
         LiveType: {
             Live: 1,
@@ -30,6 +27,7 @@ var HistoryLogController = function () {
             }
         }
     };
+
 
     self.initPage = function () {
         self.CustId = historyLogReport.CustId;
@@ -134,15 +132,11 @@ var HistoryLogController = function () {
                     var columns = [];
                     var detailHistoryLog = historyLog.HistoryLogDetailList[j];
                     if (detailHistoryLog.UpdateType == self.Constants.UpdateType.Status ||
-                        detailHistoryLog.UpdateType == self.Constants.UpdateType.VRLock ||
-                        detailHistoryLog.UpdateType == self.Constants.UpdateType.VRLockBasketball ||
-                        detailHistoryLog.UpdateType == self.Constants.UpdateType.VRLockOther ||
+                        self.Constants.UpdateType.VRLock.includes(detailHistoryLog.UpdateType) ||
+                        self.Constants.UpdateType.VRLockBasketball.includes(detailHistoryLog.UpdateType) ||
+                        self.Constants.UpdateType.VRLockOther.includes(detailHistoryLog.UpdateType) ||
                         detailHistoryLog.UpdateType == self.Constants.UpdateType.LicenseeStatus ||
-                        detailHistoryLog.UpdateType == self.Constants.UpdateType.VRPlushAccBlance ||
-                        detailHistoryLog.UpdateType == self.Constants.UpdateType.VRLockV2 ||
-                        detailHistoryLog.UpdateType == self.Constants.UpdateType.VRLockBasketballV2 ||
-                        detailHistoryLog.UpdateType == self.Constants.UpdateType.VRLockOtherV2 ||
-                        detailHistoryLog.UpdateType == self.Constants.UpdateType.VRPlushAccBlanceV2) {
+                        self.Constants.UpdateType.VRPlushAccBlance.includes(detailHistoryLog.UpdateType)) {
                         if (isFirstRow) {
                             firstInfo = {
                                 detail: detailHistoryLog,
@@ -150,10 +144,13 @@ var HistoryLogController = function () {
                             };
 
                             rowSpan++;
+                            if (self.Constants.UpdateType.UpdateVR.includes(detailHistoryLog.UpdateType)) {
+                                rowSpan++;
+                            }
                             isFirstRow = false;
                             continue;
                         } else {
-                            if (detailHistoryLog.UpdateType == self.Constants.UpdateType.VRLock || detailHistoryLog.UpdateType == self.Constants.UpdateType.VRLockV2) {
+                            if (self.Constants.UpdateType.VRLock.includes(detailHistoryLog.UpdateType)) {
                                 columns.push({
                                     Name: "ColSport",
                                     Value: viewResources.VRLock + ": " +
@@ -161,7 +158,7 @@ var HistoryLogController = function () {
                                     MergeColNumber: maxColumnNumber - 3
                                 });
                             }
-                            else if (detailHistoryLog.UpdateType == self.Constants.UpdateType.VRLockBasketball || detailHistoryLog.UpdateType == self.Constants.UpdateType.VRLockBasketballV2) {
+                            else if (self.Constants.UpdateType.VRLockBasketball.includes(detailHistoryLog.UpdateType)) {
                                 columns.push({
                                     Name: "ColSport",
                                     Value: viewResources.VRLockBasketball + ": " +
@@ -169,7 +166,7 @@ var HistoryLogController = function () {
                                     MergeColNumber: maxColumnNumber - 3
                                 });
                             }
-                            else if (detailHistoryLog.UpdateType == self.Constants.UpdateType.VRLockOther || detailHistoryLog.UpdateType == self.Constants.UpdateType.VRLockOtherV2) {
+                            else if (self.Constants.UpdateType.VRLockOther.includes(detailHistoryLog.UpdateType)) {
                                 columns.push({
                                     Name: "ColSport",
                                     Value: viewResources.VRLockOther + ": " +
@@ -177,7 +174,7 @@ var HistoryLogController = function () {
                                     MergeColNumber: maxColumnNumber - 3
                                 });
                             }
-                            else if (detailHistoryLog.UpdateType == self.Constants.UpdateType.VRPlushAccBlance || detailHistoryLog.UpdateType == self.Constants.UpdateType.VRPlushAccBlanceV2) {
+                            else if (self.Constants.UpdateType.VRPlushAccBlance.includes(detailHistoryLog.UpdateType)) {
                                 columns.push({
                                     Name: "ColSport",
                                     Value: viewResources.VRPlushAccBalance + ": " +
@@ -194,6 +191,55 @@ var HistoryLogController = function () {
                                 });
                             }
                         }
+                    } else if (self.Constants.UpdateType.UpdateVR.includes(detailHistoryLog.UpdateType)) {
+
+                        if (isFirstRow) {
+                            firstInfo = {
+                                detail: detailHistoryLog,
+                                index: i
+                            };
+
+                            sportBetTypeRow.push({
+                                Columns: [{
+                                    Name: "ColSport",
+                                    Value: viewResources.UpdateVRDownlines + ": " +
+                                        (detailHistoryLog.IsApplyDownlines ? viewResources.Yes : viewResources.No),
+                                    MergeColNumber: 4
+                                }]
+                            });
+
+                            rowSpan = rowSpan + 2;
+                            isFirstRow = false;
+                        } else {
+                            if (detailHistoryLog.VirtualRate !== null && detailHistoryLog.VirtualRate.length > 0) {
+                                var vrListLength = detailHistoryLog.VirtualRate.length;
+                                for (var k = 0; k < vrListLength; k++) {
+                                    var vrRate = detailHistoryLog.VirtualRate[k];
+                                    if (vrRate.HasData) {
+                                        columns = [];
+                                        columns.push({ Name: "ColSport", Value: detailHistoryLog.SportName });
+                                        columns.push({
+                                            Name: "ColBetType",
+                                            Value: detailHistoryLog.BetTypeList[k].Name
+                                        });
+                                        columns.push({
+                                            Name: "ColLiveType",
+                                            Value: self.getLiveTypeName(detailHistoryLog.LiveType)
+                                        });
+                                        columns.push({
+                                            Name: "ColVirtualRate",
+                                            Value: numeral((vrRate.PercentRate - 1) * 100).format(self.Constants.Format.Number.Rate)
+                                        });
+                                        sportBetTypeRow.push({
+                                            Columns: columns
+                                        });
+                                        rowSpan++;
+                                    }
+                                }
+                            }
+                        }
+
+                        continue;
                     } else {
                         var sportLiveTypeCount = detailHistoryLog.VirtualRate.length;
                         for (var k = 0; k < sportLiveTypeCount; k++) {
@@ -236,6 +282,7 @@ var HistoryLogController = function () {
                 }
 
                 bodyData = bodyData.concat([self.getRow(historyLog, firstInfo, true, rowSpan)]);
+
                 bodyData = bodyData.concat(sportBetTypeRow);
             }
         }
@@ -250,7 +297,7 @@ var HistoryLogController = function () {
             columns.push({ Name: "ColNo", Value: (firstInfo.index + 1), MergeRowNumber: rowSpan });
             columns.push({ Name: "ColDate", Value: historyLog.EditDateString, MergeRowNumber: rowSpan });
         }
-        if (logInfo.UpdateType == self.Constants.UpdateType.VRLock || logInfo.UpdateType == self.Constants.UpdateType.VRLockV2) {
+        if (self.Constants.UpdateType.VRLock.includes(logInfo.UpdateType)) {
             columns.push({
                 Name: "ColSport",
                 Value: viewResources.VRLock + ": " +
@@ -258,7 +305,7 @@ var HistoryLogController = function () {
                 MergeColNumber: (maxColumnNumber - 3)
             });
         }
-        else if (logInfo.UpdateType == self.Constants.UpdateType.VRLockBasketball || logInfo.UpdateType == self.Constants.UpdateType.VRLockBasketballV2) {
+        else if (self.Constants.UpdateType.VRLockBasketball.includes(logInfo.UpdateType)) {
             columns.push({
                 Name: "ColSport",
                 Value: viewResources.VRLockBasketball + ": " +
@@ -266,7 +313,7 @@ var HistoryLogController = function () {
                 MergeColNumber: (maxColumnNumber - 3)
             });
         }
-        else if (logInfo.UpdateType == self.Constants.UpdateType.VRLockOther || logInfo.UpdateType == self.Constants.UpdateType.VRLockOtherV2) {
+        else if (self.Constants.UpdateType.VRLockOther.includes(logInfo.UpdateType)) {
             columns.push({
                 Name: "ColSport",
                 Value: viewResources.VRLockOther + ": " +
@@ -284,11 +331,19 @@ var HistoryLogController = function () {
             });
 
         }
-        else if (logInfo.UpdateType == self.Constants.UpdateType.VRPlushAccBlance || logInfo.UpdateType == self.Constants.UpdateType.VRPlushAccBlanceV2) {
+        else if (self.Constants.UpdateType.VRPlushAccBlance.includes(logInfo.UpdateType)) {
             columns.push({
                 Name: "ColSport",
                 Value: viewResources.VRPlushAccBalance + ": " +
                     (logInfo.VRPlushAccBalance ? viewResources.Enabled : viewResources.Disabled),
+                MergeColNumber: maxColumnNumber - 3
+            });
+        }
+        else if (self.Constants.UpdateType.UpdateVR.includes(logInfo.UpdateType)) {
+            columns.push({
+                Name: "ColSport",
+                Value: viewResources.UpdateVR + ": " +
+                    (logInfo.IsUpdateVR ? viewResources.Yes : viewResources.No),
                 MergeColNumber: maxColumnNumber - 3
             });
         }

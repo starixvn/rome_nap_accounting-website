@@ -813,7 +813,7 @@ var VirtualRateController = function () {
 
     self.showUpdateVRFlow = function (id) {
         var flow1 = "If you enable Virtual rate and change the Virtual Rate value of this account at the same time:";
-        var sub1 = "This account and all downlines will enable Virtual Rate, then change Virtual Rate value.";
+        var sub1 = "This account will enable Virtual Rate, then change Virtual Rate value.";
         var flow2 = "If you lock Virtual Rate status and change Virtual Rate value of this account at the same time:";
         var sub2 = "This account and all downlines will change the Virtual Rate value, then lock the VR status.";
         var flow3 = "If you unlock Virtual Rate for this account or downlines & change Virtual Rate value at the same time:";

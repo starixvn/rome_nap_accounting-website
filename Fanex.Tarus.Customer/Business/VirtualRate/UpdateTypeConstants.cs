@@ -37,5 +37,17 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
         public const int LicenseeStatus = 2802;
 
         public const int LicenseeRate = 2800;
+
+        public const int UpdateVRSuper = 95116;
+
+        public const int UpdateVRMaster = 95117;
+
+        public const int UpdateVRAgent = 95118;
+
+        public const int UpdateLCVRSuper = 95116;
+
+        public const int UpdateLCVRMaster = 95117;
+
+        public const int UpdateLCVRAgent = 95118;
     }
 }
