@@ -180,7 +180,7 @@ namespace Fanex.Tarus.Customer.Controller
                     ? "~/Views/Customer/EditCustomer-Debug.cshtml"
                     : "~/Views/Customer/EditCustomer.cshtml", editCustomerViewModel);
         }
-        //SportBookInformationPage-Debug
+
         [AuthenticateRead]
         public ActionResult SportBookInformation()
         {
@@ -229,6 +229,25 @@ namespace Fanex.Tarus.Customer.Controller
                 0,
                 Utils.GetClientIP(),
                 CreationModes.FullMode));
+
+            return Content(response);
+        }
+
+        [HttpPost]
+        [AuthenticateHost]
+        public async Task<ActionResult> Update(UpdateCustomerRequest request)
+        {
+            var response = await customerService.UpdateCustomer(new UpdateCustomerParam(
+                request.GeneralInfo,
+                request.ProductGroups,
+                AppSession.AccId,
+                0,
+                request.CustId,
+                request.UName,
+                request.RoleId,
+                request.RoleId + 1,
+                Utils.GetClientIP(),
+                "en-US"));
 
             return Content(response);
         }
