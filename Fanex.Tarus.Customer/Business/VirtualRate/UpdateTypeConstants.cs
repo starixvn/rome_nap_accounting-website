@@ -28,9 +28,9 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
 
         public const int VRLockV2 = 844;
 
-        public const int VRLockBasketballV2 = 845;
+        public const int VRLockBasketballV2 = 846;
 
-        public const int VRLockOtherV2 = 846;
+        public const int VRLockOtherV2 = 845;
 
         public const int VRPlushAccBalanceV2 = 847;
 

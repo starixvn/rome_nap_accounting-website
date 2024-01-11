@@ -230,7 +230,7 @@ var VirtualRateController = function () {
                 html += '<td class="bettypevalue-column c padding-column" colspan="' + (endBetTypeIndex - i) + '"></td>';
             }
         } else if (i < endBetTypeIndex) {
-            html += '<td class="bettypevalue-column c padding-column" colspan="' + (endBetTypeIndex - maxBetTypeColumn) + '"></td>';
+            html += '<td class="bettypevalue-column c padding-column" colspan="' + (endBetTypeIndex - i) + '"></td>';
         }
 
         return html;
@@ -817,9 +817,9 @@ var VirtualRateController = function () {
         var flow2 = "If you lock Virtual Rate status and change Virtual Rate value of this account at the same time:";
         var sub2 = "This account and all downlines will change the Virtual Rate value, then lock the VR status.";
         var flow3 = "If you unlock Virtual Rate for this account or downlines & change Virtual Rate value at the same time:";
-        var sub3 = "This account and all downlines will unlock Virtual Rate, then change Virtual Rate value.";
+        var sub3 = "This account or all downlines will unlock Virtual Rate, then change Virtual Rate value.";
         var message = `<ul class="roman"><li>${flow1}<ul class="square"><li>${sub1}</li></ul></li><li>${flow2}<ul class="square"><li>${sub2}</li></ul></li><li>${flow3}<ul class="square"><li>${sub3}</li></ul></li></ul>`;
-        __showMessage("Update VR flow", message, 700, 250);
+        __showMessageWihtoutBtn("Update VR flow", message, 700, 180);
     };
 };
 
