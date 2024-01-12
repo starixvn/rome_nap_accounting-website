@@ -356,7 +356,8 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                     $scope.existedUser.userid = custid;
                     $scope.parentId = customerSettingView.ParentId;
                     $scope.newUser.BreadCrumbs = customerSettingView.BreadCrumbs;
-                    if (custid != "-1") {                    
+                    if (custid != "-1") {
+                        $('#step1>.btnNextR').show();
                         message.hideAlertMessage("errorMsg");
                         $("#checkExisted").removeClass('not_success');
                         $("#checkExisted").addClass('success');
