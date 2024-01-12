@@ -137,6 +137,7 @@ namespace Fanex.Tarus.Customer.Controller
         public ActionResult CreateCustomer(int uplineId, byte uplineRoleId, string uplineUsername, string site,
             string siteLabel)
         {
+            
             if (!string.IsNullOrWhiteSpace(site)
                 && uplineRoleId == RoleIdConstants.SUPER
                 && (site.Equals("76666B", StringComparison.OrdinalIgnoreCase) ||
@@ -181,16 +182,17 @@ namespace Fanex.Tarus.Customer.Controller
                     : "~/Views/Customer/EditCustomer.cshtml", editCustomerViewModel);
         }
 
-        [AuthenticateRead]
-        public ActionResult SportBookInformation()
+        // [AuthenticateRead]
+        public ActionResult SportBookInformation(byte tabIndex = 0)
         {
             var viewModel = new SportBookInformationViewModel(
+                tabIndex,
                 new AppConfiguration(GetApplicationPath()),
                 cdnUri,
                 GetAssetsVersion());
             return View(HttpContext.IsDebuggingEnabled
-                ? "~/Views/Customer/SportBookInformation-Debug.cshtml"
-                : "~/Views/Customer/SportBookInformation.cshtml",viewModel);
+                ? "~/Views/Customer/SportBookInformation/Index-Debug.cshtml"
+                : "~/Views/Customer/SportBookInformation/Index.cshtml",viewModel);
         }
 
         public async Task<ActionResult> GetCustomerSetting(int custId, byte roleId, string language = "en-US", bool isGetUpline = false)
