@@ -194,7 +194,10 @@ namespace Fanex.Tarus.Customer.Controller
         }
 
         public async Task<ActionResult> GetCustomerSetting(int custId, byte roleId, string language = "en-US", bool isGetUpline = false)
-        => Content(await customerService.GetCustomerSetting(custId, roleId, language, isGetUpline));
+        {
+            var systemId = ConfigurationManager.AppSettings["SystemId"];
+            return Content(await customerService.GetCustomerSetting(custId, roleId, Int32.Parse(systemId), language, isGetUpline));
+        }
 
         public async Task<ActionResult> CheckExistedCustomer(string username)
             => Json(await customerService.CheckExistedCustomer(username), JsonRequestBehavior.AllowGet);
