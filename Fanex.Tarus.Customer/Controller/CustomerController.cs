@@ -36,6 +36,7 @@ namespace Fanex.Tarus.Customer.Controller
         private readonly ICustomerSettingService _customerSettingService;
         private readonly Encryptor encryptor;
         private readonly ICustomerService customerService;
+        private readonly CustomerClientConfiguration customerClientConfiguration = new CustomerClientConfiguration().Initialize();
 
         public CustomerController()
             : this(null, null, null)
@@ -50,7 +51,7 @@ namespace Fanex.Tarus.Customer.Controller
             _customerSettingService = customerSettingService ?? new CustomerSettingService();
             this.encryptor = encryptor ?? new EncryptorImpl();
             this.customerService =
-                customerService ?? new CustomerService(new CustomerClientConfiguration().Initialize());
+                customerService ?? new CustomerService(customerClientConfiguration);
         }
 
         public ActionResult GetHeadlineBelongSite()
@@ -137,7 +138,6 @@ namespace Fanex.Tarus.Customer.Controller
         public ActionResult CreateCustomer(int uplineId, byte uplineRoleId, string uplineUsername, string site,
             string siteLabel)
         {
-            
             if (!string.IsNullOrWhiteSpace(site)
                 && uplineRoleId == RoleIdConstants.SUPER
                 && (site.Equals("76666B", StringComparison.OrdinalIgnoreCase) ||
@@ -192,20 +192,19 @@ namespace Fanex.Tarus.Customer.Controller
                 GetAssetsVersion());
             return View(HttpContext.IsDebuggingEnabled
                 ? "~/Views/Customer/SportBookInformation/Index-Debug.cshtml"
-                : "~/Views/Customer/SportBookInformation/Index.cshtml",viewModel);
+                : "~/Views/Customer/SportBookInformation/Index.cshtml", viewModel);
         }
 
         public async Task<ActionResult> GetCustomerSetting(int custId, byte roleId, string language = "en-US", bool isGetUpline = false)
         {
-            var systemId = ConfigurationManager.AppSettings["SystemId"];
-            return Content(await customerService.GetCustomerSetting(custId, roleId, Int32.Parse(systemId), language, isGetUpline));
+            return Content(await customerService.GetCustomerSetting(custId, roleId, customerClientConfiguration.SystemId, language, isGetUpline));
         }
 
         public async Task<ActionResult> CheckExistedCustomer(string username)
             => Json(await customerService.CheckExistedCustomer(username), JsonRequestBehavior.AllowGet);
 
         public async Task<ActionResult> GetGlobalSetting(string site, int currency)
-            => Content(await customerService.GetGlobalSetting(site, currency));
+            => Content(await customerService.GetGlobalSetting(site, currency, customerClientConfiguration.SystemId));
 
         [HttpPost]
         [AuthenticateHost]
