@@ -895,6 +895,18 @@ function showWELiveCasinoBetDetails(refno, winlossDate, custId, transType) {
     openResultsPopUp(params);
 }
 
+function showLive22BetDetails(refno, winlossDate, custId, transType) {
+    var params = {
+        url: "RNGCasinoBetList/BetDetails",
+        title: "Live22 - Detailed Bet list - " + winlossDate.split(" ")[0],
+        jsonParam: { TransId: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 227, PageSize: 500 },
+        width: 1250,
+        height: 600
+    };
+
+    openResultsPopUp(params);
+}
+
 function ViewCashOutHistory(transId, refNo, betType, originalTransId, title) {
     var cashoutParam = {
         url: "BetList/GetCashOutDetails",
