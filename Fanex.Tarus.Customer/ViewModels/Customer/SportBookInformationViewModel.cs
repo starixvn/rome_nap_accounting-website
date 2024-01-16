@@ -2,6 +2,7 @@
 {
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
+    using Sunplus.Accounting.Core.Extensions;
 
     public class SportBookInformationViewModel
     {
@@ -15,66 +16,24 @@
 
         public string Params { get; }
 
+        public string TabBetSettingContent { get; }
+
         public SportBookInformationViewModel(
-            byte tabIndex,
             AppConfiguration appConfig,
             string cndUri,
-            string assetsVersion)
+            string assetsVersion, byte tabIndex,
+            int roleId)
         {
             CdnUri = cndUri;
             AssetsVersion = assetsVersion;
             AppConfig = JsonConvert.SerializeObject(appConfig,
                 new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
             PageTitle = "Sport Book Information";
-            Params = JsonConvert.SerializeObject(
-                new
-                {
-                    tabs = BuildTabs(tabIndex, appConfig.ApplicationPath),
-                },
-                new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
-        }
-
-        private object BuildTabs(byte tabIndex, string applicationPath)
-        {
-            return new[]
-            {
-                BuildBetSettingTabs(tabIndex),
-                BuildMaxPayoutSettingTabs(tabIndex, applicationPath),
-                BuildPTSettingTabs(tabIndex, applicationPath)
-            };
-        }
-
-        private object BuildPTSettingTabs(byte tabIndex, string applicationPath)
-        {
-            return new
-            {
-                name = "Resources.PTSetting",
-                url = applicationPath + "Matrix/ViewPT/GetBettypesReference?custId=0",
-                index = 2,
-                isActive = tabIndex == 2,
-            };
-        }
-
-        private object BuildMaxPayoutSettingTabs(byte tabIndex, string applicationPath)
-        {
-            return new
-            {
-                name = "Resources.MaxPayoutSetting",
-                url = applicationPath + "ViewMaxPayoutSettingInformation/Index",
-                index = 1,
-                isActive = tabIndex == 1,
-            };
-        }
-
-        private object BuildBetSettingTabs(byte tabIndex)
-        {
-            return new
-            {
-                name = "Resources.Betsetting",
-                url = "",
-                index = 0,
-                isActive = tabIndex == 0,
-            };
+            Params = JsonConvert.SerializeObject(new JsonSerializerSettings
+                { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+            TabBetSettingContent =
+                ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language,
+                    roleId > 1 ? "SMAUnlimitedBetSettingWarningMessage" : "MemberUnlimitedBetSettingWarningMessage");
         }
     }
 }

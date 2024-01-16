@@ -36,7 +36,9 @@ namespace Fanex.Tarus.Customer.Controller
         private readonly ICustomerSettingService _customerSettingService;
         private readonly Encryptor encryptor;
         private readonly ICustomerService customerService;
-        private readonly CustomerClientConfiguration customerClientConfiguration = new CustomerClientConfiguration().Initialize();
+
+        private readonly CustomerClientConfiguration customerClientConfiguration =
+            new CustomerClientConfiguration().Initialize();
 
         public CustomerController()
             : this(null, null, null)
@@ -172,32 +174,35 @@ namespace Fanex.Tarus.Customer.Controller
         public ActionResult EditCustomer(int custId, int roleId, string uname, string siteName)
         {
             var editCustomerViewModel = new EditCustomerViewModel(
-                  new AppConfiguration(GetApplicationPath()),
-                  cdnUri,
-                  GetAssetsVersion(),
-                  roleId, uname)
-            ;
+                    new AppConfiguration(GetApplicationPath()),
+                    cdnUri,
+                    GetAssetsVersion(),
+                    roleId, uname)
+                ;
             return View(HttpContext.IsDebuggingEnabled
-                    ? "~/Views/Customer/EditCustomer-Debug.cshtml"
-                    : "~/Views/Customer/EditCustomer.cshtml", editCustomerViewModel);
+                ? "~/Views/Customer/EditCustomer-Debug.cshtml"
+                : "~/Views/Customer/EditCustomer.cshtml", editCustomerViewModel);
         }
 
         // [AuthenticateRead]
         public ActionResult SportBookInformation(byte tabIndex = 0)
         {
             var viewModel = new SportBookInformationViewModel(
-                tabIndex,
                 new AppConfiguration(GetApplicationPath()),
                 cdnUri,
-                GetAssetsVersion());
+                GetAssetsVersion(),
+                tabIndex,
+                AppSession.RoleID);
             return View(HttpContext.IsDebuggingEnabled
                 ? "~/Views/Customer/SportBookInformation/Index-Debug.cshtml"
                 : "~/Views/Customer/SportBookInformation/Index.cshtml", viewModel);
         }
 
-        public async Task<ActionResult> GetCustomerSetting(int custId, byte roleId, string language = "en-US", bool isGetUpline = false)
+        public async Task<ActionResult> GetCustomerSetting(int custId, byte roleId, string language = "en-US",
+            bool isGetUpline = false)
         {
-            return Content(await customerService.GetCustomerSetting(custId, roleId, customerClientConfiguration.SystemId, language, isGetUpline));
+            return Content(await customerService.GetCustomerSetting(custId, roleId,
+                customerClientConfiguration.SystemId, language, isGetUpline));
         }
 
         public async Task<ActionResult> CheckExistedCustomer(string username)
