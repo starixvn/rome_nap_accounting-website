@@ -20,17 +20,17 @@
     if (Model.RoleName == "Super")
     {
         roleId = 4;
-        rightColumn = 7;
+        rightColumn = 1 + (Model.MasterVirtualRate == null ? 0 : 2) + (Model.AgentVirtualRate == null ? 0 : 2) + (Model.MemberVirtualRate == null ? 0 : 2);
     }
     else if (Model.RoleName == "Master")
     {
         roleId = 3;
-        rightColumn = 5;
+        rightColumn = 1 + (Model.AgentVirtualRate == null ? 0 : 2) + (Model.MemberVirtualRate == null ? 0 : 2);
     }
     else if (Model.RoleName == "Agent")
     {
         roleId = 2;
-        rightColumn = 3;
+        rightColumn = 1 + (Model.MemberVirtualRate == null ? 0 : 2);
     }
 
     if (Model.MasterVirtualRate == null && Model.AgentVirtualRate == null && Model.MemberVirtualRate == null)
