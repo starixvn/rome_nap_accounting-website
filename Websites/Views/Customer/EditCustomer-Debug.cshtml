@@ -10,9 +10,9 @@
     window.$RefreshSig$ = () => (type) => type;
     window.__vite_plugin_react_preamble_installed__ = true;
 </script>
-<script type="module" src=@("http://localhost:4200/@vite/client")></script>
+<script type="module" src=@("http://localhost:4202/@vite/client")></script>
 
-<link rel="stylesheet" href="http://localhost:4200/src/styles.scss" />
+<link rel="stylesheet" href="http://localhost:4202/src/styles.scss" />
 
 <div class="maincontent">
     <table border="0" cellpadding="0px" cellspacing="0px" class="maincontent_header">
@@ -33,6 +33,7 @@
 
 <script type="text/javascript">
     const appConfig = @Html.Raw(Model.AppConfig);
+    const params = @Html.Raw(Model.Params);
 </script>
 <script type="text/javascript" src="@Url.Content("~/js/encode.js?v=" + version)"></script>
-<script type="module" src="http://localhost:4200/src/main.tsx"></script>
+<script type="module" src="http://localhost:4202/src/main.tsx"></script>

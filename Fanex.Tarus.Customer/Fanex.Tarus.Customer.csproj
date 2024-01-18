@@ -756,10 +756,10 @@
     <Compile Include="ManageLicenseeCode\Request\UpdNewLicenseeCodeRequest.cs" />
     <Compile Include="ManageLicenseeCode\Service.cs" />
     <Compile Include="Requests\Casino\GetUnsyncedListRequest.cs" />
-    <Compile Include="Requests\CopyCustomerRequest.cs" />
+    <Compile Include="Requests\Customer\CopyCustomerRequest.cs" />
     <Compile Include="Requests\CopySuperSetting\CheckSuperListRequest.cs" />
     <Compile Include="Requests\CopySuperSetting\UpdateWinLossLimitRequest.cs" />
-    <Compile Include="Requests\CreateCustomerRequest.cs" />
+    <Compile Include="Requests\Customer\CreateCustomerCommand.cs" />
     <Compile Include="Requests\CreditCustomer\SuperPrefixQuery.cs" />
     <Compile Include="Requests\CustomerSetting\OpenCustomer\GetSingleOpenDownlinesInfoQuery.cs" />
     <Compile Include="Requests\CustomerSetting\OpenCustomer\GetSingleOpenCustomerInfoQuery.cs" />
@@ -767,6 +767,8 @@
     <Compile Include="Requests\CustomerSetting\Suspend\GetDownlineDetailInfoQuery.cs" />
     <Compile Include="Requests\CustomerSetting\Suspend\GetMultipleSuspendCustomerInfoQuery.cs" />
     <Compile Include="Requests\CustomerSetting\Suspend\GetSingleSuspendCustomerInfoQuery.cs" />
+    <Compile Include="Requests\Customer\CreateCustomerRequest.cs" />
+    <Compile Include="Requests\Customer\EditCustomerRequest.cs" />
     <Compile Include="Requests\GetMessageLogsQuery.cs" />
     <Compile Include="Requests\InitializingBetLimit\GetProductCurrencyRequest.cs" />
     <Compile Include="Requests\InitializingCustomerSetting\GenerateConfigSettingRequest.cs" />
@@ -783,7 +785,7 @@
     <Compile Include="Requests\MultipleUpdateSuperStatus\GetSupersStatusRequest.cs" />
     <Compile Include="Requests\ParlayMaxPayout\ParlayMaxPayoutSelectRequest.cs" />
     <Compile Include="Requests\ParlayMaxPayout\ParlayMaxPayoutUpdateRequest.cs" />
-    <Compile Include="Requests\UpdateCustomerRequest.cs" />
+    <Compile Include="Requests\Customer\UpdateCustomerRequest.cs" />
     <Compile Include="Resources\BetCreditHistoryLabels.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -817,7 +819,7 @@
     <Compile Include="ViewModels\CustomerSetting\Suspend\SuspendMatrixViewModel.cs" />
     <Compile Include="ViewModels\Customer\AppConfiguration.cs" />
     <Compile Include="ViewModels\Customer\CreateCustomerViewModel.cs" />
-    <Compile Include="ViewModels\Customer\CustomerViewModel.cs" />
+    <Compile Include="ViewModels\Customer\CustomerBaseViewModel.cs" />
     <Compile Include="ViewModels\Customer\EditCustomerViewModel.cs" />
     <Compile Include="ViewModels\Customer\SportBookInformationViewModel.cs" />
     <Compile Include="ViewModels\InitializingCustomerSetting\ConfigCustomerSettingViewModel.cs" />

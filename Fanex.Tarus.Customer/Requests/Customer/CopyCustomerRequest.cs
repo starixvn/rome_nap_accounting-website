@@ -1,4 +1,4 @@
-﻿namespace Fanex.Tarus.Customer.Requests
+﻿namespace Fanex.Tarus.Customer.Requests.Customer
 {
     public class CopyCustomerRequest
     {

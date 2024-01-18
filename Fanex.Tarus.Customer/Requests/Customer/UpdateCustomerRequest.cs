@@ -1,11 +1,6 @@
 ﻿using Fanex.Customer.Client.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Fanex.Tarus.Customer.Requests
+namespace Fanex.Tarus.Customer.Requests.Customer
 {
     public class UpdateCustomerRequest
     {

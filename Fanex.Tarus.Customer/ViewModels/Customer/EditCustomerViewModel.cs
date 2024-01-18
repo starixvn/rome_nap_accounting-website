@@ -1,52 +1,37 @@
 ﻿using Fanex.Tarus.Customer.Constants;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Fanex.Tarus.Customer.Requests.Customer;
 
 namespace Fanex.Tarus.Customer.ViewModels.Customer
 {
-    public class EditCustomerViewModel
+    public class EditCustomerViewModel : CustomerBaseViewModel
     {
         public EditCustomerViewModel(
+            EditCustomerRequest request,
             AppConfiguration appConfig,
             string cndUri,
-            string assetsVersion,
-            int roleId,
-            string uname
-            )
+            string assetsVersion)
+            : base(appConfig, cndUri, assetsVersion)
         {
-            CdnUri = cndUri;
-            AssetsVersion = assetsVersion;
-            AppConfig = JsonConvert.SerializeObject(appConfig, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
-            switch (roleId)
+            Params = request.ToJson();
+            switch (request.RoleId)
             {
                 case RoleIdConstants.SUPER:
-                    PageTitle = $"Super {uname}";
+                    PageTitle = $"Super {request.UName}";
                     break;
 
                 case RoleIdConstants.MASTER:
-                    PageTitle = $"Master {uname}";
+                    PageTitle = $"Master {request.UName}";
                     break;
 
                 case RoleIdConstants.AGENT:
-                    PageTitle = $"Agent {uname}";
+                    PageTitle = $"Agent {request.UName}";
                     break;
 
                 default:
-                    PageTitle = $"{uname}";
+                    PageTitle = $"{request.UName}";
                     break;
             }
         }
-
-        public string AppConfig { get; }
-
-        public string CdnUri { get; }
-
-        public string AssetsVersion { get; }
 
         public string PageTitle { get; }
     }

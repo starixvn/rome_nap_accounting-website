@@ -15,7 +15,7 @@ using Fanex.CustomerSetting.Module.Core.Attributes;
 using Fanex.Tarus.Customer.Constants;
 using Fanex.Tarus.Customer.CreditCustomer.Business;
 using Fanex.Tarus.Customer.Criteria.CreditCustomer;
-using Fanex.Tarus.Customer.Requests;
+using Fanex.Tarus.Customer.Requests.Customer;
 using Fanex.Tarus.Customer.ViewModels.Customer;
 using Fanex.Tarus.Web.Controllers;
 using Fanex.Tarus.Web.Controllers.Filters;
@@ -37,29 +37,27 @@ namespace Fanex.Tarus.Customer.Controller
         private readonly Encryptor encryptor;
         private readonly ICustomerService customerService;
 
-        private readonly CustomerClientConfiguration customerClientConfiguration =
-            new CustomerClientConfiguration().Initialize();
+        private readonly CustomerClientConfiguration customerClientConfiguration = new CustomerClientConfiguration().Initialize();
+        private readonly JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() };
 
         public CustomerController()
             : this(null, null, null)
         {
         }
 
-        internal CustomerController(ICustomerSettingService customerSettingService, Encryptor encryptor,
-            ICustomerService customerService)
+        internal CustomerController(ICustomerSettingService customerSettingService, Encryptor encryptor, ICustomerService customerService)
         {
             cdnUri = ConfigurationManager.AppSettings["Fanex.Customer:CdnUri"];
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             _customerSettingService = customerSettingService ?? new CustomerSettingService();
             this.encryptor = encryptor ?? new EncryptorImpl();
-            this.customerService =
-                customerService ?? new CustomerService(customerClientConfiguration);
+            this.customerService = customerService ?? new CustomerService(customerClientConfiguration);
         }
 
         public ActionResult GetHeadlineBelongSite()
             => Content(JsonConvert.SerializeObject(
                 _customerSettingService.GetHeadlineBelongSite(new GetHeadlineBelongSiteCriteria()),
-                new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }));
+                jsonSerializerSettings));
 
         public ActionResult GetNotAllowedSuperPrefixes()
             => Content(JsonConvert.SerializeObject(_customerSettingService.GetSuperPrefixes(new SuperPrefixCriteria
@@ -67,7 +65,7 @@ namespace Fanex.Tarus.Customer.Controller
                 GroupName = null,
                 Prefix = null,
                 AllowNewSuper = false
-            }), new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }));
+            }), jsonSerializerSettings));
 
         [AuthenticateRead]
         public ActionResult NewCustomer()
@@ -123,62 +121,56 @@ namespace Fanex.Tarus.Customer.Controller
                     sites = _customerSettingService.GetSites(AppSession.SYSTEM),
                     currencies = _customerSettingService.GetCurrencyList(AppSession.SYSTEM)
                 },
-                new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }));
+                jsonSerializerSettings));
 
         [AuthenticateRead]
         public ActionResult CreateSuper()
         {
-            var viewModel = new CreateCustomerViewModel(new AppConfiguration(GetApplicationPath()), cdnUri,
-                GetAssetsVersion(), GetHashKey());
+            var viewModel = new CreateCustomerViewModel(new CreateCustomerRequest(), new AppConfiguration(GetApplicationPath()), cdnUri, GetAssetsVersion(), GetHashKey());
             return View(
                 HttpContext.IsDebuggingEnabled
-                    ? "~/Views/Customer/Create-Debug.cshtml"
+                    ? "~/Views/Customer/CreateSuper-Debug.cshtml"
                     : "~/Views/Customer/CreateSuper.cshtml", viewModel);
         }
 
         [AuthenticateRead]
-        public ActionResult CreateCustomer(int uplineId, byte uplineRoleId, string uplineUsername, string site,
-            string siteLabel)
+        public ActionResult CreateCustomer(CreateCustomerRequest request)
         {
-            if (!string.IsNullOrWhiteSpace(site)
-                && uplineRoleId == RoleIdConstants.SUPER
-                && (site.Equals("76666B", StringComparison.OrdinalIgnoreCase) ||
-                    site.Equals("IBCIndo", StringComparison.OrdinalIgnoreCase)))
+            if (!string.IsNullOrWhiteSpace(request.Site)
+                && request.UplineRoleId == RoleIdConstants.SUPER
+                && (request.Site.Equals("76666B", StringComparison.OrdinalIgnoreCase) ||
+                    request.Site.Equals("IBCIndo", StringComparison.OrdinalIgnoreCase)))
             {
                 return View("~/Views/Customer/NotAllowAddDirectMaster.cshtml");
             }
 
-            if (string.IsNullOrWhiteSpace(uplineUsername))
+            if (string.IsNullOrWhiteSpace(request.UplineUsername))
             {
-                uplineUsername = AppSession.CustUName;
+                request.UplineUsername = AppSession.CustUName;
             }
 
             var viewModel = new CreateCustomerViewModel(
+                request,
                 new AppConfiguration(GetApplicationPath()),
                 cdnUri,
                 GetAssetsVersion(),
-                GetHashKey(),
-                uplineId,
-                uplineRoleId,
-                uplineUsername,
-                site,
-                siteLabel);
+                GetHashKey());
 
             return View(
                 HttpContext.IsDebuggingEnabled
-                    ? "~/Views/Customer/Create-Debug.cshtml"
+                    ? "~/Views/Customer/CreateCustomer-Debug.cshtml"
                     : "~/Views/Customer/CreateCustomer.cshtml", viewModel);
         }
 
         [AuthenticateRead]
-        public ActionResult EditCustomer(int custId, int roleId, string uname, string siteName)
+        public ActionResult EditCustomer(EditCustomerRequest request)
         {
             var editCustomerViewModel = new EditCustomerViewModel(
-                    new AppConfiguration(GetApplicationPath()),
-                    cdnUri,
-                    GetAssetsVersion(),
-                    roleId, uname)
-                ;
+                request,
+                new AppConfiguration(GetApplicationPath()),
+                cdnUri,
+                GetAssetsVersion());
+
             return View(HttpContext.IsDebuggingEnabled
                 ? "~/Views/Customer/EditCustomer-Debug.cshtml"
                 : "~/Views/Customer/EditCustomer.cshtml", editCustomerViewModel);
@@ -198,8 +190,7 @@ namespace Fanex.Tarus.Customer.Controller
                 : "~/Views/Customer/SportBookInformation/Index.cshtml", viewModel);
         }
 
-        public async Task<ActionResult> GetCustomerSetting(int custId, byte roleId, string language = "en-US",
-            bool isGetUpline = false)
+        public async Task<ActionResult> GetCustomerSetting(int custId, byte roleId, string language = "en-US", bool isGetUpline = false)
         {
             return Content(await customerService.GetCustomerSetting(custId, roleId,
                 customerClientConfiguration.SystemId, language, isGetUpline));
@@ -213,7 +204,7 @@ namespace Fanex.Tarus.Customer.Controller
 
         [HttpPost]
         [AuthenticateHost]
-        public async Task<ActionResult> Create(CreateCustomerRequest request)
+        public async Task<ActionResult> Create(CreateCustomerCommand request)
         {
             var generalInfo = request.GeneralInfo;
 
@@ -221,10 +212,7 @@ namespace Fanex.Tarus.Customer.Controller
 
             if (checkResult.Code != 0)
             {
-                return Content(JsonConvert.SerializeObject(checkResult, new JsonSerializerSettings
-                {
-                    ContractResolver = new CamelCasePropertyNamesContractResolver()
-                }));
+                return Content(JsonConvert.SerializeObject(checkResult, jsonSerializerSettings));
             }
 
             var rawPassword = Security.Services.Encryptor.Decrypt(generalInfo.Password,
@@ -272,7 +260,7 @@ namespace Fanex.Tarus.Customer.Controller
             return applicationPath;
         }
 
-        private Result CheckRequest(CreateCustomerRequest request)
+        private Result CheckRequest(CreateCustomerCommand request)
         {
             if (string.IsNullOrWhiteSpace(request.GeneralInfo.Site))
             {

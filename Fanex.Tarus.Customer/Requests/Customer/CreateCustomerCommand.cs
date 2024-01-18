@@ -1,8 +1,8 @@
 ﻿using Fanex.Customer.Client.Models;
 
-namespace Fanex.Tarus.Customer.Requests
+namespace Fanex.Tarus.Customer.Requests.Customer
 {
-    public class CreateCustomerRequest
+    public class CreateCustomerCommand
     {
         public GeneralInfo GeneralInfo { get; set; }
 
