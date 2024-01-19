@@ -30,7 +30,7 @@ public class CheckUserName : IHttpHandler, IRequiresSessionState
             else
             {
                 string strType = context.Request["listType"] as string ?? string.Empty;
-                var ds = SelectCustomer.CustSelByUsername(username, AppSession.SYSTEM, true);
+                var ds = SelectCustomer.CustSelByUsername(username, AppSession.SYSTEM);
                 if (ds != null)
                 {
                     if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
