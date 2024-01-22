@@ -17,9 +17,9 @@
 <body>
     <div class="maincontent">
         <div id="sectionMessage"></div>
-        <div class="bg_table">
+        <div class="search-and-coppy">
             <div style="display: none" id="tableNote">
-                <table class="tblcollapse tblSourceAccount">
+                <table class="">
                     <tbody>
                         <tr>
                             <td>
@@ -34,60 +34,54 @@
                     </tbody>
                 </table>
             </div>
-            <div style="margin-top: 8px">
-                <span>Source Account</span>
+            <div class="sourceAccount">
+                <label class="title">Source Account</label>
                 <input id="existedUserName" type="text"
                        required />
                 <span id="checkExisted" class="success" style="display: none"></span>
             </div>
-            <table class="tblcollapse tblGeneralInfo">
+            <table class="table-search-and-coppy">
                 <thead>
-                    <tr class="title c">
-                        <th colspan="4">Copied Accounts</th>
+                    <tr>
+                        <th colspan="2">
+                            <label class="title">Copied Accounts</label>                            
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
+              
                     <tr>
-                        <td colspan="4">Usernames (separated by ',')</td>
-                    </tr>
-                    <tr>
-                        <td colspan="4">
+                        <td colspan="2">
+                            <label>Usernames (separated by ',')</label>
                             <textarea id="txtUsernames" cols="50" rows="5"></textarea>
                         </td>
                     </tr>
                     <tr id="passwordRow">
-                        <td class="w90">
-                            <label for="txtPassword">Password</label>
-                        </td>
+                        
                         <td>
+                            <label for="txtPassword">Password</label>
                             <input type="password" id="txtPassword" />
                         </td>
                     </tr>
                     <tr>
+                        
                         <td>
                             <label for="txtFirstName">First Name</label>
-                        </td>
-                        <td>
                             <input type="text" id="txtFirstName" />
                         </td>
+                       
                         <td>
                             <label for="txtLastName">Last Name</label>
-                        </td>
-                        <td>
                             <input type="text" id="txtLastName" />
                         </td>
                     </tr>
-                    <tr id="phoneRow">
+                    <tr id="phoneRow">                        
                         <td>
                             <label for="txtPhone">Phone</label>
-                        </td>
-                        <td>
                             <input type="text" id="txtPhone" />
-                        </td>
+                        </td>                       
                         <td>
                             <label for="txtMobilePhone">Mobile Phone</label>
-                        </td>
-                        <td>
                             <input type="text" id="txtMobilePhone" />
                         </td>
                     </tr>
@@ -95,15 +89,15 @@
                     <tr style="display: none" id="superCreditRow"></tr>
                     <tr style="display: none" id="memberCreditRow"></tr>
                     <tr>
-                        <td colspan="4" class="warning">
+                        <td colspan="2" class="warning">
                             <div>Warning: After submit, Please do not close this browser tab or the creation process will be aborted.</div>
                             <div>You can leave this tab open and continue your work on other tabs.</div>
                             <div>If you accidentally close the tab, you must create the "Not created" account(s) again.</div>
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="4" class="c">
-                            <button id="btnSubmit" class="btn">&nbsp;&nbsp;Submit&nbsp;&nbsp;</button>
+                        <td colspan="2">
+                            <button id="btnSubmit" class="btn-submit">Submit</button>
                         </td>
                     </tr>
                 </tbody>

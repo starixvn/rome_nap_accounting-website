@@ -313,42 +313,36 @@ $.fn.forceNumber = function () {
         });
     }
 
-    function renderCreateSuperView() {
+    function renderCreateSuperView() {        
         $passwordRow.append(`
-            <td class="w90">
-                <label for= "chkInternalUser"> Internal User</label>
-            </td>`);
-        $passwordRow.append(`
-            <td>
-                <input type="checkbox" id="chkInternalUser"/>
+            <td style="height: 1px;">
+                <div class="col-internal-user">
+                    <input type="checkbox" id="chkInternalUser"/>
+                    <label for= "chkInternalUser"> Internal User</label>
+                </div>
             </td>`);
         $siteRow.show();
         $siteRow.append(`
+
             <td>
                 <label for="ddSite">Site</label>
+                <select id="ddSite" title="Site"><option>1</option><option>1</option><option>1</option></select>
             </td>
-            <td>
-                <select id="ddSite" title="Site"></select>
-            </td>
+
             <td>
                 <label for="txtFax">Fax</label>
-            </td>
-            <td>
                 <input type="text" id="txtFax" />
             </td>`);
         $superCreditRow.show();
         $superCreditRow.append(`
-            <td class="w90">
-                <label for="txtCredit">Max Credit</label>
-            </td>
+
             <td>
+                <label for="txtCredit">Max Credit</label>
                 <input type="text" id="txtCredit" maxlength="18" />
             </td>
             <td>
                 <label>Currency</label>
-            </td>
-            <td>
-                <label id="currency"></label>
+                <label class="currency" id="currency"></label>
             </td>`);
     }
 
@@ -356,17 +350,15 @@ $.fn.forceNumber = function () {
         $passwordRow.append('<td colspan="2"></td>');
         $memberCreditRow.show();
         $memberCreditRow.append(`
-            <td class="w90">
-                <label for="txtCredit">Given Credit</label>
-            </td>
             <td>
-                <input type="text" id="txtCredit" maxlength="18" />
-                <span id="memberMaxCredit"></span>
+                <div class="col-credit">
+                    <label for="txtCredit">Given Credit</label>
+                    <input type="text" id="txtCredit" maxlength="18" />
+                    <span id="memberMaxCredit"></span>
+                <div>
             </td>
             <td>
                 <label for="txtFax">Fax</label>
-            </td>
-            <td>
                 <input type="text" id="txtFax" />
             </td>`);
     }
