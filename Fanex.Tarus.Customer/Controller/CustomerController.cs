@@ -176,7 +176,20 @@ namespace Fanex.Tarus.Customer.Controller
                 : "~/Views/Customer/EditCustomer.cshtml", editCustomerViewModel);
         }
 
-        // [AuthenticateRead]
+        [AuthenticateRead]
+        public ActionResult IndirectEditMember(IndirectEditMemberRequest request)
+        {
+            var editCustomerViewModel = new IndirectEditMemberViewModel(
+                request,
+                new AppConfiguration(GetApplicationPath()),
+                cdnUri,
+                GetAssetsVersion());
+
+            return View(HttpContext.IsDebuggingEnabled
+                ? "~/Views/Customer/IndirectEditMember-Debug.cshtml"
+                : "~/Views/Customer/IndirectEditMember.cshtml", editCustomerViewModel);
+        }
+
         public ActionResult SportBookInformation(byte tabIndex = 0)
         {
             var viewModel = new SportBookInformationViewModel(
@@ -190,10 +203,10 @@ namespace Fanex.Tarus.Customer.Controller
                 : "~/Views/Customer/SportBookInformation/Index.cshtml", viewModel);
         }
 
-        public async Task<ActionResult> GetCustomerSetting(int custId, byte roleId, string language = "en-US", bool isGetUpline = false)
+        public async Task<ActionResult> GetCustomerSetting(int custId, byte roleId, byte uplineRoleId = 0, string language = "en-US", bool isGetUpline = false)
         {
             return Content(await customerService.GetCustomerSetting(custId, roleId,
-                customerClientConfiguration.SystemId, language, isGetUpline));
+                customerClientConfiguration.SystemId, uplineRoleId, language, isGetUpline));
         }
 
         public async Task<ActionResult> CheckExistedCustomer(string username)
@@ -248,6 +261,26 @@ namespace Fanex.Tarus.Customer.Controller
 
             return Content(response);
         }
+
+        [HttpPost]
+        [AuthenticateHost]
+        public async Task<ActionResult> IndirectUpdateMember(UpdateCustomerRequest request)
+        {
+            var response = await customerService.UpdateCustomer(new UpdateCustomerParam(
+                request.GeneralInfo,
+                request.ProductGroups,
+                AppSession.AccId,
+                0,
+                request.CustId,
+                request.UName,
+                request.RoleId,
+                request.UplineRoleId,
+                Utils.GetClientIP(),
+                "en-US"));
+
+            return Content(response);
+        }
+
 
         private string GetApplicationPath()
         {

@@ -1,0 +1,29 @@
+﻿@model Fanex.Tarus.Customer.ViewModels.Customer.IndirectEditMemberViewModel
+@{
+    Page.Title = "Title goes here";
+    var version = Sunplus.Accounting.Core.Configurations.WebSettings.Version;
+}
+<link rel="stylesheet" href="@(Model.CdnUri)edit-customer/index.css?version=@(Model.AssetsVersion)" />
+
+<div class="maincontent">
+    <table border="0" cellpadding="0px" cellspacing="0px" class="maincontent_header">
+        <tr>
+            <td class="maincontent_headerL">
+            </td>
+            <td class="maincontent_headerC fixfont">@Model.PageTitle</td>
+            <td class="maincontent_headerR">
+            </td>
+        </tr>
+    </table>
+    <div class="bg_table" style="width: 844px;">
+        @Html.AntiForgeryToken()
+        <div id="root"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    const appConfig = @Html.Raw(Model.AppConfig);
+    const params = @Html.Raw(Model.Params);
+</script>
+<script type="text/javascript" src="@Url.Content("~/js/encode.js?v=" + version)"></script>
+<script type="module" src="@(Model.CdnUri)indirect-edit-member/index.js?version=@(Model.AssetsVersion)"></script>

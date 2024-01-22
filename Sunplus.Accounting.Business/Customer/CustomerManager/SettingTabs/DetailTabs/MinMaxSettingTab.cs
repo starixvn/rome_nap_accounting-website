@@ -39,8 +39,8 @@
             TemplateHandler.Assign(ref htmlcontent, "{lblMinMax}", isDeposit ? string.Empty : "<li id=\"detail_tab_1\" onclick=\"detail_tabnew_Click(this)\"><a href=\"javascript:void(0);\"><span>Super PT</span></a></li>");
             TemplateHandler.Assign(ref htmlcontent, "{lblMinMax1}", isDeposit ? string.Empty : "<a href=\"javascript:void(0);\"><span>Master PT</span></a>");
 
-            string superOnMemberSettingUrl = string.Format("EditSuperOnMember/EditSuperOnMemberPage?agentId={0}&custId={1}&uname={2}&siteName={3}", agentId, custId, userName, siteName);
-            string masterOnMemberSettingUrl = string.Format("EditMasterOnMember/EditMasterOnMemberPage?agentId={0}&custId={1}&uname={2}&siteName={3}", agentId, custId, userName, siteName);
+            string superOnMemberSettingUrl = string.Format("Customer/IndirectEditMember?roleId=1&uplineRoleId=4&agentId={0}&custId={1}&uname={2}&siteName={3}", agentId, custId, userName, siteName);
+            string masterOnMemberSettingUrl = string.Format("Customer/IndirectEditMember?roleId=1&uplineRoleId=3&agentId={0}&custId={1}&uname={2}&siteName={3}", agentId, custId, userName, siteName);
             string superSettingTab = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + superOnMemberSettingUrl + "\");' target='centerFr'>Sportsbook</a>";
 
             if (renderLeftPanelParameter.IsShowSabaCasino)

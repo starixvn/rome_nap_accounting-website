@@ -13,5 +13,7 @@ namespace Fanex.Tarus.Customer.Requests.Customer
         public string UName { get; set; }
 
         public int RoleId { get; set; }
+
+        public int UplineRoleId { get; set; }
     }
 }

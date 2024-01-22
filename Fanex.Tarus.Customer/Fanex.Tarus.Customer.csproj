@@ -769,6 +769,7 @@
     <Compile Include="Requests\CustomerSetting\Suspend\GetSingleSuspendCustomerInfoQuery.cs" />
     <Compile Include="Requests\Customer\CreateCustomerRequest.cs" />
     <Compile Include="Requests\Customer\EditCustomerRequest.cs" />
+    <Compile Include="Requests\Customer\IndirectEditMemberRequest.cs" />
     <Compile Include="Requests\GetMessageLogsQuery.cs" />
     <Compile Include="Requests\InitializingBetLimit\GetProductCurrencyRequest.cs" />
     <Compile Include="Requests\InitializingCustomerSetting\GenerateConfigSettingRequest.cs" />
@@ -821,6 +822,7 @@
     <Compile Include="ViewModels\Customer\CreateCustomerViewModel.cs" />
     <Compile Include="ViewModels\Customer\CustomerBaseViewModel.cs" />
     <Compile Include="ViewModels\Customer\EditCustomerViewModel.cs" />
+    <Compile Include="ViewModels\Customer\IndirectEditMemberViewModel.cs" />
     <Compile Include="ViewModels\Customer\SportBookInformationViewModel.cs" />
     <Compile Include="ViewModels\InitializingCustomerSetting\ConfigCustomerSettingViewModel.cs" />
     <Compile Include="ViewModels\InitializingCustomerSetting\ConfigSettingViewModel.cs" />
