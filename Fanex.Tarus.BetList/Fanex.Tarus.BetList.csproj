@@ -161,7 +161,7 @@
       <HintPath>..\packages\Fanex.BetList.RNGCore.1.0.0.1\lib\net461\Fanex.BetList.RNGCore.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.RNGWar, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.RNGWar.2.0.0.1-HFGameType-01\lib\net461\Fanex.BetList.RNGWar.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.RNGWar.2.0.0.1\lib\net461\Fanex.BetList.RNGWar.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.SabaClub, Version=2.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.SabaClub.2.0.0.2\lib\net461\Fanex.BetList.SabaClub.dll</HintPath>
