@@ -513,9 +513,6 @@ var ViewPT = {
             case 174: // Advantplay Mini
             case 159: // YeeBet
             case 9911: // IBC Live Casino
-            case 9913:
-            case 9914:
-            case 9915:
                 ViewPT.viewPTBasedOnKindOfCustomer(userName, sportId, betTypeId);
                 break;
             case 9908: // Virtual Sports
@@ -547,6 +544,9 @@ var ViewPT = {
             case 209: // Saba Casino
             case 210: // Saba Casino
                 ViewPT.viewPTBasedOnKindOfCustomer(userName, 0, 0, 6);
+                break;
+            case 9913:
+                ViewPT.viewPTBasedOnKindOfCustomer(userName, 0, 0, 1);
                 break;
             default:
                 ViewPT.getViewPTOldFormat(userName, sportId, betTypeId);
