@@ -468,15 +468,6 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                 };
                 sports.SportsList.Add(agCasino);
             }
-
-            var allSports = new Sport()
-            {
-                SportId = 0,
-                SportName = "..:: ALL ::..",
-                Bettype = GetPtBetType(0)
-            };
-            sports.SportsList.Add(allSports);
-
         }
 
         private static List<PositionTakingDTO> PositionTakingDetail(DbResult data, int roleId, int sportId)
