@@ -435,8 +435,8 @@
     <Reference Include="Fanex.Tarus.ActivityTracking, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.ActivityTracking.1.0.0.5\lib\net40\Fanex.Tarus.ActivityTracking.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Tarus.Admin, Version=1.0.5.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Admin.1.0.5.11-Add777Site01\lib\net461\Fanex.Tarus.Admin.dll</HintPath>
+    <Reference Include="Fanex.Tarus.Admin, Version=1.0.5.11, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Admin.1.0.5.11-Add777Site02\lib\net461\Fanex.Tarus.Admin.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.API, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.API.1.0.0\lib\net40\Fanex.Tarus.API.dll</HintPath>
@@ -729,8 +729,8 @@
     <Reference Include="Sunplus.Accounting.Core, Version=2.0.4.26, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Accounting.Core.2.0.4.27-Add777Site02\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.7.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.7.1-Add777Site01\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
+    <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.7.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.7.1-Add777Site03\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.Entities, Version=2.0.2.10, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Accounting.Entities.2.0.2.10\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>

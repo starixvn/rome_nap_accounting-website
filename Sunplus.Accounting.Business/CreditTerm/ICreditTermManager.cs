@@ -7,7 +7,7 @@ namespace Sunplus.Accounting.Business.CreditTerm
 {
     public interface ICreditTermManager
     {
-        List<Group> GetAllGroup();
+        List<Group> GetAllGroup(int userId);
 
         Result UpdateConsolidationReportAllowStatus(int custId, bool isViewReport);
 

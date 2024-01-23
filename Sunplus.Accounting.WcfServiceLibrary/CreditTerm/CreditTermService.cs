@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ServiceModel.Activation;
 using Sunplus.Accounting.Business.BootStrappers;
 using Sunplus.Accounting.Business.CreditTerm;
+using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Entities.CreditTerm;
 
@@ -14,7 +15,7 @@ namespace Sunplus.Accounting.WcfServiceLibrary.CreditTerm
         public List<Group> GetAllGroup()
         {
             var creditManager = CommonBootStrapper.Locator.GetInstance<ICreditTermManager>();
-            return creditManager.GetAllGroup();
+            return creditManager.GetAllGroup(AppSession.AccId);
         }
 
         public Result UpdateConsolidationReportAllowStatus(int custId, bool isViewReport)

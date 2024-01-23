@@ -27,12 +27,12 @@ namespace Sunplus.Accounting.Business.CreditTerm
             _creditTermDAO = creditTermDAO;
         }
 
-        public List<Group> GetAllGroup()
+        public List<Group> GetAllGroup(int userId)
         {
             var listGroup = new List<Group>();
             try
             {
-                var dbResult = _creditTermDAO.GetAllGroup();
+                var dbResult = _creditTermDAO.GetAllGroup(userId);
                 if (dbResult != null)
                 {
                     var rows = dbResult.Rows;
@@ -71,7 +71,7 @@ namespace Sunplus.Accounting.Business.CreditTerm
 
         public void ExportExcelAllGroup(string searchKey, string sortOrder, string sortName)
         {
-            var listGroup = GetAllGroup();
+            var listGroup = GetAllGroup(AppSession.AccId);
             if (listGroup == null)
             {
                 return;
