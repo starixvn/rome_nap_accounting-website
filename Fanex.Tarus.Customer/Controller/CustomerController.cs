@@ -212,8 +212,8 @@ namespace Fanex.Tarus.Customer.Controller
         public async Task<ActionResult> CheckExistedCustomer(string username)
             => Json(await customerService.CheckExistedCustomer(username), JsonRequestBehavior.AllowGet);
 
-        public async Task<ActionResult> GetGlobalSetting(string site, int currency)
-            => Content(await customerService.GetGlobalSetting(site, currency, customerClientConfiguration.SystemId));
+        public async Task<ActionResult> GetGlobalSetting(string siteLabel, string site, int currency)
+            => Content(await customerService.GetGlobalSetting(siteLabel, site, currency, customerClientConfiguration.SystemId));
 
         [HttpPost]
         [AuthenticateHost]
@@ -280,7 +280,6 @@ namespace Fanex.Tarus.Customer.Controller
 
             return Content(response);
         }
-
 
         private string GetApplicationPath()
         {
