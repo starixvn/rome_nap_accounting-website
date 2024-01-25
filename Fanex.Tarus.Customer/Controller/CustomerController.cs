@@ -24,6 +24,7 @@ using Newtonsoft.Json.Serialization;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Agent.Utilities;
+using Sunplus.Accounting.Business.Security;
 
 namespace Fanex.Tarus.Customer.Controller
 {
@@ -148,6 +149,8 @@ namespace Fanex.Tarus.Customer.Controller
             {
                 request.UplineUsername = AppSession.CustUName;
             }
+            
+            request.CanEditCredit = Permissions.GetHostPermission(Enumerations.Functions.Customer.Credit);
 
             var viewModel = new CreateCustomerViewModel(
                 request,
@@ -165,6 +168,8 @@ namespace Fanex.Tarus.Customer.Controller
         [AuthenticateRead]
         public ActionResult EditCustomer(EditCustomerRequest request)
         {
+            request.CanEditCredit = Permissions.GetHostPermission(Enumerations.Functions.Customer.Credit);
+            
             var editCustomerViewModel = new EditCustomerViewModel(
                 request,
                 new AppConfiguration(GetApplicationPath()),
