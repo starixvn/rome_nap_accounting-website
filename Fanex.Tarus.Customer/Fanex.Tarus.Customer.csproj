@@ -340,6 +340,9 @@
     <Compile Include="Business\AutoTransferAll\AutoTransferAllService.cs" />
     <Compile Include="Business\AutoTransferAll\IAutoTransferAllService.cs" />
     <Compile Include="Business\BetCreditHistory\BetCreditHistoryService.cs" />
+    <Compile Include="Business\ConfigureDirectAccount\ConfigureDirectAccountExcelService.cs" />
+    <Compile Include="Business\ConfigureDirectAccount\IConfigureDirectAccountService.cs" />
+    <Compile Include="Business\ConfigureDirectAccount\ConfigureDirectAccountService.cs" />
     <Compile Include="Business\CopySuperSetting\CopySuperSettingService.cs" />
     <Compile Include="Business\CopyVRSetting\CopyVRSettingService.cs" />
     <Compile Include="Business\CustomerLogin\CustomerOTPService.cs" />
@@ -408,6 +411,7 @@
     <Compile Include="Controller\Player3rdController.cs" />
     <Compile Include="Controller\Setting\OpenCustomerController.cs" />
     <Compile Include="Controller\ViewMaxPayoutSettingInformationController.cs" />
+    <Compile Include="Controller\ConfigureDirectAccountController.cs" />
     <Compile Include="Controller\CustomerLogin\CustomerOTPController.cs" />
     <Compile Include="Controller\ExtraPtGroup\ExtraPtController.cs" />
     <Compile Include="Controller\LicenseeDcsSettingController.cs" />
@@ -434,6 +438,10 @@
     <Compile Include="Criteria\BetCreditHistory\GetBetCreditHistoryCriteria.cs" />
     <Compile Include="Criteria\BetTrade\GetBetTradeStatusCriteria.cs" />
     <Compile Include="Criteria\BetTrade\UpdateBetTradeStatusCriteria.cs" />
+    <Compile Include="Criteria\ConfigureDirectAccount\UpdateImportDirectAccountCriteria.cs" />
+    <Compile Include="Criteria\ConfigureDirectAccount\CheckImportDirectAccountFileCriteria.cs" />
+    <Compile Include="Criteria\ConfigureDirectAccount\UpdateDirectAccountStatusCriteria.cs" />
+    <Compile Include="Criteria\ConfigureDirectAccount\UpdateDirectStatusEffectCriteria.cs" />
     <Compile Include="Criteria\AutoTransferAll\ClearBalanceMembersCriteria.cs" />
     <Compile Include="Criteria\AutoTransferAll\UpdatedTransferStatusCriteria.cs" />
     <Compile Include="Criteria\AutoTransferAll\DeletedTransferCriteria.cs" />
@@ -559,6 +567,8 @@
     <Compile Include="DataAccess\AutoTransferAll\IAutoTransferAllAccess.cs" />
     <Compile Include="DataAccess\AutoTransfer\AutoTransferDatalAccess.cs" />
     <Compile Include="DataAccess\BetCreditHistory\BetCreditHistoryDataAccess.cs" />
+    <Compile Include="DataAccess\ConfigureDirectAccount\ConfigureDirectAccountRepository.cs" />
+    <Compile Include="DataAccess\ConfigureDirectAccount\IConfigureDirectAccountRepository.cs" />
     <Compile Include="DataAccess\CopySuperSetting\CopySuperSettingDataAccess.cs" />
     <Compile Include="DataAccess\CopyVRSetting\CopyVRSettingDataAccess.cs" />
     <Compile Include="DataAccess\CustomerLogin\CustomerOTPDataAccess.cs" />
@@ -643,6 +653,9 @@
     <Compile Include="Entities\AutoTransfer\TurnOffAutoTransferResultModel.cs" />
     <Compile Include="Entities\BaseModel.cs" />
     <Compile Include="Entities\BetCreditHistory\BetCreditHistoryItem.cs" />
+    <Compile Include="Entities\ConfigureDirectAccount\DirectAccountStatusInfo.cs" />
+    <Compile Include="Entities\ConfigureDirectAccount\ImportDirectAccountResult.cs" />
+    <Compile Include="Entities\ConfigureDirectAccount\UpdateDirectAccountStatusEffectInfo.cs" />
     <Compile Include="Entities\CopySuperSetting\CheckSuperListResult.cs" />
     <Compile Include="Entities\CopySuperSetting\CopyWinLostLimitResult.cs" />
     <Compile Include="Entities\CopySuperSetting\SportType.cs" />
