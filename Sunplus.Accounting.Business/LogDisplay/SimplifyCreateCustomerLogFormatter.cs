@@ -51,12 +51,6 @@ namespace Sunplus.Accounting.Business.LogDisplay
 
         //private const int PTTemplateDel_Member = 485;
 
-        private const int SabaCasinoProductId = 6;
-
-        private const int CreateSuperPTActionId = 263000;
-        private const int CreateSuperCommActionId = 263000;
-        private const int CreateSuperBetSettingActionId = 262000;
-
         private readonly int[] ActionIds = {
             SettingsLogActionId_Master,
             CompactLogActionId_Master,
@@ -64,9 +58,6 @@ namespace Sunplus.Accounting.Business.LogDisplay
             CompactLogActionId_Agent,
             SettingsLogActionId_Member,
             CompactLogActionId_Member,
-            CreateSuperPTActionId,
-            CreateSuperCommActionId,
-            CreateSuperBetSettingActionId
             //PTTemplateIns_Master,
             //PTTemplateUpd_Master,
             ////PTTemplateDel_Master,

@@ -221,7 +221,7 @@
                                 tpl_tracking += '<tr class="headerSportTypeDetail"><td colspan="6" style="cursor: pointer;" onclick="LogPT.showHide(\'' + rel_group + '\')">' + group.N + '</td></tr>';
                                 tpl_tracking += '<tr><td colspan="6"><div class="' + rel_group + '"><table class="tblDesc"><tbody>';
                                 var isMultiTables = group.Tables.length > 1;
-                                for (let table of group.Tables) {
+                                for (var [tableIndex, table] of group.Tables.entries()) {
                                     var isComplexHeader = table.HeaderRows.length > 1;
                                     tpl_tracking += '<tr style="' + (isMultiTables ? 'background-color: #ebf4fa' : '') + '">';
                                     let isFirst = true;
@@ -236,7 +236,7 @@
                                         tpl_tracking += '<tr>';
                                         isFirst = true;
                                         for (let [colIndex, value] of row.entries()) {
-                                            tpl_tracking += '<td class="' + ((isFirst && value.indexOf("&emsp;") < 0) ? " collabel" : "") + (isFirst ? ' first_column' : '') + '"><div class="' + tbl + '-' + rowIndex + '-' + colIndex + clsDiff + (isFirst ? '' : ' c') + '">' + (value == undefined ? '' : value) + '</div></td>';
+                                            tpl_tracking += '<td class="' + ((isFirst && value.indexOf("&emsp;") < 0) ? " collabel" : "") + (isFirst ? ' first_column' : '') + '"><div class="' + tbl + '-' + tableIndex + '-' + rowIndex + '-' + colIndex + clsDiff + (isFirst ? '' : ' c') + '">' + (value == undefined ? '' : value) + '</div></td>';
                                             isFirst = false;
                                         }
 

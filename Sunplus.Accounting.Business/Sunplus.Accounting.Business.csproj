@@ -458,6 +458,7 @@
     <Compile Include="LogDisplay\LoginLogType.cs" />
     <Compile Include="LogDisplay\NewCurrencyForLicenseeLogFormatter.cs" />
     <Compile Include="LogDisplay\NewLicenseeLogFormatter.cs" />
+    <Compile Include="LogDisplay\CreditCustomerSetting\CustomerSettingLogFormatter.cs" />
     <Compile Include="LogDisplay\SimplifyCreateCustomerLogFormatter.cs" />
     <Compile Include="Logs.cs" />
     <Compile Include="LogDisplay\ISettingManager.cs" />

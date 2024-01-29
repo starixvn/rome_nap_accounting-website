@@ -2,6 +2,7 @@
 using DNAide.Core;
 using Fanex.Common;
 using Sunplus.Accounting.Business.Customer;
+using Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting;
 using Sunplus.Accounting.Core.Cache;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Extensions;
@@ -32,6 +33,8 @@ namespace Sunplus.Accounting.Business.LogDisplay
 
         private readonly SimplifyCreateCustomerLogFormatter _simplifyCreateCustomerLogFormatter;
 
+        private readonly CustomerSettingLogFormatter _customerSettingLogFormatter;
+
         private int[] listBetsettingActionIDLicensee = new int[] { 2012, 2013, 2019, 2036 };
 
         private int[] listStatusActionIDHasRNGKeno = new int[] { 1100, 1101, 1102, 1103 };
@@ -40,13 +43,15 @@ namespace Sunplus.Accounting.Business.LogDisplay
             ILogDisplayDAO logDAO,
             NewLicenseeLogFormatter newLicenseeLogFormatter,
             NewCurrencyForLicenseeLogFormatter newCurrencyForLicenseeLogFormatter,
-            SimplifyCreateCustomerLogFormatter simplifyCreateCustomerLogFormatter)
+            SimplifyCreateCustomerLogFormatter simplifyCreateCustomerLogFormatter,
+            CustomerSettingLogFormatter customerSettingLogFormatter)
         {
             _logDAO = logDAO;
       
             _newLicenseeLogFormatter = newLicenseeLogFormatter ?? new NewLicenseeLogFormatter();
             _newCurrencyForLicenseeLogFormatter = newCurrencyForLicenseeLogFormatter ?? new NewCurrencyForLicenseeLogFormatter();
             _simplifyCreateCustomerLogFormatter = simplifyCreateCustomerLogFormatter ?? new SimplifyCreateCustomerLogFormatter();
+            _customerSettingLogFormatter = customerSettingLogFormatter ?? new CustomerSettingLogFormatter();
         }
 
         public Sunplus.Accounting.Entities.LogDisplay.ResultLog GetLogDisplay(LogParam param)
@@ -147,8 +152,15 @@ namespace Sunplus.Accounting.Business.LogDisplay
                         string trackingvalueold = FormatPermissionSubAccount(CastAide.AsString(row["trackingvalueold"]));
                         string spName = CastAide.AsString(row["SPName"]);
                         string actionName = CastAide.AsString(row["actionname"]);
-                        record.Detail = ParseTrackingValue(actionId, trackingvalue, spName, actionName);
-                        record.Diffs = _DiffsTrackingValue(trackingvalue, CastAide.AsString(trackingvalueold, string.Empty));
+                        if (_customerSettingLogFormatter.IsCreditCustomerSettingActionId(actionId))
+                        {
+                            _customerSettingLogFormatter.GenerateDetail(record ,actionId, trackingvalue, trackingvalueold, spName, actionName);
+                        }
+                        else
+                        {
+                            record.Detail = ParseTrackingValue(actionId, trackingvalue, spName, actionName);
+                            record.Diffs = _DiffsTrackingValue(trackingvalue, CastAide.AsString(trackingvalueold, string.Empty));
+                        }
 
                         logResult.Rows.Add(record);
                     }
@@ -844,21 +856,6 @@ namespace Sunplus.Accounting.Business.LogDisplay
             }
 
             return trackingNode;
-        }
-
-        private List<List<TrackingValue>> DiffsTrackingValue(int actionId, string trackingValue, string trackingValue2)
-        {
-            if (string.IsNullOrEmpty(trackingValue2) || trackingValue.Equals(trackingValue2))
-            {
-                return null;
-            }
-
-            if (_simplifyCreateCustomerLogFormatter.IsPTTemplateLogActionId(actionId))
-            {
-                return _simplifyCreateCustomerLogFormatter.GeneratePTTemplateDiffsTrackingValue(trackingValue, trackingValue2, _GetTrackingParams);
-            }
-
-            return _DiffsTrackingValue(trackingValue, trackingValue2);
         }
 
         private List<List<TrackingValue>> _DiffsTrackingValue(string trackingValue, string trackingValue2)
