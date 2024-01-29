@@ -315,7 +315,7 @@ $.fn.forceNumber = function () {
 
     function renderCreateSuperView() {        
         $passwordRow.append(`
-            <td style="height: 1px;">
+            <td class="col-internal">
                 <div class="col-internal-user">
                     <input type="checkbox" id="chkInternalUser"/>
                     <label for= "chkInternalUser"> Internal User</label>
@@ -323,21 +323,18 @@ $.fn.forceNumber = function () {
             </td>`);
         $siteRow.show();
         $siteRow.append(`
-
             <td>
                 <label for="ddSite">Site</label>
-                <select id="ddSite" title="Site"><option>1</option><option>1</option><option>1</option></select>
+                <select id="ddSite" title="Site"></select>
             </td>
-
             <td>
                 <label for="txtFax">Fax</label>
                 <input type="text" id="txtFax" />
             </td>`);
         $superCreditRow.show();
         $superCreditRow.append(`
-
             <td>
-                <label for="txtCredit">Max Credit</label>
+                <label for="txtCredit">Max Credit<span class="require"> *</span></label>
                 <input type="text" id="txtCredit" maxlength="18" />
             </td>
             <td>
@@ -352,9 +349,9 @@ $.fn.forceNumber = function () {
         $memberCreditRow.append(`
             <td>
                 <div class="col-credit">
-                    <label for="txtCredit">Given Credit</label>
+                    <label for="txtCredit">Given Credit<span class="require"> *</span></label>
                     <input type="text" id="txtCredit" maxlength="18" />
-                    <span id="memberMaxCredit"></span>
+                    <span class="memberMaxCredit" id="memberMaxCredit"></span>
                 <div>
             </td>
             <td>

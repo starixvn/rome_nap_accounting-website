@@ -18,21 +18,11 @@
     <div class="maincontent">
         <div id="sectionMessage"></div>
         <div class="search-and-coppy">
-            <div style="display: none" id="tableNote">
-                <table class="">
-                    <tbody>
-                        <tr>
-                            <td>
-                                <div id="headlineBelongSite"></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div id="notAllowedSuperPrefixes_multiple"></div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div style="display: none" id="tableNote">                 
+                <div class="headingnote">
+                    <div id="headlineBelongSite"></div>
+                    <div id="notAllowedSuperPrefixes_multiple"></div>
+                </div>                             
             </div>
             <div class="sourceAccount">
                 <label class="title">Source Account</label>
@@ -59,7 +49,7 @@
                     <tr id="passwordRow">
                         
                         <td>
-                            <label for="txtPassword">Password</label>
+                            <label for="txtPassword">Password<span class="require"> *</span></label>
                             <input type="password" id="txtPassword" />
                         </td>
                     </tr>
@@ -90,9 +80,13 @@
                     <tr style="display: none" id="memberCreditRow"></tr>
                     <tr>
                         <td colspan="2" class="warning">
-                            <div>Warning: After submit, Please do not close this browser tab or the creation process will be aborted.</div>
-                            <div>You can leave this tab open and continue your work on other tabs.</div>
-                            <div>If you accidentally close the tab, you must create the "Not created" account(s) again.</div>
+                            <div class="headingnote">
+                                <div class="warning-mess">
+                                    <div>Warning: After submit, Please do not close this browser tab or the creation process will be aborted.</div>
+                                    <div>You can leave this tab open and continue your work on other tabs.</div>
+                                    <div>If you accidentally close the tab, you must create the "Not created" account(s) again.</div>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                     <tr>
