@@ -15,9 +15,9 @@ namespace Fanex.Tarus.Customer.Requests.Customer
 
         public string SiteLabel { get; set; } = string.Empty;
 
-        public bool CanEditCredit { get; set; } = false;
+        public bool NoPermissionEditCredit { get; set; } = false;
         
         internal string ToJson()
-            => JsonConvert.SerializeObject(new { UplineId, UplineRoleId, Site, SiteLabel, CanEditCredit }, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+            => JsonConvert.SerializeObject(new { UplineId, UplineRoleId, Site, SiteLabel, NoPermissionEditCredit }, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
     }
 }
