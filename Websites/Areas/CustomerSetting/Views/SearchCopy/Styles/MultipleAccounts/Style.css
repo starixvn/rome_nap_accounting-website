@@ -1,4 +1,8 @@
-﻿body, .maincontent {
+﻿@import "./roboto.css";
+body, body * {
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif
+}
+body, .maincontent {
     margin: 0;
     padding: 0;
 }
@@ -6,7 +10,7 @@
     box-sizing: border-box;
 }
 .maincontent {
-    width: 768px;
+    width: 700px;
 }
 
 .alertboxerr, .alertboxscc {
@@ -48,7 +52,7 @@
     line-height: 1.5;
     text-align: left;
     vertical-align: middle;
-    font-size: 12px;
+    font-size: 13px;
     clear: both;
     padding-left: 30px;
     margin-bottom: 5px;
@@ -63,8 +67,8 @@
 /**--------------**/
 
 /** -- new ui -- **/
-.mb-15{
-    margin-bottom: 15px;
+.mb-5{
+    margin-bottom: 5px;
 }
 .alertboxerr {
     border: 1px solid #CACACA;
@@ -73,34 +77,35 @@
 }
 .alertboxerr div {
     color: #E50000;
-    background: #fafafa url(../Images/cancel-round.png) no-repeat top 11px left 6px;
-    font-size: 12px;
+    background: #fafafa url(../Images/cancel-round.png) no-repeat top 3px left 6px;
+    font-size: 13px;
     line-height: 16px;
-    padding: 13px 10px 13px 36px;
+    padding: 5px 10px 5px 36px;
     margin-bottom: 0;
     border: 0;
     overflow: unset;
-    font-weight: bold;
+    font-weight: 500;
 }
 .headingnote {
     background: #FAFAFA;
     border: 1px solid #CACACA;
-    padding: 12px 12px 0 12px;
+    padding: 8px 8px 0 8px;
+    border-radius: 3px;
 }
 .headlineBelongSiteMsg {
     color: #333;
     background: #fafafa url(../Images/info.png) no-repeat top 1px left -1px;
-    font-size: 12px;
+    font-size: 13px;
     line-height: 16px;
-    padding: 0px 10px 11px 29px;
+    padding: 0px 8px 8px 29px;
     margin-bottom: 0;
     border: 0;
     overflow: unset;
-    font-weight: bold;
+    font-weight: 500;
 }
 .headlineBelongSiteMsg + .headlineBelongSiteMsg {
     position: relative;
-    margin-top: 10px;
+    margin-top: 8px;
 }
 .headlineBelongSiteMsg + .headlineBelongSiteMsg::after{
     content: "";
@@ -114,33 +119,50 @@
 .warning-mess {
     color: #A75000;
     background: #fafafa url(../Images/warning.png) no-repeat top 1px left -1px;
-    font-size: 12px;
+    font-size: 13px;
     line-height: 16px;
-    padding: 0px 10px 11px 29px;
+    padding: 0px 8px 8px 29px;
     margin-bottom: 0;
     border: 0;
     overflow: unset;
-    font-weight: bold;
+    font-weight: 500;
 }
 
 .search-and-coppy {
     border: 1px solid #CACACA;
     background: #ffffff;
-    padding: 8px;
+    padding: 5px;
 }
 .table-search-and-coppy{
     width: 100%;
 }
 .table-search-and-coppy td{
-    padding-bottom: 10px;
+    padding-bottom: 3px;
     vertical-align: top;
+    width: 50%;
+}
+.table-search-and-coppy td input[type='text']{
+    width: 332px;     
+}
+.table-search-and-coppy td:first-child {
+    padding-right: 5px;
+}
+.table-search-and-coppy td:last-child{
+    padding-left: 5px;
+}
+.table-search-and-coppy td[colspan]{
+    padding-left: 0;
+    padding-right: 0;
+}
+.table-search-and-coppy td > *{
+    width: 100%!important;
 }
 .table-search-and-coppy td.col-internal {
     padding-top: 23px;
 }
 .sourceAccount {
-    padding-bottom: 10px;
-    margin-bottom: 10px;
+    padding-bottom: 8px;
+    margin-bottom: 5px;
     border-bottom: 1px solid #d1d1d1;
 }
 
@@ -157,16 +179,16 @@ label {
 }
 label.title {
     font-size: 15px;
-    font-weight: bold;
+    font-weight: 500;
     color: #094980;
     display: block;
-    margin-bottom: 10px;
+    margin-bottom: 2px;
 }
 .require {
     color: #A11515;
 }
 select, input[type='text'], input[type='password'], .currency {
-    padding: 0 5px;
+    padding: 0 3px;
     background: #fff;
     border: 1px solid #d1d1d1;
     border-radius: 3px;
@@ -175,6 +197,7 @@ select, input[type='text'], input[type='password'], .currency {
     font-size: 13px;
     height: 26px;
     outline: none;
+    line-height: 24px;
 }
 .currency {
     background: #E6E6E6;
@@ -192,7 +215,7 @@ textarea {
     width: 100%;
     resize: none;
     font-size: 13px;
-    height: 140px;
+    height: 70px;
     outline: none;
 }
 .col-credit{
@@ -221,7 +244,7 @@ textarea {
     color: #ededed;
     font-weight: 700;
     padding: 5px 15px;
-    min-width: 100px;
+    max-width: 100px;
     background-color: #0b599c;
     border: none;
     border-radius: 3px;
