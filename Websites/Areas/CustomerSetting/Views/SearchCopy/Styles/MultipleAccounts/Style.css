@@ -136,7 +136,7 @@
     vertical-align: top;
 }
 .table-search-and-coppy td.col-internal {
-    vertical-align: middle;
+    padding-top: 23px;
 }
 .sourceAccount {
     padding-bottom: 10px;
@@ -205,10 +205,11 @@ textarea {
     left: 0;
     color: #666;
 }
-.col-internal-user{
-    height: 100%;
+.col-internal-user {
     display: flex;
     align-items: center;
+    height: 26px;
+   
 }
 .col-internal-user input {
     margin: 0 3px 0 0;
