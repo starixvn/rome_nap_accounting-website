@@ -58,7 +58,7 @@
                                     </td>
                                     @{
                                         
-                                        string[] baseCurrency = "MYR,CNY,EUR,USDT".Split(new Char[] { ',' });
+                                        string[] baseCurrency = ConfigurationManager.AppSettings["Fanex.Tarus.ExchangeRate.BaseCryptoCurrency"].Split(new Char[] { ',' });
                                         for (int i = 0, maxLength = baseCurrency.Length; i < maxLength; i++)
                                         {
                                         <td style="border-bottom: none 0px;">
