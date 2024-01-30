@@ -249,4 +249,22 @@
   <data name="StakeLevelList" xml:space="preserve">
     <value>Stake Level List</value>
   </data>
+  <data name="AutoSuperPT" xml:space="preserve">
+    <value>Master Auto PT</value>
+  </data>
+  <data name="IsAutoSuperPT" xml:space="preserve">
+    <value>Is Master Auto PT</value>
+  </data>
+  <data name="MasterMinPT" xml:space="preserve">
+    <value>Master Min PT</value>
+  </data>
+  <data name="NewSuperPT" xml:space="preserve">
+    <value>New Super PT</value>
+  </data>
+  <data name="SuperMinPT" xml:space="preserve">
+    <value>Super Min PT</value>
+  </data>
+  <data name="UpdAllMems" xml:space="preserve">
+    <value>Update All Members</value>
+  </data>
 </root>

@@ -155,6 +155,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
                         if (_customerSettingLogFormatter.IsCreditCustomerSettingActionId(actionId))
                         {
                             _customerSettingLogFormatter.GenerateDetail(record ,actionId, trackingvalue, trackingvalueold, spName, actionName);
+                            record.Diffs = _DiffsTrackingValue(trackingvalue, CastAide.AsString(trackingvalueold, string.Empty));
                         }
                         else
                         {

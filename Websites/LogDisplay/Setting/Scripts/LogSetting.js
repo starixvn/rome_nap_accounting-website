@@ -221,6 +221,7 @@
                                 tpl_tracking += '<tr class="headerSportTypeDetail"><td colspan="6" style="cursor: pointer;" onclick="LogPT.showHide(\'' + rel_group + '\')">' + group.N + '</td></tr>';
                                 tpl_tracking += '<tr><td colspan="6"><div class="' + rel_group + '"><table class="tblDesc"><tbody>';
                                 var isMultiTables = group.Tables.length > 1;
+                                var rowCount = 1;
                                 for (var [tableIndex, table] of group.Tables.entries()) {
                                     var isComplexHeader = table.HeaderRows.length > 1;
                                     tpl_tracking += '<tr style="' + (isMultiTables ? 'background-color: #ebf4fa' : '') + '">';
@@ -233,10 +234,11 @@
                                     tpl_tracking += '</tr>';
 
                                     for (var [rowIndex, row] of table.Rows.entries()) {
+                                        rowCount++;
                                         tpl_tracking += '<tr>';
                                         isFirst = true;
-                                        for (let [colIndex, value] of row.entries()) {
-                                            tpl_tracking += '<td class="' + ((isFirst && value.indexOf("&emsp;") < 0) ? " collabel" : "") + (isFirst ? ' first_column' : '') + '"><div class="' + tbl + '-' + tableIndex + '-' + rowIndex + '-' + colIndex + clsDiff + (isFirst ? '' : ' c') + '">' + (value == undefined ? '' : value) + '</div></td>';
+                                        for (let [colIndex, cell] of row.entries()) {
+                                            tpl_tracking += '<td class="' + ((isFirst && cell.Val.indexOf("&emsp;") < 0) ? " collabel" : "") + (isFirst ? ' first_column' : '') + '"><div class="' + tbl + '-' + rowCount + '-' + cell.P + clsDiff + (isFirst ? '' : ' c') + '">' + (cell == undefined ? '' : cell.Val) + '</div></td>';
                                             isFirst = false;
                                         }
 

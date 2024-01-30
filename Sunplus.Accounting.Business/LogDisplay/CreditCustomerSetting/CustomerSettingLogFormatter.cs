@@ -37,6 +37,38 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
         private const int CreateMemberCommActionId = 261003;
         private const int CreateMemberBetSettingActionId = 262003;
         private const int UpdateSuperPTActionId = 511;
+        private const int UpdateSuperMinPTActionId = 520;
+        private const int UpdateMasterPTActionId = 512;
+        private const int UpdateMasterMinPTActionId = 521;
+        private const int UpdateAgentPTActionId = 517;
+        private const int UpdateAgentMinPTActionId = 522;
+        private const int UpdateAgentPTOnMemberActionId = 516;
+        private const int UpdateMasterPTOnMemberActionId = 519;
+        private const int UpdateSuperPTOnMemberActionId = 518;
+        private const int UpdateAgentPTOnGroupedMemberActionId = 513;
+        private const int UpdateMasterPTOnGroupedMemberActionId = 514;
+        private const int UpdateSuperPTOnGroupedMemberActionId = 515;
+
+        private const int UpdateSuperParlayMaxPayoutActionId = 220000;
+        private const int UpdateSuperIndirectParlayMaxPayoutActionId = 220001;
+        private const int UpdateMasterParlayMaxPayoutActionId = 220002;
+        private const int UpdateMasterIndirectParlayMaxPayoutActionId = 220003;
+        private const int UpdateAgentParlayMaxPayoutActionId = 220004;
+        private const int UpdateAgentIndirectParlayMaxPayoutActionId = 220005;
+        private const int UpdateMemberParlayMaxPayoutActionId = 220006;
+
+        private const int UpdateSuperSBCommActionId = 251;
+        private const int UpdateMasterSBCommActionId = 252;
+        private const int UpdateAgentSBCommActionId = 253;
+        private const int UpdateMemberSBCommActionId = 254;
+
+        private const int UpdateSuperSBBetSettingActionId = 220037;
+        private const int UpdateSuperIndirectSBBetSettingActionId = 220038;
+        private const int UpdateMasterSBBetSettingActionId = 220039;
+        private const int UpdateMasterIndirectSBBetSettingActionId = 220040;
+        private const int UpdateAgentSBBetSettingActionId = 220041;
+        private const int UpdateAgentIndirectSBBetSettingActionId = 220042;
+        private const int UpdateMemberSBBetSettingActionId = 220043;
 
         private readonly int[] ActionIds = {
             CreateSuperPTActionId,
@@ -51,7 +83,36 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
             CreateMemberPTActionId,
             CreateMemberCommActionId,
             CreateMemberBetSettingActionId,
-            //UpdateSuperPTActionId,
+            UpdateSuperPTActionId,
+            UpdateSuperMinPTActionId,
+            UpdateMasterPTActionId,
+            UpdateMasterMinPTActionId,
+            UpdateAgentPTActionId,
+            UpdateAgentMinPTActionId,
+            UpdateAgentPTOnMemberActionId,
+            UpdateMasterPTOnMemberActionId,
+            UpdateSuperPTOnMemberActionId,
+            UpdateAgentPTOnGroupedMemberActionId,
+            UpdateMasterPTOnGroupedMemberActionId,
+            UpdateSuperPTOnGroupedMemberActionId,
+            UpdateSuperParlayMaxPayoutActionId,
+            UpdateSuperIndirectParlayMaxPayoutActionId,
+            UpdateMasterParlayMaxPayoutActionId,
+            UpdateMasterIndirectParlayMaxPayoutActionId,
+            UpdateAgentParlayMaxPayoutActionId,
+            UpdateAgentIndirectParlayMaxPayoutActionId,
+            UpdateMemberParlayMaxPayoutActionId,
+            UpdateSuperSBCommActionId,
+            UpdateMasterSBCommActionId,
+            UpdateAgentSBCommActionId,
+            UpdateMemberSBCommActionId,
+            UpdateSuperSBBetSettingActionId,
+            UpdateSuperIndirectSBBetSettingActionId,
+            UpdateMasterSBBetSettingActionId,
+            UpdateMasterIndirectSBBetSettingActionId,
+            UpdateAgentSBBetSettingActionId,
+            UpdateAgentIndirectSBBetSettingActionId,
+            UpdateMemberSBBetSettingActionId,
         };
 
         public bool IsCreditCustomerSettingActionId(int actionId)
@@ -124,23 +185,23 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
                 detail.SP = spName;
                 detail.Attrs = new List<TrackingElement>();
                 detail.Vals = new List<TrackingNode>();
-                //if (!IsCreateNewLogs(actionId))
-                //{
-                //    detail.Vals.Add(ParseSettingsLog(xmlLoad, GetCustLevelByActionId(actionId)));
-                //}
-                //else
-                //{
+                if (IsCreateNewLogs(actionId))
+                {
                     if (xmlLoad.HasElements)
                     {
                         foreach (var ele in xmlLoad.Elements().Distinct())
                         {
                             if (ele.HasElements)
                             {
-                                detail.Vals.Add(ParseSettingsLog(ele, GetCustLevelByActionId(actionId)));
+                                detail.Vals.Add(ParseCreateNemSettingsLog(ele, GetCustLevelByActionId(actionId)));
                             }
                         }
                     }
-                //}
+                }
+                else
+                {
+                    detail.Vals.Add(ParseUpdateSettingsLog(xmlLoad, actionId, GetCustLevelByActionId(actionId)));
+                }
             }
             catch (Exception ex)
             {
@@ -152,7 +213,36 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
             record.Diffs = diff;
         }
 
-        private TrackingNode ParseSettingsLog(XElement ele, int custLevel)
+        private TrackingNode ParseUpdateSettingsLog(XElement ele, int actionId, int custLevel)
+        {
+            var trackingNode = new TrackingNode();
+            trackingNode.Groups = new List<TrackingGroup>();
+            trackingNode.N = CacheRef.GetProductGroupName(1);
+            string groupType = ele.Name.LocalName;
+            var logAction = GetLogAction(actionId);
+            TrackingGroup trackingGroup = new TrackingGroup();
+            switch (logAction)
+            {
+                case LogAction.PT: // PT
+                    trackingGroup = ParseSBPositionTakingTrackingTable(ele, custLevel);
+                    break;
+                case LogAction.Comm: // Comm
+                    trackingGroup = ParseCommSettingLog(ele, 1, IsMember(custLevel));
+                    break;
+                case LogAction.BetSetting: // SB Bet Setting
+                    trackingGroup = ParseTrackingTable(ele, 1, 151, DisplayType.G_GT_SportType_Bettype);
+                    break;
+                case LogAction.ParlayMaxPayout: // Parlay Max Payout
+                    trackingGroup = ParseTrackingTable(ele, 1, 152, DisplayType.G_GT_SportType_Bettype);
+                    break;
+            }
+
+            trackingNode.Groups.Add(trackingGroup);
+
+            return trackingNode;
+        }
+
+        private TrackingNode ParseCreateNemSettingsLog(XElement ele, int custLevel)
         {
             var trackingNode = new TrackingNode();
             trackingNode.Groups = new List<TrackingGroup>();
@@ -190,7 +280,7 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
             var trackingTable = new TrackingTable();
             trackingTable.HeaderRows = new List<List<string>>();
             trackingTable.HeaderRows.Add(new List<string> { string.Empty });
-            trackingTable.Rows = new List<List<string>>();
+            trackingTable.Rows = new List<List<TrackingValue>>();
             List<string> existedSporttypeRow = new List<string>();
             int columnCount = 0;
             foreach (var item in groupType.Elements())
@@ -200,7 +290,7 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
                     continue;
                 }
 
-                var row = new List<string>();
+                var row = new List<TrackingValue>();
                 var sportType = int.Parse(item.Attribute("SportType").Value);
                 var betType = int.Parse(item.Attribute("BetType").Value);
                 var settingLevel = item.Attribute("SettingLevel") == null ? 0 : int.Parse(item.Attribute("SettingLevel").Value);
@@ -227,7 +317,7 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
                             var sportName = CacheRef.GetSportName(sportType);
                             if (!existedSporttypeRow.Contains(sportName))
                             {
-                                trackingTable.Rows.Add(new List<string> { sportName });
+                                trackingTable.Rows.Add(new List<TrackingValue> { new TrackingValue { Val = "sportName" } });
                                 existedSporttypeRow.Add(sportName);
                             }
 
@@ -243,7 +333,7 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
                     rowLabel = CacheRef.GetNameByGroupSubGroup(groupId, groupTypeId, sportType, betType);
                 }
 
-                row.Add(rowLabel);
+                row.Add(new TrackingValue { Val = rowLabel });
                 foreach (var attr in item.Attributes().Where(i => !i.Name.LocalName.Equals("SportType")
                     && !i.Name.LocalName.Equals("BetType")
                     && !i.Name.LocalName.Equals("SettingLevel")
@@ -255,7 +345,7 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
                         trackingTable.HeaderRows[0].Add(headerColumnName);
                     }
 
-                    row.Add(LogFormater.FormatValue(attr));
+                    row.Add(LogFormater.FormatTrackingValue(attr));
                 }
 
                 trackingTable.Rows.Add(row);
@@ -269,7 +359,7 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
                 {
                     for (int i = 0; i < gapCols; i++)
                     {
-                        row.Add(string.Empty);
+                        row.Add(new TrackingValue { Val = string.Empty });
                     }
                 }
             }
@@ -289,7 +379,7 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
             var trackingTable = new TrackingTable();
             trackingTable.HeaderRows = new List<List<string>>();
             trackingTable.HeaderRows.Add(new List<string>());
-            trackingTable.Rows = new List<List<string>>();
+            trackingTable.Rows = new List<List<TrackingValue>>();
             foreach (var item in groupType.Elements())
             {
                 if (HasData(item))
@@ -297,21 +387,21 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
                     continue;
                 }
 
-                var row = new List<string>();
+                var row = new List<TrackingValue>();
                 var sportType = int.Parse(item.Attribute("SportType").Value);
                 var sportName = CacheRef.GetSportName(sportType);
                 var betType = int.Parse(item.Attribute("BetType").Value);
                 var isLive = int.Parse(item.Attribute("IsLive").Value) > 0;
 
                 previousSportType = previousSportType == 0 ? sportType : previousSportType;
-                row.Add((isLive ? "Live " : string.Empty) + CacheRef.GetBettype(betType));
+                row.Add(new TrackingValue { Val = (isLive ? "Live " : string.Empty) + CacheRef.GetBettype(betType) });
                 if (previousSportType != 0 && !previousSportType.Equals(sportType))
                 {
                     trackingGroup.Tables.Add(trackingTable);
                     trackingTable = new TrackingTable();
                     trackingTable.HeaderRows = new List<List<string>>();
                     trackingTable.HeaderRows.Add(new List<string>());
-                    trackingTable.Rows = new List<List<string>>();
+                    trackingTable.Rows = new List<List<TrackingValue>>();
                     previousSportType = sportType;
                 }
 
@@ -326,13 +416,13 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
                     && !i.Name.LocalName.Equals("SettingLevel")
                     && !i.Name.LocalName.Equals("ProductID")))
                 {
-                    var headerColumnName = GetCreateCustomerResourceByCustomerLevel(attr.Name.LocalName, custLevel + 1);
+                    var headerColumnName = GetCreateCustomerResourceByCustomerLevel(attr.Name.LocalName, custLevel);
                     if (!trackingTable.HeaderRows[0].Contains(headerColumnName))
                     {
                         trackingTable.HeaderRows[0].Add(headerColumnName);
                     }
 
-                    row.Add(LogFormater.FormatDecimalTrailingZeros(attr.Value));
+                    row.Add(LogFormater.FormatTrackingValue(attr));
                 }
 
                 trackingTable.Rows.Add(row);
@@ -352,7 +442,7 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
             var trackingTable = new TrackingTable();
             trackingTable.HeaderRows = new List<List<string>>();
             trackingTable.HeaderRows.Add(new List<string> { string.Empty });
-            trackingTable.Rows = new List<List<string>>();
+            trackingTable.Rows = new List<List<TrackingValue>>();
 
             foreach (var item in groupType.Elements())
             {
@@ -361,14 +451,14 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
                     continue;
                 }
 
-                var row = new List<string>();
+                var row = new List<TrackingValue>();
                 var sportType = int.Parse(item.Attribute("SportType").Value);
                 var betType = int.Parse(item.Attribute("BetType").Value);
                 var isLive = int.Parse(item.Attribute("IsLive").Value) > 0;
                 var settingLevel = item.Attribute("SettingLevel") == null ? 0 : int.Parse(item.Attribute("SettingLevel").Value);
                 var productId = item.Attribute("ProductID") == null ? 0 : int.Parse(item.Attribute("ProductID").Value);
                 var labelName = settingLevel == 1 ? CacheRef.GetProductName(productId) : CacheRef.GetSportName(sportType);
-                row.Add((isLive ? "Live " : string.Empty) + labelName);
+                row.Add(new TrackingValue { Val = (isLive ? "Live " : string.Empty) + labelName });
 
                 foreach (var attr in item.Attributes().Where(i => !i.Name.LocalName.Equals("SportType")
                     && !i.Name.LocalName.Equals("BetType")
@@ -382,7 +472,7 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
                         trackingTable.HeaderRows[0].Add(headerColumnName);
                     }
 
-                    row.Add(LogFormater.FormatDecimalTrailingZeros(attr.Value));
+                    row.Add(LogFormater.FormatTrackingValue(attr));
                 }
 
                 trackingTable.Rows.Add(row);
@@ -404,7 +494,7 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
                 var trackingTable = new TrackingTable();
                 trackingTable.HeaderRows = new List<List<string>>();
                 trackingTable.HeaderRows.Add(new List<string> { string.Empty });
-                trackingTable.Rows = new List<List<string>>();
+                trackingTable.Rows = new List<List<TrackingValue>>();
                 foreach (var item in groupType.Elements())
                 {
                     if (HasData(item))
@@ -412,12 +502,15 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
                         continue;
                     }
 
-                    var row = new List<string>();
+                    var row = new List<TrackingValue>();
                     var sportType = int.Parse(item.Attribute("SportType").Value);
                     var betType = int.Parse(item.Attribute("BetType").Value);
-                    row.Add(groupId == 1 ?
+                    row.Add(new TrackingValue
+                    {
+                        Val = groupId == 1 ?
                         CacheRef.GetSportsbookCommMemberName(1, 150, sportType, betType) :
-                        CacheRef.GetNameByGroupSubGroup(1, 150, sportType, betType));
+                        CacheRef.GetNameByGroupSubGroup(1, 150, sportType, betType)
+                    });
                     foreach (var attr in item.Attributes().Where(i => !i.Name.LocalName.Equals("SportType") && !i.Name.LocalName.Equals("BetType")))
                     {
                         var headerColumnName = GetCreateCustomerResource(attr.Name.LocalName);
@@ -426,7 +519,7 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
                             trackingTable.HeaderRows[0].Add(headerColumnName);
                         }
 
-                        row.Add(LogFormater.FormatDecimalTrailingZeros(attr.Value));
+                        row.Add(LogFormater.FormatTrackingValue(attr));
                     }
 
                     trackingTable.Rows.Add(row);
@@ -519,18 +612,48 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
                 case CreateSuperPTActionId:
                 case CreateSuperCommActionId:
                 case CreateSuperBetSettingActionId:
+                case UpdateSuperPTActionId:
+                case UpdateSuperMinPTActionId:
+                case UpdateSuperParlayMaxPayoutActionId:
+                case UpdateSuperIndirectParlayMaxPayoutActionId:
+                case UpdateSuperSBCommActionId:
+                case UpdateSuperSBBetSettingActionId:
+                case UpdateSuperIndirectSBBetSettingActionId:
                     return 4;
                 case CreateMasterPTActionId:
                 case CreateMasterCommActionId:
                 case CreateMasterBetSettingActionId:
+                case UpdateMasterPTActionId:
+                case UpdateMasterMinPTActionId:
+                case UpdateMasterParlayMaxPayoutActionId:
+                case UpdateMasterIndirectParlayMaxPayoutActionId:
+                case UpdateMasterSBCommActionId:
+                case UpdateMasterSBBetSettingActionId:
+                case UpdateMasterIndirectSBBetSettingActionId:
                     return 3;
                 case CreateAgentPTActionId:
                 case CreateAgentCommActionId:
                 case CreateAgentBetSettingActionId:
+                case UpdateAgentPTActionId:
+                case UpdateAgentMinPTActionId:
+                case UpdateAgentParlayMaxPayoutActionId:
+                case UpdateAgentIndirectParlayMaxPayoutActionId:
+                case UpdateAgentSBCommActionId:
+                case UpdateAgentSBBetSettingActionId:
+                case UpdateAgentIndirectSBBetSettingActionId:
                     return 2;
                 case CreateMemberPTActionId:
                 case CreateMemberCommActionId:
                 case CreateMemberBetSettingActionId:
+                case UpdateAgentPTOnMemberActionId:
+                case UpdateMasterPTOnMemberActionId:
+                case UpdateSuperPTOnMemberActionId:
+                case UpdateAgentPTOnGroupedMemberActionId:
+                case UpdateMasterPTOnGroupedMemberActionId:
+                case UpdateSuperPTOnGroupedMemberActionId:
+                case UpdateMemberParlayMaxPayoutActionId:
+                case UpdateMemberSBCommActionId:
+                case UpdateMemberSBBetSettingActionId:
                     return 1;
                 default:
                     throw new ArgumentOutOfRangeException("actionId");
@@ -554,6 +677,77 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
         }
 
         private bool IsCreateNewLogs(int actionId)
-            => actionId >= CreateSuperPTActionId;
+            => actionId >= 260000;
+
+        private bool IsPTActionId(int actionId)
+            => actionId == CreateSuperPTActionId
+            || actionId == CreateMasterPTActionId
+            || actionId == CreateAgentPTActionId
+            || actionId == CreateMemberPTActionId
+            || actionId == UpdateSuperPTActionId
+            || actionId == UpdateSuperMinPTActionId
+            || actionId == UpdateMasterPTActionId
+            || actionId == UpdateMasterMinPTActionId
+            || actionId == UpdateAgentPTActionId
+            || actionId == UpdateAgentMinPTActionId
+            || actionId == UpdateAgentPTOnMemberActionId
+            || actionId == UpdateMasterPTOnMemberActionId
+            || actionId == UpdateSuperPTOnMemberActionId
+            || actionId == UpdateAgentPTOnGroupedMemberActionId
+            || actionId == UpdateMasterPTOnGroupedMemberActionId
+            || actionId == UpdateSuperPTOnGroupedMemberActionId;
+
+        private bool IsBetSettingActionId(int actionId)
+            => actionId == CreateSuperBetSettingActionId
+            || actionId == CreateMasterBetSettingActionId
+            || actionId == CreateAgentBetSettingActionId
+            || actionId == CreateMemberBetSettingActionId
+            || actionId == UpdateSuperSBBetSettingActionId
+            || actionId == UpdateSuperIndirectSBBetSettingActionId
+            || actionId == UpdateMasterSBBetSettingActionId
+            || actionId == UpdateMasterIndirectSBBetSettingActionId
+            || actionId == UpdateAgentSBBetSettingActionId
+            || actionId == UpdateAgentIndirectSBBetSettingActionId
+            || actionId == UpdateMemberSBBetSettingActionId;
+
+        private bool IsCommActionId(int actionId)
+            => actionId == CreateSuperCommActionId
+            || actionId == CreateMasterCommActionId
+            || actionId == CreateAgentCommActionId
+            || actionId == CreateMemberCommActionId
+            || actionId == UpdateSuperSBCommActionId
+            || actionId == UpdateMasterSBCommActionId
+            || actionId == UpdateAgentSBCommActionId
+            || actionId == UpdateMemberSBCommActionId;
+
+        private bool IsParlayMaxPaoutActionId(int actionId)
+            => actionId == UpdateSuperParlayMaxPayoutActionId
+            || actionId == UpdateSuperIndirectParlayMaxPayoutActionId
+            || actionId == UpdateMasterParlayMaxPayoutActionId
+            || actionId == UpdateMasterIndirectParlayMaxPayoutActionId
+            || actionId == UpdateAgentParlayMaxPayoutActionId
+            || actionId == UpdateAgentIndirectParlayMaxPayoutActionId
+            || actionId == UpdateMemberParlayMaxPayoutActionId;
+
+        private LogAction GetLogAction(int actionId)
+        {
+            if (IsPTActionId(actionId))
+                return LogAction.PT;
+            if (IsCommActionId(actionId))
+                return LogAction.Comm;
+            if (IsBetSettingActionId(actionId))
+                return LogAction.BetSetting;
+            if (IsParlayMaxPaoutActionId(actionId))
+                return LogAction.ParlayMaxPayout;
+            throw new InvalidOperationException("ActionId is invalid or not supported.");
+        }
+    }
+
+    public enum LogAction
+    {
+        PT = 153,
+        Comm = 150,
+        BetSetting = 151,
+        ParlayMaxPayout = 152
     }
 }
