@@ -21,7 +21,8 @@
 </div>
 
 <script>
-        const appConfig = @Html.Raw(Model.AppConfig);
+    const appConfig = @Html.Raw(Model.AppConfig);
+    const params = @Html.Raw(Model.Params);
 </script>
 <script type="text/javascript" src="@Url.Content("~/js/encode.js?v=" + version)"></script>
 <script type="module" src="@(Model.CdnUri)create-super/index.js?version=@(Model.AssetsVersion)"></script>
