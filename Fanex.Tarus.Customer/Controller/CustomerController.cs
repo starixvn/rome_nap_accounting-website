@@ -28,6 +28,7 @@ using Sunplus.Accounting.Business.Security;
 
 namespace Fanex.Tarus.Customer.Controller
 {
+    [SessionState(System.Web.SessionState.SessionStateBehavior.ReadOnly)]
     [SpecialSiteFilter]
     public class CustomerController : BaseController
     {
