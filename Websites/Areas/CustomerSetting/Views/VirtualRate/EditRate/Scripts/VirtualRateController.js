@@ -73,6 +73,15 @@ var VirtualRateController = function () {
         $(".infoIcon").click(function () {
             window.open(window.rootUrl + "VirtualRate/GetSportBetTypeReferences", '_blank');
         });
+
+        $("#btn-additional-actions").click(function () {
+            event.preventDefault();
+            if ($($(".addtional-action-item")[0]).hasClass("hidden")) {
+                $(".addtional-action-item").each(function() { $(this).removeClass("hidden"); });
+            } else {
+                $(".addtional-action-item").each(function () { $(this).addClass("hidden"); });
+            }
+        });
     };
     self.renderVirtualRateSetting = function () {
         var tableBody = $("#virtual-rate-setting tbody");
