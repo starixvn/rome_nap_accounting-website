@@ -11,6 +11,8 @@ body, .maincontent {
 }
 .maincontent {
     width: 700px;
+    margin-left: 2px;
+    margin-top: 2px;
 }
 
 .alertboxerr, .alertboxscc {
@@ -201,7 +203,6 @@ select, input[type='text'], input[type='password'], .currency {
 }
 .currency {
     background: #E6E6E6;
-    cursor: not-allowed;
     line-height: 24px;
 }
 textarea {
@@ -240,14 +241,30 @@ textarea {
     top: -2px;
 }
 
-.btn-submit {
+.btn.btn-submit {
     color: #ededed;
     font-weight: 700;
     padding: 5px 15px;
     max-width: 100px;
-    background-color: #0b599c;
+    background: #0b599c;
     border: none;
     border-radius: 3px;
     cursor: pointer;
     font-size: 13px;
+    height: auto;
+}
+.tblProgress-search-and-copy{
+    font-size: 12px;
+}
+.tblProgress-search-and-copy th, .tblProgress-search-and-copy td {
+    border: 1px solid #d1d1d1 !important;
+    border-collapse: collapse;
+    height: 26px;
+}
+.tblProgress-search-and-copy .title th {
+    background-color: #bccbdc!important;
+    color: #333;
+}
+.tblProgress-search-and-copy tbody tr:nth-child(even) {
+    background-color: #f4f4f4;
 }
