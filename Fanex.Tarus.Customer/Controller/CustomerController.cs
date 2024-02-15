@@ -149,7 +149,7 @@ namespace Fanex.Tarus.Customer.Controller
             {
                 request.UplineUsername = AppSession.CustUName;
             }
-            
+
             request.NoPermissionEditCredit = !Permissions.GetHostPermission(Enumerations.Functions.Customer.Credit);
 
             var viewModel = new CreateCustomerViewModel(
@@ -169,7 +169,7 @@ namespace Fanex.Tarus.Customer.Controller
         public ActionResult EditCustomer(EditCustomerRequest request)
         {
             request.NoPermissionEditCredit = !Permissions.GetHostPermission(Enumerations.Functions.Customer.Credit);
-            
+
             var editCustomerViewModel = new EditCustomerViewModel(
                 request,
                 new AppConfiguration(GetApplicationPath()),
@@ -210,8 +210,7 @@ namespace Fanex.Tarus.Customer.Controller
 
         public async Task<ActionResult> GetCustomerSetting(int custId, byte roleId, byte uplineRoleId = 0, string language = "en-US", bool isGetUpline = false)
         {
-            return Content(await customerService.GetCustomerSetting(custId, roleId,
-                customerClientConfiguration.SystemId, uplineRoleId, language, isGetUpline));
+            return Content(await customerService.GetCustomerSetting(custId, roleId, customerClientConfiguration.SystemId, uplineRoleId, language, isGetUpline));
         }
 
         public async Task<ActionResult> CheckExistedCustomer(string username)

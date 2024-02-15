@@ -7,15 +7,15 @@ namespace Fanex.Tarus.Customer.Requests.Customer
     {
         public int CustId { get; set; }
 
-        public int RoleId { get; set; }
+        public byte RoleId { get; set; }
+
+        public byte UplineRoleId { get; set; }
 
         public string UName { get; set; }
 
-        public string SiteName { get; set; }
-        
         public bool NoPermissionEditCredit { get; set; }
 
         internal string ToJson()
-            => JsonConvert.SerializeObject(new { CustId, RoleId ,NoPermissionEditCredit}, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+            => JsonConvert.SerializeObject(new { CustId, RoleId, UplineRoleId, NoPermissionEditCredit }, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
     }
 }
