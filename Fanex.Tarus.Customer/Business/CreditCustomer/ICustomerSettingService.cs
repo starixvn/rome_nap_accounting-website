@@ -40,12 +40,6 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
         IEnumerable<MemberGroup> GetListMemberGroup(int agentId);      
 
         /// <summary>
-        /// This funtion will return a boolean variable, let us know the current admin can edit credit or not
-        /// </summary>
-        /// <returns></returns>
-        bool CheckPermissionEditCredit();
-
-        /// <summary>
         /// This funtion will return a boolean variable, let us know the current admin create internal user
         /// </summary>
         /// <returns></returns>

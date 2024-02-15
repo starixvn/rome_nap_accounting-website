@@ -119,15 +119,6 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
         }
 
         /// <summary>
-        /// This funtion will return a boolean variable, let us know the current admin can edit credit or not
-        /// </summary>
-        /// <returns></returns>
-        public bool CheckPermissionEditCredit()
-        {
-            return Permissions.GetHostPermission(Enumerations.Functions.Customer.Credit);
-        }
-
-        /// <summary>
         /// This funtion will return a boolean variable, let us know the current admin create internal user
         /// </summary>
         /// <returns></returns>

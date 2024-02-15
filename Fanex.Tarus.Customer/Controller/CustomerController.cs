@@ -181,20 +181,6 @@ namespace Fanex.Tarus.Customer.Controller
                 : "~/Views/Customer/EditCustomer.cshtml", editCustomerViewModel);
         }
 
-        [AuthenticateRead]
-        public ActionResult IndirectEditMember(IndirectEditMemberRequest request)
-        {
-            var editCustomerViewModel = new IndirectEditMemberViewModel(
-                request,
-                new AppConfiguration(GetApplicationPath()),
-                cdnUri,
-                GetAssetsVersion());
-
-            return View(HttpContext.IsDebuggingEnabled
-                ? "~/Views/Customer/IndirectEditMember-Debug.cshtml"
-                : "~/Views/Customer/IndirectEditMember.cshtml", editCustomerViewModel);
-        }
-
         public ActionResult SportBookInformation(byte tabIndex = 0)
         {
             var viewModel = new SportBookInformationViewModel(
@@ -250,25 +236,6 @@ namespace Fanex.Tarus.Customer.Controller
         [HttpPost]
         [AuthenticateHost]
         public async Task<ActionResult> Update(UpdateCustomerRequest request)
-        {
-            var response = await customerService.UpdateCustomer(new UpdateCustomerParam(
-                request.GeneralInfo,
-                request.ProductGroups,
-                AppSession.AccId,
-                0,
-                request.CustId,
-                request.UName,
-                request.RoleId,
-                request.RoleId + 1,
-                Utils.GetClientIP(),
-                "en-US"));
-
-            return Content(response);
-        }
-
-        [HttpPost]
-        [AuthenticateHost]
-        public async Task<ActionResult> IndirectUpdateMember(UpdateCustomerRequest request)
         {
             var response = await customerService.UpdateCustomer(new UpdateCustomerParam(
                 request.GeneralInfo,

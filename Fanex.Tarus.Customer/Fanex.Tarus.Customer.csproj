@@ -624,16 +624,6 @@
     <Compile Include="DataAccess\Player3rd\Player3rdDataAccess.cs" />
     <Compile Include="DataAccess\ReplicateLicenseeSettings\IReplicateLicenseeSettingsRepository.cs" />
     <Compile Include="DataAccess\ReplicateLicenseeSettings\ReplicateLicenseeSettingsRepository.cs" />
-    <Compile Include="Controller\Credit\EditMasterOnMemberController.cs" />
-    <Compile Include="Controller\Credit\EditSuperOnMemberController.cs" />
-    <Compile Include="Controller\Credit\EditAgentMinMaxPtController.cs" />
-    <Compile Include="Controller\Credit\EditMasterMinMaxPtController.cs" />
-    <Compile Include="Controller\Credit\EditSuperMinPtController.cs" />
-    <Compile Include="Controller\Credit\CustomerSettingBaseController.cs" />
-    <Compile Include="Controller\Credit\EditAgentController.cs" />
-    <Compile Include="Controller\Credit\EditMasterController.cs" />
-    <Compile Include="Controller\Credit\EditMemberController.cs" />
-    <Compile Include="Controller\Credit\EditSuperController.cs" />
     <Compile Include="Controller\CustomerList\CustomerListController.cs" />
     <Compile Include="Controller\CustomerLogin\CustomerSecurityCodeController.cs" />
     <Compile Include="Controller\Setting\AbnormalBetController.cs" />
@@ -682,11 +672,8 @@
     <Compile Include="Entities\CopyVRSetting\CopyResultEntity.cs" />
     <Compile Include="Entities\CreditCustomer\ToastContentModel.cs" />
     <Compile Include="Entities\CreditCustomer\Currency.cs" />
-    <Compile Include="Entities\CreditCustomer\CustomerInfo.cs" />
-    <Compile Include="Entities\CreditCustomer\CustomerSettingView.cs" />
     <Compile Include="Entities\CreditCustomer\MemberGroup.cs" />
     <Compile Include="Entities\CreditCustomer\Site.cs" />
-    <Compile Include="Entities\CreditCustomer\Sites.cs" />
     <Compile Include="Entities\CreditCustomer\HeadlineBelongSiteInfo.cs" />
     <Compile Include="Entities\CreditCustomer\SuperPrefix.cs" />
     <Compile Include="Entities\EditLicensee\LicenseeInfo.cs" />
@@ -760,7 +747,6 @@
     <Compile Include="Requests\CopySuperSetting\CheckSuperListRequest.cs" />
     <Compile Include="Requests\CopySuperSetting\UpdateWinLossLimitRequest.cs" />
     <Compile Include="Requests\Customer\CreateCustomerCommand.cs" />
-    <Compile Include="Requests\CreditCustomer\SuperPrefixQuery.cs" />
     <Compile Include="Requests\CustomerSetting\OpenCustomer\GetSingleOpenDownlinesInfoQuery.cs" />
     <Compile Include="Requests\CustomerSetting\OpenCustomer\GetSingleOpenCustomerInfoQuery.cs" />
     <Compile Include="Requests\CustomerSetting\OpenCustomer\UpdateClosedStatusQuery.cs" />
