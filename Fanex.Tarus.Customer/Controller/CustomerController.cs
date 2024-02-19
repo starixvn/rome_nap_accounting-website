@@ -4,10 +4,8 @@ using System.Net;
 using System.Runtime.Caching;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using Fanex.Customer.Client.Configurations;
 using Fanex.Customer.Client.Constants;
 using Fanex.Customer.Client.Models;
-using Fanex.Customer.Client.NETFramework;
 using Fanex.Customer.Client.Params;
 using Fanex.Customer.Client.Services;
 using Fanex.CustomerSetting.Module.Core;
@@ -18,13 +16,14 @@ using Fanex.Tarus.Customer.Criteria.CreditCustomer;
 using Fanex.Tarus.Customer.Requests.Customer;
 using Fanex.Tarus.Customer.ViewModels.Customer;
 using Fanex.Tarus.Web.Controllers;
-using Fanex.Tarus.Web.Controllers.Filters;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Agent.Utilities;
 using Sunplus.Accounting.Business.Security;
+using Fanex.Tarus.Customer.Filters;
+using Fanex.Customer.Client;
 
 namespace Fanex.Tarus.Customer.Controller
 {
@@ -38,7 +37,6 @@ namespace Fanex.Tarus.Customer.Controller
         private readonly Encryptor encryptor;
         private readonly ICustomerService customerService;
 
-        private readonly CustomerClientConfiguration customerClientConfiguration = new CustomerClientConfiguration().Initialize();
         private readonly JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() };
 
         public CustomerController()
@@ -52,7 +50,7 @@ namespace Fanex.Tarus.Customer.Controller
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             _customerSettingService = customerSettingService ?? new CustomerSettingService();
             this.encryptor = encryptor ?? new EncryptorImpl();
-            this.customerService = customerService ?? new CustomerService(customerClientConfiguration);
+            this.customerService = customerService ?? new CustomerService();
         }
 
         public ActionResult GetHeadlineBelongSite()
@@ -68,15 +66,16 @@ namespace Fanex.Tarus.Customer.Controller
                 AllowNewSuper = false
             }), jsonSerializerSettings));
 
-        [AuthenticateRead]
+        [NAPCustomerAuthFilter]
         public ActionResult NewCustomer()
             => View("~/Views/Customer/NewCustomer.cshtml");
 
-        [AuthenticateRead]
+        [NAPCustomerAuthFilter]
         public ActionResult Copy()
             => View("~/Areas/CustomerSetting/Views/SearchCopy/Super/Index.cshtml");
 
         [HttpPost]
+        [NAPCustomerAuthFilter(IsHost = true)]
         public async Task<ActionResult> Copy(CopyCustomerRequest request, string code)
         {
             var param = new CopyCustomerParam(
@@ -114,7 +113,7 @@ namespace Fanex.Tarus.Customer.Controller
             return Json(custInfo, JsonRequestBehavior.AllowGet);
         }
 
-        [AuthenticateRead]
+        [NAPCustomerAuthFilter]
         public ActionResult GetSitesAndCurrencies()
             => Content(JsonConvert.SerializeObject(
                 new
@@ -124,7 +123,7 @@ namespace Fanex.Tarus.Customer.Controller
                 },
                 jsonSerializerSettings));
 
-        [AuthenticateRead]
+        [NAPCustomerAuthFilter]
         public ActionResult CreateSuper()
         {
             var viewModel = new CreateCustomerViewModel(new CreateCustomerRequest(), new AppConfiguration(GetApplicationPath()), cdnUri, GetAssetsVersion(), GetHashKey());
@@ -134,7 +133,7 @@ namespace Fanex.Tarus.Customer.Controller
                     : "~/Views/Customer/CreateSuper.cshtml", viewModel);
         }
 
-        [AuthenticateRead]
+        [NAPCustomerAuthFilter]
         public ActionResult CreateCustomer(CreateCustomerRequest request)
         {
             if (!string.IsNullOrWhiteSpace(request.Site)
@@ -165,7 +164,7 @@ namespace Fanex.Tarus.Customer.Controller
                     : "~/Views/Customer/CreateCustomer.cshtml", viewModel);
         }
 
-        [AuthenticateRead]
+        [NAPCustomerAuthFilter]
         public ActionResult EditCustomer(EditCustomerRequest request)
         {
             request.NoPermissionEditCredit = !Permissions.GetHostPermission(Enumerations.Functions.Customer.Credit);
@@ -196,17 +195,17 @@ namespace Fanex.Tarus.Customer.Controller
 
         public async Task<ActionResult> GetCustomerSetting(int custId, byte roleId, byte uplineRoleId = 0, string language = "en-US", bool isGetUpline = false)
         {
-            return Content(await customerService.GetCustomerSetting(custId, roleId, customerClientConfiguration.SystemId, uplineRoleId, language, isGetUpline));
+            return Content(await customerService.GetCustomerSetting(custId, roleId, CustomerClientManager.ClientConfigs.SystemId, uplineRoleId, language, isGetUpline));
         }
 
         public async Task<ActionResult> CheckExistedCustomer(string username)
             => Json(await customerService.CheckExistedCustomer(username), JsonRequestBehavior.AllowGet);
 
         public async Task<ActionResult> GetGlobalSetting(string siteLabel, string site, int currency)
-            => Content(await customerService.GetGlobalSetting(siteLabel, site, currency, customerClientConfiguration.SystemId));
+            => Content(await customerService.GetGlobalSetting(siteLabel, site, currency, CustomerClientManager.ClientConfigs.SystemId));
 
         [HttpPost]
-        [AuthenticateHost]
+        [NAPCustomerAuthFilter(IsHost = true)]
         public async Task<ActionResult> Create(CreateCustomerCommand request)
         {
             var generalInfo = request.GeneralInfo;
@@ -234,7 +233,7 @@ namespace Fanex.Tarus.Customer.Controller
         }
 
         [HttpPost]
-        [AuthenticateHost]
+        [NAPCustomerAuthFilter(IsHost = true)]
         public async Task<ActionResult> Update(UpdateCustomerRequest request)
         {
             var response = await customerService.UpdateCustomer(new UpdateCustomerParam(

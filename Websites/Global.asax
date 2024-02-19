@@ -35,6 +35,9 @@
 <%@ Import Namespace="ONEbook.UM.NETFramework" %>
 <%@ Import Namespace="ONEbook.UM.Transport" %>
 <%@ Import Namespace="Fanex.MailDeliver.MailClient" %>
+<%@ Import Namespace="Fanex.Customer.Client" %>
+<%@ Import Namespace="Fanex.Customer.Client.NETFramework" %>
+<%@ Import Namespace="Fanex.Customer.Client.Configurations" %>
 
 <script RunAt="server">
 
@@ -63,6 +66,7 @@
         Fanex.Data.Configuration.DbSettingProviderManager.Current.Start();
         CustomerSettingRegistration.Init();
         SettingMatrixRegistration.Init();
+        CustomerClientManager.UseConfig(new Fanex.Customer.Client.Configurations.CustomerClientConfiguration().Initialize());
 
         RegisterRoutes(RouteTable.Routes);
 

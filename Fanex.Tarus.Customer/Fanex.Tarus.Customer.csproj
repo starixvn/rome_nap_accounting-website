@@ -72,10 +72,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Customer.Client, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Customer.Client.1.0.0-beta32\lib\netstandard2.0\Fanex.Customer.Client.dll</HintPath>
+      <HintPath>..\packages\Fanex.Customer.Client.1.0.0-beta35\lib\netstandard2.0\Fanex.Customer.Client.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Customer.Client.NETFramework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Customer.Client.NETFramework.1.0.0-beta02\lib\net461\Fanex.Customer.Client.NETFramework.dll</HintPath>
+      <HintPath>..\packages\Fanex.Customer.Client.NETFramework.1.0.0-beta06\lib\net461\Fanex.Customer.Client.NETFramework.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.5.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.2.0.5.1\lib\net461\Fanex.CustomerSetting.Module.Core.dll</HintPath>
@@ -727,6 +727,7 @@
     <Compile Include="Entities\UpdateTransferOptionResult.cs" />
     <Compile Include="Entities\VirtualRate\DownlineVirtualRateModel.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
+    <Compile Include="Filters\NAPCustomerAuthFilterAttribute.cs" />
     <Compile Include="Helpers\HmacAuthenticator.cs" />
     <Compile Include="Helpers\NumberFormater.cs" />
     <Compile Include="ManageLicenseeCode\Criterias\LicenseeSelCriteria.cs" />
