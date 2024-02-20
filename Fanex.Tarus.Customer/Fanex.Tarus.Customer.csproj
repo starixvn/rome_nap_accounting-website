@@ -757,6 +757,7 @@
     <Compile Include="Requests\Customer\CreateCustomerRequest.cs" />
     <Compile Include="Requests\Customer\EditCustomerRequest.cs" />
     <Compile Include="Requests\Customer\IndirectEditMemberRequest.cs" />
+    <Compile Include="Requests\Customer\SportBookInformationRequest.cs" />
     <Compile Include="Requests\GetMessageLogsQuery.cs" />
     <Compile Include="Requests\InitializingBetLimit\GetProductCurrencyRequest.cs" />
     <Compile Include="Requests\InitializingCustomerSetting\GenerateConfigSettingRequest.cs" />

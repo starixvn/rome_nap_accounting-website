@@ -6,63 +6,64 @@
 <head>
     <link href="~/App_Themes/LeftPanel/left_panel.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="http://localhost:4201/src/styles.scss"/>
-    <script src="~/Views/Customer/SportBookInformation/Scripts/TabsNavigator.js?version=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" type="text/javascript"></script>
+    @* <script src="~/Views/Customer/SportBookInformation/Scripts/TabsNavigator.js?version=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" type="text/javascript"></script> *@
 
 
-    @* <script type="module"> *@
-    @*     import RefreshRuntime from "http://localhost:4200/@@react-refresh"; *@
-    @*     RefreshRuntime.injectIntoGlobalHook(window); *@
-    @*     window.$RefreshReg$ = () => { }; *@
-    @*     window.$RefreshSig$ = () => (type) => type; *@
-    @*     window.__vite_plugin_react_preamble_installed__ = true; *@
-    @* </script> *@
-    @* <script type="module" src=@("http://localhost:4201/@vite/client")></script> *@
+    <script type="module">
+        import RefreshRuntime from "http://localhost:4205/@@react-refresh";
+        RefreshRuntime.injectIntoGlobalHook(window);
+        window.$RefreshReg$ = () => { };
+        window.$RefreshSig$ = () => (type) => type;
+        window.__vite_plugin_react_preamble_installed__ = true;
+    </script>
+    <script type="module" src=@("http://localhost:4205/@vite/client")></script>
     <script>
         const appConfig = @Html.Raw(Model.AppConfig);
         const params = @Html.Raw(Model.Params);
         const informationPageParams = @Html.Raw(Model.Params);
     </script>
     <script type="text/javascript" src="@Url.Content("~/js/encode.js?v=" + version)"></script>
-    <script type="module" src="http://localhost:4201/src/main.tsx"></script>
+    <script type="module" src="http://localhost:4205/src/main.tsx"></script>
 </head>
-<body style="height: 100%">
-
-<div class="maincontent" style="height: 100%">
-    <div id="divMainHeader" style="background-color:#fff; position:fixed; width:100%; margin-top:-5px; padding-top:10px;">
-        <div class="box_header" style="width: 100%;">
-            <div id="left_tab1" class="left_tab" style="width: 100%">
-                <ul>
-                    <li id="left_tab1_1" class="current">
-                        <a href="javascript:;">
-                            <span>Bet Setting</span>
-                        </a>
-                    </li>
-                    <li id="left_tab1_2" style="position: relative">
-                        <a href="javascript:;">
-                            <span>Max payout setting</span>
-                        </a>
-                    </li>
-                    <li id="left_tab1_3" style="position: relative">
-                        <a href="javascript:;">
-                            <span>PT setting</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <div id="left_tab1_1_content" style="margin-top:35px; height: 100%">
-        @Html.Raw(Model.TabBetSettingContent)
-        @Html.Raw(Resources.Language.MemberUnlimitedBetSettingWarningMessage)
-    </div>
-    <div id="left_tab1_2_content" style="display: none;margin-top:35px; height: 100%">
-        <iframe src="@Url.Action("Index", "ViewMaxPayoutSettingInformation" )" id="frm" width="100%" height="100%" frameborder="0"></iframe>
-
-    </div>
-    <div id="left_tab1_3_content" style="display: none;margin-top:35px; height: 100%">
-        <iframe src="@Url.Action("GetBettypesReference", "ViewPT", new { custId = 0 })" id="frm" width="100%" height="100%" frameborder="0"></iframe>
-    </div>
-</div>
-
-</body>
+ <div id="root"></div>
+@* <body style="height: 100%"> *@
+@* *@
+@* <div class="maincontent" style="height: 100%"> *@
+@*     <div id="divMainHeader" style="background-color:#fff; position:fixed; width:100%; margin-top:-5px; padding-top:10px;"> *@
+@*         <div class="box_header" style="width: 100%;"> *@
+@*             <div id="left_tab1" class="left_tab" style="width: 100%"> *@
+@*                 <ul> *@
+@*                     <li id="left_tab1_1" class="current"> *@
+@*                         <a href="javascript:;"> *@
+@*                             <span>Bet Setting</span> *@
+@*                         </a> *@
+@*                     </li> *@
+@*                     <li id="left_tab1_2" style="position: relative"> *@
+@*                         <a href="javascript:;"> *@
+@*                             <span>Max payout setting</span> *@
+@*                         </a> *@
+@*                     </li> *@
+@*                     <li id="left_tab1_3" style="position: relative"> *@
+@*                         <a href="javascript:;"> *@
+@*                             <span>PT setting</span> *@
+@*                         </a> *@
+@*                     </li> *@
+@*                 </ul> *@
+@*             </div> *@
+@*         </div> *@
+@*     </div> *@
+@* *@
+@*     <div id="left_tab1_1_content" style="margin-top:35px; height: 100%"> *@
+@*         @Html.Raw(Model.TabBetSettingContent) *@
+@*         @Html.Raw(Resources.Language.MemberUnlimitedBetSettingWarningMessage) *@
+@*     </div> *@
+@*     <div id="left_tab1_2_content" style="display: none;margin-top:35px; height: 100%"> *@
+@*         <iframe src="@Url.Action("Index", "ViewMaxPayoutSettingInformation" )" id="frm" width="100%" height="100%" frameborder="0"></iframe> *@
+@* *@
+@*     </div> *@
+@*     <div id="left_tab1_3_content" style="display: none;margin-top:35px; height: 100%"> *@
+@*         <iframe src="@Url.Action("GetBettypesReference", "ViewPT", new { custId = 0 })" id="frm" width="100%" height="100%" frameborder="0"></iframe> *@
+@*     </div> *@
+@* </div> *@
+@* *@
+@* </body> *@

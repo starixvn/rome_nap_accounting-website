@@ -180,14 +180,13 @@ namespace Fanex.Tarus.Customer.Controller
                 : "~/Views/Customer/EditCustomer.cshtml", editCustomerViewModel);
         }
 
-        public ActionResult SportBookInformation(byte tabIndex = 0)
+        public ActionResult SportBookInformation(SportBookInformationRequest request)
         {
             var viewModel = new SportBookInformationViewModel(
+                request,
                 new AppConfiguration(GetApplicationPath()),
                 cdnUri,
-                GetAssetsVersion(),
-                tabIndex,
-                AppSession.RoleID);
+                GetAssetsVersion());
             return View(HttpContext.IsDebuggingEnabled
                 ? "~/Views/Customer/SportBookInformation/Index-Debug.cshtml"
                 : "~/Views/Customer/SportBookInformation/Index.cshtml", viewModel);
