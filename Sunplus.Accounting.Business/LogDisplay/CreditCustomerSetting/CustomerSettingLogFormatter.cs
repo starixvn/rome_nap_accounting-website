@@ -193,7 +193,7 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
                         {
                             if (ele.HasElements)
                             {
-                                detail.Vals.Add(ParseCreateNemSettingsLog(ele, GetCustLevelByActionId(actionId)));
+                                detail.Vals.Add(ParseCreateNewSettingsLog(ele, GetCustLevelByActionId(actionId)));
                             }
                         }
                     }
@@ -242,7 +242,7 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
             return trackingNode;
         }
 
-        private TrackingNode ParseCreateNemSettingsLog(XElement ele, int custLevel)
+        private TrackingNode ParseCreateNewSettingsLog(XElement ele, int custLevel)
         {
             var trackingNode = new TrackingNode();
             trackingNode.Groups = new List<TrackingGroup>();
