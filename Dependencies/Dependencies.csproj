@@ -203,8 +203,8 @@
     <Reference Include="Fanex.BetList.LiveCasinoCore, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.LiveCasinoCore.1.0.0\lib\net461\Fanex.BetList.LiveCasinoCore.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.MaxGame, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.MaxGame.2.0.0.1\lib\net461\Fanex.BetList.MaxGame.dll</HintPath>
+    <Reference Include="Fanex.BetList.MaxGame, Version=2.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.MaxGame.2.0.0.2\lib\net461\Fanex.BetList.MaxGame.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.MetricGaming, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.MetricGaming.2.0.0\lib\net461\Fanex.BetList.MetricGaming.dll</HintPath>
@@ -233,8 +233,8 @@
     <Reference Include="Fanex.BetList.RnGCasino, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.RnGCasino.2.0.0.1\lib\net461\Fanex.BetList.RnGCasino.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.RNGCore, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.RNGCore.1.0.0.1\lib\net461\Fanex.BetList.RNGCore.dll</HintPath>
+    <Reference Include="Fanex.BetList.RNGCore, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.RNGCore.1.0.0.2\lib\net461\Fanex.BetList.RNGCore.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.RNGWar, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.RNGWar.2.0.0.1\lib\net461\Fanex.BetList.RNGWar.dll</HintPath>
