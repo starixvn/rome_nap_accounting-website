@@ -1104,6 +1104,9 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
 
         case 176: // FGG
             return getFGGParam(custId, transId3rd, gameId3rd, currencyId, siteId, winlostdate);
+
+        case 227: //Live22
+            return getLive22Param(custId, transId3rd, gameId3rd, currencyId, siteId, bettype, winlostdate);
         default:
             return undefined;
     }
@@ -1593,6 +1596,27 @@ function getAGCasinoParam(transId, bettype) {
         height: 500
     };
 }
+
+function getLive22Param(custId, transId3rd, gameId3rd, currencyId, siteId, betType, endTime) {
+    return {
+        url: "ThirdParty/Live22Result",
+        title: "Live22 Result",
+        jsonParam:
+        {
+            productId: 79,
+            custId: custId,
+            transId3rd: transId3rd,
+            gameId3rd: gameId3rd,
+            BetTypeId: betType,
+            EndTime: endTime,
+            SiteId: siteId,
+            CurrencyId: currencyId
+        },
+        width: 945,
+        height: 500
+    };
+}
+
 
 function openResultsPopUp(resultParam) {
     var url = resultParam.url + "?" + $.param(resultParam.jsonParam);
