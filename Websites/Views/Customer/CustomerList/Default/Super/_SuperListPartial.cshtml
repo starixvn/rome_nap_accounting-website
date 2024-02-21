@@ -91,9 +91,7 @@
                 <span title="Edit" onmouseout="CustomerList.HideEditBox()" onclick="CustomerList.ShowMenuEdit('div_@superItem.ChildID')" class="edit-button">
                 </span>
                 <ul id="div_@superItem.ChildID" style="display:none;">
-                    <li class="canchange" onclick="EditMinMaxPT(4, '@superItem.ChildID', 0 , '@superItem.UserName');">
-                        Max PT
-                    </li>
+
                     <li class="canchange" onclick="OpenEditCustInfo('@superItem.ChildID','@Model.ParentId','Super');">
                         Info
                     </li>

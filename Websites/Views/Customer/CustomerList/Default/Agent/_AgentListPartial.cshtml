@@ -103,9 +103,6 @@
                 <span title="Edit" onmouseout="CustomerList.HideEditBox()" onclick="CustomerList.ShowMenuEdit('div_@agentItem.ChildID')" class="edit-button">
                 </span>
                 <ul id="div_@agentItem.ChildID" style="display:none;">
-                    <li class="canchange" onclick="EditMinMaxPT(2, '@agentItem.ChildID', '@Model.ParentId', '@agentItem.UserName');">
-                        Max PT
-                    </li>
                     <li class="canchange" onclick="OpenEditCustInfo('@agentItem.ChildID','Agent');">Info</li>
                     <li class="canchange" onclick="OpenEditTransferTime('@agentItem.ChildID',0);">
                         Transfer
