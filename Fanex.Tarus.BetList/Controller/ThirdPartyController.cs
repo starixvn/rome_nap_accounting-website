@@ -183,6 +183,9 @@
         public ActionResult WEResult(ThirdPartyResultRequest request)
             => BaseResult(request, "WEResultConfigs");
 
+        public ActionResult Live22Result(ThirdPartyResultRequest request)
+            => BaseResult(request, "Live22ResultConfigs");
+
         private void SetProductResultTitle(int productId)
             => ProductResultTitle = CacheRef.GetProductName(productId) + " Result";
     }
