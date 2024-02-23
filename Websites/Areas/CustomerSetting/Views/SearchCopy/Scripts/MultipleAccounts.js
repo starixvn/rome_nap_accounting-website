@@ -603,6 +603,7 @@ $.fn.forceNumber = function () {
                 if (customerSettingView.ErrorCode > 0) {
                     $("#checkExisted").removeClass('success');
                     $("#checkExisted").addClass('not_success');
+                    $("#breadCrumbs").text("");
                     showError(customerSettingView.ErrorMessage)
                 }
                 else {
@@ -613,6 +614,9 @@ $.fn.forceNumber = function () {
                         hideMessage();
                         $("#checkExisted").removeClass('not_success');
                         $("#checkExisted").addClass('success');
+                        if (customerSettingView.BreadCrumbs) {
+                            $("#breadCrumbs").text(customerSettingView.BreadCrumbs);
+                        }
 
                         getCustomerInfoByUserId(custid);
 
@@ -623,6 +627,7 @@ $.fn.forceNumber = function () {
                     else {
                         $("#checkExisted").removeClass('success');
                         $("#checkExisted").addClass('not_success');
+                        $("#breadCrumbs").text("");
                         showError("The " + parent.level + " doesn’t exist !", 1);
                     }
                 }
