@@ -203,6 +203,18 @@ namespace Fanex.Tarus.Customer.Controller
         public async Task<ActionResult> GetGlobalSetting(string siteLabel, string site, int currency)
             => Content(await customerService.GetGlobalSetting(siteLabel, site, currency, CustomerClientManager.ClientConfigs.SystemId));
 
+        public async Task<ActionResult> GetMaxPayoutSettingInformation(string site, bool isSpecialPlatform = false, string language = "en-US")
+            => Content(await customerService.GetMaxPayoutSettingInformation(site,isSpecialPlatform, language));
+        
+        public async Task<ActionResult> GetPTSettingInformation(int custId, string language = "en-US")
+            => Content(await customerService.GetPTSettingInformation(custId, AccCommon.IsLocalTest, language));
+        
+        public async Task<ActionResult> GetCommissionHint(int custId, string language = "en-US")
+            => Content(await customerService.GetCommissionHint(custId, language));
+        
+        public async Task<ActionResult> GetProductCategories(int custId, string language = "en-US")
+            => Content(await customerService.GetProductCategories(custId, language));
+        
         [HttpPost]
         [NAPCustomerAuthFilter(IsHost = true)]
         public async Task<ActionResult> Create(CreateCustomerCommand request)

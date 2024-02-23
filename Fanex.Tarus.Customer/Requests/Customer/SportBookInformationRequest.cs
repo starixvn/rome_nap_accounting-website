@@ -13,5 +13,7 @@ namespace Fanex.Tarus.Customer.Requests.Customer
         
         public int TabIndex { get; set; }
         
+        public string Site { get; set; }
+        
     }
 }
