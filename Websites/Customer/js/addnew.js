@@ -10,6 +10,9 @@
         roleId = obj("custRoleId").value;
         parentId = obj("custId").value;
     }
+
+    var custName = obj("custName").value;
+    custName = (custName == undefined || custName == '') ? obj("txtUsername").value : custName;
     var f = parent.frames["mainCust"];
 
     if (roleId == '2') {
@@ -17,12 +20,12 @@
         //f.location.href="AddNewMember.aspx?agentId="+parentId + "&username="+obj("txtUsername").value;
         //Khoa.tran add new member (Original code from IBCAgent)
         //f.location.href = "v2/AddNewMember.aspx?agentId=" + parentId + "&username=" + obj("txtUsername").value;
-        f.location.href = "../Customer/CreateCustomer?uplineId=" + parentId + "&uplineRoleId=" + roleId + "&uplineUsername=" + obj("txtUsername").value + "&siteName=" + siteName;
+        f.location.href = "../Customer/CreateCustomer?uplineId=" + parentId + "&uplineRoleId=" + roleId + "&uplineUsername=" + custName + "&siteName=" + siteName;
     }
     else if (roleId == '3') {
         parent.document.body.rows = tfHeigth + ",*";
         //f.location.href = "v2/AddNewAgent.aspx?masterId=" + parentId + "&username=" + obj("txtUsername").value; ;
-        f.location.href = "../Customer/CreateCustomer?uplineId=" + parentId + "&uplineRoleId=" + roleId + "&uplineUsername=" + obj("txtUsername").value + "&theme=nap";
+        f.location.href = "../Customer/CreateCustomer?uplineId=" + parentId + "&uplineRoleId=" + roleId + "&uplineUsername=" + custName + "&theme=nap";
     }
     else if (roleId == '4') {
         parent.document.body.rows = tfHeigth + ",*";
