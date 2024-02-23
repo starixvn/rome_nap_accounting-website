@@ -69,7 +69,22 @@ body, .maincontent {
 /**--------------**/
 
 /** -- new ui -- **/
-.mb-5{
+.success:before {
+    content: "";
+    background: url(../Images/success.svg) no-repeat;
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    vertical-align: sub;
+}
+.list-upline {
+    font-weight: 500;
+    font-size: 16px;   
+    margin-bottom: 8px;
+    border-radius: 3px;
+    margin-top: 8px;
+}
+.mb-5 {
     margin-bottom: 5px;
 }
 .alertboxerr {
