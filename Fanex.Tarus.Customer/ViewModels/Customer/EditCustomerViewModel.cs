@@ -13,26 +13,44 @@ namespace Fanex.Tarus.Customer.ViewModels.Customer
             : base(appConfig, cndUri, assetsVersion)
         {
             Params = request.ToJson();
-            switch (request.RoleId)
-            {
-                case RoleIdConstants.SUPER:
-                    PageTitle = $"Super {request.UName}";
-                    break;
-
-                case RoleIdConstants.MASTER:
-                    PageTitle = $"Master {request.UName}";
-                    break;
-
-                case RoleIdConstants.AGENT:
-                    PageTitle = $"Agent {request.UName}";
-                    break;
-
-                default:
-                    PageTitle = $"{request.UName}";
-                    break;
-            }
+            PageTitle = BuildPageTilte(request);
         }
 
         public string PageTitle { get; }
+
+        private string BuildPageTilte(EditCustomerRequest request)
+        {
+            if (request.RoleId == RoleIdConstants.SUPER)
+            {
+                return $"Super {request.UName}";
+            }
+
+            if (request.RoleId == RoleIdConstants.MASTER)
+            {
+                return $"Master {request.UName}";
+            }
+
+            if (request.RoleId == RoleIdConstants.AGENT)
+            {
+                return $"Agent {request.UName}";
+            }
+
+            if (request.RoleId == RoleIdConstants.MEMBER)
+            {
+                if (request.UplineRoleId == RoleIdConstants.SUPER)
+                {
+                    return "Edit Super On Member";
+                }
+
+                if (request.UplineRoleId == RoleIdConstants.MASTER)
+                {
+                    return "Edit Master On Member";
+                }
+
+                return $"Member {request.UName}";
+            }
+
+            return request.UName;
+        }
     }
 }
