@@ -68,7 +68,7 @@
                                             Currency Code</div>
                                     </td>
                                     @{
-                                        string[] baseCurrency = ConfigurationManager.AppSettings["Fanex.Tarus.ExchangeRate.BaseCurrency"].Split(new Char[] { ',' });
+                                        var baseCurrency = Sunplus.Accounting.Core.Configurations.WebSettings.BaseCurrency;
                                         for (int i = 0, maxLength = baseCurrency.Length; i < maxLength; i++)
                                         {
                                         <td style="border-bottom: none 0px;">
