@@ -200,14 +200,14 @@
         {
             var historyLogDetailList = new List<HistoryLogDetailModel>();
             var xmlLoad = XElement.Parse(historyLog.TrackingValue);
-            if (historyLog.ActionId == UpdateTypeConstants.VRLockOther) {
+            if (historyLog.ActionId == UpdateTypeConstants.VRLockOther || historyLog.ActionId == UpdateTypeConstants.VRLockOtherV2) {
                 historyLogDetailList.Add(new HistoryLogDetailModel
                 {
                     UpdateType = historyLog.ActionId,
                     VRLockOther = Converter.ToInt(xmlLoad.Attribute("VRLock").Value) != 0
                 });
             }
-            else if (historyLog.ActionId == UpdateTypeConstants.VRLock)
+            else if (historyLog.ActionId == UpdateTypeConstants.VRLock || historyLog.ActionId == UpdateTypeConstants.VRLockV2)
             {
                 historyLogDetailList.Add(new HistoryLogDetailModel
                 {
@@ -215,7 +215,7 @@
                     VRLock = Converter.ToInt(xmlLoad.Attribute("VRLock").Value) != 0
                 });
             }
-            else if (historyLog.ActionId == UpdateTypeConstants.VRLockBasketball)
+            else if (historyLog.ActionId == UpdateTypeConstants.VRLockBasketball || historyLog.ActionId == UpdateTypeConstants.VRLockBasketballV2)
             {
                 historyLogDetailList.Add(new HistoryLogDetailModel
                 {
@@ -232,7 +232,7 @@
                     EnableVirtualRate = Converter.ToInt(xmlLoad.Attribute("EnableVirtualrate").Value) != 0
                 });
             }
-            else if (historyLog.ActionId == UpdateTypeConstants.VRPlushAccBalance)
+            else if (historyLog.ActionId == UpdateTypeConstants.VRPlushAccBalance || historyLog.ActionId == UpdateTypeConstants.VRPlushAccBalanceV2)
             {
                 historyLogDetailList.Add(new HistoryLogDetailModel
                 {
@@ -240,52 +240,29 @@
                     VRPlushAccBalance = Converter.ToInt(xmlLoad.Attribute("VRAccumulatedBalance").Value) != 0
                 });
             }
+            else if (historyLog.ActionId == UpdateTypeConstants.UpdateVRSuper 
+                || historyLog.ActionId == UpdateTypeConstants.UpdateVRMaster 
+                || historyLog.ActionId == UpdateTypeConstants.UpdateVRAgent
+                || historyLog.ActionId == UpdateTypeConstants.UpdateLCVRSuper
+                || historyLog.ActionId == UpdateTypeConstants.UpdateLCVRMaster
+                || historyLog.ActionId == UpdateTypeConstants.UpdateLCVRAgent)
+            {
+                var logDetail = new HistoryLogDetailModel
+                {
+                    UpdateType = historyLog.ActionId,
+                    IsUpdateVR = Converter.ToInt(xmlLoad.Attribute("IsUpdateVR").Value) != 0,
+                    IsApplyDownlines = Converter.ToInt(xmlLoad.Attribute("IsApplyDownlines").Value) != 0
+                };
+                historyLogDetailList.Add(logDetail);
+
+                if(logDetail.IsUpdateVR || logDetail.IsApplyDownlines)
+                {
+                    historyLogDetailList.AddRange(GetSportVRUpdate(xmlLoad, historyLog, betTypeIndexList));
+                }
+            }
             else
             {
-                var logBySportList = new List<LogBySportEntity>();
-                foreach (XElement node in xmlLoad.Nodes())
-                {
-                    logBySportList.Add(new LogBySportEntity
-                    {
-                        SportType = Converter.ToInt(node.Attribute("SportType").Value),
-                        BetType = Converter.ToInt(node.Attribute("BetType").Value),
-                        LiveType = Converter.ToInt(node.Attribute("IsLive").Value),
-                        VirtualRate = Converter.ToDecimal(node.Attribute("VirtualMultiplier").Value)
-                    });
-                }
-
-                var sportGroups = logBySportList.GroupBy(logBySport =>
-                    new
-                    {
-                        SportType = logBySport.SportType,
-                        LiveType = logBySport.LiveType
-                    });
-
-                foreach (var sportGroup in sportGroups)
-                {
-                    var betTypeCount = betTypeIndexList.Count;
-                    var historyLogDetail = new HistoryLogDetailModel
-                    {
-                        UpdateType = historyLog.ActionId,
-                        SportId = sportGroup.Key.SportType,
-                        SportName = Sports.SportName(sportGroup.Key.SportType),
-                        LiveType = sportGroup.Key.LiveType,
-                        BetTypeList = VirtualRateSectionService.BetTypeListByFunctionName(VirtualRateSectionService.UploadVirtualFunction),
-                        VirtualRate = VirtualRateSectionService.DefaultVirtualRateList(betTypeCount)
-                    };
-
-                    foreach (var data in sportGroup)
-                    {
-                        if (betTypeIndexList.ContainsKey(data.BetType))
-                        {
-                            var betTypeIndex = betTypeIndexList[data.BetType];
-                            historyLogDetail.VirtualRate[betTypeIndex].PercentRate = data.VirtualRate;
-                            historyLogDetail.VirtualRate[betTypeIndex].HasData = true;
-                        }
-                    }
-
-                    historyLogDetailList.Add(historyLogDetail);
-                }
+                historyLogDetailList.AddRange(GetSportVRUpdate(xmlLoad, historyLog, betTypeIndexList));
             }
 
             return historyLogDetailList;
@@ -296,6 +273,59 @@
             var criteria = new GetVRAutoAdjustUpdateMessageCriteria { CustID = custId };
 
            return _virtualRateRepository.GetVRAutoAdjustUpdateMessage(criteria);
+        }
+
+        private IEnumerable<HistoryLogDetailModel> GetSportVRUpdate(XElement xmlLoad,
+            HistoryLogEntity historyLog,
+            Dictionary<int, int> betTypeIndexList)
+        {
+            var historyLogDetailList = new List<HistoryLogDetailModel>();
+            var logBySportList = new List<LogBySportEntity>();
+            foreach (XElement node in xmlLoad.Nodes())
+            {
+                logBySportList.Add(new LogBySportEntity
+                {
+                    SportType = Converter.ToInt(node.Attribute("SportType").Value),
+                    BetType = Converter.ToInt(node.Attribute("BetType").Value),
+                    LiveType = Converter.ToInt(node.Attribute("IsLive").Value),
+                    VirtualRate = Converter.ToDecimal(node.Attribute("VirtualMultiplier").Value)
+                });
+            }
+
+            var sportGroups = logBySportList.GroupBy(logBySport =>
+                new
+                {
+                    SportType = logBySport.SportType,
+                    LiveType = logBySport.LiveType
+                });
+
+            foreach (var sportGroup in sportGroups)
+            {
+                var betTypeCount = betTypeIndexList.Count;
+                var historyLogDetail = new HistoryLogDetailModel
+                {
+                    UpdateType = historyLog.ActionId,
+                    SportId = sportGroup.Key.SportType,
+                    SportName = Sports.SportName(sportGroup.Key.SportType),
+                    LiveType = sportGroup.Key.LiveType,
+                    BetTypeList = VirtualRateSectionService.BetTypeListByFunctionName(VirtualRateSectionService.UploadVirtualFunction),
+                    VirtualRate = VirtualRateSectionService.DefaultVirtualRateList(betTypeCount)
+                };
+
+                foreach (var data in sportGroup)
+                {
+                    if (betTypeIndexList.ContainsKey(data.BetType))
+                    {
+                        var betTypeIndex = betTypeIndexList[data.BetType];
+                        historyLogDetail.VirtualRate[betTypeIndex].PercentRate = data.VirtualRate;
+                        historyLogDetail.VirtualRate[betTypeIndex].HasData = true;
+                    }
+                }
+
+                historyLogDetailList.Add(historyLogDetail);
+            }
+
+            return historyLogDetailList;
         }
     }
 }

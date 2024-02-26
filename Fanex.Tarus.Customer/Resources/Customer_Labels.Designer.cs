@@ -565,7 +565,7 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enabled Virtual Rate.
+        ///   Looks up a localized string similar to Enabling/Disabling this status does not affect E-Sports.
         /// </summary>
         public static string Enabled_Virtual_Rate {
             get {
@@ -1204,6 +1204,24 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Update VR Value.
+        /// </summary>
+        public static string UpdateVR {
+            get {
+                return ResourceManager.GetString("UpdateVR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update VR Value for Downlines.
+        /// </summary>
+        public static string UpdateVRDownlines {
+            get {
+                return ResourceManager.GetString("UpdateVRDownlines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Upline&apos;s disabled.
         /// </summary>
         public static string Upline_Disabled {
@@ -1362,6 +1380,15 @@ namespace Fanex.Tarus.Customer.Resources {
         public static string VRPlushAccBalance {
             get {
                 return ResourceManager.GetString("VRPlushAccBalance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yes.
+        /// </summary>
+        public static string Yes {
+            get {
+                return ResourceManager.GetString("Yes", resourceCulture);
             }
         }
     }

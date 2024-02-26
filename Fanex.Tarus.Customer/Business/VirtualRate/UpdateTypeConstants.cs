@@ -26,8 +26,28 @@ namespace Fanex.Tarus.Customer.Business.VirtualRate
 
         public const int VRPlushAccBalance = 839;
 
+        public const int VRLockV2 = 844;
+
+        public const int VRLockBasketballV2 = 846;
+
+        public const int VRLockOtherV2 = 845;
+
+        public const int VRPlushAccBalanceV2 = 847;
+
         public const int LicenseeStatus = 2802;
 
         public const int LicenseeRate = 2800;
+
+        public const int UpdateVRSuper = 95116;
+
+        public const int UpdateVRMaster = 95117;
+
+        public const int UpdateVRAgent = 95118;
+
+        public const int UpdateLCVRSuper = 95116;
+
+        public const int UpdateLCVRMaster = 95117;
+
+        public const int UpdateLCVRAgent = 95118;
     }
 }

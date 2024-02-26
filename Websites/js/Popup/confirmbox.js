@@ -118,3 +118,39 @@ function __showMessage(title, message, width, height, popupId) {
         }
     });
 }
+
+function __showMessageWihtoutBtn(title, message, width, height, popupId) {
+    var Form = document.createElement("div");
+    var DivContent = document.createElement("div");
+    var id = popupId ? popupId : 'windowPopup';
+
+    Form.setAttribute('id', id);
+    Form.setAttribute('style', 'display: none; border: none; font-size: 12px; z-index: 999999');
+
+    DivContent.setAttribute('style', 'height: ' + (height - 125) + 'px');
+
+    var divFrame = document.createElement("div");
+    divFrame.setAttribute('style', 'height: ' + (height - 125) + 'px; margin: 2px 5px; line-height: 18px');
+
+    var frame = document.createElement("span");
+    frame.innerHTML = message;
+    frame.setAttribute('style', 'width: 100%; height: 100%; border: none');
+
+    divFrame.appendChild(frame);
+    DivContent.appendChild(divFrame);
+
+    Form.appendChild(DivContent);
+
+    document.body.appendChild(Form);
+
+    $('#' + id).css('display', 'block');
+    $('#' + id).dialog({
+        height: height, width: width, minWidth: 300, minHeight: 150,
+        title: title,
+        resizable: false,
+        modal: true,
+        close: function (event) {
+            __close(null, null, id);
+        }
+    });
+}

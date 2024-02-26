@@ -37,25 +37,32 @@ var VirtualRateController = function () {
     self.cachedData = {
         copyFromSportId: 0,
         copyFromBetTypeId: 0,
-        oldSettings: null
+        oldSettings: null,
+        closetimer: null,
+        vrSettings: {
+            isApplyVRAB: -1,
+            isApplyVRABMaster: -1,
+            isApplyVRABAgent: -1,
+            isApplyVRABMember: -1,
+            isApplyVRLSSoccer: -1,
+            isApplyVRLSSoccerMaster: -1,
+            isApplyVRLSSoccerAgent: -1,
+            isApplyVRLSSoccerMember: -1,
+            isApplyVRLSBasketball: -1,
+            isApplyVRLSBasketballMaster: -1,
+            isApplyVRLSBasketballAgent: -1,
+            isApplyVRLSBasketballMember: -1,
+            isApplyVRLSOther: -1,
+            isApplyVRLSOtherMaster: -1,
+            isApplyVRLSOtherAgent: -1,
+            isApplyVRLSOtherMember: -1
+
+        }
     };
 
     self.initPage = function () {
         self.cachedData.oldSettings = oldCustomerVirtualRateModel;
         self.renderVirtualRateSetting();
-
-        var checkboxEnable = $("#chk-enable");
-        checkboxEnable.attr("checked", customerVirtualRateModel.EnableVirtualRate ? "checked" : null);
-        checkboxEnable.click(function () {
-            var isEnable = checkboxEnable.attr("checked") ? 1 : 0;
-            self.enableEditSetting(isEnable);
-        });
-
-        $("#chk-lockVR").attr("checked", customerVirtualRateModel.LockVirtualRateStatus ? "checked" : null);
-        $("#chk-lockVRBasketball").attr("checked", customerVirtualRateModel.LockVirtualRateBasketballStatus ? "checked" : null);
-        $("#chk-lockVROther").attr("checked", customerVirtualRateModel.LockVirtualRateOtherStatus ? "checked" : null);
-
-        $("#chk-enable-accumulate-balance").attr("checked", customerVirtualRateModel.IsApplyVRPlushAccumulateBanlance ? "checked" : null);
 
         self.bindingEvent();
         self.enableEditSetting(customerVirtualRateModel.EnableVirtualRate);
@@ -65,6 +72,15 @@ var VirtualRateController = function () {
         });
         $(".infoIcon").click(function () {
             window.open(window.rootUrl + "VirtualRate/GetSportBetTypeReferences", '_blank');
+        });
+
+        $("#btn-additional-actions").click(function () {
+            event.preventDefault();
+            if ($($(".addtional-action-item")[0]).hasClass("hidden")) {
+                $(".addtional-action-item").each(function() { $(this).removeClass("hidden"); });
+            } else {
+                $(".addtional-action-item").each(function () { $(this).addClass("hidden"); });
+            }
         });
     };
     self.renderVirtualRateSetting = function () {
@@ -112,7 +128,10 @@ var VirtualRateController = function () {
             }
         }
 
-        settingHtml += '<tr class="padding-row end-row"><td colspan="' + tableColumnCount + '">&nbsp;</td></tr>';
+        if (settingHtml !== '') {
+            settingHtml += '<tr class="padding-row end-row"><td colspan="' + tableColumnCount + '">&nbsp;</td></tr>';
+        }
+
         tableBody.empty().append(settingHtml);
     };
 
@@ -124,7 +143,7 @@ var VirtualRateController = function () {
                 ' sport-id="' + sport.Id + '"/>';
 
         var titleHtml = '<tr class="table-header">';
-        titleHtml += '<td class="first-column" colspan="2">&nbsp;</td>';
+        titleHtml += '<td class="first-column" colspan="3">&nbsp;</td>';
         var betTypeLength = betTypeList.length;
         var i;
         for (i = startBetTypeIndex; i < endBetTypeIndex && i < betTypeLength; i++) {
@@ -150,7 +169,7 @@ var VirtualRateController = function () {
         var endBetTypeIndex = startBetTypeIndex + maxBetTypeColumn;
         var betTypeLength = sport.BetTypeList.length;
         var liveHtml = '<tr>';
-        liveHtml += '<td class="first-column l" colspan="2">' + self.getLiveTypeName(liveType) + '</td>';
+        liveHtml += '<td class="first-column l p-l5" colspan="3">' + self.getLiveTypeName(liveType) + '</td>';
         var i = 0;
         for (i = startBetTypeIndex; i < endBetTypeIndex && i < betTypeLength;) {
             var liveRate = liveVirtualRate[i];
@@ -182,10 +201,10 @@ var VirtualRateController = function () {
         var betTypeLength = sport.BetTypeList.length;
         var liveHtml = '<tr>';
         if (liveType === self.Constants.LiveType.Live) {
-            liveHtml += '<td class="subsport-first-column r" rowspan="2">' + subSport.Name + '</td>';
+            liveHtml += '<td class="subsport-first-column r" rowspan="3">' + subSport.Name + '</td>';
         }
 
-        liveHtml += '<td class="subsport-livetype-column l">' + self.getLiveTypeName(liveType) + '</td>';
+        liveHtml += '<td class="subsport-livetype-column l p-l5">' + self.getLiveTypeName(liveType) + '</td>';
         var i = 0;
         for (i = startBetTypeIndex; i < endBetTypeIndex && i < betTypeLength;) {
             var liveRate = liveVirtualRate[i];
@@ -220,7 +239,7 @@ var VirtualRateController = function () {
                 html += '<td class="bettypevalue-column c padding-column" colspan="' + (endBetTypeIndex - i) + '"></td>';
             }
         } else if (i < endBetTypeIndex) {
-            html += '<td class="bettypevalue-column c padding-column" colspan="' + (endBetTypeIndex - maxBetTypeColumn) + '"></td>';
+            html += '<td class="bettypevalue-column c padding-column" colspan="' + (endBetTypeIndex - i) + '"></td>';
         }
 
         return html;
@@ -237,36 +256,63 @@ var VirtualRateController = function () {
         }
     };
     self.bindingEvent = function () {
-        var buttonCopy = $("#button-copy-sport-settings-" + self.Constants.SportType.Soccer);
-        var buttonCopyBasketball = $("#button-copy-sport-settings-" + self.Constants.SportType.Basketball);
-
-        buttonCopy
-            .unbind("click")
-            .click(function () {
-                if (buttonCopyBasketball.hasClass("icon-copy-setting-checked")) {
-                    buttonCopyBasketball.trigger("click");
-                }
-
-                self.copySettingFromSport(buttonCopy);
-            });
-
-        buttonCopyBasketball
-            .unbind("click")
-            .click(function () {
-                if (buttonCopy.hasClass("icon-copy-setting-checked")) {
-                    buttonCopy.trigger("click");
-                }
-
-                self.copySettingFromSport(buttonCopyBasketball);
-            });
-
-        var buttonCopyBetType = $(".icon-copy-setting.bettype-setting");
-        buttonCopyBetType.unbind("click");
-        buttonCopyBetType.click(function () {
-            var sportId = parseInt($(this).attr("sport-id"));
-            self.copySettingFromBetType(sportId, $(this));
+        var checkboxEnable = $("#chk-enableVR");
+        checkboxEnable.click(function () {
+            var isEnable = checkboxEnable.attr("checked") ? 1 : 0;
+            self.enableEditSetting(isEnable);
         });
+
+        $(".btn-child").each(function () {
+            $(this).click(function () {
+                event.preventDefault();
+                self.clickDisableVRItemStatus($(this));
+            });
+        });
+
+        $(".btn-parent").each(function () {
+            $(this).click(function () {
+                event.preventDefault();
+                let ckbLabel = $(this);
+                var ckbInput = ckbLabel.parent().find("input").first();
+                let isEnable = ckbInput.is(":checked") ? false : true;
+                ckbInput.attr('checked', isEnable);
+                if (isEnable) {
+                    ckbLabel.removeClass("btn-disable");
+                    ckbLabel.addClass("btn-enable");
+                    ckbLabel.html(ckbLabel.data("value-enable"));
+                } else {
+                    ckbLabel.removeClass("btn-enable");
+                    ckbLabel.addClass("btn-disable");
+                    ckbLabel.html(ckbLabel.data("value-disable"));
+                    let ckbType = ckbLabel.data("btn-type");
+                    $(`.btn-${ckbType}-disable-child`).each(function () {
+                        var ckbInputChild = $(this).parent().find("input").first();
+                        ckbInputChild.attr('checked', true);
+                        $(this).html(ckbInputChild.data("downlines"));
+                        let oppositeCkb = $(`#${ckbInputChild.data("opposite-id")}`);
+                        let ckbLabelOpposite = oppositeCkb.parent().find("label").first();
+                        oppositeCkb.attr('checked', false);
+                        ckbLabelOpposite.html("0");
+                    });
+                }
+            });
+        });
+
     };
+
+    self.clickDisableVRItemStatus = function (currentSelected) {
+        var ckbInput = currentSelected.parent().find("input").first();
+        ckbInput.attr('checked', true);
+        currentSelected.html(ckbInput.data("downlines"));
+        let oppositeCkb = $(`#${ckbInput.data("opposite-id")}`);
+        let ckbLabelOpposite = oppositeCkb.parent().find("label").first();
+        oppositeCkb.attr('checked', false);
+        ckbLabelOpposite.html("0");
+        if (currentSelected.data("downline-id")) {
+            self.clickDisableVRItemStatus($(`#${currentSelected.data("downline-id")}`).parent().find("label").first());
+        }
+    };
+
     self.enableEditSetting = function (isEnable) {
         var iconCopySetting = $(".icon-copy-setting");
         var betTypeColumn = $(".bettypevalue-column");
@@ -280,7 +326,36 @@ var VirtualRateController = function () {
             var bettypeSelect = betTypeColumn.find('select[disable-level="1"]');
             bettypeSelect.attr("disabled", null);
             bettypeSelect.removeAttr("disable-level");
-            self.bindingEvent();
+
+            var buttonCopy = $("#button-copy-sport-settings-" + self.Constants.SportType.Soccer);
+            var buttonCopyBasketball = $("#button-copy-sport-settings-" + self.Constants.SportType.Basketball);
+
+            buttonCopy
+                .unbind("click")
+                .click(function () {
+                    if (buttonCopyBasketball.hasClass("icon-copy-setting-checked")) {
+                        buttonCopyBasketball.trigger("click");
+                    }
+
+                    self.copySettingFromSport(buttonCopy);
+                });
+
+            buttonCopyBasketball
+                .unbind("click")
+                .click(function () {
+                    if (buttonCopy.hasClass("icon-copy-setting-checked")) {
+                        buttonCopy.trigger("click");
+                    }
+
+                    self.copySettingFromSport(buttonCopyBasketball);
+                });
+
+            var buttonCopyBetType = $(".icon-copy-setting.bettype-setting");
+            buttonCopyBetType.unbind("click");
+            buttonCopyBetType.click(function () {
+                var sportId = parseInt($(this).attr("sport-id"));
+                self.copySettingFromBetType(sportId, $(this));
+            });
         }
         else {
             var iconCopySettingAvailable = iconCopySetting.find(":not([disabled])");
@@ -504,36 +579,47 @@ var VirtualRateController = function () {
                         __close(false, null, null, null);
                         self.blockUI();
                         var criteria = $.extend({}, customerVirtualRateModel);
-                        criteria.EnableVirtualRate = $("#chk-enable").attr("checked") ? true : false;
-                        criteria.LockVirtualRateStatus = $("#chk-lockVR").attr("checked") ? true : false;
-                        criteria.LockVirtualRateBasketballStatus = $("#chk-lockVRBasketball").attr("checked") ? true : false;
-                        criteria.LockVirtualRateOtherStatus = $("#chk-lockVROther").attr("checked") ? true : false;
-                        criteria.IsApplyAccumulateBalance = $("#chk-enable-accumulate-balance").is(":checked");
-                        criteria.IsApplyDownlineAccumulateBalance = $("#chk-apply-downline-accumulate-balance") !== undefined && $("#chk-apply-downline-accumulate-balance").is(":checked");
+                        criteria.EnableVirtualRate = $("#chk-enableVR").is(":checked") ? true : false;
+                        criteria.LockVirtualRateStatus = $("#ckb_unlockSoccerVR").is(":checked") ? false : true;
+                        criteria.LockVirtualRateBasketballStatus = $("#ckb_unlockBasketballVR").is(":checked") ? false : true;
+                        criteria.LockVirtualRateOtherStatus = $("#ckb_unlockOtherSportsVR").is(":checked") ? false : true;
+                        criteria.IsApplyAccumulateBalance = $("#chk_enableAccumulateBalance").is(":checked");
 
-                        var chkSCLockMaster, chkSCLockAgent, chkSCLockMember = 0;
-                        var chkBBLockMaster, chkBBLockAgent, chkBBLockMember = 0;
-                        var chkOSLockMaster, chkOSLockAgent, chkOSLockMember = 0;
-                        var chkEnableMaster, chkEnableAgent, chkEnableMember = 0;
+                        var chkSCLockMaster, chkSCLockAgent, chkSCLockMember;
+                        var chkBBLockMaster, chkBBLockAgent, chkBBLockMember;
+                        var chkOSLockMaster, chkOSLockAgent, chkOSLockMember;
+                        var chkEnableMaster, chkEnableAgent, chkEnableMember;
+                        chkSCLockMaster = chkSCLockAgent = chkSCLockMember = chkBBLockMaster = chkBBLockAgent = chkBBLockMember = chkOSLockMaster = chkOSLockAgent = chkOSLockMember = chkEnableMaster = chkEnableAgent = chkEnableMember = 2;
 
-                        chkSCLockMaster = $("#chk-lockSoccerVRMaster") !== undefined && $("#chk-lockSoccerVRMaster").attr("checked") ? 1 : 0;
-                        chkSCLockAgent = $("#chk-lockSoccerVRAgent") !== undefined && $("#chk-lockSoccerVRAgent").attr("checked") ? 1 : 0;
-                        chkSCLockMember = $("#chk-lockSoccerVRMember") !== undefined && $("#chk-lockSoccerVRMember").attr("checked") ? 1 : 0;
+                        if ($("#ckb_lockSoccerVRMaster") !== undefined && $("#ckb_lockSoccerVRMaster").is(":checked")) chkSCLockMaster = 0;
+                        if ($("#ckb_lockSoccerVRAgent") !== undefined && $("#ckb_lockSoccerVRAgent").is(":checked")) chkSCLockAgent = 0;
+                        if ($("#ckb_lockSoccerVRMember") !== undefined && $("#ckb_lockSoccerVRMember").is(":checked")) chkSCLockMember = 0;
+                        if ($("#ckb_unlockSoccerVRMaster") !== undefined && $("#ckb_unlockSoccerVRMaster").is(":checked")) chkSCLockMaster = 1;
+                        if ($("#ckb_unlockSoccerVRAgent") !== undefined && $("#ckb_unlockSoccerVRAgent").is(":checked")) chkSCLockAgent = 1;
+                        if ($("#ckb_unlockSoccerVRMember") !== undefined && $("#ckb_unlockSoccerVRMember").is(":checked")) chkSCLockMember = 1;
 
-                        chkBBLockMaster = $("#chk-lockBasketballVRMaster") !== undefined && $("#chk-lockBasketballVRMaster").attr("checked") ? 1 : 0;
-                        chkBBLockAgent = $("#chk-lockBasketballVRAgent") !== undefined && $("#chk-lockBasketballVRAgent").attr("checked") ? 1 : 0;
-                        chkBBLockMember = $("#chk-locBasketballkVRMember") !== undefined && $("#chk-lockBasketballVRMember").attr("checked") ? 1 : 0;
+                        if ($("#ckb_lockBasketballVRMaster") !== undefined && $("#ckb_lockBasketballVRMaster").is(":checked")) chkBBLockMaster = 0;
+                        if ($("#ckb_lockBasketballVRAgent") !== undefined && $("#ckb_lockBasketballVRAgent").is(":checked")) chkBBLockAgent = 0;
+                        if ($("#ckb_lockBasketballVRMember") !== undefined && $("#ckb_lockBasketballVRMember").is(":checked")) chkBBLockMember = 0;
+                        if ($("#ckb_unlockBasketballVRMaster") !== undefined && $("#ckb_unlockBasketballVRMaster").is(":checked")) chkBBLockMaster = 1;
+                        if ($("#ckb_unlockBasketballVRAgent") !== undefined && $("#ckb_unlockBasketballVRAgent").is(":checked")) chkBBLockAgent = 1;
+                        if ($("#ckb_unlockBasketballVRMember") !== undefined && $("#ckb_unlockBasketballVRMember").is(":checked")) chkBBLockMember = 1;
 
+                        if ($("#ckb_lockOtherSportsVRMaster") !== undefined && $("#ckb_lockOtherSportsVRMaster").is(":checked")) chkOSLockMaster = 0;
+                        if ($("#ckb_lockOtherSportsVRAgent") !== undefined && $("#ckb_lockOtherSportsVRAgent").is(":checked")) chkOSLockAgent = 0;
+                        if ($("#ckb_lockOtherSportsVRMember") !== undefined && $("#ckb_lockOtherSportsVRMember").is(":checked")) chkOSLockMember = 0;
+                        if ($("#ckb_unlockOtherSportsVRMaster") !== undefined && $("#ckb_unlockOtherSportsVRMaster").is(":checked")) chkOSLockMaster = 1;
+                        if ($("#ckb_unlockOtherSportsVRAgent") !== undefined && $("#ckb_unlockOtherSportsVRAgent").is(":checked")) chkOSLockAgent = 1;
+                        if ($("#ckb_unlockOtherSportsVRMember") !== undefined && $("#ckb_unlockOtherSportsVRMember").is(":checked")) chkOSLockMember = 1;
 
-                        chkOSLockMaster = $("#chk-lockOtherSportsVRMaster") !== undefined && $("#chk-lockOtherSportsVRMaster").attr("checked") ? 1 : 0;
-                        chkOSLockAgent = $("#chk-lockOtherSportsVRAgent") !== undefined && $("#chk-lockOtherSportsVRAgent").attr("checked") ? 1 : 0;
-                        chkOSLockMember = $("#chk-lockOtherSportsVRMember") !== undefined && $("#chk-lockOtherSportsVRMember").attr("checked") ? 1 : 0;
+                        if ($("#chk_enable_master_AB") !== undefined && $("#chk_enable_master_AB").is(":checked")) chkEnableMaster = 1;
+                        if ($("#chk_enable_agent_AB") !== undefined && $("#chk_enable_agent_AB").is(":checked")) chkEnableAgent = 1;
+                        if ($("#chk_enable_member_AB") !== undefined && $("#chk_enable_member_AB").is(":checked")) chkEnableMember = 1;
+                        if ($("#chk_disable_master_AB") !== undefined && $("#chk_disable_master_AB").is(":checked")) chkEnableMaster = 0;
+                        if ($("#chk_disable_agent_AB") !== undefined && $("#chk_disable_agent_AB").is(":checked")) chkEnableAgent = 0;
+                        if ($("#chk_disable_member_AB") !== undefined && $("#chk_disable_member_AB").is(":checked")) chkEnableMember = 0;
 
-                        chkEnableMaster = $("#chk-enableVRMaster") !== undefined && $("#chk-enableVRMaster").attr("checked") ? 1 : 0;
-                        chkEnableAgent = $("#chk-enableVRAgent") !== undefined && $("#chk-enableVRAgent").attr("checked") ? 1 : 0;
-                        chkEnableMember = $("#chk-enableVRMember") !== undefined && $("#chk-enableVRMember").attr("checked") ? 1 : 0;
-
-                        var additionalAction = '<ROOT><VR UnlockSC3="{0}"  UnlockSC2="{1}" UnlockSC1="{2}" UnlockBB3="{3}"  UnlockBB2="{4}" UnlockBB1="{5}" UnlockOS3="{6}"  UnlockOS2="{7}" UnlockOS1="{8}" Enable3="{9}"  Enable2="{10}" Enable1="{11}" /></ROOT>';
+                        var additionalAction = '<ROOT><VR UnlockSC3="{0}"  UnlockSC2="{1}" UnlockSC1="{2}" UnlockBB3="{3}"  UnlockBB2="{4}" UnlockBB1="{5}" UnlockOS3="{6}"  UnlockOS2="{7}" UnlockOS1="{8}" EnableAB3="{9}"  EnableAB2="{10}" EnableAB1="{11}" /></ROOT>';
                         criteria.AdditionalActions = additionalAction.format(chkSCLockMaster, chkSCLockAgent, chkSCLockMember, chkBBLockMaster, chkBBLockAgent, chkBBLockMember, chkOSLockMaster, chkOSLockAgent, chkOSLockMember, chkEnableMaster, chkEnableAgent, chkEnableMember);
 
                         var sportLength = customerVirtualRateModel.SportVirtualRateList.length;
@@ -560,7 +646,7 @@ var VirtualRateController = function () {
                                 self.updateBetTypeRate(sport, isCopyFromSport, isCopyFromBetType, criteria, i);
                             }
                         }
-
+                        
                         self.CallAjax(self,
                             window.rootUrl + "VirtualRate/UpdateSettings",
                             criteria,
@@ -716,6 +802,33 @@ var VirtualRateController = function () {
         }
 
         return "";
+    };
+
+    self.openNote = function (id) {
+        $(`#noteInfo`).removeClass("note-hide");
+    };
+
+    self.closeNote = function (id) {
+        self.cachedData.closetimer = window.setTimeout(function () { $(`#noteInfo`).addClass("note-hide"); }, 300);
+        
+    };
+
+    self.cancelCloseNote = function (id) {
+        if (self.cachedData.closetimer) {
+            window.clearTimeout(self.cachedData.closetimer);
+            self.cachedData.closetimer = null;
+        }
+    };
+
+    self.showUpdateVRFlow = function (id) {
+        var flow1 = "If you enable Virtual rate and change the Virtual Rate value of this account at the same time:";
+        var sub1 = "This account will enable Virtual Rate, then change Virtual Rate value.";
+        var flow2 = "If you lock Virtual Rate status and change Virtual Rate value of this account at the same time:";
+        var sub2 = "This account and all downlines will change the Virtual Rate value, then lock the VR status.";
+        var flow3 = "If you unlock Virtual Rate for this account or downlines & change Virtual Rate value at the same time:";
+        var sub3 = "This account or all downlines will unlock Virtual Rate, then change Virtual Rate value.";
+        var message = `<ul class="roman"><li>${flow1}<ul class="square"><li>${sub1}</li></ul></li><li>${flow2}<ul class="square"><li>${sub2}</li></ul></li><li>${flow3}<ul class="square"><li>${sub3}</li></ul></li></ul>`;
+        __showMessageWihtoutBtn("Update VR flow", message, 700, 180);
     };
 };
 

@@ -47,8 +47,6 @@ namespace Fanex.Tarus.Customer.Criteria.VirtualRate
 
         public bool IsApplyAccumulateBalance { get; set; }
 
-        public bool IsApplyDownlineAccumulateBalance { get; set; }
-
         public List<SportVirtualRateModel> SportVirtualRateList { get; set; }
 
         public CustomerVirtualRateModel LastSettings { get; set; }
@@ -106,7 +104,6 @@ namespace Fanex.Tarus.Customer.Criteria.VirtualRate
             }
 
             storeProcedureParams.Add("vraccumulate_balance", IsApplyAccumulateBalance);
-            storeProcedureParams.Add("is_vraccumulate_balance", IsApplyDownlineAccumulateBalance);
 
             storeProcedureParams.Add("additionalactions", AdditionalActions);
 
@@ -207,10 +204,11 @@ namespace Fanex.Tarus.Customer.Criteria.VirtualRate
             string virtualMultiplierFormat)
         {
             var paramXML = string.Empty;
-            if (liveRate.PercentRate == oldLiveRate.PercentRate)
-            {
-                return paramXML;
-            }
+            /// Undo this comment to prevent update old value
+            //if (liveRate.PercentRate == oldLiveRate.PercentRate)
+            //{
+            //    return paramXML;
+            //}
 
             paramXML += string.Format(virtualMultiplierFormat, sportId, betType.Id, liveType, liveRate.PercentRate);
             if (betType.MultiBetTypes != null && betType.MultiBetTypes.Length > 0)
