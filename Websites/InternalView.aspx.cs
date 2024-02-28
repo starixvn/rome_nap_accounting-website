@@ -28,43 +28,21 @@ public partial class InternalView : System.Web.UI.Page
 
         string strPath = Request.PhysicalApplicationPath + "/IbcKeys/ibcpkey.snk";
         Role roleType = Request["roleId"] == null || Request["roleId"].Equals("undefined", StringComparison.CurrentCultureIgnoreCase) ? Role.Null : (Role)Utils.ToInt32(Request["roleId"]);
+        string CustomerSite = Request["CustomerSite"] == null ? "" : Request["CustomerSite"]; 
         bool isDummyAcc = Permissions.CheckDummyAccount(new CheckDummyAccountCriteria() { CustName = Request["custName"] });
-        var checkCustomerBelongToSpecialSiteResult = serviceBase.CheckCustomerBelongToSpecialSite(new CheckCustomerIsSpecialSiteCriteria() { UserName = Request["custName"] });
 
-        if (isDummyAcc || checkCustomerBelongToSpecialSiteResult.IsSpecialHeadline)
+        if (isDummyAcc)
         {
-            if (!Permissions.HasPermission(Enumerations.Functions.AccessSpecialSites))
-            {
-                Response.Write(GetGlobalResourceObject(Constants.Resources.LanguageResources, "DontHavePermission"));
-                return;
-            }
+            Response.Write(GetGlobalResourceObject(Constants.Resources.LanguageResources, "DontHavePermission"));
+            return;
         }
-        else
-        {
-            var checkSpecialSitePermission = serviceBase.CheckSpecialSitePermission(
-                       new CheckSpecialSitePermissionCriteria()
-                       {
-                           UserID = Convert.ToInt32(Request["accId"]),
-                           CustName = Request["custName"]
-                       });
-            if (checkSpecialSitePermission.ErrorCode > 0)
-            {
-                Response.Write(GetGlobalResourceObject(Constants.Resources.LanguageResources, "DontHavePermission"));
-                return;
-            }
-        }
+
         string strParams = string.Empty;
-        if (checkCustomerBelongToSpecialSiteResult.Site.IndexOf("CN88") >= 0)
-        {
-            strParams = AccountingCoreUtils.EncryptString(JsonConvert.SerializeObject(internalLoginModel), 1024, strPath);
-        }
-        else
-        {
-            strParams = Request["custName"] + "&" + Request["accId"] + "&" + Sunplus.Accounting.DataAccess.IBCDLL.SystemInfo.GetDBTime().Ticks;
-            strParams = AccountingCoreUtils.EncryptString(strParams, 1024, strPath);
-        }
+       
+        strParams = Request["custName"] + "&" + Request["accId"] + "&" + Sunplus.Accounting.DataAccess.IBCDLL.SystemInfo.GetDBTime().Ticks;
+        strParams = AccountingCoreUtils.EncryptString(strParams, 1024, strPath);
 
-        string internalAgentUrl = InternalLoginManager.GetInternalLoginUrl(checkCustomerBelongToSpecialSiteResult.Site, roleType);
+        string internalAgentUrl = InternalLoginManager.GetInternalLoginUrl(CustomerSite, roleType);
         string url = string.Format("{0}?{1}params={2}&isVpn={3}",
             (internalAgentUrl.StartsWith("http") ? internalAgentUrl : "http://" + internalAgentUrl),
             Session[WebSettings.InternalAgentUMToken] == null ? "" : string.Format("UMToken={0}&", Session[WebSettings.InternalAgentUMToken]),

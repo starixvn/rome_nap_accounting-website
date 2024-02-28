@@ -346,7 +346,7 @@ function showMP(transid, refno, custId, transIndex) {
             $.ajax({
                 type: "POST",
                 url: window.rootUrl + "BetList/GetMixParlayDetail",
-                data: "transid=" + transid + "&refno=" + refno + "&custId=" + custId + "&language=" + language,
+                data: "transid=" + transid + "&refno=" + refno + "&custId=" + custId + "&removeSabaWord=true" + "&language=" + language,
                 success: function (result) {
                     divEvent.html(result);
                     divEvent.css("display", "");
@@ -386,7 +386,7 @@ function showNewCombMP(transId, transIndex, refNo, handicap1, handicap2, betchec
         if ($.trim(divParlay.html()) === "") {
             try { parent.BlockUI(); } catch (e) { }
             var params = [
-                "transid=", transId, "&refno=", refNo, "&hdp1=", handicap1, "&hdp2=", handicap2, "&betcheck=", betcheck, "&betteam=", betteam, "&custId=", custId, "&language=", language
+                "transid=", transId, "&refno=", refNo, "&hdp1=", handicap1, "&hdp2=", handicap2, "&betcheck=", betcheck, "&betteam=", betteam, "&custId=", custId, "&removeSabaWord=true", "&language=", language
             ];
 
             $.ajax({

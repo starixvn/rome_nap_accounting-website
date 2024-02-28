@@ -56,7 +56,12 @@ function MultipleUpdateSuperStatus_CheckSuper(isReloadedAfterUpdate, errorResult
         },
         complete: function () {
             parent.jQuery.unblockUI();
-        }
+        },
+        error: function (xhr) {
+                if (xhr.status === 403) {                    
+                    showAlertMessage("MultipleUpdateSuperStatus_errMsg", $.parseJSON(xhr.responseText).ErrorMessage, 1);
+                }
+            },
     });
 }
 

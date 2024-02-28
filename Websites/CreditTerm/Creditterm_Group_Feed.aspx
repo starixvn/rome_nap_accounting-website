@@ -250,8 +250,17 @@
                         type: "POST",
                         url: "../Report/GetData.ashx",
                         data: param,
-                        success: GetJSONResult
+                        success: GetJSONResult,
+                        error: function (xhr) {
+                            if (xhr.status === 403) {
+                                showAlertMessage("errMsg", $.parseJSON(xhr.responseText).ErrorMessage, 1);
+                            }
+                        },
+                        complete: function () {
+                            try { parent.jQuery.unblockUI(); } catch (e) { }
+                        }
                     }
+                       
                 );
         }
 

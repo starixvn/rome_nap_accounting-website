@@ -47,20 +47,6 @@
 
         public bool IsDeposit => WebSettings.IsApplySplitingDepositeCustomer && Utils.ToBoolean(customerInfoRow["IsDeposit"]);
 
-        public bool IsCN88
-        {
-            get
-            {
-                var site = Converter.ToString2(customerInfoRow["site"]);
-                if (string.IsNullOrWhiteSpace(site))
-                {
-                    site = Converter.ToString2(customerInfoRow["membersite"]);
-                }
-
-                return Fanex.Tarus.Infrastructure.Configurations.AppSettings.IsCN88SiteName(site);
-            }
-        }
-
         public bool IsHeadline => SearchAccountRoleId == (int)Role.Headline;
 
         public string LastLoginDate => Convert.IsDBNull(customerInfoRow["lastlogged"]) ? string.Empty : Converter.ToDateTime(customerInfoRow["lastlogged"]).ToShortDateString();
@@ -127,15 +113,7 @@
 
         public bool IsProtectedMode => Utils.ToBoolean(customerInfoRow["IsProtectedMode"]);
 
-        public int CN88CustStatus => Utils.ToInt32(customerInfoRow["CN88CustStatus"]);
-
-        public string CN88CustStatusName => CN88CustomerStatusConstants.StatusName(this.CN88CustStatus);
-
         public int ExchangeId => Converter.ToInt(customerInfoRow["exchangeid"]);
-
-        public int CN88HeadlineId => Converter.ToInt(lineInfoRow["headlineID"]);
-
-        public string CN88HeadlineName => Converter.ToString2(lineInfoRow["headlineName"]);
 
         public int SuperId => Converter.ToInt(lineInfoRow["SuperID"]);
 

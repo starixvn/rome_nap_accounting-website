@@ -29,24 +29,13 @@
 
         public decimal PendingTransfer3rd { get; private set; }
 
-        public decimal Credit =>
-            SearchAccountRoleId == (int)Role.Member && AppSettings.IsCN88SiteName(CustomerSite) ?
-            Utils.ToDecimal(memberCN88CreditRow["GivenCredit"]) :
-            Utils.ToDecimal(customerInfoRow["credit"]);
-
-        public decimal TotalBetStake => Utils.ToDecimal(memberCN88BetStakeRow["TotalBetStake"]);
-
-        public decimal YesterdayBetCredit =>
-            Utils.ToBoolean(memberCN88CreditRow["IsTodayUpdatedCredit"]) ? -1 :
-            Utils.ToDecimal(memberCN88CreditRow["GivenCredit"]) - Utils.ToDecimal(memberCN88BetStakeRow["YesterdayBetStake"]);
+        public decimal Credit => Utils.ToDecimal(customerInfoRow["credit"]);
 
         public decimal ActualRate => Converter.ToDecimal(customerInfoRow["actualrate"]);
 
         public string Currency => Converter.ToString2(customerInfoRow["currency"]);
 
         public bool EnableVirtualRate => CastAide.AsDecimal(customerInfoRow["EnableVirtualRate"]) != 0;
-
-        private bool IsCN88Site => AppSettings.IsCN88SiteName(CustomerSite);
 
         private void GetExtraCustomerInfo(
             DataRow customerInfoRow,
@@ -63,20 +52,10 @@
                     PendingTransfer3rd = member3rdPendingTransfer;
                     ParentId = Converter.ToInt(lineInfoRow["agentId"]);
                     YesterdayCash = Converter.ToDecimal(cashRow["Yesterday_Cash"]);
-
-                    AccOutstanding = IsCN88Site || IsInternalUser ? 
-                        Converter.ToDecimal(cashRow["outstanding"]) : memberOutstandingMBC;
-
-                    Cash = IsCN88Site || IsInternalUser ? 
-                        Converter.ToDecimal(cashRow["cash"]) : memberBalanceMBC + memberOutstandingMBC + PendingTransfer3rd;
-
-                    NetPosition = IsCN88Site || IsInternalUser ?
-                       Converter.ToDecimal(customerInfoRow["netPosition"]) : memberNetPositionMBC;
-
-                    BetCredit = IsCN88Site ? Credit - TotalBetStake :
-                        IsInternalUser ? Credit + Cash - AccOutstanding + NetPosition :
-                        Credit + memberBalanceMBC + memberNetPositionMBC;
-
+                    AccOutstanding = IsInternalUser ? Converter.ToDecimal(cashRow["outstanding"]) : memberOutstandingMBC;
+                    Cash = IsInternalUser ? Converter.ToDecimal(cashRow["cash"]) : memberBalanceMBC + memberOutstandingMBC + PendingTransfer3rd;
+                    NetPosition = IsInternalUser ? Converter.ToDecimal(customerInfoRow["netPosition"]) : memberNetPositionMBC;
+                    BetCredit = IsInternalUser ? Credit + Cash - AccOutstanding + NetPosition : Credit + memberBalanceMBC + memberNetPositionMBC;
                     break;
 
                 case 2: // agent

@@ -35,8 +35,8 @@
 
     var gridOptions = {};
 
-    function assignNoInfo() {
-        showAlertMessage("err", "No information is available.", 1);
+    function assignErrorMsg(msg) {
+        showAlertMessage("err", msg, 1);
         exportExcelElement.addClass("hidden");
         smaMangementGridElement.addClass("hidden");
     }
@@ -227,7 +227,7 @@
             beforeSend: function () { try { parent.BlockUI(); } catch (e) { } },
             success: function (rs) {
                 if (!rs || !rs.SMAGroupHeadlines || rs.SMAGroupHeadlines.length === 0) {
-                    assignNoInfo();
+                    assignErrorMsg("No information is available.");
                     return;
                 }
 
@@ -240,7 +240,7 @@
                 exportExcelElement.removeClass("hidden");
             },
             error: function () {
-                assignNoInfo();
+                assignErrorMsg("You don't have permission on this function.");
             },
             complete: function () { try { parent.jQuery.unblockUI(); } catch (e) { }; }
         });

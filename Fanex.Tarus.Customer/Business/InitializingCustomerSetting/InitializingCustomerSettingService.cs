@@ -13,6 +13,7 @@
     using Fanex.Tarus.Customer.Entities.InitializingCustomerSetting;
     using Fanex.Tarus.Customer.Requests.InitializingCustomerSetting;
     using Fanex.Tarus.Customer.ViewModels.InitializingCustomerSetting;
+    using Fanex.Tarus.Infrastructure.Common;
 
     public interface IInitializingCustomerSettingService
     {
@@ -156,7 +157,7 @@
         public InitializingCustomerSettingViewModel GetSetting()
         {
             var currencies = dataAccess.GetExchangeCurrency();
-            var sites = dataAccess.GetSites();
+            var sites = dataAccess.GetSites(AppSession.AccId);
             return dataAccess.GetSetting(new GetSettingCriteria(), currencies, sites);
         }
 

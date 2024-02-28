@@ -2,11 +2,9 @@
 using DNAide.Core;
 using DNAide.Data;
 using DNAide.Web;
-using Fanex.Tarus.Security.Criteria;
 using Fanex.Tarus.Security.Services;
 using IBCUtils;
 using Sunplus.Accounting.Business.CacheManager;
-using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Helper;
@@ -16,7 +14,6 @@ using System.Data;
 using System.Text;
 using System.Web;
 using System.Web.UI.HtmlControls;
-using System.Web.UI.WebControls;
 
 /// <summary>
 /// CITS
@@ -90,7 +87,7 @@ public partial class CreditTerm_CreditTermView : PageBase
             {
                 TemplateHandler.Assign(ref form, "{customer}", Convert.ToString(dr["username"]));
                 TemplateHandler.Assign(ref form, "{onsubmit}", (Convert.ToInt32(dr["TotalMember"])==1) ? "return ConfirmRemoveHeadLine();" : "return true;");
-                DataTable dtGroup = AccountCredit.Acc_CreditTermSelGroupHeadline().ResultSet.Tables[0];
+                DataTable dtGroup = AccountCredit.Acc_CreditTermSelGroupHeadline(AppSession.AccId).ResultSet.Tables[0];
                 StringBuilder strGroup = new StringBuilder();
                 strGroup.Append("<option value='0'>0 Not assign group</option>");
                 foreach (DataRow drGroup in dtGroup.Rows)

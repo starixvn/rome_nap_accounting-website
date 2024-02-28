@@ -28,6 +28,11 @@
             success: function (data) {
                 successCallback(data);
             },
+            error: function (xhr) {
+                if (xhr.status === 403) {
+                    showAlertMessage("trMsg", $.parseJSON(xhr.responseText).ErrorMessage, 1);
+                }
+            },
             complete: function () {
                 try { parent.jQuery.unblockUI(); } catch (e) { }
             }

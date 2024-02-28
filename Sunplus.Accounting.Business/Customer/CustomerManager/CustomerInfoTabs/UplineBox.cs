@@ -12,20 +12,8 @@
         {
             var uplineboxhtml = WebUtils.LoadTemplate("CustomerInfo/UplineBox.htm");
             var robotIds = new List<int>();
-
-            if (customerInfoViewModel.IsCN88)
-            {
-                TemplateHandler.Assign(ref uplineboxhtml, "{CN88HeadlineName}", customerInfoViewModel.SearchAccountRoleId == (int)Role.Headline ? customerInfoViewModel.UserName : customerInfoViewModel.CN88HeadlineName);
-                TemplateHandler.Assign(ref uplineboxhtml, "{IsHidden0}", string.Empty);
-                if (!customerInfoViewModel.HeadlineEnabled)
-                {
-                    TemplateHandler.RemoveBlock(ref uplineboxhtml, "HeadlineLogin");
-                }
-            }
-            else
-            {
-                TemplateHandler.Assign(ref uplineboxhtml, "{IsHidden0}", "hidden");
-            }
+           
+         
 
             if (customerInfoViewModel.SearchAccountRoleId <= (int)Role.Super
                 && customerInfoViewModel.SearchAccountRoleId != (int)Role.Headline)

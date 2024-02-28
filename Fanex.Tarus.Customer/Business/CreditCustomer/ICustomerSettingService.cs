@@ -8,13 +8,9 @@
 namespace Fanex.Tarus.Customer.CreditCustomer.Business
 {
     using Criteria.CreditCustomer;
-    using Customer.Entities.CN88;
     using Fanex.PTEngine.BusinessObjects;
     using Fanex.Tarus.Admin.ViewModel;
     using Fanex.Tarus.Customer.CreditCustomer.Entities;
-    using Fanex.Tarus.Customer.Criteria.CN88.Headline;
-    using Fanex.Tarus.Customer.Criteria.CN88.HeadlinePossess;
-    using Fanex.Tarus.Customer.ViewModels.CN88;
     using System.Collections.Generic;
 
     /// <summary>
@@ -60,16 +56,6 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
         Fanex.Tarus.Customer.Entities.Result UpdateAllDayBalTransfer(int custId, bool isAllDayBalTransfer, bool isIncludedDownline, int userId, string ip);
 
         Fanex.Tarus.Customer.Entities.Result UpdateAllDayBalTransferOnMaster(int custId, bool isAllDayBalTransfer, int userId, string ip);
-
-        CreditRangeModel GetCreditRangeModel(int searchAccountId, bool isMember);
-
-        Result UpdateCredit(int searchAccountId, int roleId, decimal updCredit);
-
-        HeadlinePossessViewModel GetHeadlinePossess(GetHeadlinePossessCriteria criteria, bool isAfterCreateNewSuper);
-
-        CustomerSetting.Module.Core.Models.Result UpdateHeadlinePossess(UpdateHeadlinePossessCriteria criteria);
-
-        CustomerSetting.Module.Core.Models.Result AddNewHeadline(AddNewHeadlineCriteria criteria);
 
         dynamic GetSuperPrefixes(SuperPrefixCriteria criteria);
 

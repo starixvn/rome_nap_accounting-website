@@ -324,25 +324,7 @@
   <Function Name="Create Licensee Subsidiary">
     <Setting Key="Acc_Dep_CustomerGenLicenseeSubUsername" SpName="Acc_Dep_CustomerGenLicenseeSubUsername" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_Dep_CustomerInsLicenseeSubsidiary" SpName="Acc_Dep_CustomerInsLicenseeSubsidiary" DbName="DBCust.CustDB.bodbAdminNet" />
-  </Function>
-  <Function Name="CN88">
-    <Setting Key="CS_CustomerStatusUpd" SpName="CS_CustomerStatusUpd" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="CS_Customer_Credit_Sel" SpName="CS_Customer_Credit_Sel" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="CS_Customer_Credit_Upd" SpName="CS_Customer_Credit_Upd" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="CS_Acc_CustomerUpdUnlockAccess" SpName="CS_Acc_CustomerUpdUnlockAccess" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="CS_GroupExtraPT_Sel" SpName="CS_GroupExtraPT_Sel" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="CS_GroupExtraPT_Upd" SpName="CS_GroupExtraPT_Upd" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="CS_CustomerIns_Headline" SpName="CS_CustomerIns_Headline" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="CS_HeadlineUsernameSuggestion" SpName="CS_HeadlineUsernameSuggestion" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
-  </Function>
-  <Function Name="CN88 - MoveSuper">
-    <Setting Key="CS_Customer_GetHeadlinePossess" SpName="CS_Customer_GetHeadlinePossess" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="CS_Customer_ChangeHeadline" SpName="CS_Customer_ChangeHeadline" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
-  </Function>
-  <Function Name="View Periods - CN88">
-    <Setting Key="CS_ReportPermission_SEL" SpName="CS_ReportPermission_SEL" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="CS_ReportPermission_Upd" SpName="CS_ReportPermission_Upd" DbName="DBCust.CustDB.bodbAdminNet" />
-  </Function>
+  </Function>  
   <Function Name="Lock un-suspend/reopen">
     <Setting Key="Acc_CustomerLockSuspendSel" SpName="Acc_CustomerLockSuspendSel" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
     <Setting Key="Acc_CustomerLockSuspendUpd" SpName="Acc_CustomerLockSuspendUpd" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />

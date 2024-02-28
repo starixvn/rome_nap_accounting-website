@@ -11,7 +11,7 @@
     {
         void AssignCountry(IEnumerable<TicketDetail> tickets);
 
-        IList<TicketDetail> GetMixParlayTickets(long transId, long refNo, int custId);
+        IList<TicketDetail> GetMixParlayTickets(long transId, long refNo, int custId, bool removeSabaWord);
 
         IList<TicketDetail> GetBetListByRefNo(BetListByRefNoParam param);
 

@@ -10,10 +10,7 @@
 
 namespace Fanex.Tarus.Customer.Business.ViewPT
 {
-    using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
-    using Fanex.Tarus.Customer.Criteria.ViewPT;
-    using Fanex.Tarus.Customer.Entities.ViewPT;
 
     [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
     public interface IViewPTService

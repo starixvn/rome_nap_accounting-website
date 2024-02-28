@@ -5,7 +5,6 @@
 
     public class SiteDBMixParlayDetailCriteria : CriteriaBase
     {
-        public bool IsCN88 { get; set; }
 
         [SpParam(SqlParamName = "transid")]
         public long TransId { get; set; }
@@ -20,7 +19,7 @@
 
         public DateTime BalanceUpDay { get; set; }
 
-        public string GetSettingKey()
+        public override string GetSettingKey()
             => "SiteDB_Acc_BetList_SelParlayDetail";
     }
 }

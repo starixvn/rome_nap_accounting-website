@@ -49,9 +49,6 @@
     <Setting Key="Acc_ChangeRate_Prepare_Upd" SpName="Acc_ChangeRate_Prepare_Upd" DbName="DBTXN.bodb02.bodbAdminNet" />
     <Setting Key="Acc_ChangeRate_Main_Upd" SpName="Acc_ChangeRate_Main_Upd" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
-  <Function Name="CN88">
-    <Setting Key="CS_Member_TotalBetStake_Sel" SpName="CS_Member_TotalBetStake_Sel" DbName="DBTXN.BODB02.bodbAdminNet" Plain="0" />
-  </Function>
   <Function Name="Account Info">
     <Setting Key="Acc_BalanceMemberSel" SpName="Acc_BalanceMemberSel" DbName="DBTXN.BODB02.bodbAdminNet" Plain="0" />
     <Setting Key="Acc_CustomerTotalAmountSel" SpName="Acc_CustomerTotalAmountSel" DbName="DBTXN.BODB02.bodbAdminNet" Plain="0" />

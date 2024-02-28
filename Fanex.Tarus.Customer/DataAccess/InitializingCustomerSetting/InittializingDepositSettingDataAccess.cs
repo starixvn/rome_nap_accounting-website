@@ -20,7 +20,7 @@
 
         Result ExecuteNonQuery(ICriteria criteria);
 
-        IEnumerable<BaseModel> GetSites();
+        IEnumerable<BaseModel> GetSites(int AccId);
 
         IEnumerable<BaseModel> GetExchangeCurrency(bool isDisplayMode = true);
 
@@ -50,7 +50,7 @@
             _MemoryCache = new MemoryCache(new MemoryCacheOptions());
         }
 
-        public IEnumerable<BaseModel> GetSites()
+        public IEnumerable<BaseModel> GetSites(int AccId)
         {
             var sites = new List<BaseModel>
             {
@@ -65,6 +65,10 @@
             {
                 using (var reader = objDB.ExecuteReader())
                 {
+                    objDB.AssignParamValues(new Hashtable
+                    {
+                        { "userid", AccId }
+                    });
                     if (reader != null)
                     {
                         while (reader.Read())

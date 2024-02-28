@@ -577,12 +577,6 @@ function OpenViewPT(username) {
     parent.resetMenu();
 }
 
-function viewPTCommCN88(username) {
-    var url = 'CN88PT/Index?username=' + username;
-    parent.gotoURL('centerFr', url);
-    parent.resetMenu();
-}
-
 function OpenViewSuspend(username) {
     var url = 'UnsuspendCustomer/SuspendMatrixView?username=' + username;
     parent.gotoURL('centerFr', url);

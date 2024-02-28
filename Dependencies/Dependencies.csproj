@@ -60,34 +60,6 @@
     <Reference Include="BouncyCastle.Cryptography, Version=2.0.0.0, Culture=neutral, PublicKeyToken=072edcf4a5328938, processorArchitecture=MSIL">
       <HintPath>..\packages\BouncyCastle.Cryptography.2.2.1\lib\net461\BouncyCastle.Cryptography.dll</HintPath>
     </Reference>
-    <Reference Include="Chatbot.Client, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Chatbot.Client.1.0.5\lib\net461\Chatbot.Client.dll</HintPath>
-    </Reference>
-    <Reference Include="CN88.BetList.Core, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CN88.BetList.Core.1.0.1\lib\net461\CN88.BetList.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="CN88.BetList.ESports, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CN88.BetList.ESports.1.0.0.4\lib\net461\CN88.BetList.ESports.dll</HintPath>
-    </Reference>
-    <Reference Include="CN88.BetList.Keno, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CN88.BetList.Keno.1.0.0.1\lib\net461\CN88.BetList.Keno.dll</HintPath>
-    </Reference>
-    <Reference Include="CN88.BetList.Lottery, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CN88.BetList.Lottery.1.0.0.2\lib\net461\CN88.BetList.Lottery.dll</HintPath>
-    </Reference>
-    <Reference Include="CN88.BetList.NumberGame, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CN88.BetList.NumberGame.1.0.0.3\lib\net461\CN88.BetList.NumberGame.dll</HintPath>
-    </Reference>
-    <Reference Include="CN88.BetList.Sportsbook, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CN88.BetList.Sportsbook.1.0.3\lib\net461\CN88.BetList.Sportsbook.dll</HintPath>
-    </Reference>
-    <Reference Include="CN88.BetList.VirtualSports, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CN88.BetList.VirtualSports.1.0.0.4\lib\net461\CN88.BetList.VirtualSports.dll</HintPath>
-    </Reference>
-    <Reference Include="CN88.CustomerSetting.Client, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CN88.CustomerSetting.Client.1.0.0\lib\net461\CN88.CustomerSetting.Client.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="DNAide, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.DNAide.2.1.0.0\lib\net40\DNAide.dll</HintPath>
       <Private>True</Private>
@@ -391,8 +363,8 @@
     <Reference Include="Fanex.PTEngine, Version=1.0.7.7, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.PTEngine.1.0.7.7\lib\net40\Fanex.PTEngine.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.PTSetting.BettypeReference, Version=1.0.0.8, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.PTSetting.BettypeReference.1.0.0.8\lib\net461\Fanex.PTSetting.BettypeReference.dll</HintPath>
+    <Reference Include="Fanex.PTSetting.BettypeReference, Version=1.0.0.9, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.PTSetting.BettypeReference.1.0.0.9\lib\net461\Fanex.PTSetting.BettypeReference.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.PTVirtualSports, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.PTVirtualSports.1.0.0.3\lib\net40\Fanex.PTVirtualSports.dll</HintPath>
@@ -463,8 +435,8 @@
     <Reference Include="Fanex.Tarus.ActivityTracking, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.ActivityTracking.1.0.0.5\lib\net40\Fanex.Tarus.ActivityTracking.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Tarus.Admin, Version=1.0.5.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Admin.1.0.5.10\lib\net461\Fanex.Tarus.Admin.dll</HintPath>
+    <Reference Include="Fanex.Tarus.Admin, Version=1.0.5.11, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Admin.1.0.5.11\lib\net461\Fanex.Tarus.Admin.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.API, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.API.1.0.0\lib\net40\Fanex.Tarus.API.dll</HintPath>
@@ -480,10 +452,10 @@
       <HintPath>..\packages\Fanex.Tarus.CopySuperWinlossSetting.1.0.0.5\lib\net461\Fanex.Tarus.CopySuperWinlossSetting.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.DataAccess.Implement, Version=1.0.1.7, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.DataAccess.Implement.1.0.1.7\lib\net40\Fanex.Tarus.DataAccess.Implement.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.DataAccess.Implement.1.0.1.9\lib\net40\Fanex.Tarus.DataAccess.Implement.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Entities, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Entities.1.0.0.6\lib\net40\Fanex.Tarus.Entities.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.Entities.1.0.0.7\lib\net40\Fanex.Tarus.Entities.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Excels, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Excels.1.0.0.3\lib\net40\Fanex.Tarus.Excels.dll</HintPath>
@@ -495,10 +467,10 @@
       <HintPath>..\packages\Fanex.Tarus.Finance.1.1.3.9\lib\net40\Fanex.Tarus.Finance.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.4.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.4.14\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.4.15\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Security, Version=1.0.1.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Security.1.0.1.9\lib\net40\Fanex.Tarus.Security.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.Security.1.0.2.2\lib\net40\Fanex.Tarus.Security.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Statements, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Statements.1.0.0.1\lib\net40\Fanex.Tarus.Statements.dll</HintPath>
@@ -754,17 +726,17 @@
     <Reference Include="StackExchange.Redis, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c219ff1ca8c2ce46, processorArchitecture=MSIL">
       <HintPath>..\packages\StackExchange.Redis.2.0.519\lib\net461\StackExchange.Redis.dll</HintPath>
     </Reference>
-    <Reference Include="Sunplus.Accounting.Core, Version=2.0.4.26, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.Core.2.0.4.28\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
+    <Reference Include="Sunplus.Accounting.Core, Version=2.0.4.29, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Accounting.Core.2.0.4.29\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.7.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.7\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
+    <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.7.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.7.1\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.Entities, Version=2.0.2.10, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Accounting.Entities.2.0.2.10\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.Services, Version=1.0.2.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.Services.1.0.2.9\lib\net40\Sunplus.Accounting.Services.dll</HintPath>
+      <HintPath>..\packages\Sunplus.Accounting.Services.1.0.2.11\lib\net40\Sunplus.Accounting.Services.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Agent.Utilities, Version=3.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Agent.Utilities.3.0.2\lib\net461\Sunplus.Agent.Utilities.dll</HintPath>
@@ -956,10 +928,6 @@
     <ProjectReference Include="..\Fanex.Tarus.BetList\Fanex.Tarus.BetList.csproj">
       <Project>{3c9e433c-4c0d-4ced-8fe7-26bc80894b0f}</Project>
       <Name>Fanex.Tarus.BetList</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fanex.Tarus.CN88\Fanex.Tarus.CN88.csproj">
-      <Project>{dde8556b-4bd0-4cb0-bab9-d0c812347694}</Project>
-      <Name>Fanex.Tarus.CN88</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.Tarus.Customer\Fanex.Tarus.Customer.csproj">
       <Project>{e9c20292-421d-44f7-b1d1-af255743dd89}</Project>

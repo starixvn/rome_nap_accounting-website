@@ -129,6 +129,7 @@
             MasterPositionTaking2 = r.Table.Columns.Contains("mpositiontaking2") ? Converter.ToDecimal(r["mpositiontaking2"]) : 0,
             SuperPositionTaking2 = r.Table.Columns.Contains("spositiontaking2") ? Converter.ToDecimal(r["spositiontaking2"]) : 0,
             IsChinaView = r.Table.Columns.Contains("IsChinaView") && Converter.ToBool(r["IsChinaView"]),
+            SpecialPlatfrom = r.Table.Columns.Contains("SpecialPlatfrom") ? Converter.ToInt(r["SpecialPlatfrom"]) : 0,
             LeagueGroupId = r.Table.Columns.Contains("LeagueGroupId") ? Converter.ToInt(r["LeagueGroupId"]) : 0,
             IP = Converter.ToString2(r["ip"]),
             DeviceType = r.Table.Columns.Contains("DeviceType") && !r.IsNull("DeviceType") ? Converter.To<int>(r["DeviceType"]) : (int?)null
@@ -168,6 +169,7 @@
             OddHtml = string.Empty,
             StakeHtml = string.Empty,
             IsChinaView = r.Table.Columns.Contains("IsChinaView") && Converter.ToBool(r["IsChinaView"]),
+            SpecialPlatfrom = r.Table.Columns.Contains("SpecialPlatfrom") ? Converter.ToInt(r["SpecialPlatfrom"]) : 0,
             LeagueGroupId = r.Table.Columns.Contains("LeagueGroupId") ? Converter.ToInt(r["LeagueGroupId"]) : 0,
             DeviceType = r.Table.Columns.Contains("DeviceType") && !r.IsNull("DeviceType") ? Converter.To<int>(r["DeviceType"]) : (int?)null
         };
@@ -218,7 +220,7 @@
             return new Dictionary<string, string>();
         }
 
-        public IList<TicketDetail> GetMixParlayTickets(long transId, long refNo, int custId)
+        public IList<TicketDetail> GetMixParlayTickets(long transId, long refNo, int custId, bool removeSabaWord)
         {
             var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(custId);
             if (siteDB != null)
@@ -261,7 +263,7 @@
                             + builder.BuildChoice(betDetail.Ticket, ticketHelper, null, false)
                             + builder.BuildTransEventDateAndStatusResult(betDetail.Ticket, null)
                         + (totalItem > 0 ? "</div>" + "<div class=\"line\"></div>" : "</div>");
-                    RemoveSabaWord(betDetail);
+                    if (removeSabaWord) RemoveSabaWord(betDetail);
                 }
 
                 return tickets;
@@ -372,10 +374,25 @@
         private void RemoveSabaWord(TicketDetail ticket)
         {
             var leagueGroupIds = new List<int> { 42, 74, 108 };
-            var sabaWords = new List<string> { " SABA", "SABA ", "SABA", " 沙巴", "沙巴 ", "沙巴" };
-            if (ticket.IsChinaView && leagueGroupIds.Any(i => i == ticket.LeagueGroupId))
+
+            if ((ticket.IsChinaView || ticket.SpecialPlatfrom >= 2))
             {
-                var partern = $"<span class=\"leagueName\">(.+?)</span>";
+                if (leagueGroupIds.Any(i => i == ticket.LeagueGroupId))
+                {
+                    var partern = $"<span class=\"leagueName\">(.+?)</span>";
+                    RemoveWord(partern);
+                }
+
+                if (ticket.Ticket.SportTypeId == 246)//Saba promotion
+                {
+                    var partern = $"<span class=\"sport\">(.+?)</span>";
+                    RemoveWord(partern);
+                }
+            }
+
+            void RemoveWord(string partern)
+            {
+                var sabaWords = new List<string> { " SABA", "SABA ", "SABA", " 沙巴", "沙巴 ", "沙巴" };
                 var mainTicket = Regex.Match(ticket.ChoiceHtml, partern);
                 if (mainTicket.Success)
                 {
@@ -387,6 +404,7 @@
                 }
             }
         }
+
         public IList<TicketDetail> GetBetListBetTradeDetails(BetListBetTradeDetailCriteria criteria)
         {
             return GetBetListBy(criteria);

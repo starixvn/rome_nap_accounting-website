@@ -24,10 +24,7 @@
 <%@ Import Namespace="Fanex.BetList.Core.RemotingRef" %>
 <%@ Import Namespace="Fanex.Result.Core.Base" %>
 <%@ Import Namespace="Fanex.Result.Core.RemotingRef" %>
-<%@ Import Namespace="Chatbot.Client" %>
-<%@ Import Namespace="Chatbot.Client.Configurations" %>
 <%@ Import Namespace="Fanex.Tarus.Customer.Helpers" %>
-<%@ Import Namespace="CN88.CustomerSetting.Client" %>
 <%@ Import Namespace="System.Globalization" %>
 <%@ Import Namespace="System.Threading" %>
 <%@ Import Namespace="Fanex.Tarus.BetList.Constants" %>
@@ -66,7 +63,6 @@
         AreaRegistration.RegisterAllAreas();
 
         Fanex.Data.Configuration.DbSettingProviderManager.Current.Start();
-        CN88CustomerSettingRegistration.Init();
         CustomerSettingRegistration.Init();
         SettingMatrixRegistration.Init();
 
@@ -89,12 +85,6 @@
 
         BetListManager.RegisterRemotingRef(new CacheRef());
         ResultCoreManager.RegisterRefDataHelper(new RefDataHelper());
-
-        ChatbotClientManager
-               .UseConfig(new BotClientConfigs(
-                   ConfigurationManager.AppSettings["Chatbot:BaseUrl"],
-                   ConfigurationManager.AppSettings["Chatbot:ApiKey"]))
-               .UseRestClient(new RestClientHelper());
 
         Fanex.Caching.CacheServiceManager.Use(() => new Fanex.Caching.Redis.RedisCache(new Fanex.Caching.Redis.RedisCacheOptions
         {
@@ -231,7 +221,6 @@
         if (!url.Contains("BetList/GetBetListByRefNo") &&
             !url.Contains("BetList/GetBetListByProduct") &&
             !url.Contains("BetList/GetMixParlayDetail") &&
-            !url.Contains("/CN88BetList/") &&
             Thread.CurrentThread.CurrentCulture.Name != Language.Default)
         {
             Thread.CurrentThread.CurrentCulture = new CultureInfo(Language.Default);

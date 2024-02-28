@@ -145,7 +145,7 @@ public class BaseHandler : IHttpHandler, IRequiresSessionState
         return CheckPermission(userNameOrCustIdList, "[A]");
     }
 
-    protected virtual bool CheckCN88SiteCreditSiteDepositSitePermission(string userNameOrCustIdList)
+    protected virtual bool CheckCreditSiteDepositSitePermission(string userNameOrCustIdList)
     {
         return CheckPermission(userNameOrCustIdList, "[B]");
     }

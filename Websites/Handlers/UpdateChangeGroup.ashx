@@ -76,7 +76,7 @@ public class UpdateChangeGroup : BaseHandler
             var username = _context.Request["txtUname"];
 
             return CheckSpecialPermission(username)
-                && CheckCN88SiteCreditSiteDepositSitePermission(username);
+                && CheckCreditSiteDepositSitePermission(username);
         }
 
         return false;

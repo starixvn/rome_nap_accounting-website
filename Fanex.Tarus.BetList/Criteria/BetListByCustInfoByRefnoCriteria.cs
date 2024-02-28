@@ -5,7 +5,6 @@
 
     public class BetListByCustInfoByRefnoCriteria : CriteriaBase
     {
-        public bool IsCN88 { get; set; }
 
         public int CustId { get; set; }
 

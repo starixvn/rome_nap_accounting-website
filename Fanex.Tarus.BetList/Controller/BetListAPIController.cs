@@ -78,7 +78,7 @@
                     }
                     else
                     {
-                        choiceHtml.Append(choiceMainTicket);
+                        choiceHtml.Append(firstTicket.ChoiceHtml);
                         if (ticket.BetTypeId == BetTypeContants.BetBuilder)
                         {
                             var betBuilder = GetBetBuilderDetail(ticket.TransId, ticket.CustId, ticket.Status);
@@ -103,7 +103,7 @@
 
         private ParlayTicket GetMixParlayDetail(long transId, string refNo, decimal? hdp1, decimal? hdp2, string betCheck, string betTeam, long custId)
         {
-            var result = _betListService.GetMixParlayTickets(transId, Converter.To<long>(refNo), (int)custId);
+            var result = _betListService.GetMixParlayTickets(transId, Converter.To<long>(refNo), (int)custId, removeSabaWord: true);
             var combinationTypeComboNames = string.IsNullOrEmpty(betCheck) ?
                 string.Empty :
                 _betListService.GetCombinationTypeComboNames(betTeam, betCheck, hdp1.Value, hdp2.Value, result);

@@ -51,11 +51,11 @@
     <Setting Key="Acc_CustomerSelNGUpline" SpName="Acc_CustomerSelNGUpline" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Core - Customer Info">
-    <Setting Key="Acc_CustomerSelByUserName" SpName="Acc_CustomerSelByUserName" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_CustomerSelByUserName" SpName="Acc_CustomerSelByUserName_xtest" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="Acc_CustomerSelBalanceCashInfo" SpName="Acc_CustomerSelBalanceCashInfo" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
   </Function>
   <Function Name="Admin - SMA Management">
-    <Setting Key="Acc_SiteSel_Credit" SpName="Acc_SiteSel_Credit" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_SiteSel_Credit" SpName="Acc_SiteSel_Credit_xtest" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Admin - Headline/External Group Mapping">
     <Setting Key="Acc_CurrencyList_Sel" SpName="Acc_CurrencyList_Sel" DbName="DBAGE.bodb02.bodbAdminNet" />
@@ -65,7 +65,7 @@
     <Setting Key="Acc_ExchangeSelCodeforCrossTransfer" SpName="Acc_ExchangeSelCodeforCrossTransfer" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Customer - New Customer (NEW)">
-    <Setting Key="CustomerSetting_SiteSel" SpName="Acc_SiteSel" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="CustomerSetting_SiteSel" SpName="Acc_SiteSel_xtest" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="CustomerSetting_CustomerSelCustomerInfo" SpName="Acc_CustomerSelCustomerInfo" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerSelTransferOption" SpName="Acc_CustomerSelTransferOption" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
@@ -73,7 +73,7 @@
     <Setting Key="CustomerSelStatus" SpName="Acc_CustomerSelStatus" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="SelAllInfo" SpName="Acc_CustomerSelAllInfo" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="Acc_CustDirectSel" SpName="Acc_CustDirectSel" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_CustomerSelSiteByUserName" SpName="Acc_CustomerSelSiteByUserName" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerSelSiteByUserName" SpName="Acc_CustomerSelSiteByUserName_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CustomerSelDownLineList" SpName="Acc_CustomerSelList" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CustomerSelUserInfo" SpName="Acc_CustomerSelUserInfo" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo" DbName="DBCust.CustDB.bodbAdminNet">
@@ -211,9 +211,5 @@
   </Function>
   <Function Name="">
     <Setting Key="Acc_ExchangeSel_byCurrencyName" SpName="Acc_ExchangeSel_byCurrencyName" DbName="DBCust.CustDB.bodbAdminNet" />
-  </Function>
-  <Function Name="View Pt/Comm CN88">
-    <Setting Key="CS_PTMatrix_Sel" SpName="CS_PTMatrix_Sel" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="CS_CommMatrix_Sel" SpName="CS_CommMatrix_Sel" DbName="DBCust.CustDB.bodbAdminNet" />
-  </Function>
+  </Function> 
 </Functions>

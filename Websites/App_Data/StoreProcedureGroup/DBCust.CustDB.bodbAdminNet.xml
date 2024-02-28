@@ -19,9 +19,9 @@
   <Function Name="Customer - Setting">
     <Setting Key="Acc_CustOverrideUpd" SpName="Acc_custoverrideUpd" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerInsMember_Ag" SpName="Acc_CustomerInsMember_Ag" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="CustomerSetting_InsertSuper" SpName="Acc_CustomerInsMember_Com" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="CustomerSetting_InsertSuper" SpName="Acc_CustomerInsMember_Com_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerInsMember_MAg" SpName="Acc_CustomerInsMember_MAg" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerInsMember_SAg" SpName="Acc_CustomerInsMember_SAg" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerInsMember_SAg" SpName="Acc_CustomerInsMember_SAg_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdDoubleCommLosing" SpName="Acc_CustomerUpdDoubleCommLosing" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerSettingsCloneFromRealAccount" SpName="Acc_CustomerSettingsCloneFromRealAccount" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustSetting_DCSSettingCopyInsertMember" SpName="Acc_CustSetting_DCSSettingCopyInsertMember" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -90,7 +90,7 @@
     <Setting Key="Acc_CustomerUpdMoveMaster" SpName="Acc_CustomerUpdMoveMaster" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Customer - Move Site">
-    <Setting Key="Acc_CustomerUpdMoveSite" SpName="Acc_CustomerUpdMoveSite" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerUpdMoveSite" SpName="Acc_CustomerUpdMoveSite_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Security Code">
     <Setting Key="DBA_ResetSecurityCode_Agent" SpName="Acc_CustomerUpdSecurityCode" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -169,7 +169,7 @@
     <Setting Key="Acc_CustomerUpdAutoTransferAgentStatus" SpName="Acc_CustomerUpdAutoTransferAgentStatus" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
   </Function>
   <Function Name="Report">
-    <Setting Key="Statement_Report_GetCustomerInformationByUsername" SpName="Acc_CustomerSelSiteByUserName" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
+    <Setting Key="Statement_Report_GetCustomerInformationByUsername" SpName="Acc_CustomerSelSiteByUserName_xtest" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
   </Function>
   <Function Name="Customer - Finance Super List">
     <Setting Key="Acc_CustomerSelSFinance" SpName="Acc_CustomerSelFinance_SAg" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -221,7 +221,7 @@
     <Setting Key="Acc_GroupExtraPT_GroupByProduct_Sel" SpName="Acc_GroupExtraPT_GroupByProduct_Sel" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_GroupExtraPT_GroupByProduct_Ins" SpName="Acc_GroupExtraPT_GroupByProduct_Ins" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerInsSuperInfo" SpName="Acc_CustomerInsSuperInfo" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="SelectInfoCust" SpName="Acc_CustGroupSel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="SelectInfoCust" SpName="Acc_CustGroupSel_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="DeleteCustomer" SpName="Acc_CustGroupDel" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="AddExistCustomer" SpName="Acc_CustGroupAddByUsername_Multiple" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustGroupUpdPrimaryExtraPTGroup" SpName="Acc_CustGroupUpdPrimaryExtraPTGroup" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -292,14 +292,14 @@
   </Function>
   <Function Name="Special Site">
     <Setting Key="Acc_CustomerIsSpecialSite" SpName="Acc_CustomerIsSpecialSite" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerIsAllowedAccess" SpName="Acc_CustomerIsAllowedAccess" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerIsAllowedAccess" SpName="Acc_CustomerIsAllowedAccess_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerIsDummyAccount" SpName="Acc_CustomerIsDummyAccount" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Left Menu - Credit term">
     <Setting Key="Acc_CreditTermSelCheckerList" SpName="Acc_CreditTermSelCheckerList" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Admin - Max Member Limit By Super">
-    <Setting Key="Acc_MaxMemberLimitBySuperSel" SpName="Acc_MaxMemberLimitBySuperSel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_MaxMemberLimitBySuperSel" SpName="Acc_MaxMemberLimitBySuperSel_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_MaxMemberLimitBySuperUpd" SpName="Acc_MaxMemberLimitBySuperUpd" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Left Panel - Customer Info">
@@ -311,30 +311,12 @@
     <Setting Key="EAS_CustomerDateLimitMultipleUpd" SpName="EAS_CustomerDateLimitMultipleUpd" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Others - PlayerID (3rd)">
-    <Setting Key="Acc_CustomerSelPlayerId" SpName="Acc_CustomerSelPlayerId" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerSelPlayerId" SpName="Acc_CustomerSelPlayerId_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Create Licensee Subsidiary">
     <Setting Key="Acc_Dep_CustomerGenLicenseeSubUsername" SpName="Acc_Dep_CustomerGenLicenseeSubUsername" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_Dep_CustomerInsLicenseeSubsidiary" SpName="Acc_Dep_CustomerInsLicenseeSubsidiary" DbName="DBCust.CustDB.bodbAdminNet" />
-  </Function>
-  <Function Name="CN88">
-    <Setting Key="CS_CustomerStatusUpd" SpName="CS_CustomerStatusUpd" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="CS_Customer_Credit_Sel" SpName="CS_Customer_Credit_Sel" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="CS_Customer_Credit_Upd" SpName="CS_Customer_Credit_Upd" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="CS_Acc_CustomerUpdUnlockAccess" SpName="CS_Acc_CustomerUpdUnlockAccess" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="CS_GroupExtraPT_Sel" SpName="CS_GroupExtraPT_Sel" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="CS_GroupExtraPT_Upd" SpName="CS_GroupExtraPT_Upd" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="CS_CustomerIns_Headline" SpName="CS_CustomerIns_Headline" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="CS_HeadlineUsernameSuggestion" SpName="CS_HeadlineUsernameSuggestion" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
-  </Function>
-  <Function Name="CN88 - MoveSuper">
-    <Setting Key="CS_Customer_GetHeadlinePossess" SpName="CS_Customer_GetHeadlinePossess" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="CS_Customer_ChangeHeadline" SpName="CS_Customer_ChangeHeadline" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
-  </Function>
-  <Function Name="View Periods - CN88">
-    <Setting Key="CS_ReportPermission_SEL" SpName="CS_ReportPermission_SEL" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="CS_ReportPermission_Upd" SpName="CS_ReportPermission_Upd" DbName="DBCust.CustDB.bodbAdminNet" />
-  </Function>
+  </Function>  
   <Function Name="Lock un-suspend/reopen">
     <Setting Key="Acc_CustomerLockSuspendSel" SpName="Acc_CustomerLockSuspendSel" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
     <Setting Key="Acc_CustomerLockSuspendUpd" SpName="Acc_CustomerLockSuspendUpd" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
@@ -401,7 +383,7 @@
     <Setting Key="Acc_CustSetting_MaxPayoutCheckDownline" SpName="Acc_CustSetting_MaxPayoutCheckDownline" DbName="DBCUST.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Admin - Headline/External Group Mapping">
-    <Setting Key="Acc_GroupHeadline_Sel" SpName="Acc_GroupHeadline_Sel" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_GroupHeadline_Sel" SpName="Acc_GroupHeadline_Sel_xtest" DbName="DBCUST.CustDB.bodbAdminNet" />
     <Setting Key="Acc_ExternalGroupHeadline_Sel" SpName="Acc_ExternalGroupHeadline_Sel" DbName="DBCUST.CustDB.bodbAdminNet" />
     <Setting Key="Acc_ExternalGroupHeadline_Ins" SpName="Acc_ExternalGroupHeadline_Ins" DbName="DBCUST.CustDB.bodbAdminNet" />
     <Setting Key="Acc_ExternalGroupHeadline_Upd" SpName="Acc_ExternalGroupHeadline_Upd" DbName="DBCUST.CustDB.bodbAdminNet" />

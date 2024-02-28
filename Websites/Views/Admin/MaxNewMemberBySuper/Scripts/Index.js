@@ -151,12 +151,12 @@ function UpdateData() {
             }
 
             var successCount = 0;
-            for (var i = 0; i < data.length ; i++) {
-                if (data[i].ErrCode == 1) {
-                    RenderErrMsg(data[i].UserName + ': ' + data[i].ErrMsg);
+            for (var i = 0; i < data.Data.length ; i++) {
+                if (data.Data[i].ErrCode == 1) {
+                    RenderErrMsg(data.Data[i].UserName + ': ' + data.Data[i].ErrMsg);
                 }
-                else if (data[i].ErrCode == 2) {
-                    RenderWarningMsg(data[i].UserName + ': ' + data[i].ErrMsg);
+                else if (data.Data[i].ErrCode == 2) {
+                    RenderWarningMsg(data.Data[i].UserName + ': ' + data.Data[i].ErrMsg);
                 }
                 else {
                     successCount++;

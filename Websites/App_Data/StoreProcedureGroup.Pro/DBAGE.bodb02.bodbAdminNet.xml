@@ -211,11 +211,6 @@
     <Setting Key="BetList_ColossusBets_BetDetails" SpName="Acc_BetListCB_Details" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
   </Function>
   <Function Name="">
-    <Setting Key="Acc_ExchangeSel_byCurrencyName" SpName="Acc_ExchangeSel_byCurrencyName" DbName="DBCust.CustDB.bodbAdminNet" />
-  
-  </Function>
-  <Function Name="View Pt/Comm CN88">
-    <Setting Key="CS_PTMatrix_Sel" SpName="CS_PTMatrix_Sel" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="CS_CommMatrix_Sel" SpName="CS_CommMatrix_Sel" DbName="DBCust.CustDB.bodbAdminNet" />
-  </Function>
+    <Setting Key="Acc_ExchangeSel_byCurrencyName" SpName="Acc_ExchangeSel_byCurrencyName" DbName="DBCust.CustDB.bodbAdminNet" />  
+  </Function> 
 </Functions>

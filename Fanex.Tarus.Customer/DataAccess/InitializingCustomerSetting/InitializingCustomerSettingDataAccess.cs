@@ -19,7 +19,7 @@
     {
         InitializingCustomerSettingViewModel GetSetting(GetSettingCriteria criteria, IEnumerable<BaseModel> currencies, IEnumerable<BaseModel> sites);
 
-        IEnumerable<BaseModel> GetSites();
+        IEnumerable<BaseModel> GetSites(int AccId);
 
         IEnumerable<BaseModel> GetExchangeCurrency();
 
@@ -119,7 +119,7 @@
             return result;
         }
 
-        public IEnumerable<BaseModel> GetSites()
+        public IEnumerable<BaseModel> GetSites(int AccId)
         {
             var sites = new List<BaseModel>
             {
@@ -132,6 +132,11 @@
 
             using (ObjectDb objDB = new ObjectDb("Acc_SiteSel_Credit"))
             {
+                objDB.AssignParamValues(new Hashtable
+                {
+                    { "userid", AccId }
+                });
+
                 using (var reader = objDB.ExecuteReader())
                 {
                     if (reader != null)

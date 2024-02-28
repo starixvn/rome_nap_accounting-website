@@ -23,10 +23,7 @@
         private DataRow downlineStatusInfoRow { get; set; }
 
         private DataTable dynamicSettingtable { get; set; }
-
-        private DataRow memberCN88CreditRow { get; set; }
-
-        private DataRow memberCN88BetStakeRow { get; set; }
+       
 
         public CustomerInfoViewModel(
             DataRow customerInfoRow,
@@ -34,8 +31,6 @@
             DataRow cashRow,
             DataRow downlineStatusInfoRow,
             DataTable dynamicSettingtable,
-            DataRow memberCN88CreditRow,
-            DataRow memberCN88BetStakeRow,
             decimal memberOutstandingMBC,
             decimal memberBalanceMBC,
             decimal memberNetPositionMBC,
@@ -46,8 +41,6 @@
             this.cashRow = cashRow;
             this.downlineStatusInfoRow = downlineStatusInfoRow;
             this.dynamicSettingtable = dynamicSettingtable;
-            this.memberCN88CreditRow = memberCN88CreditRow;
-            this.memberCN88BetStakeRow = memberCN88BetStakeRow;
 
             JsParam = new Hashtable();
             JsParam.Add("custid", CustId);
@@ -161,8 +154,6 @@
                                 SyncVoidbridge = Utils.ToBoolean(row["IsSync"]);
                                 HideVoidbridgeUpline = Utils.ToBoolean(row["IsHiddenUpline"]) && SearchAccountRoleId < 4;
                                 SyncVoidbridgeUpline = Utils.ToBoolean(row["IsSyncedUpline"]);
-                                break;
-
                                 break;
 
                             case "25":

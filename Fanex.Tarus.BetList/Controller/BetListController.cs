@@ -37,10 +37,10 @@ namespace Fanex.Tarus.BetList.Controllers
             _betListDetailService = new BetListDetailService();
         }
 
-        public ActionResult GetMixParlayDetail(long transId, long refNo, decimal? hdp1, decimal? hdp2, string betCheck, string betTeam, int custId, string language = Language.Default)
+        public ActionResult GetMixParlayDetail(long transId, long refNo, decimal? hdp1, decimal? hdp2, string betCheck, string betTeam, int custId, bool removeSabaWord = false, string language = Language.Default)
         {
             SetCulture(language);
-            var result = _betListService.GetMixParlayTickets(transId, refNo, custId);
+            var result = _betListService.GetMixParlayTickets(transId, refNo, custId, removeSabaWord);
 
             ViewBag.CombinationTypeComboNames = string.IsNullOrEmpty(betCheck) ?
                 string.Empty :

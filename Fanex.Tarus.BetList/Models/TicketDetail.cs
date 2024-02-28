@@ -78,5 +78,7 @@ namespace Fanex.Tarus.BetList.Models
                 return deviceInfo ?? Platforms.Platform_Uncategorized;
             }
         }
+
+        public int SpecialPlatfrom { get; set; }
     }
 }
