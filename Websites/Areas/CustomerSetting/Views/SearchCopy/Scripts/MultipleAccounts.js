@@ -75,7 +75,6 @@ $.fn.forceNumber = function () {
         $lastName = $("#txtLastName"),
         $phone = $("#txtPhone"),
         $mobilePhone = $("#txtMobilePhone"),
-        $fax = $("#txtFax"),
         $internalUser = $("#chkInternalUser"),
         $tblProgress = $("#tblProgress"),
         $btnSubmit = $("#btnSubmit"),
@@ -192,7 +191,7 @@ $.fn.forceNumber = function () {
         }
 
         creditValue = creditValue.replace(/,/g, "");
-        if (!$.isNumeric(creditValue)) {
+        if (!$.isNumeric(creditValue) || parseInt(creditValue) < 0) {
             showError("The " + (isSuper ? "Max" : "Given") + " Credit is invalid.");
             return;
         }
@@ -210,7 +209,7 @@ $.fn.forceNumber = function () {
             phone: $.trim($phone.val()),
             mobilePhone: $.trim($mobilePhone.val()),
             site: isSuper ? $("#ddSite").val() : existedUser.site,
-            fax: $.trim($fax.val()),
+            fax: $.trim($("#txtFax").val()),
             credit: credit,
             isInternal: $("#chkInternalUser").is(":checked"),
             sourceCustId: userid,
@@ -229,7 +228,7 @@ $.fn.forceNumber = function () {
         $lastName.prop("disabled", value);
         $phone.prop("disabled", value);
         $mobilePhone.prop("disabled", value);
-        $fax.prop("disabled", value);
+        $("#txtFax").prop("disabled", value);
         $internalUser.prop("disabled", value);
         $btnSubmit.prop("disabled", value);
         if (value) {
@@ -247,7 +246,7 @@ $.fn.forceNumber = function () {
         $lastName.val("");
         $phone.val("");
         $mobilePhone.val("");
-        $fax.val("");
+        $("#txtFax").val("");
         $internalUser.prop("checked", false);
         disableFormData(false);
     }
@@ -313,7 +312,7 @@ $.fn.forceNumber = function () {
         });
     }
 
-    function renderCreateSuperView() {        
+    function renderCreateSuperView() {
         $passwordRow.append(`
             <td class="col-internal">
                 <div class="col-internal-user">
@@ -664,5 +663,7 @@ $.fn.forceNumber = function () {
         handleSubmit();
     }
 
-    initialize();
+    $(document).ready(function () {
+        initialize();
+    });
 })(jQuery, viewModel, window);
