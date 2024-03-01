@@ -328,7 +328,7 @@ $.fn.forceNumber = function () {
             </td>
             <td>
                 <label for="txtFax">Fax</label>
-                <input type="text" id="txtFax" />
+                <input type="text" id="txtFax" maxlength="50" />
             </td>`);
         $superCreditRow.show();
         $superCreditRow.append(`
@@ -355,7 +355,7 @@ $.fn.forceNumber = function () {
             </td>
             <td>
                 <label for="txtFax">Fax</label>
-                <input type="text" id="txtFax" />
+                <input type="text" id="txtFax" maxlength="50" />
             </td>`);
     }
 
