@@ -35,6 +35,8 @@ namespace Fanex.Tarus.BetList.Models
 
         public string MasterOddsText => ConvertByBetType.CommValue(MasterOdds);
 
+        public bool ShowBothOdds => ConvertByBetType.IsShowSecondOdds(Odds, MasterOdds);
+
         public decimal BoostRate { get; set; }
 
         public string BoostRateText => ConvertByBetType.FormatBoostRate(BoostRate);

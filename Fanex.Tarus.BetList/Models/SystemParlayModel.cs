@@ -10,6 +10,7 @@
 namespace Fanex.Tarus.BetList.Models
 {
     using System.Collections.Generic;
+    using System.Linq;
 
     /// <summary>
     /// TODO: Update summary.
@@ -32,5 +33,7 @@ namespace Fanex.Tarus.BetList.Models
         public bool HideCombinationDetail { get; set; }
 
         public bool IsParlayBoost { get; set; }
+
+        public bool IsMixParlay => TicketsDetailList.FirstOrDefault().Ticket.BetTeam == "1";
     }
 }

@@ -126,23 +126,56 @@
                             </td>
                             <td>
                                 <div class="width120 height34 table-cell r">
-                                    @if (Model.IsParlayBoost)
+                                    @if (Model.IsMixParlay)
                                     {
-                                        <span class="underdog strikethrough">
-                                            @eventTmp.OddsText
-                                        </span>
-                                        <br />
-                                        <span class="oddstype">
-                                            <span class="underdog">@eventTmp.MasterOddsText</span>
-                                            <br />
-                                            <span class="boostrate">
-                                                <span class="icon-boost"></span>
-                                                @eventTmp.BoostRateText
+                                        if (Model.IsParlayBoost)
+                                        {
+                                            <span class="underdog strikethrough">
+                                                @eventTmp.OddsText
                                             </span>
-                                        </span>
+                                            <br />
+                                            <span class="oddstype">
+                                                <span class="underdog">@eventTmp.MasterOddsText</span>
+                                                <br />
+                                                <span class="boostrate">
+                                                    <span class="icon-boost"></span>
+                                                    @eventTmp.BoostRateText
+                                                </span>
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            if (eventTmp.ShowBothOdds)
+                                            {
+                                                <span class="underdog strikethrough">
+                                                    @eventTmp.OddsText
+                                                </span>
+                                                <br />
+                                                <span class="underdog">
+                                                    @eventTmp.MasterOddsText
+                                                </span>
+                                            }
+                                            else
+                                            {
+                                                if (eventTmp.Status.ToLowerInvariant() == BetStatus.Draw || eventTmp.Status.ToLowerInvariant() == BetStatus.Refund)
+                                                {
+                                                    <span class="underdog">
+                                                        @eventTmp.MasterOddsText
+                                                    </span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="underdog">
+                                                        @eventTmp.OddsText
+                                                    </span>
+                                                }
+                                            }
+
+                                        }
                                     }
                                     else
                                     {
+
                                         <span class="underdog">
                                             @eventTmp.MasterOddsText
                                         </span>
