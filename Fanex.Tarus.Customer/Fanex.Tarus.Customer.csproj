@@ -392,8 +392,6 @@
     <Compile Include="Business\CreditCustomer\CustomerSettingService.cs" />
     <Compile Include="Business\CreditCustomer\ICustomerSettingService.cs" />
     <Compile Include="Business\CustomerCoreService.cs" />
-    <Compile Include="Business\CustomerList\CustomerListService.cs" />
-    <Compile Include="Business\CustomerList\ICustomerListService.cs" />
     <Compile Include="Business\CustomerLogin\CustomerSecurityCodeService.cs" />
     <Compile Include="Business\CustomerLogin\ICustomerSecurityCodeService.cs" />
     <Compile Include="Business\EditLicensee\EditLicenseeService.cs" />
@@ -624,7 +622,6 @@
     <Compile Include="DataAccess\Player3rd\Player3rdDataAccess.cs" />
     <Compile Include="DataAccess\ReplicateLicenseeSettings\IReplicateLicenseeSettingsRepository.cs" />
     <Compile Include="DataAccess\ReplicateLicenseeSettings\ReplicateLicenseeSettingsRepository.cs" />
-    <Compile Include="Controller\CustomerList\CustomerListController.cs" />
     <Compile Include="Controller\CustomerLogin\CustomerSecurityCodeController.cs" />
     <Compile Include="Controller\Setting\AbnormalBetController.cs" />
     <Compile Include="Controller\Setting\CustomerSettingController.cs" />
@@ -632,8 +629,6 @@
     <Compile Include="DataAccess\BaseDataAccess.cs" />
     <Compile Include="DataAccess\CreditCustomer\CustomerSettingDataAccess.cs" />
     <Compile Include="DataAccess\CreditCustomer\ICustomerSettingDataAccess.cs" />
-    <Compile Include="DataAccess\CustomerList\CustomerListAccess.cs" />
-    <Compile Include="DataAccess\CustomerList\ICustomerListAccess.cs" />
     <Compile Include="DataAccess\CustomerLogin\CustomerSecurityCodeDataAccess.cs" />
     <Compile Include="DataAccess\CustomerLogin\ICustomerSecurityCodeDataAccess.cs" />
     <Compile Include="DataAccess\SettingCustomer\AbnormalBetAccess.cs" />

@@ -160,7 +160,7 @@
     <value>Master Max PT</value>
   </data>
   <data name="MasterPT" xml:space="preserve">
-    <value>Master Max PT</value>
+    <value>Master PT</value>
   </data>
   <data name="MaxBet" xml:space="preserve">
     <value>Max Bet</value>
@@ -187,7 +187,7 @@
     <value>Single Match Parlay</value>
   </data>
   <data name="SuperPT" xml:space="preserve">
-    <value>Super Preset PT</value>
+    <value>Super PT</value>
   </data>
   <data name="us3" xml:space="preserve">
     <value>Super Auto PT</value>
@@ -253,7 +253,7 @@
     <value>Master Auto PT</value>
   </data>
   <data name="IsAutoSuperPT" xml:space="preserve">
-    <value>Is Master Auto PT</value>
+    <value>Is Auto Super PT</value>
   </data>
   <data name="MasterMinPT" xml:space="preserve">
     <value>Master Min PT</value>
@@ -266,5 +266,8 @@
   </data>
   <data name="UpdAllMems" xml:space="preserve">
     <value>Update All Members</value>
+  </data>
+  <data name="IsAutoMasterPT" xml:space="preserve">
+    <value>Is Auto Master PT</value>
   </data>
 </root>
