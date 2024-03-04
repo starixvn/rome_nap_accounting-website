@@ -31,11 +31,11 @@ public partial class InternalView : System.Web.UI.Page
         string CustomerSite = Request["CustomerSite"] == null ? "" : Request["CustomerSite"]; 
         bool isDummyAcc = Permissions.CheckDummyAccount(new CheckDummyAccountCriteria() { CustName = Request["custName"] });
 
-        if (isDummyAcc)
-        {
-            Response.Write(GetGlobalResourceObject(Constants.Resources.LanguageResources, "DontHavePermission"));
-            return;
-        }
+        //if (isDummyAcc)
+        //{
+        //    Response.Write(GetGlobalResourceObject(Constants.Resources.LanguageResources, "DontHavePermission"));
+        //    return;
+        //}
 
         string strParams = string.Empty;
        
