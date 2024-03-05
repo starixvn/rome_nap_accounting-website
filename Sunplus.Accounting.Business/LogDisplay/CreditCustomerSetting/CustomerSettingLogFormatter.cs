@@ -592,7 +592,8 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
         {
             try
             {
-                return HttpContext.GetGlobalResourceObject(ResourceExtension.Resources.CreateCustomer.ToString(), key).ToString();
+                var value = HttpContext.GetGlobalResourceObject(ResourceExtension.Resources.CreateCustomer.ToString(), key).ToString();
+                return value.Equals(key) ? HttpContext.GetGlobalResourceObject(ResourceExtension.Resources.ViewlogV2.ToString(), key).ToString() : value;
             }
             catch (Exception)
             {
