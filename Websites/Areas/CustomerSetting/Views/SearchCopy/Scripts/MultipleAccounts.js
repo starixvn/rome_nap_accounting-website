@@ -305,7 +305,19 @@ $.fn.forceNumber = function () {
             if (data.Code === 0) {
                 divStatus.addClass("statusCreated").html("Created");
             } else {
-                divStatus.addClass("statusError").html("Error: " + data.Message.replace(/<\/?[^>]+(>|$)/g, ""));
+                var message = "";
+                if (data.MessageContent) {
+                    var messageContent = data.MessageContent;
+                    message = messageContent.MainMessage
+                    if (messageContent.SubMessages && messageContent.SubMessages.length) {
+                        var subMessages = messageContent.SubMessages.map(s => s.Message);
+                        message += ` (${subMessages.join(", ")})`;
+                    }
+                } else {
+                    message = data.message;
+                }
+
+                divStatus.addClass("statusError").html(message.replace(/<\/?[^>]+(>|$)/g, ""));
             }
         }).always(function () {
             copyMultipleAccounts(usernames, formData);

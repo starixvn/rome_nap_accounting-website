@@ -16,6 +16,7 @@ namespace Fanex.Tarus.Customer.Filters
         }
 
         public NAPCustomerAuthFilterAttribute(PermissionService permissionService)
+            : base(null)
         {
             _permissionService = permissionService ?? new PermissionService();
         }
