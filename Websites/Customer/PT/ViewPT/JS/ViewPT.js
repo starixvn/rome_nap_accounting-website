@@ -513,6 +513,8 @@ var ViewPT = {
             case 174: // Advantplay Mini
             case 159: // YeeBet
             case 9911: // IBC Live Casino
+            case 9906: // RNG Casino
+            case 9918: // Other RNG Casino
                 ViewPT.viewPTBasedOnKindOfCustomer(userName, sportId, betTypeId);
                 break;
             case 9908: // Virtual Sports
