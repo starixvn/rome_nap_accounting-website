@@ -27,7 +27,7 @@
             }
 
             TemplateHandler.Assign(ref tplTransLink, "statementLink", statementLink);
-            if (!customerInfoViewModel.IsInternalUser || accLevel == Globals.AccountType.Member)
+            if (!customerInfoViewModel.IsInternalUser && accLevel != Globals.AccountType.Member)
             {
                 TemplateHandler.RemoveBlock(ref tplTransLink, "downlinelistbtn");
             }
