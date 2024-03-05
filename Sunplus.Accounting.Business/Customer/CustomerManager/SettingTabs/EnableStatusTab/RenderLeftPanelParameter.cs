@@ -20,10 +20,6 @@ namespace Sunplus.Accounting.Business.Customer
 
         public bool IsShowColossusBetsForDeposit { get; set; }
 
-        public bool IsShowLiveCasinoForCredit { get; set; }
-
-        public bool IsShowVoidbridge { get; set; }
-
         public bool IsShowAutoSuspend { get; set; }
 
         public bool IsShowVirtualSport { get; set; }
@@ -44,20 +40,14 @@ namespace Sunplus.Accounting.Business.Customer
 
         public bool IsShowRNGLottery { get; set; }
 
-        public bool IsShowVirtualGames { get; set; }
-
-        public bool IsShowSabaclub { get; set; }
-
-        public bool IsShowVGaming { get; set; }
-
         public bool IsShowSabaVirtualSports { get; set; }
 
         public bool IsShowBitcoin { get; set; }
 
         public bool IsShowCashout { get; set; }
 
-        public bool IsShowSabaCasino { get; set; }
-
         public bool IsShowMuayThai { get; set; }
+
+        public bool IsShowLiveAndRNGCasino { get; set; }
     }
 }

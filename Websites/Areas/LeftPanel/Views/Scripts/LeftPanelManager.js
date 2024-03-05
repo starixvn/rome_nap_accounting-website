@@ -98,6 +98,26 @@ var LeftPanelManager = function () {
 
         parent.OpenNextPopup("ProductStatusSetting", url, title, width, height, true, false, window, 0, null, null);
     };
+
+    self.viewProductGroupStatusSetting = function (
+        custId,
+        custName,
+        custRole,
+        productGroupId,
+        title) {
+        var param = {
+            custId: custId,
+            custName: custName,
+            custRole: custRole,
+            productId: productGroupId,
+            isGroup: true
+        };
+        var url = "ProductStatusSetting/Index?" + $.param(param);
+        var width = 680;
+        var height = 320;
+
+        parent.OpenNextPopup("ProductStatusSetting", url, title, width, height, true, false, window, 0, null, null);
+    };
 };
 
 window.top.reloadLeftPanel = function () {

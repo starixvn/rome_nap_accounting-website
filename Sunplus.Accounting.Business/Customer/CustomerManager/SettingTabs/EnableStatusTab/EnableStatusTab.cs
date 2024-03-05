@@ -27,8 +27,6 @@
                 IsShowAutoSuspend = customerInfoViewModel.HasReadPermission_AutoSuspend,
                 IsDeposit = customerInfoViewModel.IsDeposit,
                 IsShowColossusBetsForDeposit = WebSettings.IsShowColossusBets && customerInfoViewModel.IsDeposit,
-                IsShowLiveCasinoForCredit = !customerInfoViewModel.HideEnabledCheckBoxLiveCasino,
-                IsShowVoidbridge = !customerInfoViewModel.HideEnabledCheckBoxVoidbridge,
                 IsShowVirtualSport = !customerInfoViewModel.HideCheckBoxVirtualSports,
                 IsShowVirtualSport2 = !customerInfoViewModel.HideVirtualSports2,
                 ParentId = customerInfoViewModel.ParentId,
@@ -37,14 +35,11 @@
                 Username = customerInfoViewModel.UserName,
                 AccId = AppSession.AccId,
                 IsShowRNGLottery = !customerInfoViewModel.HideRNGLottery,
-                IsShowVirtualGames = !customerInfoViewModel.HideVirtualGames,
-                IsShowSabaclub = !customerInfoViewModel.HideSabaclub,
-                IsShowVGaming = !customerInfoViewModel.HideVGaming,
                 IsShowSabaVirtualSports = !customerInfoViewModel.HideSabaVirtualSports,
                 IsShowBitcoin = !customerInfoViewModel.HideBitcoin,
                 IsShowCashout = !customerInfoViewModel.HideCashout,
-                IsShowSabaCasino = !customerInfoViewModel.HideSabaCasino,
                 IsShowMuayThai = !customerInfoViewModel.HideMuayThai,
+                IsShowLiveAndRNGCasino = !customerInfoViewModel.HideLiveAndRNGCasino,
             };
 
             htmlcontent = RenderClosedStatus(htmlcontent, customerInfoViewModel);
@@ -115,8 +110,6 @@
                 sg);
 
             TemplateHandler.Assign(ref htmlcontent, "{settingcontrol}", sg.GetHTMLSettingControl());
-
-            htmlcontent = RenderVirtualGamesControl(htmlcontent, renderLeftPanelParameter);
 
             return htmlcontent;
         }
@@ -226,36 +219,6 @@
                 TemplateHandler.RemoveBlock(ref htmlcontent, "Macau");
             }
 
-            if (customerInfoViewModel.HideSabaclub)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "EnableSabaclub");
-            }
-            else
-            {
-                TemplateHandler.Assign(ref htmlcontent, "{SabaclubOnClickFunction}", _renderLeftPanelService.GetProductStatusJsFunction(
-                    customerInfoViewModel.IsDeposit,
-                    customerInfoViewModel.CustId,
-                    customerInfoViewModel.UserName,
-                    customerInfoViewModel.SearchAccountRoleId,
-                    42,
-                    "Update Saba.games Status"));
-            }
-
-            if (customerInfoViewModel.HideVGaming)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "EnableVGaming");
-            }
-            else
-            {
-                TemplateHandler.Assign(ref htmlcontent, "{VGamingOnClickFunction}", _renderLeftPanelService.GetProductStatusJsFunction(
-                    customerInfoViewModel.IsDeposit,
-                    customerInfoViewModel.CustId,
-                    customerInfoViewModel.UserName,
-                    customerInfoViewModel.SearchAccountRoleId,
-                    66,
-                    "Update Vgaming Status"));
-            }
-
             if (customerInfoViewModel.HideRNGLottery)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "EnableRNGLottery");
@@ -274,19 +237,21 @@
                     "Update RNG Lottery Status"));
             }
 
-            if (customerInfoViewModel.HideEnabledCheckBoxVoidbridge)
+            if (customerInfoViewModel.HideLiveAndRNGCasino)
             {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "EnableMacauGames");
+                TemplateHandler.RemoveBlock(ref htmlcontent, "EnableLiveAndRNGCasino");
             }
             else
             {
-                TemplateHandler.Assign(ref htmlcontent, "{macauGamesOnClickFunction}", _renderLeftPanelService.GetProductStatusJsFunction(
-                    customerInfoViewModel.IsDeposit,
+                TemplateHandler.Assign(
+                    ref htmlcontent,
+                    "{LiveAndRNGCasinoOnClickFunction}",
+                    _renderLeftPanelService.GetProductGroupStatusJsFunction(
                     customerInfoViewModel.CustId,
                     customerInfoViewModel.UserName,
                     customerInfoViewModel.SearchAccountRoleId,
-                    18,
-                    "Update RNG Slot Status"));
+                    ProductGroupIdConstants.LiveAndRNGCasino,
+                    "Update Live & RNG Casino Status"));
             }
 
             return htmlcontent;
@@ -442,20 +407,6 @@
                                                5);
                             break;
 
-                        case "6":
-                            _renderLeftPanelService.RenderEnableProductBoxDCS2(
-                                               row1,
-                                               productRow,
-                                               sg,
-                                               ref htmlcontent,
-                                               isManageCustomerAccess,
-                                               "SabaCasino",
-                                               renderLeftPanelParameter.IsShowSabaCasino,
-                                               renderLeftPanelParameter,
-                                               "Update Saba Casino Status",
-                                               6);
-                            break;
-
                         case "25":
                             _renderLeftPanelService.RenderEnableProductBoxDCS2(
                                                row1,
@@ -482,20 +433,6 @@
                                                renderLeftPanelParameter,
                                                "Update Virtual Sports 2 Status",
                                                27);
-                            break;
-
-                        case "41":
-                            _renderLeftPanelService.RenderEnableProductBoxDCS2(
-                                               row1,
-                                               productRow,
-                                               sg,
-                                               ref htmlcontent,
-                                               isManageCustomerAccess,
-                                               "LiveCasino",
-                                               renderLeftPanelParameter.IsShowLiveCasinoForCredit,
-                                               renderLeftPanelParameter,
-                                               "Update Live Casino Status",
-                                               41);
                             break;
 
                         case "54":
@@ -790,26 +727,6 @@
             else
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "AbnormalSession");
-            }
-
-            return htmlcontent;
-        }
-
-        private string RenderVirtualGamesControl(string htmlcontent, RenderLeftPanelParameter renderLeftPanelParameter)
-        {
-            if (!renderLeftPanelParameter.IsShowVirtualGames)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "EnableVirtualGames");
-            }
-            else
-            {
-                TemplateHandler.Assign(ref htmlcontent, "{VirtualGamesOnClickFunction}", _renderLeftPanelService.GetProductStatusJsFunction(
-                    renderLeftPanelParameter.IsDeposit,
-                    renderLeftPanelParameter.CustId,
-                    renderLeftPanelParameter.Username,
-                    renderLeftPanelParameter.RoleId,
-                    Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdVirtualGames,
-                    "Update Virtual Games Status"));
             }
 
             return htmlcontent;

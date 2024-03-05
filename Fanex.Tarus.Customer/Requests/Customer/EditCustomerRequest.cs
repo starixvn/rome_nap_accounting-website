@@ -5,6 +5,8 @@ namespace Fanex.Tarus.Customer.Requests.Customer
 {
     public class EditCustomerRequest
     {
+        public int ProductGroupId { get; set; }
+
         public int CustId { get; set; }
 
         public byte RoleId { get; set; }
@@ -16,6 +18,6 @@ namespace Fanex.Tarus.Customer.Requests.Customer
         public bool NoPermissionEditCredit { get; set; }
 
         internal string ToJson()
-            => JsonConvert.SerializeObject(new { CustId, RoleId, UplineRoleId, NoPermissionEditCredit }, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+            => JsonConvert.SerializeObject(new { CustId, RoleId, UplineRoleId, NoPermissionEditCredit, ProductGroupId }, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
     }
 }

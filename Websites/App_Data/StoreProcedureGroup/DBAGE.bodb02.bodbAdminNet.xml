@@ -211,5 +211,5 @@
   </Function>
   <Function Name="">
     <Setting Key="Acc_ExchangeSel_byCurrencyName" SpName="Acc_ExchangeSel_byCurrencyName" DbName="DBCust.CustDB.wsv_nap" />
-  </Function> 
+  </Function>
 </Functions>

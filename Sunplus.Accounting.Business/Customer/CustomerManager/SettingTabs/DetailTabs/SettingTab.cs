@@ -1,6 +1,7 @@
 ﻿namespace Sunplus.Accounting.Business.Customer
 {
     using System;
+    using System.Net.PeerToPeer;
     using DNAide.Web;
 
     public partial class CustomerManager
@@ -12,7 +13,7 @@
         {
             htmlcontent = GenMenuMinMaxPT(htmlcontent, customerInfoViewModel, renderLeftPanelParameter);
 
-            htmlcontent = AssignSettingBlock(htmlcontent, customerInfoViewModel, renderLeftPanelParameter);
+            htmlcontent = AssignSettingBlock(htmlcontent, customerInfoViewModel);
 
             htmlcontent = RemoveSettingBlock(htmlcontent, customerInfoViewModel);
 
@@ -26,19 +27,16 @@
 
         private string AssignSettingBlock(
             string htmlcontent,
-            CustomerInfoViewModel customerInfoViewModel,
-            RenderLeftPanelParameter renderLeftPanelParameter)
+            CustomerInfoViewModel customerInfoViewModel)
         {
             string userName = customerInfoViewModel.UserName;
             int parentId = customerInfoViewModel.ParentId;
             int roleId = customerInfoViewModel.SearchAccountRoleId;
             int custId = customerInfoViewModel.CustId;
-            var agentId = customerInfoViewModel.AgentId;
             var superId = customerInfoViewModel.SuperId;
             var masterId = customerInfoViewModel.MasterId;
 
             string infoUrl = string.Empty;
-            string detailUrl = string.Empty;
             string downlineListURL = string.Empty;
             string addDownlineURL = string.Empty;
 
@@ -52,7 +50,6 @@
                     break;
 
                 case 1: // member
-                    detailUrl = customerInfoViewModel.IsDeposit ? "DepositCustomer/EditSettingAgent" : "Customer/EditCustomer?theme=nap&uplineRoleId=2&custId=" + custId + "&roleId=" + roleId + "&uname=" + userName + "&siteName=" + customerInfoViewModel.CustomerSite;
                     infoUrl = "Customer/EditCustomerInfo.aspx?custId=" + custId + "&type=Super";
                     agCasinoLinkSetting = string.Format("AGCasino/EditAGCasinoGameSetting?customerId={0}&uplineId={1}&roleId={2}", custId, parentId, roleId);
                     TemplateHandler.Assign(ref htmlcontent, "{IsHidden1}", "hidden");
@@ -63,7 +60,6 @@
                 case 2: // agent
                     downlineListURL = "Customer/MemberList.aspx?agentId=" + custId;
                     addDownlineURL = customerInfoViewModel.IsDeposit ? "DepositCustomer/AddNewAgent" : "Customer/CreateCustomer?theme=nap&uplineId=" + custId + "&uplineRoleId=2";
-                    detailUrl = customerInfoViewModel.IsDeposit ? "DepositCustomer/EditSettingAgent" : "Customer/EditCustomer?theme=nap&&uplineRoleId=3&custId=" + custId + "&roleId=" + roleId + "&uname=" + userName + "&siteName=" + customerInfoViewModel.CustomerSite;
                     infoUrl = "Customer/EditCustomerInfo.aspx?custId=" + custId + "&type=Agent";
                     agCasinoLinkSetting = string.Format("AGCasino/EditAGCasinoGameSetting?customerId={0}&uplineId={1}&roleId={2}", custId, masterId, roleId);
                     TemplateHandler.Assign(ref htmlcontent, "{type}", "Agent");
@@ -72,7 +68,6 @@
                     break;
 
                 case 3: // master
-                    detailUrl = customerInfoViewModel.IsDeposit ? "DepositCustomer/EditSettingAgent" : "Customer/EditCustomer?theme=nap&uplineRoleId=4&custId=" + custId + "&roleId=" + roleId + "&uname=" + userName + "&siteName=" + customerInfoViewModel.CustomerSite;
                     infoUrl = "Customer/EditCustomerInfo.aspx?custId=" + custId + "&type=Master";
                     addDownlineURL = customerInfoViewModel.IsDeposit ? "DepositCustomer/AddNewAgent" : "Customer/CreateCustomer?theme=nap&uplineId=" + custId + "&uplineRoleId=3";
                     downlineListURL = "Customer/AgentList.aspx?masterId=" + custId;
@@ -84,7 +79,6 @@
                 case 4: // super
                     addDownlineURL = customerInfoViewModel.IsDeposit ? "DepositCustomer/AddNewAgent" : "Customer/CreateCustomer?theme=nap&uplineId=" + custId + "&uplineRoleId=4";
                     downlineListURL = "Customer/MasterAgentList.aspx?superId=" + custId;
-                    detailUrl = customerInfoViewModel.IsDeposit ? "DepositCustomer/EditSettingSuper" : "Customer/EditCustomer?theme=nap&uplineRoleId=5&custId=" + custId + "&roleId=" + roleId + "&uname=" + userName + "&siteName=" + customerInfoViewModel.CustomerSite;
                     infoUrl = "Customer/EditCustomerInfo.aspx?custId=" + custId + "&type=Super";
                     agCasinoLinkSetting = string.Format("AGCasino/EditAGCasinoGameSetting?customerId={0}&uplineId={1}&roleId={2}&exchangeId={3}", custId, 0, roleId, customerInfoViewModel.ExchangeId);
                     TemplateHandler.Assign(ref htmlcontent, "{type}", "Super");
@@ -98,23 +92,25 @@
 
             TemplateHandler.Assign(ref htmlcontent, "{linkSettingInfo}", infoUrl);
             TemplateHandler.Assign(ref htmlcontent, "{virtualSportLinkSetting}", string.Format(creditDCSLink, 5));
-            TemplateHandler.Assign(ref htmlcontent, "{liveCasinoLinkSetting}", string.Format(creditDCSLink, 41));
-            TemplateHandler.Assign(ref htmlcontent, "{voidbridgeLinkSetting}", string.Format(creditDCSLink, 18));
+            TemplateHandler.Assign(ref htmlcontent, "{liveAndRNGCasinoLinkSetting}", BuildDetailUrl(customerInfoViewModel.IsDeposit, custId, roleId, userName, customerInfoViewModel.CustomerSite, ProductGroupIdConstants.LiveAndRNGCasino));
             TemplateHandler.Assign(ref htmlcontent, "{rngLotteryLinkSetting}", string.Format(creditDCSLink, Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdRNGLottery));
-            TemplateHandler.Assign(ref htmlcontent, "{virtualGamesLinkSetting}", string.Format(creditDCSLink, Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdVirtualGames));
             TemplateHandler.Assign(ref htmlcontent, "{BitcoinLinkSetting}", string.Format(creditDCSLink, 69));
-            TemplateHandler.Assign(ref htmlcontent, "{sabaclubLinkSetting}", string.Format(creditDCSLink, 42));
             TemplateHandler.Assign(ref htmlcontent, "{agcasinoLinkSetting}", agCasinoLinkSetting);
-            TemplateHandler.Assign(ref htmlcontent, "{vgamingLinkSetting}", string.Format(creditDCSLink, 66));     
-            TemplateHandler.Assign(ref htmlcontent, "{SabaCasinoLinkSetting}", string.Format(creditDCSLink, 6));
 
             //---- for menu details -----------
-            TemplateHandler.Assign(ref htmlcontent, "{linkSettingDetail}", detailUrl);
+            TemplateHandler.Assign(ref htmlcontent, "{linkSettingDetail}", BuildDetailUrl(customerInfoViewModel.IsDeposit, custId, roleId, userName, customerInfoViewModel.CustomerSite, ProductGroupIdConstants.SportsBook));
             TemplateHandler.Assign(ref htmlcontent, "{linkDownlineList}", downlineListURL);
-            TemplateHandler.Assign(ref htmlcontent, "{linkAddnewDownline}", addDownlineURL); 
+            TemplateHandler.Assign(ref htmlcontent, "{linkAddnewDownline}", addDownlineURL);
             TemplateHandler.Assign(ref htmlcontent, "{IsShow1}", "hidden");
 
             return htmlcontent;
+        }
+
+        private string BuildDetailUrl(bool isDeposit, int custId, int roleId, string userName, string site, int productGroupId)
+        {
+            return isDeposit
+                ? "DepositCustomer/EditSettingAgent"
+                : $"Customer/EditCustomer?theme=nap&uplineRoleId={roleId + 1}&custId={custId}&roleId={roleId}&uname={userName}&siteName={site}&productGroupId={productGroupId}";
         }
 
         private string RemoveSettingBlock(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
@@ -134,14 +130,9 @@
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-agcasino");
             }
 
-            if (customerInfoViewModel.HideSettingLinkLiveCasino)
+            if (customerInfoViewModel.HideLiveAndRNGCasino)
             {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "edit-LiveCasino");
-            }
-
-            if (customerInfoViewModel.HideSettingLinkVoidbridge)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Voidbridge");
+                TemplateHandler.RemoveBlock(ref htmlcontent, "edit-LiveAndRNGCasnio");
             }
 
             if (customerInfoViewModel.HideRNGLottery)
@@ -149,29 +140,9 @@
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-RNGLottery");
             }
 
-            if (customerInfoViewModel.HideVirtualGames)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "edit-VirtualGames");
-            }
-
             if (customerInfoViewModel.HideBitcoin)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Bitcoin");
-            }
-
-            if (customerInfoViewModel.HideSabaclub)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Sabaclub");
-            }
-
-            if (customerInfoViewModel.HideVGaming)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "edit-VGaming");
-            }
-
-            if (customerInfoViewModel.HideSabaCasino)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "edit-sabacasino");
             }
 
             return htmlcontent;

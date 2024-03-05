@@ -13,6 +13,7 @@
     public interface ICopySuperSettingService
     {
         CheckSuperListResult CheckSuperList(CheckSuperListRequest request);
+
         CopyWinLostLimitResult CopyWinLossLimit(UpdateWinLossLimitRequest request, int userId, string ip);
     }
 
@@ -93,18 +94,6 @@
             }
 
             return results;
-        }
-
-        private Result MappingCustErrorMessage(int errorCode, string errorMessage,int custId, List<BaseModel> superList)
-        {
-            var result = new Result(errorCode, errorMessage);
-            var super = superList.FirstOrDefault(sp => sp.Id == custId);
-            if (super != null)
-            {
-                result.ErrorMessage = string.Format("{0}: {1}", super.Name, errorMessage);
-            }
-
-            return result;
         }
     }
 }

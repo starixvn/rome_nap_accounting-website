@@ -415,15 +415,14 @@
                         </span>
                     </div>
                     <!--/Macau-->
-                    <!--EnableSabaclub-->
+                    <!--EnableLiveAndRNGCasino-->
                     <div class="col">
-                        <span class="canchange" onclick="{SabaclubOnClickFunction}">
-                            Saba.games
+                        <span class="canchange" onclick="{LiveAndRNGCasinoOnClickFunction}">
+                            Live & RNG Casino
                             <span class="icon-list"></span>
                         </span>
                     </div>
-                    <!--/EnableSabaclub-->
-                    <!--/EnableLiveCasino-->
+                    <!--/EnableLiveAndRNGCasino-->
                     <!--EnableRNGLottery-->
                     <div class="col">
                         <span class="canchange" onclick="{RNGLotteryOnClickFunction}">
@@ -431,39 +430,8 @@
                             <span class="icon-list"></span>
                         </span>
                     </div>
-                    <!--EnableVGaming-->
-                    <div class="col">
-                        <span class="canchange" onclick="{VGamingOnClickFunction}">
-                            Vgaming
-                            <span class="icon-list"></span>
-                        </span>
-                    </div>
-                    <!--/EnableVGaming-->
-                    <!--EnableMacauGames-->
-                    <div class="col">
-                        <span class="canchange" onclick="{macauGamesOnClickFunction}">
-                            RNG Slot
-                            <span class="icon-list"></span>
-                        </span>
-                    </div>
-                    <!--/EnableMacauGames-->
                     <!--/EnableRNGLottery-->
-                    <!--EnableSabaVirtualSports-->
-                    <!--<div class="col">
-                        <span class="canchange" onclick="{SabaVirtualSportsOnClickFunction}">
-                            Saba Virtual Sports
-                        </span>
-                    </div>-->
-                    <!--/EnableSabaVirtualSports-->
                     {settingcontrol}
-                    <!--EnableVirtualGames-->
-                    <div class="col">
-                        <span class="canchange" onclick="{VirtualGamesOnClickFunction}">
-                            Virtual Games
-                            <span class="icon-list"></span>
-                        </span>
-                    </div>
-                    <!--/EnableVirtualGames-->
                 </div>
             </div>
             <table class="tab_left_content" id="box_05_content_1" border="0" cellpadding="0"
@@ -485,7 +453,7 @@
                             </li>
                         </ul>
                     </div>
-                 
+
                     <div id="detail_tab_contents">
                         <div id="detail_tab_content_1" class="l detail_tab_content hidden">
                             {contentminmax}
@@ -529,11 +497,6 @@
                                 </a><br />
                             </span>
                             <!--/maxexposure-->
-                            <!--edit-sabacasino-->
-                            <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{SabaCasinoLinkSetting}');">
-                                Saba Casino
-                            </a><br />
-                            <!--/edit-sabacasino-->
                             <!--edit-agcasino-->
                             <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{agcasinoLinkSetting}');">
                                 AG Casino
@@ -544,36 +507,16 @@
                                 Virtual Sports
                             </a><br />
                             <!--/edit-VirtualSport-->
-                            <!--edit-LiveCasino-->
-                            <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{liveCasinoLinkSetting}');">
-                                Live Casino
+                            <!--edit-LiveAndRNGCasnio-->
+                            <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{liveAndRNGCasinoLinkSetting}');">
+                                Live & RNG Casino
                             </a><br />
-                            <!--/edit-LiveCasino-->
-                            <!--edit-Voidbridge-->
-                            <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{voidbridgeLinkSetting}');">
-                                RNG Slot
-                            </a><br />
-                            <!--/edit-Voidbridge-->
+                            <!--/edit-LiveAndRNGCasnio-->
                             <!--edit-RNGLottery-->
                             <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{rngLotteryLinkSetting}');">
                                 RNG Lottery
                             </a><br />
                             <!--/edit-RNGLottery-->
-                            <!--edit-VirtualGames-->
-                            <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{virtualGamesLinkSetting}');">
-                                Virtual Games
-                            </a><br />
-                            <!--/edit-VirtualGames-->
-                            <!--edit-Sabaclub-->
-                            <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{sabaclubLinkSetting}');">
-                                Saba.games
-                            </a><br />
-                            <!--/edit-Sabaclub-->
-                            <!--edit-VGaming-->
-                            <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{vgamingLinkSetting}');">
-                                Vgaming
-                            </a><br />
-                            <!--/edit-VGaming-->
                             <!--edit-Bitcoin-->
                             <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{BitcoinLinkSetting}');">
                                 Bitcoin
@@ -612,7 +555,6 @@
     <input type="hidden" id="accId" name="accId" value="{AccId}" />
     <input type="hidden" id="roleId" name="roleId" value="{RoleId}" />
     <input type="hidden" id="CustomerSite" name="CustomerSite" value="{CustomerSite}" />
-
 
     <!--checkbox-oldvalue-->
     <input type="hidden" id="chkOldValueNumberGame" name="chkOldValueNumberGame" value="{chkNumberGame}" />
