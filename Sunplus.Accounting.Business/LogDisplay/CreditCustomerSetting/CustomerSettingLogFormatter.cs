@@ -118,65 +118,10 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
         public bool IsCreditCustomerSettingActionId(int actionId)
             => ActionIds.Contains(actionId);
 
-        public List<List<TrackingValue>> GenerateDiffs(
-            string trackingValue,
-            string trackingValue2,
-            Func<string, (List<Dictionary<string, TrackingValue>> trackingParams, bool hasAttr)> generateDetailFunction)
-        {
-            var result = new List<List<TrackingValue>>();
-            var diffs = new List<TrackingValue>();
-            if (!trackingValue.Equals(trackingValue2) && !string.IsNullOrEmpty(trackingValue2))
-            {
-                trackingValue = trackingValue.Replace("\a", "");
-                trackingValue2 = trackingValue2.Replace("\a", "");
-                var (listVal, hasAttr) = generateDetailFunction(trackingValue);
-                var (listVal2, hasAttr2) = generateDetailFunction(trackingValue2);
-
-                if (listVal.Count == listVal2.Count && hasAttr == hasAttr2)
-                {
-                    var index = 0;
-                    foreach (var elms in listVal)
-                    {
-                        var isDiff = false;
-                        diffs = new List<TrackingValue>();
-                        foreach (var elm in elms)
-                        {
-                            try
-                            {
-                                var elm2 = listVal2.ElementAt(index)[elm.Key];
-                                if (!elm.Value.Val.Equals(elm2.Val, StringComparison.CurrentCultureIgnoreCase))
-                                {
-                                    isDiff = true;
-                                    elm2.DiffRowIndex = index + (hasAttr ? 1 : 0);
-                                    elm2.P = "";
-                                    diffs.Add(elm2);
-                                }
-                            }
-                            catch
-                            {
-                                continue;
-                            }
-                        }
-
-                        ++index;
-
-                        if (isDiff)
-                        {
-                            result.Add(diffs);
-                        }
-                    }
-                }
-            }
-
-            return result;
-        }
-
         public void GenerateDetail(RecordSp record, int actionId, string trackingValue, string trackingValueOld, string spName, string actionName)
         {
             this._recordSp = record;
             var detail = new TrackingLog();
-            var diff = new List<List<TrackingValue>>();
-            var listDiffs = new List<TrackingValue>();
             try
             {
                 var xmlLoad = XElement.Parse(trackingValue);
@@ -208,9 +153,7 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
                 LogExtensions.ExceptionHandler(ex);
             }
 
-            diff.Add(listDiffs);
             record.Detail = detail;
-            record.Diffs = diff;
         }
 
         private TrackingNode ParseUpdateSettingsLog(XElement ele, int actionId, int custLevel)
@@ -283,6 +226,14 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
             trackingTable.Rows = new List<List<TrackingValue>>();
             List<string> existedSporttypeRow = new List<string>();
             int columnCount = 0;
+            if (groupType.HasAttributes)
+            {
+                foreach (var attr in groupType.Attributes())
+                {
+                    trackingGroup.Vals.Add(LogFormater.FormatElement(attr));
+                }
+            }
+
             foreach (var item in groupType.Elements())
             {
                 if (HasData(item))
@@ -345,7 +296,7 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
                         trackingTable.HeaderRows[0].Add(headerColumnName);
                     }
 
-                    row.Add(LogFormater.FormatTrackingValue(attr));
+                    row.Add(LogFormater.FormatTrackingValue(attr, $"simplify-{sportType}-{betType}"));
                 }
 
                 trackingTable.Rows.Add(row);
@@ -380,6 +331,14 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
             trackingTable.HeaderRows = new List<List<string>>();
             trackingTable.HeaderRows.Add(new List<string>());
             trackingTable.Rows = new List<List<TrackingValue>>();
+            if (groupType.HasAttributes)
+            {
+                foreach (var attr in groupType.Attributes())
+                {
+                    trackingGroup.Vals.Add(LogFormater.FormatElement(attr));
+                }
+            }
+
             foreach (var item in groupType.Elements())
             {
                 if (HasData(item))
@@ -422,7 +381,7 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
                         trackingTable.HeaderRows[0].Add(headerColumnName);
                     }
 
-                    row.Add(LogFormater.FormatTrackingValue(attr));
+                    row.Add(LogFormater.FormatTrackingValue(attr, $"simplify-{sportType}-{betType}"));
                 }
 
                 trackingTable.Rows.Add(row);
@@ -472,7 +431,7 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
                         trackingTable.HeaderRows[0].Add(headerColumnName);
                     }
 
-                    row.Add(LogFormater.FormatTrackingValue(attr));
+                    row.Add(LogFormater.FormatTrackingValue(attr, $"simplify-{sportType}-{betType}"));
                 }
 
                 trackingTable.Rows.Add(row);
@@ -495,6 +454,14 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
                 trackingTable.HeaderRows = new List<List<string>>();
                 trackingTable.HeaderRows.Add(new List<string> { string.Empty });
                 trackingTable.Rows = new List<List<TrackingValue>>();
+                if (groupType.HasAttributes)
+                {
+                    foreach (var attr in groupType.Attributes())
+                    {
+                        trackingGroup.Vals.Add(LogFormater.FormatElement(attr));
+                    }
+                }
+
                 foreach (var item in groupType.Elements())
                 {
                     if (HasData(item))
@@ -519,7 +486,7 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
                             trackingTable.HeaderRows[0].Add(headerColumnName);
                         }
 
-                        row.Add(LogFormater.FormatTrackingValue(attr));
+                        row.Add(LogFormater.FormatTrackingValue(attr, $"simplify-{sportType}-{betType}"));
                     }
 
                     trackingTable.Rows.Add(row);
