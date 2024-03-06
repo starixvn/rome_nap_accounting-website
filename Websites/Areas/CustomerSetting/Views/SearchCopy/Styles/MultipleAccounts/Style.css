@@ -52,11 +52,12 @@ body, .maincontent {
 
     .statusError::before {
         content: "";
-        background: url(../Images/not_success.png) no-repeat;
+        background: url(../Images/error.png) no-repeat;
         width: 20px;
         height: 20px;
         display: inline-block;
-        vertical-align: sub;
+        vertical-align: bottom;
+        margin-right: 3px;
     }
 
 .noteMsg {
@@ -320,6 +321,7 @@ textarea {
         border: 1px solid #d1d1d1 !important;
         border-collapse: collapse;
         height: 26px;
+        padding: 5px;
     }
 
     .tblProgress-search-and-copy .title th {
