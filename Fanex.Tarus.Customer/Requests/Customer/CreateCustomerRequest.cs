@@ -7,6 +7,8 @@ namespace Fanex.Tarus.Customer.Requests.Customer
     {
         public int UplineId { get; set; } = 0;
 
+        public byte RoleId { get; set; }
+        
         public byte UplineRoleId { get; set; } = 0;
 
         public string UplineUsername { get; set; } = string.Empty;
@@ -18,6 +20,6 @@ namespace Fanex.Tarus.Customer.Requests.Customer
         public bool NoPermissionEditCredit { get; set; } = false;
         
         internal string ToJson()
-            => JsonConvert.SerializeObject(new { UplineId, UplineRoleId, Site, SiteLabel, NoPermissionEditCredit }, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+            => JsonConvert.SerializeObject(new { UplineId, UplineRoleId, RoleId, Site, SiteLabel, NoPermissionEditCredit }, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
     }
 }

@@ -126,7 +126,7 @@ namespace Fanex.Tarus.Customer.Controller
         [NAPCustomerAuthFilter]
         public ActionResult CreateSuper()
         {
-            var viewModel = new CreateCustomerViewModel(new CreateCustomerRequest(), new AppConfiguration(GetApplicationPath()), cdnUri, GetAssetsVersion(), GetHashKey());
+            var viewModel = new CreateCustomerViewModel(new CreateCustomerRequest{ UplineRoleId = RoleIdConstants.SUPER + 1, RoleId = RoleIdConstants.SUPER}, new AppConfiguration(GetApplicationPath()), cdnUri, GetAssetsVersion(), GetHashKey());
             return View(
                 HttpContext.IsDebuggingEnabled
                     ? "~/Views/Customer/CreateSuper-Debug.cshtml"
@@ -206,14 +206,14 @@ namespace Fanex.Tarus.Customer.Controller
         public async Task<ActionResult> GetMaxPayoutSettingInformation(string site, bool isSpecialPlatform = false, string language = "en-US")
             => Content(await customerService.GetMaxPayoutSettingInformation(site,isSpecialPlatform, language));
         
-        public async Task<ActionResult> GetPTSettingInformation(int custId, string language = "en-US")
-            => Content(await customerService.GetPTSettingInformation(custId, AccCommon.IsLocalTest, language));
+        public async Task<ActionResult> GetPTSettingInformation(int? custId, string site, string language = "en-US")
+            => Content(await customerService.GetPTSettingInformation(custId, AccCommon.IsLocalTest, site, language));
         
-        public async Task<ActionResult> GetCommissionHint(int custId, string language = "en-US")
-            => Content(await customerService.GetCommissionHint(custId, language));
+        public async Task<ActionResult> GetCommissionHint(int? custId,string site, string language = "en-US")
+            => Content(await customerService.GetCommissionHint(custId ?? 0, site, language));
         
-        public async Task<ActionResult> GetProductCategories(int custId, string language = "en-US")
-            => Content(await customerService.GetProductCategories(custId, language));
+        public async Task<ActionResult> GetProductCategories(int? custId,string site, int currency, string language = "en-US")
+            => Content(await customerService.GetProductCategories(custId, site, currency, language));
         
         [HttpPost]
         [NAPCustomerAuthFilter(IsHost = true)]
