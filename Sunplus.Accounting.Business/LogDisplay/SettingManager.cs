@@ -883,7 +883,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
                                 if (!elm.Value.Val.Equals(elm2.Val, StringComparison.CurrentCultureIgnoreCase))
                                 {
                                     isDiff = true;
-                                    elm2.DiffRowIndex = index + ((hasAttr && !isSimplifyCustomerSetting) ? 1 : 0);
+                                    elm2.DiffRowIndex = isSimplifyCustomerSetting ? 1 : (index + (hasAttr ? 1 : 0));
                                     diffs.Add(elm2);
                                 }
                             }
