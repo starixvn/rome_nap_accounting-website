@@ -126,7 +126,13 @@ namespace Fanex.Tarus.Customer.Controller
         [NAPCustomerAuthFilter]
         public ActionResult CreateSuper()
         {
-            var viewModel = new CreateCustomerViewModel(new CreateCustomerRequest{ UplineRoleId = RoleIdConstants.SUPER + 1, RoleId = RoleIdConstants.SUPER}, new AppConfiguration(GetApplicationPath()), cdnUri, GetAssetsVersion(), GetHashKey());
+            var viewModel = new CreateCustomerViewModel(new CreateCustomerRequest
+            {
+                UplineRoleId = RoleIdConstants.SUPER + 1, 
+                RoleId = RoleIdConstants.SUPER,
+                NoPermissionEditCredit = !Permissions.GetHostPermission(Enumerations.Functions.Customer.Credit)
+            }, new AppConfiguration(GetApplicationPath()), cdnUri, GetAssetsVersion(), GetHashKey());
+            
             return View(
                 HttpContext.IsDebuggingEnabled
                     ? "~/Views/Customer/CreateSuper-Debug.cshtml"
