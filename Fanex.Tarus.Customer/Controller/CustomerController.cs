@@ -72,7 +72,10 @@ namespace Fanex.Tarus.Customer.Controller
 
         [NAPCustomerAuthFilter]
         public ActionResult Copy()
-            => View("~/Areas/CustomerSetting/Views/SearchCopy/Super/Index.cshtml");
+        {
+            ViewBag.NoPermissionEditCredit = !Permissions.GetHostPermission(Enumerations.Functions.Customer.Credit);
+            return View("~/Areas/CustomerSetting/Views/SearchCopy/Super/Index.cshtml");
+        }
 
         [HttpPost]
         [NAPCustomerAuthFilter(IsHost = true)]

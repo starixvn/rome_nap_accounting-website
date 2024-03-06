@@ -324,7 +324,7 @@ $.fn.forceNumber = function () {
         });
     }
 
-    function renderCreateSuperView() {
+    function renderCreateSuperView(disableCredit = false) {
         $passwordRow.append(`
             <td class="col-internal">
                 <div class="col-internal-user">
@@ -346,7 +346,7 @@ $.fn.forceNumber = function () {
         $superCreditRow.append(`
             <td>
                 <label for="txtCredit">Max Credit<span class="require"> *</span></label>
-                <input type="text" id="txtCredit" maxlength="18" />
+                <input type="text" id="txtCredit" maxlength="18"  ${disableCredit ? 'disabled' : ''} />
             </td>
             <td>
                 <label>Currency</label>
@@ -354,14 +354,14 @@ $.fn.forceNumber = function () {
             </td>`);
     }
 
-    function renderCreateMemberView() {
+    function renderCreateMemberView(disableCredit = false) {
         $passwordRow.append('<td colspan="2"></td>');
         $memberCreditRow.show();
         $memberCreditRow.append(`
             <td>
                 <div class="col-credit">
                     <label for="txtCredit">Given Credit<span class="require"> *</span></label>
-                    <input type="text" id="txtCredit" maxlength="18" />
+                    <input type="text" id="txtCredit" maxlength="18" ${disableCredit ? 'disabled' : ''}/>
                     <span class="memberMaxCredit" id="memberMaxCredit"></span>
                 <div>
             </td>
@@ -372,11 +372,13 @@ $.fn.forceNumber = function () {
     }
 
     function renderViewByLevel() {
+        var noPermissionEditCredit = $('#noPermissionEditCredit').val();
         if (parent.level == "super") {
-            renderCreateSuperView();
+            renderCreateSuperView(noPermissionEditCredit);
         } else {
-            renderCreateMemberView();
+            renderCreateMemberView(noPermissionEditCredit);
         }
+        $("#txtCredit").val(0);
         $("#txtCredit").forceNumber();
     }
 
