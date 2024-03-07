@@ -9,8 +9,6 @@ namespace Fanex.Tarus.Customer.Requests.Customer
 
         public byte RoleId { get; set; }
         
-        public byte UplineRoleId { get; set; }
-        
         public int TabIndex { get; set; }
         
         public string Site { get; set; }
@@ -57,7 +55,7 @@ namespace Fanex.Tarus.Customer.Requests.Customer
         {
             get =>  new
             {
-                name = "MaxPayoutSetting", // chua dich
+                name = "MaxPayout",
                 id = "MaxPayoutSettingTab", 
                 napUrl = "/Customer/GetMaxPayoutSettingInformation?site=" + Site + "&isSpecialPlatform=false",
                 index = 1,
