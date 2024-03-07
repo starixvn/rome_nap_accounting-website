@@ -522,6 +522,7 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
             var ele = new TrackingElement();
             ele.N = groupId == 1 ? CacheRef.GetSportsbookCommSMAName(groupId, groupTypeId, sportTypeId, betTypeId) : CacheRef.GetSportName(sportTypeId);
             ele.Val = LogFormater.FormatDecimalTrailingZeros(attr.Value);
+            ele.P = $"simplify-{sportTypeId}-{betTypeId}" + attr.Name.ToString();
             return ele;
         }
 
