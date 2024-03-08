@@ -169,7 +169,7 @@ public partial class BetList_CombinationMPDetail : RequiredAuthorizationPage
 
                 #region status
 
-                TemplateHandler.Assign(ref rowTemp, "{Status}", status.ToUpper());
+                TemplateHandler.Assign(ref rowTemp, "{Status}", SystemParlayConstants.GetStatusText(status));
 
                 #endregion status
 
