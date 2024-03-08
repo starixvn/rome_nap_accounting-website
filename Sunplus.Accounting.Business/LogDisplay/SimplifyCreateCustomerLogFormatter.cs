@@ -451,7 +451,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
                 {
                     for (int i = 0; i < gapCols; i++)
                     {
-                        row.Add(new TrackingValue { });
+                        row.Add(new TrackingValue { Val = string.Empty });
                     }
                 }
             }
