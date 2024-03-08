@@ -373,7 +373,8 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
                     && !i.Name.LocalName.Equals("BetType")
                     && !i.Name.LocalName.Equals("IsLive")
                     && !i.Name.LocalName.Equals("SettingLevel")
-                    && !i.Name.LocalName.Equals("ProductID")))
+                    && !i.Name.LocalName.Equals("ProductID")
+                    && !i.Name.LocalName.Equals("GroupID")))
                 {
                     var headerColumnName = GetCreateCustomerResourceByCustomerLevel(attr.Name.LocalName, custLevel);
                     if (!trackingTable.HeaderRows[0].Contains(headerColumnName))
@@ -423,7 +424,8 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
                     && !i.Name.LocalName.Equals("BetType")
                     && !i.Name.LocalName.Equals("IsLive")
                     && !i.Name.LocalName.Equals("SettingLevel")
-                    && !i.Name.LocalName.Equals("ProductID")))
+                    && !i.Name.LocalName.Equals("ProductID")
+                    && !i.Name.LocalName.Equals("GroupID")))
                 {
                     var headerColumnName = GetCreateCustomerResourceByCustomerLevel(attr.Name.LocalName, custLevel);
                     if (!trackingTable.HeaderRows[0].Contains(headerColumnName))
@@ -478,7 +480,10 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
                         CacheRef.GetSportsbookCommMemberName(1, 150, sportType, betType) :
                         CacheRef.GetNameByGroupSubGroup(1, 150, sportType, betType)
                     });
-                    foreach (var attr in item.Attributes().Where(i => !i.Name.LocalName.Equals("SportType") && !i.Name.LocalName.Equals("BetType")))
+                    foreach (var attr in item.Attributes().Where(i => !i.Name.LocalName.Equals("SportType") 
+                        && !i.Name.LocalName.Equals("BetType")
+                        && !i.Name.LocalName.Equals("ProductID")
+                        && !i.Name.LocalName.Equals("SettingLevel")))
                     {
                         var headerColumnName = GetCreateCustomerResource(attr.Name.LocalName);
                         if (!trackingTable.HeaderRows[0].Contains(headerColumnName))
