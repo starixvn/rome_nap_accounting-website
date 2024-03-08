@@ -74,7 +74,7 @@
         var f = document.getElementById("frmSearchCopyAddNewSuper");
 
         document.body.rows = tfHeigth + ",*";
-        f.src = `../Customer/CreateCustomer?uplineId=${parentId}&uplineRoleId=${roleId}&theme=nap`;
+        f.src = `../Customer/CreateCustomer?uplineId=${parentId}&uplineRoleId=${roleId}&theme=nap&uplineUsername=${document.getElementById("txtUsername").value}`;
     }
 
     function showAlertMessage(id, message) {
