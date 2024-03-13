@@ -201,9 +201,9 @@ namespace Fanex.Tarus.Customer.Controller
                 : "~/Views/Customer/SportBookInformation/Index.cshtml", viewModel);
         }
 
-        public async Task<ActionResult> GetCustomerSetting(int custId, byte roleId, byte uplineRoleId = 0, string language = "en-US", bool isGetUpline = false)
+        public async Task<ActionResult> GetCustomerSetting(GetCustomerSettingRequest request)
         {
-            return Content(await customerService.GetCustomerSetting(custId, roleId, CustomerClientManager.ClientConfigs.SystemId, uplineRoleId, language, isGetUpline));
+            return Content(await customerService.GetCustomerSetting(request.CustId, request.RoleId, CustomerClientManager.ClientConfigs.SystemId, request.UplineRoleId, request.Language, request.IsGetUpLine, request.ProductGroupId, request.SiteLabel));
         }
 
         public async Task<ActionResult> CheckExistedCustomer(string username)
