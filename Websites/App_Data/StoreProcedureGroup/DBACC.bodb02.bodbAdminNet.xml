@@ -1,121 +1,121 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Functions SiteId="104" SiteName="NAP - Accounting">
   <Function Name="ResetWinning">
-    <Setting Key="Balance_ResetWinning_BeforeMoveBetDay" SpName="Acc_ResetWinning_SelByDate14" DbName="DBACC.bodb02.bodbAdminNet" TimeOut="0" />
-    <Setting Key="Balance_ResetWinning" SpName="Task_ResetWinning_Non3rdParty" DbName="DBACC.bodb02.bodbAdminNet" TimeOut="0" />
-    <Setting Key="Balance_ResetWinning_ExtraPT" SpName="Task_ResetWinning_ExtraPT" DbName="DBACC.bodb02.bodbAdminNet" TimeOut="0" />
+    <Setting Key="Balance_ResetWinning_BeforeMoveBetDay" SpName="Acc_ResetWinning_SelByDate14" DbName="DBACC.bodb02.wsv_nap" TimeOut="0" />
+    <Setting Key="Balance_ResetWinning" SpName="Task_ResetWinning_Non3rdParty" DbName="DBACC.bodb02.wsv_nap" TimeOut="0" />
+    <Setting Key="Balance_ResetWinning_ExtraPT" SpName="Task_ResetWinning_ExtraPT" DbName="DBACC.bodb02.wsv_nap" TimeOut="0" />
   </Function>
   <Function Name="Finance Module">
-    <Setting Key="Acc_StatementFinance" SpName="Acc_StatementFinance" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_StatementFinanceByRefno" SpName="Acc_StatementFinanceByRefno" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_FinanceAccountByCustId" SpName="Acc_FinanceAccountByCustId" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_StatementFinance" SpName="Acc_StatementFinance" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_StatementFinanceByRefno" SpName="Acc_StatementFinanceByRefno" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_FinanceAccountByCustId" SpName="Acc_FinanceAccountByCustId" DbName="DBACC.bodb02.wsv_nap" />
   </Function>
   <Function Name="Daily Transaction">
-    <Setting Key="SelDailyFinanceTxn" SpName="Acc_DailyTxn_Sel" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="SelDailyAllTxn" SpName="Acc_RptStatementDaily" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="SelDailyFinanceTxn" SpName="Acc_DailyTxn_Sel" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="SelDailyAllTxn" SpName="Acc_RptStatementDaily" DbName="DBACC.bodb02.wsv_nap" />
   </Function>
   <Function Name="Betlist">
-    <Setting Key="Acc_BetList_SelBettype" SpName="Acc_BetList_SelBettype" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="SiteDB_Acc_BetList_SelBettype" SpName="SiteDB_Acc_BetList_SelBettype" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_BetlistCombinationParlay_Details" SpName="Acc_BetlistCombinationParlay_Details" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="SiteDB_Acc_BetList_SelCombinationParlayDetail" SpName="SiteDB_Acc_BetList_SelCombinationParlayDetail" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="BetList_IP_OtherSports" SpName="Acc_BetListByIP_OtherSports" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="BetList_IP_Soccer" SpName="Acc_BetListByIP_Soccer" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="BetList_IP_Username" SpName="Acc_BetListbyIP_Username" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_Statement" SpName="Acc_Statement" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_AllStatement4Agent" SpName="Acc_AllStatement4Agent" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_AllStatementCompany" SpName="Acc_AllStatementCompany" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_BetList_LicenseeBonus_Detail" SpName="Acc_BetList_LicenseeBonus_Detail" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="Age_BetList_SelMatchResultParlay" SpName="Age_BetList_SelMatchResultParlay" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_BetsSelBetList_ByTransID" SpName="Acc_BetsSelBetList_ByTransID" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="SiteDB_Acc_BetList_SelByRefNo_Mem" SpName="SiteDB_Acc_BetList_SelByRefNo_Mem" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_BetList_Mem" SpName="Acc_BetList_Mem" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="SiteDB_Acc_BetList_Mem" SpName="SiteDB_Acc_BetList_Mem" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_BetList_CashOut_History" SpName="Acc_BetList_CashOut_History" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="SiteDB_Acc_BetList_CashOut_History" SpName="SiteDB_Acc_BetList_CashOut_History" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_BetList_SelBettype" SpName="Acc_BetList_SelBettype" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="SiteDB_Acc_BetList_SelBettype" SpName="SiteDB_Acc_BetList_SelBettype" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_BetlistCombinationParlay_Details" SpName="Acc_BetlistCombinationParlay_Details" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="SiteDB_Acc_BetList_SelCombinationParlayDetail" SpName="SiteDB_Acc_BetList_SelCombinationParlayDetail" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="BetList_IP_OtherSports" SpName="Acc_BetListByIP_OtherSports" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="BetList_IP_Soccer" SpName="Acc_BetListByIP_Soccer" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="BetList_IP_Username" SpName="Acc_BetListbyIP_Username" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_Statement" SpName="Acc_Statement" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_AllStatement4Agent" SpName="Acc_AllStatement4Agent" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_AllStatementCompany" SpName="Acc_AllStatementCompany" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_BetList_LicenseeBonus_Detail" SpName="Acc_BetList_LicenseeBonus_Detail" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Age_BetList_SelMatchResultParlay" SpName="Age_BetList_SelMatchResultParlay" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_BetsSelBetList_ByTransID" SpName="Acc_BetsSelBetList_ByTransID" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="SiteDB_Acc_BetList_SelByRefNo_Mem" SpName="SiteDB_Acc_BetList_SelByRefNo_Mem" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_BetList_Mem" SpName="Acc_BetList_Mem" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="SiteDB_Acc_BetList_Mem" SpName="SiteDB_Acc_BetList_Mem" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_BetList_CashOut_History" SpName="Acc_BetList_CashOut_History" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="SiteDB_Acc_BetList_CashOut_History" SpName="SiteDB_Acc_BetList_CashOut_History" DbName="DBACC.bodb02.wsv_nap" />
   </Function>
   <Function Name="Transaction - Automate Finance Transfer">
-    <Setting Key="GetCustIdByUsername" SpName="Acc_GetCustIdByUsername" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="GetCustIdByUsername" SpName="Acc_GetCustIdByUsername" DbName="DBACC.bodb02.wsv_nap" />
   </Function>
   <Function Name="Admin - SMA Management">
-    <Setting Key="Acc_CustomerSelByGroupHeadline" SpName="Acc_CustomerSelByGroupHeadline" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="CS_CustomerSelByGroupHeadline" SpName="CS_CustomerSelByGroupHeadline" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_CustomerSelByGroupHeadline" SpName="Acc_CustomerSelByGroupHeadline" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="CS_CustomerSelByGroupHeadline" SpName="CS_CustomerSelByGroupHeadline" DbName="DBACC.bodb02.wsv_nap" />
   </Function>
   <Function Name="Statement">
-    <Setting Key="AllStatement_Full" SpName="Acc_AllStatement_Full" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="AgentStatement" SpName="Rpt_AgentStatement" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_AllStatement_SelCheckUsersList" SpName="Acc_AllStatement_SelCheckUsersList" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_AllStatement_UsersList" SpName="Acc_AllStatement_UsersList" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_CustomerSelByRefno" SpName="Acc_CustomerSelByRefno" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_SiteDBGroupIDSelByRefnos" SpName="Acc_SiteDBGroupIDSelByRefnos" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="AllStatement_Full" SpName="Acc_AllStatement_Full" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="AgentStatement" SpName="Rpt_AgentStatement" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_AllStatement_SelCheckUsersList" SpName="Acc_AllStatement_SelCheckUsersList" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_AllStatement_UsersList" SpName="Acc_AllStatement_UsersList" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_CustomerSelByRefno" SpName="Acc_CustomerSelByRefno" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_SiteDBGroupIDSelByRefnos" SpName="Acc_SiteDBGroupIDSelByRefnos" DbName="DBACC.bodb02.wsv_nap" />
   </Function>
   <Function Name="Report">
-    <Setting Key="Acc_AllStatementCompanyDetail" SpName="Acc_AllStatementCompanyDetail" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_Rpt_Balance_Company" SpName="Acc_Rpt_Balance_Company" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_AllStatementCompanyDetail" SpName="Acc_AllStatementCompanyDetail" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_Rpt_Balance_Company" SpName="Acc_Rpt_Balance_Company" DbName="DBACC.bodb02.wsv_nap" />
   </Function>
   <Function Name="Left Panel - Transfer">
-    <Setting Key="Acc_CustomerSelIsCrossTransfer" SpName="Acc_CustomerSelIsCrossTransfer" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_DailyTxn_FinanceBettype_Sel" SpName="Acc_DailyTxn_FinanceBettype_Sel" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_CustomerSelFITransferStatus" SpName="Acc_CustomerSelFITransferStatus" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_CustomerSelInfoByUsername" SpName="Acc_CustomerSelInfoByUsername" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_CustomerSelIsCrossTransfer" SpName="Acc_CustomerSelIsCrossTransfer" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_DailyTxn_FinanceBettype_Sel" SpName="Acc_DailyTxn_FinanceBettype_Sel" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_CustomerSelFITransferStatus" SpName="Acc_CustomerSelFITransferStatus" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_CustomerSelInfoByUsername" SpName="Acc_CustomerSelInfoByUsername" DbName="DBACC.bodb02.wsv_nap" />
   </Function>
   <Function Name="Customer - Virtual Rate">
-    <Setting Key="Customer_VirtualRate_GetVirtualRate" SpName="Acc_CustomerSelVirtualMultiplier" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="Customer_VirtualRate_GetVirtualRate" SpName="Acc_CustomerSelVirtualMultiplier" DbName="DBACC.bodb02.wsv_nap" />
   </Function>
   <Function Name="Report">
-    <Setting Key="Statement_Report_GetList" SpName="Acc_StatementSel" DbName="DBACC.bodb02.bodbAdminNet" Plain="0" />
-    <Setting Key="Statement_Report_TransferDetails" SpName="Acc_StatementSelTransfer" DbName="DBACC.bodb02.bodbAdminNet" Plain="0" />
-    <Setting Key="Statement_Report_CheckInternalByUsername" SpName="Acc_FinanceAccountByCustId" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="Statement_Report_GetList" SpName="Acc_StatementSel" DbName="DBACC.bodb02.wsv_nap" Plain="0" />
+    <Setting Key="Statement_Report_TransferDetails" SpName="Acc_StatementSelTransfer" DbName="DBACC.bodb02.wsv_nap" Plain="0" />
+    <Setting Key="Statement_Report_CheckInternalByUsername" SpName="Acc_FinanceAccountByCustId" DbName="DBACC.bodb02.wsv_nap" />
   </Function>
   <Function Name="Ticket To Group Headline">
-    <Setting Key="Acc_TicketGroupHeadline_ProductSel" SpName="Acc_TicketGroupHeadline_ProductSel" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_CustomerSelGroupHeadlineByRefno" SpName="Acc_CustomerSelGroupHeadlineByRefno" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_TicketGroupHeadline_ProductSel" SpName="Acc_TicketGroupHeadline_ProductSel" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_CustomerSelGroupHeadlineByRefno" SpName="Acc_CustomerSelGroupHeadlineByRefno" DbName="DBACC.bodb02.wsv_nap" />
   </Function>
   <Function Name="Exchange Rate">
-    <Setting Key="OANDAExRateSel" SpName="Acc_Rpt_ExchangeDailyOanda_Sel" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="CryptoExRateSel" SpName="Acc_Rpt_ExchangeDaily_Crypto_Sel" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="OANDAExRateSel" SpName="Acc_Rpt_ExchangeDailyOanda_Sel" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="CryptoExRateSel" SpName="Acc_Rpt_ExchangeDaily_Crypto_Sel" DbName="DBACC.bodb02.wsv_nap" />
   </Function>
   <Function Name="BetList - Cashout">
-    <Setting Key="Acc_BetList_CashOut_Detail" SpName="Acc_BetList_CashOut_Detail" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_BetList_CashOut_Detail" SpName="Acc_BetList_CashOut_Detail" DbName="DBACC.bodb02.wsv_nap" />
   </Function>
   <Function Name="External - Admin">
-    <Setting Key="Acc_CustGroupSelExtraPTGroupByCustID" SpName="Acc_CustGroupSelExtraPTGroupByCustID" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_CustGroupSelExtraPTGroupByCustID" SpName="Acc_CustGroupSelExtraPTGroupByCustID" DbName="DBACC.bodb02.wsv_nap" />
   </Function>
   <Function Name="Jackpot Details">
-    <Setting Key="Acc_BetList_Jackpot_Detail" SpName="Acc_BetList_Jackpot_Detail" DbName="DBACC.bodb02.bodbAdminNet" Plain="0" />
-    <Setting Key="SiteDB_Acc_BetList_Jackpot_Detail" SpName="SiteDB_Acc_BetList_Jackpot_Detail" DbName="DBACC.bodb02.bodbAdminNet" Plain="0" />
+    <Setting Key="Acc_BetList_Jackpot_Detail" SpName="Acc_BetList_Jackpot_Detail" DbName="DBACC.bodb02.wsv_nap" Plain="0" />
+    <Setting Key="SiteDB_Acc_BetList_Jackpot_Detail" SpName="SiteDB_Acc_BetList_Jackpot_Detail" DbName="DBACC.bodb02.wsv_nap" Plain="0" />
   </Function>
   <Function Name="Bet Builder Detail">
-    <Setting Key="Acc_BetList_BetBuilder_Detail" SpName="Acc_BetList_BetBuilder_Detail" DbName="DBACC.bodb02.bodbAdminNet" Plain="0" />
-    <Setting Key="Acc_TicketResult_BetBuilder " SpName="Acc_TicketResult_BetBuilder" DbName="DBACC.bodb02.bodbAdminNet" Plain="0" />
+    <Setting Key="Acc_BetList_BetBuilder_Detail" SpName="Acc_BetList_BetBuilder_Detail" DbName="DBACC.bodb02.wsv_nap" Plain="0" />
+    <Setting Key="Acc_TicketResult_BetBuilder " SpName="Acc_TicketResult_BetBuilder" DbName="DBACC.bodb02.wsv_nap" Plain="0" />
   </Function>
   <Function Name="Permission - Detect Customer Id">
-    <Setting Key="Acc_CustomerDetectCustId" SpName="Acc_CustomerDetectCustId" DbName="DBACC.bodb02.bodbAdminNet" Plain="0" />
+    <Setting Key="Acc_CustomerDetectCustId" SpName="Acc_CustomerDetectCustId" DbName="DBACC.bodb02.wsv_nap" Plain="0" />
   </Function>
   <Function Name="Manage Sporttype">
-    <Setting Key="Acc_SporttypeSel" SpName="Acc_SporttypeSel" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_ExchangeCurrencySel" SpName="Acc_ExchangeCurrencySel" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_SporttypeSel" SpName="Acc_SporttypeSel" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_ExchangeCurrencySel" SpName="Acc_ExchangeCurrencySel" DbName="DBACC.bodb02.wsv_nap" />
   </Function>
   <Function Name="Initializing Bet Limit">
-    <Setting Key="Acc_InitializingGlobal_CurrencySel" SpName="Acc_InitializingGlobal_CurrencySel" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_InitializingGlobal_ProductSel" SpName="Acc_InitializingGlobal_ProductSel" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_InitializingGlobal_SportTypeSel" SpName="Acc_InitializingGlobal_SportTypeSel" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_InitializingGlobal_BetTypeSel" SpName="Acc_InitializingGlobal_BetTypeSel" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_InitializingGlobal_BetLimitCheck" SpName="Acc_InitializingGlobal_BetLimitCheck" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_InitializingGlobal_BetLimitSel" SpName="Acc_InitializingGlobal_BetLimitSel" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_InitializingGlobal_SiteSel" SpName="Acc_InitializingGlobal_SiteSel" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_InitializingGlobal_ProductCurrencySel" SpName="Acc_InitializingGlobal_ProductCurrencySel" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_InitializingGlobal_CurrencySel" SpName="Acc_InitializingGlobal_CurrencySel" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_InitializingGlobal_ProductSel" SpName="Acc_InitializingGlobal_ProductSel" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_InitializingGlobal_SportTypeSel" SpName="Acc_InitializingGlobal_SportTypeSel" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_InitializingGlobal_BetTypeSel" SpName="Acc_InitializingGlobal_BetTypeSel" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_InitializingGlobal_BetLimitCheck" SpName="Acc_InitializingGlobal_BetLimitCheck" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_InitializingGlobal_BetLimitSel" SpName="Acc_InitializingGlobal_BetLimitSel" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_InitializingGlobal_SiteSel" SpName="Acc_InitializingGlobal_SiteSel" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_InitializingGlobal_ProductCurrencySel" SpName="Acc_InitializingGlobal_ProductCurrencySel" DbName="DBACC.bodb02.wsv_nap" />
   </Function>
   <Function Name="IT Configuration - Initializing Customer Setting">
-    <Setting Key="Acc_SiteSel_Licensee" SpName="Acc_SiteSel_Licensee" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_SiteSel_Licensee" SpName="Acc_SiteSel_Licensee" DbName="DBACC.bodb02.wsv_nap" />
   </Function>
   <Function Name="Admin - Manage Product Setting - Sport Bettype Setting Matrix">
-    <Setting Key="Acc_ReferenceSetting_ProductSel" SpName="Acc_ReferenceSetting_ProductSel" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_ReferenceSetting_ProductDummySel" SpName="Acc_ReferenceSetting_ProductDummySel" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_ReferenceSetting_SportTypeSel" SpName="Acc_ReferenceSetting_SportTypeSel" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_ReferenceSetting_BetTypeSel" SpName="Acc_ReferenceSetting_BetTypeSel" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_ReferenceSetting_TableSel" SpName="Acc_ReferenceSetting_TableSel" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_ReferenceSetting_Sel" SpName="Acc_ReferenceSetting_Sel" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_ReferenceSetting_Check" SpName="Acc_ReferenceSetting_Check" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_ReferenceSetting_ProductSel" SpName="Acc_ReferenceSetting_ProductSel" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_ReferenceSetting_ProductDummySel" SpName="Acc_ReferenceSetting_ProductDummySel" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_ReferenceSetting_SportTypeSel" SpName="Acc_ReferenceSetting_SportTypeSel" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_ReferenceSetting_BetTypeSel" SpName="Acc_ReferenceSetting_BetTypeSel" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_ReferenceSetting_TableSel" SpName="Acc_ReferenceSetting_TableSel" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_ReferenceSetting_Sel" SpName="Acc_ReferenceSetting_Sel" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_ReferenceSetting_Check" SpName="Acc_ReferenceSetting_Check" DbName="DBACC.bodb02.wsv_nap" />
   </Function>
 </Functions>

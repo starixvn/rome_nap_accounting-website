@@ -1,18 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Functions SiteId="104" SiteName="NAP - Accounting">
   <Function Name="User - Account Management">
-    <Setting Key="UserLog_UserControlSel" SpName="Acc_UserLog_UserControlSel" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
-    <Setting Key="UserLog_UserControlSelTotalRecords" SpName="Acc_UserLog_UserControlSelTotalRecords" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
+    <Setting Key="UserLog_UserControlSel" SpName="Acc_UserLog_UserControlSel" DbName="DBLOG.bodb_CustomerLog.wsv_nap" />
+    <Setting Key="UserLog_UserControlSelTotalRecords" SpName="Acc_UserLog_UserControlSelTotalRecords" DbName="DBLOG.bodb_CustomerLog.wsv_nap" />
   </Function>
   <Function Name="Customer">
-    <Setting Key="Customer_VirtualRate_GetLog" SpName="Acc_CustomerSelVirtualRateHistory" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
+    <Setting Key="Customer_VirtualRate_GetLog" SpName="Acc_CustomerSelVirtualRateHistory" DbName="DBLOG.bodb_CustomerLog.wsv_nap" />
   </Function>
   <Function Name="Customer - Log">
-    <Setting Key="GetLogSetting" SpName="NAP_UserLog_RunSPSel" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
-    <Setting Key="GetLogSettingTotal" SpName="NAP_UserLog_RunSPSelTotalRecords" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
-    <Setting Key="GetLogLogin" SpName="NAP_UserLog_LoginSel" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
-    <Setting Key="GetLogLoginTotal" SpName="NAP_UserLog_LoginSelTotalRecords" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
-    <Setting Key="GetLogCredit" SpName="NAP_UserLog_CreditSel" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
-    <Setting Key="GetLogCreditTotal" SpName="NAP_UserLog_CreditSelTotalRecords" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
+    <Setting Key="GetLogSetting" SpName="NAP_UserLog_RunSPSel" DbName="DBLOG.bodb_CustomerLog.wsv_nap" />
+    <Setting Key="GetLogSettingTotal" SpName="NAP_UserLog_RunSPSelTotalRecords" DbName="DBLOG.bodb_CustomerLog.wsv_nap" />
+    <Setting Key="GetLogLogin" SpName="NAP_UserLog_LoginSel" DbName="DBLOG.bodb_CustomerLog.wsv_nap" />
+    <Setting Key="GetLogLoginTotal" SpName="NAP_UserLog_LoginSelTotalRecords" DbName="DBLOG.bodb_CustomerLog.wsv_nap" />
+    <Setting Key="GetLogCredit" SpName="NAP_UserLog_CreditSel" DbName="DBLOG.bodb_CustomerLog.wsv_nap" />
+    <Setting Key="GetLogCreditTotal" SpName="NAP_UserLog_CreditSelTotalRecords" DbName="DBLOG.bodb_CustomerLog.wsv_nap" />
   </Function>
 </Functions>

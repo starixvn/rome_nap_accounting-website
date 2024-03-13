@@ -1,74 +1,74 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Functions SiteId="104" SiteName="NAP - Accounting">
   <Function Name ="Add member">
-    <Setting Key="Dot_BalanceDebitInitialize" SpName="Dot_BalanceDebitInitialize" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="Dot_BalanceCreditInitialize" SpName="Dot_BalanceCreditInitialize" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="Dot_BalanceDebitRemove" SpName="Dot_BalanceDebitRemove" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="Dot_BalanceCreditRemove" SpName="Dot_BalanceCreditRemove" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="Dot_BalanceDebitInitialize" SpName="Dot_BalanceDebitInitialize" DbName="DBTXN.bodb02.wsv_nap" />
+    <Setting Key="Dot_BalanceCreditInitialize" SpName="Dot_BalanceCreditInitialize" DbName="DBTXN.bodb02.wsv_nap" />
+    <Setting Key="Dot_BalanceDebitRemove" SpName="Dot_BalanceDebitRemove" DbName="DBTXN.bodb02.wsv_nap" />
+    <Setting Key="Dot_BalanceCreditRemove" SpName="Dot_BalanceCreditRemove" DbName="DBTXN.bodb02.wsv_nap" />
   </Function>
   <Function Name="Finance">
-    <Setting Key="Acc_CustomerSelForexAccount" SpName="Acc_CustomerSelForexAccount" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_CustomerSelForexAccount" SpName="Acc_CustomerSelForexAccount" DbName="DBTXN.bodb02.wsv_nap" />
   </Function>
   <Function Name="Transfer">
-    <Setting Key="Acc_FinanceCrossTransferMulUpd" SpName="Acc_FinanceCrossTransferMulUpd" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
-    <Setting Key="Acc_FinanceCrossTransferBettransIns" SpName="Acc_FinanceCrossTransferBettransIns" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
-    <Setting Key="SiteDB_Acc_FinanceCrossTransferBettransIns" SpName="SiteDB_Acc_FinanceCrossTransferBettransIns" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
-    <Setting Key="Acc_FinanceCrossTransferMulUpd_WrtieLog" SpName="Acc_FinanceCrossTransferMulUpd_WrtieLog" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
-    <Setting Key="Acc_FinanceTransferMulUpd" SpName="Acc_FinanceTransferMulUpd" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
-    <Setting Key="Acc_FinanceTransferBettransIns" SpName="Acc_FinanceTransferBettransIns" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
-    <Setting Key="SiteDB_Acc_FinanceTransferBettransIns" SpName="SiteDB_Acc_FinanceTransferBettransIns" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
-    <Setting Key="Acc_FinanceTransferMulUpd_WrtieLog" SpName="Acc_FinanceTransferMulUpd_WrtieLog" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
-    <Setting Key="Acc_BettransInsTransaction" SpName="Acc_BettransInsTransaction" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
-    <Setting Key="Acc_CustomerInsClearBalance" SpName="Acc_CustomerInsClearBalance" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
-    <Setting Key="Acc_BettransInsTransferAllMembers" SpName="Acc_BettransInsTransferAllMembers" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
-    <Setting Key="Acc_ClearBalanceAllDownlines" SpName="Acc_ClearBalanceAllDownlines" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
-    <Setting Key="Acc_DailyTxn_UpdChecker" SpName="Acc_DailyTxn_UpdChecker" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_BettransDelTransaction" SpName="Acc_BettransDelTransaction" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_BettransInsCrossTransfer" SpName="Acc_BettransInsCrossTransfer" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="SiteDB_Acc_BettransInsCrossTransfer" SpName="SiteDB_Acc_BettransInsCrossTransfer" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_BettransInsTransfer" SpName="Acc_BettransInsTransfer" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="SiteDB_Acc_BettransInsTransfer" SpName="SiteDB_Acc_BettransInsTransfer" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="SiteDB_Acc_Transfer_Rollback" SpName="SiteDB_Acc_Transfer_Rollback" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="SiteDB_Acc_ReverseTransfer_Rollback" SpName="SiteDB_Acc_ReverseTransfer_Rollback" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_FinanceCrossTransferMulUpd" SpName="Acc_FinanceCrossTransferMulUpd" DbName="DBTXN.bodb02.wsv_nap"></Setting>
+    <Setting Key="Acc_FinanceCrossTransferBettransIns" SpName="Acc_FinanceCrossTransferBettransIns" DbName="DBTXN.bodb02.wsv_nap"></Setting>
+    <Setting Key="SiteDB_Acc_FinanceCrossTransferBettransIns" SpName="SiteDB_Acc_FinanceCrossTransferBettransIns" DbName="DBTXN.bodb02.wsv_nap"></Setting>
+    <Setting Key="Acc_FinanceCrossTransferMulUpd_WrtieLog" SpName="Acc_FinanceCrossTransferMulUpd_WrtieLog" DbName="DBTXN.bodb02.wsv_nap"></Setting>
+    <Setting Key="Acc_FinanceTransferMulUpd" SpName="Acc_FinanceTransferMulUpd" DbName="DBTXN.bodb02.wsv_nap"></Setting>
+    <Setting Key="Acc_FinanceTransferBettransIns" SpName="Acc_FinanceTransferBettransIns" DbName="DBTXN.bodb02.wsv_nap"></Setting>
+    <Setting Key="SiteDB_Acc_FinanceTransferBettransIns" SpName="SiteDB_Acc_FinanceTransferBettransIns" DbName="DBTXN.bodb02.wsv_nap"></Setting>
+    <Setting Key="Acc_FinanceTransferMulUpd_WrtieLog" SpName="Acc_FinanceTransferMulUpd_WrtieLog" DbName="DBTXN.bodb02.wsv_nap"></Setting>
+    <Setting Key="Acc_BettransInsTransaction" SpName="Acc_BettransInsTransaction" DbName="DBTXN.bodb02.wsv_nap"></Setting>
+    <Setting Key="Acc_CustomerInsClearBalance" SpName="Acc_CustomerInsClearBalance" DbName="DBTXN.bodb02.wsv_nap"></Setting>
+    <Setting Key="Acc_BettransInsTransferAllMembers" SpName="Acc_BettransInsTransferAllMembers" DbName="DBTXN.bodb02.wsv_nap"></Setting>
+    <Setting Key="Acc_ClearBalanceAllDownlines" SpName="Acc_ClearBalanceAllDownlines" DbName="DBTXN.bodb02.wsv_nap"></Setting>
+    <Setting Key="Acc_DailyTxn_UpdChecker" SpName="Acc_DailyTxn_UpdChecker" DbName="DBTXN.bodb02.wsv_nap" />
+    <Setting Key="Acc_BettransDelTransaction" SpName="Acc_BettransDelTransaction" DbName="DBTXN.bodb02.wsv_nap" />
+    <Setting Key="Acc_BettransInsCrossTransfer" SpName="Acc_BettransInsCrossTransfer" DbName="DBTXN.bodb02.wsv_nap" />
+    <Setting Key="SiteDB_Acc_BettransInsCrossTransfer" SpName="SiteDB_Acc_BettransInsCrossTransfer" DbName="DBTXN.bodb02.wsv_nap" />
+    <Setting Key="Acc_BettransInsTransfer" SpName="Acc_BettransInsTransfer" DbName="DBTXN.bodb02.wsv_nap" />
+    <Setting Key="SiteDB_Acc_BettransInsTransfer" SpName="SiteDB_Acc_BettransInsTransfer" DbName="DBTXN.bodb02.wsv_nap" />
+    <Setting Key="SiteDB_Acc_Transfer_Rollback" SpName="SiteDB_Acc_Transfer_Rollback" DbName="DBTXN.bodb02.wsv_nap" />
+    <Setting Key="SiteDB_Acc_ReverseTransfer_Rollback" SpName="SiteDB_Acc_ReverseTransfer_Rollback" DbName="DBTXN.bodb02.wsv_nap" />
   </Function>
   <Function Name="Reset Winning">
-    <Setting Key="Acc_ResetWinning_Ins" SpName="Acc_ResetWinning_Ins" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_ResetWinning_Ins" SpName="Acc_ResetWinning_Ins" DbName="DBTXN.bodb02.wsv_nap" />
   </Function>
   <Function Name="PT Setting Information">
-    <Setting Key="PositionTaking_RefSportTypeAndBetType" SpName="Acc_CustomerSelRefSport_Bettype" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="PositionTaking_RefSportTypeAndBetType" SpName="Acc_CustomerSelRefSport_Bettype" DbName="DBTXN.bodb02.wsv_nap" />
   </Function>
   <Function Name="Balance checking">
-    <Setting Key="Acc_BalanceMemberSelectAll" SpName="Acc_BalanceMemberSelectAll" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_BalanceMemberSelectAll" SpName="Acc_BalanceMemberSelectAll" DbName="DBTXN.bodb02.wsv_nap" />
   </Function>
   <Function Name="Ex.rate">
-    <Setting Key="Acc_ExchangeRateSel" SpName="Acc_ExchangeRateSel" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_ExchangeRateSelInvalid" SpName="Acc_ExchangeRateSelInvalid" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_ExchangeRateIns" SpName="Acc_ExchangeRateIns" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_ExchangeRateUpd" SpName="Acc_ExchangeRateUpd" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_ExchangeRateSelHistory" SpName="Acc_ExchangeRateSelHistory" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_ChangeRate_Prepare_Upd" SpName="Acc_ChangeRate_Prepare_Upd" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_ChangeRate_Main_Upd" SpName="Acc_ChangeRate_Main_Upd" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_ExchangeRateSel" SpName="Acc_ExchangeRateSel" DbName="DBTXN.bodb02.wsv_nap" />
+    <Setting Key="Acc_ExchangeRateSelInvalid" SpName="Acc_ExchangeRateSelInvalid" DbName="DBTXN.bodb02.wsv_nap" />
+    <Setting Key="Acc_ExchangeRateIns" SpName="Acc_ExchangeRateIns" DbName="DBTXN.bodb02.wsv_nap" />
+    <Setting Key="Acc_ExchangeRateUpd" SpName="Acc_ExchangeRateUpd" DbName="DBTXN.bodb02.wsv_nap" />
+    <Setting Key="Acc_ExchangeRateSelHistory" SpName="Acc_ExchangeRateSelHistory" DbName="DBTXN.bodb02.wsv_nap" />
+    <Setting Key="Acc_ChangeRate_Prepare_Upd" SpName="Acc_ChangeRate_Prepare_Upd" DbName="DBTXN.bodb02.wsv_nap" />
+    <Setting Key="Acc_ChangeRate_Main_Upd" SpName="Acc_ChangeRate_Main_Upd" DbName="DBTXN.bodb02.wsv_nap" />
   </Function>
   <Function Name="Account Info">
-    <Setting Key="Acc_BalanceMemberSel" SpName="Acc_BalanceMemberSel" DbName="DBTXN.BODB02.bodbAdminNet" Plain="0" />
-    <Setting Key="Acc_CustomerTotalAmountSel" SpName="Acc_CustomerTotalAmountSel" DbName="DBTXN.BODB02.bodbAdminNet" Plain="0" />
+    <Setting Key="Acc_BalanceMemberSel" SpName="Acc_BalanceMemberSel" DbName="DBTXN.BODB02.wsv_nap" Plain="0" />
+    <Setting Key="Acc_CustomerTotalAmountSel" SpName="Acc_CustomerTotalAmountSel" DbName="DBTXN.BODB02.wsv_nap" Plain="0" />
   </Function>
   <Function Name="Mangage Move Bet Schedule">
-    <Setting Key="Acc_Manual_MoveBet_Sel" SpName="Acc_Manual_MoveBet_Sel" DbName="DBTXN.bodb02.bodbAdminNet" Plain="0" />
-    <Setting Key="Acc_Manual_MoveBet_Adjust" SpName="Acc_Manual_MoveBet_Adjust" DbName="DBTXN.bodb02.bodbAdminNet" Plain="0" />
+    <Setting Key="Acc_Manual_MoveBet_Sel" SpName="Acc_Manual_MoveBet_Sel" DbName="DBTXN.bodb02.wsv_nap" Plain="0" />
+    <Setting Key="Acc_Manual_MoveBet_Adjust" SpName="Acc_Manual_MoveBet_Adjust" DbName="DBTXN.bodb02.wsv_nap" Plain="0" />
   </Function>
   <Function Name="Customer - New Licensee">
-    <Setting Key="Task_Cust_CheckBalance_Exception_Ins" SpName="Task_Cust_CheckBalance_Exception_Ins" DbName="DBTXN.bodb02.bodbAdminNet" Plain="0" />
-    <Setting Key="Dot_BalanceInsCredit" SpName="Dot_BalanceInsCredit" DbName="DBTXN.bodb02.bodbAdminNet" Plain="0" />
-    <Setting Key="Dot_BalanceInsDebit" SpName="Dot_BalanceInsDebit" DbName="DBTXN.bodb02.bodbAdminNet" Plain="0" />
+    <Setting Key="Task_Cust_CheckBalance_Exception_Ins" SpName="Task_Cust_CheckBalance_Exception_Ins" DbName="DBTXN.bodb02.wsv_nap" Plain="0" />
+    <Setting Key="Dot_BalanceInsCredit" SpName="Dot_BalanceInsCredit" DbName="DBTXN.bodb02.wsv_nap" Plain="0" />
+    <Setting Key="Dot_BalanceInsDebit" SpName="Dot_BalanceInsDebit" DbName="DBTXN.bodb02.wsv_nap" Plain="0" />
   </Function>
   <Function Name="ResetWinning">
-    <Setting Key="Task_ResetWinning_Non3rdParty_Add" SpName="Task_ResetWinning_Non3rdParty_Add" DbName="DBTXN.bodb02.bodbAdminNet" TimeOut="0" />
+    <Setting Key="Task_ResetWinning_Non3rdParty_Add" SpName="Task_ResetWinning_Non3rdParty_Add" DbName="DBTXN.bodb02.wsv_nap" TimeOut="0" />
   </Function>
   <Function Name="Update ABDT">
-    <Setting Key="Age_ClearBalanceCust_Job_StatusCheck" SpName="Age_ClearBalanceCust_Job_StatusCheck" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="Age_ClearBalanceCust_Job_StatusCheck" SpName="Age_ClearBalanceCust_Job_StatusCheck" DbName="DBTXN.bodb02.wsv_nap" />
   </Function>
   <Function Name="Parlay Max Payout Info">
-    <Setting Key="Acc_SabaVirtualSportsBetSettingRef_Sel" SpName="Acc_SabaVirtualSportsBetSettingRef_Sel" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_SabaVirtualSportsBetSettingRef_Sel" SpName="Acc_SabaVirtualSportsBetSettingRef_Sel" DbName="DBTXN.bodb02.wsv_nap" />
   </Function>
 </Functions>
