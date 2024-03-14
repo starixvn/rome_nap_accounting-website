@@ -130,7 +130,7 @@ $.fn.forceNumber = function () {
         if (usernamesValue.indexOf("\n") >= 0
             || usernamesValue.indexOf("\r") >= 0
             || usernamesValue.indexOf("\\") >= 0) {
-            showError("You are not allowed to input [Enter] and backslash '\\' into the Usernames field.");
+            showError("You are not allowed to input [Enter], [Space] and backslash '\\' into the Usernames field.");
             return;
         }
 
@@ -149,6 +149,13 @@ $.fn.forceNumber = function () {
                 return $.trim(item);
             })
             .sort();
+
+        for (var i = 0, max = usernamesArray.length; i <= max - 1; i++) {
+            if (usernamesArray[i].indexOf(" ") >= 0) {
+                showError("You are not allowed to input [Enter], [Space] and backslash '\\' into the Usernames field.");
+                return;
+            }
+        }
 
         // Check duplicate.
         for (var i = 0, max = usernamesArray.length; i < max - 1; i++) {
@@ -460,7 +467,7 @@ $.fn.forceNumber = function () {
             } else {
                 htmlOptions.push('<option value="');
                 htmlOptions.push(item.SiteName + '"');
-                if (existedUser.site == child.SiteName) {
+                if (existedUser.site == item.SiteName) {
                     htmlOptions.push('selected="selected"');
                 }
                 htmlOptions.push('>');
