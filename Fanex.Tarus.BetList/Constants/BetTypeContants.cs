@@ -17,6 +17,7 @@
         public const int MixParlay = 9;
         public const int SystemParlay = 29;
         public const int MixParlayVirtualSports2 = 2799;
+        public const int MixParlayEdgeGamingVS4 = 10449;
 
         public const int _5MinOU = 51;
         public const int _15MinOU = 52;
