@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Functions SiteId="104" SiteName="NAP - Accounting">
   <Function Name="Message">
-    <Setting Key="Age_MsgCustReadStatus_Ins" SpName="Age_MsgCustReadStatus_Ins" DbName="DBMSG.bodb_Message.bodbAdminNet" />
-    <Setting Key="Acc_Msg_Remove" SpName="Acc_Msg_Remove" DbName="DBMSG.bodb_Message.bodbAdminNet" />
-    <Setting Key="Dot_Msg_SetMessage" SpName="Dot_Msg_SetMessage" DbName="DBMSG.bodb_Message.bodbAdminNet" />
-    <Setting Key="Dot_Msg_SetUsrMessage" SpName="Dot_Msg_SetUsrMessage" DbName="DBMSG.bodb_Message.bodbAdminNet" />
-    <Setting Key="Age_ToastMessage_Ins" SpName="Age_ToastMessage_Ins" DbName="DBMSG.bodb_Message.bodbAdminNet" />
-    <Setting Key="Age_Msg_SetMessage" SpName="Age_Msg_SetMessage" DbName="DBMSG.bodb_Message.bodbAdminNet" />
-    <Setting Key="Age_Msg_SetUsrMessage" SpName="Age_Msg_SetUsrMessage" DbName="DBMSG.bodb_Message.bodbAdminNet" />
+    <Setting Key="Age_MsgCustReadStatus_Ins" SpName="Age_MsgCustReadStatus_Ins" DbName="DBMSG.bodb_Message.wsv_nap" />
+    <Setting Key="Acc_Msg_Remove" SpName="Acc_Msg_Remove" DbName="DBMSG.bodb_Message.wsv_nap" />
+    <Setting Key="Dot_Msg_SetMessage" SpName="Dot_Msg_SetMessage" DbName="DBMSG.bodb_Message.wsv_nap" />
+    <Setting Key="Dot_Msg_SetUsrMessage" SpName="Dot_Msg_SetUsrMessage" DbName="DBMSG.bodb_Message.wsv_nap" />
+    <Setting Key="Age_ToastMessage_Ins" SpName="Age_ToastMessage_Ins" DbName="DBMSG.bodb_Message.wsv_nap" />
+    <Setting Key="Age_Msg_SetMessage" SpName="Age_Msg_SetMessage" DbName="DBMSG.bodb_Message.wsv_nap" />
+    <Setting Key="Age_Msg_SetUsrMessage" SpName="Age_Msg_SetUsrMessage" DbName="DBMSG.bodb_Message.wsv_nap" />
   </Function>
   <Function Name="Ticket To Group Headline">
-    <Setting Key="Acc_Msg_Check" SpName="Acc_Msg_Check" DbName="DBMSG.bodb_Message.bodbAdminNet" />
+    <Setting Key="Acc_Msg_Check" SpName="Acc_Msg_Check" DbName="DBMSG.bodb_Message.wsv_nap" />
   </Function>
 </Functions>

@@ -325,7 +325,7 @@ BEGIN
 		isnull(@DisableDownlines153_51,0)	AS DisableDownlines
 		
 	SELECT * FROM @tmpTable
-	--GRANT EXECUTE ON [dbo].[Acc_CustomerSelHRStatus_andy] TO bodbAdminNet;
+	--GRANT EXECUTE ON [dbo].[Acc_CustomerSelHRStatus_andy] TO wsv_nap;
 	--GRANT EXECUTE ON [dbo].[Acc_CustomerSelHRStatus_andy] TO bodbExtAccNet;
 	--GRANT EXECUTE ON [dbo].[Acc_CustomerSelHRStatus_andy] TO bodbDownlineNet;
 END
@@ -510,7 +510,7 @@ BEGIN
 		END	
 	END
 	
-	--GRANT EXECUTE ON [dbo].[Acc_CustomerUpdHRStatus_andy] TO bodbAdminNet;
+	--GRANT EXECUTE ON [dbo].[Acc_CustomerUpdHRStatus_andy] TO wsv_nap;
 	--GRANT EXECUTE ON [dbo].[Acc_CustomerUpdHRStatus_andy] TO bodbExtAccNet;
 	--GRANT EXECUTE ON [dbo].[Acc_CustomerUpdHRStatus_andy] TO bodbDownlineNet;
 END

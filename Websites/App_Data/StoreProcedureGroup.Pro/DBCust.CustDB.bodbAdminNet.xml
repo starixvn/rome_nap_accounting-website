@@ -1,456 +1,456 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Functions>
   <Function Name="Customer - Third Party">
-    <Setting Key="Acc_CustomerUpdDisableSuperLive" SpName="Acc_CustomerUpdDisableSuperLive" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
-    <Setting Key="Acc_3rdProductSelSuperStatus" SpName="Acc_3rdProductSelSuperStatus" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
-    <Setting Key="Acc_3rdProductUpdSuperStatus" SpName="Acc_3rdProductUpdSuperStatus" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
-    <Setting Key="Customer_ViewPT_DepositPT" SpName="Acc_MT_GetDepositPT" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
-    <Setting Key="Customer_ThirdParty_GetCustomerSetting" SpName="Acc_Dep_CustomerSelSetting" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
-    <Setting Key="Customer_ThirdParty_UpdateCustomerSetting" SpName="Acc_Dep_CustomerUpdSetting" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerUpdDisableSuperLive" SpName="Acc_CustomerUpdDisableSuperLive" DbName="DBCust.CustDB.wsv_nap" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_3rdProductSelSuperStatus" SpName="Acc_3rdProductSelSuperStatus" DbName="DBCust.CustDB.wsv_nap" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_3rdProductUpdSuperStatus" SpName="Acc_3rdProductUpdSuperStatus" DbName="DBCust.CustDB.wsv_nap" Plain="0" TimeOut="600" />
+    <Setting Key="Customer_ViewPT_DepositPT" SpName="Acc_MT_GetDepositPT" DbName="DBCust.CustDB.wsv_nap" Plain="0" TimeOut="600" />
+    <Setting Key="Customer_ThirdParty_GetCustomerSetting" SpName="Acc_Dep_CustomerSelSetting" DbName="DBCust.CustDB.wsv_nap" Plain="0" TimeOut="600" />
+    <Setting Key="Customer_ThirdParty_UpdateCustomerSetting" SpName="Acc_Dep_CustomerUpdSetting" DbName="DBCust.CustDB.wsv_nap" Plain="0" TimeOut="600" />
   </Function>
   <Function Name="AG Casino">
-    <Setting Key="Acc_CustomerUpdAGCasinoSetting" SpName="Acc_AGC_UpdSuperSetting" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
-    <Setting Key="Acc_CustomerUpdAGCasinoStatus" SpName="Acc_AGC_UpdSuperStatus" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
-    <Setting Key="Customer_AGCasino_GetCustomerSetting" SpName="Acc_AGC_SelSuperSetting" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerUpdAGCasinoSetting" SpName="Acc_AGC_UpdSuperSetting" DbName="DBCust.CustDB.wsv_nap" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerUpdAGCasinoStatus" SpName="Acc_AGC_UpdSuperStatus" DbName="DBCust.CustDB.wsv_nap" Plain="0" TimeOut="600" />
+    <Setting Key="Customer_AGCasino_GetCustomerSetting" SpName="Acc_AGC_SelSuperSetting" DbName="DBCust.CustDB.wsv_nap" Plain="0" TimeOut="600" />
   </Function>
   <Function Name="Helper">
-    <Setting Key="Age_LoginAdminVerifyTicket" SpName="Age_LoginAdminVerifyTicket" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Age_LoginAdminVerifyTicket" SpName="Age_LoginAdminVerifyTicket" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Customer - Setting">
-    <Setting Key="Acc_CustOverrideUpd" SpName="Acc_CustOverrideUpd" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerInsMember_Ag" SpName="Acc_CustomerInsMember_Ag" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="CustomerSetting_InsertSuper" SpName="Acc_CustomerInsMember_Com" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerInsMember_MAg" SpName="Acc_CustomerInsMember_MAg" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerInsMember_SAg" SpName="Acc_CustomerInsMember_SAg" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdDoubleCommLosing" SpName="Acc_CustomerUpdDoubleCommLosing" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerSettingsCloneFromRealAccount" SpName="Acc_CustomerSettingsCloneFromRealAccount" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustSetting_DCSSettingCopyInsertMember" SpName="Acc_CustSetting_DCSSettingCopyInsertMember" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_SiteDBConfigSel" SpName="Acc_SiteDBConfigSel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustOverrideUpd" SpName="Acc_CustOverrideUpd" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerInsMember_Ag" SpName="Acc_CustomerInsMember_Ag" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="CustomerSetting_InsertSuper" SpName="Acc_CustomerInsMember_Com" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerInsMember_MAg" SpName="Acc_CustomerInsMember_MAg" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerInsMember_SAg" SpName="Acc_CustomerInsMember_SAg" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerUpdDoubleCommLosing" SpName="Acc_CustomerUpdDoubleCommLosing" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerSettingsCloneFromRealAccount" SpName="Acc_CustomerSettingsCloneFromRealAccount" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustSetting_DCSSettingCopyInsertMember" SpName="Acc_CustSetting_DCSSettingCopyInsertMember" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_SiteDBConfigSel" SpName="Acc_SiteDBConfigSel" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Customer Status">
 
-    <Setting Key="Acc_CustomerUpdLocked" SpName="Acc_CustomerUpdLocked" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
+    <Setting Key="Acc_CustomerUpdLocked" SpName="Acc_CustomerUpdLocked" DbName="DBCust.CustDB.wsv_nap" Plain="0" />
   </Function>
   <Function Name="Sportbook">
-    <Setting Key="Acc_CustomerUpdAgent_All" SpName="Acc_CustomerUpdAgent_All" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdClosed" SpName="Acc_CustomerUpdClosed" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdCredit" SpName="Acc_CustomerUpdCredit" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdDisableOutright" SpName="Acc_CustomerUpdDisableOutright" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdMaster_All" SpName="Acc_CustomerUpdMaster_All" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdMaster_DisableAutoMPT" SpName="Acc_CustomerUpdMaster_DisableAutoMPT" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdMember_All" SpName="Acc_CustomerUpdMember_All" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdMember_Master" SpName="Acc_CustomerUpdMember_Master" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdMember_Super" SpName="Acc_CustomerUpdMember_Super" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdNGEnableBetSetting" SpName="Acc_CustomerUpdNGEnableBetSetting" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdSuper_All" SpName="Acc_CustomerUpdSuper_All" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdSuspended" SpName="Acc_CustomerUpdSuspended" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdUserInfo" SpName="Acc_CustomerUpdUserInfo" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustDirectUpd" SpName="Acc_CustDirectUpd" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerUpdAgent_All" SpName="Acc_CustomerUpdAgent_All" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerUpdClosed" SpName="Acc_CustomerUpdClosed" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerUpdCredit" SpName="Acc_CustomerUpdCredit" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerUpdDisableOutright" SpName="Acc_CustomerUpdDisableOutright" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerUpdMaster_All" SpName="Acc_CustomerUpdMaster_All" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerUpdMaster_DisableAutoMPT" SpName="Acc_CustomerUpdMaster_DisableAutoMPT" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerUpdMember_All" SpName="Acc_CustomerUpdMember_All" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerUpdMember_Master" SpName="Acc_CustomerUpdMember_Master" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerUpdMember_Super" SpName="Acc_CustomerUpdMember_Super" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerUpdNGEnableBetSetting" SpName="Acc_CustomerUpdNGEnableBetSetting" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerUpdSuper_All" SpName="Acc_CustomerUpdSuper_All" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerUpdSuspended" SpName="Acc_CustomerUpdSuspended" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerUpdUserInfo" SpName="Acc_CustomerUpdUserInfo" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustDirectUpd" SpName="Acc_CustDirectUpd" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Virtual Rate">
-    <Setting Key="Customer_VirtualRate_UpdateMultiple" SpName="Acc_VirtualRateMulUpd" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Customer_VirtualRate_UpdateVirtualRate" SpName="Acc_CustomerUpdVirtualMultiplier" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Customer_VirtualRate_GetSportBetTypeReferences" SpName="Acc_CustomerSelReferenceVirtualRateSetting" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_CustomerVRAdjust_Confirm" SpName="Acc_CustomerVRAdjust_Confirm" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerCopyVRSetting" SpName="Acc_CustomerCopyVRSetting" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Customer_VirtualRate_UpdateMultiple" SpName="Acc_VirtualRateMulUpd" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Customer_VirtualRate_UpdateVirtualRate" SpName="Acc_CustomerUpdVirtualMultiplier" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Customer_VirtualRate_GetSportBetTypeReferences" SpName="Acc_CustomerSelReferenceVirtualRateSetting" DbName="DBTXN.bodb02.wsv_nap" />
+    <Setting Key="Acc_CustomerVRAdjust_Confirm" SpName="Acc_CustomerVRAdjust_Confirm" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerCopyVRSetting" SpName="Acc_CustomerCopyVRSetting" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Customer Credit">
-    <Setting Key="Acc_CustomerSelUsedCredit_Ag" SpName="Acc_CustomerSelUsedCredit_Ag" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerSelUsedCredit_MAg" SpName="Acc_CustomerSelUsedCredit_MAg" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerSelUsedCredit_SAg" SpName="Acc_CustomerSelUsedCredit_SAg" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdClearCredit" SpName="Acc_CustomerUpdClearCredit" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdResetMemberCredit" SpName="Acc_CustomerUpdResetMemberCredit" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerSelUsedCredit_Ag" SpName="Acc_CustomerSelUsedCredit_Ag" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerSelUsedCredit_MAg" SpName="Acc_CustomerSelUsedCredit_MAg" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerSelUsedCredit_SAg" SpName="Acc_CustomerSelUsedCredit_SAg" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerUpdClearCredit" SpName="Acc_CustomerUpdClearCredit" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerUpdResetMemberCredit" SpName="Acc_CustomerUpdResetMemberCredit" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Special Status - Function">
-    <Setting Key="Acc_CustAllowListDel" SpName="Acc_CustAllowListDel" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustAllowListIns" SpName="Acc_CustAllowListIns" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustAllowListSel" SpName="Acc_CustAllowListSel" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustAllowListUpd" SpName="Acc_CustAllowListUpd" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdAutoSuspend" SpName="Acc_CustomerUpdAutoSuspend" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="UpdateCustomerStatusAbnormal" SpName="Acc_CustomerUpdAbnormal" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdImportant" SpName="Acc_CustomerUpdImportant" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdPwdReset" SpName="Acc_CustomerUpdPwdReset" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="CS_Acc_CustomerUpdPwdReset" SpName="CS_Acc_CustomerUpdPwdReset" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdInternal" SpName="Acc_CustomerUpdInternal" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdIPLimit" SpName="Acc_CustomerUpdIPLimit" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdMatchLimit" SpName="Acc_CustomerUpdMatchLimit" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdSelectedBetting" SpName="Acc_CustomerUpdSelectedBetting" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdUserGroup" SpName="Acc_CustomerUserGroupWrapper_Upd" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdUserName" SpName="Acc_CustomerUpdUserName" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerList_SuspendInfoSel" SpName="Acc_CustomerList_SuspendInfoSel" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_Customer_SuspendInfoSel" SpName="Acc_Customer_SuspendInfoSel" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_Customer_SuspendInfoDetailSel" SpName="Acc_Customer_SuspendInfoDetailSel" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_Customer_SuspendInfoMatrixSel" SpName="Acc_Customer_SuspendInfoMatrixSel" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_Customer_CloseInfoSel" SpName="Acc_Customer_CloseInfoSel" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_Customer_CloseInfoDetailSel" SpName="Acc_Customer_CloseInfoDetailSel" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_Customer_CloseInfoMatrixSel" SpName="Acc_Customer_CloseInfoMatrixSel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustAllowListDel" SpName="Acc_CustAllowListDel" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustAllowListIns" SpName="Acc_CustAllowListIns" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustAllowListSel" SpName="Acc_CustAllowListSel" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustAllowListUpd" SpName="Acc_CustAllowListUpd" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerUpdAutoSuspend" SpName="Acc_CustomerUpdAutoSuspend" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="UpdateCustomerStatusAbnormal" SpName="Acc_CustomerUpdAbnormal" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerUpdImportant" SpName="Acc_CustomerUpdImportant" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerUpdPwdReset" SpName="Acc_CustomerUpdPwdReset" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="CS_Acc_CustomerUpdPwdReset" SpName="CS_Acc_CustomerUpdPwdReset" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerUpdInternal" SpName="Acc_CustomerUpdInternal" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerUpdIPLimit" SpName="Acc_CustomerUpdIPLimit" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerUpdMatchLimit" SpName="Acc_CustomerUpdMatchLimit" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerUpdSelectedBetting" SpName="Acc_CustomerUpdSelectedBetting" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerUpdUserGroup" SpName="Acc_CustomerUserGroupWrapper_Upd" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerUpdUserName" SpName="Acc_CustomerUpdUserName" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerList_SuspendInfoSel" SpName="Acc_CustomerList_SuspendInfoSel" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_Customer_SuspendInfoSel" SpName="Acc_Customer_SuspendInfoSel" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_Customer_SuspendInfoDetailSel" SpName="Acc_Customer_SuspendInfoDetailSel" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_Customer_SuspendInfoMatrixSel" SpName="Acc_Customer_SuspendInfoMatrixSel" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_Customer_CloseInfoSel" SpName="Acc_Customer_CloseInfoSel" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_Customer_CloseInfoDetailSel" SpName="Acc_Customer_CloseInfoDetailSel" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_Customer_CloseInfoMatrixSel" SpName="Acc_Customer_CloseInfoMatrixSel" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Move Customer">
-    <Setting Key="Acc_CustomerUpdMoveAgent" SpName="Acc_CustomerUpdMoveAgent" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdMoveMaster" SpName="Acc_CustomerUpdMoveMaster" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerUpdMoveAgent" SpName="Acc_CustomerUpdMoveAgent" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerUpdMoveMaster" SpName="Acc_CustomerUpdMoveMaster" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Customer - Move Site">
-    <Setting Key="Acc_CustomerUpdMoveSite" SpName="Acc_CustomerUpdMoveSite" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerUpdMoveSite" SpName="Acc_CustomerUpdMoveSite" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Security Code">
-    <Setting Key="DBA_ResetSecurityCode_Agent" SpName="Acc_CustomerUpdSecurityCode" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="DBA_ResetSecurityCode_Agent" SpName="Acc_CustomerUpdSecurityCode" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Customer - New Licensee">
-    <Setting Key="NewLicensee_AdNewMember" SpName="Acc_Dep_CustomerInsMember_Ag" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NewLicensee_AdNewSuper" SpName="Acc_Dep_CustomerInsMember_Com" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NewLicensee_AdNewAgent" SpName="Acc_Dep_CustomerInsMember_MAg" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NewLicensee_AdNewMaster" SpName="Acc_Dep_CustomerInsMember_SAg" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="DepositCust_UpdateMemberSetting" SpName="Acc_Dep_CustomerUpdMember_Ag" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="DepositCust_UpdateSuperSetting" SpName="Acc_Dep_CustomerUpdMember_Com" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="DepositCust_UpdateAgentSetting" SpName="Acc_Dep_CustomerUpdMember_MAg" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="DepositCust_UpdateMasterSetting" SpName="Acc_Dep_CustomerUpdMember_SAg" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NewLicensee_AdNewMember" SpName="Acc_Dep_CustomerInsMember_Ag" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NewLicensee_AdNewSuper" SpName="Acc_Dep_CustomerInsMember_Com" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NewLicensee_AdNewAgent" SpName="Acc_Dep_CustomerInsMember_MAg" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NewLicensee_AdNewMaster" SpName="Acc_Dep_CustomerInsMember_SAg" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="DepositCust_UpdateMemberSetting" SpName="Acc_Dep_CustomerUpdMember_Ag" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="DepositCust_UpdateSuperSetting" SpName="Acc_Dep_CustomerUpdMember_Com" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="DepositCust_UpdateAgentSetting" SpName="Acc_Dep_CustomerUpdMember_MAg" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="DepositCust_UpdateMasterSetting" SpName="Acc_Dep_CustomerUpdMember_SAg" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Admin - BA Customer">
-    <Setting Key="AutoFollowBetSelBACus" SpName="Acc_AutoFollowBetSelBACustomer" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="AutoFollowBetInsBACus" SpName="Acc_AutoFollowBetInsBACustomer" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="AutoFollowBetSelBACus" SpName="Acc_AutoFollowBetSelBACustomer" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="AutoFollowBetInsBACus" SpName="Acc_AutoFollowBetInsBACustomer" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Transfer">
-    <Setting Key="Acc_CustomerUpdTransferOption" SpName="Acc_CustomerUpdTransferOption" DbName="DBCust.CustDB.bodbAdminNet">
+    <Setting Key="Acc_CustomerUpdTransferOption" SpName="Acc_CustomerUpdTransferOption" DbName="DBCust.CustDB.wsv_nap">
     </Setting>
-    <Setting Key="Acc_BettransInsTransfer_Confirm" SpName="Acc_BettransInsTransfer_Confirm" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdAllDayBalTransfer" SpName="Acc_CustomerUpdAllDayBalTransfer" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpd_IsAutoEnableADBMaster" SpName="Acc_CustomerUpd_IsAutoEnableADBMaster" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerSelSuperAutoTransfer" SpName="Acc_CustomerSelSuperAutoTransfer" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Age_ClearBalanceCust_SettingUpdate_Downline" SpName="Age_ClearBalanceCust_SettingUpdate_Downline" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_BettransInsTransfer_Confirm" SpName="Acc_BettransInsTransfer_Confirm" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerUpdAllDayBalTransfer" SpName="Acc_CustomerUpdAllDayBalTransfer" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerUpd_IsAutoEnableADBMaster" SpName="Acc_CustomerUpd_IsAutoEnableADBMaster" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerSelSuperAutoTransfer" SpName="Acc_CustomerSelSuperAutoTransfer" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Age_ClearBalanceCust_SettingUpdate_Downline" SpName="Age_ClearBalanceCust_SettingUpdate_Downline" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Credit Term">
-    <Setting Key="Acc_CreditTermUpdAddToGroup" SpName="Acc_CreditTermUpdAddToGroup" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CreditTermUpdCustomer" SpName="Acc_CreditTermUpdCustomer" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CreditTermUpdIsViewReport" SpName="Acc_CreditTermUpdIsRptConsol" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CreditTermUpdRemoveFromGroup" SpName="Acc_CreditTermUpdRemoveFromGroup" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CreditTermUpdSetGroupHeadline" SpName="Acc_CreditTermUpdSetGroupHeadline" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CreditTermUpdAddToGroup" SpName="Acc_CreditTermUpdAddToGroup" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CreditTermUpdCustomer" SpName="Acc_CreditTermUpdCustomer" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CreditTermUpdIsViewReport" SpName="Acc_CreditTermUpdIsRptConsol" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CreditTermUpdRemoveFromGroup" SpName="Acc_CreditTermUpdRemoveFromGroup" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CreditTermUpdSetGroupHeadline" SpName="Acc_CreditTermUpdSetGroupHeadline" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="User control">
-    <Setting Key="Con_AdminIns" SpName="Acc_Con_AdminIns" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_Con_AdminSelPwdVerify" SpName="Acc_Con_AdminSelPwdVerify" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Con_AdminUpd" SpName="Acc_Con_AdminUpd" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="AdminUpdClosed" SpName="Acc_Con_AdminUpdClosed" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_OperatorDel" SpName="Acc_OperatorDel" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_OperatorIns" SpName="Acc_OperatorIns" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_OperatorUpd" SpName="Acc_OperatorUpd" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Con_AdminIns" SpName="Acc_Con_AdminIns" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_Con_AdminSelPwdVerify" SpName="Acc_Con_AdminSelPwdVerify" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Con_AdminUpd" SpName="Acc_Con_AdminUpd" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="AdminUpdClosed" SpName="Acc_Con_AdminUpdClosed" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_OperatorDel" SpName="Acc_OperatorDel" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_OperatorIns" SpName="Acc_OperatorIns" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_OperatorUpd" SpName="Acc_OperatorUpd" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Customer - Login">
-    <Setting Key="Acc_LoginAdmin" SpName="Acc_LoginAdmin" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_LoginAdmin" SpName="Acc_LoginAdmin" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Exchange Daily">
-    <Setting Key="Acc_ExchangeIns" SpName="Acc_ExchangeIns" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_ExchangeSel" SpName="Acc_ExchangeSel" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="EchangeUpd" SpName="Acc_ExchangeUpd" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="ExchangeDailyCryptoUpd" SpName="Acc_ExchangeDaily_Crypto_Upd" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="EchangeSelById" SpName="Acc_ExchangeSelByID" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_ExchangeIns" SpName="Acc_ExchangeIns" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_ExchangeSel" SpName="Acc_ExchangeSel" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="EchangeUpd" SpName="Acc_ExchangeUpd" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="ExchangeDailyCryptoUpd" SpName="Acc_ExchangeDaily_Crypto_Upd" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="EchangeSelById" SpName="Acc_ExchangeSelByID" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="External Betting Limit">
-    <Setting Key="Age_CustomerUpdMemBetSetting" SpName="Age_CustomerUpdMemBetSetting" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
+    <Setting Key="Age_CustomerUpdMemBetSetting" SpName="Age_CustomerUpdMemBetSetting" DbName="DBCust.CustDB.wsv_nap" Plain="0" />
   </Function>
   <Function Name="SearchCopy">
-    <Setting Key="Acc_CustomerSelExistingUsernames" SpName="Acc_CustomerSelExistingUsernames" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerInsMember_CloneSetting_Com" SpName="Acc_CustomerInsMember_CloneSetting_Com" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUplineUserNameSel" SpName="Acc_CustomerUplineUserNameSel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerSelExistingUsernames" SpName="Acc_CustomerSelExistingUsernames" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerInsMember_CloneSetting_Com" SpName="Acc_CustomerInsMember_CloneSetting_Com" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerUplineUserNameSel" SpName="Acc_CustomerUplineUserNameSel" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Esports">
-    <Setting Key="Acc_CustomerUpdDisableEsports" SpName="Acc_CustomerUpdDisableEsports" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerUpdDisableEsports" SpName="Acc_CustomerUpdDisableEsports" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="ConfigureDirectAccount">
-    <Setting Key="Customer_ConfigureDirectAccount_UpdateStatus" SpName="Acc_CustomerUpdDirectStatus" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Customer_ConfigureDirectAccount_UpdateImportDirectAccount" SpName="Acc_CustDirectMulUpd" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Customer_ConfigureDirectAccount_UpdateStatusEffect" SpName="Acc_CustDirectListAffected" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Customer_ConfigureDirectAccount_UpdateStatus" SpName="Acc_CustomerUpdDirectStatus" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Customer_ConfigureDirectAccount_UpdateImportDirectAccount" SpName="Acc_CustDirectMulUpd" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Customer_ConfigureDirectAccount_UpdateStatusEffect" SpName="Acc_CustDirectListAffected" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Agent's yesterday balance">
-    <Setting Key="Acc_CustomerSelAutoTransferAgent" SpName="Acc_CustomerSelAutoTransferAgent" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
-    <Setting Key="Acc_CustomerInsAutoTransferAgent" SpName="Acc_CustomerInsAutoTransferAgent" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
-    <Setting Key="Acc_CustomerCheckValidAutoTransferAgent" SpName="Acc_CustomerCheckValidAutoTransferAgent" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
-    <Setting Key="Acc_CustomerInsAutoTransferAgentFromFile" SpName="Acc_CustomerInsAutoTransferAgentFromFile" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
-    <Setting Key="Acc_CustomerUpdAutoTransferAgent" SpName="Acc_CustomerUpdAutoTransferAgent" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
-    <Setting Key="Acc_CustomerDelAutoTransferAgent" SpName="Acc_CustomerDelAutoTransferAgent" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
-    <Setting Key="Acc_CustomerUpdAutoTransferAgentStatus" SpName="Acc_CustomerUpdAutoTransferAgentStatus" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerSelAutoTransferAgent" SpName="Acc_CustomerSelAutoTransferAgent" DbName="DBCust.CustDB.wsv_nap" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerInsAutoTransferAgent" SpName="Acc_CustomerInsAutoTransferAgent" DbName="DBCust.CustDB.wsv_nap" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerCheckValidAutoTransferAgent" SpName="Acc_CustomerCheckValidAutoTransferAgent" DbName="DBCust.CustDB.wsv_nap" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerInsAutoTransferAgentFromFile" SpName="Acc_CustomerInsAutoTransferAgentFromFile" DbName="DBCust.CustDB.wsv_nap" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerUpdAutoTransferAgent" SpName="Acc_CustomerUpdAutoTransferAgent" DbName="DBCust.CustDB.wsv_nap" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerDelAutoTransferAgent" SpName="Acc_CustomerDelAutoTransferAgent" DbName="DBCust.CustDB.wsv_nap" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerUpdAutoTransferAgentStatus" SpName="Acc_CustomerUpdAutoTransferAgentStatus" DbName="DBCust.CustDB.wsv_nap" Plain="0" TimeOut="600" />
   </Function>
   <Function Name="Report">
-    <Setting Key="Statement_Report_GetCustomerInformationByUsername" SpName="Acc_CustomerSelSiteByUserName" DbName="DBCust.CustDB.bodbAdminNet" Plain="0" />
+    <Setting Key="Statement_Report_GetCustomerInformationByUsername" SpName="Acc_CustomerSelSiteByUserName" DbName="DBCust.CustDB.wsv_nap" Plain="0" />
   </Function>
   <Function Name="Customer - Finance Super List">
-    <Setting Key="Acc_CustomerSelSFinance" SpName="Acc_CustomerSelFinance_SAg" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerSelBySFinance" SpName="Acc_CustomerSelFinance_MAg" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerSelByMFinance" SpName="Acc_CustomerSelFinance_Ag" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerSelByAgFinance" SpName="Acc_CustomerSelFinance_Mem" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerSelSFinance" SpName="Acc_CustomerSelFinance_SAg" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerSelBySFinance" SpName="Acc_CustomerSelFinance_MAg" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerSelByMFinance" SpName="Acc_CustomerSelFinance_Ag" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerSelByAgFinance" SpName="Acc_CustomerSelFinance_Mem" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Colossus Bet Setting">
     <Function Name="Update Setting">
-      <Setting Key="Acc_CustomerUpdDisableColossusBet" SpName="Acc_Dep_CustomerUpdDisableColossusBet" DbName="DBCust.CustDB.bodbAdminNet" />
+      <Setting Key="Acc_CustomerUpdDisableColossusBet" SpName="Acc_Dep_CustomerUpdDisableColossusBet" DbName="DBCust.CustDB.wsv_nap" />
     </Function>
   </Function>
   <Function Name="DCS">
     <Function Name="Enable Status">
-      <Setting Key="Acc_CustSetting_StatusSettingSelect" SpName="Acc_CustSetting_StatusSettingSelect" DbName="DBCust.CustDB.bodbAdminNet" />
-      <Setting Key="Acc_CustSetting_DisableStatUpd" SpName="Acc_CustSetting_DisableStatUpd" DbName="DBCust.CustDB.bodbAdminNet" />
-      <Setting Key="Acc_CustSetting_CheckIsDeposit" SpName="Acc_CustSetting_CheckIsDeposit" DbName="DBCust.CustDB.bodbAdminNet" />
-      <Setting Key="Acc_CustSetting_CheckListDeposit" SpName="Acc_CustSetting_CheckListDeposit" DbName="DBCust.CustDB.bodbAdminNet" />
-      <Setting Key="Acc_CustomerSelProductStatus" SpName="Acc_CustomerSelProductStatus" DbName="DBCust.CustDB.bodbAdminNet" />
-      <Setting Key="Acc_CustSetting_DisableNewProductStatusUpd" SpName="Acc_CustSetting_DisableNewProductStatusUpd" DbName="DBCust.CustDB.bodbAdminNet" />
-      <Setting Key="Acc_CustSetting_ListSiteSel" SpName="Acc_CustSetting_ListSiteSel" DbName="DBCust.CustDB.bodbAdminNet" />
+      <Setting Key="Acc_CustSetting_StatusSettingSelect" SpName="Acc_CustSetting_StatusSettingSelect" DbName="DBCust.CustDB.wsv_nap" />
+      <Setting Key="Acc_CustSetting_DisableStatUpd" SpName="Acc_CustSetting_DisableStatUpd" DbName="DBCust.CustDB.wsv_nap" />
+      <Setting Key="Acc_CustSetting_CheckIsDeposit" SpName="Acc_CustSetting_CheckIsDeposit" DbName="DBCust.CustDB.wsv_nap" />
+      <Setting Key="Acc_CustSetting_CheckListDeposit" SpName="Acc_CustSetting_CheckListDeposit" DbName="DBCust.CustDB.wsv_nap" />
+      <Setting Key="Acc_CustomerSelProductStatus" SpName="Acc_CustomerSelProductStatus" DbName="DBCust.CustDB.wsv_nap" />
+      <Setting Key="Acc_CustSetting_DisableNewProductStatusUpd" SpName="Acc_CustSetting_DisableNewProductStatusUpd" DbName="DBCust.CustDB.wsv_nap" />
+      <Setting Key="Acc_CustSetting_ListSiteSel" SpName="Acc_CustSetting_ListSiteSel" DbName="DBCust.CustDB.wsv_nap" />
     </Function>
   </Function>
   <Function Name="Customer Select Site">
-    <Setting Key="Acc_CustomerSelSiteByUserNameMoveSite" SpName="Acc_CustomerSelSiteByUserNameMoveSite" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerSelSiteByUserNameMoveSite" SpName="Acc_CustomerSelSiteByUserNameMoveSite" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="SMA Management">
-    <Setting Key="Acc_CustomerUpdGroupHeadlineType" SpName="Acc_CustomerUpdGroupHeadlineType" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdGroupHeadlineOwner" SpName="Acc_CustomerUpdGroupHeadlineOwner" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerUpdGroupHeadlineType" SpName="Acc_CustomerUpdGroupHeadlineType" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerUpdGroupHeadlineOwner" SpName="Acc_CustomerUpdGroupHeadlineOwner" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Colossus Bets Bet List - Get SiteId">
-    <Setting Key="Acc_CustomerSelSiteByCustId" SpName="Acc_CustomerSelSiteByCustId" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerSelSiteByCustId" SpName="Acc_CustomerSelSiteByCustId" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="OTP">
-    <Setting Key="RemoveCustomerOTP" SpName="Age_OTP_CustomerOTPDel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="RemoveCustomerOTP" SpName="Age_OTP_CustomerOTPDel" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Customer - ThirdParty">
-    <Setting Key="Acc_CustomerSelStatusByProductId" SpName="Acc_CustomerSelStatusByProductId" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_Dep_CustSetting_StatusSettingSelect" SpName="Acc_Dep_CustSetting_StatusSettingSelect" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_Dep_CustSetting_DisableStatUpd" SpName="Acc_Dep_CustSetting_DisableStatUpd" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerSelStatusByProductId" SpName="Acc_CustomerSelStatusByProductId" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_Dep_CustSetting_StatusSettingSelect" SpName="Acc_Dep_CustSetting_StatusSettingSelect" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_Dep_CustSetting_DisableStatUpd" SpName="Acc_Dep_CustSetting_DisableStatUpd" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Admin - Site management">
-    <Setting Key="NAP_Admin_VerifySiteName" SpName="NAP_Admin_VerifySiteName" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_Admin_AddNewSite" SpName="NAP_Admin_AddNewSite" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_Admin_VerifySiteName" SpName="NAP_Admin_VerifySiteName" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_Admin_AddNewSite" SpName="NAP_Admin_AddNewSite" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="External - Admin">
-    <Setting Key="Acc_GroupExtraPT_GroupByProduct_Ins" SpName="Acc_GroupExtraPT_GroupByProduct_Ins" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_GroupExtraPT_GroupByProduct_Upd" SpName="Acc_GroupExtraPT_GroupByProduct_Upd" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_GroupExtraPT_GroupByProduct_Del" SpName="Acc_GroupExtraPT_GroupByProduct_Del" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_GroupExtraPT_GroupByProduct_Sel" SpName="Acc_GroupExtraPT_GroupByProduct_Sel" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerInsSuperInfo" SpName="Acc_CustomerInsSuperInfo" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="SelectInfoCust" SpName="Acc_CustGroupSel" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="DeleteCustomer" SpName="Acc_CustGroupDel" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="AddExistCustomer" SpName="Acc_CustGroupAddByUsername_Multiple" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustGroupUpdPrimaryExtraPTGroup" SpName="Acc_CustGroupUpdPrimaryExtraPTGroup" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_GroupExtraPT_GroupByProduct_Ins" SpName="Acc_GroupExtraPT_GroupByProduct_Ins" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_GroupExtraPT_GroupByProduct_Upd" SpName="Acc_GroupExtraPT_GroupByProduct_Upd" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_GroupExtraPT_GroupByProduct_Del" SpName="Acc_GroupExtraPT_GroupByProduct_Del" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_GroupExtraPT_GroupByProduct_Sel" SpName="Acc_GroupExtraPT_GroupByProduct_Sel" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerInsSuperInfo" SpName="Acc_CustomerInsSuperInfo" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="SelectInfoCust" SpName="Acc_CustGroupSel" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="DeleteCustomer" SpName="Acc_CustGroupDel" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="AddExistCustomer" SpName="Acc_CustGroupAddByUsername_Multiple" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustGroupUpdPrimaryExtraPTGroup" SpName="Acc_CustGroupUpdPrimaryExtraPTGroup" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Customer - Edit Sportbook Commission">
-    <Setting Key="Acc_CustomerCommissionSpecAccUpd" SpName="Acc_CustomerCommissionSpecAccUpd" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerNoCommCheck" SpName="Acc_CustomerNoCommCheck" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerCommissionSpecAccUpd" SpName="Acc_CustomerCommissionSpecAccUpd" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerNoCommCheck" SpName="Acc_CustomerNoCommCheck" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Licensee DCS Setting">
-    <Setting Key="NAP_LM_LicenseeSuperList" SpName="NAP_LM_LicenseeSuperList" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerSelAgentListBySuper" SpName="Acc_CustomerSelAgentListBySuper" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_Dep_SelDCSProduct" SpName="Acc_Dep_SelDCSProduct" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_LM_LicenseeSuperList" SpName="NAP_LM_LicenseeSuperList" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerSelAgentListBySuper" SpName="Acc_CustomerSelAgentListBySuper" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_Dep_SelDCSProduct" SpName="Acc_Dep_SelDCSProduct" DbName="DBCust.CustDB.wsv_nap" />
 
     <Function Name="Setting Type 1 - Position Taking">
-      <Setting Key="Acc_Dep_CustSetting_PositionTakingSettingSelect" SpName="Acc_Dep_CustSetting_PositionTakingSettingSelect" DbName="DBCust.CustDB.bodbAdminNet" />
-      <Setting Key="Acc_Dep_CustSetting_PositionTakingSettingUpd" SpName="Acc_Dep_CustSetting_PositionTakingSettingUpd" DbName="DBCust.CustDB.bodbAdminNet" />
+      <Setting Key="Acc_Dep_CustSetting_PositionTakingSettingSelect" SpName="Acc_Dep_CustSetting_PositionTakingSettingSelect" DbName="DBCust.CustDB.wsv_nap" />
+      <Setting Key="Acc_Dep_CustSetting_PositionTakingSettingUpd" SpName="Acc_Dep_CustSetting_PositionTakingSettingUpd" DbName="DBCust.CustDB.wsv_nap" />
     </Function>
 
     <Function Name="Setting Type 2 - Bet Setting with Max Per Match">
-      <Setting Key="Acc_Dep_CustSetting_BetLimitFullLineSettingSelect" SpName="Acc_Dep_CustSetting_BetLimitFullLineSettingSelect" DbName="DBCust.CustDB.bodbAdminNet" />
-      <Setting Key="Acc_Dep_CustSetting_BetLimitFullLineUpd" SpName="Acc_Dep_CustSetting_BetLimitFullLineUpd" DbName="DBCust.CustDB.bodbAdminNet" />
+      <Setting Key="Acc_Dep_CustSetting_BetLimitFullLineSettingSelect" SpName="Acc_Dep_CustSetting_BetLimitFullLineSettingSelect" DbName="DBCust.CustDB.wsv_nap" />
+      <Setting Key="Acc_Dep_CustSetting_BetLimitFullLineUpd" SpName="Acc_Dep_CustSetting_BetLimitFullLineUpd" DbName="DBCust.CustDB.wsv_nap" />
     </Function>
 
     <Function Name="Setting Type 10 - Bet Setting with Max Payout Per Match -- Setting Type 12 - Bet Setting with Max Per Ball">
-      <Setting Key="Acc_Dep_CustSetting_Game_BetLimitFullLineSettingSelect" SpName="Acc_Dep_CustSetting_Game_BetLimitFullLineSettingSelect" DbName="DBCust.CustDB.bodbAdminNet" />
-      <Setting Key="Acc_Dep_CustSetting_Game_BetLimitFullLineUpd" SpName="Acc_Dep_CustSetting_Game_BetLimitFullLineUpd" DbName="DBCust.CustDB.bodbAdminNet" />
+      <Setting Key="Acc_Dep_CustSetting_Game_BetLimitFullLineSettingSelect" SpName="Acc_Dep_CustSetting_Game_BetLimitFullLineSettingSelect" DbName="DBCust.CustDB.wsv_nap" />
+      <Setting Key="Acc_Dep_CustSetting_Game_BetLimitFullLineUpd" SpName="Acc_Dep_CustSetting_Game_BetLimitFullLineUpd" DbName="DBCust.CustDB.wsv_nap" />
     </Function>
 
     <Function Name="Setting Type 11 - Bet Setting without Max Per Match">
-      <Setting Key="Acc_Dep_CustSetting_NewBetLimitFullLineSettingSelect" SpName="Acc_Dep_CustSetting_NewBetLimitFullLineSettingSelect" DbName="DBCust.CustDB.bodbAdminNet" />
-      <Setting Key="Acc_Dep_CustSetting_NewBetLimitFullLineUpd" SpName="Acc_Dep_CustSetting_NewBetLimitFullLineUpd" DbName="DBCust.CustDB.bodbAdminNet" />
+      <Setting Key="Acc_Dep_CustSetting_NewBetLimitFullLineSettingSelect" SpName="Acc_Dep_CustSetting_NewBetLimitFullLineSettingSelect" DbName="DBCust.CustDB.wsv_nap" />
+      <Setting Key="Acc_Dep_CustSetting_NewBetLimitFullLineUpd" SpName="Acc_Dep_CustSetting_NewBetLimitFullLineUpd" DbName="DBCust.CustDB.wsv_nap" />
     </Function>
 
     <Function Name="Setting Type 4 - Product Status">
-      <Setting Key="Acc_Dep_CustSetting_StatusSelect" SpName="Acc_Dep_CustSetting_StatusSelect" DbName="DBCust.CustDB.bodbAdminNet" />
-      <Setting Key="Acc_Dep_CustSetting_StatusUpd" SpName="Acc_Dep_CustSetting_StatusUpd" DbName="DBCust.CustDB.bodbAdminNet" />
+      <Setting Key="Acc_Dep_CustSetting_StatusSelect" SpName="Acc_Dep_CustSetting_StatusSelect" DbName="DBCust.CustDB.wsv_nap" />
+      <Setting Key="Acc_Dep_CustSetting_StatusUpd" SpName="Acc_Dep_CustSetting_StatusUpd" DbName="DBCust.CustDB.wsv_nap" />
     </Function>
 
     <Function Name="Setting Type 0 - Global Stake Level">
-      <Setting Key="Acc_Dep_CustSetting_GlobalStakeLevelSelect" SpName="Acc_Dep_CustSetting_GlobalStakeLevelSelect" DbName="DBCust.CustDB.bodbAdminNet" />
-      <Setting Key="Acc_Dep_CustSetting_GlobalStakeLevelUpdate" SpName="Acc_Dep_CustSetting_GlobalStakeLevelUpdate" DbName="DBCust.CustDB.bodbAdminNet" />
+      <Setting Key="Acc_Dep_CustSetting_GlobalStakeLevelSelect" SpName="Acc_Dep_CustSetting_GlobalStakeLevelSelect" DbName="DBCust.CustDB.wsv_nap" />
+      <Setting Key="Acc_Dep_CustSetting_GlobalStakeLevelUpdate" SpName="Acc_Dep_CustSetting_GlobalStakeLevelUpdate" DbName="DBCust.CustDB.wsv_nap" />
     </Function>
 
     <Function Name="Setting Type 7, 8 - Stake Level, Stake Group Level">
-      <Setting Key="Acc_Dep_CustSetting_StakeLevelSelect" SpName="Acc_Dep_CustSetting_StakeLevelSelect" DbName="DBCust.CustDB.bodbAdminNet" />
-      <Setting Key="Acc_Dep_CustSetting_StakeLevelGroupSelect" SpName="Acc_Dep_CustSetting_StakeLevelGroupSelect" DbName="DBCust.CustDB.bodbAdminNet" />
-      <Setting Key="Acc_Dep_CustSetting_StakeLevelUpd" SpName="Acc_Dep_CustSetting_StakeLevelUpd" DbName="DBCust.CustDB.bodbAdminNet" />
+      <Setting Key="Acc_Dep_CustSetting_StakeLevelSelect" SpName="Acc_Dep_CustSetting_StakeLevelSelect" DbName="DBCust.CustDB.wsv_nap" />
+      <Setting Key="Acc_Dep_CustSetting_StakeLevelGroupSelect" SpName="Acc_Dep_CustSetting_StakeLevelGroupSelect" DbName="DBCust.CustDB.wsv_nap" />
+      <Setting Key="Acc_Dep_CustSetting_StakeLevelUpd" SpName="Acc_Dep_CustSetting_StakeLevelUpd" DbName="DBCust.CustDB.wsv_nap" />
     </Function>
   </Function>
   <Function Name="Licensee Odds Group">
-    <Setting Key="Acc_Dep_LicenseeSelAgentList" SpName="Acc_Dep_LicenseeSelAgentList" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_Dep_LicenseeOddsGroupSelByAgent" SpName="Acc_Dep_LicenseeOddsGroupSelByAgent" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_Dep_LicenseeOddsGroupUpd" SpName="Acc_Dep_LicenseeOddsGroupUpd" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_Dep_LicenseeSelAgentList" SpName="Acc_Dep_LicenseeSelAgentList" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_Dep_LicenseeOddsGroupSelByAgent" SpName="Acc_Dep_LicenseeOddsGroupSelByAgent" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_Dep_LicenseeOddsGroupUpd" SpName="Acc_Dep_LicenseeOddsGroupUpd" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Product Status Setting">
-    <Setting Key="Acc_AdminSelStatusByProductId" SpName="Acc_AdminSelStatusByProductId" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_Admin_DisableGameStatusSelect" SpName="Acc_Admin_DisableGameStatusSelect" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_Admin_DisableNewProductStatusSelect" SpName="Acc_Admin_DisableNewProductStatusSelect" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_AdminSelStatusByProductId" SpName="Acc_AdminSelStatusByProductId" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_Admin_DisableGameStatusSelect" SpName="Acc_Admin_DisableGameStatusSelect" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_Admin_DisableNewProductStatusSelect" SpName="Acc_Admin_DisableNewProductStatusSelect" DbName="DBCust.CustDB.wsv_nap" />
 
-    <Setting Key="Acc_AdminCheckAllowedDownlinesByLevel" SpName="Acc_AdminCheckAllowedDownlinesByLevel" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_AdminUpdCSStatus_Cust" SpName="Acc_AdminUpdCSStatus_Cust" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_AdminCheckAllowedDownlinesByLevel" SpName="Acc_AdminCheckAllowedDownlinesByLevel" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_AdminUpdCSStatus_Cust" SpName="Acc_AdminUpdCSStatus_Cust" DbName="DBCust.CustDB.wsv_nap" />
 
-    <Setting Key="Acc_AdminUpdDisableColossusBet" SpName="Acc_AdminUpdDisableColossusBet" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_Admin_DisableGameStatusUpd" SpName="Acc_Admin_DisableGameStatusUpd" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_Admin_DisableNewProductStatusUpd" SpName="Acc_Admin_DisableNewProductStatusUpd" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustSetting_ProductProfileSelect" SpName="Acc_CustSetting_ProductProfileSelect" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_AdminUpdDisableColossusBet" SpName="Acc_AdminUpdDisableColossusBet" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_Admin_DisableGameStatusUpd" SpName="Acc_Admin_DisableGameStatusUpd" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_Admin_DisableNewProductStatusUpd" SpName="Acc_Admin_DisableNewProductStatusUpd" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustSetting_ProductProfileSelect" SpName="Acc_CustSetting_ProductProfileSelect" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="NAP API - Update Dangerous Customers">
-    <Setting Key="Acc_CustomerSelDangerCust" SpName="Acc_CustomerSelDangerCust" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdDangercust" SpName="Acc_CustomerUpdDangercust" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerCheckDangerCustList" SpName="Acc_CustomerCheckDangerCustList" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerSelDangerCust" SpName="Acc_CustomerSelDangerCust" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerUpdDangercust" SpName="Acc_CustomerUpdDangercust" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerCheckDangerCustList" SpName="Acc_CustomerCheckDangerCustList" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Check allow downlines">
-    <Setting Key="Acc_CustomerSelCheckAllowedDownlines" SpName="Acc_CustomerSelCheckAllowedDownlines" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerSelCheckAllowedDownlines" SpName="Acc_CustomerSelCheckAllowedDownlines" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Special Site">
-    <Setting Key="Acc_CustomerIsSpecialSite" SpName="Acc_CustomerIsSpecialSite" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerIsAllowedAccess" SpName="Acc_CustomerIsAllowedAccess" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerIsDummyAccount" SpName="Acc_CustomerIsDummyAccount" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerIsSpecialSite" SpName="Acc_CustomerIsSpecialSite" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerIsAllowedAccess" SpName="Acc_CustomerIsAllowedAccess" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerIsDummyAccount" SpName="Acc_CustomerIsDummyAccount" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Left Menu - Credit term">
-    <Setting Key="Acc_CreditTermSelCheckerList" SpName="Acc_CreditTermSelCheckerList" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CreditTermSelCheckerList" SpName="Acc_CreditTermSelCheckerList" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Admin - Max Member Limit By Super">
-    <Setting Key="Acc_MaxMemberLimitBySuperSel" SpName="Acc_MaxMemberLimitBySuperSel" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_MaxMemberLimitBySuperUpd" SpName="Acc_MaxMemberLimitBySuperUpd" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_MaxMemberLimitBySuperSel" SpName="Acc_MaxMemberLimitBySuperSel" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_MaxMemberLimitBySuperUpd" SpName="Acc_MaxMemberLimitBySuperUpd" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Left Panel - Customer Info">
-    <Setting Key="UpdateUserSearch" SpName="Acc_CustomerUpdUserSearch" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="UpdateUserSearch" SpName="Acc_CustomerUpdUserSearch" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="SuperLimitDate">
-    <Setting Key="Acc_CustomerDateLimitSel" SpName="Acc_CustomerDateLimitSel" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="EAS_CustomerDateLimitSel" SpName="EAS_CustomerDateLimitSel" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="EAS_CustomerDateLimitMultipleUpd" SpName="EAS_CustomerDateLimitMultipleUpd" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerDateLimitSel" SpName="Acc_CustomerDateLimitSel" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="EAS_CustomerDateLimitSel" SpName="EAS_CustomerDateLimitSel" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="EAS_CustomerDateLimitMultipleUpd" SpName="EAS_CustomerDateLimitMultipleUpd" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Others - PlayerID (3rd)">
-    <Setting Key="Acc_CustomerSelPlayerId" SpName="Acc_CustomerSelPlayerId" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerSelPlayerId" SpName="Acc_CustomerSelPlayerId" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Create Licensee Subsidiary">
-    <Setting Key="Acc_Dep_CustomerGenLicenseeSubUsername" SpName="Acc_Dep_CustomerGenLicenseeSubUsername" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_Dep_CustomerInsLicenseeSubsidiary" SpName="Acc_Dep_CustomerInsLicenseeSubsidiary" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_Dep_CustomerGenLicenseeSubUsername" SpName="Acc_Dep_CustomerGenLicenseeSubUsername" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_Dep_CustomerInsLicenseeSubsidiary" SpName="Acc_Dep_CustomerInsLicenseeSubsidiary" DbName="DBCust.CustDB.wsv_nap" />
   </Function>  
   <Function Name="Lock un-suspend/reopen">
-    <Setting Key="Acc_CustomerLockSuspendSel" SpName="Acc_CustomerLockSuspendSel" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="Acc_CustomerLockSuspendUpd" SpName="Acc_CustomerLockSuspendUpd" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
+    <Setting Key="Acc_CustomerLockSuspendSel" SpName="Acc_CustomerLockSuspendSel" DbName="DBCUST.CustDB.wsv_nap" Plain="0" />
+    <Setting Key="Acc_CustomerLockSuspendUpd" SpName="Acc_CustomerLockSuspendUpd" DbName="DBCUST.CustDB.wsv_nap" Plain="0" />
   </Function>
   <Function Name="Betlist by product">
-    <Setting Key="Acc_CustomerSelByPlayerId" SpName="Acc_CustomerSelByPlayerId" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerSelByPlayerId" SpName="Acc_CustomerSelByPlayerId" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Customer - Finance permission">
-    <Setting Key="Acc_SelFIPermission" SpName="Acc_SelFIPermission" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
+    <Setting Key="Acc_SelFIPermission" SpName="Acc_SelFIPermission" DbName="DBCUST.CustDB.wsv_nap" Plain="0" />
   </Function>
   <Function Name="Admin - Manage Username Prefix">
-    <Setting Key="Acc_SuperPrefixByGroupSel" SpName="Acc_SuperPrefixByGroupSel" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="Acc_SuperPrefixDel" SpName="Acc_SuperPrefixDel" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="Acc_SuperPrefixIns" SpName="Acc_SuperPrefixIns" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="Acc_CustomerInsMember_SiteHeadlineSel" SpName="Acc_CustomerInsMember_SiteHeadlineSel" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
+    <Setting Key="Acc_SuperPrefixByGroupSel" SpName="Acc_SuperPrefixByGroupSel" DbName="DBCUST.CustDB.wsv_nap" Plain="0" />
+    <Setting Key="Acc_SuperPrefixDel" SpName="Acc_SuperPrefixDel" DbName="DBCUST.CustDB.wsv_nap" Plain="0" />
+    <Setting Key="Acc_SuperPrefixIns" SpName="Acc_SuperPrefixIns" DbName="DBCUST.CustDB.wsv_nap" Plain="0" />
+    <Setting Key="Acc_CustomerInsMember_SiteHeadlineSel" SpName="Acc_CustomerInsMember_SiteHeadlineSel" DbName="DBCUST.CustDB.wsv_nap" Plain="0" />
   </Function>
   <Function Name="Admin - Manage Product Setting">
-    <Setting Key="Acc_ManageCansee_Del" SpName="Acc_ManageCansee_Del" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="Acc_ManageCansee_Ins" SpName="Acc_ManageCansee_Ins" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="Acc_ManageCansee_Upd" SpName="Acc_ManageCansee_Upd" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="Acc_ManageCansee_Sel" SpName="Acc_ManageCansee_Sel" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="Acc_UMTool_GetProductSettingByFunction" SpName="Acc_UMTool_GetProductSettingByFunction" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_UMTool_Configuration_Sel" SpName="Acc_UMTool_Configuration_Sel" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_UMTool_Configuration_Upd" SpName="Acc_UMTool_Configuration_Upd" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_UMTool_Configuration_Ins" SpName="Acc_UMTool_Configuration_Ins" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_UMTool_Configuration_Del" SpName="Acc_UMTool_Configuration_Del" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_UMTool_InUMWarning_Check" SpName="Acc_UMTool_InUMWarning_Check" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_UMTool_Configuration_Del_OldData" SpName="Acc_UMTool_Configuration_Del_OldData" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_VendorGlobalSetting_Sel" SpName="Acc_VendorGlobalSetting_Sel" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="Acc_VendorGlobalSetting_Ins" SpName="Acc_VendorGlobalSetting_Ins" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="Acc_VendorGlobalSetting_Upd" SpName="Acc_VendorGlobalSetting_Upd" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="Acc_VendorGlobalSetting_Del" SpName="Acc_VendorGlobalSetting_Del" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="Acc_UMTool_MarketSel" SpName="Acc_UMTool_MarketSel" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="Acc_ReferenceSetting_Ins" SpName="Acc_ReferenceSetting_Ins" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="Acc_ReferenceSetting_Upd" SpName="Acc_ReferenceSetting_Upd" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
-    <Setting Key="Acc_ReferenceSetting_Del" SpName="Acc_ReferenceSetting_Del" DbName="DBCUST.CustDB.bodbAdminNet" Plain="0" />
+    <Setting Key="Acc_ManageCansee_Del" SpName="Acc_ManageCansee_Del" DbName="DBCUST.CustDB.wsv_nap" Plain="0" />
+    <Setting Key="Acc_ManageCansee_Ins" SpName="Acc_ManageCansee_Ins" DbName="DBCUST.CustDB.wsv_nap" Plain="0" />
+    <Setting Key="Acc_ManageCansee_Upd" SpName="Acc_ManageCansee_Upd" DbName="DBCUST.CustDB.wsv_nap" Plain="0" />
+    <Setting Key="Acc_ManageCansee_Sel" SpName="Acc_ManageCansee_Sel" DbName="DBCUST.CustDB.wsv_nap" Plain="0" />
+    <Setting Key="Acc_UMTool_GetProductSettingByFunction" SpName="Acc_UMTool_GetProductSettingByFunction" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_UMTool_Configuration_Sel" SpName="Acc_UMTool_Configuration_Sel" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_UMTool_Configuration_Upd" SpName="Acc_UMTool_Configuration_Upd" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_UMTool_Configuration_Ins" SpName="Acc_UMTool_Configuration_Ins" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_UMTool_Configuration_Del" SpName="Acc_UMTool_Configuration_Del" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_UMTool_InUMWarning_Check" SpName="Acc_UMTool_InUMWarning_Check" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_UMTool_Configuration_Del_OldData" SpName="Acc_UMTool_Configuration_Del_OldData" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_VendorGlobalSetting_Sel" SpName="Acc_VendorGlobalSetting_Sel" DbName="DBCUST.CustDB.wsv_nap" Plain="0" />
+    <Setting Key="Acc_VendorGlobalSetting_Ins" SpName="Acc_VendorGlobalSetting_Ins" DbName="DBCUST.CustDB.wsv_nap" Plain="0" />
+    <Setting Key="Acc_VendorGlobalSetting_Upd" SpName="Acc_VendorGlobalSetting_Upd" DbName="DBCUST.CustDB.wsv_nap" Plain="0" />
+    <Setting Key="Acc_VendorGlobalSetting_Del" SpName="Acc_VendorGlobalSetting_Del" DbName="DBCUST.CustDB.wsv_nap" Plain="0" />
+    <Setting Key="Acc_UMTool_MarketSel" SpName="Acc_UMTool_MarketSel" DbName="DBCUST.CustDB.wsv_nap" Plain="0" />
+    <Setting Key="Acc_ReferenceSetting_Ins" SpName="Acc_ReferenceSetting_Ins" DbName="DBCUST.CustDB.wsv_nap" Plain="0" />
+    <Setting Key="Acc_ReferenceSetting_Upd" SpName="Acc_ReferenceSetting_Upd" DbName="DBCUST.CustDB.wsv_nap" Plain="0" />
+    <Setting Key="Acc_ReferenceSetting_Del" SpName="Acc_ReferenceSetting_Del" DbName="DBCUST.CustDB.wsv_nap" Plain="0" />
   </Function>
   <Function Name="UM On product">
-    <Setting Key="Acc_CheckUM" SpName="Acc_CheckUM" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CheckUM_MultipleCustProductStatus" SpName="Acc_CheckUM_MultipleCustProductStatus" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CheckUM" SpName="Acc_CheckUM" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_CheckUM_MultipleCustProductStatus" SpName="Acc_CheckUM_MultipleCustProductStatus" DbName="DBCUST.CustDB.wsv_nap" />
   </Function>
   <Function Name="Reset Winning">
-    <Setting Key="Acc_DWLList_Sel" SpName="Acc_DWLList_Sel" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_DWLList_Ins" SpName="Acc_DWLList_Ins" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_DWLList_Upd" SpName="Acc_DWLList_Upd" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_DWLList_Del" SpName="Acc_DWLList_Del" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_DWLList_ExtraPT_Sel" SpName="Acc_DWLList_ExtraPT_Sel" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_DWLList_ExtraPT_Ins" SpName="Acc_DWLList_ExtraPT_Ins" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_DWLList_ExtraPT_Upd" SpName="Acc_DWLList_ExtraPT_Upd" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_DWLList_ExtraPT_Del" SpName="Acc_DWLList_ExtraPT_Del" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_DWLList_Sel" SpName="Acc_DWLList_Sel" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_DWLList_Ins" SpName="Acc_DWLList_Ins" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_DWLList_Upd" SpName="Acc_DWLList_Upd" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_DWLList_Del" SpName="Acc_DWLList_Del" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_DWLList_ExtraPT_Sel" SpName="Acc_DWLList_ExtraPT_Sel" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_DWLList_ExtraPT_Ins" SpName="Acc_DWLList_ExtraPT_Ins" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_DWLList_ExtraPT_Upd" SpName="Acc_DWLList_ExtraPT_Upd" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_DWLList_ExtraPT_Del" SpName="Acc_DWLList_ExtraPT_Del" DbName="DBCUST.CustDB.wsv_nap" />
   </Function>
   <Function Name="Manage Extra PT for External Groups">
-    <Setting Key="Acc_GroupExtraPT_Group_Sel" SpName="Acc_GroupExtraPT_Group_Sel" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_GroupExtraPT_Product_Sel" SpName="Acc_GroupExtraPT_Product_Sel" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_GroupExtraPT_Group_Sel" SpName="Acc_GroupExtraPT_Group_Sel" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_GroupExtraPT_Product_Sel" SpName="Acc_GroupExtraPT_Product_Sel" DbName="DBCUST.CustDB.wsv_nap" />
   </Function>
   <Function Name="Transaction - Automate Finance Transfer">
-    <Setting Key="Acc_FinanceCrossTransferMulInsTmpExcel" SpName="Acc_FinanceCrossTransferMulInsTmpExcel" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_FinanceTransferMulDelTmpExcel" SpName="Acc_FinanceTransferMulDelTmpExcel" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_FinanceTransferMulInsTmpExcel" SpName="Acc_FinanceTransferMulInsTmpExcel" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_FinanceCrossTransferMulInsTmpExcel" SpName="Acc_FinanceCrossTransferMulInsTmpExcel" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_FinanceTransferMulDelTmpExcel" SpName="Acc_FinanceTransferMulDelTmpExcel" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_FinanceTransferMulInsTmpExcel" SpName="Acc_FinanceTransferMulInsTmpExcel" DbName="DBCUST.CustDB.wsv_nap" />
   </Function>
   <Function Name="Admin - Dormant Account List">
-    <Setting Key="Acc_DormantAccountListByHeadline_Sel" SpName="Acc_DormantAccountListByHeadline_Sel" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_DormantDownlineListByHeadline_Sel" SpName="Acc_DormantDownlineListByHeadline_Sel" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_DormantAccountListByHeadline_Sel" SpName="Acc_DormantAccountListByHeadline_Sel" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_DormantDownlineListByHeadline_Sel" SpName="Acc_DormantDownlineListByHeadline_Sel" DbName="DBCUST.CustDB.wsv_nap" />
   </Function>
   <Function Name="Admin - Headline/External Group Mapping">
-    <Setting Key="Acc_GroupHeadline_Sel" SpName="Acc_GroupHeadline_Sel" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_ExternalGroupHeadline_Sel" SpName="Acc_ExternalGroupHeadline_Sel" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_ExternalGroupHeadline_Ins" SpName="Acc_ExternalGroupHeadline_Ins" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_ExternalGroupHeadline_Upd" SpName="Acc_ExternalGroupHeadline_Upd" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_ExternalGroupHeadline_Del" SpName="Acc_ExternalGroupHeadline_Del" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_ExternalGroupHeadline_MappingSuper" SpName="Acc_ExternalGroupHeadline_MappingSuper" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_GroupHeadline_Sel" SpName="Acc_GroupHeadline_Sel" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_ExternalGroupHeadline_Sel" SpName="Acc_ExternalGroupHeadline_Sel" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_ExternalGroupHeadline_Ins" SpName="Acc_ExternalGroupHeadline_Ins" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_ExternalGroupHeadline_Upd" SpName="Acc_ExternalGroupHeadline_Upd" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_ExternalGroupHeadline_Del" SpName="Acc_ExternalGroupHeadline_Del" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_ExternalGroupHeadline_MappingSuper" SpName="Acc_ExternalGroupHeadline_MappingSuper" DbName="DBCUST.CustDB.wsv_nap" />
   </Function>
   <Function Name="ParlayMaxPayout">
-    <Setting Key="Acc_CustSetting_MaxPayoutSelect" SpName="Acc_CustSetting_MaxPayoutSelect" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustSetting_MaxPayoutUpd" SpName="Acc_CustSetting_MaxPayoutUpd" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustSetting_MaxPayoutCheckDownline" SpName="Acc_CustSetting_MaxPayoutCheckDownline" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustSetting_MaxPayoutSelect" SpName="Acc_CustSetting_MaxPayoutSelect" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustSetting_MaxPayoutUpd" SpName="Acc_CustSetting_MaxPayoutUpd" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustSetting_MaxPayoutCheckDownline" SpName="Acc_CustSetting_MaxPayoutCheckDownline" DbName="DBCUST.CustDB.wsv_nap" />
   </Function>
   <Function Name="Customer - Copy Super Setting">
-    <Setting Key="Acc_CopySetting_CustomerCheckSuperList" SpName="Acc_CopySetting_CustomerCheckSuperList" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustSetting_WinLossLimitSelect" SpName="Acc_CustSetting_WinLossLimitSelect" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustSetting_WinLossLimitUpd" SpName="Acc_CustSetting_WinLossLimitUpd" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CopySetting_CustomerSelStatus" SpName="Acc_CopySetting_CustomerSelStatus" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CopySetting_CustomerCheckSuperList" SpName="Acc_CopySetting_CustomerCheckSuperList" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustSetting_WinLossLimitSelect" SpName="Acc_CustSetting_WinLossLimitSelect" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustSetting_WinLossLimitUpd" SpName="Acc_CustSetting_WinLossLimitUpd" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_CopySetting_CustomerSelStatus" SpName="Acc_CopySetting_CustomerSelStatus" DbName="DBCUST.CustDB.wsv_nap" />
   </Function>
   <Function Name="Protected Status">
-    <Setting Key="Age_CustomerUpdProtectedMode" SpName="Age_CustomerUpdProtectedMode" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Age_CustomerUpdProtectedMode" SpName="Age_CustomerUpdProtectedMode" DbName="DBCUST.CustDB.wsv_nap" />
   </Function>
   <Function Name="Init Customer Setting - Init Cust Setting">
-    <Setting Key="Acc_Initial_DCS_SettingConfig_Sel" SpName="Acc_Initial_DCS_SettingConfig_Sel" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_Initial_DCS_ProductProfile_Sel" SpName="Acc_Initial_DCS_ProductProfile_Sel" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_Initial_DCS_SettingConfigDetail_Sel" SpName="Acc_Initial_DCS_SettingConfigDetail_Sel" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_Initial_DCS_SettingConfig_Ins" SpName="Acc_Initial_DCS_SettingConfig_Ins" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_Initial_DCS_SettingConfig_Upd" SpName="Acc_Initial_DCS_SettingConfig_Upd" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_Initial_DCS_SettingConfig_Del" SpName="Acc_Initial_DCS_SettingConfig_Del" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_Initial_DCS_ConfigStatus_Upd" SpName="Acc_Initial_DCS_ConfigStatus_Upd" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_Dep_Initial_DCS_SettingConfig_Sel" SpName="Acc_Dep_Initial_DCS_SettingConfig_Sel" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_Dep_Initial_DCS_ProductProfile_Sel" SpName="Acc_Dep_Initial_DCS_ProductProfile_Sel" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_Dep_Initial_DCS_SettingConfigDetail_Sel" SpName="Acc_Dep_Initial_DCS_SettingConfigDetail_Sel" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_Dep_Initial_DCS_SettingConfig_Ins" SpName="Acc_Dep_Initial_DCS_SettingConfig_Ins" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_Dep_Initial_DCS_SettingConfig_Upd" SpName="Acc_Dep_Initial_DCS_SettingConfig_Upd" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_Dep_Initial_DCS_SettingConfig_Del" SpName="Acc_Dep_Initial_DCS_SettingConfig_Del" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_Dep_Initial_DCS_ConfigStatus_Upd" SpName="Acc_Dep_Initial_DCS_ConfigStatus_Upd" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_Dep_Initial_DCS_BetSetting_Sel" SpName="Acc_Dep_Initial_DCS_BetSetting_Sel" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_Initial_DCS_SettingConfig_Sel" SpName="Acc_Initial_DCS_SettingConfig_Sel" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_Initial_DCS_ProductProfile_Sel" SpName="Acc_Initial_DCS_ProductProfile_Sel" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_Initial_DCS_SettingConfigDetail_Sel" SpName="Acc_Initial_DCS_SettingConfigDetail_Sel" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_Initial_DCS_SettingConfig_Ins" SpName="Acc_Initial_DCS_SettingConfig_Ins" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_Initial_DCS_SettingConfig_Upd" SpName="Acc_Initial_DCS_SettingConfig_Upd" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_Initial_DCS_SettingConfig_Del" SpName="Acc_Initial_DCS_SettingConfig_Del" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_Initial_DCS_ConfigStatus_Upd" SpName="Acc_Initial_DCS_ConfigStatus_Upd" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_Dep_Initial_DCS_SettingConfig_Sel" SpName="Acc_Dep_Initial_DCS_SettingConfig_Sel" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_Dep_Initial_DCS_ProductProfile_Sel" SpName="Acc_Dep_Initial_DCS_ProductProfile_Sel" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_Dep_Initial_DCS_SettingConfigDetail_Sel" SpName="Acc_Dep_Initial_DCS_SettingConfigDetail_Sel" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_Dep_Initial_DCS_SettingConfig_Ins" SpName="Acc_Dep_Initial_DCS_SettingConfig_Ins" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_Dep_Initial_DCS_SettingConfig_Upd" SpName="Acc_Dep_Initial_DCS_SettingConfig_Upd" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_Dep_Initial_DCS_SettingConfig_Del" SpName="Acc_Dep_Initial_DCS_SettingConfig_Del" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_Dep_Initial_DCS_ConfigStatus_Upd" SpName="Acc_Dep_Initial_DCS_ConfigStatus_Upd" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_Dep_Initial_DCS_BetSetting_Sel" SpName="Acc_Dep_Initial_DCS_BetSetting_Sel" DbName="DBCUST.CustDB.wsv_nap" />
   </Function>
   <Function Name="Admin - Finance Groups Config">
-    <Setting Key="Acc_FinanceGroupsConfig_FinanceGroupSel" SpName="Acc_FinanceGroupsConfig_FinanceGroupSel" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_FinanceGroupsConfig_FinanceUser_GroupUpd" SpName="Acc_FinanceGroupsConfig_FinanceUser_GroupUpd" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_FinanceGroupsConfig_FinanceCode_IsViewUpd" SpName="Acc_FinanceGroupsConfig_FinanceCode_IsViewUpd" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_FinanceGroupsConfig_FinanceCodeDel" SpName="Acc_FinanceGroupsConfig_FinanceCodeDel" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_FinanceGroupsConfig_FinanceGroupInsValidation" SpName="Acc_FinanceGroupsConfig_FinanceGroupInsValidation" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_FinanceGroupsConfig_FinanceGroupIns" SpName="Acc_FinanceGroupsConfig_FinanceGroupIns" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_FinanceGroupsConfig_UsersInsValidation" SpName="Acc_FinanceGroupsConfig_UsersInsValidation" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_FinanceGroupsConfig_UsersIns" SpName="Acc_FinanceGroupsConfig_UsersIns" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_FinanceGroupsConfig_CodesInsValidation" SpName="Acc_FinanceGroupsConfig_CodesInsValidation" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_FinanceGroupsConfig_CodesIns" SpName="Acc_FinanceGroupsConfig_CodesIns" DbName="DBCUST.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_FinanceGroupsConfig_GroupSel" SpName="Acc_FinanceGroupsConfig_GroupSel" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_FinanceGroupsConfig_FinanceGroupSel" SpName="Acc_FinanceGroupsConfig_FinanceGroupSel" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_FinanceGroupsConfig_FinanceUser_GroupUpd" SpName="Acc_FinanceGroupsConfig_FinanceUser_GroupUpd" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_FinanceGroupsConfig_FinanceCode_IsViewUpd" SpName="Acc_FinanceGroupsConfig_FinanceCode_IsViewUpd" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_FinanceGroupsConfig_FinanceCodeDel" SpName="Acc_FinanceGroupsConfig_FinanceCodeDel" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_FinanceGroupsConfig_FinanceGroupInsValidation" SpName="Acc_FinanceGroupsConfig_FinanceGroupInsValidation" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_FinanceGroupsConfig_FinanceGroupIns" SpName="Acc_FinanceGroupsConfig_FinanceGroupIns" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_FinanceGroupsConfig_UsersInsValidation" SpName="Acc_FinanceGroupsConfig_UsersInsValidation" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_FinanceGroupsConfig_UsersIns" SpName="Acc_FinanceGroupsConfig_UsersIns" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_FinanceGroupsConfig_CodesInsValidation" SpName="Acc_FinanceGroupsConfig_CodesInsValidation" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_FinanceGroupsConfig_CodesIns" SpName="Acc_FinanceGroupsConfig_CodesIns" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_FinanceGroupsConfig_GroupSel" SpName="Acc_FinanceGroupsConfig_GroupSel" DbName="DBCUST.CustDB.wsv_nap" />
   </Function>
   <Function Name="Ex.rate">
-    <Setting Key="Acc_ExchangeMultiBaseRateUpd" SpName="Acc_ExchangeMultiBaseRateUpd" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_ExchangeMultiBaseRateUpd" SpName="Acc_ExchangeMultiBaseRateUpd" DbName="DBCUST.CustDB.wsv_nap" />
   </Function>
   <Function Name="Initializing Bet Limit">
-    <Setting Key="Acc_InitializingGlobal_BetLimitIns" SpName="Acc_InitializingGlobal_BetLimitIns" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_InitializingGlobal_BetLimitIns" SpName="Acc_InitializingGlobal_BetLimitIns" DbName="DBCUST.CustDB.wsv_nap" />
   </Function>
   <Function Name="Licensee Configuration > New Licensee Member">
-    <Setting Key="Acc_Dep_CheckExistedAccount" SpName="Acc_Dep_CheckExistedAccount" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_Dep_CheckExistedAccount" SpName="Acc_Dep_CheckExistedAccount" DbName="DBCUST.CustDB.wsv_nap" />
   </Function>
   <Function Name="Helper">
-    <Setting Key="DBCUST_Acc_SiteDBConfigSel" SpName="Acc_SiteDBConfigSel" DbName="DBCUST.CustDB.bodbAdminNet" />
+    <Setting Key="DBCUST_Acc_SiteDBConfigSel" SpName="Acc_SiteDBConfigSel" DbName="DBCUST.CustDB.wsv_nap" />
   </Function>
 </Functions>

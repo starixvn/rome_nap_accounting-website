@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Functions>
 	<Function Name="Bet Credit History">
-		<Setting Key="Acc_BalanceHistory_Mem" SpName="Acc_BalanceHistory_Mem" DbName="DBBAH.bodb02.bodbAdminNet" Plain="0" />
+		<Setting Key="Acc_BalanceHistory_Mem" SpName="Acc_BalanceHistory_Mem" DbName="DBBAH.bodb02.wsv_nap" Plain="0" />
 	</Function>
 </Functions>

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Functions SiteId="104" SiteName="NAP - Accounting">
   <Function Name="Licensee Code">
-    <Setting Key="Acc_LicenseeTransferCode_Sel" SpName="Acc_LicenseeTransferCode_Sel" DbName="DBLic.bodb_Licensee.bodbAdminNet" />
-    <Setting Key="Acc_LicenseeSel" SpName="Acc_LicenseeSel" DbName="DBLic.bodb_Licensee.bodbAdminNet" />
+    <Setting Key="Acc_LicenseeTransferCode_Sel" SpName="Acc_LicenseeTransferCode_Sel" DbName="DBLic.bodb_Licensee.wsv_nap" />
+    <Setting Key="Acc_LicenseeSel" SpName="Acc_LicenseeSel" DbName="DBLic.bodb_Licensee.wsv_nap" />
   </Function>
 </Functions>
