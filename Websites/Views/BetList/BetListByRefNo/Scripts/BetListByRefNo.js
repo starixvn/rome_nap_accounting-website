@@ -154,7 +154,7 @@ BetList.BetListByRefNo = (function ($) {
             return false;
         }
 
-        var productRequireBetId = ["22", "24", "32", "34", "36", "52", "55", "56", "60", "61", "62", "66", "67", "68", "72", "73", "75", "79"];
+        var productRequireBetId = ["22", "24", "32", "34", "36", "52", "55", "56", "60", "61", "62", "66", "67", "68", "72", "73", "75", "79", "78"];
         if ((isSabaclub || productRequireBetId.indexOf(selProductValue) !== -1) && $betId.val().trim() === "") {
             showError("BetID is required");
             return false;

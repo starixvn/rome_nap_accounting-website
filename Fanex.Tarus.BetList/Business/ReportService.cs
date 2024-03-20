@@ -289,6 +289,8 @@
                 return SportContants.WE;
             if (7601 <= betTypeId && betTypeId <= 7700)
                 return SportContants.Live22;
+            if (10000 <= betTypeId && betTypeId <= 10299)
+                return SportContants.UUSlots;
 
             return 0;
         }
