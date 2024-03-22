@@ -2476,4 +2476,10 @@
   <data name="changeTransferCondition_NoteOn" xml:space="preserve">
     <value>Note: Changing Transfer Condition will Keep Auto Transfer enabled with the current schedule adjusted to the new transfer condition</value>
   </data>
+  <data name="enableMuayThai" xml:space="preserve">
+    <value>Muay Thai</value>
+  </data>
+  <data name="lblDisabledMuayThaiUpline" xml:space="preserve">
+    <value>Muay Thai has been disabled at upline</value>
+  </data>
 </root>

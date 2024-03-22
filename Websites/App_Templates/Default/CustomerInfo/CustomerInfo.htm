@@ -415,14 +415,6 @@
                         </span>
                     </div>
                     <!--/Macau-->
-                    <!--Sportsbook2-->
-                    <div class="col">
-                        <span class="canchange" onclick="{Sportbook2OnClickFunction}">
-                            Sportsbook 2
-                            <span class="icon-list"></span>
-                        </span>
-                    </div>
-                    <!--/Sportsbook2-->
                     <!--EnableSabaclub-->
                     <div class="col">
                         <span class="canchange" onclick="{SabaclubOnClickFunction}">
@@ -458,10 +450,10 @@
                     <!--/EnableRNGLottery-->
                     <!--EnableSabaVirtualSports-->
                     <!--<div class="col">
-				        <span class="canchange" onclick="{SabaVirtualSportsOnClickFunction}">
-				            Saba Virtual Sports
-				        </span>
-				    </div>-->
+                        <span class="canchange" onclick="{SabaVirtualSportsOnClickFunction}">
+                            Saba Virtual Sports
+                        </span>
+                    </div>-->
                     <!--/EnableSabaVirtualSports-->
                     {settingcontrol}
                     <!--EnableVirtualGames-->
@@ -481,7 +473,7 @@
                     <div id="de_left">
                         <ul>
                             <!--detail_edit_menu-->
-                            <li id="detail_tab_3" class="current" onclick="detail_tabnew_Click(this)">
+                            <li id="detail_tab_3" class="current" onclick="detail_tabnew_Click(this)" style="display: {isHiddenMember};">
                                 <a href="javascript:void(0);">
                                     <span>Edit</span>
                                 </a>
@@ -537,13 +529,6 @@
                                 </a><br />
                             </span>
                             <!--/maxexposure-->
-                            <!--parlayMaxPayout-->
-                            <span>
-                                <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr', 'ParlayMaxPayout/Index?custid={CustId}&custname={FullUserName}&roleid={RoleId}');">
-                                    Parlay Max Payout
-                                </a><br />
-                            </span>
-                            <!--/parlayMaxPayout-->
                             <!--edit-sabacasino-->
                             <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{SabaCasinoLinkSetting}');">
                                 Saba Casino
@@ -558,12 +543,7 @@
                             <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{virtualSportLinkSetting}');">
                                 Virtual Sports
                             </a><br />
-                            <!--/edit-VirtualSport-->                        
-                            <!--edit-sportsbook2-->
-                            <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{sportsbook2LinkSetting}');">
-                                Sportsbook 2
-                            </a><br />
-                            <!--/edit-sportsbook2-->
+                            <!--/edit-VirtualSport-->
                             <!--edit-LiveCasino-->
                             <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{liveCasinoLinkSetting}');">
                                 Live Casino
@@ -573,7 +553,7 @@
                             <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{voidbridgeLinkSetting}');">
                                 RNG Slot
                             </a><br />
-                            <!--/edit-Voidbridge-->                    
+                            <!--/edit-Voidbridge-->
                             <!--edit-RNGLottery-->
                             <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{rngLotteryLinkSetting}');">
                                 RNG Lottery

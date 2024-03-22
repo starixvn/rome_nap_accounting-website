@@ -1,6 +1,5 @@
 ﻿namespace Sunplus.Accounting.Business.Customer
 {
-    using System;
     using System.Data;
     using ConfigureDirectAccount;
     using Core.Common;
@@ -22,7 +21,7 @@
             CustomerInfoViewModel customerInfoViewModel)
         {
             var renderLeftPanelParameter = new RenderLeftPanelParameter
-            {              
+            {
                 IsShowMacau = customerInfoViewModel.ShowMacauDeposit,
                 IsShowEnableBetTrade = customerInfoViewModel.ShowEnableBetTradeDeposit,
                 IsShowAutoSuspend = customerInfoViewModel.HasReadPermission_AutoSuspend,
@@ -36,7 +35,7 @@
                 RoleId = customerInfoViewModel.SearchAccountRoleId,
                 CustId = customerInfoViewModel.CustId,
                 Username = customerInfoViewModel.UserName,
-                AccId = AppSession.AccId,             
+                AccId = AppSession.AccId,
                 IsShowRNGLottery = !customerInfoViewModel.HideRNGLottery,
                 IsShowVirtualGames = !customerInfoViewModel.HideVirtualGames,
                 IsShowSabaclub = !customerInfoViewModel.HideSabaclub,
@@ -44,7 +43,8 @@
                 IsShowSabaVirtualSports = !customerInfoViewModel.HideSabaVirtualSports,
                 IsShowBitcoin = !customerInfoViewModel.HideBitcoin,
                 IsShowCashout = !customerInfoViewModel.HideCashout,
-                IsShowSabaCasino = !customerInfoViewModel.HideSabaCasino
+                IsShowSabaCasino = !customerInfoViewModel.HideSabaCasino,
+                IsShowMuayThai = !customerInfoViewModel.HideMuayThai,
             };
 
             htmlcontent = RenderClosedStatus(htmlcontent, customerInfoViewModel);
@@ -98,15 +98,6 @@
             htmlcontent = RenderDoubleCommControl(htmlcontent, customerInfoViewModel);
             htmlcontent = RenderOutrightControl(htmlcontent, customerInfoViewModel);
             htmlcontent = RenderSuperLiveControl(
-                htmlcontent,
-                row1,
-                customerInfoViewModel.CustParent,
-                customerInfoViewModel.ManageCustomerAccess,
-                renderLeftPanelParameter,
-                sg,
-                customerInfoViewModel.HasDownline);
-
-            htmlcontent = RenderColossusBetControl(
                 htmlcontent,
                 row1,
                 customerInfoViewModel.CustParent,
@@ -206,8 +197,6 @@
             TemplateHandler.Assign(ref htmlcontent, "{uplineStatusMacau}", "1");
             TemplateHandler.Assign(ref htmlcontent, "{macauId}", Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdMacau);
 
-            TemplateHandler.Assign(ref htmlcontent, "{uplineStatusSportsbook2}", "1");
-            TemplateHandler.Assign(ref htmlcontent, "{Sportsbook2Id}", "16");
             TemplateHandler.Assign(ref htmlcontent, "{settingType}", "4");
 
             TemplateHandler.Assign(ref htmlcontent, "{livecasino}", "41");
@@ -217,19 +206,6 @@
 
         private string RemoveEnableLinks(string htmlcontent, CustomerInfoViewModel customerInfoViewModel, RenderLeftPanelParameter renderLeftPanelParameter)
         {
-            if (customerInfoViewModel.HideSportsbook2)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "Sportsbook2");
-            }
-            else
-            {
-                TemplateHandler.Assign(ref htmlcontent, "{Sportbook2OnClickFunction}", _renderLeftPanelService.GetSportbook2StatusJsFunction(
-                    customerInfoViewModel.CustId,
-                    customerInfoViewModel.UserName,
-                    customerInfoViewModel.SearchAccountRoleId,
-                    "Update Sportbook2 Status"));
-            }
-
             if (!customerInfoViewModel.HasReadPermission_AutoSuspend)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "autosuspendstatus");
@@ -438,6 +414,20 @@
                     var productId = productRow["productID"].ToString();
                     switch (productId)
                     {
+                        case "1":
+                            _renderLeftPanelService.RenderEnableProductBoxDCS2(
+                                               row1,
+                                               productRow,
+                                               sg,
+                                               ref htmlcontent,
+                                               isManageCustomerAccess,
+                                               "MuayThai",
+                                               renderLeftPanelParameter.IsShowMuayThai,
+                                               renderLeftPanelParameter,
+                                               "Update Muay Thai Status",
+                                               1);
+                            break;
+
                         case "5":
                             _renderLeftPanelService.RenderEnableProductBoxDCS2(
                                                row1,
@@ -521,6 +511,7 @@
                                                "Update Saba Virtual Sports Status",
                                                Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdSabaVirtualSports);
                             break;
+
                         case "69":
                             _renderLeftPanelService.RenderEnableProductBoxDCS2(
                                                row1,
@@ -538,30 +529,6 @@
                 }
             }
 
-            return htmlcontent;
-        }
-
-        private string RenderColossusBetControl(
-            string htmlcontent,
-            DataRow row1,
-            CustomerDetail CustParent,
-            bool isManageCustomerAccess,
-            RenderLeftPanelParameter renderLeftPanelParameter,
-            SettingGroup sg,
-            bool hasDownline)
-        {
-            _renderLeftPanelService.RenderEnableProductBox2(
-               row1,
-               sg,
-               ref htmlcontent,
-               isManageCustomerAccess,
-               CustParent.IsDisableColossusBets,
-               hasDownline,
-               "ColossusBet",
-               renderLeftPanelParameter.IsShowColossusBetsForDeposit,
-               renderLeftPanelParameter,
-               "Update Colossus Bets Status",
-               15);
             return htmlcontent;
         }
 

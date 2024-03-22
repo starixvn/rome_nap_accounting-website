@@ -10,6 +10,10 @@
         roleId = obj("custRoleId").value;
         parentId = obj("custId").value;
     }
+
+    var custName = obj("custName").value;
+    var uplineUsername = obj("txtUsername").value;
+    custName = (custName == undefined || custName == '') ? obj("txtUsername").value : custName;
     var f = parent.frames["mainCust"];
 
     if (roleId == '2') {
@@ -17,22 +21,22 @@
         //f.location.href="AddNewMember.aspx?agentId="+parentId + "&username="+obj("txtUsername").value;
         //Khoa.tran add new member (Original code from IBCAgent)
         //f.location.href = "v2/AddNewMember.aspx?agentId=" + parentId + "&username=" + obj("txtUsername").value;
-        f.location.href = "../AddNewMember/AddNewMemberPage?agentId=" + parentId + "&username=" + obj("txtUsername").value + "&siteName=" + siteName;
+        f.location.href = "../Customer/CreateCustomer?uplineId=" + parentId + "&uplineRoleId=" + roleId + "&uplineUsername=" + uplineUsername + "&siteName=" + siteName;
     }
     else if (roleId == '3') {
         parent.document.body.rows = tfHeigth + ",*";
         //f.location.href = "v2/AddNewAgent.aspx?masterId=" + parentId + "&username=" + obj("txtUsername").value; ;
-        f.location.href = "../AddNewAgent/AddNewAgentPage?masterId=" + parentId + "&username=" + obj("txtUsername").value + "&siteName=" + siteName;
+        f.location.href = "../Customer/CreateCustomer?uplineId=" + parentId + "&uplineRoleId=" + roleId + "&uplineUsername=" + uplineUsername + "&theme=nap";
     }
     else if (roleId == '4') {
         parent.document.body.rows = tfHeigth + ",*";
         //var url="AddNewMaster.aspx?";
         //var url = "V2/AddNewMaster.aspx?";
-        var url = "../AddNewMaster/AddNewMasterPage?";
+        var url = "../Customer/CreateCustomer?";
         var uname = "";
         var custId = "";
         if (!parentRoleId) {
-            url += "superId=" + parentId;
+            url += "uplineId=" + parentId + "&uplineRoleId=" + roleId + "&theme=nap" + "&uplineUsername=" + uplineUsername;
         }
         else {
             if (obj("exSuper").checked) {
@@ -40,27 +44,31 @@
                 var custId_siteName = obj("listSuper").options[obj("listSuper").selectedIndex].value;
                 custId = custId_siteName.split('_')[0];
                 siteNameFromSuperList = custId_siteName.split('_')[1];
-                url += "superId=" + custId + "&username=" + uname + "&siteName=" + siteNameFromSuperList;
+                url += "uplineId=" + custId + "&uplineRoleId=" + roleId + "&uplineUsername=" + uname + "&theme=nap";
                 f.location.href = url;
                 return;
             }
             else if (obj("inSuper").checked) {
                 uname = obj("listCurrency").options[obj("listCurrency").selectedIndex].text;
                 custId = obj("listCurrency").options[obj("listCurrency").selectedIndex].value;
-                var site = obj("listSite").value;
-                url += "superId=" + custId + "&username=" + uname + "&siteName=" + site;
+                var listSite = obj("listSite");
+                const selectedIndex = listSite.selectedIndex;
+                const selectedItem = listSite.options[selectedIndex];
+                const site = selectedItem.value;
+                const siteLabel = (selectedItem).closest("optgroup").label;
+                url += "uplineId=" + custId + "&uplineRoleId=" + roleId + "&uplineUsername=" + uname + "&site=" + site + "&siteLabel=" + siteLabel + "&theme=nap";
                 f.location.href = url;
                 return;
             }
         }
-        url += "&set=1";
+        //url += "&set=1";
         f.location.href = url;
     }
 }
 function OpenInputParent() {
-    try{
+    try {
         document.getElementById("errMsg").innerHTML = "";
-    }catch (e){}
+    } catch (e) { }
     var selectType = obj("listType").options[obj("listType").selectedIndex].value;
     var f = parent.frames["mainCust"];
     if (selectType == "agent") {
@@ -76,10 +84,7 @@ function OpenInputParent() {
     else if (selectType == "super" || selectType == "member") {
         document.getElementById('uid-upline').style.display = 'none';
         parent.document.body.rows = "30,*";
-        //f.location.href="AddNewSuper.aspx";
-        //f.location.href = "V2/AddNewSuper.aspx"; //<-- Khoa.Tran add new v2
-        //f.location.href = "../AddNewSuper/AddNewSuperPage";// <-- Thai.Tran remove this one to add Search_Copy function
-        f.location.href = "../AddNewSuper/SearchCopyAddNewSuperPage?level=" + selectType; // <-- Thai.Tran add this one
+        f.location.href = "../Customer/NewCustomer?level=" + selectType;
     }
 }
 function CheckUserName() {
@@ -110,7 +115,6 @@ function On_SelectSuper() {
     }
 }
 function On_KeyPress(e) {
-
     if (!e) e = window.event;
     var code = (e.keyCode) ? e.keyCode : e.which;
     if (code == 13) {

@@ -71,6 +71,12 @@
       <HintPath>..\packages\Fanex.Common.1.1.0.1\lib\net40\Fanex.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.Customer.Client, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Customer.Client.1.0.0\lib\netstandard2.0\Fanex.Customer.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Customer.Client.NETFramework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Customer.Client.NETFramework.1.0.0\lib\net461\Fanex.Customer.Client.NETFramework.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.5.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.2.0.5.1\lib\net461\Fanex.CustomerSetting.Module.Core.dll</HintPath>
     </Reference>
@@ -143,6 +149,9 @@
     </Reference>
     <Reference Include="MathNet.Numerics, Version=4.15.0.0, Culture=neutral, PublicKeyToken=cd8b63ad3d691a37, processorArchitecture=MSIL">
       <HintPath>..\packages\MathNet.Numerics.Signed.4.15.0\lib\net461\MathNet.Numerics.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\netstandard2.0\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Diagnostics.Tracing.EventSource, Version=1.1.28.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Diagnostics.Tracing.EventSource.Redist.1.1.28\lib\net46\Microsoft.Diagnostics.Tracing.EventSource.dll</HintPath>
@@ -220,11 +229,11 @@
     <Reference Include="Sunplus.Accounting.Core, Version=2.0.4.29, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Accounting.Core.2.0.4.29\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.7.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.7.1\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
+    <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.8.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.8\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
     </Reference>
-    <Reference Include="Sunplus.Accounting.Entities, Version=2.0.2.10, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.Entities.2.0.2.10\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
+    <Reference Include="Sunplus.Accounting.Entities, Version=2.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Accounting.Entities.2.0.3\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.Services, Version=1.0.2.9, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Accounting.Services.1.0.2.11\lib\net40\Sunplus.Accounting.Services.dll</HintPath>
@@ -275,6 +284,11 @@
     <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
@@ -295,6 +309,15 @@
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Text.Encoding.CodePages, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Text.Encoding.CodePages.6.0.0\lib\net461\System.Text.Encoding.CodePages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Encodings.Web, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encodings.Web.8.0.0\lib\netstandard2.0\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Json.8.0.0\lib\netstandard2.0\System.Text.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="System.Transactions" />
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -369,8 +392,6 @@
     <Compile Include="Business\CreditCustomer\CustomerSettingService.cs" />
     <Compile Include="Business\CreditCustomer\ICustomerSettingService.cs" />
     <Compile Include="Business\CustomerCoreService.cs" />
-    <Compile Include="Business\CustomerList\CustomerListService.cs" />
-    <Compile Include="Business\CustomerList\ICustomerListService.cs" />
     <Compile Include="Business\CustomerLogin\CustomerSecurityCodeService.cs" />
     <Compile Include="Business\CustomerLogin\ICustomerSecurityCodeService.cs" />
     <Compile Include="Business\EditLicensee\EditLicenseeService.cs" />
@@ -399,6 +420,7 @@
     <Compile Include="Controller\AGCasinoController.cs" />
     <Compile Include="Controller\AutoTransferAll\AutoTransferAllController.cs" />
     <Compile Include="Controller\BetCreditHistoryController.cs" />
+    <Compile Include="Controller\CustomerController.cs" />
     <Compile Include="Controller\InitializingBetLimit\InitBetLimitController.cs" />
     <Compile Include="Controller\InitializingCustomerSetting\InitDepSettingController.cs" />
     <Compile Include="Controller\LicenseeMemberController.cs" />
@@ -600,21 +622,6 @@
     <Compile Include="DataAccess\Player3rd\Player3rdDataAccess.cs" />
     <Compile Include="DataAccess\ReplicateLicenseeSettings\IReplicateLicenseeSettingsRepository.cs" />
     <Compile Include="DataAccess\ReplicateLicenseeSettings\ReplicateLicenseeSettingsRepository.cs" />
-    <Compile Include="Controller\Credit\AddNewAgentController.cs" />
-    <Compile Include="Controller\Credit\AddNewMasterController.cs" />
-    <Compile Include="Controller\Credit\AddNewMemberController.cs" />
-    <Compile Include="Controller\Credit\AddNewSuperController.cs" />
-    <Compile Include="Controller\Credit\EditMasterOnMemberController.cs" />
-    <Compile Include="Controller\Credit\EditSuperOnMemberController.cs" />
-    <Compile Include="Controller\Credit\EditAgentMinMaxPtController.cs" />
-    <Compile Include="Controller\Credit\EditMasterMinMaxPtController.cs" />
-    <Compile Include="Controller\Credit\EditSuperMinPtController.cs" />
-    <Compile Include="Controller\Credit\CustomerSettingBaseController.cs" />
-    <Compile Include="Controller\Credit\EditAgentController.cs" />
-    <Compile Include="Controller\Credit\EditMasterController.cs" />
-    <Compile Include="Controller\Credit\EditMemberController.cs" />
-    <Compile Include="Controller\Credit\EditSuperController.cs" />
-    <Compile Include="Controller\CustomerList\CustomerListController.cs" />
     <Compile Include="Controller\CustomerLogin\CustomerSecurityCodeController.cs" />
     <Compile Include="Controller\Setting\AbnormalBetController.cs" />
     <Compile Include="Controller\Setting\CustomerSettingController.cs" />
@@ -622,8 +629,6 @@
     <Compile Include="DataAccess\BaseDataAccess.cs" />
     <Compile Include="DataAccess\CreditCustomer\CustomerSettingDataAccess.cs" />
     <Compile Include="DataAccess\CreditCustomer\ICustomerSettingDataAccess.cs" />
-    <Compile Include="DataAccess\CustomerList\CustomerListAccess.cs" />
-    <Compile Include="DataAccess\CustomerList\ICustomerListAccess.cs" />
     <Compile Include="DataAccess\CustomerLogin\CustomerSecurityCodeDataAccess.cs" />
     <Compile Include="DataAccess\CustomerLogin\ICustomerSecurityCodeDataAccess.cs" />
     <Compile Include="DataAccess\SettingCustomer\AbnormalBetAccess.cs" />
@@ -662,11 +667,8 @@
     <Compile Include="Entities\CopyVRSetting\CopyResultEntity.cs" />
     <Compile Include="Entities\CreditCustomer\ToastContentModel.cs" />
     <Compile Include="Entities\CreditCustomer\Currency.cs" />
-    <Compile Include="Entities\CreditCustomer\CustomerInfo.cs" />
-    <Compile Include="Entities\CreditCustomer\CustomerSettingView.cs" />
     <Compile Include="Entities\CreditCustomer\MemberGroup.cs" />
     <Compile Include="Entities\CreditCustomer\Site.cs" />
-    <Compile Include="Entities\CreditCustomer\Sites.cs" />
     <Compile Include="Entities\CreditCustomer\HeadlineBelongSiteInfo.cs" />
     <Compile Include="Entities\CreditCustomer\SuperPrefix.cs" />
     <Compile Include="Entities\EditLicensee\LicenseeInfo.cs" />
@@ -720,6 +722,7 @@
     <Compile Include="Entities\UpdateTransferOptionResult.cs" />
     <Compile Include="Entities\VirtualRate\DownlineVirtualRateModel.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
+    <Compile Include="Filters\NAPCustomerAuthFilterAttribute.cs" />
     <Compile Include="Helpers\HmacAuthenticator.cs" />
     <Compile Include="Helpers\NumberFormater.cs" />
     <Compile Include="ManageLicenseeCode\Criterias\LicenseeSelCriteria.cs" />
@@ -736,15 +739,21 @@
     <Compile Include="ManageLicenseeCode\Request\UpdNewLicenseeCodeRequest.cs" />
     <Compile Include="ManageLicenseeCode\Service.cs" />
     <Compile Include="Requests\Casino\GetUnsyncedListRequest.cs" />
+    <Compile Include="Requests\Customer\CopyCustomerRequest.cs" />
     <Compile Include="Requests\CopySuperSetting\CheckSuperListRequest.cs" />
     <Compile Include="Requests\CopySuperSetting\UpdateWinLossLimitRequest.cs" />
-    <Compile Include="Requests\CreditCustomer\SuperPrefixQuery.cs" />
+    <Compile Include="Requests\Customer\CreateCustomerCommand.cs" />
     <Compile Include="Requests\CustomerSetting\OpenCustomer\GetSingleOpenDownlinesInfoQuery.cs" />
     <Compile Include="Requests\CustomerSetting\OpenCustomer\GetSingleOpenCustomerInfoQuery.cs" />
     <Compile Include="Requests\CustomerSetting\OpenCustomer\UpdateClosedStatusQuery.cs" />
     <Compile Include="Requests\CustomerSetting\Suspend\GetDownlineDetailInfoQuery.cs" />
     <Compile Include="Requests\CustomerSetting\Suspend\GetMultipleSuspendCustomerInfoQuery.cs" />
     <Compile Include="Requests\CustomerSetting\Suspend\GetSingleSuspendCustomerInfoQuery.cs" />
+    <Compile Include="Requests\Customer\CreateCustomerRequest.cs" />
+    <Compile Include="Requests\Customer\EditCustomerRequest.cs" />
+    <Compile Include="Requests\Customer\GetCustomerSettingRequest.cs" />
+    <Compile Include="Requests\Customer\IndirectEditMemberRequest.cs" />
+    <Compile Include="Requests\Customer\SportBookInformationRequest.cs" />
     <Compile Include="Requests\GetMessageLogsQuery.cs" />
     <Compile Include="Requests\InitializingBetLimit\GetProductCurrencyRequest.cs" />
     <Compile Include="Requests\InitializingCustomerSetting\GenerateConfigSettingRequest.cs" />
@@ -761,6 +770,7 @@
     <Compile Include="Requests\MultipleUpdateSuperStatus\GetSupersStatusRequest.cs" />
     <Compile Include="Requests\ParlayMaxPayout\ParlayMaxPayoutSelectRequest.cs" />
     <Compile Include="Requests\ParlayMaxPayout\ParlayMaxPayoutUpdateRequest.cs" />
+    <Compile Include="Requests\Customer\UpdateCustomerRequest.cs" />
     <Compile Include="Resources\BetCreditHistoryLabels.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -792,6 +802,12 @@
     <Compile Include="ViewModels\CustomerSetting\Suspend\SingleUpdateViewModel.cs" />
     <Compile Include="ViewModels\CustomerSetting\Suspend\SuspendedCustomerDetailViewModel.cs" />
     <Compile Include="ViewModels\CustomerSetting\Suspend\SuspendMatrixViewModel.cs" />
+    <Compile Include="ViewModels\Customer\AppConfiguration.cs" />
+    <Compile Include="ViewModels\Customer\CreateCustomerViewModel.cs" />
+    <Compile Include="ViewModels\Customer\CustomerBaseViewModel.cs" />
+    <Compile Include="ViewModels\Customer\EditCustomerViewModel.cs" />
+    <Compile Include="ViewModels\Customer\IndirectEditMemberViewModel.cs" />
+    <Compile Include="ViewModels\Customer\SportBookInformationViewModel.cs" />
     <Compile Include="ViewModels\InitializingCustomerSetting\ConfigCustomerSettingViewModel.cs" />
     <Compile Include="ViewModels\InitializingCustomerSetting\ConfigSettingViewModel.cs" />
     <Compile Include="ViewModels\InitializingCustomerSetting\InitializingCustomerSettingViewModel.cs" />
@@ -892,9 +908,7 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Requests\ViewPeriodsCN88\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

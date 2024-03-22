@@ -19,7 +19,6 @@ public partial class Others_Menu : System.Web.UI.Page
     private enum products
     {
         virtualsport = 5,
-        sportsbook2 = 16,
         livecasino = 41,
         voidbridge = 18,
         lottery = 28,
@@ -58,7 +57,7 @@ public partial class Others_Menu : System.Web.UI.Page
         int accId = Sunplus.Accounting.Core.Common.AppSession.AccId;
         hideVirtualSports = !CastAide.AsBoolean(db.Outputs["allowedvs"]) || !WebSettings.EnableVirtualSports;
         hideLiveCasino = !CastAide.AsBoolean(db.Outputs["allowedlivecasino"]) || !WebSettings.IsShowLiveCasino;
-        hideVoidbridge = !CastAide.AsBoolean(db.Outputs["allowedvoidbridge"]) || !WebSettings.IsShowVoidbridge;  
+        hideVoidbridge = !CastAide.AsBoolean(db.Outputs["allowedvoidbridge"]) || !WebSettings.IsShowVoidbridge;
         hideRNGLottery = !CastAide.AsBoolean(db.Outputs["allowedrnglottery"]) || Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdRNGLottery == 0;
         hideVirtualGames = !CastAide.AsBoolean(db.Outputs["allowedvirtualgames"]) || Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdVirtualGames == 0;
         hideSabaclub = !CastAide.AsBoolean(db.Outputs["allowedsabaclub"]) || !WebSettings.IsShowSabaclub;
@@ -66,29 +65,29 @@ public partial class Others_Menu : System.Web.UI.Page
         hideBitcoin = !CastAide.AsBoolean(db.Outputs["allowedbitcoin"]) || !WebSettings.IsShowBitcoinBetting;
         hideSabaCasino = !CastAide.AsBoolean(db.Outputs["allowedsabacasino"]) || !WebSettings.IsShowSabaCasino;
 
-     
+
         string creditDCSLink = string.Empty;
 
 
         if (roleid == 1)
-        {          
+        {
             creditDCSLink = Page.ResolveUrl("~/DCS/ViewCustomerSetting?productId={0}&customerLevel=1&uplinelevel=2&customerId=" + custID);
         }
         else if (roleid == 2)
-        {       
+        {
             creditDCSLink = Page.ResolveUrl("~/DCS/ViewCustomerSetting?productId={0}&customerLevel=2&customerId=" + custID);
         }
         else if (roleid == 3)
-        {        
+        {
             creditDCSLink = Page.ResolveUrl("~/DCS/ViewCustomerSetting?productId={0}&customerLevel=3&customerId=" + custID);
         }
         else
         {
-            var exChangeId = CastAide.AsInt32(queryStringParams[4].Split('=')[1]);        
-            creditDCSLink = Page.ResolveUrl("~/DCS/ViewCustomerSetting?productId={0}&customerLevel=4&customerId=" + custID);        }
-      
-        this.RenderSettingTab("VirtualSports", "{urlVirtualSports}", string.Format(creditDCSLink, (int)products.virtualsport), hideVirtualSports);      
-        this.RenderSettingTab("sportsbook2", "{sportsbook2LinkSetting}", string.Format(creditDCSLink, (int)products.sportsbook2), !WebSettings.IsShowSportsbook2);
+            var exChangeId = CastAide.AsInt32(queryStringParams[4].Split('=')[1]);
+            creditDCSLink = Page.ResolveUrl("~/DCS/ViewCustomerSetting?productId={0}&customerLevel=4&customerId=" + custID);
+        }
+
+        this.RenderSettingTab("VirtualSports", "{urlVirtualSports}", string.Format(creditDCSLink, (int)products.virtualsport), hideVirtualSports);
         this.RenderSettingTab("livecasino", "{liveCasinoLinkSetting}", string.Format(creditDCSLink, (int)products.livecasino), hideLiveCasino);
         this.RenderSettingTab("voidbridge", "{voidbridgeLinkSetting}", string.Format(creditDCSLink, (int)products.voidbridge), hideVoidbridge);
         this.RenderSettingTab("RNGLottery", "{rngLotteryLinkSetting}", string.Format(creditDCSLink, Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdRNGLottery), hideRNGLottery);

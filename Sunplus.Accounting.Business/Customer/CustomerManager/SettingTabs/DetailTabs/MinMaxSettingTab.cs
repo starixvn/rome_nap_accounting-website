@@ -1,6 +1,7 @@
 ﻿namespace Sunplus.Accounting.Business.Customer
 {
     using DNAide.Web;
+    using Fanex.Tarus.Infrastructure.Constants;
 
     public partial class CustomerManager
     {
@@ -9,41 +10,15 @@
             CustomerInfoViewModel customerInfoViewModel,
             RenderLeftPanelParameter renderLeftPanelParameter)
         {
-            switch (customerInfoViewModel.SearchAccountRoleId)
+            if (customerInfoViewModel.SearchAccountRoleId == RoleIdConstants.Member)
             {
-                case 1: // member
-                    htmlcontent = AssignMemberSetting(htmlcontent, customerInfoViewModel, renderLeftPanelParameter);
-                    break;
-
-                case 2: // agent
-                    htmlcontent = AssignAgentMinMaxSetting(
-                        htmlcontent,
-                        customerInfoViewModel.CustId,
-                        customerInfoViewModel.UserName,
-                        customerInfoViewModel.IsDeposit,
-                        customerInfoViewModel.MasterId);
-
-                    break;
-
-                case 3: // master
-                    htmlcontent = AssignMasterMinMaxSetting(
-                        htmlcontent,
-                        customerInfoViewModel.CustId,
-                        customerInfoViewModel.UserName,
-                        customerInfoViewModel.IsDeposit,
-                        customerInfoViewModel.SuperId);
-                    break;
-
-                case 4: // super
-                    htmlcontent = AssignSuperMinSetting(
-                        htmlcontent,
-                        customerInfoViewModel.CustId,
-                        customerInfoViewModel.UserName,
-                        customerInfoViewModel.IsDeposit);
-                    break;
-
-                default:
-                    break;
+                htmlcontent = AssignMemberSetting(htmlcontent, customerInfoViewModel, renderLeftPanelParameter);
+            }
+            else
+            {
+                TemplateHandler.Assign(ref htmlcontent, "{isHiddenMember}", "none");
+                TemplateHandler.Assign(ref htmlcontent, "{lblMinMax}", string.Empty);
+                TemplateHandler.Assign(ref htmlcontent, "{lblMinMax1}", string.Empty);
             }
 
             return htmlcontent;
@@ -55,29 +30,18 @@
             RenderLeftPanelParameter renderLeftPanelParameter)
         {
             int custId = customerInfoViewModel.CustId;
-            int roleId = customerInfoViewModel.SearchAccountRoleId;
             string userName = customerInfoViewModel.UserName;
             bool isDeposit = customerInfoViewModel.IsDeposit;
             string siteName = customerInfoViewModel.CustomerSite;
-
-            var agentId = customerInfoViewModel.AgentId;
-            var superId = customerInfoViewModel.SuperId;
-            var masterId = customerInfoViewModel.MasterId;
-
-            string superSettingTab = string.Empty;
-            string masterSettingTab = string.Empty;
-            string superOnMemberSettingUrl = string.Empty;
-            string masterOnMemberSettingUrl = string.Empty;
 
             TemplateHandler.Assign(ref htmlcontent, "{isHiddenMember}", "inline");
             TemplateHandler.Assign(ref htmlcontent, "{lblMinMax}", isDeposit ? string.Empty : "<li id=\"detail_tab_1\" onclick=\"detail_tabnew_Click(this)\"><a href=\"javascript:void(0);\"><span>Super PT</span></a></li>");
             TemplateHandler.Assign(ref htmlcontent, "{lblMinMax1}", isDeposit ? string.Empty : "<a href=\"javascript:void(0);\"><span>Master PT</span></a>");
 
-            superOnMemberSettingUrl = string.Format("EditSuperOnMember/EditSuperOnMemberPage?agentId={0}&custId={1}&uname={2}&siteName={3}", agentId, custId, userName, siteName);
-            masterOnMemberSettingUrl = string.Format("EditMasterOnMember/EditMasterOnMemberPage?agentId={0}&custId={1}&uname={2}&siteName={3}", agentId, custId, userName, siteName);
+            string superOnMemberSettingUrl = string.Format("Customer/EditCustomer?roleId=1&uplineRoleId=4&custId={0}&uname={1}&siteName={2}", custId, userName, siteName);
+            string masterOnMemberSettingUrl = string.Format("Customer/EditCustomer?roleId=1&uplineRoleId=3&custId={0}&uname={1}&siteName={2}", custId, userName, siteName);
+            string superSettingTab = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + superOnMemberSettingUrl + "\");' target='centerFr'>Sportsbook</a>";
 
-            superSettingTab = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + superOnMemberSettingUrl + "\");' target='centerFr'>Sportsbook</a>";
-            
             if (renderLeftPanelParameter.IsShowSabaCasino)
             {
                 superSettingTab += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?productId=6&language=en-US&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=4\");' target='centerFr'>Saba Casino</a>";
@@ -86,13 +50,7 @@
             if (!customerInfoViewModel.HideSettingLinkVirtualSports)
             {
                 superSettingTab += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?productId=5&language=en-US&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=4\");' target='centerFr'>Virtual Sports</a>";
-            }            
-
-            if (!customerInfoViewModel.HideSportsbook2)
-            {
-                superSettingTab += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?productId=16&language=en-US&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=4\");' target='centerFr'>Sportsbook 2</a>";
             }
-           
 
             if (renderLeftPanelParameter.IsShowLiveCasinoForCredit)
             {
@@ -102,7 +60,7 @@
             if (renderLeftPanelParameter.IsShowVoidbridge)
             {
                 superSettingTab += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?productId=18&language=en-US&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=4\");' target='centerFr'>RNG Slot</a>";
-            }         
+            }
 
             if (renderLeftPanelParameter.IsShowRNGLottery)
             {
@@ -123,7 +81,7 @@
                     4, // Super Level.
                     "Virtual Games");
             }
-            
+
             if (renderLeftPanelParameter.IsShowSabaclub)
             {
                 superSettingTab += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?productId=42&language=en-US&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=4\");' target='centerFr'>Saba.games</a>";
@@ -139,7 +97,7 @@
                 superSettingTab += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?productId=69&language=en-US&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=4\");' target='centerFr'>Bitcoin</a>";
             }
 
-            masterSettingTab = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + masterOnMemberSettingUrl + "\");' target='centerFr'>Sportsbook</a>";
+            string masterSettingTab = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + masterOnMemberSettingUrl + "\");' target='centerFr'>Sportsbook</a>";
 
             if (renderLeftPanelParameter.IsShowSabaCasino)
             {
@@ -150,11 +108,6 @@
             {
                 masterSettingTab += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?productId=5&language=en-US&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=3\");' target='centerFr'>Virtual Sports</a>";
             }
-        
-            if (!customerInfoViewModel.HideSportsbook2)
-            {
-                masterSettingTab += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?productId=16&language=en-US&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=3\");' target='centerFr'>Sportsbook 2</a>";
-            }                        
 
             if (renderLeftPanelParameter.IsShowLiveCasinoForCredit)
             {
@@ -164,7 +117,7 @@
             if (renderLeftPanelParameter.IsShowVoidbridge)
             {
                 masterSettingTab += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?productId=18&language=en-US&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=3\");' target='centerFr'>RNG Slot</a>";
-            }        
+            }
 
             if (renderLeftPanelParameter.IsShowRNGLottery)
             {
@@ -203,39 +156,6 @@
 
             TemplateHandler.Assign(ref htmlcontent, "{contentminmax}", superSettingTab);
             TemplateHandler.Assign(ref htmlcontent, "{contentminmax1}", masterSettingTab);
-            return htmlcontent;
-        }
-
-        private string AssignAgentMinMaxSetting(string htmlcontent, int custId, string userName, bool isDeposit, int masterId)
-        {
-            TemplateHandler.Assign(ref htmlcontent, "{isHiddenMember}", "none");
-            TemplateHandler.Assign(ref htmlcontent, "{lblMinMax}", isDeposit ? string.Empty : "<li id=\"detail_tab_1\" onclick=\"detail_tabnew_Click(this)\"><a href=\"javascript:void(0);\"><span>Min/Max PT</span></a></li>");
-            TemplateHandler.Assign(ref htmlcontent, "{lblMinMax1}", string.Empty);
-            var minMaxPtUrl = "EditAgentMinMaxPt/EditAgentMinMaxPtPage?&custId=" + custId + "&uplineId=" + masterId + "&uname=" + userName;
-            var minMaxPTtab = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + minMaxPtUrl + "\");' target='centerFr'>Sportsbook</a>";
-            TemplateHandler.Assign(ref htmlcontent, "{contentminmax}", minMaxPTtab);
-            return htmlcontent;
-        }
-
-        private string AssignMasterMinMaxSetting(string htmlcontent, int custId, string userName, bool isDeposit, int superId)
-        {
-            TemplateHandler.Assign(ref htmlcontent, "{isHiddenMember}", "none");
-            TemplateHandler.Assign(ref htmlcontent, "{lblMinMax}", isDeposit ? "" : "<li id=\"detail_tab_1\" onclick=\"detail_tabnew_Click(this)\"><a href=\"javascript:void(0);\"><span>Min/Max PT</span></a></li>");
-            TemplateHandler.Assign(ref htmlcontent, "{lblMinMax1}", string.Empty);
-            var minMaxPtUrl = "EditMasterMinMaxPt/EditMasterMinMaxPtPage?&custId=" + custId + "&uplineId=" + superId + "&uname=" + userName;
-            var minMaxPTtab = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + minMaxPtUrl + "\");' target='centerFr'>Sportsbook</a>";
-            TemplateHandler.Assign(ref htmlcontent, "{contentminmax}", minMaxPTtab);
-            return htmlcontent;
-        }
-
-        private string AssignSuperMinSetting(string htmlcontent, int custId, string userName, bool isDeposit)
-        {
-            TemplateHandler.Assign(ref htmlcontent, "{isHiddenMember}", "none");
-            TemplateHandler.Assign(ref htmlcontent, "{lblMinMax}", isDeposit ? string.Empty : "<li id=\"detail_tab_1\" onclick=\"detail_tabnew_Click(this)\"><a href=\"javascript:void(0);\"><span>Min PT</span></a></li>");
-            TemplateHandler.Assign(ref htmlcontent, "{lblMinMax1}", string.Empty);
-            var minMaxPtUrl = "EditSuperMinPt/EditSuperMinPtPage?&custId=" + custId + "&uname=" + userName;
-            var submenu3 = "<a class='button_left02'  href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + minMaxPtUrl + "\");' target='centerFr'>Sportsbook</a>";
-            TemplateHandler.Assign(ref htmlcontent, "{contentminmax}", submenu3);
             return htmlcontent;
         }
     }

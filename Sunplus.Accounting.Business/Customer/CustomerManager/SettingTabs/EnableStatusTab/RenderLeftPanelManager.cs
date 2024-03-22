@@ -84,24 +84,22 @@ namespace Sunplus.Accounting.Business.Customer
         /// <param name="htmlcontent"></param>
         /// <param name="isManageCustomerAccess"></param>
         /// <param name="disabledProductParent"></param>
-        /// <param name="hasDownline"></param>
         /// <param name="productName"></param>
         /// <param name="isSupport"></param>
         /// <param name="renderLeftPanelParameter"></param>
         /// <param name="title"></param>
         /// <param name="productId"></param>
         public void RenderEnableProductBox2(
-        DataRow custInfoRow,
-        SettingGroup settingGroup,
-        ref string htmlcontent,
-        bool isManageCustomerAccess,
-        bool disabledProductParent,
-        bool hasDownline,
-        string productName,
-        bool isSupport,
-        RenderLeftPanelParameter renderLeftPanelParameter,
-        string title,
-        int productId)
+            DataRow custInfoRow,
+            SettingGroup settingGroup,
+            ref string htmlcontent,
+            bool isManageCustomerAccess,
+            bool disabledProductParent,
+            string productName,
+            bool isSupport,
+            RenderLeftPanelParameter renderLeftPanelParameter,
+            string title,
+            int productId)
         {
             if (isSupport)
             {
@@ -149,50 +147,6 @@ namespace Sunplus.Accounting.Business.Customer
             }
         }
 
-        public void RenderEnableProductBoxDCS(
-            DataRow custInfoRow,
-            DataRow productInfo,
-            SettingGroup settingGroup,
-            ref string htmlcontent,
-            bool isManageCustomerAccess,
-            bool disabledProductParent,
-            bool hasDownline,
-            string productName,
-            bool isSupport,
-            RenderLeftPanelParameter renderLeftPanelParameter,
-            string title,
-            int productId = 0,
-            int settingType = 0)
-        {
-            if (isSupport)
-            {
-                bool isDisabled = Utils.ToBoolean(productInfo["IsDisabled"]);
-                bool disableDownlines = Utils.ToBoolean(productInfo["IsDisabledDownline"]);
-                bool disableUplines = Utils.ToBoolean(productInfo["IsDisabledUpline"]);
-                var isCustomerEnabled = custInfoRow["Enabled"].ToString();
-                settingGroup.Add(GetProductSettingControl(
-                    renderLeftPanelParameter,
-                    isManageCustomerAccess,
-                    "disabled" + productName,
-                    !isDisabled,
-                    hasDownline,
-                    true,
-                    Converter.ToBool(isCustomerEnabled),
-                    disableUplines,
-                    disableDownlines,
-                    productName,
-                    title,
-                    productId,
-                    settingType));
-
-                TemplateHandler.Assign(ref htmlcontent, "{chk" + productName + "}", isDisabled ? 0 : 1);
-            }
-            else
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "{chk" + productName + "}");
-            }
-        }
-
         public void RenderEnableProductBoxDCS2(
             DataRow custInfoRow,
             DataRow productInfo,
@@ -205,52 +159,11 @@ namespace Sunplus.Accounting.Business.Customer
             string title,
             int productId = 0)
         {
-           if (isSupport)
+            if (isSupport)
             {
                 bool isDisabled = Utils.ToBoolean(productInfo["IsDisabled"]);
                 bool disableDownlines = Utils.ToBoolean(productInfo["IsDisabledDownline"]);
                 bool disableUplines = Utils.ToBoolean(productInfo["IsDisabledUpline"]);
-                var isCustomerEnabled = custInfoRow["Enabled"].ToString();
-                settingGroup.Add(GetProductSettingControl2(
-                    renderLeftPanelParameter,
-                    isManageCustomerAccess,
-                    "disabled" + productName,
-                    !isDisabled,
-                    true,
-                    Converter.ToBool(isCustomerEnabled),
-                    disableUplines,
-                    disableDownlines,
-                    productName,
-                    title,
-                    productId));
-
-                TemplateHandler.Assign(ref htmlcontent, "{chk" + productName + "}", isDisabled ? 0 : 1);
-            }
-            else
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "{chk" + productName + "}");
-            }
-        }
-
-        public void RenderOldProductEnableBoxLikeDCS(
-            DataRow custInfoRow,
-            SettingGroup settingGroup,
-            ref string htmlcontent,
-            bool isManageCustomerAccess,
-            bool disabledProductParent,
-            bool hasDownline,
-            string productName,
-            bool isSupport,
-            RenderLeftPanelParameter renderLeftPanelParameter,
-            string title,
-            int productId = 0)
-        {
-            if (isSupport)
-            {
-                bool isDisabled = Utils.ToBoolean(custInfoRow["Disable" + productName]);
-                bool disableDownlines = ContainColumn(custInfoRow.Table, "DisableDownlines" + productName)
-                    && Utils.ToBoolean(custInfoRow["DisableDownlines" + productName]);
-                bool disableUplines = Utils.ToBoolean(custInfoRow["DisabledUpline" + productName]);
                 var isCustomerEnabled = custInfoRow["Enabled"].ToString();
                 settingGroup.Add(GetProductSettingControl2(
                     renderLeftPanelParameter,
@@ -319,12 +232,12 @@ namespace Sunplus.Accounting.Business.Customer
                 jsonmouseout = canChange ? string.Empty : "UnTip()";
                 jsonmouseover = canChange ? string.Empty :
                      string.Format(
-                        "Tip('{0}', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)",                        
+                        "Tip('{0}', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)",
                         ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, isEnabled ? "lblDisabled" + productName + "Upline" : "lblDisabledAccount"));
             }
 
             return
-                new SettingControl(                   
+                new SettingControl(
                     ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "enable" + productName),
                     isAllowEdit ? currStatus : false,
                     !isAllowEdit,
@@ -365,7 +278,7 @@ namespace Sunplus.Accounting.Business.Customer
                 jsonmouseout = canChange ? string.Empty : "UnTip()";
                 jsonmouseover = canChange ? string.Empty :
                      string.Format(
-                        "Tip('{0}', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)",                       
+                        "Tip('{0}', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)",
                         ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, isEnabled ? "lblDisabled" + productName + "Upline" : "lblDisabledAccount"));
             }
 
@@ -384,18 +297,10 @@ namespace Sunplus.Accounting.Business.Customer
                     productName);
         }
 
-
         private bool ContainColumn(DataTable table, string columnName)
         {
             return table.Columns.Contains(columnName);
         }
-
-        public string GetSportbook2StatusJsFunction(
-            int custId,
-            string userName,
-            int roleId,
-            string title)
-            => $"leftPanelManager.viewProductStatusSetting({custId}, '{userName}', {roleId}, 16, '{title}')";
 
         public string GetProductStatusJsFunction(
             bool isDeposit,

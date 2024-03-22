@@ -2,6 +2,7 @@
 using DNAide.Core;
 using Fanex.Common;
 using Sunplus.Accounting.Business.Customer;
+using Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting;
 using Sunplus.Accounting.Core.Cache;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Extensions;
@@ -32,6 +33,8 @@ namespace Sunplus.Accounting.Business.LogDisplay
 
         private readonly SimplifyCreateCustomerLogFormatter _simplifyCreateCustomerLogFormatter;
 
+        private readonly CustomerSettingLogFormatter _customerSettingLogFormatter;
+
         private int[] listBetsettingActionIDLicensee = new int[] { 2012, 2013, 2019, 2036 };
 
         private int[] listStatusActionIDHasRNGKeno = new int[] { 1100, 1101, 1102, 1103 };
@@ -40,13 +43,15 @@ namespace Sunplus.Accounting.Business.LogDisplay
             ILogDisplayDAO logDAO,
             NewLicenseeLogFormatter newLicenseeLogFormatter,
             NewCurrencyForLicenseeLogFormatter newCurrencyForLicenseeLogFormatter,
-            SimplifyCreateCustomerLogFormatter simplifyCreateCustomerLogFormatter)
+            SimplifyCreateCustomerLogFormatter simplifyCreateCustomerLogFormatter,
+            CustomerSettingLogFormatter customerSettingLogFormatter)
         {
             _logDAO = logDAO;
-      
+
             _newLicenseeLogFormatter = newLicenseeLogFormatter ?? new NewLicenseeLogFormatter();
             _newCurrencyForLicenseeLogFormatter = newCurrencyForLicenseeLogFormatter ?? new NewCurrencyForLicenseeLogFormatter();
             _simplifyCreateCustomerLogFormatter = simplifyCreateCustomerLogFormatter ?? new SimplifyCreateCustomerLogFormatter();
+            _customerSettingLogFormatter = customerSettingLogFormatter ?? new CustomerSettingLogFormatter();
         }
 
         public Sunplus.Accounting.Entities.LogDisplay.ResultLog GetLogDisplay(LogParam param)
@@ -147,8 +152,16 @@ namespace Sunplus.Accounting.Business.LogDisplay
                         string trackingvalueold = FormatPermissionSubAccount(CastAide.AsString(row["trackingvalueold"]));
                         string spName = CastAide.AsString(row["SPName"]);
                         string actionName = CastAide.AsString(row["actionname"]);
-                        record.Detail = ParseTrackingValue(actionId, trackingvalue, spName, actionName);
-                        record.Diffs = _DiffsTrackingValue(trackingvalue, CastAide.AsString(trackingvalueold, string.Empty));
+                        if (_customerSettingLogFormatter.IsCreditCustomerSettingActionId(actionId))
+                        {
+                            _customerSettingLogFormatter.GenerateDetail(record, actionId, trackingvalue, trackingvalueold, spName, actionName);
+                            record.Diffs = _DiffsTrackingValue(trackingvalue, CastAide.AsString(trackingvalueold, string.Empty), true);
+                        }
+                        else
+                        {
+                            record.Detail = ParseTrackingValue(actionId, trackingvalue, spName, actionName);
+                            record.Diffs = _DiffsTrackingValue(trackingvalue, CastAide.AsString(trackingvalueold, string.Empty));
+                        }
 
                         logResult.Rows.Add(record);
                     }
@@ -846,29 +859,14 @@ namespace Sunplus.Accounting.Business.LogDisplay
             return trackingNode;
         }
 
-        private List<List<TrackingValue>> DiffsTrackingValue(int actionId, string trackingValue, string trackingValue2)
-        {
-            if (string.IsNullOrEmpty(trackingValue2) || trackingValue.Equals(trackingValue2))
-            {
-                return null;
-            }
-
-            if (_simplifyCreateCustomerLogFormatter.IsPTTemplateLogActionId(actionId))
-            {
-                return _simplifyCreateCustomerLogFormatter.GeneratePTTemplateDiffsTrackingValue(trackingValue, trackingValue2, _GetTrackingParams);
-            }
-
-            return _DiffsTrackingValue(trackingValue, trackingValue2);
-        }
-
-        private List<List<TrackingValue>> _DiffsTrackingValue(string trackingValue, string trackingValue2)
+        private List<List<TrackingValue>> _DiffsTrackingValue(string trackingValue, string trackingValue2, bool isSimplifyCustomerSetting = false)
         {
             var result = new List<List<TrackingValue>>();
             var diffs = new List<TrackingValue>();
             if (!trackingValue.Equals(trackingValue2) && !string.IsNullOrEmpty(trackingValue2))
             {
-                var (listVal, hasAttr) = _GetTrackingParams(trackingValue);
-                var (listVal2, hasAttr2) = _GetTrackingParams(trackingValue2);
+                var (listVal, hasAttr) = _GetTrackingParams(trackingValue, isSimplifyCustomerSetting);
+                var (listVal2, hasAttr2) = _GetTrackingParams(trackingValue2, isSimplifyCustomerSetting);
 
                 if (listVal.Count == listVal2.Count && hasAttr == hasAttr2)
                 {
@@ -885,7 +883,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
                                 if (!elm.Value.Val.Equals(elm2.Val, StringComparison.CurrentCultureIgnoreCase))
                                 {
                                     isDiff = true;
-                                    elm2.DiffRowIndex = index + (hasAttr ? 1 : 0);
+                                    elm2.DiffRowIndex = isSimplifyCustomerSetting ? 1 : (index + (hasAttr ? 1 : 0));
                                     diffs.Add(elm2);
                                 }
                             }
@@ -907,18 +905,16 @@ namespace Sunplus.Accounting.Business.LogDisplay
             return result;
         }
 
-        private (List<Dictionary<string, TrackingValue>> trackingParams, bool hasAttr) _GetTrackingParams(string trackingValue)
+        private (List<Dictionary<string, TrackingValue>> trackingParams, bool hasAttr) _GetTrackingParams(string trackingValue, bool isSimplifyCustomerSetting = false)
         {
-
             var result = new List<Dictionary<string, TrackingValue>>();
             var listVal = new Dictionary<string, TrackingValue>();
             var hasAttr = false;
-            trackingValue = trackingValue.Replace("\a", "");
             try
             {
                 // parse XML
                 var xmlValue = XElement.Parse(trackingValue);
-                var previousSporttype = xmlValue.Elements()?.FirstOrDefault()?.Attribute("Sport")?.Value;
+
                 foreach (var attr in xmlValue.Attributes())
                 {
                     if (listVal.ContainsKey(attr.Name.ToString()))
@@ -931,33 +927,24 @@ namespace Sunplus.Accounting.Business.LogDisplay
                 }
 
                 result.Add(listVal);
-                listVal = new Dictionary<string, TrackingValue>();
+
                 foreach (var elm in xmlValue.Elements())
                 {
-                    var sporttype = elm.Attribute("Sport")?.Value;
-                    var bettype = elm.Attribute("BT")?.Value;
-                    var inplay = elm.Attribute("InPlay")?.Value;
+                    listVal = new Dictionary<string, TrackingValue>();
+                    var sporttype = elm.Attribute("SportType")?.Value;
+                    var bettype = elm.Attribute("BetType")?.Value;
                     foreach (var attr in elm.Attributes())
                     {
-                        var attrName = attr.Name.ToString();
-                        if (listVal.ContainsKey(attrName))
+                        if (listVal.ContainsKey(attr.Name.ToString()))
                         {
                             continue;
                         }
 
-                        listVal.Add(attrName, LogFormater.FormatTrackingValue(attr, string.Empty));
+                        listVal.Add(attr.Name.ToString(), LogFormater.FormatTrackingValue(attr, isSimplifyCustomerSetting ? $"simplify-{sporttype}-{bettype}" : string.Empty));
                     }
 
-                    if (sporttype == null || previousSporttype != sporttype)
-                    {
-                        result.Add(listVal);
-                        previousSporttype = sporttype;
-                        listVal = new Dictionary<string, TrackingValue>();
-                    }
-                }
-
-                if (listVal.Count > 0)
                     result.Add(listVal);
+                }
             }
             catch (Exception ex)
             {

@@ -15,7 +15,7 @@
             string downlineListURL = string.Empty;
             string customerBalanceURL = string.Empty;
             string lblDownlineList = string.Empty;
-                Globals.AccountType accLevel = (Globals.AccountType)customerInfoViewModel.SearchAccountRoleId;
+            Globals.AccountType accLevel = (Globals.AccountType)customerInfoViewModel.SearchAccountRoleId;
             string statementLink = string.Empty;
             if (!customerInfoViewModel.IsInternalUser)
             {
@@ -27,8 +27,7 @@
             }
 
             TemplateHandler.Assign(ref tplTransLink, "statementLink", statementLink);
-            bool enableDeposit = WebSettings.IsApplySplitingDepositeCustomer;
-            if (enableDeposit && customerInfoViewModel.IsDeposit && accLevel != Globals.AccountType.Member)
+            if (!customerInfoViewModel.IsInternalUser && accLevel != Globals.AccountType.Member)
             {
                 TemplateHandler.RemoveBlock(ref tplTransLink, "downlinelistbtn");
             }
@@ -36,56 +35,19 @@
             switch (accLevel)
             {
                 case Globals.AccountType.Super:
-                    if (!customerInfoViewModel.IsInternalUser)
-                    {
-                        downlineListURL = "CustomerList/MasterAgentList?superId=" + customerInfoViewModel.CustId;
-                        if (WebSettings.OfferDoubleComm)
-                        {
-                            downlineListURL += "&doubleCommSuper=" + customerInfoViewModel.Doublecommlosing.ToString().ToLower();
-                        }
-                    }
-                    else
-                    {
-                        downlineListURL = "FinanceCustomerList/Index?upline=" + customerInfoViewModel.CustId + "&roleid=4";
-                    }
-
+                    downlineListURL = "FinanceCustomerList/Index?upline=" + customerInfoViewModel.CustId + "&roleid=4";
                     customerBalanceURL = "CustomerBalance/Index?custid=" + customerInfoViewModel.CustId.ToString() + "&roleId=4&userName=" + customerInfoViewModel.UserName;
                     TemplateHandler.RemoveBlock(ref tplTransLink, customerInfoViewModel.IsDeposit ? "balance" : null);
                     lblDownlineList = "Master List";
                     break;
                 case Globals.AccountType.Master:
-                    if (!customerInfoViewModel.IsInternalUser)
-                    {
-                        downlineListURL = "CustomerList/AgentList?masterId=" + customerInfoViewModel.CustId;
-
-                        if (WebSettings.OfferDoubleComm)
-                        {
-                            downlineListURL += "&doubleCommMaster=" + customerInfoViewModel.Doublecommlosing.ToString().ToLower();
-                        }
-                    }
-                    else
-                    {
-                        downlineListURL = "FinanceCustomerList/Index?upline=" + customerInfoViewModel.CustId + "&roleid=3";
-                    }
-
+                    downlineListURL = "FinanceCustomerList/Index?upline=" + customerInfoViewModel.CustId + "&roleid=3";
                     customerBalanceURL = "CustomerBalance/Index?custid=" + customerInfoViewModel.CustId.ToString() + "&roleId=3&userName=" + customerInfoViewModel.UserName;
                     TemplateHandler.RemoveBlock(ref tplTransLink, customerInfoViewModel.IsDeposit ? "balance" : null);
                     lblDownlineList = "Agent List";
                     break;
                 case Globals.AccountType.Agent:
-                    if (!customerInfoViewModel.IsInternalUser)
-                    {
-                        downlineListURL = "CustomerList/MemberList?agentId=" + customerInfoViewModel.CustId;
-                        if (WebSettings.OfferDoubleComm)
-                        {
-                            downlineListURL += "&doubleCommAgent=" + customerInfoViewModel.Doublecommlosing.ToString().ToLower();
-                        }
-                    }
-                    else
-                    {
-                        downlineListURL = "FinanceCustomerList/Index?upline=" + customerInfoViewModel.CustId + "&roleid=2";
-                    }
-
+                    downlineListURL = "FinanceCustomerList/Index?upline=" + customerInfoViewModel.CustId + "&roleid=2";
                     customerBalanceURL = "Customer/CustomerBalance.aspx?custid=" + customerInfoViewModel.CustId.ToString() + "&userName=" + customerInfoViewModel.UserName;
                     lblDownlineList = "Member List";
                     break;

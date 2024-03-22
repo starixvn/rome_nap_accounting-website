@@ -1,12 +1,11 @@
 ﻿<div id="div_${Id}" style="display: none; position: absolute; z-index: 1000; width:121px">
     <ul class="openedit">
-        <li class="canchange" onclick="OpenEditMinMaxPT('${Id}','${Type}');">Min Max PT</li>
         <li class="canchange" onclick="OpenEditCustInfo('${Id}','${Type}');">Info</li>
         {{if RoleId == 4 || RoleId == 3}}
         <li class="canchange" onclick="OpenEditTransferTime('${Id}',${IsAgent});">Transfer Condition</li>
         {{else}} {{if RoleId == 2 && IsDirectMaster}}
         <li class="canchange" onclick="OpenEditTransferTime('${Id}',${IsAgent});">Transfer Condition</li>
         {{/if}} {{/if}}
-        <li class="canchange" onclick="OpenChangePwd('${Id}','${UserName}');">Password</li>      
+        <li class="canchange" onclick="OpenChangePwd('${Id}','${UserName}');">Password</li>
     </ul>
 </div>

@@ -1,0 +1,27 @@
+@model Fanex.Tarus.Customer.ViewModels.Customer.SportBookInformationViewModel
+@{
+    var version = Sunplus.Accounting.Core.Configurations.WebSettings.Version;
+}
+
+<head>
+    <link href="~/App_Themes/LeftPanel/left_panel.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="http://localhost:4205/src/styles.scss"/>
+    @* <script src="~/Views/Customer/SportBookInformation/Scripts/TabsNavigator.js?version=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" type="text/javascript"></script> *@
+
+
+    <script type="module">
+        import RefreshRuntime from "http://localhost:4205/@@react-refresh";
+        RefreshRuntime.injectIntoGlobalHook(window);
+        window.$RefreshReg$ = () => { };
+        window.$RefreshSig$ = () => (type) => type;
+        window.__vite_plugin_react_preamble_installed__ = true;
+    </script>
+    <script type="module" src=@("http://localhost:4205/@vite/client")></script>
+    <script>
+        const appConfig = @Html.Raw(Model.AppConfig);
+        const informationPageParams = @Html.Raw(Model.Params);
+    </script>
+    <script type="text/javascript" src="@Url.Content("~/js/encode.js?v=" + version)"></script>
+    <script type="module" src="http://localhost:4205/src/main.tsx"></script>
+</head>
+<div id="root"></div>

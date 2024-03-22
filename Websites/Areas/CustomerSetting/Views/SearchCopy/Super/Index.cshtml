@@ -1,138 +1,136 @@
 ﻿@{
-    ViewBag.Title = "Search and Copy Super";
-    Layout = "~/Areas/CustomerSetting/Views/SearchCopy/Shared/_Layout.cshtml";
-    var query = Request.UrlReferrer.Query == null ? "level=Member" : Request.UrlReferrer.Query;
-    var level = query.Split('=').ElementAt(1);
+    Layout = null;
+    var version = Sunplus.Accounting.Core.Configurations.WebSettings.Version;
 }
-@section Styles
-{
-    <link rel="Stylesheet" href="@Url.Content("~/Areas/CustomerSetting/Views/SearchCopy/Styles/Steps/Step1.css")" />
-    <link rel="Stylesheet" href="@Url.Content("~/Areas/CustomerSetting/Views/SearchCopy/Styles/Steps/Step2.css?v=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version" />
-}
-@section Scripts
-{
-    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Views/SearchCopy/Scripts/ModuleSearchCopy.js?v=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version"></script>
-    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Views/SearchCopy/Scripts/SearchCopyController.js?v=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version"></script>
-    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Views/SearchCopy/Scripts/RemoveSetting.js?v=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version"></script>
-    <script type="text/javascript" src="@Url.Content("~/Assets/Js/HeadlineBelongSiteGetter.js?v=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version"></script>
-    <script type="text/javascript" src="@Url.Content("~/Assets/Js/SuperPrefixGetter.js?v=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version"></script>
-}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Accounting Admin System</title>
+    <link rel="stylesheet" href="@Url.Content("~/App_Themes/Public/common.css?v=" + version)" />
+    <link rel="stylesheet" href="@Url.Content("~/App_Themes/Public/input.css?v=" + version)" />
+    <link rel="stylesheet" href="@Url.Content("~/App_Themes/Public/Message.css?v=" + version)" />
+    <link rel="stylesheet" href="@Url.Content("~/App_Themes/Public/table.css?v=" + version)" />
+    <link rel="stylesheet" href="@Url.Content("~/Areas/CustomerSetting/Views/SearchCopy/Styles/MultipleAccounts/Style.css?v=" + version)" />
+</head>
+<body>
+    <div class="maincontent">
+        <div id="sectionMessage"></div>
+        <div class="search-and-coppy">
+            <div style="display: none" id="tableNote">
+                <div class="headingnote mb-5">
+                    <div id="headlineBelongSite"></div>
+                    <div id="notAllowedSuperPrefixes_multiple"></div>
+                </div>
+            </div>
+            <div class="sourceAccount">
+                <label class="title">Source Account</label>
 
-<script type="text/javascript">
-    function toUrl(relativeUrl) {
-        return '@Url.Content("~/CustomerSetting/SearchCopy/")' + relativeUrl;
-    };
+                <input id="existedUserName" type="text"
+                       required />
+                <span id="checkExisted" class="success" style="display: none"></span>
+                <br />
+                <div id="breadCrumbs" class="list-upline"></div>
+            </div>
+            <table class="table-search-and-coppy">
+                <thead>
+                    <tr>
+                        <th colspan="2">
+                            <label class="title">Copied Accounts</label>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
 
-    function setFrameLoaded() {
-        try {
-            if ($(this).attr('src') != "") {
-                PTSetting.SportType.SetFrameLoaded();
-            }
-        }
-        catch (err) {
-        }
-    };
-</script>
+                    <tr>
+                        <td colspan="2">
+                            <label>Usernames (separated by ',')</label>
+                            <textarea id="txtUsernames" cols="50" rows="5"></textarea>
+                        </td>
+                    </tr>
+                    <tr id="passwordRow">
 
-<div id="divSearchCopy" ng-controller="SearchCopyController">
-    <input type="hidden" id="currentUserId" value='@Fanex.CustomerSetting.Module.Core.Web.AppSession.AccId' />
-    <input type="hidden" id="currentURL" value='@Url.Content("~")' />
-    <div id="errorMsg" class="errMsg maincontent_box" style="width: 700px;">
+                        <td>
+                            <label for="txtPassword">Password<span class="require"> *</span></label>
+                            <input type="password" id="txtPassword" maxlength="16" />
+                        </td>
+                    </tr>
+                    <tr>
+
+                        <td>
+                            <label for="txtFirstName">First Name</label>
+                            <input type="text" id="txtFirstName" maxlength="50" />
+                        </td>
+
+                        <td>
+                            <label for="txtLastName">Last Name</label>
+                            <input type="text" id="txtLastName" maxlength="50" />
+                        </td>
+                    </tr>
+                    <tr id="phoneRow">
+                        <td>
+                            <label for="txtPhone">Phone</label>
+                            <input type="text" id="txtPhone" maxlength="50" />
+                        </td>
+                        <td>
+                            <label for="txtMobilePhone">Mobile Phone</label>
+                            <input type="text" id="txtMobilePhone" maxlength="50" />
+                        </td>
+                    </tr>
+                    <tr style="display: none" id="siteRow"></tr>
+                    <tr style="display: none" id="superCreditRow"></tr>
+                    <tr style="display: none" id="memberCreditRow"></tr>
+                    <tr>
+                        <td colspan="2" class="warning">
+                            <div class="headingnote">
+                                <div class="warning-mess">
+                                    <div>Warning: After submit, Please do not close this browser tab or the creation process will be aborted.</div>
+                                    <div>You can leave this tab open and continue your work on other tabs.</div>
+                                    <div>If you accidentally close the tab, you must create the "Not created" account(s) again.</div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <button id="btnSubmit" class="btn btn-submit">Submit</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="tblcollapse hide tblProgress-search-and-copy" id="tblProgress">
+                <thead>
+                    <tr class="title c">
+                        <th colspan="3">Progress</th>
+                    </tr>
+                    <tr class="title_1 c">
+                        <th class="w35">#</th>
+                        <th class="w250">Copied Account</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <input type="hidden" id="noPermissionEditCredit" value="@ViewBag.NoPermissionEditCredit" />
     </div>
-    <div class="formPanel">
-        <div id="panelStep1" ng-click="step2Back();">
-            <span id="spanstep1" class="step step1-active">
-                Step 1: <span style="font-weight: bold">
-                    Search Existing @level
-                </span>
-            </span>
-        </div>
-        <div id="panelStep2" ng-click="step1Next();">
-            <span id="spanstep2" class="step step2-inactive">
-                Step 2: <span style="font-weight: bold">
-                    Enter Information
-                </span>
-            </span>
-        </div>
-    </div>
-    @using (Html.BeginForm("Home", "Index", FormMethod.Post, new { id = "formSearchExistingSupper", @novalidate = "" }))
-    {
-        <div id="step1">
-            <div style="clear: both; height: 1px">
-                &nbsp;
-            </div>
-            @Html.Partial("~/Areas/CustomerSetting/Views/SearchCopy/Super/SearchForm.cshtml")
-        </div>
-        <div id="step2">
-            <div style="clear: both; height: 1px">
-                &nbsp;
-            </div>
-            <div class="row tabsports">
-                <div id="tabGenealInformation" class="tab-active" ng-click="showSetting('tabGenealInformation');">
-                    <span>General Information</span>
-                </div>
-                <div id="tabSports" class="tab-inactive">
-                    <font class="b" ng-click="showSetting('tabSports');">&nbsp;Preview settings: </font>
-                    <select id="listSports" ng-model="selectedSport" ng-options="s.sportname for s in sports"
-                            ng-change="showSetting();" name="listType"></select>
-                </div>
-            </div>
-            <div id="headlineBelongSite" style="width: 668px"></div>
-            <div id="notAllowedSuperPrefixes_step2" style="width: 668px"></div>
-            <div class="settingInfo" style="overflow: auto;margin-top:-1px;">
-                @Html.Partial("~/Areas/CustomerSetting/Views/SearchCopy/Super/GeneralInformation.cshtml")
-                <div id="divSport" class="bg_table" style="width: 99%">
-                    <iframe id="frmSportbook" onload='setFrameLoaded();' scrolling="auto" frameborder="0"
-                            class="sport" style="width: 100%; height: 680px;" hspace="0" vspace="0" marginheight="0"
-                            marginwidth="0" src="" name="frmSportbook"></iframe>
-                    <iframe id="frmSportbookMinPT" onload='setFrameLoaded();' scrolling="auto" frameborder="0"
-                            class="sport" style="width: 100%; height: 680px;" hspace="0" vspace="0" marginheight="0"
-                            marginwidth="0" src="" name="frmSportbookMinPT"></iframe>
-                    <iframe id="frmVirtualSports" onload='setFrameLoaded();' scrolling="auto" frameborder="0"
-                            class="sport" style="width: 100%; height: 680px;" hspace="0" vspace="0" marginheight="0"
-                            marginwidth="0" src="" name="frmVirtualSports"></iframe>
-                    <iframe id="frmSportsbook2" onload='setFrameLoaded();' scrolling="auto" frameborder="0"
-                            class="sport" style="width: 100%; height: 680px;" hspace="0" vspace="0" marginheight="0"
-                            marginwidth="0" src="" name="frmSportsbook2"></iframe>
-                    <iframe id="frmLiveCasino" onload='setFrameLoaded();' scrolling="auto" frameborder="0"
-                            class="sport" style="width: 100%; height: 680px;" hspace="0" vspace="0" marginheight="0"
-                            marginwidth="0" src="" name="frmLiveCasino"></iframe>
-                    <iframe id="frmVoidbridge" onload='setFrameLoaded();' scrolling="auto" frameborder="0"
-                            class="sport" style="width: 100%; height: 680px;" hspace="0" vspace="0" marginheight="0"
-                            marginwidth="0" src="" name="frmVoidbridge"></iframe>                 
-                    <iframe id="frmRNGLottery" onload='setFrameLoaded();' scrolling="auto" frameborder="0"
-                            class="sport" style="width: 100%; height: 680px;" hspace="0" vspace="0" marginheight="0"
-                            marginwidth="0" src="" name="frmRNGLottery"></iframe>
-                    <iframe id="frmVirtualGames" onload='setFrameLoaded();' scrolling="auto" frameborder="0"
-                            class="sport" style="width: 100%; height: 680px;" hspace="0" vspace="0" marginheight="0"
-                            marginwidth="0" src="" name="frmVirtualGames"></iframe>
-                    <iframe id="frmSabaclub" onload='setFrameLoaded();' scrolling="auto" frameborder="0"
-                            class="sport" style="width: 100%; height: 680px;" hspace="0" vspace="0" marginheight="0"
-                            marginwidth="0" src="" name="frmSabaclub"></iframe>
-                    <iframe id="frmVGaming" onload='setFrameLoaded();' scrolling="auto" frameborder="0"
-                            class="sport" style="width: 100%; height: 680px;" hspace="0" vspace="0" marginheight="0"
-                            marginwidth="0" src="" name="frmVGaming"></iframe>
-                    <iframe id="frmBitcoin" onload='setFrameLoaded();' scrolling="auto" frameborder="0"
-                            class="sport" style="width: 100%; height: 680px;" hspace="0" vspace="0" marginheight="0"
-                            marginwidth="0" src="" name="frmBitcoin"></iframe>
-                    <iframe id="frmSabaCasino" onload='setFrameLoaded();' scrolling="auto" frameborder="0"
-                            class="sport" style="width: 100%; height: 680px;" hspace="0" vspace="0" marginheight="0"
-                            marginwidth="0" src="" name="frmSabaCasino"></iframe>
-                </div>
-            </div>
-            <div class="newline">
-                &nbsp;
-            </div>
-            <div class="btnNextR hand grid3" ng-click="step2Back();">
-                <div class="btnNextL">
-                    <span>< Previous</span>
-                </div>
-            </div>
-            <div class="btnNextR hand grid3" ng-click="step2Submit();">
-                <div class="btnNextL">
-                    <span>Submit</span>
-                </div>
-            </div>
-        </div>
-    }
-</div>
+    <script type="text/javascript">
+        function toUrl(relativeUrl) {
+            return '@Url.Content("~/CustomerSetting/SearchCopy/")' + relativeUrl;
+        };
+        var viewModel = {
+            rootUrl: "@ViewBag.RootUrl",
+            code: "@Fanex.Tarus.Security.Services.Encryptor.Code",
+            getSuperPrefixesUrl: "@Url.Content("~/Customer/GetNotAllowedSuperPrefixes")",
+            getHeadlineBelongSiteUrl: "@Url.Content("~/Customer/GetHeadlineBelongSite")"
+        };
+    </script>
+    <script type="text/javascript" src="@Url.Content("~/js/encode.js?v=" + version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-1.8.2.min.js?v=" + version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/js/jQuery/jquery.blockUI.1.33.js?v=" + version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/js/BlockUI.js?v=" + version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Views/SearchCopy/Scripts/Libs/formatNumberExtension.js?v=20140109_1")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Views/SearchCopy/Scripts/MultipleAccounts.js?v=" + version)"></script>
+</body>
+</html>

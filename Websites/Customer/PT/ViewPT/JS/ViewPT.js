@@ -418,7 +418,7 @@ var ViewPT = {
             dataType: "json",
             success: function (rs) {
                 if (rs != null) {
-                    var products = '<option value="0">SB</option>';
+                    var products = '';
                     $.each(rs, function (i, product) {
                         products += '<option value="' + product.ProductId + '">' + product.ProductName + '</option>';
                     });
@@ -472,7 +472,6 @@ var ViewPT = {
         var sportIndex = $("#ddlSporttype").val();
         var betTypeId = $("#ddlBettype").val();
         var userName = $("#txtUsername").val();
-        var isLive = (($('#chkLive').attr("checked")) ? '1' : '0');
         var sport = ViewPT.getCurrentSportIndex(sportIndex);
         var sportId = sport == undefined ? 0 : sport.SportId;
 
@@ -514,43 +513,46 @@ var ViewPT = {
             case 174: // Advantplay Mini
             case 159: // YeeBet
             case 9911: // IBC Live Casino
-                ViewPT.viewPTBasedOnKindOfCustomer(userName, sportId, betTypeId, isLive);
+                ViewPT.viewPTBasedOnKindOfCustomer(userName, sportId, betTypeId);
                 break;
             case 9908: // Virtual Sports
-                ViewPT.viewPTBasedOnKindOfCustomer(userName, sportId, betTypeId, isLive, 5);
+                ViewPT.viewPTBasedOnKindOfCustomer(userName, sportId, betTypeId, 5);
                 break;
 
             case 23:
-                ViewPT.viewPTBasedOnKindOfCustomer(userName, 0, 0, isLive, 23);
+                ViewPT.viewPTBasedOnKindOfCustomer(userName, 0, 0, 23);
                 break;
             case 9906: // RNG Slot
-                ViewPT.viewPTBasedOnKindOfCustomer(userName, 0, 0, isLive, 18);
+                ViewPT.viewPTBasedOnKindOfCustomer(userName, 0, 0, 18);
                 break;
             case 245://Virtual Games
             case 176: // FGG
-                ViewPT.viewPTBasedOnKindOfCustomer(userName, sportId, betTypeId, isLive, 64);
+                ViewPT.viewPTBasedOnKindOfCustomer(userName, sportId, betTypeId, 64);
                 break;
             case 200://Saba.games
-                ViewPT.viewPTBasedOnKindOfCustomer(userName, 0, 0, isLive, 42);
+                ViewPT.viewPTBasedOnKindOfCustomer(userName, 0, 0, 42);
                 break;
 
             case 171: //VGaming
             case 173: //VGaming
-                ViewPT.viewPTBasedOnKindOfCustomer(userName, 0, 0, isLive, 66);
+                ViewPT.viewPTBasedOnKindOfCustomer(userName, 0, 0, 66);
                 break;
             case 175: //Bitcoin Betting
-                ViewPT.viewPTBasedOnKindOfCustomer(userName, 0, 0, isLive, 69);
+                ViewPT.viewPTBasedOnKindOfCustomer(userName, 0, 0, 69);
                 break;
             case 208: // Saba Casino
             case 209: // Saba Casino
             case 210: // Saba Casino
-                ViewPT.viewPTBasedOnKindOfCustomer(userName, 0, 0, isLive, 6);
+                ViewPT.viewPTBasedOnKindOfCustomer(userName, 0, 0, 6);
+                break;
+            case 9913:
+                ViewPT.viewPTBasedOnKindOfCustomer(userName, 0, 0, 1);
                 break;
             default:
-                ViewPT.getViewPTOldFormat(userName, sportId, betTypeId, isLive);
+                ViewPT.getViewPTOldFormat(userName, sportId, betTypeId);
         }
     },
-    viewPTBasedOnKindOfCustomer: function (userName, sportId, betTypeId, isLive, productId) {
+    viewPTBasedOnKindOfCustomer: function (userName, sportId, betTypeId, productId) {
         var params = '{"userName":"' + userName + '"}';
         $.ajax({
             type: "POST",
@@ -560,7 +562,7 @@ var ViewPT = {
             dataType: "json",
             success: function (isDepositCustomer) {
                 if (isDepositCustomer != null) {
-                    isDepositCustomer ? ViewPT.getViewPTOldFormat(userName, sportId, betTypeId, isLive) : ViewPT.getViewPTFromDynamicSettingFormat(userName, sportId, betTypeId, isLive, productId);
+                    isDepositCustomer ? ViewPT.getViewPTOldFormat(userName, sportId, betTypeId) : ViewPT.getViewPTFromDynamicSettingFormat(userName, sportId, betTypeId, productId);
                 }
                 else {
                     showAlertMessage("err", "There is no information available.", 1);
@@ -570,14 +572,14 @@ var ViewPT = {
             error: function () { try { parent.jQuery.unblockUI(); } catch (e) { } }
         });
     },
-    getViewPTFromDynamicSettingFormat: function (userName, sportId, betTypeId, isLive, productId) {
+    getViewPTFromDynamicSettingFormat: function (userName, sportId, betTypeId, productId) {
         $('#sContent').html('');
-        $("#frmSportsbook2").attr('src', "../../../Matrix/ViewCustomerSettingMatrix?productId=" + productId + "&isLive=" + (isLive == 1 ? "true" : "false") + "&showFilter=false&settingTypeId=1&sportTypeId=" + sportId + "&betTypeId=" + betTypeId + "&customerName=" + $("#txtUsername").val());
+        $("#frmSportsbook2").attr('src', "../../../Matrix/ViewCustomerSettingMatrix?productId=" + productId + "&showFilter=false&settingTypeId=1&sportTypeId=" + sportId + "&betTypeId=" + betTypeId + "&customerName=" + $("#txtUsername").val());
         $("#frmSportsbook2").show();
         parent.jQuery.unblockUI();
     },
-    getViewPTOldFormat: function (userName, sportId, betTypeId, isLive) {
-        var params = '{"userName":"' + userName + '","sportId":"' + sportId + '","bettypeId":"' + betTypeId + '", "isLive": "' + isLive + '"}';
+    getViewPTOldFormat: function (userName, sportId, betTypeId) {
+        var params = '{"userName":"' + userName + '","sportId":"' + sportId + '","bettypeId":"' + betTypeId + '"}';
         $.ajax({
             type: "POST",
             url: "../../../Services/WCF/PT/ViewPT/ViewPTService.svc/ViewPositionTaking",

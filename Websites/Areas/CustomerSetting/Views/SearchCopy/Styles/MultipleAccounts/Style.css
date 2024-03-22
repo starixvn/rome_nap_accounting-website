@@ -1,29 +1,64 @@
-﻿body, .maincontent { margin: 0; padding: 0; }
-.maincontent { width: 768px; }
-.alertboxerr, .alertboxscc { height: 25px; line-height: 25px; width: 764px; }
-.alertboxerr div, .alertboxscc div { padding: 0 0 0 21px; margin-left:5px; }
-.sourceAccount { padding: 5px 0; /*line-height: 25px; height: 25px;*/ }
-.tblcollapse { text-align: left; }
-.tblcollapse th, .tblcollapse td { padding: 4px; }
-.tblcollapse .title_1 th { background-color: #cadceb; }
-.tblGeneralInfo { margin: 10px 0; }
-.tblGeneralInfo label { font-weight: normal; }
-.tblGeneralInfo td input[type="text"], .tblGeneralInfo td input[type="password"] { height: 18px; line-height: 18px; }
-.tblGeneralInfo td input[type="text"], .tblGeneralInfo td input[type="password"], .tblGeneralInfo td select { width: 70%; }
-.warning { color: #f40000; font-weight: bold; }
-#tblProgress tr:hover { background-color: #ffddfe; }
-#txtUsernames {
-  border: 1px solid #818181;
-  font-family: Tahoma, Arial, helvetica, sans-serif;
-  font-size: 11px;
-  padding: 4px;
-  outline: none;
-  resize: vertical;
-  width: 99%;
+﻿@import "./roboto.css";
+
+body, body * {
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif
 }
-.statusInprogress { color: #000; font-weight: bold; }
-.statusCreated { color: #618e11; font-weight: bold; }
-.statusError { color: #f40000; font-weight: bold; }
+
+body, .maincontent {
+    margin: 0;
+    padding: 0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.maincontent {
+    width: 700px;
+    margin-left: 2px;
+    margin-top: 2px;
+}
+
+.alertboxerr, .alertboxscc {
+    width: 764px;
+    line-height: 18px;
+}
+
+    .alertboxerr div, .alertboxscc div {
+        padding: 0 0 0 21px;
+        margin-left: 5px;
+    }
+
+.warning {
+    color: #f40000;
+    font-weight: bold;
+}
+
+.statusInprogress {
+    color: #000;
+    font-weight: bold;
+}
+
+.statusCreated {
+    color: #618e11;
+    font-weight: bold;
+}
+
+.statusError {
+    color: #f40000;
+    font-weight: bold;
+    text-align: left;
+}
+
+    .statusError::before {
+        content: "";
+        background: url(../Images/error.png) no-repeat;
+        width: 20px;
+        height: 20px;
+        display: inline-block;
+        vertical-align: bottom;
+        margin-right: 3px;
+    }
 
 .noteMsg {
     background-color: #ffedc1;
@@ -36,7 +71,7 @@
     line-height: 1.5;
     text-align: left;
     vertical-align: middle;
-    font-size: 12px;
+    font-size: 13px;
     clear: both;
     padding-left: 30px;
     margin-bottom: 5px;
@@ -47,7 +82,277 @@
     overflow: auto;
     color: #ff5411;
 }
-.sourceUserName {
-    font-size: 18px;
-    font-weight: bold;
+
+/**--------------**/
+
+/** -- new ui -- **/
+.success:before {
+    content: "";
+    background: url(../Images/success.svg) no-repeat;
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    vertical-align: sub;
+}
+
+.list-upline {
+    font-weight: 500;
+    font-size: 16px;
+    margin-bottom: 8px;
+    border-radius: 3px;
+    margin-top: 8px;
+}
+
+.mb-5 {
+    margin-bottom: 5px;
+}
+
+.alertboxerr {
+    border: 1px solid #CACACA;
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+    .alertboxerr div {
+        color: #E50000;
+        background: #fafafa url(../Images/cancel-round.png) no-repeat top 3px left 6px;
+        font-size: 13px;
+        line-height: 16px;
+        padding: 5px 10px 5px 36px;
+        margin-bottom: 0;
+        border: 0;
+        overflow: unset;
+        font-weight: 500;
+    }
+
+.headingnote {
+    background: #FAFAFA;
+    border: 1px solid #CACACA;
+    padding: 8px 8px 0 8px;
+    border-radius: 3px;
+}
+
+.headlineBelongSiteMsg {
+    color: #333;
+    background: #fafafa url(../Images/info.png) no-repeat top 1px left -1px;
+    font-size: 13px;
+    line-height: 16px;
+    padding: 0px 8px 8px 29px;
+    margin-bottom: 0;
+    border: 0;
+    overflow: unset;
+    font-weight: 500;
+}
+
+    .headlineBelongSiteMsg + .headlineBelongSiteMsg {
+        position: relative;
+        margin-top: 8px;
+    }
+
+        .headlineBelongSiteMsg + .headlineBelongSiteMsg::after {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: #CACACA;
+        }
+
+.warning-mess {
+    color: #A75000;
+    background: #fafafa url(../Images/warning.png) no-repeat top 1px left -1px;
+    font-size: 13px;
+    line-height: 16px;
+    padding: 0px 8px 8px 29px;
+    margin-bottom: 0;
+    border: 0;
+    overflow: unset;
+    font-weight: 500;
+}
+
+.search-and-coppy {
+    border: 1px solid #CACACA;
+    background: #ffffff;
+    padding: 5px;
+}
+
+.table-search-and-coppy {
+    width: 100%;
+}
+
+    .table-search-and-coppy td {
+        padding-bottom: 3px;
+        vertical-align: top;
+        width: 50%;
+    }
+
+        .table-search-and-coppy td input[type='text'] {
+            width: 332px;
+        }
+
+        .table-search-and-coppy td:first-child {
+            padding-right: 5px;
+        }
+
+        .table-search-and-coppy td:last-child {
+            padding-left: 5px;
+        }
+
+        .table-search-and-coppy td[colspan] {
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        .table-search-and-coppy td > * {
+            width: 100% !important;
+        }
+
+        .table-search-and-coppy td.col-internal {
+            padding-top: 23px;
+        }
+
+.sourceAccount {
+    padding-bottom: 8px;
+    margin-bottom: 5px;
+    border-bottom: 1px solid #d1d1d1;
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
+label {
+    line-height: 1.42;
+    display: block;
+    font-size: 13px;
+    color: #333;
+    margin-bottom: 4px;
+    text-align: left;
+}
+
+    label.title {
+        font-size: 15px;
+        font-weight: 500;
+        color: #094980;
+        display: block;
+        margin-bottom: 2px;
+    }
+
+.require {
+    color: #A11515;
+}
+
+select, input[type='text'], input[type='password'], .currency {
+    padding: 0 3px;
+    background: #fff;
+    border: 1px solid #d1d1d1;
+    border-radius: 3px;
+    box-shadow: none;
+    width: 306px;
+    font-size: 13px;
+    height: 26px;
+    outline: none;
+    line-height: 24px;
+    &[disabled] {
+        background: #E6E6E6;
+    }
+}
+
+.currency {
+    background: #E6E6E6;
+    line-height: 24px;
+}
+
+textarea {
+    font-family: inherit;
+    appearance: none;
+    padding: 5px;
+    background: #fff;
+    border: 1px solid #d1d1d1;
+    border-radius: 3px;
+    box-shadow: none;
+    width: 100%;
+    resize: none;
+    font-size: 13px;
+    height: 70px;
+    outline: none;
+}
+
+.col-credit {
+    position: relative;
+    padding-bottom: 15px;
+}
+
+    .col-credit span.memberMaxCredit {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        color: #666;
+    }
+
+.col-internal-user {
+    display: flex;
+    align-items: center;
+    height: 26px;
+}
+
+    .col-internal-user input {
+        margin: 0 3px 0 0;
+        position: relative;
+        top: -2px;
+    }
+
+.btn.btn-submit {
+    color: #ededed;
+    font-weight: 700;
+    padding: 5px 15px;
+    max-width: 100px;
+    background: #0b599c;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 13px;
+    height: auto;
+}
+
+.tblProgress-search-and-copy {
+    font-size: 12px;
+}
+
+    .tblProgress-search-and-copy th, .tblProgress-search-and-copy td {
+        border: 1px solid #d1d1d1 !important;
+        border-collapse: collapse;
+        height: 26px;
+        padding: 5px;
+    }
+
+    .tblProgress-search-and-copy .title th {
+        background-color: #bccbdc !important;
+        color: #333;
+    }
+
+    .tblProgress-search-and-copy tbody tr:nth-child(even) {
+        background-color: #f4f4f4;
+    }
+
+.msg-content {
+    text-align: left;
+    padding-left: 5px;
+}
+
+.sub-message {
+    padding-top: 2px;
+    padding-bottom: 2px;
+    margin-top: -3px;
+    line-height: 20px;
+}
+
+.live-badge {
+    background: #dd3333;
+    font-size: 11px;
+    color: #ededed;
+    padding: 2px 5px;
+    margin-right: 3px;
+    border-radius: 3px;
 }

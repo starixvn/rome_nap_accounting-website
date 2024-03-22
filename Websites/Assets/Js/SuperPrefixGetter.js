@@ -2,15 +2,10 @@
     if (parent.level !== "super") { return; }
 
     $.ajax({
-        type: "POST",
+        type: "GET",
         url: parent.getSuperPrefixesUrl,
         contentType: "application/json; charset=utf-8",
         dataType: "json",
-        data: JSON.stringify({
-            groupName: null,
-            prefix: null,
-            allowNewSuper: false
-        }),
         success: function (data) {
             var $notAllowedSuperPrefixes = $("#notAllowedSuperPrefixes");
             var $notAllowedSuperPrefixesStepOne = $("#notAllowedSuperPrefixes_step1");
@@ -19,8 +14,8 @@
                 var warningStepTwo = "For 789y site, the following username prefixes are not allowed for new accounts anymore";
                 var warningStepOne = `<span class="start">${warningStepTwo}</span>`;
                 $.each(data, function (index, item) {
-                    warningStepOne += `<br /><span style="margin-left: 20px">- ${item.GroupName}: ${item.Prefixes}</span>`;
-                    warningStepTwo += `<br />- ${item.GroupName}: ${item.Prefixes}`;
+                    warningStepOne += `<br /><span style="margin-left: 20px">- ${item.groupName}: ${item.prefixes}</span>`;
+                    warningStepTwo += `<br />- ${item.groupName}: ${item.prefixes}`;
                 });
                 $notAllowedSuperPrefixes.addClass("headlineBelongSiteMsg");
                 $notAllowedSuperPrefixes.html(warningStepTwo);

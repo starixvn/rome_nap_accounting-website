@@ -16,7 +16,6 @@
             bool currStatus,
             bool hasDownLine)
         {
-
             string template = WebUtils.LoadTemplate("specialstatus.htm");
             TemplateHandler.Assign(ref template, "{name}", name);
             TemplateHandler.Assign(ref template, "{onmouseout}", string.Empty);
@@ -77,7 +76,7 @@
                     TemplateHandler.Assign(ref template, "{onmouseout}", "UnTip()");
 
                     var tooltipText = ResourceExtension.GetResourceValue(
-                        ResourceExtension.Resources.Language, 
+                        ResourceExtension.Resources.Language,
                         !isDirectClosed ? "IndirectlyClosedByUpline" : "lblUplineClosed");
                     TemplateHandler.Assign(ref template, "{onmouseover}", "Tip('" + tooltipText + "', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)");
                 }
@@ -164,51 +163,6 @@
                 return ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblSuspended");
             }
             return "<span style=\"color:red;\">" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblSuspended") + " (locked)</span>";
-        }
-
-        private SettingControl GetSettingControlNumberGame(
-            int roleID,
-            bool parentstatus,
-            bool isManageCustomerAccess,
-            string statusName,
-            bool currStatus,
-            bool isdisableNumberGameDL,
-            bool isenabled,
-            bool isDeposit)
-        {
-
-            string classname = string.Empty;
-            string jsonclick = string.Empty;
-            string jsonmouseover = string.Empty;
-            string jsonmouseout = string.Empty;
-
-            if (isManageCustomerAccess)
-            {
-                if (isenabled)
-                {
-                    if (4 == roleID || !parentstatus)
-                    {
-                        classname = "canchange";
-                        jsonclick = isDeposit
-                                ? "return ShowDisablePop(this);"
-                                : "return leftPanelManager.viewProductStatusSetting({CustId}, '{Username}', {RoleId}, 3, 'Update Number Game Status');";
-                    }
-                    else
-                    {
-                        classname = "cannotchange";
-                        jsonmouseout = "UnTip()";
-                        jsonmouseover = "Tip('" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblDisabledNumberGameUpline") + "', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)";
-                    }
-                }
-                else
-                {
-                    classname = "cannotchange";
-                    jsonmouseout = "UnTip()";
-                    jsonmouseover = "Tip('" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblDisabledAccount") + "', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)";
-                }
-            }
-            return new SettingControl(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblDisabledNumberGame"), currStatus, false, jsonclick, jsonmouseout, jsonmouseover, classname, statusName, roleID, isdisableNumberGameDL, "NumberGame");
-
         }
 
         private SettingControl GetSettingControlOutright(
@@ -403,7 +357,7 @@
         private SettingControl GetSettingControlAllDayBalTransferOnMaster(
             int roleId,
             bool isManageCustomerAccess,
-            string statusName, 
+            string statusName,
             bool currentStatus,
             bool currentStatusOfADB)
         {
