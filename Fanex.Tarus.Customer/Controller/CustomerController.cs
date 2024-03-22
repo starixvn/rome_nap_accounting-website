@@ -206,6 +206,9 @@ namespace Fanex.Tarus.Customer.Controller
             return Content(await customerService.GetCustomerSetting(request.CustId, request.RoleId, CustomerClientManager.ClientConfigs.SystemId, request.UplineRoleId, request.Language, request.IsGetUpLine, request.ProductGroupId, request.SiteLabel));
         }
 
+        public async Task<ActionResult> GetCurrentWinLossAmount(int custId, int sportType, int betType, string language = "en-US")
+            => Content(await customerService.GetCustomerCurrentWinLossAmounts(custId, sportType, betType, language));
+
         public async Task<ActionResult> CheckExistedCustomer(string username)
             => Json(await customerService.CheckExistedCustomer(username), JsonRequestBehavior.AllowGet);
 
