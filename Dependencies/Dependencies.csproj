@@ -123,7 +123,7 @@
       <HintPath>..\packages\Fanex.BetList.ColossusBets.2.0.0\lib\net461\Fanex.BetList.ColossusBets.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.Core, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Core.3.0.2.5-VS4-02\lib\net461\Fanex.BetList.Core.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.Core.3.0.2.9-VS4-01\lib\net461\Fanex.BetList.Core.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.Core.RemotingRef, Version=1.1.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Core.RemotingRef.2.0.0.2-VS4-01\lib\net461\Fanex.BetList.Core.RemotingRef.dll</HintPath>
@@ -230,8 +230,8 @@
     <Reference Include="Fanex.BetList.VirtualGames, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.VirtualGames.2.0.0\lib\net461\Fanex.BetList.VirtualGames.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.VirtualSports, Version=2.0.0.7, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.VirtualSports.2.0.0.7-VS4-04\lib\net461\Fanex.BetList.VirtualSports.dll</HintPath>
+    <Reference Include="Fanex.BetList.VirtualSports, Version=2.0.0.8, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.VirtualSports.2.0.0.8-VS4-01\lib\net461\Fanex.BetList.VirtualSports.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.VoidBridge, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.VoidBridge.2.0.0\lib\net461\Fanex.BetList.VoidBridge.dll</HintPath>
