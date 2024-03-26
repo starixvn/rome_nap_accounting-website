@@ -10,6 +10,7 @@
 namespace Fanex.Tarus.BetList.Models
 {
     using Fanex.BetList.Core.Utils;
+    using Fanex.Tarus.BetList.Constants;
     using System;
     using System.Collections.Generic;
 
@@ -44,5 +45,7 @@ namespace Fanex.Tarus.BetList.Models
         public decimal WinLoss { get; set; }
 
         public string Status { get; set; }
+
+        public string StatusText => SystemParlayConstants.GetStatusText(Status);
     }
 }

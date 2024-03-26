@@ -153,7 +153,7 @@
                 cell = new ExcelCell(columnIndex++, eventObject.WinLoss, _negativeNumber);
                 cell.RenderCell(row);
 
-                cell = new ExcelCell(columnIndex++, eventObject.Status, _textCenter);
+                cell = new ExcelCell(columnIndex++, eventObject.StatusText, _textCenter);
                 cell.RenderCell(row);
 
                 _currentRowIndex++;

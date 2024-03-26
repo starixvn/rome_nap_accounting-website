@@ -20,6 +20,8 @@ namespace Fanex.Tarus.BetList.Extensions
     using Resources;
     using Sunplus.Accounting.Core.Common;
     using Sunplus.Accounting.Core.Configurations;
+    using Fanex.BetList.Core.Utils.StringExt;
+    using Fanex.Tarus.BetList.Constants;
 
     /// <summary>
     /// TODO: Update summary.
@@ -51,7 +53,8 @@ namespace Fanex.Tarus.BetList.Extensions
         public static BetListExcelBuilder AddStatisWithIP(this BetListExcelBuilder factory, ITicket ticket, TicketDetail ticketDetail, ITicketHelper ticketHelper)
         {
             string country = string.IsNullOrWhiteSpace(ticketDetail.Country) ? "" : "\n" + ticketDetail.Country;
-            IRichTextString rtfCreator = new HSSFRichTextString(ticket.Status + "\n" + ticketDetail.Ticket.IP + country);
+            var status = SystemParlayConstants.GetStatusText(ticket.Status);
+            IRichTextString rtfCreator = new HSSFRichTextString(status + "\n" + ticketDetail.Ticket.IP + country);
             factory.AddCell(rtfCreator, ticketHelper.Index % 2 == 0 ? factory.OddCellStyleCenterAligned : factory.EvenCellStyleCenterAligned);
 
             return factory;

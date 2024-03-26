@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Fanex.BetList.Core.App_GlobalResources;
+using System;
+using System.Collections.Generic;
 
 namespace Fanex.Tarus.BetList.Constants
 {
@@ -18,6 +20,9 @@ namespace Fanex.Tarus.BetList.Constants
 
         public static int GetStatusOrderId(string status)
             => SystemParlayConstants.SystemParlyStatusOrder.ContainsKey(status) ? SystemParlyStatusOrder[status] : 99;
+
+        public static string GetStatusText(string status)
+            => status.Equals("LOSE", StringComparison.CurrentCultureIgnoreCase) ? CoreBetList.lose.ToUpper() : status.ToUpper();
     }
 }
 

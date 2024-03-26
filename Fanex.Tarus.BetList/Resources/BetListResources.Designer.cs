@@ -277,7 +277,7 @@ namespace Fanex.Tarus.BetList.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lose.
+        ///   Looks up a localized string similar to Lost.
         /// </summary>
         public static string Lose {
             get {
