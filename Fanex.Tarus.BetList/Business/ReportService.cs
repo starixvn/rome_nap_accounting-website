@@ -197,6 +197,9 @@
             return 2700 <= betTypeId && betTypeId <= 2899;
         }
 
+        public static bool IsVirtualSports4(int betTypeId)
+            => 10400 <= betTypeId && betTypeId <= 10499;
+
         public static bool IsCardClub(int betTypeId)
         {
             return 1901 <= betTypeId && betTypeId <= 1999;

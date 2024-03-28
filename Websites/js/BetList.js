@@ -1114,7 +1114,7 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
 
 function getResultParamByBetType(matchid, race, bettype, sporttype, refno, username, winlostdate, refno_mixparlay, league, is_outright, betid, custId) {
     switch (true) {
-        case bettype === 9 || bettype === 29 || bettype === 2799: // System Parlay, MixParlayVirtualSports2
+        case bettype === 9 || bettype === 29 || bettype === 2799 || bettype == 10449: // System Parlay, MixParlayVirtualSports2
             return getSystemParlayParam(matchid, refno_mixparlay, bettype, betid);
 
         case bettype === 1231 || bettype === 1232 || bettype === 1233: // Virtual Horse Racing.

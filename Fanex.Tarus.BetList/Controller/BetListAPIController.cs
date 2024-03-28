@@ -55,7 +55,8 @@
                     var choiceHtml = new StringBuilder();
                     var choiceMainTicket = builder.BuildChoice(ticket, ticketHelper, outputLiveCasino, isShowScoreMap: false);
                     if (ticket.BetTypeId == BetTypeContants.SystemParlay ||
-                        ticket.BetTypeId == BetTypeContants.MixParlayVirtualSports2)
+                        ticket.BetTypeId == BetTypeContants.MixParlayVirtualSports2 ||
+                        ticket.BetTypeId == BetTypeContants.MixParlayEdgeGamingVS4)
                     {
                         var partern = $"<a id=\"hidden0\" [^>]*>(.+?)</a>";
                         var mainTicket = Regex.Match(choiceMainTicket, partern);
