@@ -29,6 +29,7 @@ namespace Fanex.Tarus.BetList.Controller
     public class TarusBetListController : Controller
     {
         private readonly IBetListService _betListService;
+        private readonly IBookedBetService _bookedBetService;
         private readonly ISmartPunterService _smartPunterService;
         private string _smartPunterFunctionName = "SmartPunter";
 
@@ -36,6 +37,7 @@ namespace Fanex.Tarus.BetList.Controller
         {
             this._betListService = new BetListService();
             this._smartPunterService = new SmartPunterService();
+            this._bookedBetService = new BookedBetService();
         }
 
         /// <summary>
@@ -50,7 +52,6 @@ namespace Fanex.Tarus.BetList.Controller
 
             return View("~/Views/BetList/BetListByRefNo/Index.cshtml", viewModel);
         }
-
 
         /// <summary>
         /// Call Main Page Belist for Customer Info
@@ -79,6 +80,7 @@ namespace Fanex.Tarus.BetList.Controller
             ViewBag.ToDate = toDate == dateTmp ? DateTime.Today : toDate;
             ViewBag.IsCredit = isDeposit;
             ViewBag.TicketStatus = TicketStatusConstants.List.Select(i => new SelectListItem { Text = BetListResources.ResourceManager.GetString(i.Value), Value = i.Key.ToString() });
+            ViewBag.BookedStatus = BookedBetStatusConstants.List.Select(i => new SelectListItem { Text = i.Value, Value = i.Key.ToString() });
             return View("~/Views/BetList/BetlistByCustInfo/Index.cshtml");
         }
 
@@ -110,6 +112,24 @@ namespace Fanex.Tarus.BetList.Controller
             AppSession.AddSession(System.Web.HttpContext.Current.Session, "FROM_DATE", FromDate);
             AppSession.AddSession(System.Web.HttpContext.Current.Session, "TO_DATE", ToDate);
             return PartialView("~/Views/BetList/BetlistByCustInfo/Betlist/_BetList.cshtml", result);
+        }
+
+        [AuthorizeFunctions("ViewInfo")]
+        public ActionResult GetBookedBetData(int CustID, DateTime FromDate, DateTime ToDate, string statusIds, int PageSize, int PageIndex)
+        {
+            int quantity = 0;
+            var result = _bookedBetService.Get(CustID, FromDate, ToDate, statusIds, PageSize, PageIndex, ref quantity);
+            ViewBag.Quantity = quantity;            
+            ViewBag.NumberBegining = (PageSize * (PageIndex - 1)) + 1;
+
+            Hashtable paramHastable = new Hashtable();
+            paramHastable.Add("custId", CustID);
+
+            TempData["paramHastable"] = paramHastable;
+
+            AppSession.AddSession(System.Web.HttpContext.Current.Session, "FROM_DATE", FromDate);
+            AppSession.AddSession(System.Web.HttpContext.Current.Session, "TO_DATE", ToDate);
+            return PartialView("~/Views/BetList/BetlistByCustInfo/BookedBet/Index.cshtml", result);
         }
 
         [AuthorizeFunctions("BetListByIP")]

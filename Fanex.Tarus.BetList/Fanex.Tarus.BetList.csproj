@@ -101,7 +101,7 @@
       <HintPath>..\packages\Fanex.BetList.ColossusBets.2.0.0\lib\net461\Fanex.BetList.ColossusBets.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.Core, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Core.3.0.2.9\lib\net461\Fanex.BetList.Core.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.Core.3.0.3\lib\net461\Fanex.BetList.Core.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.Core.RemotingRef, Version=1.1.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Core.RemotingRef.2.0.0.2\lib\net461\Fanex.BetList.Core.RemotingRef.dll</HintPath>
@@ -521,6 +521,7 @@
     <Compile Include="Business\BetDetails\BetDetailsExporter.cs" />
     <Compile Include="Business\BetDetails\IBetDetailsExporter.cs" />
     <Compile Include="Business\BetListDetailService.cs" />
+    <Compile Include="Business\BookedBetService.cs" />
     <Compile Include="Business\BetListService.cs" />
     <Compile Include="Business\ExchangeBetListService.cs" />
     <Compile Include="Business\ExportExcelBetlist.cs" />
@@ -557,6 +558,7 @@
     <Compile Include="Constants\CurrencyContants.cs" />
     <Compile Include="Constants\DateTimeFormatConstants.cs" />
     <Compile Include="Constants\Language.cs" />
+    <Compile Include="Constants\BookedBetStatusConstants.cs" />
     <Compile Include="Constants\TicketStatusConstants.cs" />
     <Compile Include="Constants\RoleIdConstants.cs" />
     <Compile Include="Constants\ScoreStatusConstants.cs" />
@@ -576,6 +578,7 @@
     <Compile Include="Core\SessionManager.cs" />
     <Compile Include="Criteria\BetBuilder\GetResultBetBuilderDetailCriteria.cs" />
     <Compile Include="Criteria\BetListBetTradeDetailCriteria.cs" />
+    <Compile Include="Criteria\GetBookedBetCriteria.cs" />
     <Compile Include="Criteria\BetTypeByDateInSiteDBCriteria.cs" />
     <Compile Include="Criteria\GetAGCasinoBetDetailsInSiteDBCriteria.cs" />
     <Compile Include="Criteria\GetCashOutHistoryInSiteDBCriteria.cs" />
@@ -622,6 +625,7 @@
     <Compile Include="DataAccess\AGCasino\AGCasinoRepository.cs" />
     <Compile Include="DataAccess\AGCasino\IAGCasinoRepository.cs" />
     <Compile Include="DataAccess\BetListDetailRepository.cs" />
+    <Compile Include="DataAccess\BookedBetRepository.cs" />
     <Compile Include="DataAccess\BetListRepository.cs" />
     <Compile Include="DataAccess\ExchangeBetListRepository.cs" />
     <Compile Include="DataAccess\IBetListDetailRepository.cs" />
@@ -687,6 +691,7 @@
     <Compile Include="Models\TennisResult\TennisMatchResult.cs" />
     <Compile Include="Models\TennisResult\TennisResultEntity.cs" />
     <Compile Include="Models\TennisResult\TennisSetResult.cs" />
+    <Compile Include="Models\BookedBet.cs" />
     <Compile Include="Models\TicketDetail.cs" />
     <Compile Include="Models\VirtualHRPopupModel.cs" />
     <Compile Include="Models\VirtualTennisModel.cs" />

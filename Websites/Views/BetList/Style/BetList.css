@@ -711,3 +711,10 @@ span.icon-boost {
 span.underdog, span.favorite {
     line-break: anywhere;
 }
+
+.booked-icon {
+    padding: 0px 10px;
+    background-color: #F27C06;
+    color: white;
+    border-radius: 3px;
+}
