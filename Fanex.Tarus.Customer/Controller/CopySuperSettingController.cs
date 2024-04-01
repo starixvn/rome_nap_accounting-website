@@ -1,10 +1,11 @@
-﻿using System.Web.Mvc;
-using Fanex.CustomerSetting.Module.Core.Web.Controllers;
-using Fanex.Tarus.Customer.Business.CopySuperSetting;
+﻿using Fanex.Tarus.Customer.Business.CopySuperSetting;
 using Fanex.Tarus.Customer.Requests.CopySuperSetting;
 using Fanex.Tarus.Infrastructure.Common;
 using Fanex.Tarus.Infrastructure.Helper;
+using Fanex.Tarus.Web.Controllers;
 using Fanex.Tarus.Web.Controllers.Filters;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace Fanex.Tarus.Customer.Controller
 {
@@ -31,9 +32,9 @@ namespace Fanex.Tarus.Customer.Controller
         }
 
         [HttpPost, AuthenticateHost]
-        public ActionResult CopyWinLossLimit(UpdateWinLossLimitRequest request)
+        public async Task<ActionResult> CopyWinLossLimit(UpdateWinLossLimitRequest request)
         {
-            return Json(service.CopyWinLossLimit(request, AppSession.AccId, Utils.GetClientIP()));
+            return Json(await service.CopyWinLossLimit(request, AppSession.AccId, Utils.GetClientIP()));
         }
     }
 }

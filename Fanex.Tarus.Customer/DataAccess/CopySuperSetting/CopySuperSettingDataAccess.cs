@@ -29,11 +29,13 @@
 
                     while (reader.Read())
                     {
+                        var groupId = int.Parse(reader["groupid"].ToString());
                         var productId = int.Parse(reader["productid"].ToString());
                         var sportTypeId = int.Parse(reader["SportType"].ToString());
                         var sportTypeName = RepresentProductIds.Contains(productId) ? CacheRef.GetProductName(productId) : CacheRef.GetSportName(sportTypeId);
                         var sport = new SportType
                         {
+                            GroupId = groupId,
                             ProductId = productId,
                             SportTypeId = sportTypeId,
                             SportTypeName = sportTypeName
@@ -41,8 +43,8 @@
 
                         sportList.Add(sport);
                     }
-                    response.SportTypes = sportList;
 
+                    response.SportTypes = sportList;
                     if (reader.NextResult())
                     {
                         while (reader.Read())

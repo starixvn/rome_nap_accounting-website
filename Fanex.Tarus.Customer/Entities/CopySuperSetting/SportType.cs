@@ -2,6 +2,8 @@
 {
     public class SportType
     {
+        public int GroupId { get; set; }
+
         public int ProductId { get; set; }
 
         public int SportTypeId { get; set; }
