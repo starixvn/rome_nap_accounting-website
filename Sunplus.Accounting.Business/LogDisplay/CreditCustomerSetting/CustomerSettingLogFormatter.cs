@@ -37,6 +37,7 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
         private const int CreateMemberCommActionId = 261003;
         private const int CreateMemberBetSettingActionId = 262003;
         private const int UpdateSuperPTActionId = 511;
+        private const int UpdateSuperPTOthersActionId = 523;
         private const int UpdateSuperMinPTActionId = 520;
         private const int UpdateMasterPTActionId = 512;
         private const int UpdateMasterMinPTActionId = 521;
@@ -70,6 +71,8 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
         private const int UpdateAgentIndirectSBBetSettingActionId = 220042;
         private const int UpdateMemberSBBetSettingActionId = 220043;
 
+        private const int UpdateStakeLevel158ActionId = 220050;
+
         private readonly int[] ActionIds = {
             CreateSuperPTActionId,
             CreateSuperCommActionId,
@@ -84,6 +87,7 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
             CreateMemberCommActionId,
             CreateMemberBetSettingActionId,
             UpdateSuperPTActionId,
+            UpdateSuperPTOthersActionId,
             UpdateSuperMinPTActionId,
             UpdateMasterPTActionId,
             UpdateMasterMinPTActionId,
@@ -113,6 +117,7 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
             UpdateAgentSBBetSettingActionId,
             UpdateAgentIndirectSBBetSettingActionId,
             UpdateMemberSBBetSettingActionId,
+            UpdateStakeLevel158ActionId,
         };
 
         public bool IsCreditCustomerSettingActionId(int actionId)
@@ -177,6 +182,9 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
                     break;
                 case LogAction.ParlayMaxPayout: // Parlay Max Payout
                     trackingGroup = ParseTrackingTable(ele, 1, 152, DisplayType.G_GT_SportType_Bettype);
+                    break;
+                case LogAction.StakeLevel: // Stake Level
+                    trackingGroup = ParseTrackingTable(ele, 1, 158, DisplayType.SportType);
                     break;
             }
 
@@ -587,12 +595,14 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
                 case CreateSuperCommActionId:
                 case CreateSuperBetSettingActionId:
                 case UpdateSuperPTActionId:
+                case UpdateSuperPTOthersActionId:
                 case UpdateSuperMinPTActionId:
                 case UpdateSuperParlayMaxPayoutActionId:
                 case UpdateSuperIndirectParlayMaxPayoutActionId:
                 case UpdateSuperSBCommActionId:
                 case UpdateSuperSBBetSettingActionId:
                 case UpdateSuperIndirectSBBetSettingActionId:
+                case UpdateStakeLevel158ActionId:
                     return 4;
                 case CreateMasterPTActionId:
                 case CreateMasterCommActionId:
@@ -659,6 +669,7 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
             || actionId == CreateAgentPTActionId
             || actionId == CreateMemberPTActionId
             || actionId == UpdateSuperPTActionId
+            || actionId == UpdateSuperPTOthersActionId
             || actionId == UpdateSuperMinPTActionId
             || actionId == UpdateMasterPTActionId
             || actionId == UpdateMasterMinPTActionId
@@ -703,6 +714,10 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
             || actionId == UpdateAgentIndirectParlayMaxPayoutActionId
             || actionId == UpdateMemberParlayMaxPayoutActionId;
 
+        private bool IsStakeLevelActionId(int actionId)
+            => actionId == UpdateStakeLevel158ActionId;
+
+
         private LogAction GetLogAction(int actionId)
         {
             if (IsPTActionId(actionId))
@@ -713,6 +728,8 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
                 return LogAction.BetSetting;
             if (IsParlayMaxPaoutActionId(actionId))
                 return LogAction.ParlayMaxPayout;
+            if (IsStakeLevelActionId(actionId))
+                return LogAction.StakeLevel;
             throw new InvalidOperationException("ActionId is invalid or not supported.");
         }
     }
@@ -722,6 +739,8 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
         PT = 153,
         Comm = 150,
         BetSetting = 151,
-        ParlayMaxPayout = 152
+        ParlayMaxPayout = 152,
+        WinlossLimit = 155,
+        StakeLevel = 158,
     }
 }

@@ -65,32 +65,38 @@
                     .Select(sports => new Product { ProductId = sports[0].ProductId, Sporttypes = sports.Select(sport => sport.SportTypeId).ToList() })
                     .ToList();
 
-                var copySuperWinlossSettingRequest = new CopySuperWinlossSettingRequest
+                if (products.Any())
                 {
-                    IP = ip,
-                    SourceCustId = request.CustId,
-                    TargetCustIds = request.SuperIds,
-                    UserId = userId,
-                    Products = products,
-                    SourceUsername = request.SourceUsername
-                };
+                    var copySuperWinlossSettingRequest = new CopySuperWinlossSettingRequest
+                    {
+                        IP = ip,
+                        SourceCustId = request.CustId,
+                        TargetCustIds = request.SuperIds,
+                        UserId = userId,
+                        Products = products,
+                        SourceUsername = request.SourceUsername
+                    };
 
-                var otherResults = copySuperWinlossSettingService.Copy(copySuperWinlossSettingRequest);
-                var mappingResults = MappingCopyResults(otherResults.ToList(), request.SuperList.ToList());
+                    var otherResults = copySuperWinlossSettingService.Copy(copySuperWinlossSettingRequest);
+                    var mappingResults = MappingCopyResults(otherResults.ToList(), request.SuperList.ToList());
 
-                errorResults.AddRange(mappingResults.Where(result => result.ErrorCode != 0).Select(result => new Entities.Result(result.ErrorCode, result.ErrorMessage)));
+                    errorResults.AddRange(mappingResults.Where(result => result.ErrorCode != 0).Select(result => new Entities.Result(result.ErrorCode, result.ErrorMessage)));
+                }
 
-                var response = await customerServiceClient.CopySupersWinLossLimit(new CopySupersWinLossLimitParam(
-                    request.CustId,
-                    request.SourceUsername,
-                    request.SuperIds,
-                    string.Join(",", request.SuperList.Select(s => s.Name)),
-                    userId,
-                    (byte)CustomerClientManager.ClientConfigs.SystemId,
-                    ip,
-                    request.SportTypes.Where(sp => sp.GroupId == 3).Select(sp => sp.SportTypeId)));
-                var mappingResultsNewAPI = MappingCopyResults(response, request.SuperList.ToList());
-                errorResults.AddRange(mappingResultsNewAPI.Where(result => result.ErrorCode != 0).Select(result => new Entities.Result(result.ErrorCode, result.ErrorMessage)));
+                if (request.SportTypes.Any(sp => sp.GroupId == 3))
+                {
+                    var response = await customerServiceClient.CopySupersWinLossLimit(new CopySupersWinLossLimitParam(
+                        request.CustId,
+                        request.SourceUsername,
+                        request.SuperIds,
+                        string.Join(",", request.SuperList.Select(s => s.Name)),
+                        userId,
+                        (byte)CustomerClientManager.ClientConfigs.SystemId,
+                        ip,
+                        request.SportTypes.Where(sp => sp.GroupId == 3).Select(sp => sp.SportTypeId)));
+                    var mappingResultsNewAPI = MappingCopyResults(response, request.SuperList.ToList());
+                    errorResults.AddRange(mappingResultsNewAPI.Where(result => result.ErrorCode != 0).Select(result => new Entities.Result(result.ErrorCode, result.ErrorMessage)));
+                }
             }
 
             if (errorResults.Count > 0)
