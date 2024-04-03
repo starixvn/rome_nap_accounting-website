@@ -195,7 +195,7 @@
       <HintPath>..\packages\Fanex.BetList.PragmaticLiveCasino.2.0.0\lib\net461\Fanex.BetList.PragmaticLiveCasino.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.RnGCasino, Version=2.0.0.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.RnGCasino.2.0.0.2-API-03\lib\net461\Fanex.BetList.RnGCasino.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.RnGCasino.2.0.0.2\lib\net461\Fanex.BetList.RnGCasino.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.RNGCore, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.RNGCore.1.0.0.2\lib\net461\Fanex.BetList.RNGCore.dll</HintPath>
@@ -219,7 +219,7 @@
       <HintPath>..\packages\Fanex.BetList.Spadegaming.2.0.0.1\lib\net461\Fanex.BetList.Spadegaming.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.SportsLottery, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.SportsLottery.2.0.0.1-API-02\lib\net461\Fanex.BetList.SportsLottery.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.SportsLottery.2.0.0.1\lib\net461\Fanex.BetList.SportsLottery.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.TableGames, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.TableGames.2.0.0\lib\net461\Fanex.BetList.TableGames.dll</HintPath>
@@ -228,7 +228,7 @@
       <HintPath>..\packages\Fanex.BetList.VGaming.2.0.0.4\lib\net461\Fanex.BetList.VGaming.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.VirtualGames, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.VirtualGames.2.0.0.1-API-02\lib\net461\Fanex.BetList.VirtualGames.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.VirtualGames.2.0.0.1\lib\net461\Fanex.BetList.VirtualGames.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.VirtualSports, Version=2.0.0.9, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.VirtualSports.2.0.0.9\lib\net461\Fanex.BetList.VirtualSports.dll</HintPath>
