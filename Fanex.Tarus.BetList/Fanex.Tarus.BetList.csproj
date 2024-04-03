@@ -133,8 +133,8 @@
     <Reference Include="Fanex.BetList.PragmaticLiveCasino, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.PragmaticLiveCasino.2.0.0\lib\net461\Fanex.BetList.PragmaticLiveCasino.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.RnGCasino, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.RnGCasino.2.0.0.1\lib\net461\Fanex.BetList.RnGCasino.dll</HintPath>
+    <Reference Include="Fanex.BetList.RnGCasino, Version=2.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.RnGCasino.2.0.0.2-API-03\lib\net461\Fanex.BetList.RnGCasino.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.RNGCore, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.RNGCore.1.0.0.2\lib\net461\Fanex.BetList.RNGCore.dll</HintPath>
@@ -160,8 +160,8 @@
     <Reference Include="Fanex.BetList.TableGames, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.TableGames.2.0.0\lib\net461\Fanex.BetList.TableGames.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.VirtualGames, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.VirtualGames.2.0.0\lib\net461\Fanex.BetList.VirtualGames.dll</HintPath>
+    <Reference Include="Fanex.BetList.VirtualGames, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.VirtualGames.2.0.0.1-API-02\lib\net461\Fanex.BetList.VirtualGames.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Caching, Version=2.2.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Caching.2.2.2\lib\net461\Fanex.Caching.dll</HintPath>
