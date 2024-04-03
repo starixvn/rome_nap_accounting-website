@@ -1631,10 +1631,10 @@
   </data>
   <data name="Comm" xml:space="preserve">
     <value>Commission</value>
-  </data> 
+  </data>
   <data name="Max" xml:space="preserve">
     <value>Max per Bet</value>
-  </data>  
+  </data>
   <data name="MPE" xml:space="preserve">
     <value>Max per Event</value>
   </data>
@@ -1658,7 +1658,7 @@
   </data>
   <data name="SuperPossess" xml:space="preserve">
     <value>SMA Possess</value>
-  </data>  
+  </data>
   <data name="NewManaged" xml:space="preserve">
     <value>New Managed Account</value>
   </data>
@@ -1941,5 +1941,11 @@ Max Keno (20+1) 2</value>
   </data>
   <data name="TemplateName" xml:space="preserve">
     <value>Template Name</value>
+  </data>
+  <data name="Disable9918_4601" xml:space="preserve">
+    <value>Disabled Other RNG Casino</value>
+  </data>
+  <data name="HideGroupID3" xml:space="preserve">
+    <value>Hide Live &amp; RNG Casino</value>
   </data>
 </root>
