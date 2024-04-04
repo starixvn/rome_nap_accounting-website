@@ -910,7 +910,7 @@ function showLive22BetDetails(refno, winlossDate, custId, transType) {
 function showUUSlotsBetDetails(refno, winlossDate, custId, transType) {
     var params = {
         url: "RNGCasinoBetList/BetDetails",
-        title: "UU Slots - Detailed Bet list - " + winlossDate.split(" ")[0],
+        title: "UU SLOTS - Detailed Bet list - " + winlossDate.split(" ")[0],
         jsonParam: { TransId: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 216, PageSize: 500 },
         width: 1250,
         height: 600
@@ -1635,7 +1635,7 @@ function getLive22Param(custId, transId3rd, gameId3rd, currencyId, siteId, betTy
 function getUUSlotsParam(custId, transId3rd, gameId3rd, currencyId, siteId, betType, endTime) {
     return {
         url: "ThirdParty/UUSlotsResult",
-        title: "UU Slots Result",
+        title: "UU SLOTS Result",
         jsonParam:
         {
             productId: 78,
