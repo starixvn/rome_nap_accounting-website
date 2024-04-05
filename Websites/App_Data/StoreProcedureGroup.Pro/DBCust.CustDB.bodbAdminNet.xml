@@ -453,4 +453,7 @@
   <Function Name="Helper">
     <Setting Key="DBCUST_Acc_SiteDBConfigSel" SpName="Acc_SiteDBConfigSel" DbName="DBCUST.CustDB.wsv_nap" />
   </Function>
+  <Function Name="Customer Setting">
+    <Setting Key="Acc_LiteMode_CustSetting_ProductProfileSelect" SpName="Acc_LiteMode_CustSetting_ProductProfileSelect" DbName="DBCUST.CustDB.wsv_nap" />
+  </Function>
 </Functions>
