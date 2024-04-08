@@ -3,15 +3,8 @@
         agentId: '',
         pageSize: 50,
         pageIndex: 1,
-        type: 0,     
-        doubleCommAgent: "",
-        synccasinoUpline: false
-    },
-    paramsUpdate: {
-        custDetail: "",
-        userId: 0,
-        isDoubleComm: false
-    },
+        type: 0 
+    },  
     gridOption: {
         tblContentId: 'tbMemberList',
         manualCopyHeader: true,  //totalColumnWidth = 1270
@@ -76,22 +69,6 @@
         MemberList.params.agentId = _agentId;
         if (isSearch) {
             MemberList.params.pageIndex = 1;
-        }
-        MemberList.params.hr = "";
-        var synccasinoUpline = gup("isSynccasino");
-        if (synccasinoUpline != "") {
-            MemberList.params.synccasinoUpline = "";
-        }
-        if (_agentId == 0) {
-            MemberList.params.doubleCommAgent = "";
-        }
-        else {
-            MemberList.params.doubleCommAgent = _agentDcom.toLowerCase();
-        }
-
-        var synccasinoUpline = gup("isSynccasino");
-        if (synccasinoUpline != "") {
-            MemberList.params.synccasinoUpline = "";
         }
     },  
     virtualSportsSetting: function (custId, uplineId, roleId) {

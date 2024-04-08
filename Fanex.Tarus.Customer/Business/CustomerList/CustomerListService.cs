@@ -2,10 +2,6 @@
 
 namespace Fanex.Tarus.Customer.Business.CustomerList
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Data;
     using DNAide.Core;
     using Fanex.Tarus.Customer.CreditCustomer.DataAccess;
     using Fanex.Tarus.Customer.DataAccess;
@@ -18,6 +14,10 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
     using Sunplus.Accounting.Core.Configurations;
     using Sunplus.Accounting.Core.Extensions;
     using Sunplus.Accounting.Core.Helper;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Data;
 
     public class CustomerListService : BaseDataAccess, ICustomerListService
     {
@@ -29,120 +29,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
             _customerListAccess = customerListAccess ?? new CustomerListAccess();
             _customerSettingDataAccess = customerSettingDataAccess ?? new CustomerSettingDataAccess();
         }
-        public CustomerListModel GetSuperList(int pageSize, int pageIndex, string searchText, string selectAlpha, string selectCurreny, string dComm, string statusParam, int settingStatus)
-        {
-            try
-            {
-                var siteType = CreditOrDepositCustomerUtils.GetSiteTypeParamValue(AppSession.AccId);
-
-                if (CreditOrDepositCustomerUtils.IsNoneCreditAndDepositPermission(siteType))
-                {
-                    return new CustomerListModel();
-                }
-
-                int totalPages = 0;
-                int totalChildren = 0;
-                var dtSuperList = new DataSet();
-                Hashtable hash = new Hashtable();
-                if (!string.IsNullOrEmpty(searchText))
-                {
-                    string keyword = "%" + searchText.Replace("'", "") + "%";
-                    hash.Add("keyword", keyword);
-                }
-
-                if (!string.IsNullOrEmpty(selectAlpha))
-                {
-                    string firstchar = selectAlpha;
-                    if (string.Compare(firstchar, "0-9", true) == 0)
-                    {
-                        firstchar = "[" + firstchar + "]";
-                    }
-                    firstchar = firstchar + "%";
-                    hash.Add("firstchar", firstchar);
-                }
-
-                if (!string.IsNullOrEmpty(selectCurreny))
-                    hash.Add("currency", selectCurreny);
-
-                if (!string.IsNullOrEmpty(statusParam))
-                    hash.Add("closed", DNAide.Core.CastAide.AsBoolean(DNAide.Core.CastAide.AsInt32(statusParam)));
-
-                if (!string.IsNullOrEmpty(dComm))
-                    hash.Add("doublecommlosing", DNAide.Core.CastAide.AsBoolean(DNAide.Core.CastAide.AsInt32(dComm)));
-
-                hash.Add("pageindex", pageIndex);
-                hash.Add("pagesize", pageSize);
-                hash.Add("system", AppSession.SYSTEM.ToString().ToUpper());
-                hash.Add("system", AppSession.SYSTEM.ToString().ToUpper());
-                hash.Add("totalitems", totalChildren);
-                hash.Add("userid", AppSession.AccId);
-                hash.Add("sitetype", siteType);
-                dtSuperList = _customerListAccess.GetCustomerList("Acc_CustomerSelSAg", hash, ref totalPages, ref totalChildren);
-
-                CustomerListModel model = new CustomerListModel();
-                if (dtSuperList.Tables.Count > 0)
-                {
-                    var tableSuperList = dtSuperList.Tables[0];
-
-                    foreach (DataRow row in tableSuperList.Rows)
-                    {
-                        var superItem = new CustomerList();
-
-                        superItem.ChildID = CastAide.AsInt32(row["custid"]);
-
-                        superItem.No = CastAide.AsInt32(row["RowNumber"]);
-
-                        superItem.Status = GetStatusName(row, ref superItem);
-
-                        superItem.UserName = row["username"].ToString();
-
-                        superItem.NickName = row["username2"].ToString();
-
-                        superItem.MaxExposure = CastAide.AsDouble(row["matchlimit"]) * 100;
-
-                        double virtualRate = CastAide.AsDouble(row["virtualmultiplier"]);
-                        superItem.VirtualRate = GetVirtualRate(virtualRate);
-
-                        superItem.FirstName = row["firstname"].ToString();
-
-                        superItem.LastName = row["lastname"].ToString();
-
-                        superItem.GroupA = CastAide.AsDouble(row["groupa"]);
-
-                        superItem.GroupB = CastAide.AsDouble(row["groupb"]);
-
-                        superItem.GroupC = CastAide.AsDouble(row["groupc"]);
-
-                        superItem.GroupD = CastAide.AsDouble(row["groupd"]);
-
-                        superItem._1x2 = CastAide.AsDouble(row["discount1x2"]);
-
-                        superItem.Others = CastAide.AsDouble(row["discountcs"]);
-                        superItem.DiscountMyanmarOdds = CastAide.AsDouble(row["discountMyanmarOdds"]);
-                        superItem.IsHideLiveCasino = !WebSettings.IsShowLiveCasino;
-                        superItem.IsHideVoidbridge = !WebSettings.IsShowVoidbridge;
-                        superItem.IsHideVirtualSports = !WebSettings.EnableVirtualSports;
-                        superItem.IsHideVirtualGames = !WebSettings.IsShowVirtualGames;
-                        superItem.isDoubleComm = CastAide.AsBoolean(row["doublecommlosing"]);
-                        superItem.IsMyanmarOdds = CastAide.AsBoolean(row["IsMyanmarOdds"]);
-                        superItem.LastLoginIP = IpManagement.ReplaceVNIP(row["lastloginip"] == null ? string.Empty : row["lastloginip"].ToString());
-
-                        model.ListChildren.Add(superItem);
-                    }
-
-                    model.TotalPages = totalPages;
-                    model.TotalChildren = totalChildren;
-                }
-                return model;
-            }
-            catch (Exception ex)
-            {
-                LogExtensions.ExceptionHandler(ex);
-            }
-
-            return new CustomerListModel();
-        }
-        public CustomerListModel GetMasterList(int superID, int pageSize, int pageIndex, string searchText, string selectAlpha, string selectCurreny, string dComm, string statusParam, string doubleCommSuper, int settingStatus)
+        public CustomerListModel GetMasterList(int superID, int pageSize, int pageIndex, string searchText, string selectAlpha, string selectCurreny, string statusParam, int settingStatus)
         {
             try
             {
@@ -159,49 +46,8 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                 hash.Add("totalpages", totalPages);
                 hash.Add("totalitems", totalChildren);
                 hash.Add("system", AppSession.SYSTEM.ToString().ToUpper());
-                if (superID != 0)
-                {
-                    dtMasterList = _customerListAccess.GetCustomerList("Acc_CustomerSelBySAg", hash, ref totalPages, ref totalChildren);
-                }
-                else
-                {
-                    var siteType = CreditOrDepositCustomerUtils.GetSiteTypeParamValue(AppSession.AccId);
-
-                    if (CreditOrDepositCustomerUtils.IsNoneCreditAndDepositPermission(siteType))
-                    {
-                        return new CustomerListModel();
-                    }
-
-                    if (!string.IsNullOrEmpty(searchText))
-                    {
-                        string keyword = "%" + searchText.Replace("'", "") + "%";
-                        hash.Add("keyword", keyword);
-                    }
-
-                    if (!string.IsNullOrEmpty(selectAlpha))
-                    {
-                        string firstchar = selectAlpha;
-                        if (string.Compare(firstchar, "0-9", true) == 0)
-                        {
-                            firstchar = "[" + firstchar + "]";
-                        }
-                        firstchar = firstchar + "%";
-                        hash.Add("firstchar", firstchar);
-                    }
-
-                    if (!string.IsNullOrEmpty(selectCurreny))
-                        hash.Add("currency", selectCurreny);
-
-                    if (!string.IsNullOrEmpty(statusParam))
-                        hash.Add("closed", DNAide.Core.CastAide.AsBoolean(DNAide.Core.CastAide.AsInt32(statusParam)));
-
-                    if (!string.IsNullOrEmpty(dComm))
-                        hash.Add("doublecommlosing", DNAide.Core.CastAide.AsBoolean(DNAide.Core.CastAide.AsInt32(dComm)));
-
-                    hash.Add("sitetype", siteType);
-
-                    dtMasterList = _customerListAccess.GetCustomerList("Acc_CustomerSelMAgByCom", hash, ref totalPages, ref totalChildren);
-                }
+                dtMasterList = _customerListAccess.GetCustomerList("Acc_CustomerSelBySAg", hash, ref totalPages, ref totalChildren);
+                
 
                 CustomerListModel model = new CustomerListModel();
                 if (dtMasterList.Tables.Count > 0)
@@ -226,8 +72,6 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
 
                         double virtualRate = CastAide.AsDouble(row["virtualmultiplier"]);
                         masterItem.VirtualRate = GetVirtualRate(virtualRate);
-
-                        masterItem.DoubleCommLosingUpline = CastAide.AsBoolean(row.Table.Columns.Contains("doublecommlosingupline") ? row["doublecommlosingupline"] : false);
                         masterItem.ParentMasterDirect = CastAide.AsInt32(row.Table.Columns.Contains("srecommend") ? row["srecommend"] : 0);
                         masterItem.FirstName = row["firstname"].ToString();
 
@@ -245,25 +89,12 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
 
                         masterItem.Others = CastAide.AsDouble(row["discountcs"]);
 
-                        masterItem.IsHideLiveCasino = !WebSettings.IsShowLiveCasino || IsHideLiveCasino(row);
-                        masterItem.IsHideVoidbridge = !WebSettings.IsShowVoidbridge ||
-                            !CastAide.AsBoolean(row["SyncedVoidbridgeUpline"]) ||
-                            CastAide.AsBoolean(row["HideVoidbridgeUpline"]);
-                        masterItem.IsHideVirtualSports = !WebSettings.EnableVirtualSports ||
-                          CastAide.AsBoolean(row["HideVirtualSportsUpline"]);
-                        masterItem.IsHideVirtualGames = !WebSettings.IsShowVirtualGames ||
-                          CastAide.AsBoolean(row["HideVirtualGamesUpline"]);
-                        masterItem.isDoubleComm = CastAide.AsBoolean(row["doublecommlosing"]);
-                        masterItem.DiscountMyanmarOdds = CastAide.AsDouble(row["discountMyanmarOdds"]);
-
                         masterItem.LastLoginIP = IpManagement.ReplaceVNIP(row["lastloginip"] == null ? string.Empty : row["lastloginip"].ToString());
                         model.ListChildren.Add(masterItem);
                     }
-
                     model.TotalPages = totalPages;
                     model.TotalChildren = totalChildren;
                     model.ParentId = superID;
-                    model.ParentDoubleComm = CastAide.AsBoolean(doubleCommSuper);
                 }
                 return model;
             }
@@ -274,7 +105,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
 
             return new CustomerListModel();
         }
-        public CustomerListModel GetAgentList(int masterId, int pageSize, int pageIndex, string doubleCommMaster, int settingStatus)
+        public CustomerListModel GetAgentList(int masterId, int pageSize, int pageIndex, int settingStatus)
         {
             try
             {
@@ -330,18 +161,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                         agentItem._1x2 = CastAide.AsDouble(row["discount1x2"]);
 
                         agentItem.Others = CastAide.AsDouble(row["discountcs"]);
-                        agentItem.DiscountMyanmarOdds = CastAide.AsDouble(row["discountMyanmarOdds"]);
 
-                        agentItem.IsHideLiveCasino = !WebSettings.IsShowLiveCasino || IsHideLiveCasino(row);
-                        agentItem.IsHideVoidbridge = !WebSettings.IsShowVoidbridge ||
-                            !CastAide.AsBoolean(row["SyncedVoidbridgeUpline"]) ||
-                            CastAide.AsBoolean(row["HideVoidbridgeUpline"]);
-                        agentItem.IsHideVirtualSports = !WebSettings.EnableVirtualSports ||
-                           CastAide.AsBoolean(row["HideVirtualSportsUpline"]);
-                        agentItem.IsHideVirtualGames = !WebSettings.IsShowVirtualGames ||
-                           CastAide.AsBoolean(row["HideVirtualGamesUpline"]);
-                        agentItem.isDoubleComm = CastAide.AsBoolean(row["doublecommlosing"]);
-                        agentItem.IsMyanmarOdds = CastAide.AsBoolean(row["IsMyanmarOdds"]);
                         agentItem.LastLoginIP = IpManagement.ReplaceVNIP(row["lastloginip"] == null ? string.Empty : row["lastloginip"].ToString());
 
                         model.ListChildren.Add(agentItem);
@@ -350,7 +170,6 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                     model.TotalPages = totalPages;
                     model.ParentId = masterId;
                     model.TotalChildren = totalChildren;
-                    model.ParentDoubleComm = CastAide.AsBoolean(doubleCommMaster);
                 }
                 return model;
             }
@@ -361,7 +180,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
 
             return new CustomerListModel();
         }
-        public CustomerListModel GetMemberList(int agentId, int pageSize, int pageIndex, int isInternal, string doubleCommAgent, int settingStatus)
+        public CustomerListModel GetMemberList(int agentId, int pageSize, int pageIndex, int isInternal, int settingStatus)
         {
             try
             {
@@ -415,19 +234,8 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                         memberItem.GroupD = CastAide.AsDouble(row["playerdiscountcs"]);
 
                         memberItem._1x2 = CastAide.AsDouble(row["discount1x2"]);
-                        memberItem.DiscountMyanmarOdds = CastAide.AsDouble(row["playerdiscountMyanmarOdds"]);
-                        memberItem.Others = CastAide.AsDouble(row["playerdiscount1x2"]);       
-
-                        memberItem.IsHideLiveCasino = !WebSettings.IsShowLiveCasino || IsHideLiveCasino(row);
-                        memberItem.IsHideVoidbridge = !WebSettings.IsShowVoidbridge ||
-                            !CastAide.AsBoolean(row["SyncedVoidbridgeUpline"]) ||
-                            CastAide.AsBoolean(row["HideVoidbridgeUpline"]);
-                        memberItem.IsHideVirtualSports = !WebSettings.EnableVirtualSports ||
-                            CastAide.AsBoolean(row["HideVirtualSportsUpline"]);
-                        memberItem.IsHideVirtualGames = !WebSettings.IsShowVirtualGames ||
-                            CastAide.AsBoolean(row["HideVirtualGamesUpline"]);
-                        memberItem.isDoubleComm = CastAide.AsBoolean(row["doublecommlosing"]);
-                        memberItem.IsMyanmarOdds = CastAide.AsBoolean(row["IsMyanmarOdds"]);
+                      
+                        memberItem.Others = CastAide.AsDouble(row["playerdiscount1x2"]);    
 
                         memberItem.LastLoginIP = IpManagement.ReplaceVNIP(row["lastloginip"] == null ? string.Empty : row["lastloginip"].ToString());
                         model.ListChildren.Add(memberItem);
@@ -436,7 +244,6 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                     model.TotalPages = totalPages;
                     model.ParentId = agentId;
                     model.TotalChildren = totalChildren;
-                    model.ParentDoubleComm = CastAide.AsBoolean(doubleCommAgent);
                 }
                 return model;
             }
@@ -541,18 +348,6 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
             }
             return strVirRate;
         }
-
-        private static bool IsHideLiveCasino(DataRow row)
-            => IsNotSyncedLiveCasino(row) || IsHiddenLiveCasino(row);
-
-        private static bool IsNotSyncedLiveCasino(DataRow row)
-        {
-            return !CastAide.AsBoolean(row["SyncedAllbetUpline"]) && !CastAide.AsBoolean(row["SyncedSAGamingUpline"]);
-        }
-
-        private static bool IsHiddenLiveCasino(DataRow row)
-        {
-            return CastAide.AsBoolean(row["HideAllbetUpline"]) && CastAide.AsBoolean(row["HideSAGamingUpline"]);
-        }
+      
     }
 }

@@ -22,25 +22,6 @@ namespace Fanex.Tarus.Customer.Controller.CustomerList
             _customerList = customerList ?? new CustomerListService();
         }
 
-        public ActionResult SuperList()
-        {
-            CustomerListModel model = new CustomerListModel();
-            int pageSize = 50;
-            int pageIndex = 1;
-
-            model = _customerList.GetSuperList(pageSize, pageIndex, null, null, null, null, null, WebSettings.SettingStatus);          
-            ViewBag.Currencies = _customerList.GetCurrencyList();
-            return View("~/Views/Customer/CustomerList/Default/Super/SuperList.cshtml", model);
-        }
-
-        [HttpPost]
-        public ActionResult SuperList(int pageSize, int pageIndex, string searchText, string selectAlpha, string selectCurreny, string dComm, string status)
-        {
-            CustomerListModel model = new CustomerListModel();
-            model = _customerList.GetSuperList(pageSize, pageIndex, searchText, selectAlpha, selectCurreny, dComm, status, WebSettings.SettingStatus);
-            return PartialView("~/Views/Customer/CustomerList/Default/Super/_SuperListPartial.cshtml", model);
-        }
-
         public ActionResult MasterAgentList(int? superId, string doubleCommSuper)
         {
             CustomerListModel model = new CustomerListModel();
@@ -48,7 +29,7 @@ namespace Fanex.Tarus.Customer.Controller.CustomerList
             int pageIndex = 1;
 
             int UserID = superId ?? 0;
-            model = _customerList.GetMasterList(UserID, pageSize, pageIndex, null, null, null, null, null, doubleCommSuper, WebSettings.SettingStatus);
+            model = _customerList.GetMasterList(UserID, pageSize, pageIndex, null, null, null, null,  WebSettings.SettingStatus);
 
             //ViewBag.Currencies = _customerList.GetCurrencyList();
             return View("~/Views/Customer/CustomerList/Default/Master/MasterList.cshtml", model);
@@ -56,50 +37,48 @@ namespace Fanex.Tarus.Customer.Controller.CustomerList
         }
 
         [HttpPost]
-        public ActionResult MasterAgentList(int? superId, int pageSize, int pageIndex, string searchText, string selectAlpha, string selectCurreny, string dComm, string status, string synccasinoUpline, string doubleCommSuper)
+        public ActionResult MasterAgentList(int? superId, int pageSize, int pageIndex, string searchText, string selectAlpha, string selectCurreny, string status, string synccasinoUpline, string doubleCommSuper)
         {
             CustomerListModel model = new CustomerListModel();
-            ViewBag.synccasinoUpline = synccasinoUpline;
             int UserID = superId ?? 0;
-            model = _customerList.GetMasterList(UserID, pageSize, pageIndex, searchText, selectAlpha, selectCurreny, dComm, status, doubleCommSuper, WebSettings.SettingStatus);
+            model = _customerList.GetMasterList(UserID, pageSize, pageIndex, searchText, selectAlpha, selectCurreny, status, WebSettings.SettingStatus);
             return PartialView("~/Views/Customer/CustomerList/Default/Master/_MasterListPartial.cshtml", model);
         }
 
-        public ActionResult AgentList(int masterId, string doubleCommMaster)
+        public ActionResult AgentList(int masterId)
         {
             CustomerListModel model = new CustomerListModel();
             int pageSize = 50;
             int pageIndex = 1;
 
-            model = _customerList.GetAgentList(masterId, pageSize, pageIndex, doubleCommMaster, WebSettings.SettingStatus);
+            model = _customerList.GetAgentList(masterId, pageSize, pageIndex, WebSettings.SettingStatus);
             return View("~/Views/Customer/CustomerList/Default/Agent/AgentList.cshtml", model);
 
         }
 
         [HttpPost]
-        public ActionResult AgentList(int masterId, int pageSize, int pageIndex, string doubleCommMaster, string synccasinoUpline)
+        public ActionResult AgentList(int masterId, int pageSize, int pageIndex)
         {
             CustomerListModel model = new CustomerListModel();
-            model = _customerList.GetAgentList(masterId, pageSize, pageIndex, doubleCommMaster, WebSettings.SettingStatus);
-            ViewBag.synccasinoUpline = synccasinoUpline;            
+            model = _customerList.GetAgentList(masterId, pageSize, pageIndex, WebSettings.SettingStatus);
             return PartialView("~/Views/Customer/CustomerList/Default/Agent/_AgentListPartial.cshtml", model);
         }
 
-        public ActionResult MemberList(int agentId, string doubleCommAgent)
+        public ActionResult MemberList(int agentId)
         {
             CustomerListModel model = new CustomerListModel();
             int pageSize = 50;
             int pageIndex = 1;
-            model = _customerList.GetMemberList(agentId, pageSize, pageIndex, 0, doubleCommAgent, WebSettings.SettingStatus);   
+            model = _customerList.GetMemberList(agentId, pageSize, pageIndex, 0, WebSettings.SettingStatus);   
             return View("~/Views/Customer/CustomerList/Default/Member/MemberList.cshtml", model);
 
         }
 
         [HttpPost]
-        public ActionResult MemberList(int agentId, int pageSize, int pageIndex, int type, string doubleCommAgent, string synccasinoUpline)
+        public ActionResult MemberList(int agentId, int pageSize, int pageIndex, int type, string synccasinoUpline)
         {
             CustomerListModel model = new CustomerListModel();
-            model = _customerList.GetMemberList(agentId, pageSize, pageIndex, type, doubleCommAgent, WebSettings.SettingStatus);
+            model = _customerList.GetMemberList(agentId, pageSize, pageIndex, type, WebSettings.SettingStatus);
             ViewBag.synccasinoUpline = synccasinoUpline;
             return PartialView("~/Views/Customer/CustomerList/Default/Member/_MemberListPartial.cshtml", model);
 

@@ -11,10 +11,9 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
 
     public interface ICustomerListService
     {
-        CustomerListModel GetSuperList(int pageSize, int pageIndex, string searchText, string selectAlpha, string selectCurreny, string dComm, string statusParam, int settingStatus);
-        CustomerListModel GetMasterList(int superID, int pageSize, int pageIndex, string searchText, string selectAlpha, string selectCurreny, string dComm, string statusParam, string doubleCommSuper, int settingStatus);
-        CustomerListModel GetAgentList(int masterId, int pageSize, int pageIndex, string doubleCommMaster, int settingStatus);
-        CustomerListModel GetMemberList(int agentId, int pageSize, int pageIndex, int isInternal, string doubleCommAgent, int settingStatus);
+        CustomerListModel GetMasterList(int superID, int pageSize, int pageIndex, string searchText, string selectAlpha, string selectCurreny, string statusParam, int settingStatus);
+        CustomerListModel GetAgentList(int masterId, int pageSize, int pageIndex, int settingStatus);
+        CustomerListModel GetMemberList(int agentId, int pageSize, int pageIndex, int isInternal, int settingStatus);
         List<Currency> GetCurrencyList();
         List<ResultCustomerlist> UpdateDoubleComm(int userId, string custDetail, bool isDoubleComm);
     }

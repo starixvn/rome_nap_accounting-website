@@ -6,9 +6,7 @@
         searchText: "",
         selectAlpha: "",
         selectCurreny: "",
-        dComm: "",
         status: "",
-        synccasinoUpline: ""
     },   
     gridOption: {
         tblContentId: 'tbmasterlist',
@@ -104,12 +102,6 @@
                 masterList.params.status = status.val();
             }
             else { masterList.params.status = ""; }
-
-            var synccasinoUpline = gup("isSynccasino");
-            if (synccasinoUpline != "") {
-                masterList.params.synccasinoUpline = "";
-            }
-          
         }
     }, 
     reCalculateGrid: function () {

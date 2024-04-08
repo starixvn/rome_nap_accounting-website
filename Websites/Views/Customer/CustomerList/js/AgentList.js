@@ -2,14 +2,7 @@
     params: {
         masterId: '',
         pageSize: 50,
-        pageIndex: 1,
-        doubleCommMaster: "",
-        synccasinoUpline: false
-    },
-    paramsUpdate: {
-        custDetail: "",
-        userId: 0,
-        isDoubleComm: false
+        pageIndex: 1
     },
     gridOption: {
         tblContentId: 'tbAgentList',
@@ -82,12 +75,7 @@
         }
         else {
             AgentList.params.doubleCommMaster = _masterDcom.toLowerCase();
-        }
-
-        var synccasinoUpline = gup("isSynccasino");
-        if (synccasinoUpline != "") {
-            AgentList.params.synccasinoUpline = "";
-        }
+        }  
     },  
     reCalculateGrid: function () {
         var initWidth = 1200;
