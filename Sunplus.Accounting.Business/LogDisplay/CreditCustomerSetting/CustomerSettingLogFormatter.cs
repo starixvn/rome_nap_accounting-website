@@ -427,6 +427,13 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
             trackingTable.HeaderRows = new List<List<string>>();
             trackingTable.HeaderRows.Add(new List<string> { string.Empty });
             trackingTable.Rows = new List<List<TrackingValue>>();
+            if (groupType.HasAttributes)
+            {
+                foreach (var attr in groupType.Attributes())
+                {
+                    trackingGroup.Vals.Add(LogFormater.FormatElement(attr));
+                }
+            }
 
             foreach (var item in groupType.Elements())
             {
@@ -473,6 +480,14 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
             trackingGroup.N = GetCreateCustomerResource($"GroupType_150");
             trackingGroup.Vals = new List<TrackingElement>();
             groupId = 1;
+            if (groupType.HasAttributes)
+            {
+                foreach (var attr in groupType.Attributes())
+                {
+                    trackingGroup.Vals.Add(LogFormater.FormatElement(attr));
+                }
+            }
+
             foreach (var item in groupType.Elements())
             {
                 if (HasData(item))
@@ -546,6 +561,14 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
             }
             else
             {
+                if (groupType.HasAttributes)
+                {
+                    foreach (var attr in groupType.Attributes())
+                    {
+                        trackingGroup.Vals.Add(LogFormater.FormatElement(attr));
+                    }
+                }
+
                 foreach (var item in groupType.Elements())
                 {
                     if (HasData(item))
