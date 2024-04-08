@@ -188,6 +188,9 @@
 
         public ActionResult UUSlotsResult(ThirdPartyResultRequest request)
             => BaseResult(request, "UUSlotsResultConfigs");
+            
+        public ActionResult VGamingResult(ThirdPartyResultRequest request)
+            => BaseResult(request, "VGamingConfigs");
 
         private void SetProductResultTitle(int productId)
             => ProductResultTitle = CacheRef.GetProductName(productId) + " Result";

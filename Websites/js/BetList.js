@@ -1031,7 +1031,7 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
         case 171: // VGaming
         case 173: // VGaming
             // custId, gameroundid, gameid, siteId, sporttype, currencyname
-            return getVGamingParam(custId, transId3rd, bettype, gameId3rd, sporttype, username);
+            return getVGamingParam(custId, transId3rd, gameId3rd, currencyId, siteId, bettype, winlostdate);
 
         case 175: //Bitcoin
             return getBitcoinParam(matchid, sporttype);
@@ -1438,15 +1438,24 @@ function getSEALParam(bettype, custId, transId3rd, currencyId, siteId) {
     };
 }
 
-function getVGamingParam(custId, gameRoundId, gameId, siteId, sportType, currencyName) {
 
+function getVGamingParam(custId, transId3rd, gameId3rd, currencyId, siteId, betType, endTime) {
     return {
-        url: "../Report/ViewVGamingResult.aspx",
+        url: "ThirdParty/VGamingResult",
         title: "Vgaming Result",
-        jsonParam: { custId: custId, GameRoundId: gameRoundId, GameId: gameId, SiteId: siteId, SportType: sportType, CurrencyName: currencyName },
+        jsonParam:
+        {
+            productId: 66,
+            custId: custId,
+            transId3rd: transId3rd,
+            gameId3rd: gameId3rd,
+            BetTypeId: betType,
+            EndTime: endTime,
+            SiteId: siteId,
+            CurrencyId: currencyId
+        },
         width: 945,
-        height: 500,
-        iframe: "innerFrameVgamingResult"
+        height: 500
     };
 }
 
