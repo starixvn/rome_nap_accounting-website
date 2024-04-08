@@ -8,43 +8,19 @@
 
     var IsVisibleVirtualRate = Functions.Customer.IsVisibleVirtualRate;
 
-    var EnableVirtualSports = WebSettings.EnableVirtualSports;
-
     var adminID = AppSession.AccId;
     var adminUserName = AppSession.AccUserName;
-
-    int IsShowCustomerSettingRenovation = 0;
-    if (IsPost)
-    {
-        IsShowCustomerSettingRenovation = WebSettings.IsShowCustomerSettingRenovation;
-    }
 
     int colspan = 4;
     int colspanCom = 6;
     if (IsVisibleVirtualRate)
     {
         colspan++;
-    }
-    bool isParentMyanmarOdds = false;
-
-    foreach (var memberItem in Model.ListChildren)
-    {
-        if (memberItem.IsMyanmarOdds)
-        {
-            isParentMyanmarOdds = true;
-            break;
-        }
-    }
-
-    if (isParentMyanmarOdds)
-    {
-        colspanCom++;
-    }
+    }  
+    
     Hashtable hash = new Hashtable();
 
     hash.Add("IsVisibleVirtualRate", IsVisibleVirtualRate);
-    hash.Add("EnableVirtualSports", EnableVirtualSports);
-    hash.Add("isParentMyanmarOdds", isParentMyanmarOdds);
     string[] renderResult = Render(Model, hash);
 }
 @functions {
@@ -80,9 +56,7 @@
 @helper renderRowHeader(Fanex.Tarus.Customer.Entities.CustomerList.CustomerList memberItem, Hashtable hash)
 {
     var bg = rowCSS(memberItem);
-    var idAllow = memberItem.ChildID.ToString() + '_' + memberItem.UserName;
-    string siteName = memberItem.IsMyanmarOdds ? "76666B" : string.Empty;
-    <tr name="tr_@memberItem.ChildID" class="@bg" style="height: 20px;">
+   <tr name="tr_@memberItem.ChildID" class="@bg" style="height: 20px;">
         <td>
             <div class="table-cell c " style="width: 40px; height: 18px;">
                 @memberItem.No
@@ -90,77 +64,8 @@
         </td>
         <td>
             <div class="table-cell c" style="width: 65px; height: 18px;">
-                <a onclick="EditSportsBookSetting(1, '@memberItem.ChildID', '@Model.ParentId', '@memberItem.UserName', '@siteName');">@memberItem.Status</a>
-                <span onclick="EditSportsBookSetting(1, '@memberItem.ChildID', '@Model.ParentId', '@memberItem.UserName', '@siteName');" class="status-button">
-                    &nbsp;&nbsp;&nbsp
-                </span>
+                @memberItem.Status
             </div>
-        </td>
-        <td>
-            <div class="table-cell c" style="width: 30px; height: 18px;">
-                <span title="Edit" onmouseout="CustomerList.HideEditBox()" onclick="CustomerList.ShowMenuEdit('div_@memberItem.ChildID')" class="edit-button">
-                </span>
-                <ul id="div_@memberItem.ChildID" style="display:none;">
-                    <li class="canchange" onclick="OpenChangePwd('@memberItem.ChildID','@memberItem.UserName');">
-                        Password
-                    </li>
-                    @if (!memberItem.IsHideVirtualSports)
-                    {
-                        <li class="canchange" onclick="EditDCSByProduct('@memberItem.ChildID', 5, 'Virtual Sports');">
-                            Virtual Sports
-                        </li>
-                    }
-                    @if (!memberItem.IsHideLiveCasino)
-                    {
-                        <li class="canchange" onclick="EditDCSByProduct('@memberItem.ChildID', 41, 'Live Casino');">
-                            Live Casino
-                        </li>
-                    }
-                    @if (!memberItem.IsHideVoidbridge)
-                    {
-                        <li class="canchange" onclick="EditDCSByProduct('@memberItem.ChildID', 22, 'Macau Games');">
-                            Macau Games
-                        </li>
-                    }
-                    @if (!memberItem.IsHideVirtualGames)
-                    {
-                        <li class="canchange" onclick="EditDCSByProduct('@memberItem.ChildID', 38, 'Virtual Games');">
-                            Virtual Games
-                        </li>
-                    }
-                </ul>
-            </div>
-        </td>
-        <td>
-            @if (!Model.ParentDoubleComm && Model.ParentId != 0)
-            {
-                <div class="table-cell" style="width: 45px; height: 18px;">
-                    <span class="off-button"></span>
-                </div>
-                <div class="table-cell c" style="width: 10px; height: 18px;">
-                    <input type="checkbox" disabled="disabled" />
-                </div>
-            }
-            else
-            {
-                if (memberItem.isDoubleComm)
-                {
-                    <div class="table-cell" style="width: 45px; height: 18px;">
-                        <span id="allow_@memberItem.ChildID" class="on-button" onclick="MemberList.confirmUpdateSingle(false,'@idAllow',false);" onmouseout="" onmouseover="">
-                        </span>
-                    </div>
-                }
-                else
-                {
-                    <div class="table-cell" style="width: 45px; height: 18px;">
-                        <span id="disallow_@memberItem.ChildID" class="off-button" onclick="MemberList.confirmUpdateSingle(false,'@idAllow',true);" onmouseout="" onmouseover="">
-                        </span>
-                    </div>
-                }
-                <div class="table-cell c" style="width: 10px; height: 18px;">
-                    <input id="chk_@idAllow" onclick="CustomerList.selectID()" type="checkbox" />
-                </div>
-            }
         </td>
         <td>
             <div id="tooltip_@memberItem.UserName" class="table-cell c display" style="width: 120px; height: 18px;text-overflow:ellipsis;">
@@ -181,16 +86,6 @@
         <td>
             <div class="table-cell c" style="width: 65px; height: 18px;">
                 &nbsp;
-            </div>
-        </td>
-        <td>
-            <div class="table-cell c" style="width: 30px; height: 18px;">
-                &nbsp;
-            </div>
-        </td>
-        <td>
-            <div class="table-cell" style="width: 75px; height: 18px;">
-                <<input type="checkbox" disabled="disabled" />
             </div>
         </td>
         <td>
@@ -257,14 +152,6 @@
                 @memberItem.GroupD
             </div>
         </td>
-        @if (CastAide.AsBoolean(hash["isParentMyanmarOdds"]))
-        {
-            <td>
-                <div class="table-cell c" style="width: 70px; height: 18px;">
-                    @memberItem.DiscountMyanmarOdds
-                </div>
-            </td>
-        }
         <td>
             <div class="table-cell c" style="width: 90px; height: 18px;">
                 <a onclick="ViewIP('@memberItem.LastLoginIP')">@memberItem.LastLoginIP</a>
@@ -277,7 +164,7 @@
         <table class="grid-fixed-table free-cell-top-left">
             <thead>
                 <tr class="title">
-                    <th colspan="5">
+                    <th colspan="3">
                         <div class="table-cell" style="height: 17px;">
                             &nbsp;
                         </div>
@@ -295,29 +182,6 @@
                         </div>
                     </th>
                     <th>
-                        <div class="table-cell" style="width: 30px; height: 38px;">
-                            Edit
-                        </div>
-                    </th>
-                    <th>
-                        @if (!Model.ParentDoubleComm && Model.ParentId != 0)
-                        {
-                            <div class="table-cell" style="width: 75px; height: 38px;">
-                                <input class="verifiedmember" type="button" onclick="MemberList.confirmUpdateDComm(true);"
-                                       value="Double Comm" disabled="disabled" /><br />
-                                <input type="checkbox" onclick="CustomerList.itemAllClicked()" disabled="disabled" />
-                            </div>
-                        }
-                        else
-                        {
-                            <div class="table-cell" style="width: 75px; height: 38px;">
-                                <input id="btnMultiple" class="verifiedmember" type="button" onclick="MemberList.confirmUpdateSingle(true);"
-                                       value="Double Comm" />
-                                <input id="chkAll" type="checkbox" onclick="CustomerList.itemAllClicked()" />
-                            </div>
-                        }
-                    </th>
-                    <th>
                         <div class="table-cell" style="width: 120px; height: 38px;">
                             User Name
                         </div>
@@ -331,7 +195,7 @@
             <table id="tbMemberListrowheader" class="grid-fixed-table row_header_content">
                 <thead>
                     <tr class="title">
-                        <th colspan="5">
+                        <th colspan="3">
                             <div class="table-cell" style="height: 17px;">
                                 &nbsp;
                             </div>
@@ -346,16 +210,6 @@
                         <th>
                             <div class="table-cell" style="width: 65px; height: 38px;">
                                 Status
-                            </div>
-                        </th>
-                        <th>
-                            <div class="table-cell" style="width: 30px; height: 38px;">
-                                Edit
-                            </div>
-                        </th>
-                        <th>
-                            <div class="table-cell" style="width: 75px; height: 38px;">
-                                Multiple
                             </div>
                         </th>
                         <th>
@@ -376,7 +230,7 @@
             <table class="grid-fixed-table col_header_content">
                 <thead>
                     <tr class="title">
-                        <th colspan="5">
+                        <th colspan="3">
                             <div class="table-cell" style="height: 17px;">
                                 &nbsp;
                             </div>
@@ -404,18 +258,8 @@
                             </div>
                         </th>
                         <th>
-                            <div class="table-cell" style="width: 75px; height: 38px;">
-                                Status
-                            </div>
-                        </th>
-                        <th>
-                            <div class="table-cell" style="width: 30px; height: 38px;">
-                                Edit
-                            </div>
-                        </th>
-                        <th>
                             <div class="table-cell" style="width: 65px; height: 38px;">
-                                Multiple
+                                Status
                             </div>
                         </th>
                         <th>
@@ -483,14 +327,6 @@
                                 P Comm 3 (%)
                             </div>
                         </th>
-                        @if (isParentMyanmarOdds)
-                        {
-                            <th>
-                                <div class="table-cell" style="width: 70px; height: 38px;">
-                                    Myanmar Odds
-                                </div>
-                            </th>
-                        }
                         <th>
                             <div class="table-cell c" style="width: 90px; height: 38px;">
                                 Last Login IP
@@ -506,7 +342,7 @@
             <table id="tbMemberList" class="grid-fixed-table col_header_content">
                 <thead>
                     <tr class="title">
-                        <th colspan="5">
+                        <th colspan="3">
                             <div class="table-cell" style="height: 17px;">
                                 &nbsp;
                             </div>
@@ -536,16 +372,6 @@
                         <th>
                             <div class="table-cell" style="width: 65px; height: 38px;">
                                 Status
-                            </div>
-                        </th>
-                        <th>
-                            <div class="table-cell" style="width: 30px; height: 38px;">
-                                Edit
-                            </div>
-                        </th>
-                        <th>
-                            <div class="table-cell" style="width: 75px; height: 38px;">
-                                Multiple
                             </div>
                         </th>
                         <th>
@@ -613,14 +439,6 @@
                                 P Comm 3 (%)
                             </div>
                         </th>
-                        @if (isParentMyanmarOdds)
-                        {
-                            <th>
-                                <div class="table-cell" style="width: 70px; height: 38px;">
-                                    % Odds
-                                </div>
-                            </th>
-                        }
                         <th>
                             <div class="table-cell c" style="width: 90px; height: 38px;">
                                 Last Login IP
@@ -635,26 +453,13 @@
         </div>
     </div>
 </div>
-<div id="popupedit" class="openedit" style="display: none;" onmouseover="CustomerList.EditBoxHover()"
-     onmouseout="CustomerList.HideEditBox()">
-    <ul></ul>
-</div>
-<form id="target" method="post" target="AGEWndIframe" action="@Url.Content("~/DCS/ViewCustomerSetting")">
-    <input type="hidden" name="language" id="language" value="en-US" />
-    <input type="hidden" name="customerLevel" id="customerLevel" value="1" />
-    <input type="hidden" name="productId" id="productId" value="" />
-    <input type="hidden" name="customerId" id="customerId" value="" />
-    <input type="hidden" id="uplineLevel" name="uplineLevel" value="2" />
-</form>
 <script language="javascript" type="text/javascript">
     var _adminID = @adminID;
     var _adminUserName = '@adminUserName'
     var  _totalPages = @Model.TotalPages;
     var _totalChildren = @Model.TotalChildren;
     var _agentId = @Model.ParentId;
-    var _agentDcom = "@Model.ParentDoubleComm";
-    var _IsShowCustomerSettingRenovation = "@IsShowCustomerSettingRenovation";
-    var _IsVisibleVirtualRate = "@IsVisibleVirtualRate";
-    var _isParentMyanmarOdds = "@isParentMyanmarOdds";
+    var _agentDcom = "@Model.ParentDoubleComm";   
+    var _IsVisibleVirtualRate = "@IsVisibleVirtualRate";   
     var _userId = @AppSession.AccId;
 </script>
