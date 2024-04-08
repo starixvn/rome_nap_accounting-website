@@ -480,9 +480,11 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
                     continue;
                 }
 
+                var sportType = int.Parse(item.Attribute("SportType").Value);
+                var betType = int.Parse(item.Attribute("BetType").Value);
                 groupId = int.Parse(item.Attribute("GroupID").Value);
-                var ele = LogFormater.FormatElement(item.Attribute("Discount"));
-                ele.N = CacheRef.GetSportName(item.Attribute("SportType").Value);
+                var ele = LogFormater.FormatElement(item.Attribute("Discount"), null, $"simplify-{sportType}-{betType}");
+                ele.N = CacheRef.GetSportName(sportType);
                 trackingGroup.Vals.Add(ele);
             }
 
