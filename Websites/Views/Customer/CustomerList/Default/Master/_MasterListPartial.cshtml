@@ -13,13 +13,8 @@
 
     var adminID = AppSession.AccId;
     var adminUserName = AppSession.AccUserName;
-    int IsShowCustomerSettingRenovation = 0;
-    bool directMaster = (Model.ParentId == 0 ? true : false);
-    if (IsPost)
-    {
-        IsShowCustomerSettingRenovation = WebSettings.IsShowCustomerSettingRenovation;
-    }
-    int colspan = 4;
+   
+    int colspan = 3;
     int colspanCom = 6;
     if (IsVisibleMaxExposure)
     {
@@ -29,31 +24,11 @@
     {
         colspan++;
     }
-    bool isParentMyanmarOdds = false;
-    foreach (var masterItem in Model.ListChildren)
-    {
-        if (masterItem.IsMyanmarOdds)
-        {
-            isParentMyanmarOdds = true;
-            break;
-        }
-    }
-    bool isShowMyanmarOdds = directMaster || isParentMyanmarOdds;
-    if (directMaster)
-    {
-        colspanCom++;
-    }
-    else if (isParentMyanmarOdds)
-    {
-        colspanCom = colspanCom - 2;
-    }
-    Hashtable hash = new Hashtable();
 
+    Hashtable hash = new Hashtable();
     hash.Add("IsVisibleMaxExposure", IsVisibleMaxExposure);
     hash.Add("IsVisibleVirtualRate", IsVisibleVirtualRate);
-    hash.Add("EnableVirtualSports", EnableVirtualSports);
-    hash.Add("directMaster", directMaster);
-    hash.Add("isParentMyanmarOdds", isParentMyanmarOdds);
+ 
     string[] renderResult = Render(Model, hash);
 }
 @functions {
@@ -90,103 +65,21 @@
 {
     var bg = rowCSS(masterItem);
     var idAllow = masterItem.ChildID.ToString() + '_' + masterItem.UserName;
-    string siteName = masterItem.IsMyanmarOdds ? "76666B" : string.Empty;
 
-    <tr name="tr_@masterItem.ChildID" class="@bg">
+    <tr name="tr_@masterItem.ChildID" class="@bg" style="height: 20px;">
         <td>
             <div class="table-cell c " style="width: 40px; height: 18px;">
                 @masterItem.No
             </div>
         </td>
         <td>
-            <div class="table-cell c" style="width: 65px; height: 18px;">
-                @{
-                    int parentMasterID = Model.ParentId == 0 ? masterItem.ParentMasterDirect : Model.ParentId;
-                }
-                <a onclick="EditSportsBookSetting(3, '@masterItem.ChildID', '@parentMasterID', '@masterItem.UserName', '@siteName');">@masterItem.Status</a>
-                <span onclick="EditSportsBookSetting(3, '@masterItem.ChildID', '@parentMasterID', '@masterItem.UserName', '@siteName');" class="status-button">
-                    &nbsp;&nbsp;&nbsp
-                </span>
-            </div>
-        </td>
-        <td>
-            <div class="table-cell c" style="width: 30px; height: 18px;">
-                <span title="Edit" onmouseout="CustomerList.HideEditBox()" onclick="CustomerList.ShowMenuEdit('div_@masterItem.ChildID')" class="edit-button">
-                </span>
-                <ul id="div_@masterItem.ChildID" style="display:none;">
-                    <li class="canchange" onclick="OpenEditCustInfo('@masterItem.ChildID','Master');">Info</li>
-
-                    <li class="canchange" onclick="OpenEditTransferTime('@masterItem.ChildID',0);">
-                        Transfer
-                        Condition
-                    </li>
-                    <li class="canchange" onclick="OpenChangePwd('@masterItem.ChildID','@masterItem.UserName');">
-                        Password
-                    </li>
-
-                    @if (!masterItem.IsHideVirtualSports)
-                    {
-                        <li class="canchange" onclick="EditDCSByProduct('@masterItem.ChildID', 5, 'Virtual Sports');">
-                            Virtual Sports
-                        </li>
-                    }
-
-                    @if (!masterItem.IsHideLiveCasino)
-                    {
-                        <li class="canchange" onclick="EditDCSByProduct('@masterItem.ChildID', 41, 'Live Casino');">
-                            LiveCasino
-                        </li>
-                    }
-                    @if (!masterItem.IsHideVoidbridge)
-                    {
-                        <li class="canchange" onclick="EditDCSByProduct('@masterItem.ChildID', 22, 'Macau Games');">
-                            Macau Games
-                        </li>
-                    }
-
-                    @if (!masterItem.IsHideVirtualGames)
-                    {
-                        <li class="canchange" onclick="EditDCSByProduct('@masterItem.ChildID', 38, 'Virtual Games');">
-                            Virtual Games
-                        </li>
-                    }
-                </ul>
-            </div>
-        </td>
-        <td>
-            @if ((Model.ParentId != 0 && !Model.ParentDoubleComm) || (Model.ParentId == 0 && !masterItem.DoubleCommLosingUpline))
-            {
-                <div class="table-cell" style="width: 70px; height: 18px;">
-                    <span class="disallow-button"></span>
-                </div>
-                <div class="table-cell c" style="width: 20px; height: 18px;">
-                    <input type="checkbox" disabled="disabled" />
-                </div>
-            }
-            else
-            {
-                if (masterItem.isDoubleComm)
-                {
-                    <div class="table-cell" style="width: 70px; height: 18px;">
-                        <span id="allow_@masterItem.ChildID" class="allow-button" onclick="masterList.confirmUpdateDComm(false,'@idAllow',false);" onmouseout="" onmouseover="">
-                        </span>
-                    </div>
-                }
-                else
-                {
-                    <div class="table-cell" style="width: 70px; height: 18px;">
-                        <span id="disallow_@masterItem.ChildID" class="disallow-button" onclick="masterList.confirmUpdateDComm(false,'@idAllow',true);" onmouseout="" onmouseover="">
-                        </span>
-                    </div>
-                }
-                <div class="table-cell c" style="width: 20px; height: 18px;">
-                    <input id="chk_@idAllow" onclick="CustomerList.selectID()" type="checkbox" />
-                </div>
-            }
+	        <div class="table-cell c" style="width: 65px; height: 18px;">
+		        @masterItem.Status
+	        </div>
         </td>
         <td>
             <div id="tooltip_@masterItem.UserName" class="table-cell c display" style="width: 120px; height: 18px;text-overflow:ellipsis;">
-                <span>@masterItem.UserName</span>
+                <span><a href="AgentList?masterId=@masterItem.ChildID">@masterItem.UserName</a></span>
             </div>
         </td>
     </tr>
@@ -194,7 +87,6 @@
 @helper renderContent(Fanex.Tarus.Customer.Entities.CustomerList.CustomerList masterItem, Hashtable hash)
 {
     var bg = rowCSS(masterItem);
-    string discountMyanmarOdss = masterItem.IsMyanmarOdds ? masterItem.DiscountMyanmarOdds.ToString() : "N/A";
     <tr name="tr_@masterItem.ChildID" class="@bg" style="height: 20px;">
         <td>
             <div class="table-cell c" style="width: 40px; height: 18px;">
@@ -208,16 +100,6 @@
         </td>
         <td>
             <div class="table-cell" style="width: 30px; height: 18px;">
-                &nbsp;
-            </div>
-        </td>
-        <td>
-            <div class="table-cell" style="width: 90px; height: 18px;">
-                <input type="checkbox" />
-            </div>
-        </td>
-        <td>
-            <div class="table-cell" style="width: 120px; height: 18px;">
                 &nbsp;
             </div>
         </td>
@@ -254,35 +136,25 @@
             </div>
         </td>
         <td>
-            <div class="table-cell" style="width: 50px; height: 18px;">
-                <a class="viewdownline-button " href="AgentList?masterId=@masterItem.ChildID&doubleCommMaster=@masterItem.isDoubleComm.ToString().ToLower()&hideLiveCasinoUpline=@masterItem.IsHideLiveCasino.ToString().ToLower()&hideVoidbridgeUpline=@masterItem.IsHideVoidbridge.ToString().ToLower()">
-                    View
-                </a>
-            </div>
-        </td>
-        <td>
             <div class="table-cell c" style="width: 70px; height: 18px;">
                 @masterItem.GroupA
             </div>
         </td>
-        @if (CastAide.AsBoolean(hash["directMaster"]) || !CastAide.AsBoolean(hash["isParentMyanmarOdds"]))
-        {
-            <td>
-                <div class="table-cell c" style="width: 70px; height: 18px;">
-                    @masterItem.GroupB
-                </div>
+        <td>
+            <div class="table-cell c" style="width: 70px; height: 18px;">
+                @masterItem.GroupB
+            </div>
+        </td>
+        <td>
+            <div class="table-cell c" style="width: 70px; height: 18px;">
+                @masterItem.GroupC
+            </div>
+        </td>
+        <td>
+            <div class="table-cell c" style="width: 70px; height: 18px;">
+                @masterItem.GroupD
+            </div>
             </td>
-            <td>
-                <div class="table-cell c" style="width: 70px; height: 18px;">
-                    @masterItem.GroupC
-                </div>
-            </td>
-            <td>
-                <div class="table-cell c" style="width: 70px; height: 18px;">
-                    @masterItem.GroupD
-                </div>
-            </td>
-        }
         <td>
             <div class="table-cell c" style="width: 70px; height: 18px;">
                 @masterItem._1x2
@@ -293,14 +165,6 @@
                 @masterItem.Others
             </div>
         </td>
-        @if (CastAide.AsBoolean(hash["directMaster"]) || CastAide.AsBoolean(hash["isParentMyanmarOdds"]))
-        {
-            <td>
-                <div class="table-cell c" style="width: 70px; height: 18px;">
-                    @discountMyanmarOdss
-                </div>
-            </td>
-        }
         <td>
             <div class="table-cell c" style="width: 90px; height: 18px;">
                 <a onclick="ViewIP('@masterItem.LastLoginIP')">@masterItem.LastLoginIP</a>
@@ -313,7 +177,7 @@
         <table class="grid-fixed-table free-cell-top-left">
             <thead>
                 <tr class="title">
-                    <th colspan="5">
+                    <th colspan="3">
                         <div class="table-cell" style="height: 17px;">
                             &nbsp;
                         </div>
@@ -331,29 +195,6 @@
                         </div>
                     </th>
                     <th>
-                        <div class="table-cell" style="width: 30px; height: 38px;">
-                            Edit
-                        </div>
-                    </th>
-                    <th>
-                        @if (!Model.ParentDoubleComm && Model.ParentId != 0)
-                        {
-                            <div class="table-cell" style="width: 90px; height: 38px;">
-                                <input class="verified" type="button" onclick="masterList.confirmUpdateDComm(true);"
-                                       value="Double Comm" disabled="disabled" /><br />
-                                <input type="checkbox" onclick="CustomerList.itemAllClicked()" disabled="disabled" />
-                            </div>
-                        }
-                        else
-                        {
-                            <div class="table-cell" style="width: 90px; height: 38px;">
-                                <input id="btnMultiple" class="verified" type="button" onclick="masterList.confirmUpdateDComm(true);"
-                                       value="Double Comm" /><br />
-                                <input id="chkAll" type="checkbox" onclick="CustomerList.itemAllClicked()" />
-                            </div>
-                        }
-                    </th>
-                    <th>
                         <div class="table-cell" style="width: 120px; height: 38px;">
                             User Name
                         </div>
@@ -367,7 +208,7 @@
             <table id="tbmasterlistrowheader" class="grid-fixed-table row_header_content">
                 <thead>
                     <tr class="title">
-                        <th colspan="5">
+                        <th colspan="3">
                             <div class="table-cell" style="height: 17px;">
                                 &nbsp;
                             </div>
@@ -382,16 +223,6 @@
                         <th>
                             <div class="table-cell" style="width: 65px; height: 38px;">
                                 Status
-                            </div>
-                        </th>
-                        <th>
-                            <div class="table-cell" style="width: 30px; height: 38px;">
-                                Edit
-                            </div>
-                        </th>
-                        <th>
-                            <div class="table-cell" style="width: 90px; height: 38px;">
-                                Multiple
                             </div>
                         </th>
                         <th>
@@ -412,7 +243,7 @@
             <table class="grid-fixed-table col_header_content">
                 <thead>
                     <tr class="title">
-                        <th colspan="5">
+                        <th colspan="3">
                             <div class="table-cell" style="height: 17px;">
                                 &nbsp;
                             </div>
@@ -442,16 +273,6 @@
                         <th>
                             <div class="table-cell" style="width: 65px; height: 38px;">
                                 Status
-                            </div>
-                        </th>
-                        <th>
-                            <div class="table-cell" style="width: 30px; height: 38px;">
-                                Edit
-                            </div>
-                        </th>
-                        <th>
-                            <div class="table-cell" style="width: 90px; height: 38px;">
-                                Multiple
                             </div>
                         </th>
                         <th>
@@ -495,33 +316,27 @@
                             </div>
                         </th>
                         <th>
-                            <div class="table-cell" style="width: 50px; height: 38px;">
-                                View
-                            </div>
-                        </th>
-                        <th>
                             <div class="table-cell" style="width: 70px; height: 38px;">
                                 Group A
                             </div>
                         </th>
-                        @if (directMaster || !isParentMyanmarOdds)
-                        {
-                            <th>
-                                <div class="table-cell" style="width: 70px; height: 38px;">
-                                    Group B
-                                </div>
-                            </th>
-                            <th>
-                                <div class="table-cell" style="width: 70px; height: 38px;">
-                                    Group C
-                                </div>
-                            </th>
-                            <th>
-                                <div class="table-cell" style="width: 70px; height: 38px;">
-                                    Group D
-                                </div>
-                            </th>
-                        }
+                      
+                        <th>
+                            <div class="table-cell" style="width: 70px; height: 38px;">
+                                Group B
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-cell" style="width: 70px; height: 38px;">
+                                Group C
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-cell" style="width: 70px; height: 38px;">
+                                Group D
+                            </div>
+                        </th>
+                      
                         <th>
                             <div class="table-cell" style="width: 70px; height: 38px;">
                                 1x2
@@ -532,14 +347,6 @@
                                 Others
                             </div>
                         </th>
-                        @if (directMaster || isParentMyanmarOdds)
-                        {
-                            <th>
-                                <div class="table-cell" style="width: 70px; height: 38px;">
-                                    Myanmar Odds
-                                </div>
-                            </th>
-                        }
                         <th>
                             <div class="table-cell" style="width: 90px; height: 38px;">
                                 Last Login IP
@@ -555,7 +362,7 @@
             <table id="tbmasterlist" class="grid-fixed-table col_header_content">
                 <thead>
                     <tr class="title">
-                        <th colspan="5">
+                        <th colspan="3">
                             <div class="table-cell" style="height: 17px;">
                                 &nbsp;
                             </div>
@@ -585,16 +392,6 @@
                         <th>
                             <div class="table-cell" style="width: 65px; height: 38px;">
                                 Status
-                            </div>
-                        </th>
-                        <th>
-                            <div class="table-cell" style="width: 30px; height: 38px;">
-                                Edit
-                            </div>
-                        </th>
-                        <th>
-                            <div class="table-cell" style="width: 90px; height: 38px;">
-                                Multiple
                             </div>
                         </th>
                         <th>
@@ -638,34 +435,25 @@
                             </div>
                         </th>
                         <th>
-                            <div class="table-cell" style="width: 50px; height: 38px;">
-                                View
-                            </div>
-                        </th>
-                        <th>
                             <div class="table-cell" style="width: 70px; height: 38px;">
                                 Group A
                             </div>
                         </th>
-
-                        @if (directMaster || !isParentMyanmarOdds)
-                        {
-                            <th>
-                                <div class="table-cell" style="width: 70px; height: 38px;">
-                                    Group B
-                                </div>
-                            </th>
-                            <th>
-                                <div class="table-cell" style="width: 70px; height: 38px;">
-                                    Group C
-                                </div>
-                            </th>
-                            <th>
-                                <div class="table-cell" style="width: 70px; height: 38px;">
-                                    Group D
-                                </div>
-                            </th>
-                        }
+                        <th>
+                            <div class="table-cell" style="width: 70px; height: 38px;">
+                                Group B
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-cell" style="width: 70px; height: 38px;">
+                                Group C
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-cell" style="width: 70px; height: 38px;">
+                                Group D
+                            </div>
+                        </th>
                         <th>
                             <div class="table-cell" style="width: 70px; height: 38px;">
                                 1x2
@@ -676,15 +464,6 @@
                                 Others
                             </div>
                         </th>
-
-                        @if (directMaster || isParentMyanmarOdds)
-                        {
-                            <th>
-                                <div class="table-cell" style="width: 70px; height: 38px;">
-                                    % Odds
-                                </div>
-                            </th>
-                        }
                         <th>
                             <div class="table-cell" style="width: 90px; height: 38px;">
                                 Last Login IP
@@ -699,10 +478,7 @@
         </div>
     </div>
 </div>
-<div id="popupedit" class="openedit" style="display: none;" onmouseover="CustomerList.EditBoxHover()"
-     onmouseout="CustomerList.HideEditBox()">
-    <ul></ul>
-</div>
+
 <form id="target" method="post" target="AGEWndIframe" action="@Url.Content("~/DCS/ViewCustomerSetting")">
     <input type="hidden" name="language" id="language" value="en-US" />
     <input type="hidden" name="customerLevel" id="customerLevel" value="3" />
@@ -714,12 +490,8 @@
     var _adminUserName = '@adminUserName'
     var  _totalPages = @Model.TotalPages;
     var _totalChildren = @Model.TotalChildren;
-    var _superId = @Model.ParentId;
-    var _superDcom = "@Model.ParentDoubleComm";
-    var _IsShowCustomerSettingRenovation = "@IsShowCustomerSettingRenovation";
+    var _superId = @Model.ParentId;      
     var _IsVisibleMaxExposure = "@IsVisibleMaxExposure";
-    var _IsVisibleVirtualRate = "@IsVisibleVirtualRate";
-    var _directMaster = "@directMaster";
-    var _isParentMyanmarOdds = "@isParentMyanmarOdds";
+    var _IsVisibleVirtualRate = "@IsVisibleVirtualRate";   
     var _userId = @AppSession.AccId;
 </script>

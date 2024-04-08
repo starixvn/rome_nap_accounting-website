@@ -27,27 +27,55 @@
             }
 
             TemplateHandler.Assign(ref tplTransLink, "statementLink", statementLink);
-            if (!customerInfoViewModel.IsInternalUser && accLevel != Globals.AccountType.Member)
-            {
-                TemplateHandler.RemoveBlock(ref tplTransLink, "downlinelistbtn");
-            }
 
             switch (accLevel)
             {
                 case Globals.AccountType.Super:
-                    downlineListURL = "FinanceCustomerList/Index?upline=" + customerInfoViewModel.CustId + "&roleid=4";
+                    if (!customerInfoViewModel.IsInternalUser)
+                    {
+                        downlineListURL = "CustomerList/MasterAgentList?superId=" + customerInfoViewModel.CustId;
+                    }
+                    else
+                    {
+                        downlineListURL = "FinanceCustomerList/Index?upline=" + customerInfoViewModel.CustId + "&roleid=4";
+                    }
                     customerBalanceURL = "CustomerBalance/Index?custid=" + customerInfoViewModel.CustId.ToString() + "&roleId=4&userName=" + customerInfoViewModel.UserName;
                     TemplateHandler.RemoveBlock(ref tplTransLink, customerInfoViewModel.IsDeposit ? "balance" : null);
                     lblDownlineList = "Master List";
                     break;
                 case Globals.AccountType.Master:
-                    downlineListURL = "FinanceCustomerList/Index?upline=" + customerInfoViewModel.CustId + "&roleid=3";
+
+                    if (!customerInfoViewModel.IsInternalUser)
+                    {
+                        downlineListURL = "CustomerList/AgentList?masterId=" + customerInfoViewModel.CustId;
+
+                        if (WebSettings.OfferDoubleComm)
+                        {
+                            downlineListURL += "&doubleCommMaster=" + customerInfoViewModel.Doublecommlosing.ToString().ToLower();
+                        }
+                    }
+                    else
+                    {
+                        downlineListURL = "FinanceCustomerList/Index?upline=" + customerInfoViewModel.CustId + "&roleid=3";
+                    }
+
                     customerBalanceURL = "CustomerBalance/Index?custid=" + customerInfoViewModel.CustId.ToString() + "&roleId=3&userName=" + customerInfoViewModel.UserName;
                     TemplateHandler.RemoveBlock(ref tplTransLink, customerInfoViewModel.IsDeposit ? "balance" : null);
                     lblDownlineList = "Agent List";
                     break;
                 case Globals.AccountType.Agent:
-                    downlineListURL = "FinanceCustomerList/Index?upline=" + customerInfoViewModel.CustId + "&roleid=2";
+                    if (!customerInfoViewModel.IsInternalUser)
+                    {
+                        downlineListURL = "CustomerList/MemberList?agentId=" + customerInfoViewModel.CustId;
+                        if (WebSettings.OfferDoubleComm)
+                        {
+                            downlineListURL += "&doubleCommAgent=" + customerInfoViewModel.Doublecommlosing.ToString().ToLower();
+                        }
+                    }
+                    else
+                    {
+                        downlineListURL = "FinanceCustomerList/Index?upline=" + customerInfoViewModel.CustId + "&roleid=2";
+                    }
                     customerBalanceURL = "Customer/CustomerBalance.aspx?custid=" + customerInfoViewModel.CustId.ToString() + "&userName=" + customerInfoViewModel.UserName;
                     lblDownlineList = "Member List";
                     break;
