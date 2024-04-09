@@ -291,7 +291,8 @@
                 return SportContants.Live22;
             if (10000 <= betTypeId && betTypeId <= 10299)
                 return SportContants.UUSlots;
-
+            if (10801 <= betTypeId && betTypeId <= 11000)
+                return SportContants.SabaxD;
             return 0;
         }
 

@@ -97,5 +97,6 @@
         public const int WE = 228;
         public const int Live22 = 227;
         public const int UUSlots = 216;
+        public const int SabaxD = 240;
     }
 }

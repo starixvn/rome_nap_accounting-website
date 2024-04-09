@@ -907,6 +907,18 @@ function showLive22BetDetails(refno, winlossDate, custId, transType) {
     openResultsPopUp(params);
 }
 
+function showSabaxDDetails(refno, winlossDate, custId, transType) {
+    var params = {
+        url: "RNGCasinoBetList/BetDetails",
+        title: "Saba xD - Detailed Bet list - " + winlossDate.split(" ")[0],
+        jsonParam: { TransId: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 240, PageSize: 500 },
+        width: 1250,
+        height: 600
+    };
+
+    openResultsPopUp(params);
+}
+
 function showUUSlotsBetDetails(refno, winlossDate, custId, transType) {
     var params = {
         url: "RNGCasinoBetList/BetDetails",

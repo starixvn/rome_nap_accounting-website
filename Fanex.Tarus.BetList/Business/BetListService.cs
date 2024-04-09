@@ -8,6 +8,7 @@
     using System.Linq;
     using System.Text;
     using System.Text.RegularExpressions;
+    using System.Threading;
     using System.Threading.Tasks;
     using Alpha.IPInfo.DataAccess;
     using Alpha.IPInfo.Models;
@@ -26,6 +27,7 @@
     using Fanex.CustomerSetting.Module.Core;
     using Fanex.Data;
     using Fanex.Logging.Extensions.Web;
+    using Fanex.RemotingRef;
     using Fanex.Tarus.BetList.DataAccess.Results;
     using Fanex.Tarus.BetList.Param;
     using Fanex.Tarus.Infrastructure.Configurations;
@@ -39,6 +41,7 @@
     public class BetListService : IBetListService
     {
         public const string BetListSessionKey = "Fanex.BetList.Accounting.WinLossByLicensee";
+        private readonly IRemotingRefService _remotingRefService;
         private readonly IBetListRepository _betListRepository;
         private readonly ITicketHelper ticketHelper = new TicketHelper();
         private const int DefaultBetdaqId = -1;
@@ -263,7 +266,7 @@
                             + builder.BuildChoice(betDetail.Ticket, ticketHelper, null, false)
                             + builder.BuildTransEventDateAndStatusResult(betDetail.Ticket, null)
                         + (totalItem > 0 ? "</div>" + "<div class=\"line\"></div>" : "</div>");
-                    if (removeSabaWord) RemoveSabaWord(betDetail);
+                    if (removeSabaWord) RemoveSabaWord(betDetail, Thread.CurrentThread.CurrentUICulture.Name);
                 }
 
                 return tickets;
@@ -363,42 +366,53 @@
                 betDetail.StakeHtml = BetListExtension.BuildStake(betDetail, ref builder, ticketHelper);
                 betDetail.OddHtml = builder.BuildOdds(betDetail.Ticket, outputLiveCasino, funcGetOddsTypeName);
                 betDetail.StatusHtml = betListHelper.BuildStatus(betDetail.Ticket, ticketHelper, outputLiveCasino, factory, builder);
-
-                RemoveSabaWord(betDetail);
+                
+                RemoveSabaWord(betDetail, param.Language);
             }
+
             AssignCountry(tickets);
 
             return tickets;
         }
 
-        private void RemoveSabaWord(TicketDetail ticket)
+        private void RemoveSabaWord(TicketDetail ticket, string language)
         {
             var leagueGroupIds = new List<int> { 42, 74, 108 };
 
             if ((ticket.IsChinaView || ticket.SpecialPlatfrom >= 2))
             {
+                if(ticket.Ticket.SportTypeId == SportContants.SabaxD)
+                {
+                    var partern = $"<span class=\"sport\">(.+?)</span>";
+                    var oldText = _remotingRefService.GetSportName(SportContants.SabaxD.ToString(), language);
+                    var newText = _remotingRefService.GetResourceDataByRefIdAndResourceId("Sports_Saba", SportContants.SabaxD.ToString(), language, oldText);
+
+                    ReplaceWord(partern, oldText, newText);
+                }
+
+                var sabaText = _remotingRefService.GetResourceDataByRefIdAndResourceId("Saba", "Saba", language, "Saba");
                 if (leagueGroupIds.Any(i => i == ticket.LeagueGroupId))
                 {
                     var partern = $"<span class=\"leagueName\">(.+?)</span>";
-                    RemoveWord(partern);
+                    ReplaceWord(partern, sabaText, string.Empty);
                 }
 
                 if (ticket.Ticket.SportTypeId == 246)//Saba promotion
                 {
                     var partern = $"<span class=\"sport\">(.+?)</span>";
-                    RemoveWord(partern);
+                    ReplaceWord(partern, sabaText, string.Empty);
                 }
             }
-
-            void RemoveWord(string partern)
+           
+            void ReplaceWord(string partern, string oldText, string newText)
             {
-                var sabaWords = new List<string> { " SABA", "SABA ", "SABA", " 沙巴", "沙巴 ", "沙巴" };
+                var words = new List<string> { $" {oldText}", $"{oldText} ", $"{oldText}", $" {oldText}", $"{oldText} ", $"{oldText}" };
                 var mainTicket = Regex.Match(ticket.ChoiceHtml, partern);
                 if (mainTicket.Success)
                 {
-                    foreach (string word in sabaWords)
+                    foreach (string word in words)
                     {
-                        var a = mainTicket.Value.Contains(word) ? mainTicket.Value.Replace(word, string.Empty) : mainTicket.Value;
+                        var a = mainTicket.Value.Contains(word) ? mainTicket.Value.Replace(word, newText) : mainTicket.Value;
                         ticket.ChoiceHtml = ticket.ChoiceHtml.Replace(mainTicket.Value, a);
                     }
                 }
