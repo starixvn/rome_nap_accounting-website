@@ -907,6 +907,18 @@ function showLive22BetDetails(refno, winlossDate, custId, transType) {
     openResultsPopUp(params);
 }
 
+function showUUSlotsBetDetails(refno, winlossDate, custId, transType) {
+    var params = {
+        url: "RNGCasinoBetList/BetDetails",
+        title: "UU SLOTS - Detailed Bet list - " + winlossDate.split(" ")[0],
+        jsonParam: { TransId: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 216, PageSize: 500 },
+        width: 1250,
+        height: 600
+    };
+
+    openResultsPopUp(params);
+}
+
 function ViewCashOutHistory(transId, refNo, betType, originalTransId, title) {
     var cashoutParam = {
         url: "BetList/GetCashOutDetails",
@@ -1107,6 +1119,9 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
 
         case 227: //Live22
             return getLive22Param(custId, transId3rd, gameId3rd, currencyId, siteId, bettype, winlostdate);
+
+        case 216: //UU Slots
+            return getUUSlotsParam(custId, transId3rd, gameId3rd, currencyId, siteId, bettype, winlostdate);
         default:
             return undefined;
     }
@@ -1604,6 +1619,26 @@ function getLive22Param(custId, transId3rd, gameId3rd, currencyId, siteId, betTy
         jsonParam:
         {
             productId: 79,
+            custId: custId,
+            transId3rd: transId3rd,
+            gameId3rd: gameId3rd,
+            BetTypeId: betType,
+            EndTime: endTime,
+            SiteId: siteId,
+            CurrencyId: currencyId
+        },
+        width: 945,
+        height: 500
+    };
+}
+
+function getUUSlotsParam(custId, transId3rd, gameId3rd, currencyId, siteId, betType, endTime) {
+    return {
+        url: "ThirdParty/UUSlotsResult",
+        title: "UU SLOTS Result",
+        jsonParam:
+        {
+            productId: 78,
             custId: custId,
             transId3rd: transId3rd,
             gameId3rd: gameId3rd,

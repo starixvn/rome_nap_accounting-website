@@ -186,6 +186,9 @@
         public ActionResult Live22Result(ThirdPartyResultRequest request)
             => BaseResult(request, "Live22ResultConfigs");
 
+        public ActionResult UUSlotsResult(ThirdPartyResultRequest request)
+            => BaseResult(request, "UUSlotsResultConfigs");
+
         private void SetProductResultTitle(int productId)
             => ProductResultTitle = CacheRef.GetProductName(productId) + " Result";
     }
