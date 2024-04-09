@@ -1448,9 +1448,7 @@ function getVGamingParam(custId, transId3rd, gameId3rd, currencyId, siteId, betT
             productId: 66,
             custId: custId,
             transId3rd: transId3rd,
-            gameId3rd: gameId3rd,
             BetTypeId: betType,
-            EndTime: endTime,
             SiteId: siteId,
             CurrencyId: currencyId
         },

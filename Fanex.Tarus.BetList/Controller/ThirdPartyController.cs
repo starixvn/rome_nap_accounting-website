@@ -189,11 +189,34 @@
         public ActionResult UUSlotsResult(ThirdPartyResultRequest request)
             => BaseResult(request, "UUSlotsResultConfigs");
             
-        public ActionResult VGamingResult(ThirdPartyResultRequest request)
-            => BaseResult(request, "VGamingConfigs");
+        public ActionResult VGamingResult(VGaming3rdReques request)
+        {
+            SetProductResultTitle(request.ProductId);
+            var service = new ThirdPartyResult("VGamingConfigs");
+            var resultRequest = new ResultRequest(request.CustId, request.TransId3rd, null, request.CurrencyId, request.SiteId);
+            var result = service.GetResultGET(resultRequest);
+
+            return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(ProductResultTitle, result));
+        }
 
         private void SetProductResultTitle(int productId)
             => ProductResultTitle = CacheRef.GetProductName(productId) + " Result";
+    }
+
+    public class VGaming3rdReques
+    {
+        public int ProductId { get; set; }
+
+        public string SiteId { get; set; }
+
+        public int CustId { get; set; }
+
+        public string TransId3rd { get; set; }
+
+        public int CurrencyId { get; set; }
+
+        public int BetTypeId { get; set; }
+
     }
 
     public class ThirdPartyResultRequest
