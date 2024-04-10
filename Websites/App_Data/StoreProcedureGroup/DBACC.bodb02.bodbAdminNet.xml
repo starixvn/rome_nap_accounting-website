@@ -115,7 +115,7 @@
     <Setting Key="Acc_ReferenceSetting_ProductDummySel" SpName="Acc_ReferenceSetting_ProductDummySel" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="Acc_ReferenceSetting_SportTypeSel" SpName="Acc_ReferenceSetting_SportTypeSel" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="Acc_ReferenceSetting_BetTypeSel" SpName="Acc_ReferenceSetting_BetTypeSel" DbName="DBACC.bodb02.wsv_nap" />
-    <Setting Key="Acc_ReferenceSetting_TableSel" SpName="Acc_ReferenceSetting_TableSel_UAT4" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_ReferenceSetting_TableSel" SpName="Acc_ReferenceSetting_TableSel" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="Acc_ReferenceSetting_Sel" SpName="Acc_ReferenceSetting_Sel" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="Acc_ReferenceSetting_Check" SpName="Acc_ReferenceSetting_Check" DbName="DBACC.bodb02.wsv_nap" />
   </Function>

@@ -70,13 +70,13 @@
     <Setting Key="Acc_CustomerSelTransferOption" SpName="Acc_CustomerSelTransferOption" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Customer">
-    <Setting Key="CustomerSelStatus" SpName="Acc_CustomerSelStatus_UAT4" DbName="DBACC.bodb02.wsv_nap" />
-    <Setting Key="SelAllInfo" SpName="Acc_CustomerSelAllInfo_UAT4" DbName="DBAGE.bodb02.wsv_nap" />
+    <Setting Key="CustomerSelStatus" SpName="Acc_CustomerSelStatus" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="SelAllInfo" SpName="Acc_CustomerSelAllInfo" DbName="DBAGE.bodb02.wsv_nap" />
     <Setting Key="Acc_CustDirectSel" SpName="Acc_CustDirectSel" DbName="DBAGE.bodb02.wsv_nap" />
     <Setting Key="Acc_CustomerSelSiteByUserName" SpName="Acc_CustomerSelSiteByUserName" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="CustomerSelDownLineList" SpName="Acc_CustomerSelList" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="CustomerSelUserInfo" SpName="Acc_CustomerSelUserInfo" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo_UAT4" DbName="DBCust.CustDB.wsv_nap">
+    <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo" DbName="DBCust.CustDB.wsv_nap">
       <Mapping DataField="Currency" ObjectProperty="CurrencyId" />
     </Setting>
     <Setting Key="CustomerSelClearBalance" SpName="Acc_CustomerSelClearBalance" DbName="DBAGE.bodb02.wsv_nap" />
@@ -96,7 +96,7 @@
     <Setting Key="Acc_CreditTermSelGroupByUsername" SpName="Acc_CreditTermSelGroupByUsername" DbName="DBAGE.bodb02.wsv_nap" />
   </Function>
   <Function Name="Helper">
-    <Setting Key="CheckAllowedShow" SpName="Acc_CheckAllowedShow_UAT4" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="CheckAllowedShow" SpName="Acc_CheckAllowedShow" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="SiteSel_Report_Licensee" SpName="Acc_ActivelicenseeSel" DbName="DBAGE.bodb02.wsv_nap" />
   </Function>
   <Function Name="P2P Control">
@@ -108,8 +108,8 @@
   </Function>
   <Function Name="View Pt">
     <Setting Key="GetPT" SpName="Acc_MT_GetPT" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="GetSportType" SpName="Acc_MT_SportTypeSel_UAT4" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="GetBetType" SpName="Acc_MT_BetTypeSel_UAT4" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="GetSportType" SpName="Acc_MT_SportTypeSel" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="GetBetType" SpName="Acc_MT_BetTypeSel" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Progressive Bonus">
     <Setting Key="CustomerSelCasinoBonusStatus" SpName="Acc_CustomerSelCasinoBonusStatus" DbName="DBCust.CustDB.wsv_nap" />
@@ -119,8 +119,8 @@
     <Setting Key="Acc_CustomerSelCheckEnable" SpName="Acc_CustomerSelCheckEnable" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="External Betting Limit">
-    <Setting Key="Age_CustomerSelBetSetting" SpName="Age_CustomerSelBetSetting_UAT4" DbName="DBCust.CustDB.wsv_nap" Plain="0" />
-    <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo_UAT4" DbName="DBCust.CustDB.wsv_nap" Plain="0" />
+    <Setting Key="Age_CustomerSelBetSetting" SpName="Age_CustomerSelBetSetting" DbName="DBCust.CustDB.wsv_nap" Plain="0" />
+    <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo" DbName="DBCust.CustDB.wsv_nap" Plain="0" />
   </Function>
   <Function Name="DCS-ViewComm">
     <Setting Key="Acc_CustSetting_ProductNamesSelect" SpName="Acc_CustSetting_ProductNamesSelect" DbName="DBAGE.bodb02.wsv_nap" Plain="0" />
@@ -201,7 +201,8 @@
       <Mapping ObjectProperty="HomeId" DataField="homeid" />
       <Mapping ObjectProperty="AwayId" DataField="awayid" />
     </Setting>
-    <Setting Key="All_BetList_MatchResultAGSel" SpName="All_BetList_MatchResultAGSel" DbName="DBAGE.bodb02.wsv_nap"></Setting>
+    <Setting Key="All_BetList_MatchResultAGSel" SpName="All_BetList_MatchResultAGSel" DbName="DBAGE.bodb02.wsv_nap">
+    </Setting>
   </Function>
   <Function Name="BetList - BetTrade">
     <Setting Key="BetList_BetTradeDetails" SpName="Acc_BetList_BetTrade_Detail" DbName="DBAGE.bodb02.wsv_nap" />
