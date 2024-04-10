@@ -190,7 +190,18 @@
             => BaseResult(request, "UUSlotsResultConfigs");
             
         public ActionResult VGamingResult(ThirdPartyResultRequest request)
-            => BaseResult(request, "VGamingConfigs");
+        {
+            SetProductResultTitle(request.ProductId);
+            var service = new ThirdPartyResult("VGamingConfigs");
+            var resultRequest = new ResultRequest(request.CustId, request.TransId3rd, request.GameId3rd, request.CurrencyId, request.SiteId)
+            {
+                BetTypeId = request.BetTypeId
+            };
+            var result = service.GetResultGET(resultRequest);
+
+            return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(ProductResultTitle, result));
+        }
+        
 
         private void SetProductResultTitle(int productId)
             => ProductResultTitle = CacheRef.GetProductName(productId) + " Result";
