@@ -368,6 +368,8 @@
     <Compile Include="Business\ConfigureDirectAccount\ConfigureDirectAccountService.cs" />
     <Compile Include="Business\CopySuperSetting\CopySuperSettingService.cs" />
     <Compile Include="Business\CopyVRSetting\CopyVRSettingService.cs" />
+    <Compile Include="Business\CustomerList\CustomerListService.cs" />
+    <Compile Include="Business\CustomerList\ICustomerListService.cs" />
     <Compile Include="Business\CustomerLogin\CustomerOTPService.cs" />
     <Compile Include="Business\CustomerLogin\ICustomerOTPService.cs" />
     <Compile Include="Business\ExtraPtGroup\ExtraPtService.cs" />
@@ -421,6 +423,7 @@
     <Compile Include="Controller\AutoTransferAll\AutoTransferAllController.cs" />
     <Compile Include="Controller\BetCreditHistoryController.cs" />
     <Compile Include="Controller\CustomerController.cs" />
+    <Compile Include="Controller\CustomerList\CustomerListController.cs" />
     <Compile Include="Controller\InitializingBetLimit\InitBetLimitController.cs" />
     <Compile Include="Controller\InitializingCustomerSetting\InitDepSettingController.cs" />
     <Compile Include="Controller\LicenseeMemberController.cs" />
@@ -593,6 +596,8 @@
     <Compile Include="DataAccess\ConfigureDirectAccount\IConfigureDirectAccountRepository.cs" />
     <Compile Include="DataAccess\CopySuperSetting\CopySuperSettingDataAccess.cs" />
     <Compile Include="DataAccess\CopyVRSetting\CopyVRSettingDataAccess.cs" />
+    <Compile Include="DataAccess\CustomerList\CustomerListAccess.cs" />
+    <Compile Include="DataAccess\CustomerList\ICustomerListAccess.cs" />
     <Compile Include="DataAccess\CustomerLogin\CustomerOTPDataAccess.cs" />
     <Compile Include="DataAccess\CustomerLogin\ICustomerOTPDataAccess.cs" />
     <Compile Include="DataAccess\EditLicensee\EditLicenseeRepository.cs" />
