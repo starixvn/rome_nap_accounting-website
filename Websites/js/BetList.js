@@ -910,7 +910,7 @@ function showLive22BetDetails(refno, winlossDate, custId, transType) {
 function showSabaxDDetails(refno, winlossDate, custId, transType) {
     var params = {
         url: "RNGCasinoBetList/BetDetails",
-        title: "Saba xD - Detailed Bet list - " + winlossDate.split(" ")[0],
+        title: "SABA xD - Detailed Bet list - " + winlossDate.split(" ")[0],
         jsonParam: { TransId: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 240, PageSize: 500 },
         width: 1250,
         height: 600
@@ -1088,6 +1088,8 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
         case 239: // BG
             return getBGParam(custId, transId3rd, gameId3rd, currencyId, siteId);
 
+        case 240: // Saba xD
+            return getSabaxDParam(custId, transId3rd, currencyId, siteId);
         case 241: // BBIN
             return getBBinParam(custId, transId3rd, gameId3rd, currencyId, siteId);
 
@@ -1471,6 +1473,22 @@ function getVGamingParam(custId, transId3rd, gameId3rd, currencyId, siteId, betT
     };
 }
 
+function getSabaxDParam(custId, transId3rd, currencyId, siteId) {
+    return {
+        url: "ThirdParty/SabaxDResult",
+        title: "Saba xD Result",
+        jsonParam:
+        {
+            productId: 86,
+            custId: custId,
+            transId3rd: transId3rd,
+            SiteId: siteId,
+            CurrencyId: currencyId
+        },
+        width: 945,
+        height: 500
+    };
+}
 function getSabaClubParam(custId, gameRoundId, gameId, siteId, sportType) {
 
     return {

@@ -220,6 +220,9 @@
         }
 
 
+        public ActionResult SabaxDResult(ThirdPartyResultRequest request)
+            => BaseResult(request, "SabaxDResultConfigs");
+
         private void SetProductResultTitle(int productId)
             => ProductResultTitle = CacheRef.GetProductName(productId) + " Result";
     }
