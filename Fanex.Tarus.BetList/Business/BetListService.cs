@@ -41,7 +41,7 @@
     public class BetListService : IBetListService
     {
         public const string BetListSessionKey = "Fanex.BetList.Accounting.WinLossByLicensee";
-        private readonly IRemotingRefService _remotingRefService;
+        private readonly IRemotingRefService _remotingRefService = new RemotingRefService();
         private readonly IBetListRepository _betListRepository;
         private readonly ITicketHelper ticketHelper = new TicketHelper();
         private const int DefaultBetdaqId = -1;
