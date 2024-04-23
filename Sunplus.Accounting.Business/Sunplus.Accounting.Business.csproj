@@ -448,7 +448,6 @@
     <Compile Include="Customer\IServiceCustomerList.cs" />
     <Compile Include="Customer\CustomerManager\SettingTabs\EnableStatusTab\RenderLeftPanelManager.cs" />
     <Compile Include="Customer\CustomerManager\SettingTabs\EnableStatusTab\RenderLeftPanelParameter.cs" />
-    <Compile Include="ExChangeRate\CasinoAPIService.cs" />
     <Compile Include="ExChangeRate\ExChangeRateHelper.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="IHelper.cs" />
