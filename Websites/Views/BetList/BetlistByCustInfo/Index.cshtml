@@ -13,7 +13,7 @@
     <link rel="stylesheet" type="text/css" href="~/js/jQuery/GridScroller/gridscroller.css" />
     <link href="~/js/MultipleSelect/jquery.multiselect.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="~/Views/BetList/Style/BetList.css?ver=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" />
-    <link rel="stylesheet" type="text/css" href="~/Views/BetList/BetlistByCustInfo/Style/BetListByCustInfo.css?ver=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" />
+    <link rel="stylesheet" type="text/css" href="~/Views/BetList/BetlistByCustInfo/Style/BetListByCustInfo.css?ver=1@Sunplus.Accounting.Core.Configurations.WebSettings.Version" />
 </head>
 <body>
     <div class="main">
@@ -44,6 +44,14 @@
                                 <span>Booked Bet</span>
                             </a>
                         </li>
+                        @if ((bool)ViewBag.IsSabaCoins)
+                        {
+                            <li class="" id="Li5" onclick="BetListByCustInfo.viewSabaCoinsTab();">
+                                <a href="javascript:;">
+                                    <span>Saba Coins</span>
+                                </a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
@@ -136,8 +144,49 @@
                 </div>
             </div>
 
+            <div id="maincontent_sabacoins" class="maincontent_box hidden" style="width: 100%;">
+                <div>
+                    <input onclick="BetlistByCustInfoSabaCoins.disabledSabaCoinsFilter();" type="radio" id="rdByRef-sabacoins" value="-1" name="type-sabacoins" />
+                    <label style="font-weight: bold" for="rdByRef-sabacoins">By Ref No:</label>
+                    <input id="txtRefNo-sabacoins" type="text" maxlength="19" style="background-color: #fff; width: 130px;" autocomplete="off" onkeypress="return KeyPress(event);" />
+                    <div id="info-msg-sabacoins" class="info-msg hide">
+                        For Sportsbook, the search result includes the related Bonus/Cash tickets.<br />
+                        For Casino products, tickets can only be found within the last 6 months.
+                    </div>
+                </div>
+                <div>
+                    <input onclick="BetlistByCustInfoSabaCoins.disabledSabaCoinsFilter();" type="radio" id="rdByUser-sabacoins" value="-2" name="type-sabacoins" checked="checked" />
+                    <label style="font-weight: bold" for="rdByUser-sabacoins">Advance (Event Date):</label>
+                    <span style="font-weight: bold">From </span>
+                    <span style="padding-left: 5px">
+                        <input id="txtfromdate-sabacoins" class="txtdate" readonly="readonly" />
+                    </span>
+                    <span class="b" style="padding-left: 5px">To</span>
+                    <span style="padding-left: 5px">
+                        <input id="txttodate-sabacoins" class="txtdate" readonly="readonly" />
+                    </span>
+                    <span style="padding-left: 10px">Status</span>
+                    <span style="padding-left: 5px">
+                        <span id="ddlStatus-sabacoins" class="multiselect" multiple="multiple">
+                        </span>
+                    </span>
+                    <span id="divBettype-sabacoins" class="hidden" style="padding-left: 5px">
+                        <span>Bettypes </span>
+                        <select id="ddlBettype-sabacoins" name="FilterBy"></select>
+                    </span>
+                </div>
+                <div>
+                    <input class="btn" type="button" id="btnReport-sabacoins" value="Submit" onclick="BetlistByCustInfoSabaCoins.getBetListByCustInfo();" />
+                    <input class="btn" type="button" id="btnToday-sabacoins" value="Reset" onclick="Helper.reset_date();" />
+                </div>
+                <div id="err">
+                </div>
+            </div>
+
             <div id="betlistMain">
                 <div id="betListContent" style="margin-top: 10px;">
+                </div>
+                <div id="betListSabaCoinsContent" class="hidden" style="margin-top: 10px;">
                 </div>
                 <div id="betListSystemParlayContent" class="hidden" style="margin-top: 10px;">
                 </div>
@@ -159,6 +208,7 @@
         var _today = '@DateTime.Today.ToShortDateString()';
         var _yesterday = '@DateTime.Today.AddDays(-1).ToShortDateString()';
         var _custID = '@ViewBag.CustID';
+        var _shadowcustId = '@ViewBag.ShadowCustID';
         var _fromDate = '@ViewBag.FromDate';
         var _toDate = '@ViewBag.ToDate';
         var _accId = '@Fanex.Tarus.Infrastructure.Common.AppSession.AccId';
@@ -176,7 +226,8 @@
                 "@Url.Content("~/js/MultipleSelect/jquery.multiselect.js?ver=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",
                 "@Url.Content("~/js/BetList.js?ver=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",
                 "@Url.Content("~/Areas/AGCasino/Views/BetDetails/Scripts/BetDetails.js?ver=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",                
-                "@Url.Content("~/Views/BetList/BetlistByCustInfo/Scripts/BetlistByCustInfo.js?ver=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",
+                "@Url.Content("~/Views/BetList/BetlistByCustInfo/Scripts/BetlistByCustInfo.js?ver=1")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",
+                "@Url.Content("~/Views/BetList/BetlistByCustInfo/Scripts/BetlistByCustInfoSabaCoins.js?ver=2")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",
                 "@Url.Content("~/Views/BetList/BetlistByCustInfo/Scripts/ExchangeBetlist.js?ver=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",
                 "@Url.Content("~/Views/BetList/Scripts/BetlistGlobal.js?ver=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version");
     </script>

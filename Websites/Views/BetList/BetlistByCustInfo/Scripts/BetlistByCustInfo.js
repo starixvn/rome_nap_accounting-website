@@ -33,6 +33,13 @@
         customerId: null,
         transactionId: null
     },
+    paramGetSabaCoinsBetlist: {
+        fromDate: null,
+        toDate: null,
+        custId: null,
+        pageIndex: 1,
+        pageSize: 100
+    },
     URL: null,
     gridOpts: {
         tblContentId: 'tblContent',
@@ -420,6 +427,7 @@
         $('#Li2').addClass('current');
         $('#Li3').removeClass('current');
         $('#Li4').removeClass('current');
+        $('#Li5').removeClass('current');
         //system parlay display
         $('#maincontent_systemparlay').removeClass('hidden');
         $('#betListSystemParlayContent').removeClass('hidden');
@@ -434,6 +442,10 @@
         //Booked
         $('#maincontent_booked').addClass('hidden');
         $('#bookedBetContent').addClass('hidden');
+
+        //Saba coins
+        $('#maincontent_sabacoins').addClass('hidden');
+        $('#betListSabaCoinsContent').addClass('hidden');
     },
     viewBetListTab: function () {
         //change tab
@@ -441,6 +453,7 @@
         $('#Li2').removeClass('current');
         $('#Li3').removeClass('current');
         $('#Li4').removeClass('current');
+        $('#Li5').removeClass('current');
         //system parlay hidden
         $('#maincontent_systemparlay').addClass('hidden');
         $('#betListSystemParlayContent').addClass('hidden');
@@ -454,6 +467,9 @@
         //Booked
         $('#maincontent_booked').addClass('hidden');
         $('#bookedBetContent').addClass('hidden');
+        //Saba coins
+        $('#maincontent_sabacoins').addClass('hidden');
+        $('#betListSabaCoinsContent').addClass('hidden');
     },
 
     viewBookedBetTab: function () {
@@ -482,6 +498,7 @@
         $('#Li1').removeClass('current');
         $('#Li2').removeClass('current');
         $('#Li3').addClass('current');
+        $('#Li5').removeClass('current');
 
         //system parlay hidden
         $('#maincontent_systemparlay').addClass('hidden');
@@ -497,6 +514,32 @@
         //Booked
         $('#maincontent_booked').addClass('hidden');
         $('#bookedContent').addClass('hidden');
+        //Saba coins
+        $('#maincontent_sabacoins').addClass('hidden');
+        $('#betListSabaCoinsContent').addClass('hidden');
+    },
+
+    viewSabaCoinsTab: function () {
+        //change tab
+        $('#Li1').removeClass('current');
+        $('#Li2').removeClass('current');
+        $('#Li3').removeClass('current');
+        $('#Li5').addClass('current');
+
+        //system parlay hidden
+        $('#maincontent_systemparlay').addClass('hidden');
+        $('#betListSystemParlayContent').addClass('hidden');
+        //betlist display
+        $('#maincontent_betlist').addClass('hidden');
+        $('#betListContent').addClass('allhidden');
+
+        //Exchange
+        $('#maincontent_exchange').addClass('hidden');
+        $('#betListExchangeContent').addClass('hidden');
+
+        //Saba coins
+        $('#maincontent_sabacoins').removeClass('hidden');
+        $('#betListSabaCoinsContent').removeClass('hidden');
     }
 
 };
