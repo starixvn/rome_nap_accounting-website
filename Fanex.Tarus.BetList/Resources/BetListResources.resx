@@ -339,4 +339,19 @@
   <data name="Platform" xml:space="preserve">
     <value>Platform</value>
   </data>
+  <data name="Booking" xml:space="preserve">
+    <value>Booking</value>
+  </data>
+  <data name="Successful" xml:space="preserve">
+    <value>Successful</value>
+  </data>
+  <data name="Unsuccessful" xml:space="preserve">
+    <value>Unsuccessful</value>
+  </data>
+  <data name="ProcressingBet" xml:space="preserve">
+    <value>Procressing Bet</value>
+  </data>
+  <data name="Cancelled" xml:space="preserve">
+    <value>Cancelled</value>
+  </data>
 </root>

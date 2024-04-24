@@ -1,0 +1,175 @@
+﻿@using Fanex.BetList.Core.Entities;
+@using Fanex.Tarus.BetList.Models;
+@using Fanex.Tarus.BetList.Constants;
+@using System.Linq;
+@model IList<BookedBet>
+
+@{
+    var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+    int index = ViewBag.NumberBegining;
+}
+
+<div id="BookedBetContainer" class="freegrid display-none">
+    <div class="col_header row-headers-background scroll-y">
+        <div class="header-container">
+            <table class="grid-fixed-table col_header_content">
+                <thead>
+                    <tr>
+                        <th>
+                            <div class="width30 height34 table-cell">
+                                No
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width200 height34 table-cell">
+                                Booked Time
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width275 height34 table-cell">
+                                Choice
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width120 height34 table-cell">
+                                Odds
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width100 height34 table-cell">
+                                Booked Stake
+                            </div>
+                        </th>
+                       
+                        <th>
+                            <div class="width150 height34 table-cell">
+                                Status
+                            </div>
+                        </th>                        
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+    <div class="grid-container container">
+        <div class="content-container">
+            <table id="tblContent" class="grid-fixed-table col_header_content ">
+                <thead>
+                    <tr>
+                        <th>
+                            <div class="width30 height34 table-cell">
+                                No
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width200 height34 table-cell">
+                                Booked Time
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width275 height34 table-cell">
+                                Choice
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width120 height34 table-cell">
+                                Odds
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width100 height34 table-cell">
+                                Booked Stake
+                            </div>
+                        </th>
+                        
+                        <th>
+                            <div class="width150 height34 table-cell">
+                                Status
+                            </div>
+                        </th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Any())
+                    {   
+                        foreach (var betdetail in Model)
+                        {
+                            <tr class="c">
+                                <td>
+                                    <div class="c width30 table-cell">
+                                        @index
+                                    </div>
+                                </td>
+                                <td class="c">
+                                    <div class="width200 table-cell refno">
+                                        @Html.Raw(betdetail.TransDateHtml)
+                                    </div>
+                                </td>
+                                <td id="td_right_@betdetail.Ticket.TransId" class='r bl_evt'>
+                                    <div id="choice_right_@betdetail.Ticket.TransId" class="width275 table-cell">
+                                        @Html.Raw(betdetail.ChoiceHtml)
+                                    </div>
+                                </td>
+                                <td class='r bl_underdog'>
+                                    <div class="width120 table-cell">
+                                        <span class="underdog">@betdetail.OddsValue</span>
+                                        <br/>
+                                        <span class="oddstype">@betdetail.OddsType</span>
+                                    </div>
+                                </td>
+                                <td class='r bl_underdog'>
+                                    <div class="width100 table-cell">
+                                        @Html.Raw(betdetail.StakeHtml)
+                                    </div>
+                                </td>
+                                <td class="c">
+                                    <div id="stautus_@betdetail.Ticket.TransId" class="width150 table-cell">
+                                        @Html.Raw(betdetail.StatusHtml)
+
+                                        @{
+                                            if(betdetail.Ticket.StatusId == BookedBetStatusConstants.Unsuccessful)
+                                            {
+                                                <br/>
+                                                @Html.Raw(betdetail.ReasonText)
+                                            }
+                                            var ip = @Sunplus.Accounting.Business.IpManagement.ReplaceVNIP(betdetail.Ticket.IP);
+                                        }
+                                        
+                                        <br />
+                                        <a class="status-col" href="http://redirect.me/?https://www.infobyip.com/ip-@(betdetail.Ticket.IP).html" target="_blank">@betdetail.Ticket.IP</a>
+                                        
+                                        @if (!string.IsNullOrWhiteSpace(betdetail.Country))
+                                        {
+                                            <br />
+                                            @betdetail.Country
+                                        }
+                                    </div>
+                                </td>
+
+                            </tr>
+                             
+                                index++;
+                                
+                        }
+                    }
+                    else
+                    {
+                        <tr class="c">
+                            <td colspan="6" class='r'>
+                                <div class="c b">
+                                    There is no data
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var _custid = 1;
+    var _length = @ViewBag.Quantity;    
+    var resultTitle = '@ViewBag.ResultTitle';
+</script>

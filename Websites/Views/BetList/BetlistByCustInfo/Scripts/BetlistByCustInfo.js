@@ -1,4 +1,13 @@
 ﻿var BetListByCustInfo = {
+    paramGetBooked: {
+        fromDate: null,
+        toDate: null,
+        custId: null,
+        statusIds: null,
+        pageIndex: 1,
+        pageSize: 100
+    },
+
     paramGetExchangeBetlist: {
         fromDate: null,
         toDate: null,
@@ -93,6 +102,42 @@
         })
     },
 
+    BuildBookedStatusDropdownlist: function () {
+        var multiselectData = [];
+        for (var i = 0; i < bookedStatus.length; i++) {
+            multiselectData.push({
+                Id: "selecteBookedStatus" + bookedStatus[i].Value,
+                Value: bookedStatus[i].Value,
+                Text: bookedStatus[i].Text,
+                Checked: true,
+                Enable: true,
+                CssClass: "",
+                Items: []
+            });
+        }
+        $("#ddlBookedStatus").multiSelect({
+            minWidth: 150,
+            maxHeight: 450,
+            shadow: true,
+            showHeader: true,
+            isCheckAll: true,
+            showFooter: false,
+            checkAllText: "All",
+            listData: multiselectData,
+            isUsedCustomCheckAllText: true,
+            customCheckAllText: 'All',
+            noneSelectedText: "Select Statuses",
+            onCheck: function () {
+                if ($("#ddlBookedStatus").multiSelect("getCheckedItems").length === 0) {
+                    showAlertMessage("err", "Please choose Status!", 1);
+                }
+                else {
+                    $("#err").empty();
+                }
+            },
+            noItemText: "No Status found."
+        })
+    },
     getBetListSystemParlay: function () {
         BetListByCustInfo.paramGetBetlistSystemParlay.customerId = _custID;
         BetListByCustInfo.paramGetBetlistSystemParlay.transactionId = $('#txtRefNoSystemParaly').val();
@@ -156,7 +201,66 @@
             }
         });
     },
+    getBookedBet: function () {
+        var params ={
+                    custId: _custID,
+                    fromDate: $("#booked_fromdate").val(),
+                    toDate:  $("#booked_todate").val(),
+                    statusIds: $("#ddlBookedStatus").multiSelect("getCheckedItems").join(","),
+                    PageSize: BetListByCustInfo.paramGetBooked.pageSize,
+                    PageIndex: BetListByCustInfo.paramGetBooked.pageIndex
+                };        
+        
+        try { parent.BlockUI(); } catch (e) { }
+        $.ajax({
+            type: "POST",
+            url: window.rootUrl + "TarusBetList/GetBookedBetData",
+            data: params,
+            success: function (result) {                
+                $("#bookedBetContent").html(result);
+                $("#bookedBetContent").removeClass("hidden");
+                BetListByCustInfo.gridOpts.isShowPager = _length!==0;
+                var gridBookedBet = $("#BookedBetContainer");
+                gridBookedBet.initGrid(BetListByCustInfo.gridOpts);
+                gridBookedBet.removeClass("display-none").gridScroller({
+                    tblContentId: 'tblContent',
+                    manualCopyHeader: true,
+                    isShowPager: true,
+                    fullWidth: true,
+                    fullHeight: false,
+                    gridWidth: 900,
+                    gridHeight: 500,
+                    freezeWidth: 0,
+                    numberFreezeCol: 0
+                });
+                initPager(_length, BetListByCustInfo.paramGetBooked.pageSize, BetListByCustInfo.paramGetBooked.pageIndex-1);
 
+                function initPager (total_items, items_per_page, current_page) {
+                    BetListByCustInfo.pagerOpts.callback = pageSelectCallback;
+                    BetListByCustInfo.pagerOpts.items_per_page = items_per_page;
+                    BetListByCustInfo.pagerOpts.current_page = current_page;
+
+                    $("#bookedBetMain #pagination").pagination(total_items, BetListByCustInfo.pagerOpts);
+                };
+
+                function pageSelectCallback (page_index, _items_per_page, jq) {
+                    var max_page = Math.ceil(_length / _items_per_page);
+                    page_index = page_index < max_page ? page_index : max_page - 1;
+
+                    BetListByCustInfo.paramGetBooked.pageIndex = page_index + 1;
+                    BetListByCustInfo.paramGetBooked.pageSize = _items_per_page;
+                    BetListByCustInfo.getBookedBet();
+                    return false;
+                }
+            },
+            error: function () {
+                try { parent.jQuery.unblockUI(); } catch (e) { }
+            },
+            complete: function () {
+                try { parent.jQuery.unblockUI(); } catch (e) { }
+            }
+        });
+    },
     getBetListByCustInfo: function () {
         var params = BetListByCustInfo.getParams();
         if (params.statusIds === "") {
@@ -315,6 +419,7 @@
         $('#Li1').removeClass('current');
         $('#Li2').addClass('current');
         $('#Li3').removeClass('current');
+        $('#Li4').removeClass('current');
         //system parlay display
         $('#maincontent_systemparlay').removeClass('hidden');
         $('#betListSystemParlayContent').removeClass('hidden');
@@ -325,12 +430,17 @@
         //Exchange
         $('#maincontent_exchange').addClass('hidden');
         $('#betListExchangeContent').addClass('hidden');
+        
+        //Booked
+        $('#maincontent_booked').addClass('hidden');
+        $('#bookedBetContent').addClass('hidden');
     },
     viewBetListTab: function () {
         //change tab
         $('#Li1').addClass('current');
         $('#Li2').removeClass('current');
         $('#Li3').removeClass('current');
+        $('#Li4').removeClass('current');
         //system parlay hidden
         $('#maincontent_systemparlay').addClass('hidden');
         $('#betListSystemParlayContent').addClass('hidden');
@@ -340,10 +450,35 @@
         //Exchange
         $('#maincontent_exchange').addClass('hidden');
         $('#betListExchangeContent').addClass('hidden');
+
+        //Booked
+        $('#maincontent_booked').addClass('hidden');
+        $('#bookedBetContent').addClass('hidden');
     },
 
+    viewBookedBetTab: function () {
+        //change tab
+        $('#Li4').addClass('current');
+        $('#Li1').removeClass('current');
+        $('#Li2').removeClass('current');
+        $('#Li3').removeClass('current');
+        //system parlay hidden
+        $('#maincontent_systemparlay').addClass('hidden');
+        $('#betListSystemParlayContent').addClass('hidden');
+        //betlist display
+        $('#maincontent_betlist').addClass('hidden');
+        $('#betListContent').addClass('allhidden');
+        //Exchange
+        $('#maincontent_exchange').addClass('hidden');
+        $('#betListExchangeContent').addClass('hidden');
+
+        //Booked
+        $('#maincontent_booked').removeClass('hidden');
+        $('#bookedBetContent').removeClass('hidden');
+    },
     viewExchangeTab: function () {
         //change tab
+        $('#Li4').removeClass('current');
         $('#Li1').removeClass('current');
         $('#Li2').removeClass('current');
         $('#Li3').addClass('current');
@@ -358,12 +493,41 @@
         //Exchange
         $('#maincontent_exchange').removeClass('hidden');
         $('#betListExchangeContent').removeClass('hidden');
+
+        //Booked
+        $('#maincontent_booked').addClass('hidden');
+        $('#bookedContent').addClass('hidden');
     }
 
 };
 
 
 var Helper = {
+    renderBookedCalendarFromTo: function () {
+        var defaults = {
+            showOtherMonths: true,
+            selectOtherMonths: true,
+            onSelect: function (selectedDate) {
+                var option = this.id == "booked_fromdate" ? "minDate" : "maxDate",
+                    instance = $(this).data("datepicker"),
+                    date = $.datepicker.parseDate(
+                        instance.settings.dateFormat ||
+                        $.datepicker._defaults.dateFormat,
+                        selectedDate, instance.settings);
+                dates.not(this).datepicker("option", option, date);
+            }
+        };
+
+        var dates = $("#booked_fromdate").datepicker(defaults);
+        var today = new Date(_today);
+        var fdate = $("#booked_fromdate");
+        var tdate = $("#booked_todate");
+        fdate.datepicker(defaults);
+        tdate.datepicker(defaults);
+        fdate.datepicker("setDate", today);
+        tdate.datepicker("setDate", today);
+    },
+
     renderExchangeCalendarFromTo: function () {
         var defaults = {
             showOtherMonths: true,
@@ -587,8 +751,10 @@ function showNewCombMP(transId, transIndex, refNo, handicap1, handicap2, betchec
 head.ready(function (event) {
     Helper.renderCalendarFromTo("#txtfromdate, #txttodate");
     Helper.renderExchangeCalendarFromTo();
+    Helper.renderBookedCalendarFromTo();
     Helper.range_date();
     BetListByCustInfo.BuildTicketStatusDropdownlist();
+    BetListByCustInfo.BuildBookedStatusDropdownlist();
     BetListByCustInfo.getBetListByCustInfo(false);
     BetListByCustInfo.getBettyes();
     $("#txtRefNo").attr("disabled", "disabled");

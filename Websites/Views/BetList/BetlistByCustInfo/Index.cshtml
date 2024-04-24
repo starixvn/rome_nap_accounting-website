@@ -1,6 +1,7 @@
 ﻿@{
     var isCredit = (bool)ViewBag.IsCredit;
     var ticketStatus = (IEnumerable<SelectListItem>)ViewBag.TicketStatus;
+    var bookedStatus = (IEnumerable<SelectListItem>)ViewBag.BookedStatus;
 
 }
 <html>
@@ -18,7 +19,7 @@
     <div class="main">
         <div class="maincontent">
             <div id="boxheader">
-                <div class="left_tab">
+                <div class="left_tab" style="width: 400px">
                     <ul>
                         <li class="current" id="Li1" onclick="BetListByCustInfo.viewBetListTab();">
                             <a href="javascript:;">
@@ -38,6 +39,11 @@
                                 </a>
                             </li>
                         }
+                        <li class="" id="Li4" onclick="BetListByCustInfo.viewBookedBetTab();">
+                            <a href="javascript:;">
+                                <span>Booked Bet</span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -111,14 +117,36 @@
                 </div>
             </div>
 
+            <div class="maincontent_box hidden" id="maincontent_booked">
+                <span style="font-weight: bold">Booked Date: From </span>
+                <span style="padding-left: 5px">
+                    <input id="booked_fromdate" class="txtdate" readonly="readonly" />
+                </span>
+                <span class="b" style="padding-left: 5px">To</span>
+                <span style="padding-left: 5px">
+                    <input id="booked_todate" class="txtdate" readonly="readonly" />
+                </span>
+                <span style="padding-left: 10px">Status</span>
+                <span style="padding-left: 5px">
+                    <span id="ddlBookedStatus" class="multiselect" multiple="multiple">
+                    </span>
+                </span>
+                <input class="btn" type="button" id="btnReport" value="Submit" onclick="BetListByCustInfo.getBookedBet();" />
+                <div id="errMsg2">
+                </div>
+            </div>
+
             <div id="betlistMain">
                 <div id="betListContent" style="margin-top: 10px;">
                 </div>
                 <div id="betListSystemParlayContent" class="hidden" style="margin-top: 10px;">
                 </div>
-            </div>
 
-            <div id="betListExchangeContent" class="hidden" style="margin-top: 10px;">
+            </div>
+            <div id="bookedBetMain">
+                <div id="bookedBetContent" class="hidden" style="margin-top: 10px;">
+                </div>
+            </div><div id="betListExchangeContent" class="hidden" style="margin-top: 10px;">
             </div>
             <div id="Popup" style="display: none;">
             </div>
@@ -127,6 +155,7 @@
     <script type="text/javascript">
         window.rootUrl = '@Url.Content("~")';
         var ticketStatus = @Html.Raw(Json.Encode(ticketStatus))     
+        var bookedStatus = @Html.Raw(Json.Encode(bookedStatus))
         var _today = '@DateTime.Today.ToShortDateString()';
         var _yesterday = '@DateTime.Today.AddDays(-1).ToShortDateString()';
         var _custID = '@ViewBag.CustID';
