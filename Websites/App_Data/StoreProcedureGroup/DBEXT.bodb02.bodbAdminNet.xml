@@ -14,12 +14,11 @@
   </Function>
   <Function Name="Customer NewLicensee">
     <Setting Key="Customer_NewLicensee_CheckUsername" SpName="Acc_Dep_LicenseeUsernameCheck" DbName="DBAGE.bodb02.wsv_nap" />
-    <Setting Key="Customer_NewLicensee_GetCurrencies" SpName="Acc_CurrencySel" DbName="DBAGE.bodb02.wsv_nap" />
+    <Setting Key="Customer_NewLicensee_GetCurrencies" SpName="Acc_CurrencySel_xpre" DbName="DBAGE.bodb02.wsv_nap" />
   </Function>
   <Function Name="Customer - Edit Sportbook Commission">
     <Setting Key="Acc_CustomerNoCommSelBettypes" SpName="Acc_CustomerNoCommSelBettypes" DbName="DBAGE.bodb02.wsv_nap" />
   </Function>
-
   <Function Name="Exchange">
     <Setting Key="Acc_BetList_Exchange" SpName="Acc_BetList_Exchange" DbName="DBAGE.bodb02.wsv_nap" />
     <Setting Key="Acc_BetList_Exchange_Detail" SpName="Acc_BetList_Exchange_Detail" DbName="DBAGE.bodb02.wsv_nap" />
@@ -28,5 +27,4 @@
     <Setting Key="Acc_Amendment_CheckAndNotifyNotification" SpName="Acc_Amendment_CheckAndNotifyNotification" DbName="DBEXT.bodb02.wsv_nap" />
     <Setting Key="Acc_Amendment_CheckAndNotifyNotification_DB053" SpName="Acc_Amendment_CheckAndNotifyNotification" DbName="DBEXT.bodb02.wsv_nap.DB053" />
   </Function>
-  
 </Functions>

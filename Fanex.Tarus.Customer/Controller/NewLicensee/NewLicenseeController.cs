@@ -15,6 +15,7 @@ namespace Fanex.Tarus.Customer.Controller.NewLicensee
     using Fanex.Tarus.Customer.Criteria.NewLicensee;
     using Fanex.Tarus.Customer.Entities.NewLicensee;
     using Fanex.Tarus.Web.Controllers;
+    using Sunplus.Accounting.Core.Common;
 
     public class NewLicenseeController : BaseController
     {
@@ -34,7 +35,8 @@ namespace Fanex.Tarus.Customer.Controller.NewLicensee
         public List<Currency> GetCurrenciesBySystem()
         {
             var currencies = _newLicenseeService.GetCurrenciesBySystem(new GetCurrenciesBySystemCriteria() {
-                mode = OfferDepositSite
+                mode = OfferDepositSite,
+                userId = AppSession.AccId
             });
             return currencies;
         }

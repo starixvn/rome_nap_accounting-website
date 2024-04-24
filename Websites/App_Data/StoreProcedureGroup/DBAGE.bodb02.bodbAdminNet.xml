@@ -16,7 +16,7 @@
     <Setting Key="EchangeSelAcc" SpName="Acc_ExchangeSelAccount" DbName="DBAGE.bodb02.wsv_nap" />
   </Function>
   <Function Name="Left Panel - Credit term">
-    <Setting Key="GetAllGroup" SpName="Acc_CreditTermSelGroupHeadline" DbName="DBAGE.bodb02.wsv_nap" />
+    <Setting Key="GetAllGroup" SpName="Acc_CreditTermSelGroupHeadline_xpre" DbName="DBAGE.bodb02.wsv_nap" />
   </Function>
   <Function Name="Customer - Move Customer - Move Agent">
     <Setting Key="Acc_CustomerCheckMoveAgent" SpName="Acc_CustomerCheckMoveAgent" DbName="DBCust.CustDB.wsv_nap" />
@@ -45,7 +45,7 @@
     <Setting Key="Acc_BetList_Match3rdResultSel" SpName="Acc_BetList_Match3rdResultSel" DbName="DBAGE.bodb02.wsv_nap" />
   </Function>
   <Function Name="Customer - New Customer (NEW)">
-    <Setting Key="Acc_CustomerSelSAgList" SpName="Acc_CustomerSelSAgList" DbName="DBAGE.bodb02.wsv_nap" />
+    <Setting Key="Acc_CustomerSelSAgList" SpName="Acc_CustomerSelSAgList_xpre" DbName="DBAGE.bodb02.wsv_nap" />
   </Function>
   <Function Name="Customer - Enable Number Game">
     <Setting Key="Acc_CustomerSelNGUpline" SpName="Acc_CustomerSelNGUpline" DbName="DBCust.CustDB.wsv_nap" />
@@ -73,7 +73,7 @@
     <Setting Key="CustomerSelStatus" SpName="Acc_CustomerSelStatus" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="SelAllInfo" SpName="Acc_CustomerSelAllInfo" DbName="DBAGE.bodb02.wsv_nap" />
     <Setting Key="Acc_CustDirectSel" SpName="Acc_CustDirectSel" DbName="DBAGE.bodb02.wsv_nap" />
-    <Setting Key="Acc_CustomerSelSiteByUserName" SpName="Acc_CustomerSelSiteByUserName" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerSelSiteByUserName" SpName="Acc_CustomerSelSiteByUserName_xpre" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="CustomerSelDownLineList" SpName="Acc_CustomerSelList" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="CustomerSelUserInfo" SpName="Acc_CustomerSelUserInfo" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo" DbName="DBCust.CustDB.wsv_nap">
