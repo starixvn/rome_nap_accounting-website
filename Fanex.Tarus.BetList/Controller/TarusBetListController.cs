@@ -142,10 +142,10 @@ namespace Fanex.Tarus.BetList.Controller
             return View("~/Views/BetList/BetListByIP/Index.cshtml");
         }
 
-        public ActionResult ExportBetDetails(int sportType, long refNo, int custId, byte transType, DateTime winlostDate)
+        public ActionResult ExportBetDetails(int sportType, long refNo, int custId, byte transType, DateTime winlostDate, string sportName = "", bool hideSabaText = false)
         {
             IBetDetailsExporter exporter = new BetDetailsExporter();
-            string fileName = exporter.GetFileNameWithoutExtension(sportType);
+            string fileName = exporter.GetFileNameWithoutExtension(sportType, sportName);
 
             var response = System.Web.HttpContext.Current.Response;
             response.Clear();
@@ -153,13 +153,13 @@ namespace Fanex.Tarus.BetList.Controller
             response.AddHeader("Content-Disposition", string.Format("attachment; filename={0}.xls", fileName));
 
             var ticketDetails = exporter.GetTicketDetails(sportType, refNo, custId, transType, winlostDate);
-            exporter.Export(ticketDetails, response.OutputStream, sportType);
+            exporter.Export(ticketDetails, response.OutputStream, sportType, hideSabaText);
 
             return new EmptyResult();
         }
 
         public ActionResult ExportBBINBetDetails(int sportType, long refNo, int custId, byte transType)
-           => ExportBetDetails(sportType, refNo, custId, transType, DateTime.Now);
+           => ExportBetDetails(sportType, refNo, custId, transType, DateTime.Now, string.Empty, false);
 
         public ActionResult ExportJackpotDetails(long transId, int custId, int betType, DateTime winlostdate, string title)
         {
@@ -171,7 +171,7 @@ namespace Fanex.Tarus.BetList.Controller
             response.AddHeader("Content-Disposition", string.Format("attachment; filename={0}.xls", title.Replace(" ", string.Empty)));
 
             var ticketDetails = exporter.GetJackpotDetails(transId, custId, betType, winlostdate);
-            exporter.Export(ticketDetails, response.OutputStream, SportContants.RNG_RNGGame);
+            exporter.Export(ticketDetails, response.OutputStream, SportContants.RNG_RNGGame, false);
 
             return new EmptyResult();
         }

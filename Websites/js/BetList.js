@@ -907,11 +907,11 @@ function showLive22BetDetails(refno, winlossDate, custId, transType) {
     openResultsPopUp(params);
 }
 
-function showSabaxDDetails(refno, winlossDate, custId, transType) {
+function showSabaxDDetails(refno, winlossDate, custId, transType, sportName, hideSabaText) {
     var params = {
         url: "RNGCasinoBetList/BetDetails",
-        title: "SABA xD - Detailed Bet list - " + winlossDate.split(" ")[0],
-        jsonParam: { TransId: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 240, PageSize: 500 },
+        title: sportName + " - Detailed Bet list - " + winlossDate.split(" ")[0],
+        jsonParam: { TransId: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 240, PageSize: 500, SportName: sportName, HideSabaText: hideSabaText },
         width: 1250,
         height: 600
     };
@@ -1476,7 +1476,7 @@ function getVGamingParam(custId, transId3rd, gameId3rd, currencyId, siteId, betT
 function getSabaxDParam(custId, transId3rd, currencyId, siteId) {
     return {
         url: "ThirdParty/SabaxDResult",
-        title: "Saba xD Result",
+        title: "SABA xD Result",
         jsonParam:
         {
             productId: 86,

@@ -7,12 +7,12 @@
 
     public interface IBetDetailsExporter
     {
-        string GetFileNameWithoutExtension(int sportType);
+        string GetFileNameWithoutExtension(int sportType, string sportName);
 
         IEnumerable<TicketDetail> GetTicketDetails(int sportType, long refNo, int custId, byte transType, DateTime winlostDate);
 
         IEnumerable<TicketDetail> GetJackpotDetails(long transId, int custId, int betType, DateTime winlostDate);
 
-        void Export(IEnumerable<TicketDetail> ticketDetails, Stream stream, int sportType);
+        void Export(IEnumerable<TicketDetail> ticketDetails, Stream stream, int sportType, bool hideSabaText);
     }
 }

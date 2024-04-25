@@ -207,7 +207,7 @@
       <HintPath>..\packages\Fanex.BetList.SabaClub.2.0.0.3\lib\net461\Fanex.BetList.SabaClub.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.SABAxD, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.SABAxD.1.0.0-beta-04\lib\net461\Fanex.BetList.SABAxD.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.SABAxD.1.0.0-beta-06\lib\net461\Fanex.BetList.SABAxD.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.SAGaming, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.SAGaming.2.0.0\lib\net461\Fanex.BetList.SAGaming.dll</HintPath>
@@ -346,7 +346,7 @@
       <HintPath>..\packages\Fanex.Module.Logs.2.0.0.2\lib\net40\Fanex.Module.Logs.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Module.RNGCasino, Version=2.0.2.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Module.RNGCasino.2.0.2.1-saba-01\lib\net461\Fanex.Module.RNGCasino.dll</HintPath>
+      <HintPath>..\packages\Fanex.Module.RNGCasino.2.0.2.1-saba-07\lib\net461\Fanex.Module.RNGCasino.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Module.Statement, Version=1.0.1.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Module.Statement.1.0.1.1\lib\net40\Fanex.Module.Statement.dll</HintPath>

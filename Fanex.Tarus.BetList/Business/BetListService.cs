@@ -121,7 +121,8 @@
                 RefCode = r.Table.Columns.Contains("refcode") ? Converter.To<long>(r["refcode"]) : 0,
                 SettlementStatus = r.Table.Columns.Contains("SettlementStatus") ? Converter.To<byte>(r["SettlementStatus"]) : (byte)0,
                 SiteId = r.Table.Columns.Contains("SiteId") ? Converter.ToString2(r["SiteId"]) : "",
-                JackpotInfo = r.Table.Columns.Contains("JackpotInfo") ? Converter.ToString2(r["JackpotInfo"]) : string.Empty
+                JackpotInfo = r.Table.Columns.Contains("JackpotInfo") ? Converter.ToString2(r["JackpotInfo"]) : string.Empty,
+                LeagueGroupId = r.Table.Columns.Contains("LeagueGroupId") ? Converter.ToInt(r["LeagueGroupId"]) : 0,
             },
             ChoiceHtml = string.Empty,
             OddHtml = string.Empty,
@@ -132,8 +133,7 @@
             MasterPositionTaking2 = r.Table.Columns.Contains("mpositiontaking2") ? Converter.ToDecimal(r["mpositiontaking2"]) : 0,
             SuperPositionTaking2 = r.Table.Columns.Contains("spositiontaking2") ? Converter.ToDecimal(r["spositiontaking2"]) : 0,
             IsChinaView = r.Table.Columns.Contains("IsChinaView") && Converter.ToBool(r["IsChinaView"]),
-            SpecialPlatfrom = r.Table.Columns.Contains("SpecialPlatfrom") ? Converter.ToInt(r["SpecialPlatfrom"]) : 0,
-            LeagueGroupId = r.Table.Columns.Contains("LeagueGroupId") ? Converter.ToInt(r["LeagueGroupId"]) : 0,
+            SpecialPlatfrom = r.Table.Columns.Contains("SpecialPlatfrom") ? Converter.ToInt(r["SpecialPlatfrom"]) : 0,            
             IP = Converter.ToString2(r["ip"]),
             DeviceType = r.Table.Columns.Contains("DeviceType") && !r.IsNull("DeviceType") ? Converter.To<int>(r["DeviceType"]) : (int?)null
         };
@@ -167,13 +167,13 @@
                 Status = Converter.ToString2(r["status"]),
                 SettlementStatus = r.Table.Columns.Contains("SettlementStatus") ? Convert.ToByte(r["SettlementStatus"]) : (byte)0,
                 TransDate = Converter.ToDateTime(r["TransDate"]),
+                LeagueGroupId = r.Table.Columns.Contains("LeagueGroupId") ? Converter.ToInt(r["LeagueGroupId"]) : 0,
             },
             ChoiceHtml = string.Empty,
             OddHtml = string.Empty,
             StakeHtml = string.Empty,
             IsChinaView = r.Table.Columns.Contains("IsChinaView") && Converter.ToBool(r["IsChinaView"]),
-            SpecialPlatfrom = r.Table.Columns.Contains("SpecialPlatfrom") ? Converter.ToInt(r["SpecialPlatfrom"]) : 0,
-            LeagueGroupId = r.Table.Columns.Contains("LeagueGroupId") ? Converter.ToInt(r["LeagueGroupId"]) : 0,
+            SpecialPlatfrom = r.Table.Columns.Contains("SpecialPlatfrom") ? Converter.ToInt(r["SpecialPlatfrom"]) : 0,            
             DeviceType = r.Table.Columns.Contains("DeviceType") && !r.IsNull("DeviceType") ? Converter.To<int>(r["DeviceType"]) : (int?)null
         };
         public BetListService()
@@ -261,12 +261,12 @@
                 foreach (TicketDetail betDetail in tickets)
                 {
                     totalItem--;
+                    ticketHelper.HideSabaText = removeSabaWord && IsHideSabaWord(betDetail);
                     betDetail.ChoiceHtml =
                         "<div class='ticketList'>"
                             + builder.BuildChoice(betDetail.Ticket, ticketHelper, null, false)
                             + builder.BuildTransEventDateAndStatusResult(betDetail.Ticket, null)
-                        + (totalItem > 0 ? "</div>" + "<div class=\"line\"></div>" : "</div>");
-                    if (removeSabaWord) RemoveSabaWord(betDetail, Thread.CurrentThread.CurrentUICulture.Name);
+                        + (totalItem > 0 ? "</div>" + "<div class=\"line\"></div>" : "</div>");                    
                 }
 
                 return tickets;
@@ -359,6 +359,7 @@
 
             foreach (var betDetail in tickets)
             {
+                ticketHelper.HideSabaText = IsHideSabaWord(betDetail);
                 ticketHelper.IsShowOddsWithChoice = IsShowOddsWithChoice(betDetail.Ticket.BetTypeId);
 
                 betDetail.TransDateHtml = builder.BuildTrans(betDetail.Ticket);
@@ -366,8 +367,6 @@
                 betDetail.StakeHtml = BetListExtension.BuildStake(betDetail, ref builder, ticketHelper);
                 betDetail.OddHtml = builder.BuildOdds(betDetail.Ticket, outputLiveCasino, funcGetOddsTypeName);
                 betDetail.StatusHtml = betListHelper.BuildStatus(betDetail.Ticket, ticketHelper, outputLiveCasino, factory, builder);
-                
-                RemoveSabaWord(betDetail, param.Language);
             }
 
             AssignCountry(tickets);
@@ -375,50 +374,19 @@
             return tickets;
         }
 
-        private void RemoveSabaWord(TicketDetail ticket, string language)
+        private bool IsHideSabaWord(TicketDetail ticket)
         {
             var leagueGroupIds = new List<int> { 42, 74, 108 };
-
-            if ((ticket.IsChinaView || ticket.SpecialPlatfrom >= 2))
+            var sportTypes = new List<int> { SportContants.SabaxD, SportContants.SabaPromotion };
+            if (ticket.IsChinaView || ticket.SpecialPlatfrom >= 2)
             {
-                if(ticket.Ticket.SportTypeId == SportContants.SabaxD)
-                {
-                    var partern = $"<span class=\"sport\">(.+?)</span>";
-                    var oldText = _remotingRefService.GetSportName(SportContants.SabaxD.ToString(), language);
-                    var newText = _remotingRefService.GetResourceDataByRefIdAndResourceId("Sports_Saba", SportContants.SabaxD.ToString(), language, oldText);
-
-                    ReplaceWord(partern, oldText, newText);
-                }
-
-                var sabaText = _remotingRefService.GetResourceDataByRefIdAndResourceId("Saba", "Saba", language, "Saba");
-                if (leagueGroupIds.Any(i => i == ticket.LeagueGroupId))
-                {
-                    var partern = $"<span class=\"leagueName\">(.+?)</span>";
-                    ReplaceWord(partern, sabaText, string.Empty);
-                }
-
-                if (ticket.Ticket.SportTypeId == 246)//Saba promotion
-                {
-                    var partern = $"<span class=\"sport\">(.+?)</span>";
-                    ReplaceWord(partern, sabaText, string.Empty);
-                }
+                return sportTypes.Any(i => i == ticket.Ticket.SportTypeId) ||
+                    leagueGroupIds.Any(i => i == ticket.Ticket.LeagueGroupId);
             }
-           
-            void ReplaceWord(string partern, string oldText, string newText)
-            {
-                var words = new List<string> { $" {oldText}", $"{oldText} ", $"{oldText}", $" {oldText}", $"{oldText} ", $"{oldText}" };
-                var mainTicket = Regex.Match(ticket.ChoiceHtml, partern);
-                if (mainTicket.Success)
-                {
-                    foreach (string word in words)
-                    {
-                        var a = mainTicket.Value.Contains(word) ? mainTicket.Value.Replace(word, newText) : mainTicket.Value;
-                        ticket.ChoiceHtml = ticket.ChoiceHtml.Replace(mainTicket.Value, a);
-                    }
-                }
-            }
+
+            return false;
         }
-
+        
         public IList<TicketDetail> GetBetListBetTradeDetails(BetListBetTradeDetailCriteria criteria)
         {
             return GetBetListBy(criteria);
