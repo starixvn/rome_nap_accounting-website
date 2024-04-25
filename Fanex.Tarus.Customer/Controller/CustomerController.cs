@@ -191,9 +191,11 @@ namespace Fanex.Tarus.Customer.Controller
 
         public ActionResult SportBookInformation(SportBookInformationRequest request)
         {
+            var appPath = GetApplicationPath();
+            request.ApplicationPath = appPath;
             var viewModel = new SportBookInformationViewModel(
                 request,
-                new AppConfiguration(GetApplicationPath()),
+                new AppConfiguration(appPath),
                 cdnUri,
                 GetAssetsVersion());
             return View(HttpContext.IsDebuggingEnabled
