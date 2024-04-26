@@ -115,7 +115,7 @@ namespace Fanex.Tarus.BetList.Controller
             AppSession.AddSession(System.Web.HttpContext.Current.Session, "TO_DATE", ToDate);
             return PartialView("~/Views/BetList/BetlistByCustInfo/Betlist/_BetList.cshtml", result);
         }
-
+       
         [AuthorizeFunctions("ViewInfo")]
         public ActionResult GetBookedBetData(int CustID, DateTime FromDate, DateTime ToDate, string statusIds, int PageSize, int PageIndex)
         {

@@ -1,4 +1,13 @@
 ﻿var BetListByCustInfo = {
+    paramGetBetBetlist_saba: {
+        fromDate: null,
+        toDate: null,
+        custId: null,
+        betType: 0,
+        pageIndex: 1,
+        pageSize: 100,
+        language: null
+    },
     paramGetBooked: {
         fromDate: null,
         toDate: null,
@@ -32,13 +41,6 @@
     paramGetBetlistSystemParlay: {
         customerId: null,
         transactionId: null
-    },
-    paramGetSabaCoinsBetlist: {
-        fromDate: null,
-        toDate: null,
-        custId: null,
-        pageIndex: 1,
-        pageSize: 100
     },
     URL: null,
     gridOpts: {
@@ -99,6 +101,29 @@
             noneSelectedText: "Select Statuses",
             onCheck: function () {
                 if ($("#ddlStatus").multiSelect("getCheckedItems").length === 0) {
+                    showAlertMessage("err", "Please choose Status!", 1);
+                }
+                else {
+                    $("#err").empty();
+                }
+            },
+            noItemText: "No Status found."
+        });
+
+        $("#ddlStatus_saba").multiSelect({
+            minWidth: 150,
+            maxHeight: 450,
+            shadow: true,
+            showHeader: true,
+            isCheckAll: true,
+            showFooter: false,
+            checkAllText: "All",
+            listData: multiselectData,
+            isUsedCustomCheckAllText: true,
+            customCheckAllText: 'All',
+            noneSelectedText: "Select Statuses",
+            onCheck: function () {
+                if ($("#ddlStatus_saba").multiSelect("getCheckedItems").length === 0) {
                     showAlertMessage("err", "Please choose Status!", 1);
                 }
                 else {
@@ -268,6 +293,64 @@
             }
         });
     },
+    getBetListByCustInfo_saba: function () {
+        var params = BetListByCustInfo.getParams_saba();
+        if (params.statusIds === "") {
+            return;
+        }
+        var isByDateRange = $('input[name=type]:checked').val() == "-2";
+        try { parent.BlockUI(); } catch (e) { }
+        $.ajax({
+            type: "POST",
+            url: window.rootUrl + BetListByCustInfo.URL,
+            data: params,
+            success: function (result) {
+                $("#betListContent_saba").removeClass('hidden');
+                $("#betListContent_saba").html(result);
+
+                if (typeof _length != "undefined") {
+                    BetListByCustInfo.gridOpts.isShowPager = ((_length == 0 || _length == 1) ? false : true);                    
+                    $("#betListContent_saba #BetlistByCustInfo").initGrid(BetListByCustInfo.gridOpts);
+                    $('#betListContent_saba #BetlistByCustInfo').removeClass("display-none").gridScroller(BetListByCustInfo.gridOpts);
+                    if (!isByDateRange) {
+                        $("a:[id^='hidden']").each(function () {
+                            this.click();
+                            $(this).removeAttr("href");
+                        });
+                    }
+
+                    initPager(_length,
+                        BetListByCustInfo.paramGetBetBetlist_saba.pageSize,
+                        BetListByCustInfo.paramGetBetBetlist_saba.pageIndex - 1);
+
+                    function initPager (total_items, items_per_page, current_page) {
+                            BetListByCustInfo.pagerOpts.callback = pageSelectCallback;
+                            BetListByCustInfo.pagerOpts.items_per_page = items_per_page;
+                            BetListByCustInfo.pagerOpts.current_page = current_page;
+
+                            $("#betlistMain_saba #pagination").pagination(total_items, BetListByCustInfo.pagerOpts);
+                    };
+                    function pageSelectCallback (page_index, _items_per_page, jq) {
+                        var max_page = Math.ceil(_length / _items_per_page);
+                        page_index = page_index < max_page ? page_index : max_page - 1;
+
+                        BetListByCustInfo.paramGetBetBetlist_saba.pageIndex = page_index + 1;
+                        BetListByCustInfo.paramGetBetBetlist._sabapageSize = _items_per_page;
+                        BetListByCustInfo.getBetListByCustInfo_saba(false);
+                        return false;
+                    };
+                }
+
+                $("#lang-container").width($("#BetlistByCustInfo_Saba").width())
+            },
+            error: function () {
+                try { parent.jQuery.unblockUI(); } catch (e) { }
+            },
+            complete: function () {
+                try { parent.jQuery.unblockUI(); } catch (e) { }
+            }
+        });
+    },
     getBetListByCustInfo: function () {
         var params = BetListByCustInfo.getParams();
         if (params.statusIds === "") {
@@ -308,10 +391,47 @@
             }
         });
     },
+
+
     getSelectedStatus: function () {
         return $("#ddlStatus").multiSelect("getCheckedItems").join(",");
     },
 
+    getSelectedStatus_saba: function () {
+        return $("#ddlStatus_saba").multiSelect("getCheckedItems").join(",");
+    },
+    getParams_saba: function () {
+        if ($('input[name=type_saba]:checked').val() == "-2") {
+            var fromDateTmp = $('#txtfromdate_saba').val();
+            var toDateTmp = $('#txttodate_saba').val();
+            var bettypeTmp = $('#ddlBettype_saba').val() == null ? 0 : $('#ddlBettype_saba').val();
+            var statusIds = BetListByCustInfo.getSelectedStatus_saba();
+            if (BetListByCustInfo.paramGetBetBetlist.fromDate != fromDateTmp ||
+                BetListByCustInfo.paramGetBetBetlist.toDate != toDateTmp ||
+                BetListByCustInfo.paramGetBetBetlist.betType != bettypeTmp ||
+                BetListByCustInfo.paramGetBetBetlist.statusIds != statusIds) {
+                BetListByCustInfo.paramGetBetBetlist.pageIndex = 1;
+                BetListByCustInfo.paramGetBetBetlist.pageSize = 100;
+            }
+
+            BetListByCustInfo.paramGetBetBetlist.fromDate = fromDateTmp;
+            BetListByCustInfo.paramGetBetBetlist.toDate = toDateTmp;
+            BetListByCustInfo.paramGetBetBetlist.custId = _shadowcustId;
+            BetListByCustInfo.paramGetBetBetlist.betType = bettypeTmp;
+            BetListByCustInfo.paramGetBetBetlist.statusIds = BetListByCustInfo.getSelectedStatus_saba();
+            BetListByCustInfo.paramGetBetBetlist.language = $("#languageCodeHidden").val();
+            BetListByCustInfo.URL =  "TarusBetList/GetBetListByCustInfo_DateRange";
+            return BetListByCustInfo.paramGetBetBetlist;
+        }
+        else {
+            BetListByCustInfo.paramGetBetBetlistbyRefno.customerId = _shadowcustId;
+            BetListByCustInfo.paramGetBetBetlistbyRefno.transactionId = $('#txtRefNo_saba').val();
+            BetListByCustInfo.paramGetBetBetlistbyRefno.language = $("#languageCodeHidden").val();
+
+            BetListByCustInfo.URL =  "BetList/GetBetListByCustInfo_Refno";
+            return BetListByCustInfo.paramGetBetBetlistbyRefno;
+        }
+    },
     getParams: function () {
         if ($('input[name=type]:checked').val() == "-2") {
             var fromDateTmp = $('#txtfromdate').val();
@@ -381,6 +501,40 @@
             }
         });
     },
+    getBettyes_saba: function () {
+        var paramGetBetTypes = {
+            FromDate: $('#txtfromdate_saba').val(),
+            ToDate: $('#txttodate_saba').val(),
+            CustID: _shadowcustId
+        };
+        try { parent.BlockUI(); } catch (e) { }
+        $.ajax({
+            type: "POST",
+            url: window.rootUrl + "BetList/GetBetTypes",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(paramGetBetTypes),
+            success: function (rs) {
+                if (rs.length > 1) {
+                    $("#divBettype_saba").removeClass("hidden");
+                    $('#ddlBettype_saba').empty();
+                    $.each(rs, function (i, val) {
+                        $('#ddlBettype_saba').append('<option value="' + val.BetTypeID + '">' + val.BetTypeName + '</option>');
+                    });
+                }
+                else {
+                    $("#divBettype_saba").addClass("hidden");
+                }
+            },
+            error: function (event, jqXHR, ajaxSettings) {
+
+                try { parent.jQuery.unblockUI(); } catch (e) { }
+            },
+            complete: function () {
+                try { parent.jQuery.unblockUI(); } catch (e) { }
+            }
+        });
+    },
     disabledFilter: function () {
         var $infoMsg = $("#info-msg");
         if ($('input[name=type]:checked').val() == "-2") {
@@ -401,6 +555,31 @@
             });
 
             $("#txtRefNo").removeAttr("disabled", "disabled");
+            $infoMsg.removeClass("hide");
+            $("#err").empty();
+        }
+    },
+
+    disabledFilter_saba: function () {
+        var $infoMsg = $("#info-msg_saba");
+        if ($('input[name=type_saba]:checked').val() == "-2") {
+            $("#txtRefNo_saba").attr("disabled", "disabled");
+
+            $("#txttodate_saba").removeAttr("disabled", "disabled");
+            $("#txtfromdate_saba").removeAttr("disabled", "disabled");
+            $("#ddlBettype_saba").removeAttr("disabled", "disabled");
+            BetListByCustInfo.BuildTicketStatusDropdownlist();
+            $infoMsg.addClass("hide");
+        }
+        else {
+            $("#txttodate_saba").attr("disabled", "disabled");
+            $("#txtfromdate_saba").attr("disabled", "disabled");
+            $("#ddlBettype_saba").attr("disabled", "disabled");
+            $("#ddlStatus_saba").multiSelect({
+                "disabled": true
+            });
+
+            $("#txtRefNo_saba").removeAttr("disabled", "disabled");
             $infoMsg.removeClass("hide");
             $("#err").empty();
         }
@@ -444,8 +623,8 @@
         $('#bookedBetContent').addClass('hidden');
 
         //Saba coins
-        $('#maincontent_sabacoins').addClass('hidden');
-        $('#betListSabaCoinsContent').addClass('hidden');
+        $('#maincontent_betlist_saba').addClass('hidden');
+        $('#betListContent_saba').addClass('allhidden');
     },
     viewBetListTab: function () {
         //change tab
@@ -467,9 +646,10 @@
         //Booked
         $('#maincontent_booked').addClass('hidden');
         $('#bookedBetContent').addClass('hidden');
+
         //Saba coins
         $('#maincontent_sabacoins').addClass('hidden');
-        $('#betListSabaCoinsContent').addClass('hidden');
+        $('#betListContent_saba').addClass('allhidden');
     },
 
     viewBookedBetTab: function () {
@@ -491,6 +671,10 @@
         //Booked
         $('#maincontent_booked').removeClass('hidden');
         $('#bookedBetContent').removeClass('hidden');
+        
+        //Saba coins
+        $('#maincontent_sabacoins').addClass('hidden');
+        $('#betListContent_saba').addClass('allhidden');
     },
     viewExchangeTab: function () {
         //change tab
@@ -514,9 +698,10 @@
         //Booked
         $('#maincontent_booked').addClass('hidden');
         $('#bookedContent').addClass('hidden');
+
         //Saba coins
         $('#maincontent_sabacoins').addClass('hidden');
-        $('#betListSabaCoinsContent').addClass('hidden');
+        $('#betListContent_saba').addClass('allhidden');
     },
 
     viewSabaCoinsTab: function () {
@@ -537,9 +722,13 @@
         $('#maincontent_exchange').addClass('hidden');
         $('#betListExchangeContent').addClass('hidden');
 
+        //Booked
+        $('#maincontent_booked').addClass('hidden');
+        $('#bookedContent').addClass('hidden');
+
         //Saba coins
         $('#maincontent_sabacoins').removeClass('hidden');
-        $('#betListSabaCoinsContent').removeClass('hidden');
+        $('#betListContent_saba').removeClass('allhidden');
     }
 
 };
@@ -596,6 +785,29 @@ var Helper = {
         tdate.datepicker("setDate", today);
     },
 
+    renderCalendarFromTo_saba: function (ids) {
+            var defaults = {
+                showOtherMonths: true,
+                selectOtherMonths: true,
+                onSelect: function (selectedDate) {
+                    var option = this.id == "txtfromdate_saba" ? "minDate" : "maxDate",
+                        instance = $(this).data("datepicker"),
+                        date = $.datepicker.parseDate(
+                            instance.settings.dateFormat ||
+                            $.datepicker._defaults.dateFormat,
+                            selectedDate, instance.settings);
+                    dates.not(this).datepicker("option", option, date);
+                    BetListByCustInfo.getBettyes_saba();
+                }
+            };
+
+            var dates = $(ids).datepicker(defaults);
+            var dt = new Date(_today);
+            var fdate = $(ids.split(',')[0]);
+            var tdate = $(ids.split(',')[1]);
+            fdate.datepicker("setDate", dt);
+            tdate.datepicker("setDate", dt);
+    },
     renderCalendarFromTo: function (ids) {
         var defaults = {
             showOtherMonths: true,
@@ -793,6 +1005,7 @@ function showNewCombMP(transId, transIndex, refNo, handicap1, handicap2, betchec
 
 head.ready(function (event) {
     Helper.renderCalendarFromTo("#txtfromdate, #txttodate");
+    Helper.renderCalendarFromTo_saba("#txtfromdate_saba, #txttodate_saba");
     Helper.renderExchangeCalendarFromTo();
     Helper.renderBookedCalendarFromTo();
     Helper.range_date();
@@ -800,5 +1013,7 @@ head.ready(function (event) {
     BetListByCustInfo.BuildBookedStatusDropdownlist();
     BetListByCustInfo.getBetListByCustInfo(false);
     BetListByCustInfo.getBettyes();
+    BetListByCustInfo.getBettyes_saba();
     $("#txtRefNo").attr("disabled", "disabled");
+    $("#txtRefNo_saba").attr("disabled", "disabled");
 });

@@ -146,38 +146,38 @@
 
             <div id="maincontent_sabacoins" class="maincontent_box hidden" style="width: 100%;">
                 <div>
-                    <input onclick="BetlistByCustInfoSabaCoins.disabledSabaCoinsFilter();" type="radio" id="rdByRef-sabacoins" value="-1" name="type-sabacoins" />
-                    <label style="font-weight: bold" for="rdByRef-sabacoins">By Ref No:</label>
-                    <input id="txtRefNo-sabacoins" type="text" maxlength="19" style="background-color: #fff; width: 130px;" autocomplete="off" onkeypress="return KeyPress(event);" />
-                    <div id="info-msg-sabacoins" class="info-msg hide">
+                    <input onclick="BetListByCustInfo.disabledFilter_saba();" type="radio" id="rdByRef" value="-1" name="type_saba" />
+                    <label style="font-weight: bold" for="rdByRef">By Ref No:</label>
+                    <input id="txtRefNo_saba" type="text" maxlength="19" style="background-color: #fff; width: 130px;" autocomplete="off" onkeypress="return KeyPress(event);" />
+                    <div id="info-msg_saba" class="info-msg hide">
                         For Sportsbook, the search result includes the related Bonus/Cash tickets.<br />
                         For Casino products, tickets can only be found within the last 6 months.
                     </div>
                 </div>
                 <div>
-                    <input onclick="BetlistByCustInfoSabaCoins.disabledSabaCoinsFilter();" type="radio" id="rdByUser-sabacoins" value="-2" name="type-sabacoins" checked="checked" />
-                    <label style="font-weight: bold" for="rdByUser-sabacoins">Advance (Event Date):</label>
+                    <input onclick="BetListByCustInfo.disabledFilter_saba();" type="radio" id="rdByUser_saba" value="-2" name="type_saba" checked="checked" />
+                    <label style="font-weight: bold" for="rdByUser">Advance (Event Date):</label>
                     <span style="font-weight: bold">From </span>
                     <span style="padding-left: 5px">
-                        <input id="txtfromdate-sabacoins" class="txtdate" readonly="readonly" />
+                        <input id="txtfromdate_saba" class="txtdate" readonly="readonly" />
                     </span>
                     <span class="b" style="padding-left: 5px">To</span>
                     <span style="padding-left: 5px">
-                        <input id="txttodate-sabacoins" class="txtdate" readonly="readonly" />
+                        <input id="txttodate_saba" class="txtdate" readonly="readonly" />
                     </span>
                     <span style="padding-left: 10px">Status</span>
                     <span style="padding-left: 5px">
-                        <span id="ddlStatus-sabacoins" class="multiselect" multiple="multiple">
+                        <span id="ddlStatus_saba" class="multiselect" multiple="multiple">
                         </span>
                     </span>
-                    <span id="divBettype-sabacoins" class="hidden" style="padding-left: 5px">
+                    <span id="divBettype_saba" class="hidden" style="padding-left: 5px">
                         <span>Bettypes </span>
-                        <select id="ddlBettype-sabacoins" name="FilterBy"></select>
+                        <select id="ddlBettype_saba" name="FilterBy"></select>
                     </span>
                 </div>
                 <div>
-                    <input class="btn" type="button" id="btnReport-sabacoins" value="Submit" onclick="BetlistByCustInfoSabaCoins.getBetListByCustInfo();" />
-                    <input class="btn" type="button" id="btnToday-sabacoins" value="Reset" onclick="Helper.reset_date();" />
+                    <input class="btn" type="button" id="btnReport_saba" value="Submit" onclick="BetListByCustInfo.getBetListByCustInfo_saba(false);" />
+                    <input class="btn" type="button" id="btnToday_saba" value="Reset" onclick="Helper.reset_date();" />
                 </div>
                 <div id="err">
                 </div>
@@ -186,17 +186,21 @@
             <div id="betlistMain">
                 <div id="betListContent" style="margin-top: 10px;">
                 </div>
-                <div id="betListSabaCoinsContent" class="hidden" style="margin-top: 10px;">
-                </div>
                 <div id="betListSystemParlayContent" class="hidden" style="margin-top: 10px;">
                 </div>
-
             </div>
             <div id="bookedBetMain">
                 <div id="bookedBetContent" class="hidden" style="margin-top: 10px;">
                 </div>
-            </div><div id="betListExchangeContent" class="hidden" style="margin-top: 10px;">
             </div>
+            <div id="betListExchangeContent" class="hidden" style="margin-top: 10px;">
+            </div>
+
+            <div id="betlistMain_saba">                
+                <div id="betListContent_saba" class="hidden" style="margin-top: 10px;">
+                </div>
+            </div>
+
             <div id="Popup" style="display: none;">
             </div>
         </div>
@@ -227,7 +231,6 @@
                 "@Url.Content("~/js/BetList.js?ver=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",
                 "@Url.Content("~/Areas/AGCasino/Views/BetDetails/Scripts/BetDetails.js?ver=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",                
                 "@Url.Content("~/Views/BetList/BetlistByCustInfo/Scripts/BetlistByCustInfo.js?ver=1")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",
-                "@Url.Content("~/Views/BetList/BetlistByCustInfo/Scripts/BetlistByCustInfoSabaCoins.js?ver=2")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",
                 "@Url.Content("~/Views/BetList/BetlistByCustInfo/Scripts/ExchangeBetlist.js?ver=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",
                 "@Url.Content("~/Views/BetList/Scripts/BetlistGlobal.js?ver=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version");
     </script>
