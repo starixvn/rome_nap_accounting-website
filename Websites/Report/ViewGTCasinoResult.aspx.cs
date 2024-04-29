@@ -8,7 +8,20 @@ public partial class ViewGTCasinoResult : System.Web.UI.Page
         string gtCasinoResult;
         var gtCasinoResultService = new GTCasinoResultBuilder();
 
-        gtCasinoResult = gtCasinoResultService.Render(Request.QueryString["transDesc"], Request.QueryString["matchCode"], Request.QueryString["betTypeId"]);
+        gtCasinoResult = gtCasinoResultService.Render(Request.QueryString["transDesc"], ParseTranId3rd(Request.QueryString["matchCode"]), Request.QueryString["betTypeId"]);
         this.lResult.Text = gtCasinoResult;
+    }
+
+    private static string ParseTranId3rd(string transId3rd)
+    {
+        const string transId3rdSeparator = "|$|";
+        if (transId3rd == null || !transId3rd.Contains(transId3rdSeparator))
+        {
+            return transId3rd;
+        }
+
+        var transIdParts = transId3rd.Split(new string[] { transId3rdSeparator }, StringSplitOptions.RemoveEmptyEntries);
+
+        return transIdParts[transIdParts.Length - 1];
     }
 }
