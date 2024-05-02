@@ -165,20 +165,18 @@
             var result = service.GetResultGET(resultRequest);
 
             return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(ProductResultTitle, result));
-        }        
-
-        private ActionResult BaseResult(ThirdPartyResultRequest request, string configName)
-        {
-            SetProductResultTitle(request.ProductId);
-            var service = new ThirdPartyResult(configName);
-            var resultRequest = new ResultRequest(request.CustId, request.TransId3rd, request.GameId3rd, request.CurrencyId, request.SiteId);
-            var result = service.GetResultGET(resultRequest);
-
-            return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(ProductResultTitle, result));
-        }
+        }   
 
         public ActionResult JiliResult(ThirdPartyResultRequest request)
-            => BaseResult(request, "JiliResultConfigs");
+        {
+
+            var resultRequest = new ResultRequest(request.CustId, request.TransId3rd, request.GameId3rd, request.CurrencyId, request.SiteId)
+            {
+                BetTypeId = request.BetTypeId
+            };
+
+            return BaseResult(request, resultRequest, "JiliResultConfigs");
+        }
 
         public ActionResult WEResult(ThirdPartyResultRequest request)
             => BaseResult(request, "WEResultConfigs");
@@ -201,7 +199,26 @@
 
             return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(ProductResultTitle, result));
         }
-        
+
+        private ActionResult BaseResult(ThirdPartyResultRequest request, string configName)
+        {
+            SetProductResultTitle(request.ProductId);
+            var service = new ThirdPartyResult(configName);
+            var resultRequest = new ResultRequest(request.CustId, request.TransId3rd, request.GameId3rd, request.CurrencyId, request.SiteId);
+            var result = service.GetResultGET(resultRequest);
+
+            return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(ProductResultTitle, result));
+        }
+
+        private ActionResult BaseResult(ThirdPartyResultRequest request, ResultRequest resultRequest, string configName)
+        {
+            SetProductResultTitle(request.ProductId);
+            var service = new ThirdPartyResult(configName);
+            var result = service.GetResultGET(resultRequest);
+
+            return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(ProductResultTitle, result));
+        }
+
 
         private void SetProductResultTitle(int productId)
             => ProductResultTitle = CacheRef.GetProductName(productId) + " Result";
