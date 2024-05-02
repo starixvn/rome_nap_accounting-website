@@ -156,7 +156,7 @@
                         }
                     }
 
-                    if (row["GroupID"] != null && int.TryParse(row["GroupID"].ToString(), out int productGroupId))
+                    if (!this.IsDeposit && row["GroupID"] != null && int.TryParse(row["GroupID"].ToString(), out int productGroupId))
                     {
                         switch (productGroupId)
                         {
