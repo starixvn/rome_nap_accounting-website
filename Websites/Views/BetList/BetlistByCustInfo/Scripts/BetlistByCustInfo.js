@@ -658,6 +658,8 @@
         $('#Li1').removeClass('current');
         $('#Li2').removeClass('current');
         $('#Li3').removeClass('current');
+        $('#Li5').removeClass('current');
+
         //system parlay hidden
         $('#maincontent_systemparlay').addClass('hidden');
         $('#betListSystemParlayContent').addClass('hidden');
@@ -709,6 +711,7 @@
         $('#Li1').removeClass('current');
         $('#Li2').removeClass('current');
         $('#Li3').removeClass('current');
+        $('#Li4').removeClass('current');
         $('#Li5').addClass('current');
 
         //system parlay hidden

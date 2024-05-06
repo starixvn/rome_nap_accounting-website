@@ -98,6 +98,7 @@
         public const int Live22 = 227;
         public const int UUSlots = 216;
         public const int SabaxD = 240;
+        public const int SabaCoins = 149;
         public const int SabaPromotion = 246;
 
     }
