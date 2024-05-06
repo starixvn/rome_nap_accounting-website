@@ -356,3 +356,13 @@ textarea {
     margin-right: 3px;
     border-radius: 3px;
 }
+.icon-credit {
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    background: url(../Images/credit.png) no-repeat center center/ 100%;
+    vertical-align: middle;
+    position: relative;
+    top: -2px;
+    margin-left: 4px;
+}

@@ -352,7 +352,7 @@ $.fn.forceNumber = function () {
         $superCreditRow.show();
         $superCreditRow.append(`
             <td>
-                <label for="txtCredit">Max Credit<span class="require"> *</span></label>
+                <label for="txtCredit">Max Credit<span class="require"> *</span><span class="icon-credit"></span></label>
                 <input type="text" id="txtCredit" maxlength="18"  ${disableCredit ? 'disabled' : ''} />
             </td>
             <td>
@@ -367,7 +367,7 @@ $.fn.forceNumber = function () {
         $memberCreditRow.append(`
             <td>
                 <div class="col-credit">
-                    <label for="txtCredit">Given Credit<span class="require"> *</span></label>
+                    <label for="txtCredit">Given Credit<span class="require"> *</span><span class="icon-credit"></span></label>
                     <input type="text" id="txtCredit" maxlength="18" ${disableCredit ? 'disabled' : ''}/>
                     <span class="memberMaxCredit" id="memberMaxCredit"></span>
                 <div>
