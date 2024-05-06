@@ -352,7 +352,7 @@ $.fn.forceNumber = function () {
         $superCreditRow.show();
         $superCreditRow.append(`
             <td>
-                <label for="txtCredit">Max Credit<span class="require"> *</span><span class="icon-credit"></span></label>
+                <label for="txtCredit">Max Credit<span class="require"> *</span></label>
                 <input type="text" id="txtCredit" maxlength="18"  ${disableCredit ? 'disabled' : ''} />
             </td>
             <td>
@@ -367,9 +367,9 @@ $.fn.forceNumber = function () {
         $memberCreditRow.append(`
             <td>
                 <div class="col-credit">
-                    <label for="txtCredit">Given Credit<span class="require"> *</span><span class="icon-credit"></span></label>
+                    <label for="txtCredit">Given Credit<span class="require"> *</span></label>
                     <input type="text" id="txtCredit" maxlength="18" ${disableCredit ? 'disabled' : ''}/>
-                    <span class="memberMaxCredit" id="memberMaxCredit"></span>
+                    <div class="memberMaxCredit" id="memberMaxCredit"></div>
                 <div>
             </td>
             <td>
@@ -549,8 +549,15 @@ $.fn.forceNumber = function () {
     }
 
     function renderMemberMaxCredit(custInfo) {
-        var memberMaxCredit = custInfo.MaxCredit - custInfo.Credit;
-        $("#memberMaxCredit").text(`Min: 0 - Max: ${(Math.trunc(memberMaxCredit * 100) / 100).toLocaleString("en-US")}`);
+        var maxCredit = custInfo.MaxCredit - custInfo.Credit;
+        var memberMaxCredit = custInfo.MemberMaxCredit;
+        var max = memberMaxCredit ? Math.min(memberMaxCredit, maxCredit) : maxCredit;
+        existedUser.maxCredit = max;
+        var hint = `<span>Min: 0 - Max: ${(Math.trunc(max * 100) / 100).toLocaleString("en-US")} </span>`;
+        if (memberMaxCredit) {
+            hint += ` <span class="icon-credit" data-title="Available Credit: ${maxCredit}\nThe Maximum Member Credit set by your upline: ${memberMaxCredit}"></span>`;
+        }
+        $("#memberMaxCredit").html(hint);
     }
 
     function getCustomerInfoByUserId(custid) {
