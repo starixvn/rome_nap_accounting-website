@@ -116,6 +116,9 @@ namespace Fanex.Tarus.Customer.Controller
             return Json(custInfo, JsonRequestBehavior.AllowGet);
         }
 
+        private static bool IsMember(string level)
+            => level.Equals("member", StringComparison.OrdinalIgnoreCase);
+
         [NAPCustomerAuthFilter]
         public ActionResult GetSitesAndCurrencies()
             => Content(JsonConvert.SerializeObject(

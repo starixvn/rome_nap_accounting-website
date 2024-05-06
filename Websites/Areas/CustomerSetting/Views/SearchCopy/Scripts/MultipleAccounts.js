@@ -548,13 +548,14 @@ $.fn.forceNumber = function () {
         $("#currency").text(currency);
     }
 
-    function renderMemberMaxCredit(memberMaxCredit) {
-        $("#memberMaxCredit").text(`<= ${memberMaxCredit}`);
+    function renderMemberMaxCredit(custInfo) {
+        var memberMaxCredit = custInfo.MaxCredit - custInfo.Credit;
+        $("#memberMaxCredit").text(`Min: 0 - Max: ${(Math.trunc(memberMaxCredit * 100) / 100).toLocaleString("en-US")}`);
     }
 
     function getCustomerInfoByUserId(custid) {
         var param = {
-            custid: custid,
+            custid: custid
         };
 
         $.ajax({
@@ -584,7 +585,7 @@ $.fn.forceNumber = function () {
                 renderCurrency(custInfo.CurrencyName);
 
                 if (custInfo.RoleId == MEMBER) {
-                    renderMemberMaxCredit(custInfo.MaxCredit);
+                    renderMemberMaxCredit(custInfo);
                 }
 
                 getAllSites();
