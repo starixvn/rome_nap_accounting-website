@@ -361,27 +361,19 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 if (msg.Length == 0)
                 {
                     string tplSubject = "Exchange Rate was changed";
-                    SendEmail_Template mail = new SendEmail_Template();
-                    foreach (DataRow dr in Rows)
-                    {
-                        mail.username = AppSession.Username;
-                        mail.ExchangeID = exid.ToString();
-                        mail.BaseRate = actualrate.ToString();
-                        mail.oldBaseRate = dr["actualrate"].ToString();
-                        if (actualrate.ToString() != dr["actualrate"].ToString())
-                            mail.BaseRate = changeColor(actualrate.ToString());
-
-                        mail.minbet = dr["minbet"].ToString();
-                        mail.minbetlive = dr["minbetlive"].ToString();
-
-                        mail.IP = HttpContext.Current.Request.UserHostAddress;
-                        mail.date = DateTime.Now.ToString();
-                    }
-
+                    string mailTemplate = WebUtils.LoadTemplate("ExRate/SendEmail.htm");
+                    TemplateHandler.Assign(ref mailTemplate, "username", AppSession.Username);
+                    TemplateHandler.Assign(ref mailTemplate, "ExchangeID", exid);
+                    TemplateHandler.Assign(ref mailTemplate, "BaseRate", actualrate.ToString() != Rows[0]["actualrate"].ToString()? changeColor(actualrate.ToString()) : actualrate);
+                    TemplateHandler.Assign(ref mailTemplate, "oldBaseRate", Rows[0]["actualrate"]);
+                    TemplateHandler.Assign(ref mailTemplate, "minbet", Rows[0]["minbet"]);
+                    TemplateHandler.Assign(ref mailTemplate, "minbetlive", Rows[0]["minbetlive"]);
+                    TemplateHandler.Assign(ref mailTemplate, "IP", HttpContext.Current.Request.UserHostAddress);
+                    TemplateHandler.Assign(ref mailTemplate, "date", DateTime.Now.ToString());
 
                     SendMailExtension.AccSendMail(MailSection.HostName.Gmail, MailSection.ToMailExchangeRate,
                                                   MailSection.CCMailExchangeRate, MailSection.BCCMailExchangeRate,
-                                                  tplSubject, mail.ToString());
+                                                  tplSubject, mailTemplate);
                 }
             }
             catch (Exception ex)
