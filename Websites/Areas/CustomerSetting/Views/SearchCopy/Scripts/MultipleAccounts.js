@@ -548,14 +548,18 @@ $.fn.forceNumber = function () {
         $("#currency").text(currency);
     }
 
+    function formatCurrency(value) {
+        return (Math.trunc(value * 100) / 100).toLocaleString("en-US");
+    }
+
     function renderMemberMaxCredit(custInfo) {
         var maxCredit = custInfo.MaxCredit - custInfo.Credit;
         var memberMaxCredit = custInfo.MemberMaxCredit;
         var max = memberMaxCredit ? Math.min(memberMaxCredit, maxCredit) : maxCredit;
         existedUser.maxCredit = max;
-        var hint = `<span>Min: 0 - Max: ${(Math.trunc(max * 100) / 100).toLocaleString("en-US")} </span>`;
+        var hint = `<span>Min: 0 - Max: ${formatCurrency(max)} </span>`;
         if (memberMaxCredit) {
-            hint += ` <span class="icon-credit" data-title="Available Credit: ${maxCredit}\nThe Maximum Member Credit set by your upline: ${memberMaxCredit}"></span>`;
+            hint += ` <span class="icon-credit" data-title="Available Credit: ${formatCurrency(maxCredit)}\nThe Maximum Member Credit set by your upline: ${formatCurrency(memberMaxCredit)} "></span>`;
         }
         $("#memberMaxCredit").html(hint);
     }
