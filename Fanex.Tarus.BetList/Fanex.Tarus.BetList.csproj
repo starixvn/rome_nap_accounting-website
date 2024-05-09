@@ -113,13 +113,13 @@
       <HintPath>..\packages\Fanex.BetList.FGG.2.0.0.1\lib\net461\Fanex.BetList.FGG.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.GTCasino, Version=2.0.0.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.GTCasino.2.0.0.2-API-02\lib\net461\Fanex.BetList.GTCasino.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.GTCasino.2.0.0.2\lib\net461\Fanex.BetList.GTCasino.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.Jili, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Betlist.Jili.1.0.0.2\lib\net461\Fanex.BetList.Jili.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.LiveCasinoCore, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.LiveCasinoCore.1.0.0.2-GamingAPI-01\lib\net461\Fanex.BetList.LiveCasinoCore.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.LiveCasinoCore.1.0.0.2\lib\net461\Fanex.BetList.LiveCasinoCore.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.MetricGaming, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.MetricGaming.2.0.0\lib\net461\Fanex.BetList.MetricGaming.dll</HintPath>
@@ -134,7 +134,7 @@
       <HintPath>..\packages\Fanex.BetList.PP.2.0.0.2\lib\net461\Fanex.BetList.PP.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.PragmaticLiveCasino, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.PragmaticLiveCasino.2.0.0.1-API-02\lib\net461\Fanex.BetList.PragmaticLiveCasino.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.PragmaticLiveCasino.2.0.0.1\lib\net461\Fanex.BetList.PragmaticLiveCasino.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.RnGCasino, Version=2.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.RnGCasino.2.0.0.2\lib\net461\Fanex.BetList.RnGCasino.dll</HintPath>
@@ -152,7 +152,7 @@
       <HintPath>..\packages\Fanex.BetList.SAGaming.2.0.0\lib\net461\Fanex.BetList.SAGaming.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.SealEntertainment, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.SealEntertainment.2.0.0.1-API-01\lib\net461\Fanex.BetList.SealEntertainment.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.SealEntertainment.2.0.0.1\lib\net461\Fanex.BetList.SealEntertainment.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.SexyGaming, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.SexyGaming.2.0.0.1\lib\net461\Fanex.BetList.SexyGaming.dll</HintPath>
