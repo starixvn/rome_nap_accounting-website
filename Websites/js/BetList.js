@@ -1006,7 +1006,7 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
             return getCricketParam(matchid, bettype, sporttype, currencyId, gameId3rd);
 
         case 156:
-            return getSEALParam(bettype, custId, transId3rd, currencyId, siteId);
+            return getSEALParam(bettype, custId, transId3rd, gameId3rd, currencyId, siteId);
             
         case 155:
             return getMGParam(custId, transId3rd, gameId3rd, currencyId, bettype, siteId);
@@ -1428,11 +1428,11 @@ function getCardClubParam(bettype, custId, transId3rd, gameId3rd, currencyId, si
     };
 }
 
-function getSEALParam(bettype, custId, transId3rd, currencyId, siteId) {
+function getSEALParam(bettype, custId, transId3rd, gameId3rd, currencyId, siteId) {
     return {
         url: "ThirdParty/SEALResult",
         title: "SEAL Entertainment Result",
-        jsonParam: { BetTypeId: bettype, custId: custId, transId3rd: transId3rd, siteId: siteId, currenctyId: currencyId, productId: 72 },
+        jsonParam: { gameId3rd: gameId3rd, BetTypeId: bettype, custId: custId, transId3rd: transId3rd, siteId: siteId, currenctyId: currencyId, productId: 72 },
         width: 850,
         height: 800
     };
