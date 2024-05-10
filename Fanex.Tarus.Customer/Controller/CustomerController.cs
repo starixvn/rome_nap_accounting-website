@@ -226,8 +226,8 @@ namespace Fanex.Tarus.Customer.Controller
         public async Task<ActionResult> GetCommissionHint(int? custId, string site, string language = "en-US")
             => Content(await customerService.GetCommissionHint(custId ?? 0, site, language));
 
-        public async Task<ActionResult> GetProductCategories(int? custId, string site, int currency, string language = "en-US")
-            => Content(await customerService.GetProductCategories(custId, site, currency, language));
+        public async Task<ActionResult> GetProductCategories(int? custId, string site, string siteLabel, int currency, string language = "en-US")
+            => Content(await customerService.GetProductCategories(custId, site, siteLabel, currency, language));
 
         [HttpPost]
         [NAPCustomerAuthFilter(IsHost = true)]
