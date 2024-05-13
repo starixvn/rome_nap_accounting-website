@@ -1,8 +1,7 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-
-namespace Fanex.Tarus.Customer.Requests.Customer
+﻿namespace Fanex.Tarus.Customer.Requests.Customer
 {
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Serialization;
     public class SportBookInformationRequest
     {
         public int? CustId { get; set; }
@@ -12,11 +11,12 @@ namespace Fanex.Tarus.Customer.Requests.Customer
         public int TabIndex { get; set; }
 
         public string Site { get; set; }
-        
+
         public string SiteLabel { get; set; }
 
         public int Currency { get; set; }
-        
+
+        public string ApplicationPath { get; set; }
 
         internal string ToJson() => JsonConvert.SerializeObject(new
         {
@@ -43,39 +43,39 @@ namespace Fanex.Tarus.Customer.Requests.Customer
         {
             name = "BetSetting",
             id = "BetSettingTab",
-            napUrl = "",
+            url = "",
             isActive = TabIndex == 0,
         };
-        
+
         private object MaxPayoutSettingTab => new
         {
             name = "MaxPayout",
             id = "MaxPayoutSettingTab",
-            napUrl = "/Customer/GetMaxPayoutSettingInformation?site=" + Site + "&siteLabel=" + SiteLabel,
+            url = ApplicationPath + "Customer/GetMaxPayoutSettingInformation?site=" + Site + "&siteLabel=" + SiteLabel,
             isActive = TabIndex == 1,
         };
-        
+
         private object PTSettingTab => new
         {
             name = "PositionTaking",
             id = "PTSettingTab",
-            napUrl = "/Customer/GetPTSettingInformation?custId=" + CustId + "&site=" + Site,
+            url = ApplicationPath + "Customer/GetPTSettingInformation?custId=" + CustId + "&site=" + Site,
             isActive = TabIndex == 2,
         };
-        
+
         private object CommissionSettingTab => new
         {
             name = "Commission",
             id = "CommissionHintTab",
-            napUrl = "/Customer/GetCommissionHint?custId=" + CustId + "&site=" + Site,
+            url = ApplicationPath + "Customer/GetCommissionHint?custId=" + CustId + "&site=" + Site,
             isActive = TabIndex == 3,
         };
-        
+
         private object ProductCategorySettingTab => new
         {
             name = "ProductCategories",
             id = "ProductCategorySettingTab",
-            napUrl = "/Customer/GetProductCategories?custId=" + CustId + "&site=" + Site + "&currency=" + Currency,
+            url = ApplicationPath + "Customer/GetProductCategories?custId=" + CustId + "&site=" + Site + "&currency=" + Currency,
             isActive = TabIndex == 4,
         };
 
@@ -83,6 +83,7 @@ namespace Fanex.Tarus.Customer.Requests.Customer
         {
             name = "WinLossLimit",
             id = "WinLossLimitTab",
+            url = "",
             isActive = TabIndex == 5,
         };
     }

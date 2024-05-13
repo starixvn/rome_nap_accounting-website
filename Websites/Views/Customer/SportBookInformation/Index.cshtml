@@ -3,7 +3,8 @@
     var version = Sunplus.Accounting.Core.Configurations.WebSettings.Version;
 }
 <head>
-    <link rel="stylesheet" href="@(Model.CdnUri)sportsbook-information/index.css?version=@(Model.AssetsVersion)" />
+    <title>Customer Setting Information</title>
+    <link rel="stylesheet" href="@(Model.CdnUri)sportsbook-information/index.css?version=@(Model.AssetsVersion)"/>
     <script>
        const appConfig = @Html.Raw(Model.AppConfig);
        const informationPageParams = @Html.Raw(Model.Params);

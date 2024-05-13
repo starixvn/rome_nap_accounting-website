@@ -82,7 +82,9 @@ var BetDetailsManager = function () {
             transType: transType,
             pageIndex: 0,
             pageSize: pageSize,
-            winlossDate: winlostDate
+            winlossDate: winlostDate,
+            sportName: sportName,
+            hideSabaText: hideSabaText
         };
 
         gridContainer = $("#betlist-details");
@@ -102,7 +104,9 @@ var BetDetailsManager = function () {
                 refNo: formData.transId,
                 custId: formData.custId,
                 transType: formData.transType,
-                winlostDate: formData.winlossDate
+                winlostDate: formData.winlossDate,
+                sportName: formData.sportName,
+                hideSabaText: formData.hideSabaText == '' ? false : formData.hideSabaText
             };
             var url = window.rootUrl + "TarusBetList/ExportBetDetails?" + $.param(exportData);
             $("#frmExportExcel").attr("src", url);

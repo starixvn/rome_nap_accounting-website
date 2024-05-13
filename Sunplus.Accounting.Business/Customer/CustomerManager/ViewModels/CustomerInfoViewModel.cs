@@ -22,9 +22,6 @@
 
         private DataRow downlineStatusInfoRow { get; set; }
 
-        private DataTable dynamicSettingtable { get; set; }
-       
-
         public CustomerInfoViewModel(
             DataRow customerInfoRow,
             DataRow lineInfoRow,
@@ -40,11 +37,12 @@
             this.lineInfoRow = lineInfoRow;
             this.cashRow = cashRow;
             this.downlineStatusInfoRow = downlineStatusInfoRow;
-            this.dynamicSettingtable = dynamicSettingtable;
 
-            JsParam = new Hashtable();
-            JsParam.Add("custid", CustId);
-            JsParam.Add("roleid", SearchAccountRoleId);
+            JsParam = new Hashtable
+            {
+                { "custid", CustId },
+                { "roleid", SearchAccountRoleId }
+            };
 
             GetExtraCustomerInfo(customerInfoRow, lineInfoRow, cashRow, memberOutstandingMBC, memberBalanceMBC, memberNetPositionMBC, member3rdPendingTransfer);
             GetShowedHiddenProduct(dynamicSettingtable);
@@ -76,8 +74,6 @@
 
         public bool DisableOutright => Utils.ToBoolean(customerInfoRow["DisableOutright"]);
 
-        public bool HideVirtualGames { get; private set; } = true;
-
         public bool HideBitcoin { get; private set; } = true;
 
         public bool HideCashout { get; private set; } = true;
@@ -85,10 +81,6 @@
         public bool HideRNGLottery { get; private set; } = true;
 
         public bool HideVirtualSports2 { get; private set; } = true;
-
-        public bool HideSabaclub { get; private set; } = true;
-
-        public bool HideVGaming { get; private set; } = true;
 
         public bool HideSabaVirtualSports { get; private set; } = true;
 
@@ -104,9 +96,9 @@
 
         public bool LockUnsuspend => Utils.ToBoolean(customerInfoRow["LockUnsuspend"]);
 
-        public bool HideSabaCasino { get; private set; } = true;
-
         public bool HideMuayThai { get; private set; } = true;
+
+        public bool HideLiveAndRNGCasino { get; private set; } = true;
 
         public CustomerDetail CustParent
         {
@@ -132,28 +124,9 @@
                         var productId = row["productID"].ToString();
                         switch (productId)
                         {
-                            case "1":
-                                HideMuayThai = (Utils.ToBoolean(row["IsHidden"]) && SearchAccountRoleId < 4);
-                                break;
-
                             case "5":
                                 HideCheckBoxVirtualSports = (Utils.ToBoolean(row["IsHiddenUpline"]) && SearchAccountRoleId < 4) || !WebSettings.EnableVirtualSports;
                                 HideSettingLinkVirtualSports = (Utils.ToBoolean(row["IsHiddenUpline"]) && SearchAccountRoleId < 4) || !WebSettings.EnableVirtualSports || IsDeposit;
-                                break;
-
-                            case "6":
-                                HideSabaCasino = (Utils.ToBoolean(row["IsHidden"]) && SearchAccountRoleId < 4) || !WebSettings.IsShowSabaCasino;
-                                break;
-
-                            case "41":
-                                HideLiveCasinoUpline = HideLiveCasinoUpline && Utils.ToBoolean(row["IsHiddenUpline"]) && SearchAccountRoleId < 4;
-                                HideLiveCasino = HideLiveCasino && Utils.ToBoolean(row["IsHidden"]);
-                                break;
-
-                            case "18":
-                                SyncVoidbridge = Utils.ToBoolean(row["IsSync"]);
-                                HideVoidbridgeUpline = Utils.ToBoolean(row["IsHiddenUpline"]) && SearchAccountRoleId < 4;
-                                SyncVoidbridgeUpline = Utils.ToBoolean(row["IsSyncedUpline"]);
                                 break;
 
                             case "25":
@@ -172,32 +145,27 @@
                                     IsDeposit || (SearchAccountRoleId < 4 && (isHideRNGLottery || isHideUplineRNGLottery));
                                 break;
 
-                            case "64":
-                                bool isHideVirtualGames = Utils.ToBoolean(row["IsHidden"]);
-                                HideVirtualGames = Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdVirtualGames == 0 || isHideVirtualGames;
-                                break;
-
-                            case "42":
-                                HideSabaclub = Utils.ToBoolean(row["IsHidden"]) || !WebSettings.IsShowSabaclub;
-                                SyncSabaclub = Utils.ToBoolean(row["IsSync"]);
-                                HideSabaclubUpline = Utils.ToBoolean(row["IsHiddenUpline"]) && SearchAccountRoleId < 4;
-                                SyncSabaclubUpline = Utils.ToBoolean(row["IsSyncedUpline"]);
-                                break;
-
                             case "54":
                                 HideSabaVirtualSports = Utils.ToBoolean(row["IsHidden"]) || !WebSettings.IsShowSabaVirtualSports;
-                                break;
-
-                            case "66":
-                                HideVGaming = Utils.ToBoolean(row["IsHidden"]) || !WebSettings.IsShowVGaming;
-                                SyncVGaming = Utils.ToBoolean(row["IsSync"]);
-                                HideVGamingUpline = Utils.ToBoolean(row["IsHiddenUpline"]) && SearchAccountRoleId < 4;
-                                SyncVGamingUpline = Utils.ToBoolean(row["IsSyncedUpline"]);
                                 break;
 
                             case "69":
                                 bool isHideBitcoin = Utils.ToBoolean(row["IsHidden"]);
                                 HideBitcoin = !WebSettings.IsShowBitcoinBetting || isHideBitcoin;
+                                break;
+                        }
+                    }
+
+                    if (!this.IsDeposit && row["GroupID"] != null && int.TryParse(row["GroupID"].ToString(), out int productGroupId))
+                    {
+                        switch (productGroupId)
+                        {
+                            case ProductGroupIdConstants.SportsBook:
+                                HideMuayThai = (Utils.ToBoolean(row["IsHidden"]) && SearchAccountRoleId < 4);
+                                break;
+
+                            case ProductGroupIdConstants.LiveAndRNGCasino:
+                                HideLiveAndRNGCasino = (Utils.ToBoolean(row["IsHidden"]) && SearchAccountRoleId < 4);
                                 break;
                         }
                     }

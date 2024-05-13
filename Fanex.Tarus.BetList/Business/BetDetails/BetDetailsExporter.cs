@@ -35,7 +35,7 @@
             _remotingRefService = new RemotingRefService();
         }
 
-        public string GetFileNameWithoutExtension(int sportType)
+        public string GetFileNameWithoutExtension(int sportType, string sportName)
         {
             var fileNameMapper = new Dictionary<int, string>
             {
@@ -54,10 +54,10 @@
                 {SportContants.IonCasino, "IONLiveCasino_Details"},
                 {SportContants.PPLiveCasino, "PPLiveCasino_Details"}
             };
-
+            var name = string.IsNullOrEmpty(sportName) ? _remotingRefService.GetSportName(sportType.ToString(), "en-US") : sportName;
             return fileNameMapper.ContainsKey(sportType) ?
                 fileNameMapper[sportType] :
-                $"{_remotingRefService.GetSportName(sportType.ToString(), "en-US")}_Details";
+                $"{name}_Details";
         }
 
         public IEnumerable<TicketDetail> GetTicketDetails(
@@ -108,7 +108,8 @@
                 sportType == SportContants.MGRNG ||
                 sportType == SportContants.Jili ||
                 sportType == SportContants.Live22 ||
-                sportType == SportContants.UUSlots)
+                sportType == SportContants.UUSlots ||
+                sportType == SportContants.SabaxD)
             {
                 return GetRNGCasinoTickets(refNo, custId, transType, winlostDate);
             }
@@ -131,7 +132,7 @@
             return service.JackpotDetails(criteria).Select(t => new TicketDetail { Ticket = t.Ticket, DeviceType = t.DeviceType });
         }
 
-        public void Export(IEnumerable<TicketDetail> ticketDetails, Stream stream, int sportType)
+        public void Export(IEnumerable<TicketDetail> ticketDetails, Stream stream, int sportType, bool hideSabaText)
         {
             short excelColumns = 11;
 
@@ -153,6 +154,7 @@
                 {
                     ticket = item.Ticket;
                     ticketHelper.Index = index++;
+                    ticketHelper.HideSabaText = hideSabaText;
 
                     builder
                         .AddNo(index)
@@ -175,7 +177,7 @@
 
             var workbook = builder.GetBetList();
             workbook.Write(stream, true);
-        }
+        }        
 
         private static void AddHeader(IBetListExcelBuilder builder, int sportType)
         {

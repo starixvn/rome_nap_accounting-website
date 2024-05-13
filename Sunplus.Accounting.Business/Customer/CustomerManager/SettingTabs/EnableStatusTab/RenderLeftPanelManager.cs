@@ -302,6 +302,16 @@ namespace Sunplus.Accounting.Business.Customer
             return table.Columns.Contains(columnName);
         }
 
+        public string GetProductGroupStatusJsFunction(
+            int custId,
+            string userName,
+            int roleId,
+            int productGroupId,
+            string title)
+        {
+            return $"leftPanelManager.viewProductGroupStatusSetting({custId}, '{userName}', {roleId}, {productGroupId}, '{title}')";
+        }
+
         public string GetProductStatusJsFunction(
             bool isDeposit,
             int custId,

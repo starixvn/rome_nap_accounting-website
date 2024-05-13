@@ -9,8 +9,7 @@ using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
 using System.Data;
-using Fanex.RemotingRef;
-using Fanex.Tarus.Infrastructure.Caching;
+using Sunplus.Accounting.Business;
 
 public partial class Others_Menu : System.Web.UI.Page
 {
@@ -19,21 +18,14 @@ public partial class Others_Menu : System.Web.UI.Page
     private enum products
     {
         virtualsport = 5,
-        livecasino = 41,
-        voidbridge = 18,
-        lottery = 28,
-        sabaclub = 42,
-        vgaming = 66,
         Bitcoin = 69,
-        sabaCasino = 6
     };
 
     protected void Page_Load(object sender, EventArgs e)
     {
         this.tplMenu = WebUtils.LoadTemplate("Customer/v2/MenuUpdatePT.htm");
-        Boolean AllowedCS, hideVirtualSports, hideLiveCasino, hideVoidbridge, hideRNGLottery, hideVirtualGames, hideSabaclub, hideVGaming;
+        Boolean AllowedCS, hideVirtualSports, hideRNGLottery, hideLiveAndRNGCasino;
         Boolean hideBitcoin;
-        Boolean hideSabaCasino;
         string[] queryStringParams = Request.UrlReferrer.Query.Split('&');
         string custID = queryStringParams[0].ToString();
         custID = custID.Substring(8, custID.Length - 8);
@@ -56,15 +48,9 @@ public partial class Others_Menu : System.Web.UI.Page
         var uplineId = CastAide.AsInt32(queryStringParams[3].Split('=')[1]);
         int accId = Sunplus.Accounting.Core.Common.AppSession.AccId;
         hideVirtualSports = !CastAide.AsBoolean(db.Outputs["allowedvs"]) || !WebSettings.EnableVirtualSports;
-        hideLiveCasino = !CastAide.AsBoolean(db.Outputs["allowedlivecasino"]) || !WebSettings.IsShowLiveCasino;
-        hideVoidbridge = !CastAide.AsBoolean(db.Outputs["allowedvoidbridge"]) || !WebSettings.IsShowVoidbridge;
         hideRNGLottery = !CastAide.AsBoolean(db.Outputs["allowedrnglottery"]) || Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdRNGLottery == 0;
-        hideVirtualGames = !CastAide.AsBoolean(db.Outputs["allowedvirtualgames"]) || Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdVirtualGames == 0;
-        hideSabaclub = !CastAide.AsBoolean(db.Outputs["allowedsabaclub"]) || !WebSettings.IsShowSabaclub;
-        hideVGaming = !CastAide.AsBoolean(db.Outputs["allowedvgaming"]) || !WebSettings.IsShowVGaming;
         hideBitcoin = !CastAide.AsBoolean(db.Outputs["allowedbitcoin"]) || !WebSettings.IsShowBitcoinBetting;
-        hideSabaCasino = !CastAide.AsBoolean(db.Outputs["allowedsabacasino"]) || !WebSettings.IsShowSabaCasino;
-
+        hideLiveAndRNGCasino = !CastAide.AsBoolean(db.Outputs["allowedliverngcasino"]);
 
         string creditDCSLink = string.Empty;
 
@@ -88,14 +74,9 @@ public partial class Others_Menu : System.Web.UI.Page
         }
 
         this.RenderSettingTab("VirtualSports", "{urlVirtualSports}", string.Format(creditDCSLink, (int)products.virtualsport), hideVirtualSports);
-        this.RenderSettingTab("livecasino", "{liveCasinoLinkSetting}", string.Format(creditDCSLink, (int)products.livecasino), hideLiveCasino);
-        this.RenderSettingTab("voidbridge", "{voidbridgeLinkSetting}", string.Format(creditDCSLink, (int)products.voidbridge), hideVoidbridge);
+        this.RenderSettingTab("LiveAndRNGCasino", "{liveAndRNGCasinoLinkSetting}", BuildSettingUrl(CastAide.AsInt32(custID), roleid, roleid + 1, ProductGroupIdConstants.LiveAndRNGCasino), hideLiveAndRNGCasino);
         this.RenderSettingTab("RNGLottery", "{rngLotteryLinkSetting}", string.Format(creditDCSLink, Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdRNGLottery), hideRNGLottery);
-        this.RenderSettingTab("VirtualGames", "{virtualGamesLinkSetting}", string.Format(creditDCSLink, Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdVirtualGames), hideVirtualGames);
-        this.RenderSettingTab("sabaclub", "{sabaclubLinkSetting}", string.Format(creditDCSLink, (int)products.sabaclub), hideSabaclub);
-        this.RenderSettingTab("vgaming", "{vgamingLinkSetting}", string.Format(creditDCSLink, (int)products.vgaming), hideVGaming);
         this.RenderSettingTab("Bitcoin", "{BitcoinLinkSetting}", string.Format(creditDCSLink, (int)products.Bitcoin), hideBitcoin);
-        this.RenderSettingTab("SabaCasino", "{SabaCasinoLinkSetting}", string.Format(creditDCSLink, (int)products.sabaCasino), hideSabaCasino);
         this.sMenu.Text = this.tplMenu;
     }
 
@@ -108,5 +89,10 @@ public partial class Others_Menu : System.Web.UI.Page
         }
 
         TemplateHandler.Assign(ref this.tplMenu, nodeToAssign, settingLink);
+    }
+
+    private string BuildSettingUrl(int custId, int roleId, int uplineRoleId, int productGroupId)
+    {
+        return string.Format(Page.ResolveUrl("~/Customer/EditCustomer?roleId={0}&uplineRoleId={1}&custId={2}&productGroupId={3}"), roleId, uplineRoleId, custId, productGroupId);
     }
 }

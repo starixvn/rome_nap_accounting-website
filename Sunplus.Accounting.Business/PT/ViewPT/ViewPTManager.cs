@@ -448,16 +448,6 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
 
         private void GetSportsOutOfList(ref SportDTO sports, string userName)
         {
-
-            var parlayMixsport = new Sport()
-            {
-                SportId = 999,
-                SportName = ResourceExtension.GetResourceValue(
-                                             ResourceExtension.Resources.Language, "lblMixedSports"),
-                Bettype = new BettypeDTO()
-            };
-            sports.SportsList.Add(parlayMixsport);          
-
             if (WebSettings.EnableAGCasino)
             {
                 var agCasino = new Sport
