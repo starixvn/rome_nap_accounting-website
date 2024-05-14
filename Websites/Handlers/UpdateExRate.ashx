@@ -25,7 +25,7 @@ public class UpdateExRate : IHttpHandler, IRequiresSessionState
 
         try
         {
-            string errMsg = "";         
+            string errMsg = "";
             string actualRate = CastAide.AsString(context.Request["BaseRate"]);
             string currency = context.Request["Currency"];
             string minbet = CastAide.AsString(context.Request["Minbet"]);
@@ -62,12 +62,12 @@ public class UpdateExRate : IHttpHandler, IRequiresSessionState
             {
                 try
                 {
-                    exRateId = CastAide.AsInt32(context.Request["exrateId"]);                
+                    exRateId = CastAide.AsInt32(context.Request["exrateId"]);
 
                     errMsg = exRate.UpdateEditExChangeRate(exRateId, actualRate, currency, minbet, minbetlive, Description, MultipliedBy, Code, OfferSite, CurrencyType, CoinMarketCapID, IsActive);
-                   
+
                     if (errMsg.Length == 0)
-                    {                     
+                    {
                         context.Response.Write("ok|Update exchange rate successfully!");
                         return;
                     }
@@ -97,15 +97,14 @@ public class UpdateExRate : IHttpHandler, IRequiresSessionState
                 context.Response.Write(exRate.ResetEditExchangeRate(exRateId));
             }
             else if (context.Request["type"] == "editbaserate")
-            {             
-
+            {
                 var result = exRate.EditBaseRate_UpdateBaseRate(context.Request["updateParams"]);
-             
+
                 if (result.ErrorCode == 0)
                 {
                     context.Response.Write("ok|The base rates have been updated successfully.");
                 }
-                if (result.ErrorCode == 2)
+                else if (result.ErrorCode == 2)
                 {
                     context.Response.Write("2|" + result.ErrorMessage);
                 }
