@@ -369,7 +369,7 @@ $.fn.forceNumber = function () {
                 <div class="col-credit">
                     <label for="txtCredit">Given Credit<span class="require"> *</span></label>
                     <input type="text" id="txtCredit" maxlength="18" ${disableCredit ? 'disabled' : ''}/>
-                    <span class="memberMaxCredit" id="memberMaxCredit"></span>
+                    <div class="memberMaxCredit" id="memberMaxCredit"></div>
                 <div>
             </td>
             <td>
@@ -548,13 +548,25 @@ $.fn.forceNumber = function () {
         $("#currency").text(currency);
     }
 
-    function renderMemberMaxCredit(memberMaxCredit) {
-        $("#memberMaxCredit").text(`<= ${memberMaxCredit}`);
+    function formatCurrency(value) {
+        return (Math.trunc(value * 100) / 100).toLocaleString("en-US");
+    }
+
+    function renderMemberMaxCredit(custInfo) {
+        var maxCredit = custInfo.MaxCredit - custInfo.Credit;
+        var memberMaxCredit = custInfo.MemberMaxCredit;
+        var max = memberMaxCredit ? Math.min(memberMaxCredit, maxCredit) : maxCredit;
+        existedUser.maxCredit = max;
+        var hint = `<span>Min: 0 - Max: ${formatCurrency(max)} </span>`;
+        if (memberMaxCredit) {
+            hint += ` <span class="icon-credit" data-title="Available Credit: ${formatCurrency(maxCredit)}\nThe Maximum Member Credit set by your upline: ${formatCurrency(memberMaxCredit)} "></span>`;
+        }
+        $("#memberMaxCredit").html(hint);
     }
 
     function getCustomerInfoByUserId(custid) {
         var param = {
-            custid: custid,
+            custid: custid
         };
 
         $.ajax({
@@ -584,7 +596,7 @@ $.fn.forceNumber = function () {
                 renderCurrency(custInfo.CurrencyName);
 
                 if (custInfo.RoleId == MEMBER) {
-                    renderMemberMaxCredit(custInfo.MaxCredit);
+                    renderMemberMaxCredit(custInfo);
                 }
 
                 getAllSites();
