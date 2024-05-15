@@ -88,8 +88,8 @@
     <Reference Include="Fanex.BetList.AGCasino, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.AGCasino.2.0.0\lib\net461\Fanex.BetList.AGCasino.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.Allbet, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Allbet.2.0.0.1\lib\net461\Fanex.BetList.Allbet.dll</HintPath>
+    <Reference Include="Fanex.BetList.Allbet, Version=2.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.Allbet.2.0.0.2-API-02\lib\net461\Fanex.BetList.Allbet.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.BBIN, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.BBIN.2.0.0.1\lib\net461\Fanex.BetList.BBIN.dll</HintPath>
@@ -118,8 +118,8 @@
     <Reference Include="Fanex.BetList.Jili, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Betlist.Jili.1.0.0.2\lib\net461\Fanex.BetList.Jili.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.LiveCasinoCore, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.LiveCasinoCore.1.0.0.2\lib\net461\Fanex.BetList.LiveCasinoCore.dll</HintPath>
+    <Reference Include="Fanex.BetList.LiveCasinoCore, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.LiveCasinoCore.1.0.0.3-GamingAPI-01\lib\net461\Fanex.BetList.LiveCasinoCore.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.MetricGaming, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.MetricGaming.2.0.0\lib\net461\Fanex.BetList.MetricGaming.dll</HintPath>
@@ -154,8 +154,8 @@
     <Reference Include="Fanex.BetList.SealEntertainment, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.SealEntertainment.2.0.0.1\lib\net461\Fanex.BetList.SealEntertainment.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.SexyGaming, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.SexyGaming.2.0.0.1\lib\net461\Fanex.BetList.SexyGaming.dll</HintPath>
+    <Reference Include="Fanex.BetList.SexyGaming, Version=2.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.SexyGaming.2.0.0.2-API-02\lib\net461\Fanex.BetList.SexyGaming.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.Spadegaming, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Spadegaming.2.0.0.1\lib\net461\Fanex.BetList.Spadegaming.dll</HintPath>
@@ -205,8 +205,8 @@
       <HintPath>..\packages\Fanex.Result.Core.AGCasino.1.0.1\lib\net40\Fanex.Result.Core.AGCasino.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Result.Core.AllBetCasino, Version=1.0.2.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core.AllBetCasino.1.0.2.1\lib\net40\Fanex.Result.Core.AllBetCasino.dll</HintPath>
+    <Reference Include="Fanex.Result.Core.Allbet, Version=2.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Result.Core.AllBetCasino.2.0.0.2-API-02\lib\net461\Fanex.Result.Core.Allbet.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Result.Core.Base, Version=3.0.0.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core-NPOI.2.0.6.3.0.0.5\lib\net461\Fanex.Result.Core.Base.dll</HintPath>
@@ -216,6 +216,9 @@
     </Reference>
     <Reference Include="Fanex.Result.Core.Casino, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.Casino.1.0.0.1\lib\Fanex.Result.Core.Casino.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Result.Core.ConfigurationHelper, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Result.Core.ConfigurationHelper.1.0.0\lib\net461\Fanex.Result.Core.ConfigurationHelper.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Result.Core.GTCasino, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.GTCasino.2.0.0\lib\net461\Fanex.Result.Core.GTCasino.dll</HintPath>
@@ -271,9 +274,6 @@
     <Reference Include="IBCFile, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.File.1.0.0\lib\net40\IBCFile.dll</HintPath>
       <Private>True</Private>
-    </Reference>
-    <Reference Include="LiveCasinoResult, Version=1.0.1.8, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core.AllBetCasino.1.0.2.1\lib\net40\LiveCasinoResult.dll</HintPath>
     </Reference>
     <Reference Include="MathNet.Numerics, Version=4.15.0.0, Culture=neutral, PublicKeyToken=cd8b63ad3d691a37, processorArchitecture=MSIL">
       <HintPath>..\packages\MathNet.Numerics.Signed.4.15.0\lib\net461\MathNet.Numerics.dll</HintPath>
@@ -393,8 +393,8 @@
     </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
-    <Reference Include="System.Configuration.ConfigurationManager, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Configuration.ConfigurationManager.6.0.0\lib\net461\System.Configuration.ConfigurationManager.dll</HintPath>
+    <Reference Include="System.Configuration.ConfigurationManager, Version=6.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Configuration.ConfigurationManager.6.0.1\lib\net461\System.Configuration.ConfigurationManager.dll</HintPath>
     </Reference>
     <Reference Include="System.Core" />
     <Reference Include="System.Data.OracleClient" />
