@@ -63,7 +63,15 @@
             return Json(new ThirdPartyResultViewModel(ProductResultTitle, result), JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult PPResult(ThirdPartyResultRequest request) => BaseResult(request, "PPResultConfigs");
+        public ActionResult PPResult(ThirdPartyResultRequest request)
+        {
+            var resultRequest = new ResultRequest(request.CustId, request.TransId3rd, request.GameId3rd, request.CurrencyId, request.SiteId)
+            {
+                BetTypeId = request.BetTypeId
+            };
+
+            return BaseResult(request, resultRequest, "PPResultConfigs");
+        }
 
         public ActionResult HabaneroResult(ThirdPartyResultRequest request) => BaseResult(request, "HabaneroResultConfigs");
 
