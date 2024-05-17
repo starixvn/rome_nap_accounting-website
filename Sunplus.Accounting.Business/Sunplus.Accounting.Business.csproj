@@ -130,11 +130,11 @@
     <Reference Include="Fanex.RemotingRef, Version=1.5.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.RemotingRef.1.5.4\lib\net461\Fanex.RemotingRef.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Tarus.Admin, Version=1.0.5.11, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Admin.1.0.5.11\lib\net461\Fanex.Tarus.Admin.dll</HintPath>
+    <Reference Include="Fanex.Tarus.Admin, Version=1.0.5.12, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Admin.1.0.5.12-realcur001\lib\net461\Fanex.Tarus.Admin.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Tarus.DataAccess.Implement, Version=1.0.1.7, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.DataAccess.Implement.1.0.1.9\lib\net40\Fanex.Tarus.DataAccess.Implement.dll</HintPath>
+    <Reference Include="Fanex.Tarus.DataAccess.Implement, Version=1.0.1.10, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.DataAccess.Implement.1.0.1.10-realcur001\lib\net40\Fanex.Tarus.DataAccess.Implement.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Excels, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Excels.1.0.0.3\lib\net40\Fanex.Tarus.Excels.dll</HintPath>
@@ -262,8 +262,8 @@
     <Reference Include="Sunplus.Accounting.Core, Version=2.0.4.29, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Accounting.Core.2.0.4.29\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.8.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.8\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
+    <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.9.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.9.1-realcur001\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.Entities, Version=2.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Accounting.Entities.2.0.3\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
