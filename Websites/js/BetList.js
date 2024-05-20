@@ -1111,7 +1111,7 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
             return getSpadegamingParam(custId, transId3rd, gameId3rd, currencyId, siteId, bettype);
 
         case 248: //PP
-            return getPPParam(custId, transId3rd, gameId3rd, currencyId, siteId);
+            return getPPParam(custId, transId3rd, gameId3rd, currencyId, siteId, bettype);
 
         case 250: // AGCasino.
             return getAGCasinoParam(refno, bettype);
@@ -1602,11 +1602,11 @@ function getLinkedGamesParam(custId, transId3rd, gameId3rd, currencyId, siteId) 
 }
 
 
-function getPPParam(custId, transId3rd, gameId3rd, currencyId, siteId) {
+function getPPParam(custId, transId3rd, gameId3rd, currencyId, siteId, bettypeId) {
     return {
         url: "ThirdParty/PPResult",
         title: "PP Result",
-        jsonParam: { custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, productId: 32, CurrencyId: currencyId, SiteId: siteId },
+        jsonParam: { custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, productId: 32, CurrencyId: currencyId, SiteId: siteId, BetTypeId: bettypeId },
         width: 945,
         height: 500
     };
