@@ -240,7 +240,10 @@
       <Setting Key="Acc_Dep_CustSetting_PositionTakingSettingSelect" SpName="Acc_Dep_CustSetting_PositionTakingSettingSelect" DbName="DBCust.CustDB.wsv_nap" />
       <Setting Key="Acc_Dep_CustSetting_PositionTakingSettingUpd" SpName="Acc_Dep_CustSetting_PositionTakingSettingUpd" DbName="DBCust.CustDB.wsv_nap" />
     </Function>
-
+    <Function Name="Setting Type 18 - Charge Position Taking">
+      <Setting Key="Acc_Dep_CustSetting_ChargePTSelect" SpName="Acc_Dep_CustSetting_ChargePTSelect" DbName="DBCust.CustDB.wsv_nap" />
+      <Setting Key="Acc_Dep_CustSetting_ChargePTUpd" SpName="Acc_Dep_CustSetting_ChargePTUpd" DbName="DBCust.CustDB.wsv_nap" />
+    </Function>
     <Function Name="Setting Type 2 - Bet Setting with Max Per Match">
       <Setting Key="Acc_Dep_CustSetting_BetLimitFullLineSettingSelect" SpName="Acc_Dep_CustSetting_BetLimitFullLineSettingSelect" DbName="DBCust.CustDB.wsv_nap" />
       <Setting Key="Acc_Dep_CustSetting_BetLimitFullLineUpd" SpName="Acc_Dep_CustSetting_BetLimitFullLineUpd" DbName="DBCust.CustDB.wsv_nap" />
@@ -250,12 +253,6 @@
       <Setting Key="Acc_Dep_CustSetting_Game_BetLimitFullLineSettingSelect" SpName="Acc_Dep_CustSetting_Game_BetLimitFullLineSettingSelect" DbName="DBCust.CustDB.wsv_nap" />
       <Setting Key="Acc_Dep_CustSetting_Game_BetLimitFullLineUpd" SpName="Acc_Dep_CustSetting_Game_BetLimitFullLineUpd" DbName="DBCust.CustDB.wsv_nap" />
     </Function>
-
-    <Function Name="Setting Type 11 - Bet Setting without Max Per Match">
-      <Setting Key="Acc_Dep_CustSetting_NewBetLimitFullLineSettingSelect" SpName="Acc_Dep_CustSetting_NewBetLimitFullLineSettingSelect" DbName="DBCust.CustDB.wsv_nap" />
-      <Setting Key="Acc_Dep_CustSetting_NewBetLimitFullLineUpd" SpName="Acc_Dep_CustSetting_NewBetLimitFullLineUpd" DbName="DBCust.CustDB.wsv_nap" />
-    </Function>
-
     <Function Name="Setting Type 4 - Product Status">
       <Setting Key="Acc_Dep_CustSetting_StatusSelect" SpName="Acc_Dep_CustSetting_StatusSelect" DbName="DBCust.CustDB.wsv_nap" />
       <Setting Key="Acc_Dep_CustSetting_StatusUpd" SpName="Acc_Dep_CustSetting_StatusUpd" DbName="DBCust.CustDB.wsv_nap" />
@@ -270,6 +267,10 @@
       <Setting Key="Acc_Dep_CustSetting_StakeLevelSelect" SpName="Acc_Dep_CustSetting_StakeLevelSelect" DbName="DBCust.CustDB.wsv_nap" />
       <Setting Key="Acc_Dep_CustSetting_StakeLevelGroupSelect" SpName="Acc_Dep_CustSetting_StakeLevelGroupSelect" DbName="DBCust.CustDB.wsv_nap" />
       <Setting Key="Acc_Dep_CustSetting_StakeLevelUpd" SpName="Acc_Dep_CustSetting_StakeLevelUpd" DbName="DBCust.CustDB.wsv_nap" />
+    </Function>
+    <Function Name="Setting Type 5 - Charge Commission">
+      <Setting Key="Acc_Dep_CustSetting_ChargeCommSelect" SpName="Acc_Dep_CustSetting_ChargeCommSelect" DbName="DBCust.CustDB.wsv_nap" />
+      <Setting Key="Acc_Dep_CustSetting_ChargeCommUpd" SpName="Acc_Dep_CustSetting_ChargeCommUpd" DbName="DBCust.CustDB.wsv_nap" />
     </Function>
   </Function>
   <Function Name="Licensee Odds Group">

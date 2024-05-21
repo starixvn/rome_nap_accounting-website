@@ -522,7 +522,8 @@
     <Compile Include="Criteria\LicenseeDcsSetting\GetAgentCriteria.cs" />
     <Compile Include="Criteria\LicenseeDcsSetting\GetBetSettingWithMaxPerBallCriteria.cs" />
     <Compile Include="Criteria\LicenseeDcsSetting\GetBetSettingWithMaxPayoutPerMatchCriteria.cs" />
-    <Compile Include="Criteria\LicenseeDcsSetting\GetBetSettingWithoutMaxPerMatchCriteria.cs" />
+    <Compile Include="Criteria\LicenseeDcsSetting\GetChargeCommissionCriteria.cs" />
+    <Compile Include="Criteria\LicenseeDcsSetting\GetChargePositionTakingCriteria.cs" />
     <Compile Include="Criteria\LicenseeDcsSetting\GetStakeLevelCriteria.cs" />
     <Compile Include="Criteria\LicenseeDcsSetting\GetBetSettingCriteria.cs" />
     <Compile Include="Criteria\LicenseeDcsSetting\GetGlobalStakeLevelCriteria.cs" />
@@ -535,9 +536,10 @@
     <Compile Include="Criteria\LicenseeDcsSetting\NonQueryCriteria.cs" />
     <Compile Include="Criteria\LicenseeDcsSetting\UpdateBetSettingWithMaxPerBallCriteria.cs" />
     <Compile Include="Criteria\LicenseeDcsSetting\UpdateBetSettingWithMaxPayoutPerMatchCriteria.cs" />
-    <Compile Include="Criteria\LicenseeDcsSetting\UpdateBetSettingWithoutMaxPerMatchCriteria.cs" />
     <Compile Include="Criteria\LicenseeDcsSetting\UpdateBetSettingCriteria.cs" />
+    <Compile Include="Criteria\LicenseeDcsSetting\UpdateChargeCommissionCriteria.cs" />
     <Compile Include="Criteria\LicenseeDcsSetting\UpdateGlobalStakeLevelCriteria.cs" />
+    <Compile Include="Criteria\LicenseeDcsSetting\UpdateChargePositionTakingCriteria.cs" />
     <Compile Include="Criteria\LicenseeDcsSetting\UpdatePositionTakingCriteria.cs" />
     <Compile Include="Criteria\LicenseeDcsSetting\UpdateStakeLevelCriteria.cs" />
     <Compile Include="Criteria\LicenseeDcsSetting\UpdateStatusCriteria.cs" />
@@ -711,7 +713,8 @@
     <Compile Include="Entities\LicenseeDcsSetting\BaseModelExtra.cs" />
     <Compile Include="Entities\LicenseeDcsSetting\BetSettingEntityWithMaxPerBall.cs" />
     <Compile Include="Entities\LicenseeDcsSetting\BetSettingEntityWithMaxPayoutPerMatch.cs" />
-    <Compile Include="Entities\LicenseeDcsSetting\BetSettingWithoutMaxPerMatchEntity.cs" />
+    <Compile Include="Entities\LicenseeDcsSetting\ChargeCommissionEntity.cs" />
+    <Compile Include="Entities\LicenseeDcsSetting\ChargePTEntity.cs" />
     <Compile Include="Entities\LicenseeDcsSetting\StakeLevelEntity.cs" />
     <Compile Include="Entities\LicenseeDcsSetting\StakeLevelGroupEntity.cs" />
     <Compile Include="Entities\LicenseeDcsSetting\PTEntity.cs" />
@@ -818,7 +821,8 @@
     <Compile Include="ViewModels\InitializingCustomerSetting\InitializingCustomerSettingViewModel.cs" />
     <Compile Include="ViewModels\LicenseeDcsSetting\BetSettingWithMaxPerBallViewModel.cs" />
     <Compile Include="ViewModels\LicenseeDcsSetting\BetSettingWithMaxPayoutPerMatchViewModel.cs" />
-    <Compile Include="ViewModels\LicenseeDcsSetting\BetSettingWithoutMaxPerMatchViewModel.cs" />
+    <Compile Include="ViewModels\LicenseeDcsSetting\ChargeCommissionViewModel.cs" />
+    <Compile Include="ViewModels\LicenseeDcsSetting\ChargePTViewModel.cs" />
     <Compile Include="ViewModels\LicenseeDcsSetting\StakeLevelViewModel.cs" />
     <Compile Include="Entities\LicenseeDcsSetting\BetSettingEntity.cs" />
     <Compile Include="Entities\LicenseeDcsSetting\GlobalStakeLevelEntity.cs" />

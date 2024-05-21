@@ -15,11 +15,13 @@ namespace Fanex.Tarus.Customer.Business.LicenseeDcsSetting
         
         IEnumerable<ProductSettingTypeEntity> GetProducts();
 
-        List<PTEntity> GetPositionTaking(int productId, int superId);
+        IEnumerable<PTEntity> GetPositionTaking(int productId, int superId);
+
+        IEnumerable<ChargePTEntity> GetChargePositionTaking(int productId, int superId);
+
+        IEnumerable<ChargeCommissionEntity> GetChargeCommission(int productId, int superId);
 
         IEnumerable<BetSettingEntity> GetBetSettings(int productId, int superId, int agentId);
-
-        IEnumerable<BetSettingWithoutMaxPerMatchEntity> GetBetSettingWithoutMaxPerMatch(int productId, int superId, int agentId);
 
         IEnumerable<BetSettingWithMaxPayoutPerMatchEntity> GetBetSettingsWithMaxPayoutPerMatch(int productId, int superId, int agentId);
 
@@ -35,10 +37,24 @@ namespace Fanex.Tarus.Customer.Business.LicenseeDcsSetting
 
         Result UpdatePositionTaking(
             int productId,
-            List<PTEntity> superPT,
+            IEnumerable<PTEntity> superPT,
             IEnumerable<int> agentIds,
-            List<AgentsExtraInfo> agentsExtraInfo,
+            IEnumerable<AgentsExtraInfo> agentsExtraInfo,
             bool isAgentOnly,
+            int userId,
+            string ip);
+
+        Result UpdateChargePositionTaking(
+            int productId,
+            IEnumerable<ChargePTEntity> PT,
+            IEnumerable<int> superIds,
+            int userId,
+            string ip);
+
+        Result UpdateChargeCommission(
+            int productId,
+            IEnumerable<ChargeCommissionEntity> commission,
+            IEnumerable<int> superIds,
             int userId,
             string ip);
 
@@ -46,15 +62,6 @@ namespace Fanex.Tarus.Customer.Business.LicenseeDcsSetting
             int superId,
             bool applyExistedMem,
             BetSettingEntity betSetting,
-            IEnumerable<int> agentIds,
-            bool isAgentOnly,
-            int userId,
-            string ip);
-
-        Result UpdateBetSettingWithoutMaxPerMatch(
-            int superId,
-            bool applyExistedMem,
-            BetSettingWithoutMaxPerMatchEntity betSetting,
             IEnumerable<int> agentIds,
             bool isAgentOnly,
             int userId,

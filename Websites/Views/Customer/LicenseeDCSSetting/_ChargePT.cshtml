@@ -1,0 +1,46 @@
+﻿@using Fanex.Tarus.Customer.Resources
+@using Fanex.Tarus.Customer.ViewModels.LicenseeDcsSetting;
+@model ChargePTViewModel
+@{
+    Layout = null;
+}
+<table class="tblcollapse pt_table">
+    <thead>
+        <tr class="title">
+            <td colspan="2">@LicenseeDcsSettingLabels.PositionTaking <span>(@Model.ShowSuperOrAgentNames())</span></td>
+        </tr>
+        <tr class="title">
+            <td>
+                All Sports
+            </td>
+            <td>
+                PT
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        
+        
+        @if (Model.SuperPT.Any())
+        {
+            foreach (var pt in Model.SuperPT)
+            {
+                <tr data-sporttype="@pt.SportType" data-pt="@pt.PTPercent" class="ptrow_js">
+                    <td>@pt.SportTypeName</td>
+                    <td class="w300">
+                        @Html.DropDownList("ptDropDown_" + pt.SportType, Model.PositionTakingList(pt.PTPercent), new { @class = "halfwidth dropdownpt" })
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="2">There is no information available.</td>
+            </tr>
+        }
+
+
+    </tbody>
+</table>
+<button type="button" class="update-setting-button mT5" id="btnUpdatePT" >@LicenseeDcsSettingLabels.Update</button>

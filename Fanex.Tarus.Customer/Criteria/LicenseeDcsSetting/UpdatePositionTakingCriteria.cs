@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Fanex.NAP.Framework.Data;
 using Fanex.Tarus.Customer.Entities.LicenseeDcsSetting;
@@ -10,7 +11,7 @@ namespace Fanex.Tarus.Customer.Criteria.LicenseeDcsSetting
         public UpdatePositionTakingCriteria(
             int productId,
             int superId,
-            List<PTEntity> PTList,
+            IEnumerable<PTEntity> PTList,
             int agentId,
             bool isAgentOnly,
             int userId,
@@ -30,7 +31,7 @@ namespace Fanex.Tarus.Customer.Criteria.LicenseeDcsSetting
         public int SuperId { get; }
 
         [SpParam(Ignored = true)]
-        public List<PTEntity> PTList { get; }
+        public IEnumerable<PTEntity> PTList { get; }
 
         public string PT
         {
@@ -50,7 +51,7 @@ namespace Fanex.Tarus.Customer.Criteria.LicenseeDcsSetting
                     }
 
                     builder.Append("PT = \"" + pt + "\" ");
-                    builder.Append("IsLive = \"" + (entity.IsLive?"1":"0") + "\" ");
+                    builder.Append("IsLive = \"" + (entity.IsLive ? "1" : "0") + "\" ");
                     builder.Append("/>");
                 }
 
@@ -66,6 +67,6 @@ namespace Fanex.Tarus.Customer.Criteria.LicenseeDcsSetting
             => "Acc_Dep_CustSetting_PositionTakingSettingUpd";
 
         public override bool IsValid()
-            => base.IsValid() && ProductId > 0 && AgentId > 0 && PTList.Count > 0;
+            => base.IsValid() && ProductId > 0 && AgentId > 0 && PTList != null && PTList.Any();
     }
 }

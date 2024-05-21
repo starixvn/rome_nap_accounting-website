@@ -35,9 +35,14 @@ namespace Fanex.Tarus.Customer.ViewModels.LicenseeDcsSetting
 
             switch (type)
             {
+                case SettingType.Commission:
+                    return LicenseeDcsSettingLabels.Commission;
+                case SettingType.ChargeCommission:
+                    return LicenseeDcsSettingLabels.ChargeComm;
                 case SettingType.GlobalBetLimit:
                     return LicenseeDcsSettingLabels.GlobalBetLimit;
                 case SettingType.PositionTaking:
+                case SettingType.ChargePositionTaking:
                     return LicenseeDcsSettingLabels.PT;
                 case SettingType.BetSetting:
                 case SettingType.BetSettingWithoutMaxPerMatch:

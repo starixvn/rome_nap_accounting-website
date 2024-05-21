@@ -25,12 +25,14 @@ namespace Fanex.Tarus.Customer.DataAccess.LicenseeDcsSetting
         public IEnumerable<ProductSettingTypeEntity> GetProducts(ICriteria criteria)
             => ExecuteDataReader(criteria, GetProductSettingType);
 
-        public List<PTEntity> GetPositionTaking(ICriteria criteria)
-        {
-            var entities = ExecuteDataReader(criteria, GetPositionTaking);
+        public IEnumerable<PTEntity> GetPositionTaking(ICriteria criteria)
+            =>ExecuteDataReader(criteria, GetPositionTaking);
 
-            return entities.ToList();
-        }
+        public IEnumerable<ChargePTEntity> GetChargePositionTaking(ICriteria criteria)
+            => ExecuteDataReader(criteria, GetChargePositionTaking);
+
+        public IEnumerable<ChargeCommissionEntity> GetChargeCommission(ICriteria criteria)
+            => ExecuteDataReader(criteria, GetChargeCommission);
 
         public IEnumerable<BetSettingEntity> GetBetSettings(ICriteria criteria)
         {
@@ -70,57 +72,6 @@ namespace Fanex.Tarus.Customer.DataAccess.LicenseeDcsSetting
                              SuperMaxBet = super.MaxBet,
                              MaxPerMatch = agent.MaxPerMatch,
                              SuperMaxPerMatch = super.MaxPerMatch
-                         };
-
-            return result.ToList();
-        }
-
-        public IEnumerable<BetSettingWithoutMaxPerMatchEntity> GetBetSettingWithoutMaxPerMatch(ICriteria criteria)
-        {
-            IList<BetSettingWithoutMaxPerMatchEntity> globals = new List<BetSettingWithoutMaxPerMatchEntity>();
-            IList<BetSettingWithoutMaxPerMatchEntity> supers = new List<BetSettingWithoutMaxPerMatchEntity>();
-            IList<BetSettingWithoutMaxPerMatchEntity> agents = new List<BetSettingWithoutMaxPerMatchEntity>();
-
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
-            {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
-                {
-                    while (reader.Read())
-                    {
-                        globals.Add(GetBetSettingWithoutMaxPerMatch(reader));
-                    }
-
-                    reader.NextResult();
-                    while (reader.Read())
-                    {
-                        supers.Add(GetBetSettingWithoutMaxPerMatch(reader));
-                    }
-
-                    reader.NextResult();
-                    while (reader.Read())
-                    {
-                        agents.Add(GetBetSettingWithoutMaxPerMatch(reader));
-                    }
-                }
-            }
-
-            var result = from super in supers
-                         join agent in agents
-                         on new { super.SportType, super.BetType }
-                         equals new { agent.SportType, agent.BetType }
-                         join global in globals
-                         on new { super.SportType, super.BetType }
-                         equals new { global.SportType, global.BetType }
-                         select new BetSettingWithoutMaxPerMatchEntity()
-                         {
-                             SportType = super.SportType,
-                             BetType = super.BetType,
-                             MinBet = agent.MinBet,
-                             SuperMinBet = super.MinBet,
-                             GlobalMinBet = global.MinBet,
-                             MaxBet = agent.MaxBet,
-                             SuperMaxBet = super.MaxBet,
-                             GlobalMaxBet = global.MaxBet
                          };
 
             return result.ToList();
@@ -326,6 +277,21 @@ namespace Fanex.Tarus.Customer.DataAccess.LicenseeDcsSetting
                 IsLive = Convert.ToBoolean(reader["islive"])
             };
 
+        private static ChargePTEntity GetChargePositionTaking(IDataReader reader)
+            => new ChargePTEntity
+            {
+                PT = Convert.ToDecimal(reader["pt"]),
+                SportType = Convert.ToInt32(reader["sporttype"])
+            };
+
+        private static ChargeCommissionEntity GetChargeCommission(IDataReader reader)
+            => new ChargeCommissionEntity
+            {
+                Discount = Convert.ToDecimal(reader["discount"]),
+                SportType = Convert.ToInt32(reader["sporttype"]),
+                BetType = Convert.ToInt32(reader["bettype"])
+            };
+
         private static BetSettingEntity GetBetSetting(IDataReader reader)
             => new BetSettingEntity(
                 Convert.ToInt32(reader["sporttype"]),
@@ -333,13 +299,6 @@ namespace Fanex.Tarus.Customer.DataAccess.LicenseeDcsSetting
                 Convert.ToDecimal(reader["minbet"]),
                 Convert.ToDecimal(reader["maxbet"]),
                 Convert.ToDecimal(reader["maxpermatch"]));
-
-        private static BetSettingWithoutMaxPerMatchEntity GetBetSettingWithoutMaxPerMatch(IDataReader reader)
-            => new BetSettingWithoutMaxPerMatchEntity(
-                Convert.ToInt32(reader["sporttype"]),
-                Convert.ToInt32(reader["bettype"]),
-                Convert.ToDecimal(reader["minbet"]),
-                Convert.ToDecimal(reader["maxbet"]));
 
         private static BetSettingWithMaxPayoutPerMatchEntity GetBetSettingWithMaxPayoutPerMatch(IDataReader reader)
             => new BetSettingWithMaxPayoutPerMatchEntity(

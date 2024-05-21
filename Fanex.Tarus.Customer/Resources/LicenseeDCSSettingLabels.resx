@@ -252,4 +252,16 @@
   <data name="MaxPerBall" xml:space="preserve">
     <value>Max Per Ball</value>
   </data>
+  <data name="Commission" xml:space="preserve">
+    <value>Commission</value>
+  </data>
+  <data name="ChargeComm" xml:space="preserve">
+    <value>Charge Commission</value>
+  </data>
+  <data name="UpdateChargeCommissionSuccessfully" xml:space="preserve">
+    <value>Update Charge Commission successfully</value>
+  </data>
+  <data name="ChargePT" xml:space="preserve">
+    <value>Charge PT</value>
+  </data>
 </root>

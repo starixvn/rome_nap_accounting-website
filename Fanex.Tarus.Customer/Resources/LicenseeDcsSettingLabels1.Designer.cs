@@ -133,6 +133,33 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Charge Commission.
+        /// </summary>
+        public static string ChargeComm {
+            get {
+                return ResourceManager.GetString("ChargeComm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Charge PT.
+        /// </summary>
+        public static string ChargePT {
+            get {
+                return ResourceManager.GetString("ChargePT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Commission.
+        /// </summary>
+        public static string Commission {
+            get {
+                return ResourceManager.GetString("Commission", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Copy all Bet Setting from 1st row.
         /// </summary>
         public static string CopyBetSettingFrom1stRow {
@@ -408,6 +435,15 @@ namespace Fanex.Tarus.Customer.Resources {
         public static string UpdateBetSettingSuccessfully {
             get {
                 return ResourceManager.GetString("UpdateBetSettingSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update Charge Commission successfully.
+        /// </summary>
+        public static string UpdateChargeCommissionSuccessfully {
+            get {
+                return ResourceManager.GetString("UpdateChargeCommissionSuccessfully", resourceCulture);
             }
         }
         

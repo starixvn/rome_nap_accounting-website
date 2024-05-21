@@ -16,11 +16,13 @@ namespace Fanex.Tarus.Customer.DataAccess.LicenseeDcsSetting
         
         IEnumerable<ProductSettingTypeEntity> GetProducts(ICriteria criteria);
 
-        List<PTEntity> GetPositionTaking(ICriteria criteria);
+        IEnumerable<PTEntity> GetPositionTaking(ICriteria criteria);
+
+        IEnumerable<ChargePTEntity> GetChargePositionTaking(ICriteria criteria);
+
+        IEnumerable<ChargeCommissionEntity> GetChargeCommission(ICriteria criteria);
 
         IEnumerable<BetSettingEntity> GetBetSettings(ICriteria criteria);
-
-        IEnumerable<BetSettingWithoutMaxPerMatchEntity> GetBetSettingWithoutMaxPerMatch(ICriteria criteria);
 
         IEnumerable<BetSettingWithMaxPayoutPerMatchEntity> GetBetSettingsWithMaxPayoutPerMatch(ICriteria criteria);
 
