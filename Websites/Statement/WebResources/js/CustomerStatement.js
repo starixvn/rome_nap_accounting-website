@@ -121,6 +121,8 @@ function completeUpdateIsInternal(rs) {
         },
         error: function (jqXHR) {
             if (jqXHR.status === 403) {
+                $('#txtCustName').val("");
+                jQuery('#GridContainer').addClass("hidden");
                 var denyObject = $.parseJSON(jqXHR.responseText);
                 var errorBox = $("#errBox");
                 errorBox.find("div").html(denyObject.ErrorMessage);

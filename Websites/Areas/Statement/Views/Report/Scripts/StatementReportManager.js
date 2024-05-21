@@ -54,13 +54,14 @@ var StatementReportManager = function () {
             success: function (rs) {
                 successFunction(rs);
             },
-            error: function (jqXhr, event, ajaxSettings) {
+            error: function (jqXhr, event, ajaxSettings) {               
                 var responseObject = $.parseJSON(jqXhr.responseText);
                 var errorBox = $("#errBox");
                 errorBox.find("div").html(jqXhr.status === 403 ? responseObject.ErrorMessage : responseObject.Message);
                 errorBox.show();
-                parent.jQuery.unblockUI();
-
+                $('#txtCustName').val("");
+                jQuery('#GridContainer').addClass("hidden");
+                parent.jQuery.unblockUI();              
                 if (self.eventFunction.unblockUI) {
                     self.eventFunction.unblockUI();
                 }
