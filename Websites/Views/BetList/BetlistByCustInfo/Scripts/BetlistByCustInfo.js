@@ -623,7 +623,7 @@
         $('#bookedBetContent').addClass('hidden');
 
         //Saba coins
-        $('#maincontent_betlist_saba').addClass('hidden');
+        $('#maincontent_sabacoins').addClass('hidden');
         $('#betListContent_saba').addClass('allhidden');
     },
     viewBetListTab: function () {
