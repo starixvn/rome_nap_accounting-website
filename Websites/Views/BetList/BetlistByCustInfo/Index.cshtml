@@ -13,7 +13,7 @@
     <link rel="stylesheet" type="text/css" href="~/js/jQuery/GridScroller/gridscroller.css" />
     <link href="~/js/MultipleSelect/jquery.multiselect.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="~/Views/BetList/Style/BetList.css?ver=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" />
-    <link rel="stylesheet" type="text/css" href="~/Views/BetList/BetlistByCustInfo/Style/BetListByCustInfo.css?ver=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" />
+    <link rel="stylesheet" type="text/css" href="~/Views/BetList/BetlistByCustInfo/Style/BetListByCustInfo.css?ver=1@Sunplus.Accounting.Core.Configurations.WebSettings.Version" />
 </head>
 <body>
     <div class="main">
@@ -44,6 +44,14 @@
                                 <span>Booked Bet</span>
                             </a>
                         </li>
+                        @if ((bool)ViewBag.IsSabaCoins)
+                        {
+                            <li class="" id="Li5" onclick="BetListByCustInfo.viewSabaCoinsTab();">
+                                <a href="javascript:;">
+                                    <span>Saba Coins</span>
+                                </a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
@@ -136,18 +144,63 @@
                 </div>
             </div>
 
+            <div id="maincontent_sabacoins" class="maincontent_box hidden" style="width: 100%;">
+                <div>
+                    <input onclick="BetListByCustInfo.disabledFilter_saba();" type="radio" id="rdByRef" value="-1" name="type_saba" />
+                    <label style="font-weight: bold" for="rdByRef">By Ref No:</label>
+                    <input id="txtRefNo_saba" type="text" maxlength="19" style="background-color: #fff; width: 130px;" autocomplete="off" onkeypress="return KeyPress(event);" />
+                    <div id="info-msg_saba" class="info-msg hide">
+                        For Sportsbook, the search result includes the related Bonus/Cash tickets.<br />
+                        For Casino products, tickets can only be found within the last 6 months.
+                    </div>
+                </div>
+                <div>
+                    <input onclick="BetListByCustInfo.disabledFilter_saba();" type="radio" id="rdByUser_saba" value="-2" name="type_saba" checked="checked" />
+                    <label style="font-weight: bold" for="rdByUser">Advance (Event Date):</label>
+                    <span style="font-weight: bold">From </span>
+                    <span style="padding-left: 5px">
+                        <input id="txtfromdate_saba" class="txtdate" readonly="readonly" />
+                    </span>
+                    <span class="b" style="padding-left: 5px">To</span>
+                    <span style="padding-left: 5px">
+                        <input id="txttodate_saba" class="txtdate" readonly="readonly" />
+                    </span>
+                    <span style="padding-left: 10px">Status</span>
+                    <span style="padding-left: 5px">
+                        <span id="ddlStatus_saba" class="multiselect" multiple="multiple">
+                        </span>
+                    </span>
+                    <span id="divBettype_saba" class="hidden" style="padding-left: 5px">
+                        <span>Bettypes </span>
+                        <select id="ddlBettype_saba" name="FilterBy"></select>
+                    </span>
+                </div>
+                <div>
+                    <input class="btn" type="button" id="btnReport_saba" value="Submit" onclick="BetListByCustInfo.getBetListByCustInfo_saba(false);" />
+                    <input class="btn" type="button" id="btnToday_saba" value="Reset" onclick="Helper.reset_date();" />
+                </div>
+                <div id="err">
+                </div>
+            </div>
+
             <div id="betlistMain">
                 <div id="betListContent" style="margin-top: 10px;">
                 </div>
                 <div id="betListSystemParlayContent" class="hidden" style="margin-top: 10px;">
                 </div>
-
             </div>
             <div id="bookedBetMain">
                 <div id="bookedBetContent" class="hidden" style="margin-top: 10px;">
                 </div>
-            </div><div id="betListExchangeContent" class="hidden" style="margin-top: 10px;">
             </div>
+            <div id="betListExchangeContent" class="hidden" style="margin-top: 10px;">
+            </div>
+
+            <div id="betlistMain_saba">                
+                <div id="betListContent_saba" class="hidden" style="margin-top: 10px;">
+                </div>
+            </div>
+
             <div id="Popup" style="display: none;">
             </div>
         </div>
@@ -159,6 +212,7 @@
         var _today = '@DateTime.Today.ToShortDateString()';
         var _yesterday = '@DateTime.Today.AddDays(-1).ToShortDateString()';
         var _custID = '@ViewBag.CustID';
+        var _shadowcustId = '@ViewBag.ShadowCustID';
         var _fromDate = '@ViewBag.FromDate';
         var _toDate = '@ViewBag.ToDate';
         var _accId = '@Fanex.Tarus.Infrastructure.Common.AppSession.AccId';
@@ -176,7 +230,7 @@
                 "@Url.Content("~/js/MultipleSelect/jquery.multiselect.js?ver=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",
                 "@Url.Content("~/js/BetList.js?ver=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",
                 "@Url.Content("~/Areas/AGCasino/Views/BetDetails/Scripts/BetDetails.js?ver=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",                
-                "@Url.Content("~/Views/BetList/BetlistByCustInfo/Scripts/BetlistByCustInfo.js?ver=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",
+                "@Url.Content("~/Views/BetList/BetlistByCustInfo/Scripts/BetlistByCustInfo.js?ver=1")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",
                 "@Url.Content("~/Views/BetList/BetlistByCustInfo/Scripts/ExchangeBetlist.js?ver=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version",
                 "@Url.Content("~/Views/BetList/Scripts/BetlistGlobal.js?ver=")@Sunplus.Accounting.Core.Configurations.WebSettings.Version");
     </script>

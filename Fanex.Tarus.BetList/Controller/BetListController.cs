@@ -152,7 +152,7 @@ namespace Fanex.Tarus.BetList.Controllers
             ViewBag.NumberBegining = 1;
             ViewBag.ResultTitle = CreateResultTitle(result.Value);
             return PartialView("~/Views/BetList/BetlistByCustInfo/Betlist/_BetList.cshtml", result);
-        }
+        }        
 
         /// <summary>
         /// Render Partial for SystemParlay Tab - Customer Info.

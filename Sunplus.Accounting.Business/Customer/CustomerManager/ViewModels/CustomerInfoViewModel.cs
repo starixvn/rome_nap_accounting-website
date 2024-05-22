@@ -58,6 +58,10 @@
 
         public bool ViewFiAcc => Permissions.FinancePermission.IsViewFiAcc(IsInternalUser);
 
+        public bool IsSabaCoins => Utils.ToBoolean(customerInfoRow["IsSabaCoins"]);
+
+        public int ShadowCustId => Utils.ToInt32(customerInfoRow["ShadowCustId"]);
+
         public bool HideDirectStatus => Utils.ToBoolean(customerInfoRow["IsHideDirectStatus"]);
 
         public bool CheckedDirectStatus => Utils.ToBoolean(customerInfoRow["IsCheckDirectStatus"]);

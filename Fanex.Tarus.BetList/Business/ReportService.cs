@@ -293,6 +293,8 @@
                 return SportContants.UUSlots;
             if (10801 <= betTypeId && betTypeId <= 11000)
                 return SportContants.SabaxD;
+            if (11001 <= betTypeId && betTypeId <= 11019)
+                return SportContants.SabaCoins;
             return 0;
         }
 
