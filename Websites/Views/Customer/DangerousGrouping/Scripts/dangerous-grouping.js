@@ -167,7 +167,12 @@ function GetCustomerDanger() {
             }
         },
         error: function (err) {
+            if (err.status == 403) {
+                showAlertMessage('errMsg', "You don't have permission to access.", 1);
+            }
+            else { 
             showAlertMessage('errMsg', 'Internal server error.', 1);
+            }
         },
         complete: function () {
             parent.jQuery.unblockUI();
@@ -195,7 +200,13 @@ function GetValidateResponse(usernames, dangerType, dangerLevel) {
                 }
             },
             error: function (err) {
-                resolve('Internal server error.');
+                if (err.status == 403) {
+                    resolve("You don't have permission to access.");                  
+                }
+                else {
+                    resolve('Internal server error.');
+                }
+                
             }
         });
     });
@@ -264,7 +275,12 @@ function UpdateSingleAccountDanger() {
                     }
                 },
                 error: function (err) {
-                    showAlertMessage('errMsg', 'Internal server error.', 1);
+                    if (err.status == 403) {
+                        showAlertMessage('errMsg', "You don't have permission to access.", 1);
+                    }
+                    else {
+                        showAlertMessage('errMsg', 'Internal server error.', 1);
+                    }
                 },
                 complete: function () {
                     parent.jQuery.unblockUI();
@@ -321,7 +337,12 @@ function UpdateMultipleAccountDanger() {
                     }
                 },
                 error: function (err) {
-                    showAlertMessage('errMsg', 'Internal server error.', 1);
+                    if (err.status == 403) {
+                        showAlertMessage('errMsg', "You don't have permission to access.", 1);
+                    }
+                    else {
+                        showAlertMessage('errMsg', 'Internal server error.', 1);
+                    }
                 },
                 complete: function () {
                     parent.jQuery.unblockUI();
