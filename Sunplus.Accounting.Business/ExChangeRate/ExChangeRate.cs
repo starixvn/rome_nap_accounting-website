@@ -364,7 +364,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                     string mailTemplate = WebUtils.LoadTemplate("ExRate/SendEmail.htm");
                     TemplateHandler.Assign(ref mailTemplate, "username", AppSession.Username);
                     TemplateHandler.Assign(ref mailTemplate, "ExchangeID", exid);
-                    TemplateHandler.Assign(ref mailTemplate, "BaseRate", actualrate.ToString() != Rows[0]["actualrate"].ToString()? changeColor(actualrate.ToString()) : actualrate);
+                    TemplateHandler.Assign(ref mailTemplate, "BaseRate", actualrate.ToString() != Rows[0]["actualrate"].ToString() ? changeColor(actualrate.ToString()) : actualrate);
                     TemplateHandler.Assign(ref mailTemplate, "oldBaseRate", Rows[0]["actualrate"]);
                     TemplateHandler.Assign(ref mailTemplate, "minbet", Rows[0]["minbet"]);
                     TemplateHandler.Assign(ref mailTemplate, "minbetlive", Rows[0]["minbetlive"]);
@@ -525,7 +525,10 @@ namespace Sunplus.Accounting.Business.ExChangeRate
             AGIP = dbIP;
             IsSiteDB = isSiteDB;
             SiteDBGroupId = siteDBGroupId;
+            RetryTimes = 0;
         }
+
+        private int RetryTimes;
 
         public int SiteDBGroupId { get; }
 
@@ -568,15 +571,29 @@ namespace Sunplus.Accounting.Business.ExChangeRate
 
         public void EditBaseRate_UpdateExchangeTablesInBackground()
         {
+            if (RetryTimes >= 5)
+            {
+                var ex = new Exception($"Update Exchange Rate UNSUCCESSFULL with retry times: {RetryTimes}");
+                LogExtensions.ExceptionHandler(ex);
+                throw ex;
+            }            
+
             LogService.Info($"[Edit Base Rate] - Start update Tables - AGIP: {AGIP}");
             string[] listTableNames = new string[] { "bettransRnG", "bettransLC", "translog", "bettrans", "Transfer_Coll", "bettransG", "Transfer" };
             foreach (string tableName in listTableNames)
             {
-                LogService.Info($"[Edit Base Rate] - 1st time - Updating table : {tableName} - AGIP: {AGIP}");
-                this.EditBaseRate_UpdateExchangeTable(tableName);
-                LogService.Info($"[Edit Base Rate] - 1st time - Updated table: {tableName} - AGIP: {AGIP}");
+                LogService.Info($"[Edit Base Rate] - Retry times: {RetryTimes} - Updating table : {tableName} - AGIP: {AGIP}");
+                var result = this.EditBaseRate_UpdateExchangeTable(tableName);
+                if (result.ErrorCode != 0)
+                {
+                    RetryTimes++;
+                    Thread.Sleep(5000);
+                    EditBaseRate_UpdateExchangeTablesInBackground();
+                }                
+                LogService.Info($"[Edit Base Rate] - Retry times: {RetryTimes} - Updated table: {tableName} - AGIP: {AGIP}");
             }
 
+            RetryTimes = 0;
             if (!IsSiteDB)
             {
                 Thread.Sleep(5000);
@@ -591,22 +608,13 @@ namespace Sunplus.Accounting.Business.ExChangeRate
             LogService.Info($"[Edit Base Rate] - End update Tables - AGIP: {AGIP}");
         }
 
-        private void EditBaseRate_UpdateExchangeTable(string tableName)
+        private Result EditBaseRate_UpdateExchangeTable(string tableName)
         {
-            try
-            {
-                var param = new Hashtable();
-                param.Add("tablename", tableName);
-                param.Add("issitedb", IsSiteDB);
-                IBCProvider.ExChangeRate.ExchangeMultiBaseRateUpdateForTable(param, SiteDBGroupId, AGIP);
-            }
-            catch (Exception ex)
-            {
-                // Must use try catch here to handle exception inside parallel task, because this exception is not handled by global.asax
-                LogExtensions.ExceptionHandler(ex);
-                // Rethrow to terminate process.
-                throw ex;
-            }
+            var param = new Hashtable();
+            param.Add("tablename", tableName);
+            param.Add("issitedb", IsSiteDB);
+
+            return IBCProvider.ExChangeRate.ExchangeMultiBaseRateUpdateForTable(param, SiteDBGroupId, AGIP);
         }
     }
 
