@@ -33,7 +33,10 @@
         [AuthenticateRead]
         public JsonResult Search()
         {
-            var data = _lockUnsuspendService.Search(new SearchCustomerCriteria());
+            var data = _lockUnsuspendService.Search(new SearchCustomerCriteria()
+            {
+                UserID = AppSession.AccId
+            });
             var viewModel = new List<LockUnsuspendResultViewModel>();
             foreach (var entity in data)
             {
