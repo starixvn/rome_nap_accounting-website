@@ -55,7 +55,10 @@ Fanex.Accounting.AutomateTransferList = function () {
 
                 me.InitCanTranferUsername(pageData);
             },
-            error: function () {
+            error: function (err) {
+                if (err.status == 403) {
+                    $("#err").show().html("<div class='alerterror'>You don't have permission to access.</div>");
+                }
                 parent.jQuery.unblockUI();
             },
             complete: function () {
