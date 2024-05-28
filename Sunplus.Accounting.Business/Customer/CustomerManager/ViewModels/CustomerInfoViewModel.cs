@@ -82,10 +82,6 @@
 
         public bool HideCashout { get; private set; } = true;
 
-        public bool HideRNGLottery { get; private set; } = true;
-
-        public bool HideVirtualSports2 { get; private set; } = true;
-
         public bool HideSabaVirtualSports { get; private set; } = true;
 
         public bool ShowSettingLinkAGCasinoDeposit => WebSettings.EnableAGCasino && IsDeposit;
@@ -94,15 +90,13 @@
 
         public bool ShowMacauDeposit => WebSettings.EnableMacau && SearchAccountRoleId.Equals(4) && IsDeposit;
 
-        public bool HideSettingLinkVirtualSports { get; private set; } = true;
-
-        public bool HideCheckBoxVirtualSports { get; private set; } = true;
-
         public bool LockUnsuspend => Utils.ToBoolean(customerInfoRow["LockUnsuspend"]);
 
         public bool HideMuayThai { get; private set; } = true;
 
         public bool HideLiveAndRNGCasino { get; private set; } = true;
+
+        public bool HideRNGGames { get; private set; } = true;
 
         public CustomerDetail CustParent
         {
@@ -119,7 +113,7 @@
 
         private void GetShowedHiddenProduct(DataTable dynamicSettingtable)
         {
-            if (this.SearchAccountRoleId != (int)Role.Headline)
+            if (SearchAccountRoleId != (int)Role.Headline)
             {
                 foreach (DataRow row in dynamicSettingtable.Rows)
                 {
@@ -128,25 +122,8 @@
                         var productId = row["productID"].ToString();
                         switch (productId)
                         {
-                            case "5":
-                                HideCheckBoxVirtualSports = (Utils.ToBoolean(row["IsHiddenUpline"]) && SearchAccountRoleId < 4) || !WebSettings.EnableVirtualSports;
-                                HideSettingLinkVirtualSports = (Utils.ToBoolean(row["IsHiddenUpline"]) && SearchAccountRoleId < 4) || !WebSettings.EnableVirtualSports || IsDeposit;
-                                break;
-
                             case "25":
                                 HideCashout = (Utils.ToBoolean(row["IsHidden"]) && SearchAccountRoleId < 4) || !WebSettings.EnableCashOut;
-                                break;
-
-                            case "27":
-                                HideVirtualSports2 = (Utils.ToBoolean(row["IsHiddenUpline"]) && SearchAccountRoleId < 4) || !WebSettings.EnableVirtualSports;
-                                break;
-
-                            case "44": // We do NOT have Unsync case for RNG Lottery.
-                                bool isHideRNGLottery = Utils.ToBoolean(row["IsHidden"]);
-                                bool isHideUplineRNGLottery = Utils.ToBoolean(row["IsHiddenUpline"]);
-
-                                HideRNGLottery = Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdRNGLottery == 0 ||
-                                    IsDeposit || (SearchAccountRoleId < 4 && (isHideRNGLottery || isHideUplineRNGLottery));
                                 break;
 
                             case "54":
@@ -160,12 +137,16 @@
                         }
                     }
 
-                    if (!this.IsDeposit && row["GroupID"] != null && int.TryParse(row["GroupID"].ToString(), out int productGroupId))
+                    if (!IsDeposit && row["GroupID"] != null && int.TryParse(row["GroupID"].ToString(), out int productGroupId))
                     {
                         switch (productGroupId)
                         {
                             case ProductGroupIdConstants.SportsBook:
                                 HideMuayThai = (Utils.ToBoolean(row["IsHidden"]) && SearchAccountRoleId < 4);
+                                break;
+
+                            case ProductGroupIdConstants.RNGGames:
+                                HideRNGGames = (Utils.ToBoolean(row["IsHidden"]) && SearchAccountRoleId < 4);
                                 break;
 
                             case ProductGroupIdConstants.LiveAndRNGCasino:

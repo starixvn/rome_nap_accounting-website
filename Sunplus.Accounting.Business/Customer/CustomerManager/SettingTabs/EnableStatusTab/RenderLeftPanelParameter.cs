@@ -38,8 +38,6 @@ namespace Sunplus.Accounting.Business.Customer
 
         public int AccId { get; set; }
 
-        public bool IsShowRNGLottery { get; set; }
-
         public bool IsShowSabaVirtualSports { get; set; }
 
         public bool IsShowBitcoin { get; set; }
@@ -49,5 +47,7 @@ namespace Sunplus.Accounting.Business.Customer
         public bool IsShowMuayThai { get; set; }
 
         public bool IsShowLiveAndRNGCasino { get; set; }
+
+        public bool IsShowRNGGames { get; set; }
     }
 }

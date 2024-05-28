@@ -24,7 +24,7 @@ public partial class Others_Menu : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         this.tplMenu = WebUtils.LoadTemplate("Customer/v2/MenuUpdatePT.htm");
-        Boolean AllowedCS, hideVirtualSports, hideRNGLottery, hideLiveAndRNGCasino;
+        Boolean AllowedCS, hideVirtualSports, hideRNGLottery, hideLiveAndRNGCasino, hideRNGGames;
         Boolean hideBitcoin;
         string[] queryStringParams = Request.UrlReferrer.Query.Split('&');
         string custID = queryStringParams[0].ToString();
@@ -51,6 +51,7 @@ public partial class Others_Menu : System.Web.UI.Page
         hideRNGLottery = !CastAide.AsBoolean(db.Outputs["allowedrnglottery"]) || Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdRNGLottery == 0;
         hideBitcoin = !CastAide.AsBoolean(db.Outputs["allowedbitcoin"]) || !WebSettings.IsShowBitcoinBetting;
         hideLiveAndRNGCasino = !CastAide.AsBoolean(db.Outputs["allowedliverngcasino"]);
+        hideRNGGames = !CastAide.AsBoolean(db.Outputs["allowedrnggames"]);
 
         string creditDCSLink = string.Empty;
 
@@ -73,9 +74,8 @@ public partial class Others_Menu : System.Web.UI.Page
             creditDCSLink = Page.ResolveUrl("~/DCS/ViewCustomerSetting?productId={0}&customerLevel=4&customerId=" + custID);
         }
 
-        this.RenderSettingTab("VirtualSports", "{urlVirtualSports}", string.Format(creditDCSLink, (int)products.virtualsport), hideVirtualSports);
         this.RenderSettingTab("LiveAndRNGCasino", "{liveAndRNGCasinoLinkSetting}", BuildSettingUrl(CastAide.AsInt32(custID), roleid, roleid + 1, ProductGroupIdConstants.LiveAndRNGCasino), hideLiveAndRNGCasino);
-        this.RenderSettingTab("RNGLottery", "{rngLotteryLinkSetting}", string.Format(creditDCSLink, Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdRNGLottery), hideRNGLottery);
+        this.RenderSettingTab("RNGGames", "{rngGamesLinkSetting}", BuildSettingUrl(CastAide.AsInt32(custID), roleid, roleid + 1, ProductGroupIdConstants.RNGGames), hideRNGGames);
         this.RenderSettingTab("Bitcoin", "{BitcoinLinkSetting}", string.Format(creditDCSLink, (int)products.Bitcoin), hideBitcoin);
         this.sMenu.Text = this.tplMenu;
     }

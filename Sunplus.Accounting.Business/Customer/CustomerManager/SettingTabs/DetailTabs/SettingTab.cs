@@ -1,7 +1,6 @@
 ﻿namespace Sunplus.Accounting.Business.Customer
 {
     using System;
-    using System.Net.PeerToPeer;
     using DNAide.Web;
 
     public partial class CustomerManager
@@ -91,9 +90,8 @@
             }
 
             TemplateHandler.Assign(ref htmlcontent, "{linkSettingInfo}", infoUrl);
-            TemplateHandler.Assign(ref htmlcontent, "{virtualSportLinkSetting}", string.Format(creditDCSLink, 5));
             TemplateHandler.Assign(ref htmlcontent, "{liveAndRNGCasinoLinkSetting}", BuildDetailUrl(customerInfoViewModel.IsDeposit, custId, roleId, userName, customerInfoViewModel.CustomerSite, ProductGroupIdConstants.LiveAndRNGCasino));
-            TemplateHandler.Assign(ref htmlcontent, "{rngLotteryLinkSetting}", string.Format(creditDCSLink, Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdRNGLottery));
+            TemplateHandler.Assign(ref htmlcontent, "{rngGamesLinkSetting}", BuildDetailUrl(customerInfoViewModel.IsDeposit, custId, roleId, userName, customerInfoViewModel.CustomerSite, ProductGroupIdConstants.RNGGames));
             TemplateHandler.Assign(ref htmlcontent, "{BitcoinLinkSetting}", string.Format(creditDCSLink, 69));
             TemplateHandler.Assign(ref htmlcontent, "{agcasinoLinkSetting}", agCasinoLinkSetting);
 
@@ -120,11 +118,6 @@
                 TemplateHandler.RemoveBlock(ref htmlcontent, "addNew-Deposite");
             }
 
-            if (customerInfoViewModel.HideSettingLinkVirtualSports)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "edit-VirtualSport");
-            }
-
             if (!customerInfoViewModel.ShowSettingLinkAGCasinoDeposit)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-agcasino");
@@ -135,9 +128,9 @@
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-LiveAndRNGCasnio");
             }
 
-            if (customerInfoViewModel.HideRNGLottery)
+            if (customerInfoViewModel.HideRNGGames)
             {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "edit-RNGLottery");
+                TemplateHandler.RemoveBlock(ref htmlcontent, "edit-RNGGames");
             }
 
             if (customerInfoViewModel.HideBitcoin)
