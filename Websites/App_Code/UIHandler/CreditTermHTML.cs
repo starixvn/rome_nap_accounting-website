@@ -337,6 +337,11 @@ namespace Sunplus.Accounting.Presentation
                     var result = AccountCredit.Acc_CreditTermUpdAddToGroup(username, groupid, userid);
                     if (result.ErrorCode != 0)
                     {
+                        if (result.ErrorCode == 101)
+                        {
+                            result.ErrorMessage = "You don\'t have permission to access";
+                        }
+
                         errorMsg.Append(username + ": " + result.ErrorMessage + "<br />");
                     }
                     else
@@ -359,7 +364,7 @@ namespace Sunplus.Accounting.Presentation
                     {
                         TemplateHandler.Assign(ref from, "{msg}",
                                                "<script>showAlertMessage('errMsg','" + string.Format("The selected supers have been successfully added. The following supers are enqueued to be removed from their old External Groups on 0:00 tomorrow: {0}.", affectecSuperString) + "',0);"
-                                               + "showAlertMessage('errMsg1', '" + errorMsg.ToString() + "', 1);</script>");
+                                               + "showAlertMessage('errMsg1', \"" + errorMsg + "\", 1);</script>");
                     }
                 }
                 else if (errorMsg.Length == 0)
@@ -370,13 +375,13 @@ namespace Sunplus.Accounting.Presentation
                 else if (successMsg.Length > 0)
                 {
                     TemplateHandler.Assign(ref from, "{msg}",
-                                               "<script>showAlertMessage('errMsg','" + string.Format("Successfully added accounts: {0}.", successMsg.ToString()) + "',0);"
-                                               + "showAlertMessage('errMsg1', '" + errorMsg.ToString() + "', 1);</script>");
+                                               "<script>showAlertMessage('errMsg','" + string.Format("Successfully added accounts: {0}.", successMsg) + "',0);"
+                                               + "showAlertMessage('errMsg1', \"" + errorMsg + "\", 1);</script>");
                 }
                 else
                 {
                     TemplateHandler.Assign(ref from, "{msg}",
-                                                  "<script>showAlertMessage('errMsg','" + errorMsg.ToString() + "',1);</script>");
+                                                  "<script>showAlertMessage('errMsg',\"" + errorMsg + "\",1);</script>");
                 }
             }
         }
