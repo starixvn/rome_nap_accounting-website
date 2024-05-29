@@ -31,7 +31,12 @@ function CheckExistAgent() {
             }
         },
         error: function (err) {
-            showAlertMessage('errMsg', "Internal Server Error.", 1);
+            if (err.status == 403) {               
+                showAlertMessage('errMsg', "You don't have permission to access.", 1);
+            }
+            else {
+                showAlertMessage('errMsg', 'Internal server error.', 1);
+            }           
         },
         complete: function () {
             try { parent.jQuery.unblockUI(); } catch (e) { };
