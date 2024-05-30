@@ -23,7 +23,7 @@ namespace Fanex.Tarus.Customer.Business.LicenseeDcsSetting
             => _settingDataAccess.GetSites(new GetSiteCriteria());
 
         public IEnumerable<BaseModel> GetSupers(string site)
-            => _settingDataAccess.GetSupers(new GetSuperCriteria(site));
+            => _settingDataAccess.GetSupers(new GetSuperCriteria(site, AppSession.AccId));
         
         public IEnumerable<BaseModelExtra> GetAgents(string superIds)
             => _settingDataAccess.GetAgents(new GetAgentCriteria(superIds, AppSession.AccId));

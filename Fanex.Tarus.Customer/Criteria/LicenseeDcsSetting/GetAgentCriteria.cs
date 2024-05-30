@@ -10,7 +10,7 @@ namespace Fanex.Tarus.Customer.Criteria.LicenseeDcsSetting
             UserID = userId;
         }
 
-        public int UserID { get; set; }
+        public int UserID { get; }
 
         public string SRecommend { get; }
 

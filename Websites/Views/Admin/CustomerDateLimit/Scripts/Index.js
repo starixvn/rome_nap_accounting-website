@@ -63,10 +63,16 @@ var CustomerDataRange = {
                     $('#CustomerDataRange').removeClass("hidden").reRenderScroller(529, gridHeight, true);
                 }
             },
+            error: function (err) {         
+                if (err.status == 403) {
+                    $("#pagination").html('&nbsp;');
+                    $("#tblCustomerDataRange").html("<tr><td colspan='4'><div class='c' style='width:526px;'>You don't have permission to access.</div></td></tr>");
+                    $('#CustomerDataRange').removeClass("hidden").reRenderScroller(529, gridHeight, true);
+                }
+            },
             complete: function () {
                 try { parent.jQuery.unblockUI(); } catch (e) { }
             }
-
         });
     },    
 
