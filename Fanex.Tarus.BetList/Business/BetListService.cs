@@ -123,6 +123,7 @@
                 SiteId = r.Table.Columns.Contains("SiteId") ? Converter.ToString2(r["SiteId"]) : "",
                 JackpotInfo = r.Table.Columns.Contains("JackpotInfo") ? Converter.ToString2(r["JackpotInfo"]) : string.Empty,
                 LeagueGroupId = r.Table.Columns.Contains("LeagueGroupId") ? Converter.ToInt(r["LeagueGroupId"]) : 0,
+                EventStatus = r.Table.Columns.Contains("BetStatus") ? Converter.ToString2(r["BetStatus"]) : string.Empty,
             },
             ChoiceHtml = string.Empty,
             OddHtml = string.Empty,
