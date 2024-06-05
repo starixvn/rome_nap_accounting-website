@@ -211,7 +211,7 @@
                                         for (var r1 = 0; r1 < 3; r1++) {
                                             var _elm, _etmp = { N: "", Val: "", P: "" };
                                             _elm = (typeof group.Vals[ind_g] != 'undefined') ? group.Vals[ind_g] : _etmp;
-                                            tpl_tracking += '<td class="collabel ' + (r1 == 0 ? 'first_column ' : '') + '"><div class="colW1sp">' + _elm.N + '</div></td><td><div class="colW2sp ' + tbl + '-' + (i + 1) + '-' + _elm.P + clsDiff + '">' + _elm.Val + '</div></td>';
+                                            tpl_tracking += '<td class="collabel ' + (r1 == 0 ? 'first_column ' : '') + '"><div class="colW1sp">' + _elm.N + '</div></td><td><div class="colW2sp ' + tbl + '-' + (i + 1) + '-' + _elm.P + clsDiff + '">' + LogPT.formatEmptyVal(_elm.Val) + '</div></td>';
                                             ind_g++;
                                         }
                                         tpl_tracking += '</tr>';
@@ -239,7 +239,7 @@
                                         tpl_tracking += '<tr>';
                                         isFirst = true;
                                         for (let [colIndex, cell] of row.entries()) {
-                                            tpl_tracking += '<td class="' + ((isFirst && cell.Val.indexOf("&emsp;") < 0) ? " collabel" : "") + (isFirst ? ' first_column' : '') + '"><div class="' + tbl + '-' + (i + 1) + '-' + cell.P + clsDiff + (isFirst ? '' : ' c') + '">' + (cell == undefined ? '' : cell.Val) + '</div></td>';
+                                            tpl_tracking += '<td class="' + ((isFirst && cell.Val.indexOf("&emsp;") < 0) ? " collabel" : "") + (isFirst ? ' first_column' : '') + '"><div class="' + tbl + '-' + (i + 1) + '-' + cell.P + clsDiff + (isFirst ? '' : ' c') + '">' + (cell == undefined ? '_' : LogPT.formatEmptyVal(cell.Val)) + '</div></td>';
                                             isFirst = false;
                                         }
 
@@ -259,7 +259,7 @@
                                     for (var r1 = 0; r1 < 3; r1++) {
                                         var _elm, _etmp = { N: "", Val: "", P: "" };
                                         _elm = (typeof group.Vals[ind_g] != 'undefined') ? group.Vals[ind_g] : _etmp;
-                                        tpl_tracking += '<td class="collabel ' + (r1 == 0 ? 'first_column ' : '') + '"><div class="colW1sp">' + _elm.N + '</div></td><td><div class="colW2sp ' + tbl + '-' + (i + 1) + '-' + _elm.P + clsDiff + '">' + _elm.Val + '</div></td>';
+                                        tpl_tracking += '<td class="collabel ' + (r1 == 0 ? 'first_column ' : '') + '"><div class="colW1sp">' + _elm.N + '</div></td><td><div class="colW2sp ' + tbl + '-' + (i + 1) + '-' + _elm.P + clsDiff + '">' + LogPT.formatEmptyVal(_elm.Val) + '</div></td>';
                                         ind_g++;
                                     }
                                     tpl_tracking += '</tr>';
@@ -458,5 +458,8 @@
             modal: true,
             title: "League Group"
         });
+    },
+    formatEmptyVal: function (val) {
+        return $.trim(val).length == 0 ? '_' : $.trim(val);
     }
 };
