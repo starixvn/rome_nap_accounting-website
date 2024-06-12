@@ -250,11 +250,13 @@ namespace Fanex.Tarus.Customer.Controller
             generalInfo.Password = encryptor.CfsEnCode(rawPassword);
 
             var response = await customerService.CreateCustomer(new CreateCustomerParam(
-                request.GeneralInfo,
+                generalInfo,
                 request.ProductGroups,
                 AppSession.AccId,
                 0,
                 Utils.GetClientIP(),
+                generalInfo.Site,
+                generalInfo.SiteLabel,
                 CreationModes.FullMode));
 
             return Content(response);
@@ -274,6 +276,8 @@ namespace Fanex.Tarus.Customer.Controller
                 request.RoleId,
                 request.UplineRoleId,
                 Utils.GetClientIP(),
+                request.Site,
+                request.SiteLabel,
                 "en-US"));
 
             return Content(response);
