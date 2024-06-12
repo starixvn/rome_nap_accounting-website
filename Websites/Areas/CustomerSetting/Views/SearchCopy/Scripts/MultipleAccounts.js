@@ -303,9 +303,8 @@ $.fn.forceNumber = function () {
             dataType: "json",
             data: JSON.stringify(formData)
         }).fail(function (jqXHR) {
-            if (jqXHR.status === 403) {
-                var denyObject = $.parseJSON(jqXHR.responseText);
-                divStatus.removeClass().addClass("statusError").html("Error: " + denyObject.ErrorMessage);
+            if (jqXHR.status === 403 || jqXHR.status === 401) {
+                divStatus.removeClass().addClass("statusError").html("Error: You don't have permission on this function.");
             }
         }).done(function (data) {
             divStatus.removeClass();
