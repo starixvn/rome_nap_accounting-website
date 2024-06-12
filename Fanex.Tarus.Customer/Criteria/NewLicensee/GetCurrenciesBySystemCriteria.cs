@@ -8,6 +8,8 @@
 //   <change who="Louis.Nguyen" date="2012.12.07">Created</change>
 // </history>
 
+using EasyNetQ.FluentConfiguration;
+
 namespace Fanex.Tarus.Customer.Criteria.NewLicensee
 {
     /// <summary>
@@ -16,6 +18,8 @@ namespace Fanex.Tarus.Customer.Criteria.NewLicensee
     public class GetCurrenciesBySystemCriteria
     {
         public int mode { get; set; }
+
+        public int userId { get; set; }
 
         public string GetSettingKey()
         {

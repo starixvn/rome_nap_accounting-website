@@ -52,7 +52,16 @@
                 url: "../Handlers/UpdateTransferAllMember.ashx",
                 async: true,
                 data: 'username=' + $('#txtUname').val() + "&type=" + type,
-                success: AfterUpdate
+                success: AfterUpdate,
+                error: function (err) {
+                    if (err.status == 403) {
+                        showAlertMessage('errMsg', "You don't have permission to access.", 1);
+                    }
+                    else {
+                        showAlertMessage('errMsg', 'Internal server error.', 1);
+                    }
+                    try{parent.jQuery.unblockUI();}catch(e){}
+                },
             });
         }
 

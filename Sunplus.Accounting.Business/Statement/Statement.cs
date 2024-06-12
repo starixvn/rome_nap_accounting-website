@@ -41,12 +41,6 @@ namespace Sunplus.Accounting.Business.Statement
         /// <returns>html string</returns>
         public static string GetAuditStatement()
         {
-            if (string.IsNullOrEmpty(AppSession.CustUName)
-                || AppSession.CustID == 0)
-            {
-                return AlertMessage.GetMsg(IbcError.SESSION_EXPIRED_MSG, AlertMessage.MsgType.Error);
-            }
-
             string tpl = WebUtils.LoadTemplate("Statement/AuditContent.htm");
             string excelTpl = tpl;
             var htmlReport = new StringBuilder();
@@ -247,17 +241,10 @@ namespace Sunplus.Accounting.Business.Statement
 
         public static string GetDetailStatement(string fdate, string tdate)
         {
-            if (string.IsNullOrEmpty(AppSession.CustUName)
-                || AppSession.CustID == 0)
-            {
-                return AlertMessage.GetMsg(IbcError.SESSION_EXPIRED_MSG, AlertMessage.MsgType.Error);
-            }
-
             string tpl = WebUtils.LoadTemplate("Statement/DetailContent.htm");
             var htmlReport = new StringBuilder();
             DateTime fdt, tdt;
             bool candelete = false;
-
             // For new export excel function.
             IList<DetailStatement> detailStatements = new List<DetailStatement>();
 
@@ -365,12 +352,6 @@ namespace Sunplus.Accounting.Business.Statement
 
         public static string GetMemberStatement(string fromDate, string toDate)
         {
-            if (string.IsNullOrEmpty(AppSession.CustUName)
-                || AppSession.CustID == 0)
-            {
-                return AlertMessage.GetMsg(IbcError.SESSION_EXPIRED_MSG, AlertMessage.MsgType.Error);
-            }
-
             //get persmission of logined user
             bool hasUpdateTransPermission = Permissions.GetHostPermission
                 (Enumerations.Functions.FinancialManagement.DailyFinanceTxn);

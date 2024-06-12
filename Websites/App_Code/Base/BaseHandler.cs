@@ -4,6 +4,7 @@ using System.Web;
 using System.Web.SessionState;
 using DNAide.Core;
 using Fanex.Tarus.Security.HttpModules.Services;
+using Fanex.Tarus.Security.Services;
 using Sunplus.Accounting.Business.Customer;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Helper;
@@ -153,8 +154,9 @@ public class BaseHandler : IHttpHandler, IRequiresSessionState
     private bool CheckPermission(string userNameOrCustIdList, string type)
     {
         var accId = Convert.ToInt32(_context.Session["AccId"]);
-
-        ICustomerAuthorization customerAuthorization = CustomerAuthorizationFactory.GetInstance(type, userNameOrCustIdList);
+        var customerAuthorizationService = new CustomerAuthorizationService();
+        var customerTypes = customerAuthorizationService.GetCustomerTypes(userNameOrCustIdList);
+        ICustomerAuthorization customerAuthorization = CustomerAuthorizationFactory.GetInstance(type, userNameOrCustIdList, customerTypes);
         return customerAuthorization.CanHost(userNameOrCustIdList, accId).IsOk;
     }
 }

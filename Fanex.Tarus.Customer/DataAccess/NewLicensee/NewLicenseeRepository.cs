@@ -33,6 +33,7 @@ namespace Fanex.Tarus.Customer.DataAccess.NewLicensee
             using (ObjectDb objDb = new ObjectDb(criteria.GetSettingKey()))
             {
                 objDb.AddInParameter("mode", DbType.Int16, criteria.mode);
+                objDb.AddInParameter("userid", DbType.Int32, criteria.userId);
                 var dataset = objDb.ExecuteDataSet();
                 if (dataset != null && dataset.Tables.Count > 0)
                 {

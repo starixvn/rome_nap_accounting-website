@@ -4,6 +4,8 @@
 
     public class SearchCustomerCriteria : CriteriaBase
     {
+        public int UserID { get; set; }
+
         public override string GetSettingKey()
         {
             return "Acc_CustomerLockSuspendSel";

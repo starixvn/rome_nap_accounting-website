@@ -62,6 +62,9 @@
             {
                 $('#errMsg1').append('<div class="alertboxerr"><div>' + lang.AccessDenied + '</div></div>');
             }
+            if (a.status == 403) {
+                $('#errMsg1').append('<div class="alertboxerr"><div>' + "You don't have permission to access." + '</div></div>');
+            }
         },
         complete: function () { try { parent.jQuery.unblockUI(); } catch (e) { }; }
     });

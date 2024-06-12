@@ -80,11 +80,11 @@
       <HintPath>..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Tarus.Admin, Version=1.0.5.11, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Admin.1.0.5.11\lib\net461\Fanex.Tarus.Admin.dll</HintPath>
+    <Reference Include="Fanex.Tarus.Admin, Version=1.0.5.12, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Admin.1.0.5.12\lib\net461\Fanex.Tarus.Admin.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Security, Version=1.0.1.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Security.1.0.2.2\lib\net40\Fanex.Tarus.Security.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.Security.1.0.2.3\lib\net40\Fanex.Tarus.Security.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Web.Controllers, Version=1.0.1.7, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Web.Controller.1.0.1.7\lib\net40\Fanex.Tarus.Web.Controllers.dll</HintPath>

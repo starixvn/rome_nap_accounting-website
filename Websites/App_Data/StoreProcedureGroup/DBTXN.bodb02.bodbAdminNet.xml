@@ -38,7 +38,7 @@
     <Setting Key="PositionTaking_RefSportTypeAndBetType" SpName="Acc_CustomerSelRefSport_Bettype" DbName="DBTXN.bodb02.wsv_nap" />
   </Function>
   <Function Name="Balance checking">
-    <Setting Key="Acc_BalanceMemberSelectAll" SpName="Acc_BalanceMemberSelectAll" DbName="DBTXN.bodb02.wsv_nap" />
+    <Setting Key="Acc_BalanceMemberSelectAll" SpName="Acc_BalanceMemberSelectAll_xpre" DbName="DBTXN.bodb02.wsv_nap" />
   </Function>
   <Function Name="Ex.rate">
     <Setting Key="Acc_ExchangeRateSel" SpName="Acc_ExchangeRateSel" DbName="DBTXN.bodb02.wsv_nap" />

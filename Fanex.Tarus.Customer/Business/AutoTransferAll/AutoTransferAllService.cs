@@ -39,6 +39,7 @@ namespace Fanex.Tarus.Customer.Business.AutoTransferAll
 
         public AutoTransferAll GetAutoTranfers(SelectTransferAgentCriteria criteria)
         {
+            criteria.UserID = this._userId;
             return _autoTransferAllAccess.GetAutoTranfers(criteria);
         }
 
@@ -112,7 +113,11 @@ namespace Fanex.Tarus.Customer.Business.AutoTransferAll
         public ValidAgents CheckValidAgentsFromFile(HttpPostedFileBase fileUploaded)
         {
             var usernames = this.ReadUsernameFromFile(fileUploaded);
-            return _autoTransferAllAccess.CheckValidAgentsFromFile(new CheckValidAgentsFromFileCriteria { UserName = usernames });
+            return _autoTransferAllAccess.CheckValidAgentsFromFile(new CheckValidAgentsFromFileCriteria
+            {
+                UserName = usernames,
+                UserID = this._userId
+        });
         }
 
         /// <summary>

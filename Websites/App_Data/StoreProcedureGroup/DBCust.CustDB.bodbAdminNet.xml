@@ -19,7 +19,7 @@
   <Function Name="Customer - Setting">
     <Setting Key="Acc_CustOverrideUpd" SpName="Acc_custoverrideUpd" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_CustomerInsMember_Ag" SpName="Acc_CustomerInsMember_Ag" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="CustomerSetting_InsertSuper" SpName="Acc_CustomerInsMember_Com" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="CustomerSetting_InsertSuper" SpName="Acc_CustomerInsMember_Com_xpre" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_CustomerInsMember_MAg" SpName="Acc_CustomerInsMember_MAg" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_CustomerInsMember_SAg" SpName="Acc_CustomerInsMember_SAg" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_CustomerUpdDoubleCommLosing" SpName="Acc_CustomerUpdDoubleCommLosing" DbName="DBCust.CustDB.wsv_nap" />
@@ -118,7 +118,7 @@
     <Setting Key="Age_ClearBalanceCust_SettingUpdate_Downline" SpName="Age_ClearBalanceCust_SettingUpdate_Downline" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Credit Term">
-    <Setting Key="Acc_CreditTermUpdAddToGroup" SpName="Acc_CreditTermUpdAddToGroup" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CreditTermUpdAddToGroup" SpName="Acc_CreditTermUpdAddToGroup_xpre" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_CreditTermUpdCustomer" SpName="Acc_CreditTermUpdCustomer" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_CreditTermUpdIsViewReport" SpName="Acc_CreditTermUpdIsRptConsol" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_CreditTermUpdRemoveFromGroup" SpName="Acc_CreditTermUpdRemoveFromGroup" DbName="DBCust.CustDB.wsv_nap" />
@@ -138,7 +138,7 @@
   </Function>
   <Function Name="Exchange Daily">
     <Setting Key="Acc_ExchangeIns" SpName="Acc_ExchangeIns" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="Acc_ExchangeSel" SpName="Acc_ExchangeSel" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_ExchangeSel" SpName="Acc_ExchangeSel_xpre" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="EchangeUpd" SpName="Acc_ExchangeUpd" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="ExchangeDailyCryptoUpd" SpName="Acc_ExchangeDaily_Crypto_Upd" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="EchangeSelById" SpName="Acc_ExchangeSelByID" DbName="DBCust.CustDB.wsv_nap" />
@@ -148,7 +148,7 @@
   </Function>
   <Function Name="SearchCopy">
     <Setting Key="Acc_CustomerSelExistingUsernames" SpName="Acc_CustomerSelExistingUsernames" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="Acc_CustomerInsMember_CloneSetting_Com" SpName="Acc_CustomerInsMember_CloneSetting_Com" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerInsMember_CloneSetting_Com" SpName="Acc_CustomerInsMember_CloneSetting_Com_xpre" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_CustomerUplineUserNameSel" SpName="Acc_CustomerUplineUserNameSel" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Esports">
@@ -169,7 +169,7 @@
     <Setting Key="Acc_CustomerUpdAutoTransferAgentStatus" SpName="Acc_CustomerUpdAutoTransferAgentStatus" DbName="DBCust.CustDB.wsv_nap" Plain="0" TimeOut="600" />
   </Function>
   <Function Name="Report">
-    <Setting Key="Statement_Report_GetCustomerInformationByUsername" SpName="Acc_CustomerSelSiteByUserName" DbName="DBCust.CustDB.wsv_nap" Plain="0" />
+    <Setting Key="Statement_Report_GetCustomerInformationByUsername" SpName="Acc_CustomerSelSiteByUserName_xpre" DbName="DBCust.CustDB.wsv_nap" Plain="0" />
   </Function>
   <Function Name="Customer - Finance Super List">
     <Setting Key="Acc_CustomerSelSFinance" SpName="Acc_CustomerSelFinance_SAg" DbName="DBCust.CustDB.wsv_nap" />
@@ -187,7 +187,7 @@
       <Setting Key="Acc_CustSetting_StatusSettingSelect" SpName="Acc_CustSetting_StatusSettingSelect" DbName="DBCust.CustDB.wsv_nap" />
       <Setting Key="Acc_CustSetting_DisableStatUpd" SpName="Acc_CustSetting_DisableStatUpd" DbName="DBCust.CustDB.wsv_nap" />
       <Setting Key="Acc_CustSetting_CheckIsDeposit" SpName="Acc_CustSetting_CheckIsDeposit" DbName="DBCust.CustDB.wsv_nap" />
-      <Setting Key="Acc_CustSetting_CheckListDeposit" SpName="Acc_CustSetting_CheckListDeposit" DbName="DBCust.CustDB.wsv_nap" />
+      <Setting Key="Acc_CustSetting_CheckListDeposit" SpName="Acc_CustSetting_CheckListDeposit_xpre" DbName="DBCust.CustDB.wsv_nap" />
       <Setting Key="Acc_CustomerSelProductStatus" SpName="Acc_CustomerSelProductStatus" DbName="DBCust.CustDB.wsv_nap" />
       <Setting Key="Acc_CustSetting_DisableNewProductStatusUpd" SpName="Acc_CustSetting_DisableNewProductStatusUpd" DbName="DBCust.CustDB.wsv_nap" />
       <Setting Key="Acc_CustSetting_ListSiteSel" SpName="Acc_CustSetting_ListSiteSel" DbName="DBCust.CustDB.wsv_nap" />
@@ -221,7 +221,7 @@
     <Setting Key="Acc_GroupExtraPT_GroupByProduct_Sel" SpName="Acc_GroupExtraPT_GroupByProduct_Sel" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_GroupExtraPT_GroupByProduct_Ins" SpName="Acc_GroupExtraPT_GroupByProduct_Ins" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_CustomerInsSuperInfo" SpName="Acc_CustomerInsSuperInfo" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="SelectInfoCust" SpName="Acc_CustGroupSel" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="SelectInfoCust" SpName="Acc_CustGroupSel_xpre" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="DeleteCustomer" SpName="Acc_CustGroupDel" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="AddExistCustomer" SpName="Acc_CustGroupAddByUsername_Multiple" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_CustGroupUpdPrimaryExtraPTGroup" SpName="Acc_CustGroupUpdPrimaryExtraPTGroup" DbName="DBCust.CustDB.wsv_nap" />
@@ -292,21 +292,21 @@
   </Function>
   <Function Name="Special Site">
     <Setting Key="Acc_CustomerIsSpecialSite" SpName="Acc_CustomerIsSpecialSite" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="Acc_CustomerIsAllowedAccess" SpName="Acc_CustomerIsAllowedAccess" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerIsAllowedAccess" SpName="Acc_CustomerIsAllowedAccess_xpre" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_CustomerIsDummyAccount" SpName="Acc_CustomerIsDummyAccount" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Left Menu - Credit term">
     <Setting Key="Acc_CreditTermSelCheckerList" SpName="Acc_CreditTermSelCheckerList" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Admin - Max Member Limit By Super">
-    <Setting Key="Acc_MaxMemberLimitBySuperSel" SpName="Acc_MaxMemberLimitBySuperSel" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="Acc_MaxMemberLimitBySuperUpd" SpName="Acc_MaxMemberLimitBySuperUpd" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_MaxMemberLimitBySuperSel" SpName="Acc_MaxMemberLimitBySuperSel_xpre" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_MaxMemberLimitBySuperUpd" SpName="Acc_MaxMemberLimitBySuperUpd_xpre" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Left Panel - Customer Info">
     <Setting Key="UpdateUserSearch" SpName="Acc_CustomerUpdUserSearch" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="SuperLimitDate">
-    <Setting Key="Acc_CustomerDateLimitSel" SpName="Acc_CustomerDateLimitSel" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerDateLimitSel" SpName="Acc_CustomerDateLimitSel_xpre" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="EAS_CustomerDateLimitSel" SpName="EAS_CustomerDateLimitSel" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="EAS_CustomerDateLimitMultipleUpd" SpName="EAS_CustomerDateLimitMultipleUpd" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
@@ -383,7 +383,7 @@
     <Setting Key="Acc_CustSetting_MaxPayoutCheckDownline" SpName="Acc_CustSetting_MaxPayoutCheckDownline" DbName="DBCUST.CustDB.wsv_nap" />
   </Function>
   <Function Name="Admin - Headline/External Group Mapping">
-    <Setting Key="Acc_GroupHeadline_Sel" SpName="Acc_GroupHeadline_Sel" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_GroupHeadline_Sel" SpName="Acc_GroupHeadline_Sel_xpre" DbName="DBCUST.CustDB.wsv_nap" />
     <Setting Key="Acc_ExternalGroupHeadline_Sel" SpName="Acc_ExternalGroupHeadline_Sel" DbName="DBCUST.CustDB.wsv_nap" />
     <Setting Key="Acc_ExternalGroupHeadline_Ins" SpName="Acc_ExternalGroupHeadline_Ins" DbName="DBCUST.CustDB.wsv_nap" />
     <Setting Key="Acc_ExternalGroupHeadline_Upd" SpName="Acc_ExternalGroupHeadline_Upd" DbName="DBCUST.CustDB.wsv_nap" />

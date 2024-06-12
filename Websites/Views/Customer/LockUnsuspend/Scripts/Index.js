@@ -62,20 +62,39 @@
         }
 
         parent.BlockUI();
-        $.post('Update', { custList: DOMElements.txtUsername.val(), isLock: isLock }, function (data) {
-            if (data.ErrorCode == 0) {
-                DOMElements.errMsg.html("<div class='alertboxscc'><div>Updated successfully.</div></div>");
+        $.ajax({
+            type: "POST",
+            url: "Update",
+            contentType: "application/json",
+            data: JSON.stringify({ custList: DOMElements.txtUsername.val(), isLock: isLock }),
+            dataType: "json",
+            success: function (data) {
+                if (data.ErrorCode == 0) {
+                    DOMElements.errMsg.html("<div class='alertboxscc'><div>Updated successfully.</div></div>");
+                    DOMElements.errMsg.show();
+                    setTimeout(function () {
+                        DOMElements.errMsg.html();
+                        DOMElements.errMsg.hide();
+                        Search();
+                    }, 3000);
+                } else {
+                    DOMElements.errMsg.html("<div class='alertboxerr'><div>" + data.ErrorMessage + "</div></div>");
+                    DOMElements.errMsg.show();
+                }
+            },
+            error: function (err) {    
+                if (err.status == 403) {
+                    DOMElements.errMsg.html("<div class='alertboxerr'><div>You don't have permission to access.</div></div>");                
+                }
+                else {
+                    DOMElements.errMsg.html("<div class='alertboxerr'><div>" + data.ErrorMessage + "</div></div>");
+                }              
                 DOMElements.errMsg.show();
-                setTimeout(function () {
-                    DOMElements.errMsg.html();
-                    DOMElements.errMsg.hide();
-                    Search();
-                }, 3000);
-            } else {
-                DOMElements.errMsg.html("<div class='alertboxerr'><div>" + data.ErrorMessage + "</div></div>");
-                DOMElements.errMsg.show();
+            },
+            complete: function () {
+                parent.jQuery.unblockUI();
             }
-        }).always(parent.jQuery.unblockUI);
+        });   
     }
 
     Init();
