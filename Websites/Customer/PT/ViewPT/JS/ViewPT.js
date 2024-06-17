@@ -515,6 +515,7 @@ var ViewPT = {
             case 9911: // IBC Live Casino
             case 9906: // RNG Casino
             case 9918: // Other RNG Casino
+            case 9909: //RNG Games
                 ViewPT.viewPTBasedOnKindOfCustomer(userName, sportId, betTypeId);
                 break;
             case 9908: // Virtual Sports
