@@ -15,5 +15,9 @@ namespace Fanex.Tarus.Customer.Requests.Customer
         public int RoleId { get; set; }
 
         public int UplineRoleId { get; set; }
+
+        public string Site { get; set; }
+
+        public string SiteLabel { get; set; }
     }
 }
