@@ -211,7 +211,7 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
                     trackingGroup = ParseSBPositionTakingTrackingTable(ele, custLevel);
                     break;
                 case LogAction.PT: // PT Others
-                    trackingGroup = ParsePositionTakingTrackingTable(ele, custLevel);
+                    trackingGroup = ParsePositionTakingTrackingTable(ele, custLevel, out groupId);
                     break;
                 case LogAction.SBComm: // Comm
                     trackingGroup = ParseSBCommSettingLog(ele, IsMember(custLevel));
@@ -448,7 +448,7 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
             return trackingGroup;
         }
 
-        private TrackingGroup ParsePositionTakingTrackingTable(XElement groupType, int custLevel)
+        private TrackingGroup ParsePositionTakingTrackingTable(XElement groupType, int custLevel, out int groupId)
         {
             TrackingGroup trackingGroup = new TrackingGroup();
             trackingGroup.N = GetCreateCustomerResource($"GroupType_153");
@@ -459,6 +459,7 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
             trackingTable.HeaderRows = new List<List<string>>();
             trackingTable.HeaderRows.Add(new List<string> { string.Empty });
             trackingTable.Rows = new List<List<TrackingValue>>();
+            groupId = 1;
             if (groupType.HasAttributes)
             {
                 foreach (var attr in groupType.Attributes())
@@ -481,6 +482,7 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
                 var settingLevel = item.Attribute("SettingLevel") == null ? 0 : int.Parse(item.Attribute("SettingLevel").Value);
                 var productId = item.Attribute("ProductID") == null ? 0 : int.Parse(item.Attribute("ProductID").Value);
                 var labelName = settingLevel == 1 ? CacheRef.GetProductName(productId) : CacheRef.GetSportName(sportType);
+                groupId = item.Attribute("GroupID") == null ? 1 : int.Parse(item.Attribute("GroupID").Value);
                 row.Add(new TrackingValue { Val = (isLive ? "Live " : string.Empty) + labelName });
 
                 foreach (var attr in item.Attributes().Where(i => !i.Name.LocalName.Equals("SportType")
