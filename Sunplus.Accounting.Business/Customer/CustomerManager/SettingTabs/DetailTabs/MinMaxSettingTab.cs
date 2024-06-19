@@ -71,7 +71,7 @@
             if (!customerInfoViewModel.HideRNGGames)
             {
                 masterSettingTab += string.Format(
-                    "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + BuildSettingUrl(custId, RoleIdConstants.Member, RoleIdConstants.Master, userName, siteName, ProductGroupIdConstants.LiveAndRNGCasino) + "\");' target='centerFr'>{0}</a>",
+                    "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + BuildSettingUrl(custId, RoleIdConstants.Member, RoleIdConstants.Master, userName, siteName, ProductGroupIdConstants.RNGGames) + "\");' target='centerFr'>{0}</a>",
                     "RNG Games");
             }
 
