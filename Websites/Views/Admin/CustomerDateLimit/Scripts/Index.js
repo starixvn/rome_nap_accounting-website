@@ -19,7 +19,7 @@ var CustomerDataRange = {
             }
         });
 
-        CustomerDataRange.getList(0);
+        //CustomerDataRange.getList(0);
     },
 
     getList: function (fromCache) {
