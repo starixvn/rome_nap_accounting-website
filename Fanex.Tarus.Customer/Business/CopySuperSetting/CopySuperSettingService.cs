@@ -59,7 +59,7 @@
             if (request.SportTypes.Any())
             {
                 processedCount += superIds.Count;
-                var products = request.SportTypes.Where(sp => sp.GroupId != 3) // Exclude GroupId = 3 for LC & RNG Casino, will update using new method
+                var products = request.SportTypes.Where(sp => sp.GroupId != 3 && sp.GroupId != 2) // Exclude GroupId = 3 for LC & RNG Casino, will update using new method
                     .GroupBy(sport => sport.ProductId)
                     .Select(grp => grp.ToList())
                     .Select(sports => new Product { ProductId = sports[0].ProductId, Sporttypes = sports.Select(sport => sport.SportTypeId).ToList() })
@@ -83,7 +83,7 @@
                     errorResults.AddRange(mappingResults.Where(result => result.ErrorCode != 0).Select(result => new Entities.Result(result.ErrorCode, result.ErrorMessage)));
                 }
 
-                if (request.SportTypes.Any(sp => sp.GroupId == 3))
+                if (request.SportTypes.Any(sp => sp.GroupId == 3 || sp.GroupId == 2))
                 {
                     var response = await customerServiceClient.CopySupersWinLossLimit(new CopySupersWinLossLimitParam(
                         request.CustId,
@@ -93,7 +93,7 @@
                         userId,
                         (byte)CustomerClientManager.ClientConfigs.SystemId,
                         ip,
-                        request.SportTypes.Where(sp => sp.GroupId == 3).Select(sp => sp.SportTypeId)));
+                        request.SportTypes.Where(sp => sp.GroupId == 3 || sp.GroupId == 2).Select(sp => sp.SportTypeId)));
                     var mappingResultsNewAPI = MappingCopyResults(response, request.SuperList.ToList());
                     errorResults.AddRange(mappingResultsNewAPI.Where(result => result.ErrorCode != 0).Select(result => new Entities.Result(result.ErrorCode, result.ErrorMessage)));
                 }
