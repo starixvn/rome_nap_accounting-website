@@ -94,7 +94,12 @@ transfer.crossCurrencyTransfer = {
                 this.showSystemExRate();
             }
             $("#divAjaxLoaderImageFromUser").hide();
-        }, this));
+        }, this)).fail(function (e) {
+            if (e.status == 403) {
+                transfer.utils.showError("You don't have permission to access");
+            }
+            $("#divAjaxLoaderImageToUser").hide();
+        });
     },
     showExRateToUser: function () {
         transfer.utils.hideMessage();
@@ -858,7 +863,11 @@ transfer.YesterdayTransactionsForm = {
             } else {
                 return rs;
             }
-        }, this));
+        }, this)).fail(function (e) {
+            if (e.status == 403) {
+                transfer.utils.showError("You don't have permission to access");
+            }           
+        });
     },
     checkCurrency:async function (){
         const fromCus =await transfer.YesterdayTransactionsForm.getUserInfo($("#fromuser").text().trim());
