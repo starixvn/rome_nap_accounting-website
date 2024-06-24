@@ -123,7 +123,12 @@ transfer.crossCurrencyTransfer = {
                 this.showSystemExRate();
             }
             $("#divAjaxLoaderImageToUser").hide();
-        }, this));
+        }, this)).fail(function (e) {
+            if (e.status == 403) {
+                transfer.utils.showError("You don't have permission to access");
+            }
+            $("#divAjaxLoaderImageToUser").hide();
+        });
     },
     showSystemExRate: function () {
         if (this.rowFromUser != null && this.rowToUser != null) {
@@ -387,7 +392,12 @@ transfer.crossCurrencyTransfer2 = {
                 this.showSystemExRate();
             }
             $("#divAjaxLoaderImageFromUser2").hide();
-        }, this));
+        }, this)).fail(function (e) {
+            if (e.status == 403) {
+                transfer.utils.showError("You don't have permission to access");
+            }
+            $("#divAjaxLoaderImageToUser").hide();
+        });
     },
     showExRateToUser: function () {
         transfer.utils.hideMessage();
@@ -426,7 +436,12 @@ transfer.crossCurrencyTransfer2 = {
                 this.showSystemExRate();
             }
             $("#divAjaxLoaderImageToUser2").hide();
-        }, this));
+        }, this)).fail(function (e) {
+            if (e.status == 403) {
+                transfer.utils.showError("You don't have permission to access");
+            }
+            $("#divAjaxLoaderImageToUser").hide();
+        });
     },
     showSystemExRate: function () {
         if (this.rowFromUser != null && this.rowToUser != null) {
