@@ -87,6 +87,12 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
         private const int UpdateAgentIndirectSBBetSettingActionId = 220042;
         private const int UpdateMemberSBBetSettingActionId = 220043;
 
+        private const int UpdateSuperIndirectBetSetting154ActionId = 220044;
+        private const int UpdateMasterIndirectBetSetting154ActionId = 220045;
+        private const int UpdateAgentIndirectBetSetting154ActionId = 220046;
+        private const int UpdateSMAMBetSetting154ActionId = 220047;
+
+
         private const int UpdateStakeLevel158ActionId = 220050;
         private const int UpdateWinLossLimit155ActionId = 852;
 
@@ -155,6 +161,11 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
             UpdateMemberSBBetSettingActionId,
             UpdateStakeLevel158ActionId,
             UpdateWinLossLimit155ActionId,
+
+            UpdateSuperIndirectBetSetting154ActionId,
+            UpdateMasterIndirectBetSetting154ActionId,
+            UpdateAgentIndirectBetSetting154ActionId,
+            UpdateSMAMBetSetting154ActionId,
         };
 
         public bool IsCreditCustomerSettingActionId(int actionId)
@@ -219,8 +230,11 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
                 case LogAction.Comm: // Comm Others
                     trackingGroup = ParseCommSettingLog(ele, out groupId);
                     break;
-                case LogAction.BetSetting: // SB Bet Setting
+                case LogAction.SBBetSetting: // SB Bet Setting
                     trackingGroup = ParseTrackingTable(ele, 151, DisplayType.G_GT_SportType_Bettype, out groupId);
+                    break;
+                case LogAction.BetSetting154: // Bet Setting RNG Games
+                    trackingGroup = ParseTrackingTable(ele, 154, DisplayType.SportType, out groupId);
                     break;
                 case LogAction.ParlayMaxPayout: // Parlay Max Payout
                     trackingGroup = ParseTrackingTable(ele, 152, DisplayType.G_GT_SportType_Bettype, out groupId);
@@ -745,6 +759,10 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
                 case UpdateMemberParlayMaxPayoutActionId:
                 case UpdateMemberSBCommActionId:
                 case UpdateMemberSBBetSettingActionId:
+                case UpdateSuperIndirectBetSetting154ActionId:
+                case UpdateMasterIndirectBetSetting154ActionId:
+                case UpdateAgentIndirectBetSetting154ActionId:
+                case UpdateSMAMBetSetting154ActionId:
                     return 1;
                 default:
                     throw new ArgumentOutOfRangeException("actionId");
@@ -802,7 +820,7 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
             || actionId == UpdateAgentPTOnMemberOthersActionId
             || actionId == UpdateAgentPTOnGroupedMemberOthersActionId;
 
-        private bool IsBetSettingActionId(int actionId)
+        private bool IsSBBetSettingActionId(int actionId)
             => actionId == CreateSuperBetSettingActionId
             || actionId == CreateMasterBetSettingActionId
             || actionId == CreateAgentBetSettingActionId
@@ -814,6 +832,12 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
             || actionId == UpdateAgentSBBetSettingActionId
             || actionId == UpdateAgentIndirectSBBetSettingActionId
             || actionId == UpdateMemberSBBetSettingActionId;
+
+        private bool IsBetSetting154ActionId(int actionId)
+            => actionId == UpdateSuperIndirectBetSetting154ActionId
+            || actionId == UpdateMasterIndirectBetSetting154ActionId
+            || actionId == UpdateAgentIndirectBetSetting154ActionId
+            || actionId == UpdateSMAMBetSetting154ActionId;
 
         private bool IsSBCommActionId(int actionId)
             => actionId == CreateSuperCommActionId
@@ -852,8 +876,10 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
                 return LogAction.SBComm;
             if (IsCommActionId(actionId))
                 return LogAction.Comm;
-            if (IsBetSettingActionId(actionId))
-                return LogAction.BetSetting;
+            if (IsSBBetSettingActionId(actionId))
+                return LogAction.SBBetSetting;
+            if (IsBetSetting154ActionId(actionId))
+                return LogAction.BetSetting154;
             if (IsParlayMaxPaoutActionId(actionId))
                 return LogAction.ParlayMaxPayout;
             if (IsStakeLevelActionId(actionId))
@@ -870,7 +896,8 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
         PT,
         SBComm,
         Comm,
-        BetSetting,
+        SBBetSetting,
+        BetSetting154,
         ParlayMaxPayout,
         WinlossLimit,
         StakeLevel,
