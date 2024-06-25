@@ -94,6 +94,8 @@ namespace Sunplus.Accounting.Business.LogDisplay
                     return ReplaceZeroWithUnlimited(val);
                 case 8:
                     return FormatAutoTransferSchedule(val);
+                case 9:
+                    return ReplaceEmptyWithUnassigned(val);
                 default:
                     break;
             }
@@ -207,6 +209,9 @@ namespace Sunplus.Accounting.Business.LogDisplay
 
             return val;
         }
+
+        public static string ReplaceEmptyWithUnassigned(string val)
+            =>string.IsNullOrWhiteSpace(val)? "Unassigned" : val;
 
         public static string FormatAutoTransferSchedule(string str)
         {

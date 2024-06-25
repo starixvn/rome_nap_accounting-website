@@ -154,8 +154,8 @@ namespace Sunplus.Accounting.Business.LogDisplay
                         string actionName = CastAide.AsString(row["actionname"]);
                         if (_customerSettingLogFormatter.IsCreditCustomerSettingActionId(actionId))
                         {
-                            trackingvalue = trackingvalue.Replace("=\"\"", "=\"Unassigned\"");
-                            trackingvalueold = trackingvalueold.Replace("=\"\"", "=\"Unassigned\"");
+                            //trackingvalue = trackingvalue.Replace("=\"\"", "=\"Unassigned\"");
+                            //trackingvalueold = trackingvalueold.Replace("=\"\"", "=\"Unassigned\"");
                             _customerSettingLogFormatter.GenerateDetail(record, actionId, trackingvalue, trackingvalueold, spName, actionName);
                             record.Diffs = _DiffsTrackingValue(trackingvalue, CastAide.AsString(trackingvalueold, string.Empty), true);
                         }
