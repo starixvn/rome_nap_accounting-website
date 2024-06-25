@@ -843,6 +843,11 @@ transfer.YesterdayTransactionsForm = {
                     closeDialogModal()
                 }
                 transfer.utils.unBlock();
+            }).fail(function (e) {
+                if (e.status == 403) {
+                    transfer.utils.showError("You don't have permission to access");
+                }
+                transfer.utils.unBlock();
             });
         return true;
     },
