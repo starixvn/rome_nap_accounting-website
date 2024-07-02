@@ -47,6 +47,9 @@ function RenderMultiSelect(id) {
 function SearchLicenseeCode(pageIndex, pageSize) {
     parent.BlockUI();
     var lienseeIds = $("#selectLicensee").multiSelect("getCheckedItems").join(',');
+    if ($("#selectLicensee").multiSelect("getUncheckItems").length === 0) {
+        lienseeIds = "All";
+    }
     var status = $("#selectStatus").multiSelect("getCheckedItems").join(',');
     filterValues.LicenseeIds = lienseeIds;
     filterValues.StatusIds = status;
