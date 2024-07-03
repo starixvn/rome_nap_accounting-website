@@ -370,8 +370,9 @@
     <Reference Include="Fanex.Nap.SSO, Version=1.0.0.8, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Nap.SSO.1.0.0.8\lib\net40\Fanex.Nap.SSO.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.ProductStatus.Setting, Version=1.0.4.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.ProductStatus.Setting.1.0.4.3-beta01\lib\net461\Fanex.ProductStatus.Setting.dll</HintPath>
+    <Reference Include="Fanex.ProductStatus.Setting, Version=1.0.4.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.ProductStatus.Setting.1.0.4.2\lib\net461\Fanex.ProductStatus.Setting.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.PTEngine, Version=1.0.7.7, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.PTEngine.1.0.7.7\lib\net40\Fanex.PTEngine.dll</HintPath>
