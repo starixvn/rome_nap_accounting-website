@@ -82,6 +82,9 @@
             }
             , error: function (e) {
                 $("#divAjaxLoaderImageToUser").hide();
+                if (e.status == 403) {
+                    transfer.ui.showError("You don't have permission to access");
+                }
             }
         });
     };
