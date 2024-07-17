@@ -208,6 +208,9 @@
             return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(ProductResultTitle, result));
         }
 
+        public ActionResult FastSpinResult(ThirdPartyResultRequest request)
+            => BaseResult(request, "FastSpinResultConfigs");
+
         private ActionResult BaseResult(ThirdPartyResultRequest request, string configName)
         {
             SetProductResultTitle(request.ProductId);

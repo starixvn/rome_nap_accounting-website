@@ -131,6 +131,9 @@
     <Reference Include="Fanex.BetList.ESports, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.ESports.2.0.0\lib\net461\Fanex.BetList.ESports.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.BetList.FastSpin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.FastSpin.1.0.0-Beta-02\lib\net461\Fanex.BetList.FastSpin.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.BetList.FGG, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.FGG.2.0.0.1\lib\net461\Fanex.BetList.FGG.dll</HintPath>
     </Reference>
