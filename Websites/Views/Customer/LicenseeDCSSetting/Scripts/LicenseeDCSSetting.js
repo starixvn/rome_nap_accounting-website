@@ -1,9 +1,11 @@
 ﻿(function ($, common, rootUrl) {
+    const exchangeProductId = 31;
     var boxContentDiv = $("#boxContent"),
         siteDropDown = $("#siteDropDown"),
         superDropDown = $("#superDropDown"),
         productDropDown = $("#productDropDown"),
-        functionDropDown = $("#functionDropDown");
+        functionDropDown = $("#functionDropDown"),
+        agentSection = $(".agent-section");
     var isMultipleSuperDropDownOpen = false;
     var agentsExtraInfo = [];
 
@@ -33,8 +35,8 @@
     }
 
     function getSelectedAgents() {
-        var agentIds = $("#agentDropDown").multiSelect("getCheckedItems");
-        var agentNames = agentIds.length > 0 ? $("#agentDropDown").multiSelect("getCheckedItemsByText") : [];
+        var agentIds = $('#agentDropDown').multiSelect("getCheckedItems");
+        var agentNames = agentIds.length > 0 ? $('#agentDropDown').multiSelect("getCheckedItemsByText") : [];
 
         return {
             AgentIds: agentIds.join(","),
@@ -93,7 +95,7 @@
             });
         }
 
-        $("#agentDropDown").multiSelect({
+        $('#agentDropDown').multiSelect({
             minWidth: 200,
             maxHeight: 450,
             shadow: true,
@@ -164,6 +166,17 @@
         })[0];
 
         renderDropDown(functionDropDown, setting.SettingTypes);
+    }
+
+    function functionDropDown_change() {
+        resetFrom();
+        var settingType = parseInt(this.value);
+        if (settingType == 5 || settingType == 18) {
+            agentSection.hide();
+        }
+        else {
+            agentSection.show();
+        }
     }
     
 
@@ -244,32 +257,35 @@
                 };
 
                 switch (functionId) {
+                    case "0":
+                        globalStakeLevelHandler.initialize(defaultParam, selectButton_click);
+                        break;
                     case "1":
                         ptHandler.initialize(defaultParam, getSelectedAgents);
                         break;
                     case "2":
                         betSettingHandler.initialize(defaultParam, selectButton_click, getSelectedAgents);
                         break;
-                    case "10":
-                        betSettingWithMaxPayoutPerMatchHandler.initialize(defaultParam, selectButton_click, getSelectedAgents);
-                        break;
-                    case "11":
-                        betSettingWithoutMaxPerMatchHandler.initialize(defaultParam, selectButton_click, getSelectedAgents);
-                        break;
-                    case "12":
-                        betSettingWithMaxPerBallHandler.initialize(defaultParam, selectButton_click, getSelectedAgents);
-                        break;
                     case "4":
                         statusHandler.initialize(defaultParam, selectButton_click, getSelectedAgents);
                         break;
-                    case "0":
-                        globalStakeLevelHandler.initialize(defaultParam, selectButton_click);
+                    case "5":
+                        chargeCommissionHandler.initialize(defaultParam);
                         break;
                     case "7":
                         stakeLevelHandler.initialize(defaultParam, selectButton_click, getSelectedAgents);
                         break;
                     case "8":
                         stakeLevelGroupHandler.initialize(defaultParam, selectButton_click, getSelectedAgents);
+                        break;
+                    case "10":
+                        betSettingWithMaxPayoutPerMatchHandler.initialize(defaultParam, selectButton_click, getSelectedAgents);
+                        break;
+                    case "12":
+                        betSettingWithMaxPerBallHandler.initialize(defaultParam, selectButton_click, getSelectedAgents);
+                        break;
+                    case "18":
+                        chargePTHandler.initialize(defaultParam);
                         break;
                     default:
                         break;
@@ -287,32 +303,35 @@
     function getFunctionUrl(functionId) {
         var url;
         switch (functionId) {
+            case "0":
+                url = "LicenseeDcsSetting/GlobalStakeLevel";
+                break;
             case "1":
                 url = "LicenseeDcsSetting/PT";
                 break;
             case "2":
                 url = "LicenseeDcsSetting/BetSetting";
                 break;
-            case "10":
-                url = "LicenseeDcsSetting/BetSettingWithMaxPayoutPerMatch";
-                break;
-            case "11":
-                url = "LicenseeDcsSetting/BetSettingWithoutMaxPerMatch";
-                break;
-            case "12":
-                url = "LicenseeDcsSetting/BetSettingWithMaxPerBall";
-                break;
             case "4":
                 url = "LicenseeDcsSetting/Status";
                 break;
-            case "0":
-                url = "LicenseeDcsSetting/GlobalStakeLevel";
+            case "5":
+                url = "LicenseeDcsSetting/ChargeCommission";
                 break;
             case "7":
                 url = "LicenseeDcsSetting/StakeLevel";
                 break;
             case "8":
                 url = "LicenseeDcsSetting/StakeLevelGroup";
+                break;
+            case "10":
+                url = "LicenseeDcsSetting/BetSettingWithMaxPayoutPerMatch";
+                break;
+            case "12":
+                url = "LicenseeDcsSetting/BetSettingWithMaxPerBall";
+                break;
+            case "18":
+                url = "LicenseeDcsSetting/ChargePT";
                 break;
             default:
                 url = "";
@@ -341,7 +360,7 @@
         renderSelectAgentList([]);
         siteDropDown.change(siteDropDown_change).select2();
         productDropDown.change(productDropDown_change).select2();
-        functionDropDown.select2({minimumResultsForSearch: Infinity});
+        functionDropDown.change(functionDropDown_change).select2({minimumResultsForSearch: Infinity});
         $("#selectButton").click(selectButton_click);
     }
 

@@ -1,4 +1,5 @@
 ﻿using Fanex.NAP.Framework.Data;
+using Sunplus.Accounting.Core.Configurations;
 
 namespace Fanex.Tarus.Customer.Criteria.LicenseeDcsSetting
 {
@@ -16,6 +17,8 @@ namespace Fanex.Tarus.Customer.Criteria.LicenseeDcsSetting
         public int SuperId { get; }
 
         public int AgentId { get; }
+
+        public byte SettingStatus => WebSettings.SettingStatus;
 
         public override string GetSettingKey()
             => "Acc_Dep_CustSetting_BetLimitFullLineSettingSelect";

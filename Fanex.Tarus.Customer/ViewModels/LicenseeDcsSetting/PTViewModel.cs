@@ -12,7 +12,7 @@ namespace Fanex.Tarus.Customer.ViewModels.LicenseeDcsSetting
             SuperPT = new List<PTEntity>();
         }
 
-        public List<PTEntity> SuperPT { get; set; }
+        public IEnumerable<PTEntity> SuperPT { get; set; }
 
         public bool IsAgentOnly { get; set; }
 

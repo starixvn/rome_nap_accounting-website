@@ -87,6 +87,64 @@ namespace Fanex.Tarus.Customer.Controller
         }
 
         [HttpPost, AuthenticateRead]
+        public ActionResult ChargePT(ChargePTViewModel model)
+        {
+            // Get first AgentId.
+            var superIds = ConvertToIntArray(model.SuperIds).ToList();
+
+            if (superIds.Count > 1)
+            {
+                superIds = new List<int> { 0 };
+            }
+
+            model.SuperPT = _settingService.GetChargePositionTaking(model.ProductId, superIds[0]);
+
+            return PartialView("~/Views/Customer/LicenseeDCSSetting/_ChargePT.cshtml", model);
+        }
+
+        [HttpPost, AuthenticateHost]
+        public ActionResult UpdateChargePT(ChargePTViewModel model)
+        {
+            var result = _settingService.UpdateChargePositionTaking(
+                model.ProductId,
+                model.SuperPT,
+                ConvertToIntArray(model.SuperIds),
+                AppSession.AccId,
+                Utils.GetClientIP());
+
+            return Json(result, JsonRequestBehavior.DenyGet);
+        }
+
+        [HttpPost, AuthenticateRead]
+        public ActionResult ChargeCommission(ChargeCommissionViewModel model)
+        {
+            // Get first AgentId.
+            var superIds = ConvertToIntArray(model.SuperIds).ToList();
+
+            if (superIds.Count > 1)
+            {
+                superIds = new List<int> { 0 };
+            }
+
+            model.Commission = _settingService.GetChargeCommission(model.ProductId, superIds[0]);
+
+            return PartialView("~/Views/Customer/LicenseeDCSSetting/_ChargeCommission.cshtml", model);
+        }
+
+        [HttpPost, AuthenticateHost]
+        public ActionResult UpdateChargeCommission(ChargeCommissionViewModel model)
+        {
+            var result = _settingService.UpdateChargeCommission(
+                model.ProductId,
+                model.Commission,
+                ConvertToIntArray(model.SuperIds),
+                AppSession.AccId,
+                Utils.GetClientIP());
+
+            return Json(result, JsonRequestBehavior.DenyGet);
+        }
+
+        [HttpPost, AuthenticateRead]
         public ActionResult BetSetting(BetSettingViewModel model)
         {
             // Get first AgentId.
@@ -97,19 +155,6 @@ namespace Fanex.Tarus.Customer.Controller
             model.BetSettings = betSettings;
 
             return PartialView("~/Views/Customer/LicenseeDCSSetting/_BetSetting.cshtml", model);
-        }
-
-        [HttpPost, AuthenticateRead]
-        public ActionResult BetSettingWithoutMaxPerMatch(BetSettingWithoutMaxPerMatchViewModel model)
-        {
-            // Get first AgentId.
-            var agentIds = ConvertToIntArray(model.AgentIds).ToList();
-            var agentId = agentIds.Count == 1 ? agentIds[0] : 0;
-
-            var betSettings = _settingService.GetBetSettingWithoutMaxPerMatch(model.ProductId, model.SuperId, agentId);
-            model.BetSettings = betSettings;
-
-            return PartialView("~/Views/Customer/LicenseeDCSSetting/_BetSettingWithoutMaxPerMatch.cshtml", model);
         }
 
         [HttpPost, AuthenticateRead]
@@ -142,21 +187,6 @@ namespace Fanex.Tarus.Customer.Controller
         public ActionResult UpdateBetSetting(BetSettingViewModel model)
         {
             var result = _settingService.UpdateBetSetting(
-                model.SuperId,
-                model.ApplyExistedMem,
-                model.BetSettings.FirstOrDefault(),
-                ConvertToIntArray(model.AgentIds),
-                model.IsAgentOnly,
-                AppSession.AccId,
-                Utils.GetClientIP());
-
-            return Json(result, JsonRequestBehavior.DenyGet);
-        }
-
-        [HttpPost, AuthenticateHost]
-        public ActionResult UpdateBetSettingWithoutMaxPerMatch(BetSettingWithoutMaxPerMatchViewModel model)
-        {
-            var result = _settingService.UpdateBetSettingWithoutMaxPerMatch(
                 model.SuperId,
                 model.ApplyExistedMem,
                 model.BetSettings.FirstOrDefault(),

@@ -31,17 +31,21 @@ namespace Fanex.Tarus.Customer.Business.LicenseeDcsSetting
         public IEnumerable<ProductSettingTypeEntity> GetProducts()
             => _settingDataAccess.GetProducts(new GetProductCriteria());
 
-        public List<PTEntity> GetPositionTaking(int productId, int superId)
+        public IEnumerable<PTEntity> GetPositionTaking(int productId, int superId)
             => _settingDataAccess.GetPositionTaking(
                 new GetPositionTakingCriteria(productId, superId));
+
+        public IEnumerable<ChargePTEntity> GetChargePositionTaking(int productId, int superId)
+            => _settingDataAccess.GetChargePositionTaking(
+                new GetChargePositionTakingCriteria(productId, superId));
+
+        public IEnumerable<ChargeCommissionEntity> GetChargeCommission(int productId, int superId)
+            => _settingDataAccess.GetChargeCommission(
+                new GetChargeCommissionCriteria(productId, superId));
 
         public IEnumerable<BetSettingEntity> GetBetSettings(int productId, int superId, int agentId)
             => _settingDataAccess.GetBetSettings(
                 new GetBetSettingCriteria(productId, superId, agentId));
-
-        public IEnumerable<BetSettingWithoutMaxPerMatchEntity> GetBetSettingWithoutMaxPerMatch(int productId, int superId, int agentId)
-            => _settingDataAccess.GetBetSettingWithoutMaxPerMatch(
-                new GetBetSettingWithoutMaxPerMatchCriteria(productId, superId, agentId));
 
         public IEnumerable<BetSettingWithMaxPayoutPerMatchEntity> GetBetSettingsWithMaxPayoutPerMatch(int productId, int superId, int agentId)
             => _settingDataAccess.GetBetSettingsWithMaxPayoutPerMatch(
@@ -111,9 +115,9 @@ namespace Fanex.Tarus.Customer.Business.LicenseeDcsSetting
 
         public Result UpdatePositionTaking(
             int productId,
-            List<PTEntity> superPT,
+            IEnumerable<PTEntity> superPT,
             IEnumerable<int> agentIds,
-            List<AgentsExtraInfo> agentsExtraInfo,
+            IEnumerable<AgentsExtraInfo> agentsExtraInfo,
             bool isAgentOnly,
             int userId,
             string ip)
@@ -123,7 +127,7 @@ namespace Fanex.Tarus.Customer.Business.LicenseeDcsSetting
             
             foreach (var agentId in agentIds)
             {
-                var superId = agentsExtraInfo.Find(e => e.Id == agentId).SuperID;
+                var superId = agentsExtraInfo.FirstOrDefault(e => e.Id == agentId)?.SuperID ?? 0;
                 result = UpdatePositionTaking(productId, superId, superPT, agentId, isAgentOnly, userId, ip);
 
                 if (result.ErrorCode != 0)
@@ -134,6 +138,56 @@ namespace Fanex.Tarus.Customer.Business.LicenseeDcsSetting
 
             return errorResults.Count == 0
                 ? new Result(0, LicenseeDcsSettingLabels.UpdatePTSuccessfully)
+                : new Result(1, string.Join("<br/>", errorResults.Select(err => err.ErrorMessage)));
+        }
+
+        public Result UpdateChargePositionTaking(
+            int productId,
+            IEnumerable<ChargePTEntity> PT,
+            IEnumerable<int> superIds,
+            int userId,
+            string ip)
+        {
+            Result result;
+            IList<Result> errorResults = new List<Result>();
+
+            foreach (var superId in superIds)
+            {
+                result = UpdateChargePositionTaking(productId, superId, PT, userId, ip);
+
+                if (result.ErrorCode != 0)
+                {
+                    errorResults.Add(result);
+                }
+            }
+
+            return errorResults.Count == 0
+                ? new Result(0, LicenseeDcsSettingLabels.UpdatePTSuccessfully)
+                : new Result(1, string.Join("<br/>", errorResults.Select(err => err.ErrorMessage)));
+        }
+
+        public Result UpdateChargeCommission(
+            int productId,
+            IEnumerable<ChargeCommissionEntity> commission,
+            IEnumerable<int> superIds,
+            int userId,
+            string ip)
+        {
+            Result result;
+            IList<Result> errorResults = new List<Result>();
+
+            foreach (var superId in superIds)
+            {
+                result = UpdateChargeCommission(productId, superId, commission, userId, ip);
+
+                if (result.ErrorCode != 0)
+                {
+                    errorResults.Add(result);
+                }
+            }
+
+            return errorResults.Count == 0
+                ? new Result(0, LicenseeDcsSettingLabels.UpdateChargeCommissionSuccessfully)
                 : new Result(1, string.Join("<br/>", errorResults.Select(err => err.ErrorMessage)));
         }
 
@@ -152,33 +206,6 @@ namespace Fanex.Tarus.Customer.Business.LicenseeDcsSetting
             foreach (var agentId in agentIds)
             {
                 result = UpdateBetSetting(superId, applyExistedMem, betSetting, agentId, isAgentOnly, userId, ip);
-
-                if (result.ErrorCode != 0)
-                {
-                    errorResults.Add(result);
-                }
-            }
-
-            return errorResults.Count == 0
-                ? new Result(0, LicenseeDcsSettingLabels.UpdateBetSettingSuccessfully)
-                : new Result(1, string.Join("<br/>", errorResults.Select(err => err.ErrorMessage)));
-        }
-
-        public Result UpdateBetSettingWithoutMaxPerMatch(
-            int superId,
-            bool applyExistedMem,
-            BetSettingWithoutMaxPerMatchEntity betSetting,
-            IEnumerable<int> agentIds,
-            bool isAgentOnly,
-            int userId,
-            string ip)
-        {
-            Result result;
-            IList<Result> errorResults = new List<Result>();
-
-            foreach (var agentId in agentIds)
-            {
-                result = UpdateBetSettingWithoutMaxPerMatch(superId, applyExistedMem, betSetting, agentId, isAgentOnly, userId, ip);
 
                 if (result.ErrorCode != 0)
                 {
@@ -329,13 +356,37 @@ namespace Fanex.Tarus.Customer.Business.LicenseeDcsSetting
         private Result UpdatePositionTaking(
             int productId,
             int superId,
-            List<PTEntity> superPT,
+            IEnumerable<PTEntity> superPT,
             int agentId,
             bool isAgentOnly,
             int userId,
             string ip)
         {
             ICriteria criteria = new UpdatePositionTakingCriteria(productId, superId, superPT, agentId, isAgentOnly, userId, ip);
+
+            return _settingDataAccess.ExecuteNonQuery(criteria);
+        }
+
+        private Result UpdateChargePositionTaking(
+            int productId,
+            int superId,
+            IEnumerable<ChargePTEntity> PT,
+            int userId,
+            string ip)
+        {
+            ICriteria criteria = new UpdateChargePositionTakingCriteria(productId, superId, PT, userId, ip);
+
+            return _settingDataAccess.ExecuteNonQuery(criteria);
+        }
+
+        private Result UpdateChargeCommission(
+            int productId,
+            int superId,
+            IEnumerable<ChargeCommissionEntity> commission,
+            int userId,
+            string ip)
+        {
+            ICriteria criteria = new UpdateChargeCommissionCriteria(productId, superId, commission, userId, ip);
 
             return _settingDataAccess.ExecuteNonQuery(criteria);
         }
@@ -350,20 +401,6 @@ namespace Fanex.Tarus.Customer.Business.LicenseeDcsSetting
             string ip)
         {
             ICriteria criteria = new UpdateBetSettingCriteria(superId, applyExistedMem, betSetting, agentId, isAgentOnly, userId, ip);
-
-            return _settingDataAccess.ExecuteNonQuery(criteria);
-        }
-
-        private Result UpdateBetSettingWithoutMaxPerMatch(
-            int superId,
-            bool applyExistedMem,
-            BetSettingWithoutMaxPerMatchEntity betSetting,
-            int agentId,
-            bool isAgentOnly,
-            int userId,
-            string ip)
-        {
-            ICriteria criteria = new UpdateBetSettingWithoutMaxPerMatchCriteria(superId, applyExistedMem, betSetting, agentId, isAgentOnly, userId, ip);
 
             return _settingDataAccess.ExecuteNonQuery(criteria);
         }

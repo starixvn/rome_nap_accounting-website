@@ -7,12 +7,14 @@
         BetSetting = 2,
         Commission = 3,
         ProductStatus = 4,
+        ChargeCommission = 5,
         ChargedComm = 5,
         WinLossLimit = 6,
         StakeLevel = 7,
         StakeLevelGroup = 8,
         BetSettingWithMaxPayoutPerMatch = 10,
         BetSettingWithoutMaxPerMatch = 11,
-        BetSettingWithMaxPerBall = 12
+        BetSettingWithMaxPerBall = 12,
+        ChargePositionTaking = 18
     }
 }

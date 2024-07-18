@@ -1,0 +1,38 @@
+﻿@using Fanex.Tarus.Customer.Resources
+@using Fanex.Tarus.Customer.ViewModels.LicenseeDcsSetting;
+@model ChargeCommissionViewModel
+@{
+    Layout = null;
+}
+<table class="tblcollapse pt_table">
+    <thead>
+        <tr class="title">
+            <td colspan="2">@LicenseeDcsSettingLabels.ChargeComm <span>(@Model.ShowSuperOrAgentNames())</span></td>
+        </tr>
+    </thead>
+    <tbody>
+
+
+        @if (Model.Commission.Any())
+        {
+            foreach (var comm in Model.Commission)
+            {
+                <tr data-sporttype="@comm.SportType" data-bettype="@comm.BetType" data-pt="@comm.Discount" class="row_js">
+                    <td>@comm.SportTypeName</td>
+                    <td class="w300">
+                        @Html.DropDownList("commDropDown_" + comm.BetType + "_" + comm.SportType, Model.CommissionList(comm.Discount), new { @class = "halfwidth dropdowncomm" })
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="2">There is no information available.</td>
+            </tr>
+        }
+
+
+    </tbody>
+</table>
+<button type="button" class="update-setting-button mT5" id="btnUpdateComm">@LicenseeDcsSettingLabels.Update</button>

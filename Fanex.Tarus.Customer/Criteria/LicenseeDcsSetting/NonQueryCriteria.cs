@@ -1,4 +1,5 @@
 ﻿using Fanex.NAP.Framework.Data;
+using Sunplus.Accounting.Core.Configurations;
 
 namespace Fanex.Tarus.Customer.Criteria.LicenseeDcsSetting
 {
@@ -11,6 +12,8 @@ namespace Fanex.Tarus.Customer.Criteria.LicenseeDcsSetting
         public int ErrCode { get; set; }
 
         public string ErrMsg { get; set; }
+
+        public byte SettingStatus => WebSettings.SettingStatus;
 
         public override bool IsValid()
             => UserId > 0 && !string.IsNullOrEmpty(IP);
