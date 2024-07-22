@@ -602,6 +602,7 @@ accManager.accounts = {
         var lastName = $("#tbxLastNameNewAcc").val();
         var password = $("#tbxPassNewAcc").val();
         var deptId = $("#selDeptNewAcc").val();
+        var deptName = $("#selDeptNewAcc option:selected").text();
 
         if (accManager.utils.isEmpty(userName)) {
             accManager.utils.showErr("Please input Username!");
@@ -643,8 +644,10 @@ accManager.accounts = {
             firstName: accManager.utils.encodeSpecifiedCharacter(firstName),
             lastName: accManager.utils.encodeSpecifiedCharacter(lastName),
             groupId: deptId,
+            groupName: deptName,
             password: password,
             code: $('#code').val()
+
         };
 
         accManager.utils.blockUI();
