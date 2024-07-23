@@ -211,6 +211,9 @@
         public ActionResult FastSpinResult(ThirdPartyResultRequest request)
             => BaseResult(request, "FastSpinResultConfigs");
 
+        public ActionResult FACHAIResult(ThirdPartyResultRequest request)
+            => BaseResult(request, "FACHAIResultConfigs");
+
         private ActionResult BaseResult(ThirdPartyResultRequest request, string configName)
         {
             SetProductResultTitle(request.ProductId);
