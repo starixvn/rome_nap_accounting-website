@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Functions SiteId="104" SiteName="NAP - Accounting">
-  <Function Name="Manage Amin">
+  <Function Name="Manage Admin">
     <Setting Key="Acc_CustomerIns_Register" SpName="Acc_CustomerIns_Register_uat2" DbName="DBCust.DBGLOB.wsv_nap" Plain="0" />
     <Setting Key="Acc_CustomerIns_Rollback" SpName="Acc_CustomerIns_Rollback_uat2" DbName="DBCust.DBGLOB.wsv_nap" Plain="0" />
   </Function> 
