@@ -125,8 +125,8 @@
     <Setting Key="Acc_CreditTermUpdSetGroupHeadline" SpName="Acc_CreditTermUpdSetGroupHeadline" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="User control">
-    <Setting Key="Con_AdminIns" SpName="Acc_Con_AdminIns_uat2" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="Acc_CustomerInsUserInfo_Rollback" SpName="Acc_CustomerInsUserInfo_Rollback_uat2" DbName="DBCust.CustDB.wsv_nap" />    
+    <Setting Key="Con_AdminIns" SpName="Acc_Con_AdminIns_uat2" DbName="DBCust3.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerInsUserInfo_Rollback" SpName="Acc_CustomerInsUserInfo_Rollback" DbName="DBCust3.CustDB.wsv_nap" />    
     <Setting Key="Acc_Con_AdminSelPwdVerify" SpName="Acc_Con_AdminSelPwdVerify" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Con_AdminUpd" SpName="Acc_Con_AdminUpd" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="AdminUpdClosed" SpName="Acc_Con_AdminUpdClosed" DbName="DBCust.CustDB.wsv_nap" />
