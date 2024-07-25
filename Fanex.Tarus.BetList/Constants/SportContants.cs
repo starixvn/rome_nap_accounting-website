@@ -100,6 +100,7 @@
         public const int SabaxD = 240;
         public const int SabaCoins = 149;
         public const int SabaPromotion = 246;
+        public const int FastSpin = 230;
 
     }
 }
