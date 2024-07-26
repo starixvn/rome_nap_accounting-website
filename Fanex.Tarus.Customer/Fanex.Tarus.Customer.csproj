@@ -110,8 +110,8 @@
     <Reference Include="Fanex.Tarus.Admin, Version=1.0.5.12, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Admin.1.0.5.13\lib\net461\Fanex.Tarus.Admin.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Tarus.Business.Implement, Version=1.0.1.10, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Business.Implement.1.0.1.12\lib\net40\Fanex.Tarus.Business.Implement.dll</HintPath>
+    <Reference Include="Fanex.Tarus.Business.Implement, Version=1.0.1.13, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Business.Implement.1.0.1.13\lib\net40\Fanex.Tarus.Business.Implement.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.CopySuperWinlossSetting, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.CopySuperWinlossSetting.1.0.0.5\lib\net461\Fanex.Tarus.CopySuperWinlossSetting.dll</HintPath>

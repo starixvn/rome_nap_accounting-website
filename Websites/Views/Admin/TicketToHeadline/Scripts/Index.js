@@ -1,5 +1,5 @@
 ﻿var form;
-var showNotifyHeadlinesButtonForProducts = [1, 3, 5, 27];
+var showNotifyHeadlinesButtonForProducts = [1, 3, 5, 27, 88];
 $(document).ready(function () {
 
     ajax_form($('#mainForm'), function (result) {
