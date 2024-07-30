@@ -166,6 +166,7 @@
         })[0];
 
         renderDropDown(functionDropDown, setting.SettingTypes);
+		functionDropDown.change();
     }
 
     function functionDropDown_change() {
