@@ -182,6 +182,9 @@
     <Reference Include="Fanex.BetList.MGRNGCasino, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.MGRNGCasino.2.0.0\lib\net461\Fanex.BetList.MGRNGCasino.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.BetList.Nextspin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.Nextspin.1.0.0-beta-01\lib\net461\Fanex.BetList.Nextspin.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.BetList.NG2, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.NG2.2.0.0\lib\net461\Fanex.BetList.NG2.dll</HintPath>
     </Reference>

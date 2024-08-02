@@ -299,6 +299,8 @@
                 return SportContants.FastSpin;
             if (11300 <= betTypeId && betTypeId <= 11399)
                 return SportContants.FACHAI;
+            if (10450 <= betTypeId && betTypeId <= 10750)
+                return SportContants.Nextspin;
             return 0;
         }
 

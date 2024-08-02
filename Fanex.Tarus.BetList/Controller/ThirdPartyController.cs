@@ -221,6 +221,9 @@
 
         public ActionResult FACHAIResult(ThirdPartyResultRequest request)
             => BaseResult(request, "FACHAIResultConfigs");
+            
+        public ActionResult NextspinResult(ThirdPartyResultRequest request)
+            => BaseResult(request, "NextspinResultConfigs");
 
         private ActionResult BaseResult(ThirdPartyResultRequest request, string configName)
         {
