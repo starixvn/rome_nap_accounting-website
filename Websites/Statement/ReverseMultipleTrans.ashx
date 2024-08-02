@@ -8,6 +8,7 @@ using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Helper;
 using System.Linq;
 using System.Collections.Generic;
+using Sunplus.Accounting.Business.Security;
 
 public class ReverseMultipleTrans : IHttpHandler, IRequiresSessionState
 {
@@ -24,65 +25,74 @@ public class ReverseMultipleTrans : IHttpHandler, IRequiresSessionState
         }
         else
         {
-            var custName = context.Request["custName"].ToString();
-            var userService = Sunplus.Accounting.Business.BootStrappers.CommonBootStrapper.Locator.GetInstance<Sunplus.Accounting.Business.IUserService>();
-            int custId = userService.GetCustomerIdByUsername(custName);
-            var refsno = context.Request["refsno"].Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-            if (refsno.Length == 0)
+            if (Permissions.GetHostPermission(Enumerations.Functions.Transfer.DeleteTrans))
             {
-                context.Response.Write("1|" + AlertMessage.GetMsg(IBCUtils.IbcError.INVALID_INPUT_VALUE_MSG, AlertMessage.MsgType.Error));
-                return;
-            }
-            List<ReverseError> reverseErrors = new List<ReverseError>();
-            List<string> successRefs = new List<string>();
-            foreach (var refno in refsno)
-            {
-                long parsedRefno = 0;
-                if (!long.TryParse(refno, out parsedRefno))
+                var custName = context.Request["custName"].ToString();
+                var userService = Sunplus.Accounting.Business.BootStrappers.CommonBootStrapper.Locator.GetInstance<Sunplus.Accounting.Business.IUserService>();
+                int custId = userService.GetCustomerIdByUsername(custName);
+                var refsno = context.Request["refsno"].Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                if (refsno.Length == 0)
                 {
                     context.Response.Write("1|" + AlertMessage.GetMsg(IBCUtils.IbcError.INVALID_INPUT_VALUE_MSG, AlertMessage.MsgType.Error));
                     return;
                 }
-                else
-                {
-                    try
-                    {
-                        IBCUtils.IbcError error = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.AccountStatement.Acc_BettransDelTransaction(parsedRefno, custId, (int)context.Session["AccId"], context.Request.UserHostAddress);
-                        if (error.ErrorCode != 0)
-                        {
-                            reverseErrors.Add(new ReverseError() { Refno = parsedRefno.ToString(), Message = error.ErrorMsg });
 
-                        }
-                        else
-                        {
-                            successRefs.Add(parsedRefno.ToString());
-                        }
-                    }
-                    catch (Exception ex)
+                List<ReverseError> reverseErrors = new List<ReverseError>();
+                List<string> successRefs = new List<string>();
+                foreach (var refno in refsno)
+                {
+                    long parsedRefno = 0;
+                    if (!long.TryParse(refno, out parsedRefno))
                     {
-                        Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-                        context.Response.Write("1|" + AlertMessage.GetMsg(IBCUtils.IbcError.INTERNAL_ERROR_MSG, AlertMessage.MsgType.Error));
+                        context.Response.Write("1|" + AlertMessage.GetMsg(IBCUtils.IbcError.INVALID_INPUT_VALUE_MSG, AlertMessage.MsgType.Error));
                         return;
                     }
+                    else
+                    {
+                        try
+                        {
+
+                            IBCUtils.IbcError error = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.AccountStatement.Acc_BettransDelTransaction(parsedRefno, custId, (int)context.Session["AccId"], context.Request.UserHostAddress);
+                            if (error.ErrorCode != 0)
+                            {
+                                reverseErrors.Add(new ReverseError() { Refno = parsedRefno.ToString(), Message = error.ErrorMsg });
+
+                            }
+                            else
+                            {
+                                successRefs.Add(parsedRefno.ToString());
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                            context.Response.Write("1|" + AlertMessage.GetMsg(IBCUtils.IbcError.INTERNAL_ERROR_MSG, AlertMessage.MsgType.Error));
+                            return;
+                        }
+                    }
+
                 }
 
-            }
-            var response = "0";
-            if (successRefs.Any())
-            {
-                response += "|<div style='color:green'>Reverse successfully: " + string.Join(", ", successRefs) + "</div>";
-
-            }
-            if (reverseErrors.Any())
-            {
-                response += "|<div style='color:red'>Reverse unsuccessfully:";
-                reverseErrors.ForEach(error =>
+                var response = "0";
+                if (successRefs.Any())
                 {
-                    response += "</br>Ref No " + error.Refno + ": " + error.Message;
-                });
-                response += "</div>";
+                    response += "|<div style='color:green'>Reverse successfully: " + string.Join(", ", successRefs) + "</div>";
+
+                }
+
+                if (reverseErrors.Any())
+                {
+                    response += "|<div style='color:red'>Reverse unsuccessfully:";
+                    reverseErrors.ForEach(error => { response += "</br>Ref No " + error.Refno + ": " + error.Message; });
+                    response += "</div>";
+                }
+
+                context.Response.Write(response);
             }
-            context.Response.Write(response);
+            else
+            {
+                context.Response.Write("1|" + AlertMessage.GetMsg("You are not authorized on this function.", AlertMessage.MsgType.Error));
+            }
         }
     }
 
