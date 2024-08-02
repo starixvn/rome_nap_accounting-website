@@ -46,4 +46,7 @@
   <Function Name="External - Admin">
     <Setting Key="SelectGroupName" SpName="Acc_ExternalGroupSel" DbName="DBPOL.Nap_UserControl.wsv_nap" />
   </Function>
+  <Function Name="Admin">
+    <Setting Key="Acc_DeniedSiteCurrency_Sel" SpName="Acc_DeniedSiteCurrency_Sel" DbName="DBPOL.Nap_UserControl.wsv_nap" />
+  </Function>  
 </Functions>

@@ -81,7 +81,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Tarus.Admin, Version=1.0.5.12, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Admin.1.0.5.12\lib\net461\Fanex.Tarus.Admin.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.Admin.1.0.5.13-Beta1\lib\net461\Fanex.Tarus.Admin.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Security, Version=1.0.1.9, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Security.1.0.2.3\lib\net40\Fanex.Tarus.Security.dll</HintPath>
