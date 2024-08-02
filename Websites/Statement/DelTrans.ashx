@@ -4,6 +4,7 @@ using System;
 using System.Web;
 using System.Web.SessionState;
 using DNAide.Web;
+using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Helper;
 
@@ -33,15 +34,24 @@ public class DelTrans : IHttpHandler,IRequiresSessionState {
             {
                 try
                 {
-                    IBCUtils.IbcError error = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.AccountStatement.Acc_BettransDelTransaction(refno, custId , (int)context.Session["AccId"], context.Request.UserHostAddress);
-                    if (error.ErrorCode != 0)
+                    if (Permissions.GetHostPermission(Enumerations.Functions.Transfer.DeleteTrans))
                     {
-                        context.Response.Write("1|" + error.ErrorMsg);
+                        IBCUtils.IbcError error = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.AccountStatement.Acc_BettransDelTransaction(refno, custId , (int)context.Session["AccId"], context.Request.UserHostAddress);
+                        if (error.ErrorCode != 0)
+                        {
+                            context.Response.Write("1|" + error.ErrorMsg);
+                        }
+                        else
+                        {
+                            context.Response.Write("0|Reverse transaction successfully");
+                        }
                     }
                     else
                     {
-                        context.Response.Write("0|Reverse transaction successfully");
+                        context.Response.Write("1|You are not authorized on this function.");
                     }
+                
+                   
                 }
                 catch(Exception ex)
                 {
