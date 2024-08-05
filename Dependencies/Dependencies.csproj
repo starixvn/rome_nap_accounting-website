@@ -86,8 +86,8 @@
     <Reference Include="Fanex.BetDetails.BetBuilder, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetDetails.BetBuilder.1.0.0.2\lib\net461\Fanex.BetDetails.BetBuilder.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.AdvantPlay, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.AdvantPlay.2.0.0\lib\net461\Fanex.BetList.AdvantPlay.dll</HintPath>
+    <Reference Include="Fanex.BetList.AdvantPlay, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.AdvantPlay.2.0.0.1-beta-01\lib\net461\Fanex.BetList.AdvantPlay.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.AdvantPlayMini, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.AdvantPlayMini.2.0.0\lib\net461\Fanex.BetList.AdvantPlayMini.dll</HintPath>

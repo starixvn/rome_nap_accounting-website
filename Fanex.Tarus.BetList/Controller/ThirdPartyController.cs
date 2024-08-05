@@ -77,7 +77,15 @@
 
         public ActionResult CGResult(ThirdPartyResultRequest request) => BaseResult(request, "CGResultConfigs");
 
-        public ActionResult AdvantPlayResult(ThirdPartyResultRequest request) => BaseResult(request, "AdvantPlayResultConfigs");
+        public ActionResult AdvantPlayResult(ThirdPartyResultRequest request)
+        {
+            var resultRequest = new ResultRequest(request.CustId, request.TransId3rd, request.GameId3rd, request.CurrencyId, request.SiteId)
+            {
+                BetTypeId = request.BetTypeId
+            };
+
+            return BaseResult(request, resultRequest, "AdvantPlayResultConfigs");
+        }
 
         public ActionResult AdvantPlayMiniResult(ThirdPartyResultRequest request) => BaseResult(request, "AdvantPlayMiniResultConfigs");
 
