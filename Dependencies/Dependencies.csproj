@@ -480,7 +480,7 @@
       <HintPath>..\packages\Fanex.Tarus.ExchangeRate.1.0.0.17\lib\net40\Fanex.Tarus.ExchangeRate.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Finance, Version=1.1.3.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Finance.1.1.3.9\lib\net40\Fanex.Tarus.Finance.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.Finance.1.1.3.11-Beta1\lib\net40\Fanex.Tarus.Finance.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.4.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.4.15\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
@@ -743,7 +743,7 @@
       <HintPath>..\packages\Sunplus.Accounting.Core.2.0.4.31\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.9.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.9.3-Beta3\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
+      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.9.3-Beta4\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.Entities, Version=2.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Accounting.Entities.2.0.3\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
