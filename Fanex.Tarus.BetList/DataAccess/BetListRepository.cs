@@ -758,5 +758,28 @@
 
             return custId;
         }
+
+        public IEnumerable<SportBettypeMatrixModel> SelectSportBettypeMatrix()
+        {
+            var criteria = new GetSportBettypeMatrixCriteria();
+            var entities = new List<SportBettypeMatrixModel>();
+            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                var reader = objDb.ExecuteReader(criteria.GetSpParams());
+                while (reader.Read())
+                {
+                    entities.Add(new SportBettypeMatrixModel
+                    {
+                        SportType = Converter.To<int>(reader["SportType"]),
+                        BetType = Converter.To<int>(reader["BetType"]),
+                        ProductId = Converter.To<int>(reader["ProductID"])
+                    });
+                }
+
+                reader.Close();
+            }
+
+            return entities;
+        }
     }
 }
