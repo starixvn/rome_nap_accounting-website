@@ -110,7 +110,8 @@
                 sportType == SportContants.Live22 ||
                 sportType == SportContants.UUSlots ||
                 sportType == SportContants.SabaxD ||
-                sportType == SportContants.FastSpin)
+                sportType == SportContants.FastSpin ||
+                sportType == SportContants.FACHAI)
             {
                 return GetRNGCasinoTickets(refNo, custId, transType, winlostDate);
             }

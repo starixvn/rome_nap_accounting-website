@@ -101,6 +101,7 @@
         public const int SabaCoins = 149;
         public const int SabaPromotion = 246;
         public const int FastSpin = 230;
+        public const int FACHAI = 146;
 
     }
 }
