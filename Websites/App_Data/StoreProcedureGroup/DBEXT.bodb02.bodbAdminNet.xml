@@ -14,7 +14,7 @@
   </Function>
   <Function Name="Customer NewLicensee">
     <Setting Key="Customer_NewLicensee_CheckUsername" SpName="Acc_Dep_LicenseeUsernameCheck" DbName="DBAGE.bodb02.wsv_nap" />
-    <Setting Key="Customer_NewLicensee_GetCurrencies" SpName="Acc_CurrencySel" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Customer_NewLicensee_GetCurrencies" SpName="Acc_CurrencySel_uat3" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Customer - Edit Sportbook Commission">
     <Setting Key="Acc_CustomerNoCommSelBettypes" SpName="Acc_CustomerNoCommSelBettypes" DbName="DBAGE.bodb02.wsv_nap" />
