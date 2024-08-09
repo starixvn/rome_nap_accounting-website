@@ -9,7 +9,7 @@
         private string _username;
         private string _betId;
 
-        public long UserId { get; set; }
+        public string DeniedList { get; set; }
 
         public byte ProductId { get; set; }
 

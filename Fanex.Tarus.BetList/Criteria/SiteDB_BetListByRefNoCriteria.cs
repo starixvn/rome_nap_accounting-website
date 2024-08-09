@@ -6,7 +6,7 @@
 
     public class SiteDBBetListByRefNoCriteria : CriteriaBase
     {
-        public int UserId { get; set; }
+        public string DeniedList { get; set; }
 
         public string RefNo { get; set; }
 
