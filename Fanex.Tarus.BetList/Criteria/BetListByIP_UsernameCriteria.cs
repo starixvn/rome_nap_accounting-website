@@ -13,8 +13,7 @@
 
         public DateTime BalanceUpDay { get; set; }
 
-        public int UserId
-            => AppSession.AccId;
+        public string DeniedList { get; set; }
 
         public string Permission { get; set; }
 
