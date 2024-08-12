@@ -1781,6 +1781,16 @@ function getParlay3rdParam(matchid, refno, bettype, betid) {
     };
 }
 
+function getParlay3rdParam(matchid, refno, bettype, betid) {
+    return {
+        url: "Report/ViewParlay3rdResult.aspx",
+        title: "Mix Parlay",
+        jsonParam: { refno: refno, matchid: matchid, bettype: bettype, betid: betid },
+        width: 945,
+        height: 500
+    };
+}
+
 function getMetricGamingParam(matchid, bettype, sporttype, betid) {
     return {
         url: "Report/ViewMetricGamingResult.aspx",
