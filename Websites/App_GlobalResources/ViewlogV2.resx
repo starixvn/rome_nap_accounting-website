@@ -1948,4 +1948,7 @@ Max Keno (20+1) 2</value>
   <data name="HideGroupID3" xml:space="preserve">
     <value>Hide Live &amp; RNG Casino</value>
   </data>
+  <data name="ChargeComm" xml:space="preserve">
+    <value>Charge Commission</value>
+  </data>
 </root>
