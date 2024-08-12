@@ -39,7 +39,17 @@ namespace Fanex.Tarus.BetList.Business.Results
 
             return ResultEngine.HtmlParser(parlayData.ToList(), this.GetFanexResultSetting()).Replace("original-title", " title ");
         }
-       
+
+        public string Get3rdResult(long refNo)
+        {
+            var parlayData = this._parlayResultDataAccess.GetParlay3rdResult(new GetParlay3rdResultCriteria
+            {
+                RefNo = refNo
+            });
+
+            return ResultEngine.HtmlParser(parlayData.ToList(), this.GetFanexResultSetting()).Replace("original-title", " title ");
+        }
+
         /// <summary>
         /// Gets the FANEX result setting.
         /// </summary>

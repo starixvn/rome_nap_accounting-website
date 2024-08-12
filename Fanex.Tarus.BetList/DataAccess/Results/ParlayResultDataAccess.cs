@@ -22,6 +22,21 @@ namespace Fanex.Tarus.BetList.DataAccess.Results
     /// </summary>
     public class ParlayResultDataAccess : IParlayResultDataAccess
     {
+        public IEnumerable<Parlay> GetParlay3rdResult(GetParlay3rdResultCriteria criteria)
+        {
+            List<Parlay> results = null;
+
+            using (var db = new ObjectDb(criteria.GetSettingKey(), 600))
+            {
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    results = GetParlays(reader);
+                }
+            }
+
+            return results;
+        }
+
         /// <summary>
         /// Gets the parlay result.
         /// </summary>

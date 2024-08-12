@@ -19,5 +19,7 @@ namespace Fanex.Tarus.BetList.DataAccess.Results
     public interface IParlayResultDataAccess
     {
         IEnumerable<Parlay> GetParlayResult(GetParlayResultCriteria criteria);
+
+        IEnumerable<Parlay> GetParlay3rdResult(GetParlay3rdResultCriteria criteria);
     }
 }

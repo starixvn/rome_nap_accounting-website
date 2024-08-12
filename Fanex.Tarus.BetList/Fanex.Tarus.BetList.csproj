@@ -208,8 +208,8 @@
     <Reference Include="Fanex.Result.Core.Allbet, Version=2.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.AllBetCasino.2.0.0.2\lib\net461\Fanex.Result.Core.Allbet.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Result.Core.Base, Version=3.0.1.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core-NPOI.2.0.6.3.0.1.2\lib\net461\Fanex.Result.Core.Base.dll</HintPath>
+    <Reference Include="Fanex.Result.Core.Base, Version=3.0.0.8, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Result.Core-NPOI.2.0.6.3.0.0.8-vs5-05\lib\net461\Fanex.Result.Core.Base.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Result.Core.Bitcoin, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core-Bitcoin.2.0.0\lib\net461\Fanex.Result.Core.Bitcoin.dll</HintPath>
@@ -593,6 +593,7 @@
     <Compile Include="Criteria\IPInfo\GetIPV4InfoCriteria.cs" />
     <Compile Include="Criteria\IPInfo\GetIPV6InfoCriteria.cs" />
     <Compile Include="Criteria\Results\GetVS2RacingResultCriteria.cs" />
+    <Compile Include="Criteria\Results\GetParlay3rdResultCriteria.cs" />
     <Compile Include="Criteria\SiteDB_MixParlayDetailCriteria.cs" />
     <Compile Include="Criteria\SiteDB_BetListByCustInfoByRefnoCriteria.cs" />
     <Compile Include="Criteria\BetListByCustInfoByRefnoCriteria.cs" />

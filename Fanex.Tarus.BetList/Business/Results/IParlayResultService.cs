@@ -15,5 +15,7 @@ namespace Fanex.Tarus.BetList.Business.Results
     public interface IParlayResultService
     {
         string GetResult(long refNo);
+
+        string Get3rdResult(long refNo);
     }
 }

@@ -1243,6 +1243,10 @@ function getResultParamByBetType(matchid, race, bettype, sporttype, refno, usern
         case bettype === 9 || bettype === 29 || bettype === 2799 || bettype == 10449: // System Parlay, MixParlayVirtualSports2
             return getSystemParlayParam(matchid, refno_mixparlay, bettype, betid);
 
+        case bettype == 11099: 
+            return getParlay3rdParam(matchid, refno_mixparlay, bettype, betid);
+
+
         case bettype === 1231 || bettype === 1232 || bettype === 1233: // Virtual Horse Racing (Old).
             return getVirtualHRAndTennisParam(matchid, sporttype);
 
@@ -1750,6 +1754,16 @@ function getSystemParlayParam(matchid, refno, bettype, betid) {
     return {
         url: "Report/ViewMixParlayResult.aspx",
         title: bettype === 9 ? "System Parlay" : "Mix Parlay",
+        jsonParam: { refno: refno, matchid: matchid, bettype: bettype, betid: betid },
+        width: 945,
+        height: 500
+    };
+}
+
+function getParlay3rdParam(matchid, refno, bettype, betid) {
+    return {
+        url: "Report/ViewParlay3rdResult.aspx",
+        title: "Mix Parlay",
         jsonParam: { refno: refno, matchid: matchid, bettype: bettype, betid: betid },
         width: 945,
         height: 500
