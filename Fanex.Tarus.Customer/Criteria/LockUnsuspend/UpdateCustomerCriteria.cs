@@ -8,7 +8,7 @@
 
         public bool Lock { get; set; }
 
-        public int UserId { get; set; }
+        public string DeniedList { get; set; }
 
         public string IP { get; set; }
 
@@ -19,7 +19,7 @@
 
         public override bool IsValid()
         {
-            return !string.IsNullOrWhiteSpace(CustList) && UserId > 0;
+            return !string.IsNullOrWhiteSpace(CustList);
         }
     }
 }

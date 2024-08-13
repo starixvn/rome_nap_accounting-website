@@ -1,4 +1,6 @@
-﻿namespace Fanex.Tarus.Customer.Controller
+﻿using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
+
+namespace Fanex.Tarus.Customer.Controller
 {
     using Fanex.Tarus.Customer.Criteria.LockUnsuspend;
     using Fanex.Tarus.Customer.DataAccess.LockUnsuspend;
@@ -35,7 +37,7 @@
         {
             var data = _lockUnsuspendService.Search(new SearchCustomerCriteria()
             {
-                UserID = AppSession.AccId
+                DeniedList = AccountCredit.Acc_DeniedSiteCurrency_Sel(AppSession.AccId)
             });
             var viewModel = new List<LockUnsuspendResultViewModel>();
             foreach (var entity in data)
@@ -59,7 +61,7 @@
                 CustList = custList.Trim(),
                 Lock = isLock,
                 IP = Utils.GetClientIP(),
-                UserId = AppSession.AccId
+                DeniedList = AccountCredit.Acc_DeniedSiteCurrency_Sel(AppSession.AccId)
             }));
         }
     }

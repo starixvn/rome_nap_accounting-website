@@ -1,3 +1,5 @@
+using Fanex.Common.Extensions;
+
 namespace Sunplus.Accounting.Presentation
 {
     using DNAide.Core;
@@ -79,29 +81,34 @@ namespace Sunplus.Accounting.Presentation
 
                 string username_selected = string.Empty, custid_selected = string.Empty, msg = string.Empty;
                 int count_normal_user_selected = 0;
-
-                if (type == 1)
-                {
-                    AddUsersToGroup(ref formHtml, groupId, username, userid);
-                }
-                else if (type == 3) // 3 - Remove Selected Users from This Group
-                {
-                    RemoveSelectedUsersFromGroup(ref formHtml, groupId, userid, listname, ref username_selected, ref custid_selected, ref msg, ref count_normal_user_selected);
-                }
-                else if (type == 2) // 2 - Set Selected User to Headline
-                {
-                    SetSelectedUserToBeGroupHeadline(ref formHtml, groupId, userid, listname);
-                }
-                else
-                {
-                    TemplateHandler.Assign(ref formHtml, "{msg}", "");
-                }
-
                 if (type > 0)
                 {
-                    var newThread = new Thread(ThreadMethod);
-                    newThread.Start();
-                    Thread.Sleep(2000);
+                    if (!Permissions.GetHostPermission(Enumerations.Functions.Customer.OtherCust))
+                    {
+                        TemplateHandler.Assign(ref formHtml, "{msg}",
+                            "<script>showAlertMessage('errMsg',\"You don\'t have permission to access\",1);</script>");
+                    }
+                    else
+                    {
+                        if (type == 1)
+                        {
+                            AddUsersToGroup(ref formHtml, groupId, username, userid);
+                        }
+                        else if (type == 3) // 3 - Remove Selected Users from This Group
+                        {
+                            RemoveSelectedUsersFromGroup(ref formHtml, groupId, userid, listname, ref username_selected, ref custid_selected, ref msg, ref count_normal_user_selected);
+                        }
+                        else if (type == 2) // 2 - Set Selected User to Headline
+                        {
+                            SetSelectedUserToBeGroupHeadline(ref formHtml, groupId, userid, listname);
+                        }
+                        else
+                        {
+                            TemplateHandler.Assign(ref formHtml, "{msg}", "");
+                        }
+
+                        Thread.Sleep(2000);
+                    }
                 }
 
                 var creditTermService = new CreditTermService();
@@ -253,7 +260,7 @@ namespace Sunplus.Accounting.Presentation
             return formHtml;
         }
 
-        private static void RemoveSelectedUsersFromGroup(ref string from, int groupid, int userid, string listname, ref string username_selected, ref string custid_selected, ref string msg, ref int count_normal_user_selected)
+        private static void RemoveSelectedUsersFromGroup(ref string formHtml, int groupid, int userid, string listname, ref string username_selected, ref string custid_selected, ref string msg, ref int count_normal_user_selected)
         {
             var stringseparator = new[] { "," };
             var affectedSupers = new List<string>();
@@ -300,10 +307,10 @@ namespace Sunplus.Accounting.Presentation
                 msg = "<script>showAlertMessage('errMsg','" + msg + "',0);</script>";
             }
 
-            TemplateHandler.Assign(ref from, "{msg}", msg);
+            TemplateHandler.Assign(ref formHtml, "{msg}", msg);
         }
 
-        private static void SetSelectedUserToBeGroupHeadline(ref string from, int groupid, int userid, string listname)
+        private static void SetSelectedUserToBeGroupHeadline(ref string formHtml, int groupid, int userid, string listname)
         {
             var rs = AccountCredit.Acc_CreditTermUpdSetGroupHeadline(Convert.ToInt32(listname), groupid,
                                        userid);
@@ -311,25 +318,25 @@ namespace Sunplus.Accounting.Presentation
             {
                 if (rs.ErrorCode != 0)
                 {
-                    TemplateHandler.Assign(ref from, "{msg}",
+                    TemplateHandler.Assign(ref formHtml, "{msg}",
                                            "<script>showAlertMessage('errMsg','" +
                                            rs.ErrorMessage + "',1);</script>");
                 }
                 else
                 {
-                    TemplateHandler.Assign(ref from, "{msg}",
+                    TemplateHandler.Assign(ref formHtml, "{msg}",
                                            "<script>showAlertMessage('errMsg','Group Headline has been changed.',0);</script>");
                 }
             }
         }
 
-        private static void AddUsersToGroup(ref string from, int groupid, string usernames, int userid)
+        private static void AddUsersToGroup(ref string formHtml, int groupid, string usernames, int userid)
         {
             StringBuilder errorMsg = new StringBuilder();
             StringBuilder successMsg = new StringBuilder();
-            var affectectSuper = new List<string>();
+            var affectedSuper = new List<string>();
 
-            if (ValidateUserNameInput(ref from, usernames))
+            if (ValidateUserNameInput(ref formHtml, usernames))
             {
                 List<string> listUsername = usernames.Split(',').Select(m => m.Trim()).ToList();
                 foreach (string username in listUsername)
@@ -348,39 +355,39 @@ namespace Sunplus.Accounting.Presentation
                     {
                         successMsg.Append(username + ", ");
                     }
-                    affectectSuper.AddRange(result.AffectedSupers.Split(',').Select(m => m.Trim()));
+                    affectedSuper.AddRange(result.AffectedSupers.Split(',').Select(m => m.Trim()));
                 }
-                affectectSuper.RemoveAll(sp => sp == string.Empty || sp == null);
-                var affectecSuperString = string.Join(",", affectectSuper.Distinct());
+                affectedSuper.RemoveAll(sp => sp.IsNullOrTrimEmpty());
+                var affectedSupers = string.Join(",", affectedSuper.Distinct());
                 successMsg.Length -= successMsg.Length > 2 ? 2 : 0;
-                if (affectecSuperString.Length > 0)
+                if (affectedSupers.Length > 0)
                 {
                     if (errorMsg.Length == 0)
                     {
-                        TemplateHandler.Assign(ref from, "{msg}",
-                                              "<script>showAlertMessage('errMsg','" + string.Format("The selected supers have been successfully added. The following supers are enqueued to be removed from their old External Groups on 0:00 tomorrow: {0}.", affectecSuperString) + "',0);</script>");
+                        TemplateHandler.Assign(ref formHtml, "{msg}",
+                                              "<script>showAlertMessage('errMsg','" + string.Format("The selected supers have been successfully added. The following supers are enqueued to be removed from their old External Groups on 0:00 tomorrow: {0}.", affectedSupers) + "',0);</script>");
                     }
                     else
                     {
-                        TemplateHandler.Assign(ref from, "{msg}",
-                                               "<script>showAlertMessage('errMsg','" + string.Format("The selected supers have been successfully added. The following supers are enqueued to be removed from their old External Groups on 0:00 tomorrow: {0}.", affectecSuperString) + "',0);"
+                        TemplateHandler.Assign(ref formHtml, "{msg}",
+                                               "<script>showAlertMessage('errMsg','" + string.Format("The selected supers have been successfully added. The following supers are enqueued to be removed from their old External Groups on 0:00 tomorrow: {0}.", affectedSupers) + "',0);"
                                                + "showAlertMessage('errMsg1', \"" + errorMsg + "\", 1);</script>");
                     }
                 }
                 else if (errorMsg.Length == 0)
                 {
-                    TemplateHandler.Assign(ref from, "{msg}",
+                    TemplateHandler.Assign(ref formHtml, "{msg}",
                                                   "<script>showAlertMessage('errMsg','All accounts have been successfully added.',0);</script>");
                 }
                 else if (successMsg.Length > 0)
                 {
-                    TemplateHandler.Assign(ref from, "{msg}",
+                    TemplateHandler.Assign(ref formHtml, "{msg}",
                                                "<script>showAlertMessage('errMsg','" + string.Format("Successfully added accounts: {0}.", successMsg) + "',0);"
                                                + "showAlertMessage('errMsg1', \"" + errorMsg + "\", 1);</script>");
                 }
                 else
                 {
-                    TemplateHandler.Assign(ref from, "{msg}",
+                    TemplateHandler.Assign(ref formHtml, "{msg}",
                                                   "<script>showAlertMessage('errMsg',\"" + errorMsg + "\",1);</script>");
                 }
             }
@@ -415,10 +422,5 @@ namespace Sunplus.Accounting.Presentation
         }
 
         #endregion Credit Term
-
-        private static void ThreadMethod()
-        {
-            Thread.Sleep(10);
-        }
     }
 }
