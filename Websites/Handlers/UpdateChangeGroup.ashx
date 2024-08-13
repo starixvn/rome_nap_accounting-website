@@ -27,11 +27,12 @@ public class UpdateChangeGroup : BaseHandler
                 string uname = context.Request["txtUname"] as string ?? string.Empty;
                 uname = uname.Trim();
                 string strResult = "";
+                string errmsg = "";
                 if (strClear == "1")
                 {
                     strResult = "Clear Credit successfully.";
                     var custInfo = UpdateCustomer.GetCustInfo(uname);
-                    string errmsg = "";
+                    
                     if (Permissions.CheckPermission(Convert.ToInt32(context.Session["AccId"] as object ?? -1), Enumerations.Functions.Customer.Credit, ref errmsg) != 0)
                     {
                         err.ErrorMsg = errmsg;
@@ -54,8 +55,16 @@ public class UpdateChangeGroup : BaseHandler
                 else
                 {
                     string ugroup = context.Request["listGroup"] as string ?? string.Empty;
-                    err = Sunplus.Accounting.DataAccess.IBCDLL.Customer.UpdateCustomer.CustomerUpdUserGroupRpt(uname, ugroup, accId);
-                    strResult = "Change User Group successfully.";
+                    if (Permissions.CheckPermission(Convert.ToInt32(context.Session["AccId"] as object ?? -1), Enumerations.Functions.Customer.OtherCust, ref errmsg) != 0)
+                    {
+                        err.ErrorMsg = errmsg;
+                        err.ErrorCode = 101;
+                    }
+                    else
+                    {
+                        err = Sunplus.Accounting.DataAccess.IBCDLL.Customer.UpdateCustomer.CustomerUpdUserGroupRpt(uname, ugroup, accId);
+                        strResult = "Change User Group successfully.";
+                    }
                 }
                 if (err.IsSuccess())
                 {

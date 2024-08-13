@@ -53,6 +53,7 @@ namespace Fanex.Tarus.Customer.Controller
         }
 
         [HttpPost]
+        [AuthenticateHost]
         public JsonResult UpdateSettings(UpdateSettingsCriteria criteria)
         {
             var result = _virtualRateService.UpdateSettings(criteria);
