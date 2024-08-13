@@ -113,7 +113,7 @@
                 {
                     N = GetGroupName("Product", ele.Attribute("ID").Value),
                     P = ele.Attribute("ID").Name.LocalName,
-                    Val = ele.Attribute("ChargeComm").Value
+                    Val = LogFormater.FormatDecimalTrailingZeros(ele.Attribute("ChargeComm").Value)
                 });
             }
 
