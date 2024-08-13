@@ -45,6 +45,10 @@
                     {
                         detail.Vals.Add(ParsePositionTaking(ele));
                     }
+                    else if (ele.Name.LocalName.Equals("ChargeComm"))
+                    {
+                        detail.Vals.Add(ParseChargeComm(ele));
+                    }
                     else if (listBetSettingKey.Contains(ele.Name.LocalName))
                     {
                         detail.Vals.Add(ParseBetSetting(ele));
@@ -92,6 +96,24 @@
                     N = GetGroupName("Product", ele.Attribute("ID").Value),
                     P = ele.Attribute("ID").Name.LocalName,
                     Val = ele.Attribute("PT").Value
+                });
+            }
+
+            return trackingNode;
+        }
+
+        private TrackingNode ParseChargeComm(XElement element)
+        {
+            var trackingNode = new TrackingNode();
+            trackingNode.Vals = new List<TrackingElement>();
+            trackingNode.N = LogFormater.GetResourceName(element.Name.LocalName);
+            foreach (var ele in element.Elements())
+            {
+                trackingNode.Vals.Add(new TrackingElement()
+                {
+                    N = GetGroupName("Product", ele.Attribute("ID").Value),
+                    P = ele.Attribute("ID").Name.LocalName,
+                    Val = ele.Attribute("ChargeComm").Value
                 });
             }
 
