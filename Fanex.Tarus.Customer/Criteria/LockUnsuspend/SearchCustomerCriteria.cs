@@ -4,7 +4,7 @@
 
     public class SearchCustomerCriteria : CriteriaBase
     {
-        public int UserID { get; set; }
+        public string DeniedList { get; set; }
 
         public override string GetSettingKey()
         {

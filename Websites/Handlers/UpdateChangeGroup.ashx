@@ -2,6 +2,8 @@
 
 using System;
 using System.Web;
+using Sunplus.Accounting.Business.Security;
+using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
 using Sunplus.Accounting.Entities.Customer;
@@ -29,15 +31,24 @@ public class UpdateChangeGroup : BaseHandler
                 {
                     strResult = "Clear Credit successfully.";
                     var custInfo = UpdateCustomer.GetCustInfo(uname);
-                    if (custInfo.RoleId == 1)
+                    string errmsg = "";
+                    if (Permissions.CheckPermission(Convert.ToInt32(context.Session["AccId"] as object ?? -1), Enumerations.Functions.Customer.Credit, ref errmsg) != 0)
                     {
-                        var totalAmt = UpdateCustomer.GetTotalAmount(custInfo.CustId);
-                        err = UpdateCustomer.UpdClearMemberCreditRpt(uname, accId, totalAmt);
+                        err.ErrorMsg = errmsg;
+                        err.ErrorCode = 101;
                     }
                     else
                     {
-                        err = UpdateCustomer.UpdClearSMACreditRpt(uname, accId);
-                    }
+                        if (custInfo.RoleId == 1)
+                        {
+                            var totalAmt = UpdateCustomer.GetTotalAmount(custInfo.CustId);
+                            err = UpdateCustomer.UpdClearMemberCreditRpt(uname, accId, totalAmt);
+                        }
+                        else
+                        {
+                            err = UpdateCustomer.UpdClearSMACreditRpt(uname, accId);
+                        }
+                    }                  
 
                 }
                 else

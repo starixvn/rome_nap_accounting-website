@@ -5,6 +5,7 @@ using System.Text;
 using DNAide.Web;
 using IBCUtils;
 using Sunplus.Accounting.Business;
+using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
@@ -30,7 +31,6 @@ public partial class UsedCreditDetail : RequiredAuthorizationPage
         {
             _accid = Convert.ToInt32(Session["AccId"] as object ?? -1);
             if (_accid == -1) throw new AccException(IbcError.ACCESS_DENIED_MSG);
-
             int _custid = CustId;
             int _roleid = Convert.ToInt32(Session["CustRoleId"] as object ?? -1);
             if (_custid == -1 || _roleid == -1) throw new AccException(IbcError.USERNAME_UNAVAILABLE_MSG);
@@ -252,6 +252,10 @@ public partial class UsedCreditDetail : RequiredAuthorizationPage
     private string AgentResetMemberCredit(int _custid, bool _isClosedOnly)
     {
         string str = string.Empty;
+        if (!Permissions.GetHostPermission(Enumerations.Functions.Customer.Credit))
+        {
+            return AlertMessage.GetMsg(IbcError.ACCESS_DENIED_MSG, AlertMessage.MsgType.Error);
+        }
         try
         {
             Sunplus.Accounting.DataAccess.IBCDLL.Accounting.UserCredit.ResetMemberCredit(_accid, _custid, _isClosedOnly);

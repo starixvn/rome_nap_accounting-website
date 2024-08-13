@@ -1,11 +1,12 @@
 <%@ WebHandler Language="C#" Class="UpdateMoveSite" %>
 
 using System;
+using System.Collections;
 using System.Web;
 using System.Web.SessionState;
 using DNAide.Core;
 using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.DataAccess;
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 
 public class UpdateMoveSite : IHttpHandler,IRequiresSessionState {
     
@@ -18,15 +19,16 @@ public class UpdateMoveSite : IHttpHandler,IRequiresSessionState {
         { 
             case "0"://update site
                 var cust = new Sunplus.Accounting.Business.CustSetting.CustSettingMoveSite();
-                int CustId = DNAide.Core.CastAide.AsInt32(context.Request["CustId"]);
+                int CustId = CastAide.AsInt32(context.Request["CustId"]);
                 string NewSite = context.Request["NewSite"];
                 string Msg = cust.UpdateMoveSite(CustId, NewSite);
                 context.Response.Write(Msg);
                 break;
             case "1"://get site info from username
-                System.Collections.Hashtable param = new System.Collections.Hashtable();
+                Hashtable param = new Hashtable();
                 param.Add("username", context.Request["CustId"]);
                 param.Add("userid", AppSession.AccId);
+                param.Add("deniedlist", AccountCredit.Acc_DeniedSiteCurrency_Sel(AppSession.AccId));
                 DNAide.Data.DbResult ds = null;
 
                 using (Fanex.Data.ObjectDb db = new Fanex.Data.ObjectDb("Acc_CustomerSelSiteByUserName", 600))

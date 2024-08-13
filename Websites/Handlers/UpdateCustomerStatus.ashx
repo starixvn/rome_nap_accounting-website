@@ -67,15 +67,23 @@ public class UpdateCustomerStatus : BaseHandler
                             var customerManager = new Sunplus.Accounting.Business.Customer.CustomerManager();
                             string CustUserName = customerManager.GetCustName(AppSession.CustRoleId);
                             string accId = AppSession.AccId.ToString();
-                            IbcError error;
-                            if(AppSession.CustRoleId == 1) // member
+                            IbcError error = new IbcError();
+                            if (Permissions.CheckPermission(_accid, Enumerations.Functions.Customer.Credit, ref errmsg) != 0)
                             {
-                                var totalAmt = UpdateCustomer.GetTotalAmount(AppSession.CustID);
-                                error = UpdateCustomer.UpdClearMemberCreditRpt(CustUserName, accId, totalAmt);
+                                error.ErrorMsg = errmsg;
+                                error.ErrorCode = 101;
                             }
                             else
                             {
-                                error = UpdateCustomer.UpdClearSMACreditRpt(CustUserName, accId);
+                                if(AppSession.CustRoleId == 1) // member
+                                {
+                                    var totalAmt = UpdateCustomer.GetTotalAmount(AppSession.CustID);
+                                    error = UpdateCustomer.UpdClearMemberCreditRpt(CustUserName, accId, totalAmt);
+                                }
+                                else
+                                {
+                                    error = UpdateCustomer.UpdClearSMACreditRpt(CustUserName, accId);
+                                }
                             }
 
                             if (error.ErrorCode > 0)
@@ -90,13 +98,14 @@ public class UpdateCustomerStatus : BaseHandler
                     }
                     s += "parent.changeDisplayStatus();";
                     break;
-                /*Phuong.Nguyen
-                 *Add new case for HR request changing status
-                 */
-                //Start
                 case "AutoSuspend":
                     int isSuspend = (status) ? 1 : 0;
-                    IBCUtils.IbcError err = Sunplus.Accounting.DataAccess.IBCDLL.Customer.UpdateCustomer.CustomerUpdAutoSuspendRpt(_custid, isSuspend, _accid);
+                    if (Permissions.CheckPermission(_accid, Enumerations.Functions.Customer.AutoSuspend, ref errmsg) != 0)
+                    {
+                        s = StringUtils.JS_Alert(errmsg);
+                        break;
+                    }
+                    IbcError err = UpdateCustomer.CustomerUpdAutoSuspendRpt(_custid, isSuspend, _accid);
                     if (err.ErrorCode > 0)
                         throw new AccException(err.ErrorMsg);
                     s = "parent.changeDisplayStatus();";
