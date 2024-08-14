@@ -296,7 +296,7 @@
   </Function>
   <Function Name="Special Site">
     <Setting Key="Acc_CustomerIsSpecialSite" SpName="Acc_CustomerIsSpecialSite" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="Acc_CustomerIsAllowedAccess" SpName="Acc_CustomerIsAllowedAccess" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerIsAllowedAccess" SpName="Acc_CustomerIsAllowedAccess_uat3" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_CustomerIsDummyAccount" SpName="Acc_CustomerIsDummyAccount" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Left Menu - Credit term">
