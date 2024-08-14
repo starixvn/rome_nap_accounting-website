@@ -118,6 +118,7 @@ namespace Sunplus.Accounting.Presentation
                 if (totalmember <= 1)
                 {
                     TemplateHandler.RemoveBlock(ref formHtml, "DataContent");
+                    TemplateHandler.Assign(ref formHtml, "{msg}", "There is no information available");
                     TemplateHandler.Assign(ref formHtml, "{scriptRedirectWhenNoUser}", "<script>RedirectToGroupList();</script>");
                 }
                 else
