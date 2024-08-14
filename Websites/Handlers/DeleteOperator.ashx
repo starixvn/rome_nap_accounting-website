@@ -4,7 +4,9 @@ using System;
 using System.Web;
 using System.Web.SessionState;
 using System.Collections;
+using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Helper;
+using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
 
 
@@ -23,16 +25,23 @@ public class DeleteOperator : IHttpHandler,IRequiresSessionState {
                 Hashtable resultUpdated = new Hashtable();
                 int custId = Convert.ToInt32(context.Request.QueryString["operatorId"]); //int  id of current Operator                
                 int userId = Convert.ToInt32(context.Session["AccId"], System.Globalization.CultureInfo.CurrentUICulture); //int id of current Login Admin
-                resultUpdated = UpdateCustomer.CustomerDelOperatorRpt(custId, "E", userId);
-                if (Convert.ToString(resultUpdated["errCode"]) == "0")
+                string errorMsg = String.Empty;
+                if (Permissions.CheckPermission(userId, Enumerations.Functions.UserControl,ref errorMsg) != 0)
                 {
-                    context.Response.Write("parent.location.href='../Customer/OperatorList.aspx';" + Environment.NewLine);
+                    context.Response.Write("parent.alert_error('" + AlertMessage.GetMsg(errorMsg, AlertMessage.MsgType.Error) + "','errMsg');");
                 }
                 else
                 {
-                    context.Response.Write("parent.alert_error('" + AlertMessage.GetMsg(resultUpdated["errMsg"].ToString(), AlertMessage.MsgType.Error) + "','errMsg');");
+                    resultUpdated = UpdateCustomer.CustomerDelOperatorRpt(custId, "E", userId);
+                    if (Convert.ToString(resultUpdated["errCode"]) == "0")
+                    {
+                        context.Response.Write("parent.location.href='../Customer/OperatorList.aspx';" + Environment.NewLine);
+                    }
+                    else
+                    {
+                        context.Response.Write("parent.alert_error('" + AlertMessage.GetMsg(resultUpdated["errMsg"].ToString(), AlertMessage.MsgType.Error) + "','errMsg');");
+                    }
                 }
-
             }
             catch
             {
