@@ -16,7 +16,13 @@
 
     <link href="../js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css" rel="stylesheet" type="text/css" />
     <link href="../js/jQuery/GridScroller/gridscroller.css" rel="stylesheet" type="text/css" />
-
+    <script type="text/javascript">
+      function RedirectToGroupList() {
+            setTimeout(function () {
+                window.location.href = "../CreditTerm/CreditTermGroupView.aspx";
+            }, 3000)
+        }
+    </script>
 </head>
 <body style="overflow: scroll !important;">
     <div class="main" style="width: 916px">
@@ -272,12 +278,6 @@
                 setTimeout(function () { parent.jQuery.unblockUI(); }, 2000);
             } catch (e) { }
 
-        }
-
-        function RedirectToGroupList() {
-            setTimeout(function () {
-                window.location.href = "../CreditTerm/CreditTermGroupView.aspx";
-            }, 3000)
         }
 
         function ExportToExcel(groupid) {
