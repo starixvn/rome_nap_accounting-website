@@ -297,6 +297,8 @@
                 return SportContants.SabaCoins;
             if (11100 <= betTypeId && betTypeId <= 11299)
                 return SportContants.FastSpin;
+            if (11300 <= betTypeId && betTypeId <= 11399)
+                return SportContants.FACHAI;
             return 0;
         }
 
