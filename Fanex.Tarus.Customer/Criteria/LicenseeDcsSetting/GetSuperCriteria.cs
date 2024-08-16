@@ -4,13 +4,13 @@ namespace Fanex.Tarus.Customer.Criteria.LicenseeDcsSetting
 {
     internal sealed class GetSuperCriteria : CriteriaBase
     {
-        public GetSuperCriteria(string site, int userId)
+        public GetSuperCriteria(string site, string deniedList)
         {
             Site = site;
-            UserId = userId;
+            DeniedList = deniedList;
         }
 
-        public int UserId { get; }
+        public string DeniedList { get; }
 
         public string Site { get; }
 
