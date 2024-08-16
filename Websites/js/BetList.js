@@ -1222,6 +1222,9 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
 
         case 138: //ON Casino
             return getONCasinoParam(custId, transId3rd, gameId3rd, currencyId, siteId, bettype, winlostdate);
+            
+        case 147: //Virtually Sports
+            return getVirtuallySportParam(matchid, sporttype);
 
         case 177: //VS2 Horse and Dog Racing
         case 198:
@@ -1295,6 +1298,14 @@ function getBitcoinParam(matchid, sporttype) {
     return {
         url: "Report/ViewBitcoinResult.aspx",
         title: "Bitcoin",
+        jsonParam: { matchid: matchid, sporttype: sporttype }
+    };
+}
+
+function getVirtuallySportParam(matchid, sporttype) {
+    return {
+        url: "Report/ViewVirtuallySportResult.aspx",
+        title: "Virtually Soccer",
         jsonParam: { matchid: matchid, sporttype: sporttype }
     };
 }

@@ -545,6 +545,7 @@
     <Compile Include="Business\Results\MetricGamingResultService.cs" />
     <Compile Include="Business\Results\IMetricGamingResultService.cs" />
     <Compile Include="Business\Results\BitcoinResultService.cs" />
+    <Compile Include="Business\Results\VirtuallySportResultService.cs" />
     <Compile Include="Business\Results\VirtualTennisResultService.cs" />
     <Compile Include="Business\Results\IVirtualRacingResultService.cs" />
     <Compile Include="Business\Results\VirtualRacingResultService.cs" />
@@ -650,6 +651,7 @@
     <Compile Include="DataAccess\Results\MetricGamingResultDataAccess.cs" />
     <Compile Include="DataAccess\Results\IMetricGamingResultDataAccess.cs" />
     <Compile Include="DataAccess\Results\BitcoinResultDataAccess.cs" />
+    <Compile Include="DataAccess\Results\VirtuallySportResultDataAccess.cs" />
     <Compile Include="DataAccess\Results\VirtualTennisResultDataAccess.cs" />
     <Compile Include="DataAccess\Results\IVirtualRacingResultDataAccess.cs" />
     <Compile Include="DataAccess\Results\VirtualRacingResultDataAccess.cs" />
