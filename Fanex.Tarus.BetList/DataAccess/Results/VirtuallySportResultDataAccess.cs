@@ -24,7 +24,7 @@ namespace Fanex.Tarus.BetList.DataAccess.Results
                 {
                     while (reader.Read())
                     {
-                        result.Add(BindSportbook(reader));
+                        result.Add(BindBitcoin(reader));
                     }
                 }
             }
@@ -32,13 +32,14 @@ namespace Fanex.Tarus.BetList.DataAccess.Results
             return result;
         }
 
-        private static Sportsbook BindSportbook(IDataReader reader)
+        private static Sportsbook BindBitcoin(IDataReader reader)
         {
             return new Sportsbook
             {
                 LeagueId = reader["league3rdid"] != DBNull.Value ? int.Parse(reader["league3rdid"].ToString()) : 0,
                 MatchId = reader["match3rdid"] != DBNull.Value ? int.Parse(reader["match3rdid"].ToString()) : 0,
                 EventStatus = reader["eventstatus"] != DBNull.Value ? reader["eventstatus"].ToString() : string.Empty,
+                EventDate = reader["eventdate"] != DBNull.Value ? DateTime.Parse(reader["eventdate"].ToString()) : DateTime.MinValue,
                 KickOffTime = reader["eventdate"] != DBNull.Value ? DateTime.Parse(reader["eventdate"].ToString()) : DateTime.MinValue,
                 BetStatus = reader["betstatus"] != DBNull.Value ? reader["betstatus"].ToString() : string.Empty,
                 MatchCode = reader["MatchCode"] != DBNull.Value ? reader["MatchCode"].ToString() : string.Empty,
