@@ -171,7 +171,7 @@ public partial class CustomerBalance : PageBase
     {
         try
         {
-            if (Permissions.HasPermission(Enumerations.Functions.Customer.CustomerBalance))
+            if (Permissions.HasHostPermission(Enumerations.Functions.Customer.CustomerBalance))
             {
                 Sunplus.Accounting.DataAccess.IBCDLL.Accounting.CustomerBalance.CustomerInsertClearBalance(_accId,
                     _custId, _custIdList, isCheckAll, ref errmsg, Request.UserHostAddress);
