@@ -492,7 +492,7 @@
       <HintPath>..\packages\Fanex.Tarus.User.1.0.0.6\lib\net40\Fanex.Tarus.User.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Web.Controllers, Version=1.0.1.7, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Web.Controller.1.0.1.8-Beta1\lib\net40\Fanex.Tarus.Web.Controllers.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.Web.Controller.1.0.1.8-Beta2\lib\net40\Fanex.Tarus.Web.Controllers.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Web.Models, Version=1.0.0.8, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Web.Models.1.0.0.9\lib\net40\Fanex.Tarus.Web.Models.dll</HintPath>
