@@ -955,6 +955,18 @@ function showFACHAIBetDetails(refno, winlossDate, custId, transType) {
     openResultsPopUp(params);
 }
 
+function showNextspinBetDetails(refno, winlossDate, custId, transType) {
+    var params = {
+        url: "RNGCasinoBetList/BetDetails",
+        title: "Nextspin - Detailed Bet list - " + winlossDate.split(" ")[0],
+        jsonParam: { TransId: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 229, PageSize: 500 },
+        width: 1250,
+        height: 600
+    };
+
+    openResultsPopUp(params);
+}
+
 function ViewCashOutHistory(transId, refNo, betType, originalTransId, title) {
     var cashoutParam = {
         url: "BetList/GetCashOutDetails",
@@ -1166,6 +1178,9 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
             
         case 146: //FA CHAI
             return getFACHAIParam(custId, transId3rd, gameId3rd, currencyId, siteId, bettype, winlostdate);
+
+        case 229: //Nextspin
+            return getNextspinParam(custId, transId3rd, gameId3rd, currencyId, siteId, bettype, winlostdate);
         default:
             return undefined;
     }
@@ -1760,6 +1775,27 @@ function getFACHAIParam(custId, transId3rd, gameId3rd, currencyId, siteId, betTy
         height: 500
     };
 }
+
+function getNextspinParam(custId, transId3rd, gameId3rd, currencyId, siteId, betType, endTime) {
+    return {
+        url: "ThirdParty/NextspinResult",
+        title: "Nextspin Result",
+        jsonParam:
+        {
+            productId: 85,
+            custId: custId,
+            transId3rd: transId3rd,
+            gameId3rd: gameId3rd,
+            BetTypeId: betType,
+            EndTime: endTime,
+            SiteId: siteId,
+            CurrencyId: currencyId
+        },
+        width: 945,
+        height: 500
+    };
+}
+
 
 
 function openResultsPopUp(resultParam) {

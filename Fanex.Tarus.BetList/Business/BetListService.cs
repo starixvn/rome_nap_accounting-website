@@ -41,10 +41,12 @@
     public class BetListService : IBetListService
     {
         public const string BetListSessionKey = "Fanex.BetList.Accounting.WinLossByLicensee";
+        public const string BetListSportBettypeMatrix = "Fanex.BetList.Accounting.SportBettypeMatrix";
         private readonly IRemotingRefService _remotingRefService = new RemotingRefService();
         private readonly IBetListRepository _betListRepository;
         private readonly ITicketHelper ticketHelper = new TicketHelper();
         private const int DefaultBetdaqId = -1;
+        private const int SportbookProductId = 1;
         private readonly List<int> SabaclubProductIdList = new List<int> { 42, 66 };
         private readonly IIPInfoService _ipInfoService;
         private readonly ICacheService _cacheService;
@@ -1342,8 +1344,12 @@
         private string GetSportNameSuffixByBetType(int betTypeId)
         {
             var sportName = string.Empty;
-
-            if (ReportService.IsVirtualSportBetType(betTypeId))
+            var sportType = GetSportNameByBetType(betTypeId);
+            if(sportType != 0)
+            {
+                sportName = ticketHelper.GetSportNameById(sportType);
+            }
+            else if (ReportService.IsVirtualSportBetType(betTypeId))
             {
                 sportName = BetListResources.Virtual_Sports;
             }
@@ -1460,7 +1466,6 @@
             {
                 sportName = ticketHelper.GetSportNameById(SportContants.YeeBet);
             }
-
             else
             {
                 var sport = ReportService.GetSportFromBetTypeId(betTypeId);
@@ -1473,6 +1478,32 @@
         private string GetProductName(int productId)
         {
             return ticketHelper.GetResourceData("Product", productId.ToString());
+        }
+
+        private int GetSportNameByBetType(int betType)
+        {
+            var sportBettypeMatrix = GetSportBetTypeSettingMatrix();
+
+            var matrix = sportBettypeMatrix.FirstOrDefault(sbm => sbm.BetType == betType);
+
+            if(matrix == null || matrix.ProductId == SportbookProductId)
+            {
+                return 0;
+            }
+
+            return matrix.SportType;
+        }
+
+        private IEnumerable<SportBettypeMatrixModel> GetSportBetTypeSettingMatrix()
+        {
+            var sportBettypeMatrix = _cacheService.Get<IEnumerable<SportBettypeMatrixModel>>(BetListSportBettypeMatrix);
+            if(sportBettypeMatrix == null)
+            {
+                sportBettypeMatrix = _betListRepository.SelectSportBettypeMatrix();
+                _cacheService.Set(BetListSportBettypeMatrix, sportBettypeMatrix, new CacheItemOptions { SlidingExpiration = TimeSpan.FromDays(1) });
+            }
+
+            return sportBettypeMatrix;
         }
     }
 }

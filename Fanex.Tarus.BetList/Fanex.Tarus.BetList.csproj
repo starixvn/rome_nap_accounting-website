@@ -585,6 +585,7 @@
     <Compile Include="Criteria\BetTypeByDateInSiteDBCriteria.cs" />
     <Compile Include="Criteria\GetAGCasinoBetDetailsInSiteDBCriteria.cs" />
     <Compile Include="Criteria\GetCashOutHistoryInSiteDBCriteria.cs" />
+    <Compile Include="Criteria\GetSportBettypeMatrixCriteria.cs" />
     <Compile Include="Criteria\IPInfo\GetIPV4InfoByTopCountryCriteria.cs" />
     <Compile Include="Criteria\IPInfo\GetIPV4InfoCriteria.cs" />
     <Compile Include="Criteria\IPInfo\GetIPV6InfoCriteria.cs" />
@@ -686,6 +687,7 @@
     <Compile Include="Models\IPVNBean.cs" />
     <Compile Include="Models\Match.cs" />
     <Compile Include="Models\ParlayEvent.cs" />
+    <Compile Include="Models\SportBettypeMatrixModel.cs" />
     <Compile Include="Models\SystemParlayDetail.cs" />
     <Compile Include="Models\SystemParlayDetailExcel.cs" />
     <Compile Include="Models\SystemParlayModel.cs" />

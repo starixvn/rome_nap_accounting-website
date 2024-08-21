@@ -198,7 +198,7 @@
         }
 
         public static bool IsVirtualSports4(int betTypeId)
-            => 10400 <= betTypeId && betTypeId <= 10499;
+            => 10400 <= betTypeId && betTypeId <= 10449;
 
         public static bool IsCardClub(int betTypeId)
         {
@@ -299,6 +299,8 @@
                 return SportContants.FastSpin;
             if (11300 <= betTypeId && betTypeId <= 11399)
                 return SportContants.FACHAI;
+            if (10450 <= betTypeId && betTypeId <= 10750)
+                return SportContants.Nextspin;
             return 0;
         }
 

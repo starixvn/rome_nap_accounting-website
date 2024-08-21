@@ -41,5 +41,7 @@
         string GetSiteNameByCustId(ICriteria criteria);
 
         int MapPlayerIdToCustId(MapPlayerId3rdToCustIdCriteria criteria);
+
+        IEnumerable<SportBettypeMatrixModel> SelectSportBettypeMatrix();
     }
 }
