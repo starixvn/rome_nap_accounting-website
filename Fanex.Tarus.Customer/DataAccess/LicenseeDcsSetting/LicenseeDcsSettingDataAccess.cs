@@ -249,11 +249,6 @@ namespace Fanex.Tarus.Customer.DataAccess.LicenseeDcsSetting
         {
             var agent = GetSuper(reader);
 
-            if (Convert.ToBoolean(reader["issub"]))
-            {
-                agent.Name += " (sub)";
-            }
-
             return new BaseModelExtra
             {
                 Id = agent.Id,
