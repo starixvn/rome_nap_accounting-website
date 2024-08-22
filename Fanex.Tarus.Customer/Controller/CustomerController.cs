@@ -95,6 +95,7 @@ namespace Fanex.Tarus.Customer.Controller
                 request.Site,
                 false,
                 Utils.GetClientIP(),
+                ObjectDbExtensions.GetSiteDBConfigBySite(request.Site).CustDBGroupID,
                 isInternal: request.IsInternal)
             {
                 FirstName = request.FirstName,
@@ -260,6 +261,7 @@ namespace Fanex.Tarus.Customer.Controller
                 Utils.GetClientIP(),
                 generalInfo.Site,
                 generalInfo.SiteLabel,
+                ObjectDbExtensions.GetSiteDBConfigBySite(request.GeneralInfo.Site).CustDBGroupID,
                 CreationModes.FullMode));
 
             return Content(response);
@@ -279,6 +281,7 @@ namespace Fanex.Tarus.Customer.Controller
                 request.RoleId,
                 request.UplineRoleId,
                 Utils.GetClientIP(),
+                ObjectDbExtensions.GetSiteDBConfigBySite(request.GeneralInfo.Site).CustDBGroupID,
                 request.Site,
                 request.SiteLabel,
                 "en-US"));

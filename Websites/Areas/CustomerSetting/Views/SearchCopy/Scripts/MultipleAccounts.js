@@ -543,8 +543,8 @@ $.fn.forceNumber = function () {
         });
     }
 
-    function renderCurrency(currency) {
-        $("#currency").text(currency);
+    function renderCurrency(currency, currencyid) {
+        $("#currency").text(currency).data('currency-id', currencyid);
     }
 
     function formatCurrency(value) {
@@ -592,7 +592,7 @@ $.fn.forceNumber = function () {
                 existedUser.site = custInfo.Site;
                 existedUser.isDirectCustomer = custInfo.IsDirectCustomer;
 
-                renderCurrency(custInfo.CurrencyName);
+                renderCurrency(custInfo.CurrencyName, custInfo.CurrencyId);
 
                 if (custInfo.RoleId == MEMBER) {
                     renderMemberMaxCredit(custInfo);

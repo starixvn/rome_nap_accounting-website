@@ -11,6 +11,7 @@
     using Fanex.Tarus.Customer.Entities;
     using Fanex.Tarus.Customer.Entities.CopySuperSetting;
     using Fanex.Tarus.Customer.Requests.CopySuperSetting;
+    using Fanex.Tarus.Infrastructure.Extensions;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -93,6 +94,7 @@
                         userId,
                         (byte)CustomerClientManager.ClientConfigs.SystemId,
                         ip,
+                        ObjectDbExtensions.GetSiteDBConfigByCustId(request.CustId).CustDBGroupID,
                         request.SportTypes.Where(sp => sp.GroupId == 3 || sp.GroupId == 2).Select(sp => sp.SportTypeId)));
                     var mappingResultsNewAPI = MappingCopyResults(response, request.SuperList.ToList());
                     errorResults.AddRange(mappingResultsNewAPI.Where(result => result.ErrorCode != 0).Select(result => new Entities.Result(result.ErrorCode, result.ErrorMessage)));

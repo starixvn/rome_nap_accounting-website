@@ -120,4 +120,7 @@
     <Setting Key="Acc_ReferenceSetting_Sel" SpName="Acc_ReferenceSetting_Sel" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="Acc_ReferenceSetting_Check" SpName="Acc_ReferenceSetting_Check" DbName="DBACC.bodb02.wsv_nap" />
   </Function>
+  <Function Name="Scaleout DB">
+    <Setting Key="Acc_ServerDBConfigSel" SpName="Acc_ServerDBConfigSel" DbName="DBACC.bodb02.wsv_nap" />
+  </Function>
 </Functions>
