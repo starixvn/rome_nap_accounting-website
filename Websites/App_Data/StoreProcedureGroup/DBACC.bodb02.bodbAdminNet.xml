@@ -122,5 +122,6 @@
   </Function>
   <Function Name="Scaleout DB">
     <Setting Key="Acc_ServerDBConfigSel" SpName="Acc_ServerDBConfigSel" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_ServerDBConfigSelByCust" SpName="Acc_ServerDBConfigSelByCust" DbName="DBACC.bodb02.wsv_nap" />
   </Function>
 </Functions>
