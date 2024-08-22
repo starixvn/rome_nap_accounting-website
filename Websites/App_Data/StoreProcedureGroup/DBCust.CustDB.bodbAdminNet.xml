@@ -208,7 +208,7 @@
   </Function>
   <Function Name="Customer - ThirdParty">
     <Setting Key="Acc_CustomerSelStatusByProductId" SpName="Acc_CustomerSelStatusByProductId" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="Acc_Dep_CustSetting_StatusSettingSelect" SpName="Acc_Dep_CustSetting_StatusSettingSelect_UAT1" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_Dep_CustSetting_StatusSettingSelect" SpName="Acc_Dep_CustSetting_StatusSettingSelect" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_Dep_CustSetting_DisableStatUpd" SpName="Acc_Dep_CustSetting_DisableStatUpd" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Admin - Site manabement">
@@ -233,39 +233,39 @@
   <Function Name="Licensee DCS Setting">
     <Setting Key="NAP_LM_LicenseeSuperList" SpName="NAP_LM_LicenseeSuperList" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_CustomerSelAgentListBySuper" SpName="Acc_CustomerSelAgentListBySuper" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="Acc_Dep_SelDCSProduct" SpName="Acc_Dep_SelDCSProduct_UAT1" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_Dep_SelDCSProduct" SpName="Acc_Dep_SelDCSProduct" DbName="DBCust.CustDB.wsv_nap" />
     <Function Name="Setting Type 1 - Position Taking">
-      <Setting Key="Acc_Dep_CustSetting_PositionTakingSettingSelect" SpName="Acc_Dep_CustSetting_PositionTakingSettingSelect_UAT1" DbName="DBCust.CustDB.wsv_nap" />
-      <Setting Key="Acc_Dep_CustSetting_PositionTakingSettingUpd" SpName="Acc_Dep_CustSetting_PositionTakingSettingUpd_UAT1" DbName="DBCust.CustDB.wsv_nap" />
+      <Setting Key="Acc_Dep_CustSetting_PositionTakingSettingSelect" SpName="Acc_Dep_CustSetting_PositionTakingSettingSelect" DbName="DBCust.CustDB.wsv_nap" />
+      <Setting Key="Acc_Dep_CustSetting_PositionTakingSettingUpd" SpName="Acc_Dep_CustSetting_PositionTakingSettingUpd" DbName="DBCust.CustDB.wsv_nap" />
     </Function>
     <Function Name="Setting Type 18 - Charge Position Taking">
-      <Setting Key="Acc_Dep_CustSetting_ChargePTSelect" SpName="Acc_Dep_CustSetting_ChargePTSelect_UAT1" DbName="DBCust.CustDB.wsv_nap" />
-      <Setting Key="Acc_Dep_CustSetting_ChargePTUpd" SpName="Acc_Dep_CustSetting_ChargePTUpd_UAT1" DbName="DBCust.CustDB.wsv_nap" />
+      <Setting Key="Acc_Dep_CustSetting_ChargePTSelect" SpName="Acc_Dep_CustSetting_ChargePTSelect" DbName="DBCust.CustDB.wsv_nap" />
+      <Setting Key="Acc_Dep_CustSetting_ChargePTUpd" SpName="Acc_Dep_CustSetting_ChargePTUpd" DbName="DBCust.CustDB.wsv_nap" />
     </Function>
     <Function Name="Setting Type 2 - Bet Setting with Max Per Match">
-      <Setting Key="Acc_Dep_CustSetting_BetLimitFullLineSettingSelect" SpName="Acc_Dep_CustSetting_BetLimitFullLineSettingSelect_UAT1" DbName="DBCust.CustDB.wsv_nap" />
-      <Setting Key="Acc_Dep_CustSetting_BetLimitFullLineUpd" SpName="Acc_Dep_CustSetting_BetLimitFullLineUpd_UAT1" DbName="DBCust.CustDB.wsv_nap" />
+      <Setting Key="Acc_Dep_CustSetting_BetLimitFullLineSettingSelect" SpName="Acc_Dep_CustSetting_BetLimitFullLineSettingSelect" DbName="DBCust.CustDB.wsv_nap" />
+      <Setting Key="Acc_Dep_CustSetting_BetLimitFullLineUpd" SpName="Acc_Dep_CustSetting_BetLimitFullLineUpd" DbName="DBCust.CustDB.wsv_nap" />
     </Function>
     <Function Name="Setting Type 10 - Bet Setting with Max Payout Per Match -- Setting Type 12 - Bet Setting with Max Per Ball">
-      <Setting Key="Acc_Dep_CustSetting_Game_BetLimitFullLineSettingSelect" SpName="Acc_Dep_CustSetting_Game_BetLimitFullLineSettingSelect_UAT1" DbName="DBCust.CustDB.wsv_nap" />
-      <Setting Key="Acc_Dep_CustSetting_Game_BetLimitFullLineUpd" SpName="Acc_Dep_CustSetting_Game_BetLimitFullLineUpd_UAT1" DbName="DBCust.CustDB.wsv_nap" />
+      <Setting Key="Acc_Dep_CustSetting_Game_BetLimitFullLineSettingSelect" SpName="Acc_Dep_CustSetting_Game_BetLimitFullLineSettingSelect" DbName="DBCust.CustDB.wsv_nap" />
+      <Setting Key="Acc_Dep_CustSetting_Game_BetLimitFullLineUpd" SpName="Acc_Dep_CustSetting_Game_BetLimitFullLineUpd" DbName="DBCust.CustDB.wsv_nap" />
     </Function>
     <Function Name="Setting Type 4 - Product Status">
-      <Setting Key="Acc_Dep_CustSetting_StatusSelect" SpName="Acc_Dep_CustSetting_StatusSelect_UAT1" DbName="DBCust.CustDB.wsv_nap" />
-      <Setting Key="Acc_Dep_CustSetting_StatusUpd" SpName="Acc_Dep_CustSetting_StatusUpd_UAT1" DbName="DBCust.CustDB.wsv_nap" />
+      <Setting Key="Acc_Dep_CustSetting_StatusSelect" SpName="Acc_Dep_CustSetting_StatusSelect" DbName="DBCust.CustDB.wsv_nap" />
+      <Setting Key="Acc_Dep_CustSetting_StatusUpd" SpName="Acc_Dep_CustSetting_StatusUpd" DbName="DBCust.CustDB.wsv_nap" />
     </Function>
     <Function Name="Setting Type 0 - Global Stake Level">
-      <Setting Key="Acc_Dep_CustSetting_GlobalStakeLevelSelect" SpName="Acc_Dep_CustSetting_GlobalStakeLevelSelect_UAT1" DbName="DBCust.CustDB.wsv_nap" />
+      <Setting Key="Acc_Dep_CustSetting_GlobalStakeLevelSelect" SpName="Acc_Dep_CustSetting_GlobalStakeLevelSelect" DbName="DBCust.CustDB.wsv_nap" />
       <Setting Key="Acc_Dep_CustSetting_GlobalStakeLevelUpdate" SpName="Acc_Dep_CustSetting_GlobalStakeLevelUpdate" DbName="DBCust.CustDB.wsv_nap" />
     </Function>
     <Function Name="Setting Type 7, 8 - Stake Level, Stake Group Level">
-      <Setting Key="Acc_Dep_CustSetting_StakeLevelSelect" SpName="Acc_Dep_CustSetting_StakeLevelSelect_UAT1" DbName="DBCust.CustDB.wsv_nap" />
-      <Setting Key="Acc_Dep_CustSetting_StakeLevelGroupSelect" SpName="Acc_Dep_CustSetting_StakeLevelGroupSelect_UAT1" DbName="DBCust.CustDB.wsv_nap" />
-      <Setting Key="Acc_Dep_CustSetting_StakeLevelUpd" SpName="Acc_Dep_CustSetting_StakeLevelUpd_UAT1" DbName="DBCust.CustDB.wsv_nap" />
+      <Setting Key="Acc_Dep_CustSetting_StakeLevelSelect" SpName="Acc_Dep_CustSetting_StakeLevelSelect" DbName="DBCust.CustDB.wsv_nap" />
+      <Setting Key="Acc_Dep_CustSetting_StakeLevelGroupSelect" SpName="Acc_Dep_CustSetting_StakeLevelGroupSelect" DbName="DBCust.CustDB.wsv_nap" />
+      <Setting Key="Acc_Dep_CustSetting_StakeLevelUpd" SpName="Acc_Dep_CustSetting_StakeLevelUpd" DbName="DBCust.CustDB.wsv_nap" />
     </Function>
     <Function Name="Setting Type 5 - Charge Commission">
-      <Setting Key="Acc_Dep_CustSetting_ChargeCommSelect" SpName="Acc_Dep_CustSetting_ChargeCommSelect_UAT1" DbName="DBCust.CustDB.wsv_nap" />
-      <Setting Key="Acc_Dep_CustSetting_ChargeCommUpd" SpName="Acc_Dep_CustSetting_ChargeCommUpd_UAT1" DbName="DBCust.CustDB.wsv_nap" />
+      <Setting Key="Acc_Dep_CustSetting_ChargeCommSelect" SpName="Acc_Dep_CustSetting_ChargeCommSelect" DbName="DBCust.CustDB.wsv_nap" />
+      <Setting Key="Acc_Dep_CustSetting_ChargeCommUpd" SpName="Acc_Dep_CustSetting_ChargeCommUpd" DbName="DBCust.CustDB.wsv_nap" />
     </Function>
   </Function>
   <Function Name="Licensee Odds Group">
