@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Web;
 using System.Xml.Linq;
+using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Helper;
@@ -76,7 +77,11 @@ namespace Sunplus.Accounting.Business.Admin
             }
 
             var results = new List<Result>();
-
+            if (!Permissions.GetHostPermission(Enumerations.Admin.Admin_ManageExAcc))
+            {
+                return new List<Result> { new Result(500, "You don\'t have permission to access.") };
+            }
+          
             try
             {
                 var result = _externalSiteDAO.AddSuperToGroup(username, groupName, AppSession.AccId);
@@ -87,7 +92,7 @@ namespace Sunplus.Accounting.Business.Admin
                 }
                 else
                 {
-                        results.AddRange(ProccessResultMessage(result.ErrorMessage));
+                    results.AddRange(ProccessResultMessage(result.ErrorMessage));
                 }
 
                 return results;
