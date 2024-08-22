@@ -65,6 +65,7 @@
   <Function Name="Report">
     <Setting Key="Acc_AllStatementCompanyDetail" SpName="Acc_AllStatementCompanyDetail" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="Acc_Rpt_Balance_Company" SpName="Acc_Rpt_Balance_Company" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Age_BetList_SelMatch3rdResultParlay" SpName="Age_BetList_SelMatch3rdResultParlay" DbName="DBACC.bodb02.wsv_nap" />
   </Function>
   <Function Name="Left Panel - Transfer">
     <Setting Key="Acc_CustomerSelIsCrossTransfer" SpName="Acc_CustomerSelIsCrossTransfer" DbName="DBACC.bodb02.wsv_nap" />

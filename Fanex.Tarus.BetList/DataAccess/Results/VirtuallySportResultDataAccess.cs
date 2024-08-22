@@ -42,10 +42,10 @@ namespace Fanex.Tarus.BetList.DataAccess.Results
                 EventDate = reader["eventdate"] != DBNull.Value ? DateTime.Parse(reader["eventdate"].ToString()) : DateTime.MinValue,
                 BetStatus = reader["betstatus"] != DBNull.Value ? reader["betstatus"].ToString() : string.Empty,
                 MatchCode = reader["MatchCode"] != DBNull.Value ? reader["MatchCode"].ToString() : string.Empty,
-                HtHomeScore = reader["HtHomeScore"] != DBNull.Value ? int.Parse(reader["HtHomeScore"].ToString()) : 0,
-                HtAwayScore = reader["HtAwayScore"] != DBNull.Value ? int.Parse(reader["HtAwayScore"].ToString()) : 0,
-                FinalHomeScore = reader["FinalHomeScore"] != DBNull.Value ? int.Parse(reader["FinalHomeScore"].ToString()) : 0,
-                FinalAwayScore = reader["FinalAwayScore"] != DBNull.Value ? int.Parse(reader["FinalAwayScore"].ToString()) : 0,
+                HtHomeScore = reader["HtHomeScore"] != DBNull.Value ? int.Parse(reader["HtHomeScore"].ToString()) : (int?) null,
+                HtAwayScore = reader["HtAwayScore"] != DBNull.Value ? int.Parse(reader["HtAwayScore"].ToString()) : (int?)null,
+                FinalHomeScore = reader["FinalHomeScore"] != DBNull.Value ? int.Parse(reader["FinalHomeScore"].ToString()) : (int?)null,
+                FinalAwayScore = reader["FinalAwayScore"] != DBNull.Value ? int.Parse(reader["FinalAwayScore"].ToString()) : (int?)null,
                 HomeId = reader["HomeId"] != DBNull.Value ? int.Parse(reader["HomeId"].ToString()) : 0,
                 AwayId = reader["AwayId"] != DBNull.Value ? int.Parse(reader["AwayId"].ToString()) : 0
             };
