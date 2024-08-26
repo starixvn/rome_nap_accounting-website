@@ -48,6 +48,10 @@ function GetExcelFile() {
 }
 
 function RenderData(data) {
+    if (data == null) {
+        return;
+    }
+
     if (data.IsNotifyHeadline && data.ErrorCode == 0) {
         showAlertMessage('errMsg', "Notify Headline Successfully!", 0);
         return;
