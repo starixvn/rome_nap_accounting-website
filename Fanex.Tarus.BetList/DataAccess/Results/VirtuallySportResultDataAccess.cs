@@ -39,7 +39,7 @@ namespace Fanex.Tarus.BetList.DataAccess.Results
                 LeagueId = reader["league3rdid"] != DBNull.Value ? int.Parse(reader["league3rdid"].ToString()) : 0,
                 MatchId = reader["match3rdid"] != DBNull.Value ? int.Parse(reader["match3rdid"].ToString()) : 0,
                 EventStatus = reader["eventstatus"] != DBNull.Value ? reader["eventstatus"].ToString() : string.Empty,
-                EventDate = reader["eventdate"] != DBNull.Value ? DateTime.Parse(reader["eventdate"].ToString()) : DateTime.MinValue,
+                KickOffTime = reader["eventdate"] != DBNull.Value ? DateTime.Parse(reader["eventdate"].ToString()) : DateTime.MinValue,
                 BetStatus = reader["betstatus"] != DBNull.Value ? reader["betstatus"].ToString() : string.Empty,
                 MatchCode = reader["MatchCode"] != DBNull.Value ? reader["MatchCode"].ToString() : string.Empty,
                 HtHomeScore = reader["HtHomeScore"] != DBNull.Value ? int.Parse(reader["HtHomeScore"].ToString()) : (int?) null,

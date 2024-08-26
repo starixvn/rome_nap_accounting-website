@@ -268,6 +268,7 @@ namespace Fanex.Tarus.BetList.DataAccess.Results
                 HtAwayScore = reader["htawayscore"] != DBNull.Value ? int.Parse(reader["htawayscore"].ToString()) : new int?(),
                 Color = ColumnExisted(reader, "lcolor") && reader["lcolor"] != DBNull.Value ? reader["lcolor"].ToString() : string.Empty,
                 FinalHomeScore = reader["finalhomescore"] != DBNull.Value ? int.Parse(reader["finalhomescore"].ToString()) : new int?(),
+                MatchCode = reader["matchcode"] != DBNull.Value ? reader["matchcode"].ToString() : string.Empty,
                 HtHomeScore = reader["hthomescore"] != DBNull.Value ? int.Parse(reader["hthomescore"].ToString()) : new int?(),
                 KickOffTime = reader["eventdate"] != DBNull.Value ? DateTime.Parse(reader["eventdate"].ToString()) : DateTime.MinValue,
                 GameDetails = new List<GameDetail>(),
