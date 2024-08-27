@@ -24,7 +24,7 @@ namespace Fanex.Tarus.BetList.DataAccess.Results
                 {
                     while (reader.Read())
                     {
-                        result.Add(BindBitcoin(reader));
+                        result.Add(BindSportbook(reader));
                     }
                 }
             }
@@ -32,7 +32,7 @@ namespace Fanex.Tarus.BetList.DataAccess.Results
             return result;
         }
 
-        private static Sportsbook BindBitcoin(IDataReader reader)
+        private static Sportsbook BindSportbook(IDataReader reader)
         {
             return new Sportsbook
             {
