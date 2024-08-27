@@ -281,7 +281,7 @@ namespace Fanex.Tarus.Customer.Controller
                 request.RoleId,
                 request.UplineRoleId,
                 Utils.GetClientIP(),
-                ObjectDbExtensions.GetSiteDBConfigBySite(request.GeneralInfo.Site).CustDBGroupID,
+                ObjectDbExtensions.GetSiteDBConfigByCustId(request.CustId).CustDBGroupID,
                 request.Site,
                 request.SiteLabel,
                 "en-US"));
