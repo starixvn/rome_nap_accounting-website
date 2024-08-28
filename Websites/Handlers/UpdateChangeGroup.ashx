@@ -2,6 +2,7 @@
 
 using System;
 using System.Web;
+using IBCUtils;
 using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Helper;
@@ -21,7 +22,7 @@ public class UpdateChangeGroup : BaseHandler
             context.Response.Write("<script type=\"text/javascript\">");
             try
             {
-                IBCUtils.IbcError err = null;
+                IBCUtils.IbcError err = new IbcError();
                 string strClear = context.Request["clearCr"] as string ?? string.Empty;
                 string accId = context.Session["accId"].ToString();
                 string uname = context.Request["txtUname"] as string ?? string.Empty;
