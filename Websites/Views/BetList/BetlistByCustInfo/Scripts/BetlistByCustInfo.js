@@ -560,6 +560,17 @@
         }
     },
 
+    disabledFilter_Exchange: function () {
+        var $infoMsg = $("#info-msg");
+        if ($('input[name=exType]:checked').val() == "-2") {
+            $("#exchange_fromdate").attr("disabled", "disabled");
+            $("#exchange_todate").attr("disabled", "disabled");            
+        }
+        else {
+            $("#exchange_fromdate").removeAttr("disabled", "disabled");
+            $("#exchange_todate").removeAttr("disabled", "disabled");
+        }
+    },
     disabledFilter_saba: function () {
         var $infoMsg = $("#info-msg_saba");
         if ($('input[name=type_saba]:checked').val() == "-2") {
