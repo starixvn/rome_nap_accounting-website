@@ -10,6 +10,9 @@
     public interface IExchangeBetListService
     {
         ExchangeViewModel GetBetList(ExchangeBetListCriteria criteria);
+
+        RunningExchangeViewModel GetRunningBetList(RunningExchangeBetListCriteria criteria);
+
         IEnumerable<ExchangeTicket> GetBetDetail(ExchangeBetDetailCriteria criteria);
     }
 
@@ -33,6 +36,13 @@
         public ExchangeViewModel GetBetList(ExchangeBetListCriteria criteria)
         {
             var model = exchangeRepository.GetBetList(criteria);
+            model.Index = ((criteria.PageIndex - 1) * criteria.PageSize) + 1;
+            return model;
+        }
+
+        public RunningExchangeViewModel GetRunningBetList(RunningExchangeBetListCriteria criteria)
+        {
+            var model = exchangeRepository.GetRunningTickets(criteria);
             model.Index = ((criteria.PageIndex - 1) * criteria.PageSize) + 1;
             return model;
         }

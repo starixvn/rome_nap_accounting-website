@@ -23,6 +23,14 @@
         }
 
         [AuthorizeFunctions("ViewInfo")]
+        public ActionResult GetRunningData(RunningExchangeBetListCriteria criteria)
+        {
+            var tickets = exchangeService.GetRunningBetList(criteria);
+
+            return PartialView("~/Views/BetList/BetlistByCustInfo/Exchange/RunningTickets.cshtml", tickets);
+        }
+
+        [AuthorizeFunctions("ViewInfo")]
         public ActionResult GetDetails(ExchangeBetDetailCriteria criteria)
         {
             var details = exchangeService.GetBetDetail(criteria);

@@ -581,6 +581,7 @@
     <Compile Include="Core\SessionManager.cs" />
     <Compile Include="Criteria\BetBuilder\GetResultBetBuilderDetailCriteria.cs" />
     <Compile Include="Criteria\BetListBetTradeDetailCriteria.cs" />
+    <Compile Include="Criteria\Exchange\RunningExchangeBetListCriteria.cs" />
     <Compile Include="Criteria\GetBookedBetCriteria.cs" />
     <Compile Include="Criteria\BetTypeByDateInSiteDBCriteria.cs" />
     <Compile Include="Criteria\GetAGCasinoBetDetailsInSiteDBCriteria.cs" />
@@ -665,6 +666,8 @@
     <Compile Include="Helper\ChoiceHelper.cs" />
     <Compile Include="Helper\ReportServices.cs" />
     <Compile Include="Models\BalanceUp.cs" />
+    <Compile Include="Models\Exchange\RunningExchangeViewModel.cs" />
+    <Compile Include="Models\Exchange\RunningExchangeTicket.cs" />
     <Compile Include="Models\SiteModel.cs" />
     <Compile Include="Models\BetListByIP_Username.cs" />
     <Compile Include="Models\BetListDetail.cs" />
