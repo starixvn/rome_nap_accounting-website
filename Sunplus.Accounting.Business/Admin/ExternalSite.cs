@@ -110,6 +110,10 @@ namespace Sunplus.Accounting.Business.Admin
         {
             try
             {
+                if (!Permissions.GetHostPermission(Enumerations.Admin.Admin_ManageExAcc))
+                {
+                    return new Result(500, "You don\'t have permission to access.");
+                }
                 return _externalSiteDAO.RemoveSuperFromGroup(custId, groupName, AppSession.AccId);
             }
             catch (Exception ex)
