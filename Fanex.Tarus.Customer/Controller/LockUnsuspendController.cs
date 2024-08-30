@@ -59,6 +59,7 @@ namespace Fanex.Tarus.Customer.Controller
             return Json(_lockUnsuspendService.Update(new UpdateCustomerCriteria()
             {
                 CustList = custList.Trim(),
+                UserId = AppSession.AccId,
                 Lock = isLock,
                 IP = Utils.GetClientIP(),
                 DeniedList = AccountCredit.Acc_DeniedSiteCurrency_Sel(AppSession.AccId)
