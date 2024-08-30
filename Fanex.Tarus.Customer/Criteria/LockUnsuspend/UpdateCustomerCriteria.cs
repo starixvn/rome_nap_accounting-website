@@ -6,6 +6,8 @@
     {
         public string CustList { get; set; }
 
+        public int UserId { get; set; }
+
         public bool Lock { get; set; }
 
         public string DeniedList { get; set; }
@@ -19,7 +21,7 @@
 
         public override bool IsValid()
         {
-            return !string.IsNullOrWhiteSpace(CustList);
+            return !string.IsNullOrWhiteSpace(CustList) && UserId > 0;
         }
     }
 }
