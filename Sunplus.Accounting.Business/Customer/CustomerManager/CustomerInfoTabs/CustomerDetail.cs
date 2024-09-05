@@ -1,4 +1,6 @@
-﻿namespace Sunplus.Accounting.Business.Customer
+﻿using System.Security.Policy;
+
+namespace Sunplus.Accounting.Business.Customer
 {
     using System.Web.Security;
     using Core.Common;
@@ -7,6 +9,7 @@
     using DNAide.Utils;
     using DNAide.Web;
     using Fanex.Tarus.Infrastructure.Constants;
+    using Sunplus.Accounting.Business.Security;
     using static Fanex.Tarus.Infrastructure.Common.Enumerations;
 
     public partial class CustomerManager
@@ -122,18 +125,19 @@
             }
 
             string shortUserName = customerInfoViewModel.UserName.Length < 20 ? customerInfoViewModel.UserName : customerInfoViewModel.UserName.Substring(0, 20) + "...";
+            bool isViewContactInfo = customerInfoViewModel.IsDeposit || Permissions.HasPermission(Enumerations.Functions.Customer.ContactInfo);
             TemplateHandler.Assign(ref htmlcontent, "{statusClass}", statusClass);
             TemplateHandler.Assign(ref htmlcontent, "{UserName}", shortUserName);
             TemplateHandler.Assign(ref htmlcontent, "{isHiddenReview}", string.IsNullOrWhiteSpace(customerInfoViewModel.DisplayReview) ? "none" : "");
             TemplateHandler.Assign(ref htmlcontent, "{Review}", customerInfoViewModel.DisplayReview);
             TemplateHandler.Assign(ref htmlcontent, "{FullUserName}", customerInfoViewModel.UserName);
-            TemplateHandler.Assign(ref htmlcontent, "{CustomerName}", customerInfoViewModel.Fullname);
-            TemplateHandler.Assign(ref htmlcontent, "{FullCustomerName}", customerInfoViewModel.Fullname);
+            TemplateHandler.Assign(ref htmlcontent, "{CustomerName}", isViewContactInfo ? customerInfoViewModel.Fullname : string.Empty );
+            TemplateHandler.Assign(ref htmlcontent, "{FullCustomerName}", isViewContactInfo ? customerInfoViewModel.Fullname : string.Empty);
             TemplateHandler.Assign(ref htmlcontent, "{NickName}", customerInfoViewModel.Nickname);
            
-            TemplateHandler.Assign(ref htmlcontent, "{CustomerFax}", customerInfoViewModel.Fax);
-            TemplateHandler.Assign(ref htmlcontent, "{CustomerPhone}", customerInfoViewModel.Phone);
-            TemplateHandler.Assign(ref htmlcontent, "{CustomerMobile}", customerInfoViewModel.Mobile);
+            TemplateHandler.Assign(ref htmlcontent, "{CustomerFax}", isViewContactInfo ?  customerInfoViewModel.Fax : string.Empty);
+            TemplateHandler.Assign(ref htmlcontent, "{CustomerPhone}", isViewContactInfo ? customerInfoViewModel.Phone : string.Empty);
+            TemplateHandler.Assign(ref htmlcontent, "{CustomerMobile}", isViewContactInfo ?  customerInfoViewModel.Mobile : string.Empty);
             //info for internal agent login
             string rndStr = Encryption.RandomString(6);
 #pragma warning disable CS0618 // Type or member is obsolete
