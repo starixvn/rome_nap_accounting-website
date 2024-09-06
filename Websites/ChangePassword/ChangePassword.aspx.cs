@@ -121,7 +121,7 @@ public partial class ChangePassword_ChangePassword : RequiredAuthorizationPage
     {
         try
         {
-            if (!Permissions.HasHostPermission(Enumerations.Functions.Customer.Password))
+            if ((custid != userid)  && !Permissions.HasHostPermission(Enumerations.Functions.Customer.Password))
             {
                 errMsg = "You are not authorized on this function.";
                 return false;
