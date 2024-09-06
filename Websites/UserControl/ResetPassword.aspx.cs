@@ -62,7 +62,7 @@ public partial class UserControl_ResetPassword : System.Web.UI.Page
         string s = string.Empty;
         try
         {
-            if (!Permissions.GetHostPermission(Enumerations.Functions.Customer.Password))
+            if ((custId!=accId) && !Permissions.GetHostPermission(Enumerations.Functions.Customer.Password))
             {
                 s += "<script type='text/javascript'>showAlertMessage('errMsg','You don\'t have permission to access.!',0); ";
             }
