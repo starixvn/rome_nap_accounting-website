@@ -93,6 +93,7 @@ namespace Fanex.Tarus.Customer.Controller
                 0,
                 request.SourceCustId,
                 request.Site,
+                request.Currency,
                 false,
                 Utils.GetClientIP(),
                 ObjectDbExtensions.GetSiteDBConfigBySite(request.Site).CustDBGroupID,
@@ -281,7 +282,7 @@ namespace Fanex.Tarus.Customer.Controller
                 request.RoleId,
                 request.UplineRoleId,
                 Utils.GetClientIP(),
-                ObjectDbExtensions.GetSiteDBConfigByCustId(request.CustId).CustDBGroupID,
+                ObjectDbExtensions.GetSiteDBConfigByCustId(request.CustId)?.CustDBGroupID ?? 0,
                 request.Site,
                 request.SiteLabel,
                 "en-US"));

@@ -222,7 +222,8 @@ $.fn.forceNumber = function () {
             sourceCustId: userid,
             custLevel: existedUser.roleId,
             uplineId: parentId,
-            code: vm.code
+            code: vm.code,
+            currency: $('#currency').data().currencyId
         };
     }
 
