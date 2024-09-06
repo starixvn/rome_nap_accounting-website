@@ -126,6 +126,11 @@ namespace Sunplus.Accounting.Business.Customer
 
             string shortUserName = customerInfoViewModel.UserName.Length < 20 ? customerInfoViewModel.UserName : customerInfoViewModel.UserName.Substring(0, 20) + "...";
             bool isViewContactInfo = customerInfoViewModel.IsDeposit || Permissions.HasPermission(Enumerations.Functions.Customer.ContactInfo);
+            if (!isViewContactInfo)
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "UpdateInfo");
+            }
+
             TemplateHandler.Assign(ref htmlcontent, "{statusClass}", statusClass);
             TemplateHandler.Assign(ref htmlcontent, "{UserName}", shortUserName);
             TemplateHandler.Assign(ref htmlcontent, "{isHiddenReview}", string.IsNullOrWhiteSpace(customerInfoViewModel.DisplayReview) ? "none" : "");
