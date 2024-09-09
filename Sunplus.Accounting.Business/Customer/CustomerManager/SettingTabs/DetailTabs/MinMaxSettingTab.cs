@@ -40,29 +40,18 @@
 
             string superSettingTab = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + BuildSettingUrl(custId, RoleIdConstants.Member, RoleIdConstants.Super, userName, siteName, ProductGroupIdConstants.SportsBook) + "\");' target='centerFr'>Sportsbook</a>";
 
-            if (!customerInfoViewModel.HideSettingLinkVirtualSports)
-            {
-                superSettingTab += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?productId=5&language=en-US&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=4\");' target='centerFr'>Virtual Sports</a>";
-            }
-
             if (!customerInfoViewModel.HideLiveAndRNGCasino)
             {
                 superSettingTab += string.Format(
-                   "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + BuildSettingUrl(custId, RoleIdConstants.Member, RoleIdConstants.Super, userName, siteName, ProductGroupIdConstants.LiveAndRNGCasino) + "\");' target='centerFr'>{3}</a>",
-                   Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdRNGLottery,
-                   custId,
-                   4, // Super Level.
+                   "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + BuildSettingUrl(custId, RoleIdConstants.Member, RoleIdConstants.Super, userName, siteName, ProductGroupIdConstants.LiveAndRNGCasino) + "\");' target='centerFr'>{0}</a>",
                    "Live & RNG Casino");
             }
 
-            if (renderLeftPanelParameter.IsShowRNGLottery)
+            if (!customerInfoViewModel.HideRNGGames)
             {
                 superSettingTab += string.Format(
-                    "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"DCS/ViewCustomerSetting?language=en-US&productId={0}&customerLevel=1&customerId={1}&uplinelevel={2}\");' target='centerFr'>{3}</a>",
-                    Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdRNGLottery,
-                    custId,
-                    4, // Super Level.
-                    "RNG Lottery");
+                   "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + BuildSettingUrl(custId, RoleIdConstants.Member, RoleIdConstants.Super, userName, siteName, ProductGroupIdConstants.RNGGames) + "\");' target='centerFr'>{0}</a>",
+                   "RNG Games");
             }
 
             if (renderLeftPanelParameter.IsShowBitcoin)
@@ -72,29 +61,18 @@
 
             string masterSettingTab = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + BuildSettingUrl(custId, RoleIdConstants.Member, RoleIdConstants.Master, userName, siteName, ProductGroupIdConstants.SportsBook) + "\");' target='centerFr'>Sportsbook</a>";
 
-            if (!customerInfoViewModel.HideSettingLinkVirtualSports)
-            {
-                masterSettingTab += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?productId=5&language=en-US&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=3\");' target='centerFr'>Virtual Sports</a>";
-            }
-
             if (!customerInfoViewModel.HideLiveAndRNGCasino)
             {
                 masterSettingTab += string.Format(
-                    "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + BuildSettingUrl(custId, RoleIdConstants.Member, RoleIdConstants.Master, userName, siteName, ProductGroupIdConstants.LiveAndRNGCasino) + "\");' target='centerFr'>{3}</a>",
-                    Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdRNGLottery,
-                    custId,
-                    3, // Master Level.
+                    "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + BuildSettingUrl(custId, RoleIdConstants.Member, RoleIdConstants.Master, userName, siteName, ProductGroupIdConstants.LiveAndRNGCasino) + "\");' target='centerFr'>{0}</a>",
                     "Live & RNG Casino");
             }
 
-            if (renderLeftPanelParameter.IsShowRNGLottery)
+            if (!customerInfoViewModel.HideRNGGames)
             {
                 masterSettingTab += string.Format(
-                    "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"DCS/ViewCustomerSetting?language=en-US&productId={0}&customerLevel=1&customerId={1}&uplinelevel={2}\");' target='centerFr'>{3}</a>",
-                    Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdRNGLottery,
-                    custId,
-                    3, // Master Level.
-                    "RNG Lottery");
+                    "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + BuildSettingUrl(custId, RoleIdConstants.Member, RoleIdConstants.Master, userName, siteName, ProductGroupIdConstants.RNGGames) + "\");' target='centerFr'>{0}</a>",
+                    "RNG Games");
             }
 
             if (renderLeftPanelParameter.IsShowBitcoin)

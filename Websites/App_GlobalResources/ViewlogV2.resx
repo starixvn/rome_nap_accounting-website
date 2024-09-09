@@ -1951,4 +1951,7 @@ Max Keno (20+1) 2</value>
   <data name="ChargeComm" xml:space="preserve">
     <value>Charge Commission</value>
   </data>
+  <data name="Disable9919_1501" xml:space="preserve">
+    <value>Disabled Keno/Lottery</value>
+  </data>
 </root>
