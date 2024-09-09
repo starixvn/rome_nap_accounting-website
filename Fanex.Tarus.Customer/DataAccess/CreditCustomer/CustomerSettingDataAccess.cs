@@ -5,6 +5,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
+
 namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
 {
     using Customer.DataAccess;
@@ -47,6 +49,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
                     objDB.AddInParameter("system", DbType.String, system.ToUpper());
                     objDB.AddInParameter("mode", DbType.Int16, OfferSiteCredit);
                     objDB.AddInParameter("userid", DbType.Int32, AppSession.AccId);
+                    objDB.AddInParameter("deniedlist", DbType.String, AccountCredit.Acc_DeniedSiteCurrency_Sel(AppSession.AccId, 2));
                     using (var reader = objDB.ExecuteReader())
                     {
                         if (reader != null)
