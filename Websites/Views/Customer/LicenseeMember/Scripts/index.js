@@ -1,5 +1,7 @@
 ﻿var cachedMembers = [];
 var selectedAgentId = 0;
+var custDBGroupID = 0;
+var site = "";
 function CheckExistAgent() {
     $("#errMsg").html("");
     $("#tblmember").hide();
@@ -19,24 +21,27 @@ function CheckExistAgent() {
                 return;
             }
 
-            if (result > 0) {
+            if (result && result.agentId > 0) {
+                selectedAgentId = result.agentId;
+                custDBGroupID = result.custDBGroupID;
+                site = result.site;
                 var members = $("#txtMemberUsernames").val();
                 if (members.trim().length === 0) {
                     showAlertMessage('errMsg', "Please enter Member!", 1);
                     return;
                 }
-                GenerateMemberList(members, result);
+                GenerateMemberList(members);
             } else {
                 showAlertMessage('errMsg', "The selected account is not a valid licensee agent.", 1);
             }
         },
         error: function (err) {
-            if (err.status == 403) {               
+            if (err.status == 403) {
                 showAlertMessage('errMsg', "You don't have permission to access.", 1);
             }
             else {
                 showAlertMessage('errMsg', 'Internal server error.', 1);
-            }           
+            }
         },
         complete: function () {
             try { parent.jQuery.unblockUI(); } catch (e) { };
@@ -44,15 +49,14 @@ function CheckExistAgent() {
     });
 }
 
-function GenerateMemberList(members, agentId) {
+function GenerateMemberList(members) {
     var memberList = members.split(",").filter(onlyUnique);
     cachedMembers = memberList;
-    selectedAgentId = agentId;
     var bodyRows = [];
     for (var i = 0; i < memberList.length; i++) {
         var memberName = memberList[i].trim();
         var row = { Columns: [] };
-        row.Columns.push({ Name: 'No', Value: i+1 });
+        row.Columns.push({ Name: 'No', Value: i + 1 });
         row.Columns.push({ Name: 'Member', Value: memberName });
         row.Columns.push({ Name: 'Selected', Value: "x" });
         row.Columns.push({ Name: 'Status', Value: "Not created", CustomAttr: "id=\"status" + memberName + "\"" });
@@ -84,7 +88,9 @@ function CreateMember() {
     var member = cachedMembers.shift();
     var request = {
         Recommend: selectedAgentId,
-        Username: member
+        Username: member,
+        CustDBGroupID: custDBGroupID,
+        Site: site
     };
     var statusDiv = $(document.getElementById("status" + member));
     statusDiv.removeClass();
@@ -105,7 +111,6 @@ function CreateMember() {
                 statusDiv.addClass("status-failed");
                 statusDiv.html(result.ErrorMessage);
             }
-            
         },
         error: function (err) {
             statusDiv.removeClass();
@@ -140,7 +145,7 @@ $(document).ready(function () {
             }
 
             memberUsernameValue = memberUsernameValue.replace(/\s/g, ",");
-            var usernameArray = memberUsernameValue.split(",").filter(item => item.length > 0).slice(0,200);
+            var usernameArray = memberUsernameValue.split(",").filter(item => item.length > 0).slice(0, 200);
             memberUsername.val(usernameArray.join(","));
         }
     });

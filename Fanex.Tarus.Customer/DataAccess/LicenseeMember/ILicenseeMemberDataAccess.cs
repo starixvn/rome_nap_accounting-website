@@ -7,6 +7,8 @@
     {
         int CheckExistAgent(CheckExistAgentCriteria criteria);
 
+        (Result, int) RegisterMember(RegisterMemberCriteria criteria);
+
         Result InsertMember(InsertMemberCriteria criteria);
     }
 }

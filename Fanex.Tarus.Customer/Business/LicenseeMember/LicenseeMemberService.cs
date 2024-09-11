@@ -5,7 +5,7 @@
     using Fanex.Tarus.Customer.DataAccess.LicenseeMember;
     using Fanex.Tarus.Customer.Requests.LicenseeMember;
 
-    public class LicenseeMemberService :ILicenseeMemberService
+    public class LicenseeMemberService : ILicenseeMemberService
     {
         private readonly ILicenseeMemberDataAccess dataAccess;
 
@@ -23,15 +23,23 @@
 
         public Result InsertMember(InsertMemberRequest request, int userId, string ip)
         {
-            var criteria = new InsertMemberCriteria
-            {
-                Recommend = request.Recommend,
-                Username = request.Username,
-                Creator = userId,
-                IP = ip
-            };
+            var registerResult = dataAccess.RegisterMember(new RegisterMemberCriteria(request.Username, request.Recommend, request.Site, request.CustDBGroupID));
 
-            return dataAccess.InsertMember(criteria);
+            if (registerResult.Item1.IsSuccess)
+            {
+                var criteria = new InsertMemberCriteria
+                {
+                    CustId = registerResult.Item2,
+                    Recommend = request.Recommend,
+                    Username = request.Username,
+                    Creator = userId,
+                    IP = ip
+                };
+
+                return dataAccess.InsertMember(criteria);
+            }
+
+            return registerResult.Item1;
         }
     }
 }
