@@ -44,7 +44,7 @@ namespace Fanex.Tarus.Customer.DangerousGrouping.Services
         public CustomerDangerResult GetCustomerDanger(string username, int userId, string adName)
         {
             return dataAccess.GetCustomerDanger(new GetCustomerDangerCriteria
-                (username, userId, adName, string.Join(",", MangeAccountInfoPermissionBuilder.GetCustomerPermissions(userId, PolicyConst.Read)),
+                (username, userId, adName, string.Join(",", MangeAccountInfoPermissionBuilder.MapToCustomterPermissionParameter(userId, PolicyConst.Read)),
                     AccountCredit.Acc_DeniedSiteCurrency_Sel(userId)));
         }
 
@@ -59,7 +59,7 @@ namespace Fanex.Tarus.Customer.DangerousGrouping.Services
                 DangerType = request.DangerType,
                 UpdateDownline = request.UpdateDownline,
                 IP = userHostAddress,
-                Permission = string.Join(",", MangeAccountInfoPermissionBuilder.GetCustomerPermissions(userId, PolicyConst.Read)),
+                Permission = string.Join(",", MangeAccountInfoPermissionBuilder.MapToCustomterPermissionParameter(userId, PolicyConst.Read)),
                 DeniedList = AccountCredit.Acc_DeniedSiteCurrency_Sel(userId)
             };
 
@@ -81,7 +81,7 @@ namespace Fanex.Tarus.Customer.DangerousGrouping.Services
                 UsernameList = request.Usernames,
                 DangerType = request.DangerType,
                 DangerLevel = request.DangerLevel,
-                Permission = string.Join(",", MangeAccountInfoPermissionBuilder.GetCustomerPermissions(userId, PolicyConst.Read)),
+                Permission = string.Join(",", MangeAccountInfoPermissionBuilder.MapToCustomterPermissionParameter(userId, PolicyConst.Read)),
                 DeniedList = AccountCredit.Acc_DeniedSiteCurrency_Sel(userId)
             };
 
@@ -102,7 +102,7 @@ namespace Fanex.Tarus.Customer.DangerousGrouping.Services
                     DangerType = multipleCustomersDangerUpdateRequest.DangerType,
                     UpdateDownline = multipleCustomersDangerUpdateRequest.UpdateDownline,
                     IP = userHostAddress,
-                    Permission = string.Join(",", MangeAccountInfoPermissionBuilder.GetCustomerPermissions(userId, PolicyConst.Read)),
+                    Permission = string.Join(",", MangeAccountInfoPermissionBuilder.MapToCustomterPermissionParameter(userId, PolicyConst.Read)),
                     DeniedList = AccountCredit.Acc_DeniedSiteCurrency_Sel(userId)
                 };
 
