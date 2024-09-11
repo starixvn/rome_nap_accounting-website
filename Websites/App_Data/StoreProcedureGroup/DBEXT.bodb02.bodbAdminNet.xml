@@ -20,6 +20,7 @@
     <Setting Key="Acc_CustomerNoCommSelBettypes" SpName="Acc_CustomerNoCommSelBettypes" DbName="DBAGE.bodb02.wsv_nap" />
   </Function>
   <Function Name="Exchange">
+    <Setting Key="Acc_BetList_Exchange_Running" SpName="Acc_BetList_Exchange_Running_xtest" DbName="DBAGE.bodb02.wsv_nap" />
     <Setting Key="Acc_BetList_Exchange" SpName="Acc_BetList_Exchange" DbName="DBAGE.bodb02.wsv_nap" />
     <Setting Key="Acc_BetList_Exchange_Detail" SpName="Acc_BetList_Exchange_Detail" DbName="DBAGE.bodb02.wsv_nap" />
   </Function>

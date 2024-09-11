@@ -1,0 +1,214 @@
+﻿@using System.Linq
+@using Fanex.Tarus.BetList.Models.Exchange
+@using Fanex.Tarus.BetList.Extensions
+
+@model RunningExchangeViewModel
+@{
+    var index = Model.Index - 1;
+}
+
+<div id="ExchangeBetlist" class="freegrid display-none">
+    <div class="col_header row-headers-background scroll-y">
+        <div class="header-container">
+            <table class="grid-fixed-table col_header_content">
+                <thead>
+                    <tr>
+                        <th>
+                            <div class="width30 height34 table-cell">
+                                No
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width300 height34 table-cell">
+                                Market
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width80 height34 table-cell">
+                                Bet ID
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width150 height34 table-cell">
+                                Selection
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width50 height34 table-cell">
+                                Type
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width80 height34 table-cell">
+                                Bet Placed (GMT+8)
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width50 height34 table-cell">
+                                Odds Avg
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width80 height34 table-cell">
+                                Stake
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width80 height34 table-cell">
+                                Win Loss
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width80 height34 table-cell">
+                                WL/Comm
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+    <div class="grid-container container">
+        <div class="content-container">
+            <table id="tblContent" class="grid-fixed-table col_header_content ">
+                <thead>
+                    <tr>
+                        <th>
+                            <div class="width30 height34 table-cell">
+                                No
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width300 height34 table-cell">
+                                Market
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width80 height34 table-cell">
+                                Bet ID
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width150 height34 table-cell">
+                                Selection
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width50 height34 table-cell">
+                                Type
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width80 height34 table-cell">
+                                Bet Placed (GMT+8)
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width50 height34 table-cell">
+                                Odds Avg
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width80 height34 table-cell">
+                                Stake
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width80 height34 table-cell">
+                                Win Loss
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width80 height34 table-cell">
+                                WL/Comm
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                @if (Model.Details.Any())
+                {
+                    <tbody>
+                        @foreach (var detail in Model.Details)
+                        {
+                            index = index + 1;
+                            <tr>
+                                <td class="c">
+                                    <div class="width30 table-cell">
+                                        @index
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="width300 table-cell">
+                                        @detail.EventTypeName >
+                                        <span style="font-weight:bold">@detail.EventName </span> >
+                                        @detail.MarketName
+                                    </div>
+                                </td>
+                                <td class="c">
+                                    <div class="width80 table-cell">
+                                        <a href="javascript:void(0);" onclick="ExchangeBetlist.getDetails(@detail.BetId,'@detail.Type');">@detail.BetId</a>
+                                    </div>
+                                </td>
+                                <td class="c">
+                                    <div class="width150 table-cell">
+                                        @detail.SelectionName
+                                    </div>
+                                </td>
+                                <td class="c @detail.Type">
+                                    <div class="width50 table-cell">
+                                        @detail.Type
+                                    </div>
+                                </td>
+                                <td class="c">
+                                    <div class="width80 table-cell">
+                                        @detail.BetPlaced
+                                    </div>
+                                </td>
+                                <td class="r">
+                                    <div class="width50 table-cell">
+                                        @detail.OddsAvgText
+                                    </div>
+                                </td>
+                                <td class="r">
+                                    <div class="width80 table-cell">
+                                        @detail.Stake.Format(2)
+                                    </div>
+                                </td>
+                                <td class="r">
+                                    <div class="width80 table-cell">
+                                        -
+                                    </div>
+                                </td>
+                                <td class="r">
+                                    <div class="width80 table-cell">
+                                        -
+                                    </div>
+                                </td>
+                            </tr>                            
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr class="r">
+                            <td class="b" colspan="9" align="right">
+                                Grand Total
+                            </td>
+                            <td>
+                                -
+                            </td>
+                        </tr>
+                    </tfoot>
+                }
+                else
+                {
+                    <tr>
+                        <td class="c b" colspan="11">There is no data</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var _totalSummaryRowsExchange = @Model.TotalSummaryRows;
+</script>

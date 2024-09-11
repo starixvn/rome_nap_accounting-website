@@ -112,17 +112,26 @@
             </div>
 
             <div class="maincontent_box hidden" id="maincontent_exchange">
-                <span style="font-weight: bold">From </span>
-                <span style="padding-left: 5px">
-                    <input id="exchange_fromdate" class="txtdate" readonly="readonly" />
-                </span>
-                <span class="b" style="padding-left: 5px">To</span>
-                <span style="padding-left: 5px">
-                    <input id="exchange_todate" class="txtdate" readonly="readonly" />
-                </span>
-                <input class="btn" type="button" id="btnReport" value="Submit" onclick="ExchangeBetlist.getData();" />
-                <div id="errMsg2">
+                <div>
+                    <input onclick="BetListByCustInfo.disabledFilter_Exchange();" id="exType1" type="radio" value="-1" name="exType" checked="checked" />                    
+                    <label style="font-weight: bold" for="exType1">Settled Tickets From </label>
+                    <span style="padding-left: 5px">
+                        <input id="exchange_fromdate" class="txtdate" readonly="readonly" />
+                    </span>
+                    <span class="b" style="padding-left: 5px">To</span>
+                    <span style="padding-left: 5px">
+                        <input id="exchange_todate" class="txtdate" readonly="readonly" />
+                    </span>
                 </div>
+                <div>
+                    <input onclick="BetListByCustInfo.disabledFilter_Exchange();" id="exType2" type="radio" value="-2" name="exType" />
+                    <label style="font-weight: bold" for="exType2">Running Tickets </label>
+                </div>
+                <div style="margin: 5px">
+                    <input class="btn" type="button" id="btnReport" value="Submit" onclick="ExchangeBetlist.getData();" />
+                    <div id="errMsg2">
+                    </div>
+                </div>                
             </div>
 
             <div class="maincontent_box hidden" id="maincontent_booked">

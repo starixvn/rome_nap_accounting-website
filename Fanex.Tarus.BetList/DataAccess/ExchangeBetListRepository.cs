@@ -10,10 +10,52 @@
     public interface IExchangeBetListRepository
     {
         ExchangeViewModel GetBetList(ExchangeBetListCriteria criteria);
+
+        RunningExchangeViewModel GetRunningTickets(RunningExchangeBetListCriteria criteria);
     }
 
     public class ExchangeBetListRepository : IExchangeBetListRepository
     {
+        public RunningExchangeViewModel GetRunningTickets(RunningExchangeBetListCriteria criteria)
+        {   
+            var details = new List<RunningExchangeTicket>();
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    while (reader.Read())
+                    {
+                        details.Add(new RunningExchangeTicket
+                        {
+                            BetId = Convert.ToInt64(reader["BetId"]),                            
+                            EventId = Convert.ToInt32(reader["EventId"]),
+                            EventName = Convert.ToString(reader["EventName"]),
+                            EventTypeName = Convert.ToString(reader["EventTypeName"]),
+                            BetPlaced = Convert.ToDateTime(reader["BetPlaced"]),                            
+                            MarketId = Convert.ToString(reader["MarketId"]),
+                            MarketName = Convert.ToString(reader["MarketName"]),
+                            OddsAvg = Convert.ToDecimal(reader["OddsAvg"]),
+                            SelectionName = Convert.ToString(reader["SelectionName"]),
+                            Stake = Convert.ToDecimal(reader["Stake"]),
+                            Type = Convert.ToString(reader["Type"]),                            
+                            CategoryType = reader["CategoryType"] != DBNull.Value ? Convert.ToInt32(reader["CategoryType"]) : 1,
+                            FancyBetRuns = reader["FancyBetRuns"] != DBNull.Value ? Convert.ToDecimal(reader["FancyBetRuns"]) : 0
+                        });
+                    }
+                   
+                }
+
+                var ouputParams = db.GetOuputParams();
+
+                if (ouputParams != null && ouputParams.ContainsKey("totalrows"))
+                {
+                    criteria.TotalRows = Convert.ToInt32(ouputParams["totalrows"]);
+                }
+            }
+
+            return new RunningExchangeViewModel(details, criteria.TotalRows);
+        }
+
         public ExchangeViewModel GetBetList(ExchangeBetListCriteria criteria)
         {
             var summaries = new List<ExchangeSummaryTicket>();

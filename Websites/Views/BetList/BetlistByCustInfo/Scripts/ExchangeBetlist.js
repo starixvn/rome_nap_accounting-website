@@ -45,7 +45,8 @@
 
     getData: function () {
         try { parent.BlockUI(); } catch (e) { }
-
+        
+        var url = $('input[name=exType]:checked').val() == "-2"?"ExchangeBetList/GetRunningData":"ExchangeBetList/GetData"
         var fromDateTmp = $('#exchange_fromdate').val();
         var toDateTmp = $('#exchange_todate').val();
         if (ExchangeBetlist.param.fromDate != fromDateTmp
@@ -58,7 +59,7 @@
         ExchangeBetlist.param.toDate = toDateTmp;
         $.ajax({
             type: "POST",
-            url: window.rootUrl + "ExchangeBetList/GetData",
+            url: window.rootUrl + url,
             data: {
                 fromDate: ExchangeBetlist.param.fromDate,
                 toDate: ExchangeBetlist.param.toDate,
