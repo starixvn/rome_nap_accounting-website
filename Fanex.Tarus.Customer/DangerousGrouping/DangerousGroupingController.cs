@@ -29,7 +29,7 @@
         [AuthenticateRead]
         public ActionResult CustomerDanger(string username)
         {
-            ViewBag.CustomerDanger = service.GetCustomerDanger(username, AppSession.AccId).CustomerDanger;
+            ViewBag.CustomerDanger = service.GetCustomerDanger(username, AppSession.AccId, AppSession.AccUserName).CustomerDanger;
             var dangerLevels = service.GetDangerLevelList();
 
             return View(indexPath, dangerLevels);
@@ -39,7 +39,7 @@
         [HttpGet]
         public JsonResult GetCustomerDanger(string username)
         {
-            var customerdanger = service.GetCustomerDanger(username, AppSession.AccId);
+            var customerdanger = service.GetCustomerDanger(username, AppSession.AccId, AppSession.AccUserName);
 
             return Json(customerdanger, JsonRequestBehavior.AllowGet);
         }
@@ -48,7 +48,7 @@
         [HttpPost]
         public JsonResult UpdateCustomerDanger([System.Web.Http.FromBody]CustomerDangerUpdateRequest customerDangerUpdateRequest)
         {
-            var result = service.UpdateCustomerDanger(customerDangerUpdateRequest, AppSession.AccId, HttpContext.Request.UserHostAddress);
+            var result = service.UpdateCustomerDanger(customerDangerUpdateRequest, AppSession.AccId, AppSession.AccUserName, HttpContext.Request.UserHostAddress);
 
             return Json(result);
         }
@@ -57,7 +57,7 @@
         [HttpPost]
         public JsonResult ValidateUsernames([System.Web.Http.FromBody]ValidateUsernamesRequest validateUsernamesRequest)
         {
-            var result = service.ValdiateUsernames(validateUsernamesRequest, AppSession.AccId, HttpContext.Request.UserHostAddress);
+            var result = service.ValdiateUsernames(validateUsernamesRequest, AppSession.AccId, AppSession.AccUserName, HttpContext.Request.UserHostAddress);
 
             return Json(result);
         }
@@ -66,7 +66,7 @@
         [HttpPost]
         public JsonResult UpdateMultipleCustomersDanger([System.Web.Http.FromBody] MultipleCustomersDangerUpdateRequest multipleCustomersDangerUpdateRequest)
         {
-            var result = service.UpdateMultipleCustomersDanger(multipleCustomersDangerUpdateRequest, AppSession.AccId, HttpContext.Request.UserHostAddress);
+            var result = service.UpdateMultipleCustomersDanger(multipleCustomersDangerUpdateRequest, AppSession.AccId, AppSession.AccUserName, HttpContext.Request.UserHostAddress);
 
             return Json(result);
         }
