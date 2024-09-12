@@ -132,7 +132,7 @@
       <HintPath>..\packages\Fanex.BetList.ESports.2.0.0\lib\net461\Fanex.BetList.ESports.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.FACHAI, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.FACHAI.1.0.0.1-beta-01\lib\net461\Fanex.BetList.FACHAI.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.FACHAI.1.0.0.1\lib\net461\Fanex.BetList.FACHAI.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.FastSpin, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.FastSpin.1.0.0.1\lib\net461\Fanex.BetList.FastSpin.dll</HintPath>
