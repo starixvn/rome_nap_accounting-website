@@ -470,8 +470,8 @@
     <Reference Include="Fanex.Tarus.CopySuperWinlossSetting, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.CopySuperWinlossSetting.1.0.0.5\lib\net461\Fanex.Tarus.CopySuperWinlossSetting.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Tarus.DataAccess.Implement, Version=1.0.1.10, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.DataAccess.Implement.1.0.1.11\lib\net40\Fanex.Tarus.DataAccess.Implement.dll</HintPath>
+    <Reference Include="Fanex.Tarus.DataAccess.Implement, Version=1.0.1.12, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.DataAccess.Implement.1.0.1.12-scaleout01\lib\net40\Fanex.Tarus.DataAccess.Implement.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Entities, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Entities.1.0.0.8\lib\net40\Fanex.Tarus.Entities.dll</HintPath>
@@ -486,7 +486,7 @@
       <HintPath>..\packages\Fanex.Tarus.Finance.1.1.3.11\lib\net40\Fanex.Tarus.Finance.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.4.17, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.4.17-scaleout004\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.4.17-scaleout006\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Security, Version=1.0.1.9, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Security.1.0.2.4\lib\net40\Fanex.Tarus.Security.dll</HintPath>

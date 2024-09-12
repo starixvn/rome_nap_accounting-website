@@ -5,6 +5,7 @@
     using Fanex.Tarus.Customer.Criteria.LicenseeMember;
     using Fanex.Tarus.DataAccess.Implement.Customer;
     using Fanex.Tarus.DataAccess.Interface.Customer;
+    using Fanex.Tarus.Infrastructure.Extensions;
     using System;
 
     public class LicenseeMemberDataAccess : ILicenseeMemberDataAccess
@@ -18,6 +19,18 @@
         public LicenseeMemberDataAccess(IDepositCustomerAccess depositCustomerAccess)
         {
             _depositCustomerAccess = depositCustomerAccess ?? new DepositCustomerAccess();
+        }
+
+        public SiteDB GetSiteDBConfig(string username)
+        {
+            var criteria = new GetDepServerDBConfigByUsernameCriteria(username);
+            SiteDB siteDBConfig = null;
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                siteDBConfig = db.QueryEntity<SiteDB>(criteria);
+            }
+
+            return siteDBConfig;
         }
 
         public int CheckExistAgent(CheckExistAgentCriteria criteria)
@@ -40,7 +53,7 @@
                 db.ExecuteReader(criteria.GetSpParams());
 
                 var ouputParams = db.GetOuputParams();
-                custId = Convert.ToInt32(ouputParams["custid"]);
+                custId = ouputParams["custid"] != DBNull.Value ? Convert.ToInt32(ouputParams["custid"]) : 0;
                 result = new Result(Convert.ToInt32(ouputParams["errcode"]), ouputParams["errmsg"].ToString());
             }
 
@@ -62,8 +75,21 @@
             {
                 _depositCustomerAccess.InsertBalanceWhenCreateNewMember(criteria.CustId, criteria.Username);
             }
+            else
+            {
+                RollbackInsertMember(criteria.CustId);
+            }
 
             return result;
+        }
+
+        private void RollbackInsertMember(int custId)
+        {
+            var criteria = new RollbackInsertMemberCriteria(custId);
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                db.ExecuteNonQuery(criteria.GetSpParams());
+            }
         }
     }
 }

@@ -4,7 +4,6 @@
     using Fanex.Tarus.Customer.Business.LicenseeMember;
     using Fanex.Tarus.Customer.Requests.LicenseeMember;
     using Fanex.Tarus.Infrastructure.Common;
-    using Fanex.Tarus.Infrastructure.Extensions;
     using Fanex.Tarus.Infrastructure.Helper;
     using Fanex.Tarus.Web.Controllers;
     using Fanex.Tarus.Web.Controllers.Filters;
@@ -32,7 +31,7 @@
         public ActionResult CheckExistAgent(string agentName)
         {
             var agentId = service.CheckExistAgent(agentName);
-            var siteDB = ObjectDbExtensions.GetDepSiteDBConfigByUsername(agentName);
+            var siteDB = service.GetSiteDBConfig(agentName);
             return Json(new { agentId, custDBGroupID = siteDB.CustDBGroupID, site = siteDB.Site }, JsonRequestBehavior.AllowGet);
         }
 
