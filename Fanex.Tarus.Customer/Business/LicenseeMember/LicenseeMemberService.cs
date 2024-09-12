@@ -4,7 +4,6 @@
     using Fanex.Tarus.Customer.Criteria.LicenseeMember;
     using Fanex.Tarus.Customer.DataAccess.LicenseeMember;
     using Fanex.Tarus.Customer.Requests.LicenseeMember;
-    using Fanex.Tarus.Infrastructure.Extensions;
 
     public class LicenseeMemberService : ILicenseeMemberService
     {
@@ -14,8 +13,6 @@
         {
             dataAccess = new LicenseeMemberDataAccess();
         }
-
-        public SiteDB GetSiteDBConfig(string username) => dataAccess.GetSiteDBConfig(username);
 
         public int CheckExistAgent(string agentName)
         {

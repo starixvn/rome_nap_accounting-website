@@ -21,18 +21,6 @@
             _depositCustomerAccess = depositCustomerAccess ?? new DepositCustomerAccess();
         }
 
-        public SiteDB GetSiteDBConfig(string username)
-        {
-            var criteria = new GetDepServerDBConfigByUsernameCriteria(username);
-            SiteDB siteDBConfig = null;
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
-            {
-                siteDBConfig = db.QueryEntity<SiteDB>(criteria);
-            }
-
-            return siteDBConfig;
-        }
-
         public int CheckExistAgent(CheckExistAgentCriteria criteria)
         {
             using (var db = new ObjectDb(criteria.GetSettingKey()))
