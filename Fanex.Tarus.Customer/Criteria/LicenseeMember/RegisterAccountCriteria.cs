@@ -1,23 +1,23 @@
 ﻿using Fanex.NAP.Framework.Data;
-using Fanex.Tarus.Customer.Constants;
 
 namespace Fanex.Tarus.Customer.Criteria.LicenseeMember
 {
-    public class RegisterMemberCriteria : CriteriaBase
+    public class RegisterAccountCriteria : CriteriaBase
     {
-        public RegisterMemberCriteria(string username, int uplineID, string site, int siteDBGroupID)
+        public RegisterAccountCriteria(string username, int uplineID, byte roleId, string site, int siteDBGroupID)
         {
             Username = username;
             UplineID = uplineID;
             Site = site;
             SiteDBGroupID = siteDBGroupID;
+            RoleId = roleId;
         }
 
         public string Username { get; }
 
         public int UplineID { get; }
 
-        public byte RoleId { get; } = RoleIdConstants.MEMBER;
+        public byte RoleId { get; }
 
         public string Site { get; }
 

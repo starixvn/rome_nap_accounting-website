@@ -1,5 +1,6 @@
 ﻿using Fanex.Data;
 using Fanex.NAP.Framework.Data;
+using Fanex.Tarus.Customer.DataAccess.Licensee;
 using Fanex.Tarus.Customer.Entities;
 using Fanex.Tarus.Customer.Resources;
 using Fanex.Tarus.DataAccess.Implement.Customer;
@@ -9,11 +10,13 @@ using System.Collections.Generic;
 
 namespace Fanex.Tarus.Customer.DataAccess.LicenseeSubsidiary
 {
-    internal class LicenseeSubsidiaryDataAccess : ILicenseeSubsidiaryDataAccess
+    internal class LicenseeSubsidiaryDataAccess : LicenseeDataAccess, ILicenseeSubsidiaryDataAccess
     {
         private readonly IDepositCustomerAccess _depositCustomerAccess;
 
-        public LicenseeSubsidiaryDataAccess() : this(null) { }
+        public LicenseeSubsidiaryDataAccess() : this(null)
+        {
+        }
 
         public LicenseeSubsidiaryDataAccess(IDepositCustomerAccess depositCustomerAccess)
         {

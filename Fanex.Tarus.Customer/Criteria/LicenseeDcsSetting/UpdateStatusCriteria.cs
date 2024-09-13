@@ -40,6 +40,12 @@ namespace Fanex.Tarus.Customer.Criteria.LicenseeDcsSetting
 
         public bool IsAgentOnly { get; }
 
+        public int DummyAgentId { get; set; }
+
+        public string DumUserName { get; set; }
+
+        public int IsCreateDummyExchange { get; set; }
+
         public override string GetSettingKey()
             => "Acc_Dep_CustSetting_StatusUpd";
 

@@ -31,8 +31,9 @@
         [HttpGet, AuthenticateHost]
         public ActionResult CheckExistAgent(string agentName)
         {
-            var agentId = service.CheckExistAgent(agentName);
             var siteDB = ObjectDbExtensions.GetSiteDBConfigByUsername(agentName);
+            var agentId = service.CheckExistAgent(agentName, siteDB.CustDBGroupID);
+
             return Json(new { agentId, custDBGroupID = siteDB.CustDBGroupID, site = siteDB.Site }, JsonRequestBehavior.AllowGet);
         }
 

@@ -1,38 +1,48 @@
-﻿namespace Fanex.Tarus.Customer.DataAccess.LicenseeMember
-{
-    using Fanex.CustomerSetting.Module.Core.Models;
-    using Fanex.Data;
-    using Fanex.Tarus.Customer.Criteria.LicenseeMember;
-    using Fanex.Tarus.DataAccess.Implement.Customer;
-    using Fanex.Tarus.DataAccess.Interface.Customer;
-    using Fanex.Tarus.Infrastructure.Extensions;
-    using System;
+﻿using Fanex.Data;
+using Fanex.Tarus.Customer.Criteria.LicenseeMember;
+using Fanex.Tarus.Customer.Entities;
+using Fanex.Tarus.DataAccess.Implement.Customer;
+using Fanex.Tarus.DataAccess.Interface.Customer;
+using System;
 
-    public class LicenseeMemberDataAccess : ILicenseeMemberDataAccess
+namespace Fanex.Tarus.Customer.DataAccess.Licensee
+{
+    public interface ILicenseeDataAccess
+    {
+        CheckExistAccountResult CheckExistAccount(CheckExistAccountCriteria criteria);
+
+        (Result, int) RegisterAccount(RegisterAccountCriteria criteria);
+
+        Result InsertMember(InsertMemberCriteria criteria);
+
+        void RollbackInsertAccount(int custId);
+    }
+
+    public class LicenseeDataAccess : ILicenseeDataAccess
     {
         private readonly IDepositCustomerAccess _depositCustomerAccess;
 
-        public LicenseeMemberDataAccess() : this(null)
+        public LicenseeDataAccess() : this(null)
         {
         }
 
-        public LicenseeMemberDataAccess(IDepositCustomerAccess depositCustomerAccess)
+        public LicenseeDataAccess(IDepositCustomerAccess depositCustomerAccess)
         {
             _depositCustomerAccess = depositCustomerAccess ?? new DepositCustomerAccess();
         }
 
-        public int CheckExistAgent(CheckExistAgentCriteria criteria)
+        public CheckExistAccountResult CheckExistAccount(CheckExistAccountCriteria criteria)
         {
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
                 db.ExecuteReader(criteria.GetSpParams());
 
                 var ouputParams = db.GetOuputParams();
-                return Convert.ToInt32(ouputParams["custid"]);
+                return new CheckExistAccountResult { CustId = Convert.ToInt32(ouputParams["custid"]), MRecommend = Convert.ToInt32(ouputParams["mrecommend"]) };
             }
         }
 
-        public (Result, int) RegisterMember(RegisterMemberCriteria criteria)
+        public (Result, int) RegisterAccount(RegisterAccountCriteria criteria)
         {
             Result result;
             int custId = 0;
@@ -59,21 +69,21 @@
                 result = new Result(Convert.ToInt32(ouputParams["errcode"]), ouputParams["errmsg"].ToString());
             }
 
-            if (result.IsSuccess)
+            if (result.ErrorCode == 0)
             {
                 _depositCustomerAccess.InsertBalanceWhenCreateNewMember(criteria.CustId, criteria.Username);
             }
             else
             {
-                RollbackInsertMember(criteria.CustId);
+                RollbackInsertAccount(criteria.CustId);
             }
 
             return result;
         }
 
-        private void RollbackInsertMember(int custId)
+        public void RollbackInsertAccount(int custId)
         {
-            var criteria = new RollbackInsertMemberCriteria(custId);
+            var criteria = new RollbackInsertAccountCriteria(custId);
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
                 db.ExecuteNonQuery(criteria.GetSpParams());

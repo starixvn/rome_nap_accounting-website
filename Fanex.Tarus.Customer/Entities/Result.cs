@@ -40,6 +40,13 @@ namespace Fanex.Tarus.Customer.Entities
         public string valueComm { get; set; }
     }
 
+    public class CheckExistAccountResult
+    {
+        public int CustId { get; set; }
+
+        public int MRecommend { get; set; }
+    }
+
     public class SubsidiaryResult : Result
     {
         public SubsidiaryResult() : base() { }

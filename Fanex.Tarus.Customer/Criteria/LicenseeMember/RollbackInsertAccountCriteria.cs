@@ -2,9 +2,9 @@
 
 namespace Fanex.Tarus.Customer.Criteria.LicenseeMember
 {
-    public class RollbackInsertMemberCriteria : CriteriaBase
+    public class RollbackInsertAccountCriteria : CriteriaBase
     {
-        public RollbackInsertMemberCriteria(int custId)
+        public RollbackInsertAccountCriteria(int custId)
         {
             CustId = custId;
         }
