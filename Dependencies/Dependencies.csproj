@@ -191,6 +191,9 @@
     <Reference Include="Fanex.BetList.NumberGame, Version=2.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.NumberGame.2.0.0.2\lib\net461\Fanex.BetList.NumberGame.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.BetList.ONCasino, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.ONCasino.1.0.0-Beta-01\lib\net461\Fanex.BetList.ONCasino.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.BetList.PGSoft, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.PGSoft.2.0.0\lib\net461\Fanex.BetList.PGSoft.dll</HintPath>
     </Reference>

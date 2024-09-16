@@ -967,6 +967,18 @@ function showNextspinBetDetails(refno, winlossDate, custId, transType) {
     openResultsPopUp(params);
 }
 
+function showONLiveCasinoBetDetails(refno, winlossDate, custId, transType) {
+    var params = {
+        url: "AGCasinoBetList/BetDetails",
+        title: "ON Casino - Detailed Bet list - " + winlossDate.split(" ")[0],
+        jsonParam: { Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 138, PageSize: 500 },
+        width: 1250,
+        height: 600
+    };
+
+    openResultsPopUp(params);
+}
+
 function ViewCashOutHistory(transId, refNo, betType, originalTransId, title) {
     var cashoutParam = {
         url: "BetList/GetCashOutDetails",
@@ -1181,6 +1193,9 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
 
         case 229: //Nextspin
             return getNextspinParam(custId, transId3rd, gameId3rd, currencyId, siteId, bettype, winlostdate);
+
+        case 138: //ON Casino
+            return getONCasinoParam(custId, transId3rd, gameId3rd, currencyId, siteId, bettype, winlostdate);
         default:
             return undefined;
     }
@@ -1796,7 +1811,25 @@ function getNextspinParam(custId, transId3rd, gameId3rd, currencyId, siteId, bet
     };
 }
 
-
+function getONCasinoParam(custId, transId3rd, gameId3rd, currencyId, siteId, betType, endTime) {
+    return {
+        url: "ThirdParty/ONCasinoResult",
+        title: "ON Casino Result",
+        jsonParam:
+        {
+            productId: 96,
+            custId: custId,
+            transId3rd: transId3rd,
+            gameId3rd: gameId3rd,
+            BetTypeId: betType,
+            EndTime: endTime,
+            SiteId: siteId,
+            CurrencyId: currencyId
+        },
+        width: 945,
+        height: 500
+    };
+}
 
 function openResultsPopUp(resultParam) {
     var url = resultParam.url + "?" + $.param(resultParam.jsonParam);
