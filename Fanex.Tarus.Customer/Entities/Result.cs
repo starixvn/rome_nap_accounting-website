@@ -47,6 +47,15 @@ namespace Fanex.Tarus.Customer.Entities
         public int MRecommend { get; set; }
     }
 
+    public class UpdateStatusResult : Result
+    {
+        public int DummyAgentId { get; set; }
+
+        public string DumUserName { get; set; }
+
+        public bool IsCreateDummyExchange { get; set; }
+    }
+
     public class SubsidiaryResult : Result
     {
         public SubsidiaryResult() : base() { }

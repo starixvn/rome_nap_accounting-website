@@ -2,22 +2,29 @@
 using System.Linq;
 using Fanex.NAP.Framework.Data;
 using Fanex.Tarus.Customer.Criteria.LicenseeDcsSetting;
+using Fanex.Tarus.Customer.Criteria.LicenseeMember;
 using Fanex.Tarus.Customer.DataAccess.LicenseeDcsSetting;
 using Fanex.Tarus.Customer.Entities;
 using Fanex.Tarus.Customer.Entities.LicenseeDcsSetting;
 using Fanex.Tarus.Customer.Resources;
+using Fanex.Tarus.DataAccess.Implement.Constants;
+using Fanex.Tarus.DataAccess.Implement.Customer;
+using Fanex.Tarus.DataAccess.Interface.Customer;
 using Fanex.Tarus.Infrastructure.Common;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
+using Fanex.Tarus.Infrastructure.Extensions;
 
 namespace Fanex.Tarus.Customer.Business.LicenseeDcsSetting
 {
     internal class LicenseeDcsSettingService : ILicenseeDcsSettingService
     {
         private readonly ILicenseeDcsSettingDataAccess _settingDataAccess;
+        private readonly IDepositCustomerAccess _depositCustomerAccess;
 
-        public LicenseeDcsSettingService(ILicenseeDcsSettingDataAccess settingDataAccess = null)
+        public LicenseeDcsSettingService(ILicenseeDcsSettingDataAccess settingDataAccess = null, IDepositCustomerAccess depositCustomerAccess = null)
         {
             _settingDataAccess = settingDataAccess ?? new LicenseeDcsSettingDataAccess();
+            _depositCustomerAccess = depositCustomerAccess ?? new DepositCustomerAccess();
         }
 
         public IEnumerable<string> GetSites()
@@ -25,7 +32,7 @@ namespace Fanex.Tarus.Customer.Business.LicenseeDcsSetting
 
         public IEnumerable<BaseModel> GetSupers(string site)
             => _settingDataAccess.GetSupers(new GetSuperCriteria(site, AccountCredit.Acc_DeniedSiteCurrency_Sel(AppSession.AccId, 2)));
-        
+
         public IEnumerable<BaseModelExtra> GetAgents(string superIds)
             => _settingDataAccess.GetAgents(new GetAgentCriteria(superIds, AppSession.AccId));
 
@@ -125,7 +132,7 @@ namespace Fanex.Tarus.Customer.Business.LicenseeDcsSetting
         {
             Result result;
             IList<Result> errorResults = new List<Result>();
-            
+
             foreach (var agentId in agentIds)
             {
                 var superId = agentsExtraInfo.FirstOrDefault(e => e.Id == agentId)?.SuperID ?? 0;
@@ -442,21 +449,53 @@ namespace Fanex.Tarus.Customer.Business.LicenseeDcsSetting
             int userId,
             string ip)
         {
-            ICriteria criteria = new UpdateStatusCriteria(
+            var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(custId);
+            var criteria = new UpdateStatusCriteria(
                 productId,
                 custId,
                 status,
                 isAgentOnly,
                 userId,
-                ip);
-            var result = _settingDataAccess.ExecuteNonQuery(criteria);
+                ip,
+                siteDB.CustDBGroupID);
+            var result = _settingDataAccess.UpdateStatus(criteria);
 
             if (result.ErrorCode == 0)
             {
+                if (result.IsCreateDummyExchange)
+                {
+                    CreateDummyMember(result.DumUserName, result.DummyAgentId, siteDB.Site, siteDB.CustDBGroupID, userId, ip);
+                }
+
                 result.ErrorMessage = LicenseeDcsSettingLabels.UpdateStatusSuccessfully;
             }
 
             return result;
+        }
+
+        private void CreateDummyMember(string userName, int uplineId, string site, int siteDBGroupId, int creator, string ip)
+        {
+            var registerAccountResult = _settingDataAccess.RegisterAccount(new RegisterAccountCriteria(userName, uplineId, RoleConstants.Member, site, siteDBGroupId));
+            if (registerAccountResult.Item1.ErrorCode == 0)
+            {
+                var insertMemberResult = _settingDataAccess.InsertMember(new InsertMemberCriteria
+                {
+                    CustId = registerAccountResult.Item2,
+                    Creator = creator,
+                    Username = userName,
+                    Recommend = uplineId,
+                    IP = ip
+                });
+
+                if (insertMemberResult.ErrorCode == 0)
+                {
+                    _depositCustomerAccess.InsertBalanceWhenCreateNewMember(registerAccountResult.Item2, userName);
+                }
+                else
+                {
+                    _settingDataAccess.RollbackInsertAccount(registerAccountResult.Item2);
+                }
+            }
         }
 
         private Result UpdateStakeLevels(

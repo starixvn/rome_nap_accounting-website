@@ -1,4 +1,5 @@
-﻿using Fanex.Tarus.Customer.Entities.LicenseeDcsSetting;
+﻿using Fanex.NAP.Framework.Data;
+using Fanex.Tarus.Customer.Entities.LicenseeDcsSetting;
 
 namespace Fanex.Tarus.Customer.Criteria.LicenseeDcsSetting
 {
@@ -10,7 +11,8 @@ namespace Fanex.Tarus.Customer.Criteria.LicenseeDcsSetting
             StatusEntity status,
             bool isAgentOnly,
             int userId,
-            string ip)
+            string ip,
+            int custDBGroupId)
         {
             ProductId = productId;
             CustId = custId;
@@ -22,6 +24,7 @@ namespace Fanex.Tarus.Customer.Criteria.LicenseeDcsSetting
             IsAgentOnly = isAgentOnly;
             UserId = userId;
             IP = ip;
+            CustDBGroupId = custDBGroupId;
         }
 
         public int ProductId { get; }
@@ -40,14 +43,18 @@ namespace Fanex.Tarus.Customer.Criteria.LicenseeDcsSetting
 
         public bool IsAgentOnly { get; }
 
-        public int DummyAgentId { get; set; }
-
-        public string DumUserName { get; set; }
-
-        public int IsCreateDummyExchange { get; set; }
+        [SpParam(Ignored = true)]
+        public int CustDBGroupId { get; }
 
         public override string GetSettingKey()
-            => "Acc_Dep_CustSetting_StatusUpd";
+        {
+            if (CustDBGroupId == 0)
+            {
+                return "Acc_Dep_CustSetting_StatusUpd";
+            }
+
+            return $"SiteDB{CustDBGroupId}_Acc_Dep_CustSetting_StatusUpd";
+        }
 
         public override bool IsValid()
             => base.IsValid() && ProductId > 0;

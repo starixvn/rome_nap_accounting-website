@@ -29,8 +29,8 @@ namespace Fanex.Tarus.Customer.Business.LicenseeSubsidiary
 
         public Result Create(string username, string existedUsername, int userId, string ip)
         {
-            var siteDB = ObjectDbExtensions.GetSiteDBConfigByUsername(username);
-            var checkExistResult = CheckExistAgent(username, siteDB.CustDBGroupID);
+            var siteDB = ObjectDbExtensions.GetSiteDBConfigByUsername(existedUsername);
+            var checkExistResult = CheckExistAgent(existedUsername, siteDB.CustDBGroupID);
             var registerResult = licenseeDataAccess.RegisterAccount(new RegisterAccountCriteria(username, checkExistResult.MRecommend, RoleIdConstants.AGENT, siteDB.Site, siteDB.CustDBGroupID));
 
             if (registerResult.Item1.ErrorCode == 0)

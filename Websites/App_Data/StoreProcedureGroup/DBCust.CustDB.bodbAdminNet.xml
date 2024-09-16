@@ -95,7 +95,7 @@
     <Setting Key="DBA_ResetSecurityCode_Agent" SpName="Acc_CustomerUpdSecurityCode" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Customer - New Licensee">
-    <Setting Key="NewLicensee_AdNewMember" SpName="Acc_Dep_CustomerInsMember_Ag_UAT2" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NewLicensee_AdNewMember" SpName="Acc_Dep_CustomerInsMember_Ag" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="NewLicensee_AdNewSuper" SpName="Acc_Dep_CustomerInsMember_Com" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="NewLicensee_AdNewAgent" SpName="Acc_Dep_CustomerInsMember_MAg" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="NewLicensee_AdNewMaster" SpName="Acc_Dep_CustomerInsMember_SAg" DbName="DBCust.CustDB.wsv_nap" />
@@ -124,7 +124,7 @@
     <Setting Key="Acc_CreditTermUpdSetGroupHeadline" SpName="Acc_CreditTermUpdSetGroupHeadline" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="User control">
-    <Setting Key="Con_AdminIns" SpName="Acc_Con_AdminIns_uat2" DbName="DBCust3.CustDB.wsv_nap" />
+    <Setting Key="Con_AdminIns" SpName="Acc_Con_AdminIns" DbName="DBCust3.CustDB.wsv_nap" />
     <Setting Key="Acc_CustomerInsUserInfo_Rollback" SpName="Acc_CustomerInsUserInfo_Rollback" DbName="DBCust3.CustDB.wsv_nap" />
     <Setting Key="Acc_Con_AdminSelPwdVerify" SpName="Acc_Con_AdminSelPwdVerify" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Con_AdminUpd" SpName="Acc_Con_AdminUpd" DbName="DBCust.CustDB.wsv_nap" />
@@ -318,7 +318,7 @@
     <Setting Key="Acc_CustomerSelPlayerId" SpName="Acc_CustomerSelPlayerId" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Create Licensee Subsidiary">
-    <Setting Key="Acc_Dep_CustomerInsLicenseeSubsidiary" SpName="Acc_Dep_CustomerInsLicenseeSubsidiary_UAT2" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_Dep_CustomerInsLicenseeSubsidiary" SpName="Acc_Dep_CustomerInsLicenseeSubsidiary" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Lock un-suspend/reopen">
     <Setting Key="Acc_CustomerLockSuspendSel" SpName="Acc_CustomerLockSuspendSel" DbName="DBCUST.CustDB.wsv_nap" Plain="0" />

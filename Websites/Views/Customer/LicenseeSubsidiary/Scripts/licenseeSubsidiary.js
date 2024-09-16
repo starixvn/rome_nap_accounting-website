@@ -113,7 +113,7 @@ $.fn.forceNumber = function (keyupCallback) {
             formData,
             function (data) {
                 if (data && data.length > 0) {
-                    textareaAgentUsernames.val(data.copiedAccounts.join(","));
+                    textareaAgentUsernames.val(data.join(","));
                 } else {
                     showErrorMessage(resources.sourceAgentNotFoundError.replace("{0}", formData.username));
                     textareaAgentUsernames.val("");

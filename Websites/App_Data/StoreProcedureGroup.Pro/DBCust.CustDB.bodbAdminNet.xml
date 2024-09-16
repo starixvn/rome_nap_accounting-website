@@ -324,7 +324,6 @@
     <Setting Key="Acc_CustomerSelPlayerId" SpName="Acc_CustomerSelPlayerId" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Create Licensee Subsidiary">
-    <Setting Key="Acc_Dep_CustomerGenLicenseeSubUsername" SpName="Acc_Dep_CustomerGenLicenseeSubUsername" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_Dep_CustomerInsLicenseeSubsidiary" SpName="Acc_Dep_CustomerInsLicenseeSubsidiary" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Lock un-suspend/reopen">

@@ -5,13 +5,14 @@ using System.Linq;
 using Fanex.Data;
 using Fanex.NAP.Framework.Data;
 using Fanex.Tarus.Customer.Criteria.LicenseeDcsSetting;
+using Fanex.Tarus.Customer.DataAccess.Licensee;
 using Fanex.Tarus.Customer.Entities;
 using Fanex.Tarus.Customer.Entities.LicenseeDcsSetting;
 using Fanex.Tarus.Customer.Resources;
 
 namespace Fanex.Tarus.Customer.DataAccess.LicenseeDcsSetting
 {
-    internal class LicenseeDcsSettingDataAccess : ILicenseeDcsSettingDataAccess
+    internal class LicenseeDcsSettingDataAccess : LicenseeDataAccess, ILicenseeDcsSettingDataAccess
     {
         public IEnumerable<string> GetSites(ICriteria criteria)
             => ExecuteDataReader(criteria, GetSite);
@@ -26,7 +27,7 @@ namespace Fanex.Tarus.Customer.DataAccess.LicenseeDcsSetting
             => ExecuteDataReader(criteria, GetProductSettingType);
 
         public IEnumerable<PTEntity> GetPositionTaking(ICriteria criteria)
-            =>ExecuteDataReader(criteria, GetPositionTaking);
+            => ExecuteDataReader(criteria, GetPositionTaking);
 
         public IEnumerable<ChargePTEntity> GetChargePositionTaking(ICriteria criteria)
             => ExecuteDataReader(criteria, GetChargePositionTaking);
@@ -215,6 +216,29 @@ namespace Fanex.Tarus.Customer.DataAccess.LicenseeDcsSetting
             }
 
             return stakeLevelGroups;
+        }
+
+        public UpdateStatusResult UpdateStatus(UpdateStatusCriteria criteria)
+        {
+            if (!criteria.IsValid())
+            {
+                return new UpdateStatusResult { ErrorCode = 400, ErrorMessage = LicenseeDcsSettingLabels.BadRequest };
+            }
+
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                db.ExecuteNonQuery(criteria.GetSpParams());
+                var outputParams = db.GetOuputParams();
+
+                return new UpdateStatusResult
+                {
+                    ErrorCode = Convert.ToInt32(outputParams["errcode"]),
+                    ErrorMessage = outputParams["errmsg"].ToString(),
+                    DummyAgentId = outputParams["dummyagentid"] is DBNull ? 0 : Convert.ToInt32(outputParams["dummyagentid"]),
+                    DumUserName = outputParams["dumusername"].ToString(),
+                    IsCreateDummyExchange = Convert.ToBoolean(outputParams["iscreatedummyexchange"])
+                };
+            }
         }
 
         public Result ExecuteNonQuery(ICriteria criteria)
