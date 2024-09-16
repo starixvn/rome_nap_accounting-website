@@ -1344,12 +1344,7 @@
         private string GetSportNameSuffixByBetType(int betTypeId)
         {
             var sportName = string.Empty;
-            var sportType = GetSportNameByBetType(betTypeId);
-            if(sportType != 0)
-            {
-                sportName = ticketHelper.GetSportNameById(sportType);
-            }
-            else if (ReportService.IsVirtualSportBetType(betTypeId))
+            if (ReportService.IsVirtualSportBetType(betTypeId))
             {
                 sportName = BetListResources.Virtual_Sports;
             }
@@ -1469,6 +1464,7 @@
             else
             {
                 var sport = ReportService.GetSportFromBetTypeId(betTypeId);
+                if (sport == 0) sport = GetSportNameByBetType(betTypeId);
                 sportName = sport == 0 ? string.Empty : ticketHelper.GetSportNameById(sport);
             }
 
