@@ -13,7 +13,7 @@ using Role = Fanex.Tarus.Infrastructure.Common.Enumerations.Role;
 using Fanex.Tarus.User.Entities;
 using Newtonsoft.Json;
 
-public partial class InternalView : System.Web.UI.Page
+public partial class InternalView : PageBase
 {
     protected void Page_Load(object sender, EventArgs e)
     {

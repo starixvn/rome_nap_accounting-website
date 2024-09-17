@@ -1,9 +1,12 @@
-﻿namespace Sunplus.Accounting.Business.Customer
+﻿using Sunplus.Accounting.Business.Security;
+
+namespace Sunplus.Accounting.Business.Customer
 {
     using System.Collections.Generic;
     using Core.Web;
     using DNAide.Web;
     using IBCUtils.Objects;
+    using Sunplus.Accounting.Core.Common;
     using static Fanex.Tarus.Infrastructure.Common.Enumerations;
 
     public partial class CustomerManager
@@ -12,8 +15,12 @@
         {
             var uplineboxhtml = WebUtils.LoadTemplate("CustomerInfo/UplineBox.htm");
             var robotIds = new List<int>();
-           
-         
+            if (!Permissions.HasPermission("AccessAgencySite"))
+            {
+                TemplateHandler.RemoveBlock(ref uplineboxhtml, "SuperLogin");
+                TemplateHandler.RemoveBlock(ref uplineboxhtml, "MasterLogin");
+                TemplateHandler.RemoveBlock(ref uplineboxhtml, "AgentLogin");
+            }
 
             if (customerInfoViewModel.SearchAccountRoleId <= (int)Role.Super
                 && customerInfoViewModel.SearchAccountRoleId != (int)Role.Headline)

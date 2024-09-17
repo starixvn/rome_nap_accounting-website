@@ -38,7 +38,7 @@ public class PageBase : Page
             LogOut();
         }
 
-        if (!HasPermission())
+        if (!HasPermission(AppSession.PageAccess))
         {
             RedirectDeny();
         }
@@ -71,5 +71,14 @@ public class PageBase : Page
         var permissionService = new PermissionService();
         AppSession.PageAccess = permissionService.GetPageAccess(AppSession.AccId);
         return AppSession.PageAccess.ContainsKey(url);
+    }
+
+    private bool HasPermission(Dictionary<string, int> PageAccess)
+    {
+        string url = Request.CurrentExecutionFilePath.ToLower();
+        if (Request.ApplicationPath.Equals("/"))
+            url = "/" + url;
+        url = url.Replace(Request.ApplicationPath.ToLower() + "/", "").ToLower();
+        return PageAccess.ContainsKey(url);
     }
 }
