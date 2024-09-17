@@ -38,7 +38,7 @@ public class PageBase : Page
             LogOut();
         }
 
-        if (!HasPermission(AppSession.PageAccess))
+        if (!HasPermission())
         {
             RedirectDeny();
         }
