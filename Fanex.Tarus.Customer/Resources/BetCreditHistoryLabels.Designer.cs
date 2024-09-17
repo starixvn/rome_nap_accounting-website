@@ -79,7 +79,7 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Actual Stake.
+        ///   Looks up a localized string similar to Actual Amt.
         /// </summary>
         public static string ActualStake {
             get {
@@ -88,7 +88,7 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Balance Change.
+        ///   Looks up a localized string similar to Bal Change.
         /// </summary>
         public static string BalanceChange {
             get {
@@ -97,7 +97,7 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bet Credit.
+        ///   Looks up a localized string similar to Bet Cre.
         /// </summary>
         public static string BetCredit {
             get {
@@ -124,7 +124,7 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Given Credit.
+        ///   Looks up a localized string similar to Given Cre.
         /// </summary>
         public static string GivenCredit {
             get {
@@ -142,7 +142,7 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to New Balance.
+        ///   Looks up a localized string similar to New Bal.
         /// </summary>
         public static string NewBalance {
             get {
@@ -151,7 +151,7 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Player Comm.
+        ///   Looks up a localized string similar to P. Comm.
         /// </summary>
         public static string PlayerComm {
             get {
@@ -187,7 +187,7 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Win Loss.
+        ///   Looks up a localized string similar to WL.
         /// </summary>
         public static string WinLoss {
             get {
@@ -196,7 +196,7 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Win Loss Date.
+        ///   Looks up a localized string similar to WL Date.
         /// </summary>
         public static string WinLossDate {
             get {

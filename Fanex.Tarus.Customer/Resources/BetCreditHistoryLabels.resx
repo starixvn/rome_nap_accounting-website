@@ -121,13 +121,13 @@
     <value>Action</value>
   </data>
   <data name="ActualStake" xml:space="preserve">
-    <value>Actual Stake</value>
+    <value>Actual Amt</value>
   </data>
   <data name="BalanceChange" xml:space="preserve">
-    <value>Balance Change</value>
+    <value>Bal Change</value>
   </data>
   <data name="BetCredit" xml:space="preserve">
-    <value>Bet Credit</value>
+    <value>Bet Cre</value>
   </data>
   <data name="BetCreditHistory" xml:space="preserve">
     <value>Bet Credit History</value>
@@ -139,16 +139,16 @@
     <value>From</value>
   </data>
   <data name="GivenCredit" xml:space="preserve">
-    <value>Given Credit</value>
+    <value>Given Cre</value>
   </data>
   <data name="Member" xml:space="preserve">
     <value>Member</value>
   </data>
   <data name="NewBalance" xml:space="preserve">
-    <value>New Balance</value>
+    <value>New Bal</value>
   </data>
   <data name="PlayerComm" xml:space="preserve">
-    <value>Player Comm</value>
+    <value>P. Comm</value>
   </data>
   <data name="RefNo" xml:space="preserve">
     <value>Ref No</value>
@@ -160,9 +160,9 @@
     <value>To</value>
   </data>
   <data name="WinLoss" xml:space="preserve">
-    <value>Win Loss</value>
+    <value>WL</value>
   </data>
   <data name="WinLossDate" xml:space="preserve">
-    <value>Win Loss Date</value>
+    <value>WL Date</value>
   </data>
 </root>
