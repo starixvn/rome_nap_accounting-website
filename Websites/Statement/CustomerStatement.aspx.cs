@@ -29,19 +29,20 @@ public partial class Statement_CustomerStatement : PageBase
         try
         {
             isInternalCustomer = Converter.ToBool(Request.QueryString["isinternal"]) ? 1 : 0;
+            bool isWhiteLabel = Converter.ToBool(Request.QueryString["IsWhiteLabel"]);
             WebUtils.SetNoCache();
             int reportNo = 1;
             reportNo = CastAide.AsInt32(Request.QueryString["repno"], 1);
             var tabId = CastAide.AsInt32(Request.QueryString["repno"], 1);
             isNewStatementTab = tabId == 1 ? 1 : 0;
 
-            if (reportNo < 1 || reportNo > 5 || reportNo == 2)
+            if (reportNo != 7 && (reportNo < 1 || reportNo > 5 || reportNo == 2))
             {
                 //combine statement 1&2
                 reportNo = 1;
             }
 
-            if (tabId < 1 || tabId > 6 || tabId == 2)
+            if (reportNo != 7 && (tabId < 1 || tabId > 6 || tabId == 2))
             {
                 tabId = 1;
             }
@@ -64,7 +65,7 @@ public partial class Statement_CustomerStatement : PageBase
             //render banner search - filter
             reportHeader.Text = "Statement";
 
-            RenderFilterBanner(tabId, reportNo, fdt, tdt);
+            RenderFilterBanner(tabId, reportNo, fdt, tdt, isWhiteLabel);
 
             //for export to excel
             if (CastAide.AsInt32(Request.QueryString["IsExport"], 0) == 1)
@@ -151,7 +152,7 @@ public partial class Statement_CustomerStatement : PageBase
     /// <param name="fromdate"></param>
     /// <param name="todate"></param>
     /// <returns></returns>
-    private void RenderFilterBanner(int tabId, int reportTypeNo, DateTime fromdate, DateTime todate)
+    private void RenderFilterBanner(int tabId, int reportTypeNo, DateTime fromdate, DateTime todate, bool isWhiteLabel)
     {
         /*
          * From date and todate must be less than or equal to DateTime.Now
@@ -169,6 +170,7 @@ public partial class Statement_CustomerStatement : PageBase
         string headerHtml = WebUtils.LoadTemplate("Statement/CustomerHeader.htm");
 
         TemplateHandler.Assign(ref headerHtml, "{reportNo}", reportTypeNo.ToString());
+        TemplateHandler.Assign(ref headerHtml, "{isWhiteLabel}", isWhiteLabel.ToString());
         TemplateHandler.Assign(ref headerHtml, "{custname}",
             System.Web.HttpUtility.UrlDecode(WebUtils.GetQueryStringValue<string>("custname", string.Empty)));
 
@@ -179,6 +181,12 @@ public partial class Statement_CustomerStatement : PageBase
             TemplateHandler.RemoveBlock(ref headerHtml, "IsAgent");
         }
 
+        if (!isWhiteLabel)
+        {
+            TemplateHandler.RemoveBlock(ref headerHtml, "WhiteLabel");
+            TemplateHandler.RemoveBlock(ref headerHtml, "WhiteLabelLink");
+        }
+
         switch (tabId)
         {
             case 1://Statement 1&2
@@ -186,6 +194,7 @@ public partial class Statement_CustomerStatement : PageBase
                 TemplateHandler.RemoveBlock(ref headerHtml, "StatementOld");
                 TemplateHandler.RemoveBlock(ref headerHtml, "Detail");
                 TemplateHandler.RemoveBlock(ref headerHtml, "Audit");
+                TemplateHandler.RemoveBlock(ref headerHtml, "WhiteLabel");
                 break;
 
             case 3:// Detail
@@ -193,6 +202,7 @@ public partial class Statement_CustomerStatement : PageBase
                 TemplateHandler.RemoveBlock(ref headerHtml, "StatementOld");
                 TemplateHandler.RemoveBlock(ref headerHtml, "DetailLink");
                 TemplateHandler.RemoveBlock(ref headerHtml, "Audit");
+                TemplateHandler.RemoveBlock(ref headerHtml, "WhiteLabel");
                 break;
 
             case 4://Audit
@@ -200,6 +210,7 @@ public partial class Statement_CustomerStatement : PageBase
                 TemplateHandler.RemoveBlock(ref headerHtml, "StatementOld");
                 TemplateHandler.RemoveBlock(ref headerHtml, "Detail");
                 TemplateHandler.RemoveBlock(ref headerHtml, "AuditLink");
+                TemplateHandler.RemoveBlock(ref headerHtml, "WhiteLabel");
                 break;
 
             case 6:// Old Statement
@@ -207,6 +218,15 @@ public partial class Statement_CustomerStatement : PageBase
                 TemplateHandler.RemoveBlock(ref headerHtml, "StatementOldLink");
                 TemplateHandler.RemoveBlock(ref headerHtml, "Detail");
                 TemplateHandler.RemoveBlock(ref headerHtml, "Audit");
+                TemplateHandler.RemoveBlock(ref headerHtml, "WhiteLabel");
+                break;
+
+            case 7:// White Label Txn
+                TemplateHandler.RemoveBlock(ref headerHtml, "Statement");
+                TemplateHandler.RemoveBlock(ref headerHtml, "StatementOld");
+                TemplateHandler.RemoveBlock(ref headerHtml, "Detail");
+                TemplateHandler.RemoveBlock(ref headerHtml, "Audit");
+                TemplateHandler.RemoveBlock(ref headerHtml, "WhiteLabelLink");
                 break;
         }
         //if (reportTypeNo == 1) //Statement 1&2

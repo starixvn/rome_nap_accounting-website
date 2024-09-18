@@ -1,0 +1,7 @@
+﻿img {
+    cursor: pointer;
+}
+
+.word-wrap-text {
+    word-wrap: break-word;
+}

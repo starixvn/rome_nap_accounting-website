@@ -31,7 +31,7 @@ public class GetData : BaseHandler
         string strData = string.Empty;
         reportNo = CastAide.AsInt32(context.Request["repno"], 1);
         var isReward = CastAide.AsBoolean(context.Request["isReward"]);
-        if (reportNo < 1 || reportNo > 5 || reportNo == 2) //combine reportNo 1&2
+        if (reportNo != 7 && (reportNo < 1 || reportNo > 5 || reportNo == 2)) //combine reportNo 1&2
             reportNo = 1;
 
         var helper = new Helper();
@@ -65,6 +65,15 @@ public class GetData : BaseHandler
                     CastAide.AsString(context.Request["tdate"]));
                 context.Response.Write(strData);
                 break;
+
+            case 7: 
+                strData = StatementHTML.GetWhiteLabelTxn(
+                    CastAide.AsString(context.Request["custname"]),
+                    CastAide.AsString(context.Request["fdate"]),
+                    CastAide.AsString(context.Request["tdate"]));
+                context.Response.Write(strData);
+                break;
+
         }
     }
 

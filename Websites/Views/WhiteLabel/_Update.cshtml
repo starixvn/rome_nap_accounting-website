@@ -1,0 +1,57 @@
+﻿
+
+<div id="update-white-label-dialog" class="hide" style="background-color:#E6E9F0">
+    <div id="error-messages" class="hide"></div>
+    <input type="hidden" id="hidCustId" />
+    <table>
+        <tr>
+            <td class="b">Username</td>
+            <td><span id="txtUsername" /></td>
+            <td class="b">Site</td>
+            <td><span id="txtSite" /></td>
+        </tr>
+        <tr>
+            <td class="b">White Label</td>
+            <td><span id="txtWhiteLabel" /></td>
+            <td class="b"></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td class="b">Middleman</td>
+            <td colspan="3">
+                <table border="1px" style="border-collapse: collapse;">
+                    <tr>
+                        <td style="background-color: #B5C4D0">Agent (<span class="b" id="txtAgentName"></span>)</td>
+                        <td><select id="selAgentRate"></select></td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: #B5C4D0">Master (<span class="b" id="txtMasterName"></span>)</td>
+                        <td><select id="selMasterRate"></select></td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: #B5C4D0">Super (<span class="b" id="txtSuperName"></span>)</td>
+                        <td><select id="selSuperRate"></select></td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: #B5C4D0">Headline (<span class="b" id="txtHeadlineName"></span>)</td>
+                        <td><select id="selHeadlineRate"></select></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td class="b">Launched Date</td>
+            <td colspan="3"><span id="lblLaunchedDate" /></td>
+        </tr>
+        <tr>
+            <td class="b">Remark</td>
+            <td colspan="3"><textarea rows="3" cols="50" id="txtRemark"></textarea></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td class="r">
+                <button type="button" class="btn w50" id="btnSubmit">Update</button>
+            </td>
+        </tr>
+    </table>
+</div>

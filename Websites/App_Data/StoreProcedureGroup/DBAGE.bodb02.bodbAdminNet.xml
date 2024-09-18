@@ -72,7 +72,7 @@
   </Function>
   <Function Name="Customer">
     <Setting Key="CustomerSelStatus" SpName="Acc_CustomerSelStatus" DbName="DBACC.bodb02.wsv_nap" />
-    <Setting Key="SelAllInfo" SpName="Acc_CustomerSelAllInfo" DbName="DBAGE.bodb02.wsv_nap" />
+    <Setting Key="SelAllInfo" SpName="Acc_CustomerSelAllInfo_xpre" DbName="DBAGE.bodb02.wsv_nap" />
     <Setting Key="Acc_CustDirectSel" SpName="Acc_CustDirectSel" DbName="DBAGE.bodb02.wsv_nap" />
     <Setting Key="Acc_CustomerSelSiteByUserName" SpName="Acc_CustomerSelSiteByUserName" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="CustomerSelDownLineList" SpName="Acc_CustomerSelList" DbName="DBCust.CustDB.wsv_nap" />
@@ -210,7 +210,8 @@
   <Function Name="Colossus Bets">
     <Setting Key="BetList_ColossusBets_BetDetails" SpName="Acc_BetListCB_Details" DbName="DBAGE.bodb02.wsv_nap" Plain="0" />
   </Function>
-  <Function Name="">
-    <Setting Key="Acc_ExchangeSel_byCurrencyName" SpName="Acc_ExchangeSel_byCurrencyName" DbName="DBCust.CustDB.wsv_nap" />
+  <Function Name="White Label - Statement">
+    <Setting Key="Acc_WhiteLabel_TransactionSel" SpName="Acc_WhiteLabel_TransactionSel_xtest" DbName="DBAGE.bodb02.wsv_nap" Plain="0" />
+    <Setting Key="Acc_WhiteLabel_CustomerSelByRefNo" SpName="Acc_WhiteLabel_CustomerSelByRefNo_xtest" DbName="DBAGE.bodb02.wsv_nap" Plain="0" />
   </Function>
 </Functions>

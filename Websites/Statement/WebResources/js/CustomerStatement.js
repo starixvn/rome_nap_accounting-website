@@ -154,7 +154,8 @@ function ViewCustomerStatement(reportNo) {
     var url = "CustomerStatement.aspx?repno=" + reportNo.toString()
         + "&fdate=" + fdate.toString()
         + "&tdate=" + tdate.toString()
-        + "&custname=" + encodeURIComponent($("#txtCustName").attr("value"));
+        + "&custname=" + encodeURIComponent($("#txtCustName").attr("value"))
+        + "&IsWhiteLabel=" + $("#isWhiteLabel").val();
 
     window.location.href = url;
 }
@@ -167,7 +168,8 @@ function VBL(fdate) {
 
 function ViewStatement(repno) {
     url = "CustomerStatement.aspx?repno=" + repno
-        + "&custname=" + encodeURIComponent($("#txtCustName").attr("value"));
+        + "&custname=" + encodeURIComponent($("#txtCustName").attr("value"))
+        + "&IsWhiteLabel=" + $("#isWhiteLabel").val();
     document.location.href = url;
 }
 
@@ -413,6 +415,7 @@ jQuery(document).ready(function () {
     $('#bannerfilter').bind('keypress', function (e) {
         var code = (e.keycode ? e.keycode : e.which);
         if (code == 13) {
+            ReverseTrans
             GetDataReport();
         }
     });

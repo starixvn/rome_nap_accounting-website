@@ -47,6 +47,8 @@
 
         public bool IsDeposit => WebSettings.IsApplySplitingDepositeCustomer && Utils.ToBoolean(customerInfoRow["IsDeposit"]);
 
+        public bool IsWhiteLabel => Utils.ToBoolean(customerInfoRow["IsWhiteLabel"]);
+
         public bool IsHeadline => SearchAccountRoleId == (int)Role.Headline;
 
         public string LastLoginDate => Convert.IsDBNull(customerInfoRow["lastlogged"]) ? string.Empty : Converter.ToDateTime(customerInfoRow["lastlogged"]).ToShortDateString();

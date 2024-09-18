@@ -1,0 +1,54 @@
+﻿@using Sunplus.Accounting.Core.Common;
+@{
+    Page.Title = "Manage White Label";
+}
+<link href="@Url.Content("~/Scripts/_Libs/jQuery/Styles/jquery-ui-1.9.1.custom.css?v=" + @AccCommon.Version())" rel="stylesheet" />
+<link href="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Grid.css?v=" + @AccCommon.Version())" rel="stylesheet" />
+<link href="@Url.Content("~/Views/WhiteLabel/Styles/Index.css?v=" + @AccCommon.Version())" rel="stylesheet" />
+<div class="maincontent">
+    <table cellspacing="0px" cellpadding="0px" border="0" class="maincontent_header">
+        <tbody>
+            <tr>
+                <td class="maincontent_headerL"></td>
+                <td class="maincontent_headerC">Manage White Label</td>
+                <td class="maincontent_headerR"></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="maincontent_box">
+        <div id="trMsg"></div>
+        <table>
+            <tr>
+                <td class="b">White Label</td>
+                <td>
+                    @Html.DropDownList("selWhiteLabel", (IEnumerable<SelectListItem>)ViewBag.WhiteLabelInfoList, new { @id = "selWhiteLabel" })
+                </td>
+                <td class="b w50">Username</td>
+                <td class="w105">
+                    <input type="text" class="text" id="txtWhiteLabelUsername" />
+                </td>
+                <td class="w40">
+                    <button type="button" class="btn" id="btnSubmit">Submit</button>
+                </td>
+                <td>
+                    <img alt="Add" title="Add" src="~/App_Themes/Images/icn_add.png" style="cursor: pointer" onclick="whiteLabel.AddWhiteLabel()">
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="grid-container">
+        <div id="gridId" class="freegrid">
+        </div>
+    </div>
+</div>
+
+@Html.Partial("~/Views/WhiteLabel/_AddNew.cshtml")
+@Html.Partial("~/Views/WhiteLabel/_Update.cshtml")
+
+<script src="@Url.Content("~/Scripts/_Libs/FanexGrid/moment.js?v=" + @AccCommon.Version())" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Grid.js?v=" + @AccCommon.Version())" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-ui-1.9.1.js?v=" + @AccCommon.Version())" type="text/javascript"></script>
+<script src="@Url.Content("~/Views/WhiteLabel/Scripts/Index.js?v=" + @AccCommon.Version())" type="text/javascript"></script>
+<script>
+        window.rootUrl = '@Url.Content("~")';
+</script>

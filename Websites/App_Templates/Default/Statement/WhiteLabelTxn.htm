@@ -1,0 +1,41 @@
+﻿<table class="tbllayout" style="width:960px" cellspacing="1">
+    <!--ReportHeader-->
+    <tr>
+        <td colspan="5"></td>
+        <td style="width: 75px;">
+            <span id="selectedCount"></span>
+        </td>
+        <td align="center">
+            <input id="btnReverse" class="reversed  verifiedDisabled" disabled="disabled" type="button" onclick="WhiteLabelReverseTransAll()" title="Reverse" value="Reverse">
+        </td>
+    </tr>
+    <tr class="title">
+        <td class="c">Date</td>
+        <td class="c">Ref No</td>
+        <td class="c">Amount</td>
+        <td class="c">Creator</td>
+        <td class="c">Remark</td>
+        <td class="c"><input type="checkbox" id="chkAll" onclick="onClickAllCheckBox();" /></td>
+        <td class="c">Reverse</td>
+    </tr>
+    <!--/ReportHeader-->
+    <!--ReportContent-->
+    <tr class="{odd_even}" class="r">
+        <td class="c">{Date}</td>
+        <td class="c">{RefNo}</td>
+        <td class="r">{Amount}</td>
+        <td align="c">{Creator}</td>
+        <td class="l">{Remark}</td>
+        <td class="c">
+            <!--ReverseCheckbox-->
+            <input type="checkbox" id="chkReverse_{Refno}" name="chkReverse" onclick="onClickCheckBoxItem('chkReverse_{Refno}')" />
+            <!--/ReverseCheckbox-->
+        </td>
+        <td align="center">
+            <!--ReverseLink-->
+            <input class="reversed" type="button" onclick="WhiteLabelReverseTrans('{Refno}');" title="Reverse" value="Reverse">
+            <!--/ReverseLink-->
+        </td>
+    </tr>
+    <!--/ReportContent-->
+</table>
