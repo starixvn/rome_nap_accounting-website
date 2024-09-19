@@ -5,6 +5,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using Fanex.Tarus.Security.Services;
+using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 
 namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
@@ -254,6 +256,13 @@ namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
             {
                 AffectedDownlinesInfo = new List<AffectedDownlinesInfoModel>()
             };
+
+            if (!Permissions.GetHostPermission(Enumerations.Functions.Customer.OtherCust))
+            {
+                result.ErrorCode = 500;
+                result.ErrorMessage = "You are not authorized on this function.";
+                return result;
+            }
 
             using (ObjectDb db = new ObjectDb("Acc_CustomerUpdTransferOption", 600))
             {
