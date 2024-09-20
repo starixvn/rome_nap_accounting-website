@@ -16,7 +16,7 @@
                 TemplateHandler.RemoveBlock(ref htmlcontent, "hideonmember");
             }
 
-            if (!Permissions.GetHostPermission(Enumerations.Functions.Customer.ContactInfo))
+            if (!Permissions.HasPermission(Enumerations.Functions.Customer.ContactInfo))
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "directinfo");
                 TemplateHandler.RemoveBlock(ref htmlcontent, "directinfotab");

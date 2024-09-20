@@ -18,7 +18,7 @@
             string htmlcontent,
             CustomerInfoViewModel customerInfoViewModel)
         {
-            if (!Permissions.GetHostPermission(Enumerations.Functions.Customer.CustomerBalance))
+            if (!Permissions.HasPermission(Enumerations.Functions.Customer.CustomerBalance))
             {
                 TemplateHandler.Assign(ref htmlcontent, "{BalanceInfo}", string.Empty);
                 return htmlcontent;
