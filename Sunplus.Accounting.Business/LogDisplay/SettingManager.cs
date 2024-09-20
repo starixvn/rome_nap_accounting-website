@@ -18,6 +18,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Xml.Linq;
+using Sunplus.Accounting.Business.Security;
 
 namespace Sunplus.Accounting.Business.LogDisplay
 {
@@ -76,9 +77,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
                     break;
 
                 case (int)ELogType.Credit:
-                    var resultCredit = GetLogCredit(param.CustName, param.FromDate, param.ToDate, param.Page, param.PageSize);
-                    logResult.Total = resultCredit.Total;
-                    logResult.Credit = resultCredit.Rows;
+                    ViewLogCredit(param, logResult);
                     break;
 
                 case (int)ELogType.Login:
@@ -91,7 +90,23 @@ namespace Sunplus.Accounting.Business.LogDisplay
                     break;
             }
             return logResult;
+
+            void ViewLogCredit(LogParam logParam, ResultLog resultLog)
+            {
+                if (!Permissions.HasPermission("ViewCreditLog"))
+                {
+                    resultLog.ErrorMessage = "You are not authorized on this function.";
+                }
+                else
+                {
+                   var resultCredit = GetLogCredit(logParam.CustName, logParam.FromDate, logParam.ToDate, logParam.Page,
+                        logParam.PageSize);
+                    resultLog.Total = resultCredit.Total;
+                    resultLog.Credit = resultCredit.Rows;
+                }
+            }
         }
+      
 
         /**
             @Function GetLogSetting

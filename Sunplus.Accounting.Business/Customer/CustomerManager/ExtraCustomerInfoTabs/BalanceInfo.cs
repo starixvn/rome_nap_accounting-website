@@ -18,6 +18,12 @@
             string htmlcontent,
             CustomerInfoViewModel customerInfoViewModel)
         {
+            if (!Permissions.GetHostPermission(Enumerations.Functions.Customer.CustomerBalance))
+            {
+                TemplateHandler.Assign(ref htmlcontent, "{BalanceInfo}", string.Empty);
+                return htmlcontent;
+            }
+
             bool hasTransferPermission = Permissions.GetHostPermission(Enumerations.Functions.Transfer.OtherTrans); // 2: Transfer
 
             string balanceinfo = WebUtils.LoadTemplateBySystem("CustomerInfo/BalanceInfo.htm");
