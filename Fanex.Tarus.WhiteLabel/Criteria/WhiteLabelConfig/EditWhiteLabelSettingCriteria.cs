@@ -1,4 +1,5 @@
 ﻿using Fanex.NAP.Framework.Data;
+using System;
 
 namespace Fanex.Tarus.WhiteLabel.Criteria.WhiteLabelConfig
 {
@@ -19,6 +20,8 @@ namespace Fanex.Tarus.WhiteLabel.Criteria.WhiteLabelConfig
         public int UserId { get; set; }
 
         public string IP { get; set; }
+
+        public DateTime LaunchedDate { get; set; }
 
         public override string GetSettingKey()
             => "Acc_WhiteLabelSetting_Upd";

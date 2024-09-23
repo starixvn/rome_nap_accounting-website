@@ -61,6 +61,7 @@ namespace Fanex.Tarus.WhiteLabel.Controller.WhiteLabelConfig
                 HeadlineRate = request.HeadlineRate,
                 MasterRate = request.MasterRate,
                 SuperRate = request.SuperRate,
+                LaunchedDate = request.LaunchedDate.Value,
                 IP = Utils.GetClientIP(),
                 Remark = request.Remark,
                 UserId = AppSession.AccId

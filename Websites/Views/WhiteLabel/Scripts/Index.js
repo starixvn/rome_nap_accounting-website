@@ -183,7 +183,7 @@
             self.RenderDropdowPercent($('#selSuperRate', dialog), data.SuperRate);
             $('#txtHeadlineName', dialog).text(data.Headline);
             self.RenderDropdowPercent($('#selHeadlineRate', dialog), data.HeadlineRate);
-            $('#lblLaunchedDate', dialog).text(moment(self.toDateTime(data.LaunchedDate)).format('DD/MM/YYYY'));
+            $('#txtLaunchedDate', dialog).datepicker('setDate', moment(self.toDateTime(data.LaunchedDate)).datepicker('enable');
             $('#txtRemark', dialog).val(data.Remark);
             $('#btnSubmit', dialog).off().click(function () {
                 var params = {
@@ -192,6 +192,7 @@
                     HeadlineRate: $('#selHeadlineRate', dialog).val(),
                     SuperRate: $('#selSuperRate', dialog).val(),
                     MasterRate: $('#selMasterRate', dialog).val(),
+                    LaunchedDate: $('#txtLaunchedDate', dialog).val(),
                     Remark: $('#txtRemark', dialog).val()
                 };
 
@@ -221,7 +222,6 @@
         $('#txtHeadlineName', dialog).empty();
         $('#selHeadlineRate', dialog).empty();
         $('#txtLaunchedDate', dialog).datepicker('setDate', new Date()).datepicker("enable");
-        $('#lblLaunchedDate', dialog).empty();
         $('#txtRemark', dialog).val('');
         self.hideMsg(dialog);
     }

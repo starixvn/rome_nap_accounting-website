@@ -7,8 +7,6 @@ namespace Fanex.Tarus.WhiteLabel.Criteria.WhiteLabelConfig
     {
         public string WhiteLabel { get; set; }
 
-        public DateTime LaunchedDate { get; set; }
-
         public override string GetSettingKey()
             => "Acc_WhiteLabelSetting_Ins";
 
