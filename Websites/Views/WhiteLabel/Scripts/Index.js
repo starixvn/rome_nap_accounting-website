@@ -73,7 +73,7 @@
                 { HeaderText: "Action", Width: 70, Name: "Action", HeaderAlign: "center", CellAlign: "center" }
             ],
             bodyRows: bodyRows,
-            gridExpandHeight: 200,
+            gridExpandHeight: 50,
             showDistinctRow: false
         };
 
@@ -81,7 +81,6 @@
     }
 
     self.AddWhiteLabel = function () {
-        
         var dialog = $("#add-white-label-dialog").dialog({
             title: "Add White Label Setting",
             autoOpen: false,
@@ -89,16 +88,17 @@
             width: 600,
             modal: true,
             open: function (event, ui) {
-                //self.cachedDOMElement.txtLaunchedDate.datepicker("enable");
+                self.cachedDOMElement.txtLaunchedDate_AddNew.datepicker("enable");
             },
             close: function (event, ui) {
-                //self.cachedDOMElement.txtLaunchedDate.datepicker("disable");
+                self.cachedDOMElement.txtLaunchedDate_AddNew.datepicker("disable");
             }
         });
         dialog.removeClass("hide").dialog("open");
         self.ClearForm(dialog);
         $('#txtUsername', dialog).focusout(function () {
             $.get(window.rootUrl + "WhiteLabel/GetAgentInfoForAddNew?agentName=" + $(this).val(), function (data) {
+                parent.BlockUI();
                 if (data.ErrCode !== undefined) {
                     self.showErrMsg(dialog, data.ErrMsg);
                 }
@@ -107,7 +107,7 @@
                     $('#hidCustId', dialog).val(data.CustId);
                     $('#txtSite', dialog).val(data.Site);
                     $('#txtWhiteLabel', dialog).val('');
-                    $('#txtAgentName', dialog).text(data.UserName);
+                    $('#txtAgentName', dialog).text(data.Agent);
                     self.RenderDropdowPercent($('#selAgentRate', dialog), 88);
                     $('#txtMasterName', dialog).text(data.Master);
                     self.RenderDropdowPercent($('#selMasterRate', dialog), 1);
@@ -115,10 +115,9 @@
                     self.RenderDropdowPercent($('#selSuperRate', dialog), 1);
                     $('#txtHeadlineName', dialog).text(data.Headline);
                     self.RenderDropdowPercent($('#selHeadlineRate', dialog), 1);
-
-                    $('#txtLaunchedDate', dialog).datepicker('setDate', Date.now()).datepicker('enable');
                     $('#txtRemark', dialog).val('');
                     $('#btnSubmit', dialog).off().click(function () {
+                        parent.BlockUI();
                         var params = {
                             CustId: $('#hidCustId', dialog).val(),
                             WhiteLabel: $('#txtWhiteLabel', dialog).val(),
@@ -126,7 +125,7 @@
                             HeadlineRate: $('#selHeadlineRate', dialog).val(),
                             SuperRate: $('#selSuperRate', dialog).val(),
                             MasterRate: $('#selMasterRate', dialog).val(),
-                            LaunchedDate: $('#txtLaunchedDate', dialog).val(),
+                            LaunchedDate: $('#txtLaunchedDate_AddNew', dialog).val(),
                             Remark: $('#txtRemark', dialog).val()
                         };
 
@@ -141,8 +140,13 @@
                         }
 
                         $.post(window.rootUrl + "WhiteLabel/Add", params, function (data) {
+                            parent.jQuery.unblockUI();
                             if (data.ErrCode == 0) {
                                 self.showSuccessMsg(dialog, 'Add White Label successfully');
+                                setTimeout(function () {
+                                    dialog.dialog('close');
+                                    self.Search();
+                                }, 3000);
                             }
                             else {
                                 self.showErrMsg(dialog, data.ErrMsg);
@@ -150,11 +154,14 @@
                         })
                     });
                 }
+
+                parent.jQuery.unblockUI();
             });
         });
     }
 
     self.EditWhiteLabel = function (username) {
+        parent.BlockUI();
         $.get(window.rootUrl + "WhiteLabel/GetWhiteLabelSettingForEdit?agentName=" + username, function (data) {
             var dialog = $("#update-white-label-dialog").dialog({
                 title: "Update White Label Setting",
@@ -163,10 +170,10 @@
                 width: 600,
                 modal: true,
                 open: function (event, ui) {
-                    //self.cachedDOMElement.txtLaunchedDate.datepicker("enable");
+                    self.cachedDOMElement.txtLaunchedDate_Update.datepicker("enable");
                 },
                 close: function (event, ui) {
-                    //self.cachedDOMElement.txtLaunchedDate.datepicker("disable");
+                    self.cachedDOMElement.txtLaunchedDate_Update.datepicker("disable");
                 }
             });
 
@@ -175,7 +182,7 @@
             $('#txtUsername', dialog).text(data.UserName);
             $('#txtSite', dialog).text(data.Site);
             $('#txtWhiteLabel', dialog).text(data.WhiteLabel);
-            $('#txtAgentName', dialog).text(data.UserName);
+            $('#txtAgentName', dialog).text(data.Agent);
             self.RenderDropdowPercent($('#selAgentRate', dialog), data.AgentRate);
             $('#txtMasterName', dialog).text(data.Master);
             self.RenderDropdowPercent($('#selMasterRate', dialog), data.MasterRate);
@@ -183,22 +190,28 @@
             self.RenderDropdowPercent($('#selSuperRate', dialog), data.SuperRate);
             $('#txtHeadlineName', dialog).text(data.Headline);
             self.RenderDropdowPercent($('#selHeadlineRate', dialog), data.HeadlineRate);
-            $('#txtLaunchedDate', dialog).datepicker('setDate', moment(self.toDateTime(data.LaunchedDate)).datepicker('enable');
+            $('#txtLaunchedDate_Update', dialog).datepicker('setDate', self.toDateTime(data.LaunchedDate)).datepicker('enable');
             $('#txtRemark', dialog).val(data.Remark);
             $('#btnSubmit', dialog).off().click(function () {
+                parent.BlockUI();
                 var params = {
                     CustId: $('#hidCustId', dialog).val(),
                     AgentRate: $('#selAgentRate', dialog).val(),
                     HeadlineRate: $('#selHeadlineRate', dialog).val(),
                     SuperRate: $('#selSuperRate', dialog).val(),
                     MasterRate: $('#selMasterRate', dialog).val(),
-                    LaunchedDate: $('#txtLaunchedDate', dialog).val(),
+                    LaunchedDate: $('#txtLaunchedDate_Update', dialog).val(),
                     Remark: $('#txtRemark', dialog).val()
                 };
 
                 $.post(window.rootUrl + "WhiteLabel/Update", params, function (data) {
+                    parent.jQuery.unblockUI();
                     if (data.ErrCode == 0) {
                         self.showSuccessMsg(dialog, 'Update White Label successfully');
+                        setTimeout(function () {
+                            dialog.dialog('close');
+                            self.Search();
+                        },3000);
                     }
                     else {
                         self.showErrMsg(dialog, data.ErrMsg);
@@ -206,6 +219,7 @@
                 })
             });
             dialog.removeClass("hide").dialog("open");
+            parent.jQuery.unblockUI();
         });
     }
 
@@ -221,7 +235,8 @@
         $('#selSuperRate', dialog).empty();
         $('#txtHeadlineName', dialog).empty();
         $('#selHeadlineRate', dialog).empty();
-        $('#txtLaunchedDate', dialog).datepicker('setDate', new Date()).datepicker("enable");
+        $('#txtLaunchedDate_AddNew').datepicker('setDate', new Date()).datepicker("enable");
+        $('#txtLaunchedDate_Update').datepicker('setDate', new Date()).datepicker("enable");
         $('#txtRemark', dialog).val('');
         self.hideMsg(dialog);
     }
@@ -255,7 +270,8 @@
             selWhiteLabel: $('#selWhiteLabel'),
             txtWhiteLabelUsername: $('#txtWhiteLabelUsername'),
             btnSubmit: $('#btnSubmit'),
-            txtLaunchedDate: $('#txtLaunchedDate')
+            txtLaunchedDate_AddNew: null,
+            txtLaunchedDate_Update: null
         };
 
         self.cachedDOMElement.btnSubmit.click(function () { self.Search(); });
@@ -265,7 +281,9 @@
             //minDate: new Date()
         };
 
-        self.cachedDOMElement.txtLaunchedDate = $("#txtLaunchedDate")
+        self.cachedDOMElement.txtLaunchedDate_AddNew = $("#txtLaunchedDate_AddNew")
+            .datepicker(dateOption);
+        self.cachedDOMElement.txtLaunchedDate_Update = $("#txtLaunchedDate_Update")
             .datepicker(dateOption);
     }
 

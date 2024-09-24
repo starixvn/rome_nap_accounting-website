@@ -6,6 +6,8 @@ namespace Fanex.Tarus.WhiteLabel.Models.WhiteLabelConfig
     {
         public int CustId { get; set; }
 
+        public string UserName { get; set; }
+
         public string WhiteLabel { get; set; }
 
         public string Headline { get; set; }
@@ -20,7 +22,7 @@ namespace Fanex.Tarus.WhiteLabel.Models.WhiteLabelConfig
 
         public decimal MasterRate { get; set; }
 
-        public string UserName { get; set; }
+        public string Agent { get; set; }
 
         public decimal AgentRate { get; set; }
 

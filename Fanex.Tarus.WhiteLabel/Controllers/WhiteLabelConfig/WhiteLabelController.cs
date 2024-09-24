@@ -1,6 +1,7 @@
 ﻿using Fanex.Tarus.Infrastructure.Common;
 using Fanex.Tarus.Infrastructure.Helper;
 using Fanex.Tarus.Web.Controllers;
+using Fanex.Tarus.Web.Controllers.Filters;
 using Fanex.Tarus.WhiteLabel.Criteria.WhiteLabelConfig;
 using Fanex.Tarus.WhiteLabel.Requests.WhiteLabelConfig;
 using Fanex.Tarus.WhiteLabel.Services.WhiteLabelConfig;
@@ -20,15 +21,18 @@ namespace Fanex.Tarus.WhiteLabel.Controller.WhiteLabelConfig
             this.service = service ?? new WhiteLabelService();
         }
 
+        [AuthenticateRead]
         public ActionResult Index()
         {
             ViewBag.WhiteLabelInfoList = service.GetWhiteLabelInfo();
             return View();
         }
 
+        [AuthenticateRead]
         public JsonResult Search(string username, int? custId)
             => Json(service.Search(new GetWhiteLabelSettingCriteria() { Username = username, CustId = custId }), JsonRequestBehavior.AllowGet);
 
+        [AuthenticateRead]
         public JsonResult GetAgentInfoForAddNew(string agentName)
         {
             var checkCustResult = service.Check(new CheckWhiteLabelSettingCriteria() { Username = agentName, IsNew = true });
@@ -41,6 +45,7 @@ namespace Fanex.Tarus.WhiteLabel.Controller.WhiteLabelConfig
             return Json(checkCustResult, JsonRequestBehavior.AllowGet);
         }
 
+        [AuthenticateRead]
         public JsonResult GetWhiteLabelSettingForEdit(string agentName)
         {
             var checkCustResult = service.Check(new CheckWhiteLabelSettingCriteria() { Username = agentName, IsNew = false });
@@ -53,6 +58,8 @@ namespace Fanex.Tarus.WhiteLabel.Controller.WhiteLabelConfig
             return Json(checkCustResult, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
+        [AuthenticateHost]
         public JsonResult Update(EditWhiteLabelRequest request)
             => Json(service.Update(new EditWhiteLabelSettingCriteria()
             {
@@ -67,6 +74,8 @@ namespace Fanex.Tarus.WhiteLabel.Controller.WhiteLabelConfig
                 UserId = AppSession.AccId
             }));
 
+        [HttpPost]
+        [AuthenticateHost]
         public JsonResult Add(AddWhiteLabelRequest request)
             => Json(service.Add(new AddWhiteLabelSettingCriteria() {
                 CustId = request.CustId,
