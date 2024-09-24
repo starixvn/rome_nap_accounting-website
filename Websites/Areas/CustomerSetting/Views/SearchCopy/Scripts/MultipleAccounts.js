@@ -223,7 +223,7 @@ $.fn.forceNumber = function () {
             custLevel: existedUser.roleId,
             uplineId: parentId,
             code: vm.code,
-            currency: $('#currency').data().currencyId
+            currency: isSuper ? $('#currency').data().currencyId : null
         };
     }
 
