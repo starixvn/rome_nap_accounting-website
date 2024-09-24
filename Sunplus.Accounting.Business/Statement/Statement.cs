@@ -7,7 +7,6 @@ using System.Web;
 using DNAide.Core;
 using DNAide.Data;
 using DNAide.Web;
-using Fanex.Data;
 using Fanex.Tarus.Statements.Models;
 using IBCUtils;
 using Sunplus.Accounting.Business.BootStrappers;
@@ -97,7 +96,7 @@ namespace Sunplus.Accounting.Business.Statement
                             TemplateHandler.RemoveBlock(ref rowHtml, "nobr");
 
                             // For new export excel function.
-                            auditStatements.Add(new AuditStatement
+                            auditStatements.Add(new AuditStatement 
                             {
                                 Date = strAccDate.Replace("<!--nobr--><br><!--/nobr-->", string.Empty),
                                 Remark = remark,
@@ -323,7 +322,7 @@ namespace Sunplus.Accounting.Business.Statement
                             htmlReport.Append(rowHtml);
 
                             // For new export excel function.
-                            detailStatements.Add(new DetailStatement
+                            detailStatements.Add(new DetailStatement 
                             {
                                 Date = transDate,
                                 RefNo = refno,
@@ -381,7 +380,7 @@ namespace Sunplus.Accounting.Business.Statement
             // For new export excel function.
             OldStatement oldStatement = null;
             IList<OldStatement> oldStatements = new List<OldStatement>();
-
+            
             try
             {
                 balanceUpDay = ReportUtils.BalanceUp.BalanceUpDay;
@@ -671,46 +670,6 @@ namespace Sunplus.Accounting.Business.Statement
         {
             TemplateHandler.RemoveBlock(ref contentTemplate, "verifyheader");
             TemplateHandler.ReplaceBlock(ref contentTemplate, "ReportContent", AccCommon.GenNoInformation("8"));
-        }
-
-        public static string GetWhiteLabelTxn(string userName, string fromDate, string toDate)
-        {
-            string contentTemplate = WebUtils.LoadTemplate("Statement/WhiteLabelTxn.htm");
-
-            var htmlReport = new StringBuilder();
-            string itemTemplate = TemplateHandler.CopyBlock(contentTemplate, "ReportContent");
-            using (var objDb = new ObjectDb("Acc_WhiteLabel_TransactionSel"))
-            {
-                bool isEmpty = true;
-                var reader = objDb.ExecuteReader(new { fromDate, toDate, userName });
-                while (reader.Read())
-                {
-                    var rowHtml = itemTemplate;
-                    isEmpty = false;
-                    TemplateHandler.Assign(ref rowHtml, "{Date}", reader["TransDate"]);
-                    TemplateHandler.Assign(ref rowHtml, "{RefNo}", reader["RefNo"]);
-                    TemplateHandler.Assign(ref rowHtml, "{Amount}", FormatHandler.FormatNumber20(reader["Amount"]));
-                    TemplateHandler.Assign(ref rowHtml, "{Creator}", reader["Creator"]);
-                    TemplateHandler.Assign(ref rowHtml, "{Remark}", reader["TransDesc"]);
-
-                    if (!CastAide.AsBoolean(reader["IsReversed"], true))
-                    {
-                        TemplateHandler.RemoveBlock(ref rowHtml, "ReverseLink");
-                        TemplateHandler.RemoveBlock(ref rowHtml, "ReverseCheckbox");
-                    }
-
-                    htmlReport.Append(rowHtml);
-                }
-
-                TemplateHandler.ReplaceBlock(ref contentTemplate, "ReportContent", htmlReport.ToString());
-
-                if (isEmpty)
-                {
-                    TemplateHandler.ReplaceBlock(ref contentTemplate, "ReportContent", AccCommon.GenNoInformation("4"));
-                }
-            }
-
-            return contentTemplate;
         }
 
         #endregion Methods

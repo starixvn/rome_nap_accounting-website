@@ -348,7 +348,6 @@
             TemplateHandler.Assign(ref htmlcontent, "{RoleId}", customerInfoViewModel.SearchAccountRoleId.ToString());
             TemplateHandler.Assign(ref htmlcontent, "{CustId}", customerInfoViewModel.CustId);
             TemplateHandler.Assign(ref htmlcontent, "{Username}", customerInfoViewModel.UserName);
-            TemplateHandler.Assign(ref htmlcontent, "{IsWhiteLabel}", customerInfoViewModel.IsWhiteLabel);
         }
 
         private void AssignCustomerSession(CustomerInfoViewModel customerInfoViewModel)

@@ -19,11 +19,11 @@
             string statementLink = string.Empty;
             if (!customerInfoViewModel.IsInternalUser)
             {
-                statementLink = "Statement/CustomerStatement.aspx?custname={custname}&isinternal=" + customerInfoViewModel.IsInternalUser + "&IsWhiteLabel={IsWhiteLabel}";
+                statementLink = "Statement/CustomerStatement.aspx?custname={custname}&isinternal=" + customerInfoViewModel.IsInternalUser;
             }
             else
             {
-                statementLink = "CustomerStatement/Index?CustID=" + customerInfoViewModel.CustId + "&CustName={custname}&IsWhiteLabel={IsWhiteLabel}";
+                statementLink = "CustomerStatement/Index?CustID=" + customerInfoViewModel.CustId + "&CustName={custname}";
             }
 
             TemplateHandler.Assign(ref tplTransLink, "statementLink", statementLink);

@@ -65,15 +65,6 @@ public class GetData : BaseHandler
                     CastAide.AsString(context.Request["tdate"]));
                 context.Response.Write(strData);
                 break;
-
-            case 7: 
-                strData = StatementHTML.GetWhiteLabelTxn(
-                    CastAide.AsString(context.Request["custname"]),
-                    CastAide.AsString(context.Request["fdate"]),
-                    CastAide.AsString(context.Request["tdate"]));
-                context.Response.Write(strData);
-                break;
-
         }
     }
 
