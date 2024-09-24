@@ -131,11 +131,13 @@
 
                         if (params.CustId == undefined || params.CustId == '' || params.CustId == 0) {
                             self.showErrMsg(dialog, "CustId is required.");
+                            parent.jQuery.unblockUI();
                             return;
                         }
 
                         if (params.WhiteLabel == undefined || params.WhiteLabel == '') {
                             self.showErrMsg(dialog, "WhiteLabel is required.");
+                            parent.jQuery.unblockUI();
                             return;
                         }
 
