@@ -11,7 +11,12 @@
                 try { parent.BlockUI(); } catch (e) { }
             },
             success: function (data) {
-                self.RenderSearchGrid(data);
+                if (data.indexOf('Access Denied') > 0) {
+                    self.showErrMsg($('#result-message'), 'You are not authorized on this function');
+                }
+                else {
+                    self.RenderSearchGrid(data);
+                }
             },
             complete: function () {
                 try { parent.jQuery.unblockUI(); } catch (e) { }
@@ -99,7 +104,10 @@
         $('#txtUsername', dialog).focusout(function () {
             $.get(window.rootUrl + "WhiteLabel/GetAgentInfoForAddNew?agentName=" + $(this).val(), function (data) {
                 parent.BlockUI();
-                if (data.ErrCode !== undefined) {
+                if (data.ErrorCode == 999) {
+                    self.showErrMsg(dialog, data.ErrorMessage);
+                }
+                else if (data.ErrCode !== undefined) {
                     self.showErrMsg(dialog, data.ErrMsg);
                 }
                 else {
@@ -143,7 +151,10 @@
 
                         $.post(window.rootUrl + "WhiteLabel/Add", params, function (data) {
                             parent.jQuery.unblockUI();
-                            if (data.ErrCode == 0) {
+                            if (data.ErrorCode == 999) {
+                                self.showErrMsg(dialog, data.ErrorMessage);
+                            }
+                            else if (data.ErrCode == 0) {
                                 self.showSuccessMsg(dialog, 'Add White Label successfully');
                                 setTimeout(function () {
                                     dialog.dialog('close');
@@ -208,12 +219,15 @@
 
                 $.post(window.rootUrl + "WhiteLabel/Update", params, function (data) {
                     parent.jQuery.unblockUI();
-                    if (data.ErrCode == 0) {
+                    if (data.ErrorCode == 999) {
+                        self.showErrMsg(dialog, data.ErrorMessage);
+                    }
+                    else if (data.ErrCode == 0) {
                         self.showSuccessMsg(dialog, 'Update White Label successfully');
                         setTimeout(function () {
                             dialog.dialog('close');
                             self.Search();
-                        },3000);
+                        }, 3000);
                     }
                     else {
                         self.showErrMsg(dialog, data.ErrMsg);
