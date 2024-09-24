@@ -4,11 +4,27 @@
     using System.Data;
     using DataAccess.IBCDLL.Customer;
     using DNAide.Web;
+    using Sunplus.Accounting.Business.Security;
+    using Sunplus.Accounting.Core.Common;
 
     public partial class CustomerManager
     {
         private static string RenderDirectInfoTab(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
         {
+            if (customerInfoViewModel.SearchAccountRoleId == 1)
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "hideonmember");
+            }
+
+            if (!Permissions.HasPermission(Enumerations.Functions.Customer.ContactInfo))
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "directinfo");
+                TemplateHandler.RemoveBlock(ref htmlcontent, "directinfotab");
+                TemplateHandler.RemoveBlock(ref htmlcontent, "directinfotabcontent");
+
+                return htmlcontent;
+            }
+
             var directCustomerInfo = SelectCustomer.CustomerSelDirectInfo(customerInfoViewModel.CustId);
             DataRow directCustomerInfoRow = null;
 
@@ -50,11 +66,6 @@
                 TemplateHandler.Assign(ref htmlcontent, "{MaxLossTab}", maxlossValue);
                 TemplateHandler.Assign(ref htmlcontent, "{GroupHeadlineMaxLossTab}", groupHeadlineMaxLoss);
                 TemplateHandler.Assign(ref htmlcontent, "{LinkDirectInfo}", string.Format("Customer/EditDirectCustomerInfo.aspx?roleId={0}&custId={1}&userName={2}", customerInfoViewModel.SearchAccountRoleId, customerInfoViewModel.CustId, customerInfoViewModel.UserName));
-            }
-
-            if (customerInfoViewModel.SearchAccountRoleId == 1)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "hideonmember");
             }
 
             return htmlcontent;
