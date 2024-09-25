@@ -306,7 +306,11 @@ namespace Sunplus.Accounting.Business.CreditTerm
                         TotalBalance = IBCUtils.FormatHandler.FormatNumber20(drow["totalbalance"]),
                         PendingTransfer3rd = IBCUtils.FormatHandler.FormatNumber20(drow["pendingtransfer3rd"]),
                         MaxLoss = GetMaxLossValue(drow["maxloss"]),
-                        IsGroupHeadline = CastAide.AsBoolean(drow["isgroupheadline"])
+                        IsGroupHeadline = CastAide.AsBoolean(drow["isgroupheadline"]),
+                        RewardMaxTransId = CastAide.AsInt32(drow["RewardMaxTransId"]),
+                        RewardPending = IBCUtils.FormatHandler.FormatNumber20(drow["RewardPending"]),
+                        RewardCurrency = CastAide.AsString(drow["RewardCurrency"]),
+                        Total_YesterdayBalance_RewardPending = IBCUtils.FormatHandler.FormatNumber20(drow["Total_YesterdayBalance_RewardPending"])
                     });
                 }
 
@@ -325,7 +329,9 @@ namespace Sunplus.Accounting.Business.CreditTerm
                         TotalBalance = IBCUtils.FormatHandler.FormatNumber20(totalrow["totalbalance_rm"]),
                         MaxLoss = GetMaxLossValue(totalrow["totalmaxloss_rm"]),
                         PendingTransfer3rd = IBCUtils.FormatHandler.FormatNumber20(totalrow["pendingtransfer3rd_rm"]),
-                        IsGroupHeadline = false
+                        IsGroupHeadline = false,
+                        RewardPending = IBCUtils.FormatHandler.FormatNumber20(totalrow["RewardPending"]),
+                        Total_YesterdayBalance_RewardPending = IBCUtils.FormatHandler.FormatNumber20(totalrow["Total_YesterdayBalance_RewardPending"])
                     });
                 }
             }

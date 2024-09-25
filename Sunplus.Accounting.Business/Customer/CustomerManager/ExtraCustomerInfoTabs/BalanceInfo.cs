@@ -41,20 +41,26 @@
             TemplateHandler.Assign(ref balanceinfo, "{CustName}", customerInfoViewModel.UserName);
 
             TemplateHandler.Assign(ref balanceinfo, "{AccOutstandTxn}", string.Format("{0:n}", customerInfoViewModel.Currency + " " + IBCUtils.FormatHandler.FormatNumber20(customerInfoViewModel.AccOutstanding)));
+
+            TemplateHandler.Assign(ref balanceinfo, "{RewardBalance}", string.Format("{0:n}", customerInfoViewModel.RewardCurrency + " " + IBCUtils.FormatHandler.FormatNumber20(customerInfoViewModel.RewardBalance)));
             if (customerInfoViewModel.SearchAccountRoleId == 1)
             {
-                TemplateHandler.Assign(ref balanceinfo, "{NetPosition}", customerInfoViewModel.Currency + " " + IBCUtils.FormatHandler.FormatNumber20(customerInfoViewModel.NetPosition));
+                TemplateHandler.Assign(ref balanceinfo, "{NetPosition}",
+                    customerInfoViewModel.Currency + " " +
+                    IBCUtils.FormatHandler.FormatNumber20(customerInfoViewModel.NetPosition));
                 TemplateHandler.Assign(ref balanceinfo, "{hiddenbalance}", "hidden");
+                TemplateHandler.RemoveBlock(ref balanceinfo, "HideOnMember");
             }
             else
             {
                 TemplateHandler.RemoveBlock(ref balanceinfo, "NetPosition");
-
                 TemplateHandler.Assign(ref balanceinfo, "{hiddenbalance}", "");
                 TemplateHandler.Assign(ref balanceinfo, "{colorYesterdayBal}", (hasTransferPermission ? " canchange" : string.Empty) + ((customerInfoViewModel.YesterdayBal >= 0) ? " b" : " hilight"));
                 TemplateHandler.Assign(ref balanceinfo, "{YesterdayBal}", string.Format("{0:####.##}", customerInfoViewModel.YesterdayBal));
                 TemplateHandler.Assign(ref balanceinfo, "{YesterdayBalCur}", string.Format("{0:n}", IBCUtils.FormatHandler.FormatNumber20(customerInfoViewModel.YesterdayBal)));
                 TemplateHandler.Assign(ref balanceinfo, "{CurYesterdayBalCur}", customerInfoViewModel.Currency + " ");
+                TemplateHandler.Assign(ref balanceinfo, "{OutstandTxn}", string.Format("{0:n}", customerInfoViewModel.Currency + " " + IBCUtils.FormatHandler.FormatNumber20(customerInfoViewModel.OutStanding)));
+                TemplateHandler.Assign(ref balanceinfo, "{RewardPending}", string.Format("{0:n}", customerInfoViewModel.RewardCurrency + " " + IBCUtils.FormatHandler.FormatNumber20(customerInfoViewModel.RewardPending)));
             }
 
             //Check Given Credit Permission

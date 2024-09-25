@@ -146,5 +146,6 @@
         public string DisplayReview => string.Concat(Review, Review2);
 
         public string CustomerClass => Utils.ToString(customerInfoRow["CustomerClass"]);
+      
     }
 }

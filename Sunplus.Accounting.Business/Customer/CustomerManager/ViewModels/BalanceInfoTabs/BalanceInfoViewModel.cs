@@ -35,7 +35,14 @@
 
         public string Currency => Converter.ToString2(customerInfoRow["currency"]);
 
+        public string RewardCurrency => Converter.ToString2(cashRow["RewardCurrency"]);
+
+        public decimal RewardPending => Utils.ToDecimal(cashRow["RewardPending"]);
+
+        public decimal RewardBalance => Utils.ToDecimal(cashRow["RewardBalance"]);
+
         public bool EnableVirtualRate => CastAide.AsDecimal(customerInfoRow["EnableVirtualRate"]) != 0;
+
 
         private void GetExtraCustomerInfo(
             DataRow customerInfoRow,
