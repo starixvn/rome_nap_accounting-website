@@ -33,7 +33,7 @@ namespace Fanex.Tarus.Customer.Business.LicenseeSubsidiary
             var checkExistResult = CheckExistAgent(existedUsername, siteDB.CustDBGroupID);
             var registerResult = licenseeDataAccess.RegisterAccount(new RegisterAccountCriteria(username, checkExistResult.MRecommend, RoleIdConstants.AGENT, siteDB.Site, siteDB.CustDBGroupID));
 
-            if (registerResult.Item1.ErrorCode == 0)
+            if (registerResult.Item1.IsSuccess)
             {
                 var result = licenseeDataAccess.Create(
                     new CreateLicenseeSubsidiaryCriteria(
@@ -46,7 +46,7 @@ namespace Fanex.Tarus.Customer.Business.LicenseeSubsidiary
                         ip,
                         siteDB.CustDBGroupID));
 
-                if (result.ErrorCode > 0)
+                if (!result.IsSuccess)
                 {
                     licenseeDataAccess.RollbackInsertAccount(registerResult.Item2);
                 }

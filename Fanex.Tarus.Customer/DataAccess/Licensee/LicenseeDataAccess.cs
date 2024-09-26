@@ -69,7 +69,7 @@ namespace Fanex.Tarus.Customer.DataAccess.Licensee
                 result = new Result(Convert.ToInt32(ouputParams["errcode"]), ouputParams["errmsg"].ToString());
             }
 
-            if (result.ErrorCode == 0)
+            if (result.IsSuccess)
             {
                 _depositCustomerAccess.InsertBalanceWhenCreateNewMember(criteria.CustId, criteria.Username);
             }

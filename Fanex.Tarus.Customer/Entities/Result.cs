@@ -30,6 +30,8 @@ namespace Fanex.Tarus.Customer.Entities
         public int ErrorCode { get; set; }
 
         public string ErrorMessage { get; set; }
+
+        public bool IsSuccess => ErrorCode == 0;
     }
 
     /// <summary>

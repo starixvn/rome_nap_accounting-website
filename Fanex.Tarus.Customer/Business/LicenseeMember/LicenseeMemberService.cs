@@ -31,7 +31,7 @@
                 request.Site,
                 request.CustDBGroupID));
 
-            if (registerResult.Item1.ErrorCode == 0)
+            if (registerResult.Item1.IsSuccess)
             {
                 var criteria = new InsertMemberCriteria
                 {
