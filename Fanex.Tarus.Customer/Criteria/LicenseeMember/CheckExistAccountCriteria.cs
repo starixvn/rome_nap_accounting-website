@@ -17,6 +17,12 @@
 
         public int CustId { get; set; }
 
+        public int SRecommend { get; set; }
+
+        public int MRecommend { get; set; }
+
+        public int Recommend { get; set; }
+
         [SpParam(Ignored = true)]
         public int CustDBGroupId { get; }
 
