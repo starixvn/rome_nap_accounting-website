@@ -73,7 +73,5 @@ namespace Fanex.Tarus.Customer.Entities
         public int CustId { get; }
 
         public int ExistedCustId { get; }
-
-        public bool IsSuccess => ErrorCode == 0;
     }
 }

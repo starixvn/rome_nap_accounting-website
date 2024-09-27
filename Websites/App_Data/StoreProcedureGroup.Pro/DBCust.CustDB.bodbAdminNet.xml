@@ -233,7 +233,6 @@
     <Setting Key="Acc_CustomerNoCommCheck" SpName="Acc_CustomerNoCommCheck" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Licensee DCS Setting">
-    <Setting Key="NAP_LM_LicenseeSuperList" SpName="NAP_LM_LicenseeSuperList" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_CustomerSelAgentListBySuper" SpName="Acc_CustomerSelAgentListBySuper" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_Dep_SelDCSProduct" SpName="Acc_Dep_SelDCSProduct" DbName="DBCust.CustDB.wsv_nap" />
 
