@@ -25,7 +25,7 @@
     </script>
 </head>
 <body style="overflow: scroll !important;">
-    <div class="main" style="width: 916px">
+    <div class="main" style="width: 1236px">
         <div class="maincontent">
             <table border="0" cellpadding="0px" cellspacing="0px" class="maincontent_header">
                 <tr>
@@ -45,7 +45,7 @@
                 <%=strfilter%>
             </div>
             <div class="bg_table">
-                <div style="width: 900px">
+                <div style="width: 1220px">
                     <div id="sContent">
                         <%=strContent%>
                     </div>

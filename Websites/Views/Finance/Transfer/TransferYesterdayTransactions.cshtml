@@ -1,5 +1,5 @@
 ﻿<div>
-    <table class="tbllayout" style="width: 500px;" cellspacing="1">
+    <table class="tbllayout" style="width: 600px;" cellspacing="1">
         <tr>
             <td class="l b">
                 From:
@@ -46,15 +46,62 @@
                 <input type="text" class="txt" id="remark" name="remark" size="50" />
             </td>
         </tr>
+	    <tr>
+		    <td colspan="4" class="c">
+			    <input id="chk-collection-yesterday" type="checkbox" class="chk-collection"/>
+			    <label for="chk-collection-yesterday">Collection</label>
+		    </td>
+	    </tr>
+        @if (Model.IsShowReward)
+        {
+	        <!--Reward-->
+	        <tr>
+		        <td colspan="4" class="c">
+			        <input id="chk-confrimpayment" value="checked" type="checkbox" class="chk-confrimpayment"/>
+			        <label for="chk-confrimpayment">Confirm Payment</label>
+		        </td>
+	        </tr>
+	        <tr>
+		        <td colspan="4" class="l">
+			        The reward amount has been summed up to now.<br/>
+			        Confirm to reset the reward amount to zero. <br/>
+			        This action also records the expense into 'Saba Rewards Promotion' code.
+		        </td>
+	        </tr>
+	        <tr>
+		        <td class="l b">
+			        Await Amount:
+		        </td>
+                <td class="l">
+                    <input class="txt" type="text" id="txtRewardAmount" name="txtRewardAmount" size="5" value="@Model.RewardAmount" onkeypress="return CheckDecNumber(event);" /> @Model.RewardCurrency
+                </td>
+                <td class="l b">
+                    System Ex.Rate (@Model.RewardCurrency/RM):
+                </td>
+		        <td class="l">
+			        <input type="text" class="txt" id="txtRewardRate" name="txtRewardRate" size="10" value="@Model.FromAmount"
+			               style="text-align: right"/>
+		        </td>
+	        </tr>
+	        <tr>
+		        <td class="l b">
+			        Expense Amount:
+		        </td>
+                <td class="l">
+                    <input class="txt" type="text" id="txtExpanseAmount" name="txtExpanseAmount" size="5" value="@Model.RewardCurrency" onkeypress="return CheckDecNumber(event);" /> RM
+                </td>
+		        <td class="l b" colspan="2">
+
+		        </td>
+	        </tr>
+	        <!--/Reward-->
+        }
         <tr>
             <td colspan="4" class="c">
-                <input id="chk-collection-yesterday" type="checkbox" class="chk-collection"/>
-                <label for="chk-collection-yesterday">Collection</label>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="4" class="c">
-                <input class="btn" type="button" id="transfer" value="Transfer" onclick="transfer.YesterdayTransactionsForm.validateValue();"></input>
+                <input class="btn" type="button" id="transfer" value="Transfer" onclick="transfer.YesterdayTransactionsForm.validateValue();"></input> @if (Model.IsShowReward)
+                {
+                    @Html.Raw("(TOTAL: " + Model.Total_YesterdayBalance_RewardPending + ")");
+                }
             </td>
         </tr>
     </table>

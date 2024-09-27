@@ -148,7 +148,7 @@ namespace Sunplus.Accounting.Presentation
 
                             if (hasTransferPermission)
                             {
-                                jsTranferPopup = "OpenPopupTransfer" + "('1','" + member.YesterdayBalance + "','" + member.Username + "');";
+                                jsTranferPopup = "OpenPopupTransfer" + "('" + member.YesterdayBalance + "','" + member.Username + "','" + member.RewardMaxTransId + "','" + member.Reward + "','" + member.RewardCurrency + "','" + member.Total_YesterdayBalance_Reward + "');";
                                 TemplateHandler.Assign(ref _userrow, "{canClick}", "canClick");
                             }
                             if (member.IsGroupHeadline)
@@ -215,7 +215,12 @@ namespace Sunplus.Accounting.Presentation
                                 member.PendingTransfer3rd);
 
                             TemplateHandler.Assign(ref _userrow, "{TotalBalanceNoneFormat}", member.TotalBalance);
-                            TemplateHandler.Assign(ref _userrow, "{PendingTranfer3rdNoneFormat}", member.PendingTransfer3rd);
+                            TemplateHandler.Assign(ref _userrow, "{Reward}", member.Reward);
+                            TemplateHandler.Assign(ref _userrow, "{RewardCurrency}", member.RewardCurrency);
+                            TemplateHandler.Assign(ref _userrow, "{TotalYesterdayBalRewardRaw}", member.Total_YesterdayBalance_Reward);
+                            TemplateHandler.Assign(ref _userrow, "{TotalYesterdayBalReward}", member.Total_YesterdayBalance_Reward.StartsWith("-") ?
+                                string.Format("<span style=\"color:#ee0000\">{0}</span>", member.Total_YesterdayBalance_Reward) :
+                                member.Total_YesterdayBalance_Reward);
                             TemplateHandler.Assign(ref _userrow, "{MaxLoss}", member.MaxLoss);
                             TemplateHandler.Assign(ref _userrow, "{headlineclasstext}", headlineclasstext);
                             TemplateHandler.Assign(ref _userrow, "{removeitem}", removeitem);
@@ -232,6 +237,10 @@ namespace Sunplus.Accounting.Presentation
                                 member.YesterdayBalance.StartsWith("-") ?
                                     string.Format("<span style=\"color:#ee0000\">{0}</span>", member.YesterdayBalance) :
                                     member.YesterdayBalance);
+                            TemplateHandler.Assign(ref formHtml, "{SumReward}", member.Reward);
+                            TemplateHandler.Assign(ref formHtml, "{SumTotalYesterdayBalReward}", member.Total_YesterdayBalance_Reward.StartsWith("-") ?
+                                string.Format("<span style=\"color:#ee0000\">{0}</span>", member.Total_YesterdayBalance_Reward) :
+                                member.Total_YesterdayBalance_Reward);
                             TemplateHandler.Assign(
                                 ref formHtml,
                                 "{SumTotalBalance}",
