@@ -40,7 +40,7 @@
     <Setting Key="GetCustIdByUsername" SpName="Acc_GetCustIdByUsername" DbName="DBACC.bodb02.wsv_nap" />
   </Function>
   <Function Name="Admin - SMA Management">
-    <Setting Key="Acc_CustomerSelByGroupHeadline" SpName="Acc_CustomerSelByGroupHeadline_UAT3" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_CustomerSelByGroupHeadline" SpName="Acc_CustomerSelByGroupHeadline" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="CS_CustomerSelByGroupHeadline" SpName="CS_CustomerSelByGroupHeadline" DbName="DBACC.bodb02.wsv_nap" />
   </Function>
   <Function Name="Statement">

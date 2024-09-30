@@ -443,7 +443,7 @@
     <Setting Key="Acc_FinanceGroupsConfig_CodesInsValidation" SpName="Acc_FinanceGroupsConfig_CodesInsValidation" DbName="DBCUST.CustDB.wsv_nap" />
     <Setting Key="Acc_FinanceGroupsConfig_CodesIns" SpName="Acc_FinanceGroupsConfig_CodesIns" DbName="DBCUST.CustDB.wsv_nap" />
     <Setting Key="Acc_FinanceGroupsConfig_GroupSel" SpName="Acc_FinanceGroupsConfig_GroupSel" DbName="DBCUST.CustDB.wsv_nap" />
-    <Setting Key="Acc_FinanceGroupsConfig_GetValidCustid" SpName="Acc_FinanceGroupsConfig_GetValidCustid_xtest" DbName="DBPOL.NAP_UserControl.wsv_nap" />
+    <Setting Key="Acc_FinanceGroupsConfig_GetValidCustid" SpName="Acc_FinanceGroupsConfig_GetValidCustid" DbName="DBPOL.NAP_UserControl.wsv_nap" />
   </Function>
   <Function Name="Ex.rate">
     <Setting Key="Acc_ExchangeMultiBaseRateUpd" SpName="Acc_ExchangeMultiBaseRateUpd" DbName="DBCUST.CustDB.wsv_nap" />
