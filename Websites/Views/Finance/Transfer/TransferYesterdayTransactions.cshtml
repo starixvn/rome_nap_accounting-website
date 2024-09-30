@@ -57,7 +57,7 @@
 	        <!--Reward-->
 	        <tr>
 		        <td colspan="4" class="c">
-			        <input id="chk-confrimpayment" value="checked" type="checkbox" class="chk-confrimpayment"/>
+			        <input id="chk-confrimpayment" checked="checked" type="checkbox" class="chk-confrimpayment"/>
 			        <label for="chk-confrimpayment">Confirm Payment</label>
 		        </td>
 	        </tr>
@@ -88,7 +88,7 @@
 			        Expense Amount:
 		        </td>
                 <td class="l">
-                    <input class="txt" type="text" id="txtExpanseAmount" name="txtExpanseAmount" size="5" value="@Model.RewardCurrency" onkeypress="return CheckDecNumber(event);" /> RM
+                    <input class="txt" type="text" id="txtExpanseAmount" name="txtExpanseAmount" size="5" value="@Model.Total_YesterdayBalance_RewardPending" onkeypress="return CheckDecNumber(event);" /> RM
                 </td>
 		        <td class="l b" colspan="2">
 
@@ -97,13 +97,14 @@
 	        <!--/Reward-->
         }
         <tr>
-            <td colspan="4" class="c">
-                <input class="btn" type="button" id="transfer" value="Transfer" onclick="transfer.YesterdayTransactionsForm.validateValue();"></input> @if (Model.IsShowReward)
-                {
-                    @Html.Raw("(TOTAL: " + Model.Total_YesterdayBalance_RewardPending + ")");
-                }
-            </td>
+	        <td colspan="4" class="c">
+		        <input class="btn" type="button" id="transfer" value="Transfer" onclick="transfer.YesterdayTransactionsForm.validateValue();"></input> @if (Model.IsShowReward)
+		                                                                                                                                               {
+			                                                                                                                                               @Html.Raw("(TOTAL: " + Model.Total_YesterdayBalance_RewardPending + ")");
+		                                                                                                                                               }
+	        </td>
         </tr>
+        <input type="hidden" id="rewardMaxTransId" value="@Model.RewardMaxTransId" />
     </table>
 </div>
 <iframe id="frmTransfer" width="350px" scrolling="no" height="110px" frameborder="0"
