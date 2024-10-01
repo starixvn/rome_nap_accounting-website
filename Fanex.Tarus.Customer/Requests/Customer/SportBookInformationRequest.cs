@@ -83,7 +83,7 @@
         {
             name = "WinLossLimit",
             id = "WinLossLimitTab",
-            url = "",
+            url = ApplicationPath + "Customer/GetWinLossLimitInformation?custId=" + CustId + "&site=" + Site + "&currency=" + Currency,
             isActive = TabIndex == 5,
         };
     }
