@@ -151,7 +151,8 @@ namespace Fanex.Tarus.BetList.DataAccess.Results
                 SettlementStatus = reader["SettlementStatus"] != DBNull.Value ? Convert.ToByte(reader["SettlementStatus"]) : default(byte),
                 NoHTScore = reader["NoHTScore"] != DBNull.Value ? Convert.ToBoolean(reader["NoHTScore"]) : false,
                 MainType = reader["MainType"] != DBNull.Value ? Convert.ToByte(reader["MainType"]) : default(byte),
-                SubType = reader["SubType"] != DBNull.Value ? Convert.ToInt32(reader["SubType"]) : default(int)
+                SubType = reader["SubType"] != DBNull.Value ? Convert.ToInt32(reader["SubType"]) : default(int),
+                SessionTime = reader["SessionTime"] != DBNull.Value ? Convert.ToInt32(reader["SessionTime"]) : default(int),
             };
         }
 
