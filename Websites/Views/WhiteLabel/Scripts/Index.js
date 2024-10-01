@@ -113,7 +113,7 @@
                 else {
                     self.hideMsg(dialog);
                     $('#hidCustId', dialog).val(data.CustId);
-                    $('#txtSite', dialog).val(data.Site);
+                    $('#txtSite', dialog).text(data.Site);
                     $('#txtWhiteLabel', dialog).val('');
                     $('#txtAgentName', dialog).text(data.Agent);
                     self.RenderDropdowPercent($('#selAgentRate', dialog), 88);
@@ -129,10 +129,10 @@
                         var params = {
                             CustId: $('#hidCustId', dialog).val(),
                             WhiteLabel: $('#txtWhiteLabel', dialog).val(),
-                            AgentRate: $('#selAgentRate', dialog).val(),
-                            HeadlineRate: $('#selHeadlineRate', dialog).val(),
-                            SuperRate: $('#selSuperRate', dialog).val(),
-                            MasterRate: $('#selMasterRate', dialog).val(),
+                            AgentRate: parseInt($('#selAgentRate', dialog).val()),
+                            HeadlineRate: parseInt($('#selHeadlineRate', dialog).val()),
+                            SuperRate: parseInt($('#selSuperRate', dialog).val()),
+                            MasterRate: parseInt($('#selMasterRate', dialog).val()),
                             LaunchedDate: $('#txtLaunchedDate_AddNew', dialog).val(),
                             Remark: $('#txtRemark', dialog).val()
                         };
@@ -145,6 +145,12 @@
 
                         if (params.WhiteLabel == undefined || params.WhiteLabel == '') {
                             self.showErrMsg(dialog, "WhiteLabel is required.");
+                            parent.jQuery.unblockUI();
+                            return;
+                        }
+
+                        if (params.HeadlineRate + params.AgentRate + params.SuperRate + params.MasterRate > 91) {
+                            self.showErrMsg(dialog, "The Total Earning Rate must not exceed 91%.");
                             parent.jQuery.unblockUI();
                             return;
                         }
@@ -209,13 +215,19 @@
                 parent.BlockUI();
                 var params = {
                     CustId: $('#hidCustId', dialog).val(),
-                    AgentRate: $('#selAgentRate', dialog).val(),
-                    HeadlineRate: $('#selHeadlineRate', dialog).val(),
-                    SuperRate: $('#selSuperRate', dialog).val(),
-                    MasterRate: $('#selMasterRate', dialog).val(),
+                    AgentRate: parseInt($('#selAgentRate', dialog).val()),
+                    HeadlineRate: parseInt($('#selHeadlineRate', dialog).val()),
+                    SuperRate: parseInt($('#selSuperRate', dialog).val()),
+                    MasterRate: parseInt($('#selMasterRate', dialog).val()),
                     LaunchedDate: $('#txtLaunchedDate_Update', dialog).val(),
                     Remark: $('#txtRemark', dialog).val()
                 };
+
+                if (params.HeadlineRate + params.AgentRate + params.SuperRate + params.MasterRate > 91) {
+                    self.showErrMsg(dialog, "The Total Earning Rate must not exceed 91%.");
+                    parent.jQuery.unblockUI();
+                    return;
+                }
 
                 $.post(window.rootUrl + "WhiteLabel/Update", params, function (data) {
                     parent.jQuery.unblockUI();
@@ -241,7 +253,7 @@
 
     self.ClearForm = function (dialog) {
         $('#txtUsername', dialog).val('');
-        $('#txtSite', dialog).val('');
+        $('#txtSite', dialog).text('');
         $('#txtWhiteLabel', dialog).val('');
         $('#txtAgentName', dialog).empty();
         $('#selAgentRate', dialog).empty();
