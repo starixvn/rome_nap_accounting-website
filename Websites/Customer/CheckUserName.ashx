@@ -22,7 +22,7 @@ public class CheckUserName : IHttpHandler, IRequiresSessionState
         try
         {
             var permissionService = new ServiceBase();
-            var checkSpecialSiteAccess = permissionService.CheckSpecialSitePermission(new CheckSpecialSitePermissionCriteria() { UserID = AppSession.AccId, CustName = username });
+            var checkSpecialSiteAccess = permissionService.CheckSpecialSitePermission(new CheckSpecialSitePermissionCriteria() { UserID = AppSession.AccId, UserName = AppSession.AccUserName, CustName = username });
             if (checkSpecialSiteAccess.ErrorCode > 0)
             {
                 context.Response.Write(" parent.parent.document.body.rows = '55,*';parent.showAlertMessage('errMsg','" + System.Net.WebUtility.HtmlEncode(checkSpecialSiteAccess.ErrorMessage) + "',1);");
