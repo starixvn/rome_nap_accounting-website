@@ -800,6 +800,16 @@ transfer.YesterdayTransactionsForm = {
     validateValue: function () {
         $('#errMsg').hide();
         var isTransferYesterday = $("#chk-confrimtransfer").is(":checked");
+        var IsShowReward = $("#isShowReward").val();
+
+        if (!isTransferYesterday && !isConfrimReward) {
+            return false;
+        }  
+
+        var param = {
+            fromCustName: fromUsername
+        };   
+        
         if (isTransferYesterday) {
             var _toUser = document.getElementById("touser").value;
             if (_toUser.isNullOrEmpty()) {
@@ -824,26 +834,23 @@ transfer.YesterdayTransactionsForm = {
 
             if (isNaN(parseFloat(_amount))) {
                 return false;
-            }            
+            }
+
+            param = {
+                fromCustName: fromUsername,
+                toCustName: _toUser,
+                exRate: _exRate,
+                amount: _amount.replace(/,/g, ""),
+                remark: $("#remark").val(),
+                isCollection: $("#chk-collection-yesterday").is(":checked")
+            };     
         }
-        var IsShowReward = $("#isShowReward").val();
+        
         var isConfrimReward = IsShowReward && $("#chk-confrimpayment").is(":checked");
+        param.IsShowReward = IsShowReward;
+        param.IsTransferYesterday = isTransferYesterday;            
 
-        if (!isTransferYesterday && !isConfrimReward) {
-            return false;
-        }
-
-        var param = {
-            IsTransferYesterday: isTransferYesterday,
-            fromCustName: fromUsername,
-            toCustName: _toUser,
-            exRate: _exRate,
-            amount: _amount.replace(/,/g, ""),
-            remark: $("#remark").val(),
-            isCollection: $("#chk-collection-yesterday").is(":checked")
-        };     
-
-        if (isConfrimReward) {
+        if (isConfrimReward) {           
             param.IsShowReward = isConfrimReward;
             param.RewardMaxTransId = $("#rewardMaxTransId").val();
             param.RewardAmount = $("#txtRewardAmount").val();
