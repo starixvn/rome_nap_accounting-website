@@ -1,19 +1,25 @@
 ﻿<div>
-    <table class="tbllayout" style="width: 600px;" cellspacing="1">
+    <table class="tbllayout yesterdaytransfer" style="width: 620px;">
+        <tr>
+            <td colspan="4" class="l" style="background-color:#b5c4d0  !important">
+                <input id="chk-confrimtransfer" checked="checked" type="checkbox" class="chk-confrimtransfer" />
+                <label for="chk-confrimtransfer">Transfer yesterday's total balance</label>
+            </td>
+        </tr>
         <tr>
             <td class="l b">
                 From:
-                <td class="l">
-                    <span class="b" id="fromuser">
-                        @Model.FromCustName
-                    </span>
-                </td>
+            <td class="l">
+                <span class="b" id="fromuser">
+                    @Model.FromCustName
+                </span>
+            </td>
             </td>
             <td class="l b">
                 To:
             </td>
             <td class="l">
-                <input class="txt" type="text" id="touser" name="touser" size="10"/>
+                <input class="txt" type="text" id="touser" name="touser" size="10" />
             </td>
         </tr>
         <tr>
@@ -21,14 +27,14 @@
                 Ex.Rate:
             </td>
             <td class="l">
-                <input class="txt" type="text" id="exrate" name="exrate" size="5" value="1.00" onkeypress="return CheckDecNumber(event);"/>
+                <input class="txt" type="text" id="exrate" name="exrate" size="5" value="1.00" onkeypress="return CheckDecNumber(event);" />
             </td>
             <td class="l b">
                 Amount:
             </td>
             <td class="l">
                 <input type="text" class="txt" id="txtamount" name="txtamount" size="10" value="@Model.FromAmount"
-                       style="text-align: right"/>
+                       style="text-align: right" />
             </td>
         </tr>
         <tr>
@@ -37,7 +43,7 @@
                 <span id="systemExRateText"></span>
             </td>
             <td class="l">
-                <span id="systemExRateValue" class="b" ></span>
+                <span id="systemExRateValue" class="b"></span>
             </td>
             <td class="l b">
                 Description:
@@ -46,67 +52,68 @@
                 <input type="text" class="txt" id="remark" name="remark" size="50" />
             </td>
         </tr>
-	    <tr>
-		    <td colspan="4" class="c">
-			    <input id="chk-collection-yesterday" type="checkbox" class="chk-collection"/>
-			    <label for="chk-collection-yesterday">Collection</label>
-		    </td>
-	    </tr>
-        @if (Model.IsShowReward)
-        {
-	        <!--Reward-->
-	        <tr>
-		        <td colspan="4" class="c">
-			        <input id="chk-confrimpayment" checked="checked" type="checkbox" class="chk-confrimpayment"/>
-			        <label for="chk-confrimpayment">Confirm Payment</label>
-		        </td>
-	        </tr>
-	        <tr>
-		        <td colspan="4" class="l">
-			        The reward amount has been summed up to now.<br/>
-			        Confirm to reset the reward amount to zero. <br/>
-			        This action also records the expense into 'Saba Rewards Promotion' code.
-		        </td>
-	        </tr>
-	        <tr>
-		        <td class="l b">
-			        Await Amount:
-		        </td>
+        <tr>
+            <td></td>
+            <td colspan="3" class="l">
+                <input id="chk-collection-yesterday" type="checkbox" class="chk-collection" />
+                <label for="chk-collection-yesterday">Collection</label>
+            </td>
+        </tr>
+    </table>
+
+    @if (Model.IsShowReward)
+    {
+        <!--Reward-->
+        <table class="tbllayout yesterdaytransfer" style="width: 620px;">
+            <tr>
+                <td colspan="4" class="l" style="background-color:#b5c4d0  !important">
+                    <input id="chk-confrimpayment" checked="checked" type="checkbox" class="chk-confrimpayment" />
+                    <label for="chk-confrimpayment">Reward Payment</label>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4" class="l">
+                    The reward amount has been summed up to now.<br />
+                    Confirm to reset the reward amount to zero. <br />
+                    This action also records the expense into 'Saba Rewards Promotion' code.
+                </td>
+            </tr>
+            <tr>
+                <td class="l b">
+                    Await Amount:
+                </td>
                 <td class="l">
-                    <input class="txt" type="text" id="txtRewardAmount" name="txtRewardAmount" size="5" value="@Model.RewardAmount" onkeypress="return CheckDecNumber(event);" /> @Model.RewardCurrency
+                    <input class="txt" type="text" id="txtRewardAmount" name="txtRewardAmount" size="5" value="@Model.RewardAmount" disabled="disabled" readonly="" /> @Model.RewardCurrency
                 </td>
                 <td class="l b">
                     System Ex.Rate (@Model.RewardCurrency/RM):
                 </td>
-		        <td class="l">
-			        <input type="text" class="txt" id="txtRewardRate" name="txtRewardRate" size="10" value="@Model.FromAmount"
-			               style="text-align: right"/>
-		        </td>
-	        </tr>
-	        <tr>
-		        <td class="l b">
-			        Expense Amount:
-		        </td>
                 <td class="l">
-                    <input class="txt" type="text" id="txtExpanseAmount" name="txtExpanseAmount" size="5" value="@Model.Total_YesterdayBalance_RewardPending" onkeypress="return CheckDecNumber(event);" /> RM
+                    <input type="text" class="txt" id="txtRewardRate" name="txtRewardRate" size="10" value="@Model.RewardExrate" readonly=""
+                           style="text-align: left; border: none" />
                 </td>
-		        <td class="l b" colspan="2">
-
-		        </td>
-	        </tr>
-	        <!--/Reward-->
+            </tr>
+            <tr>
+                <td class="l b">
+                    Expense Amount:
+                </td>
+                <td class="l">
+                    <input class="txt" type="text" id="txtExpanseAmount" name="txtExpanseAmount" size="5" value="@Model.Total_YesterdayBalance_RewardPending" disabled="disabled" readonly="" /> RM
+                </td>
+                <td class="l b" colspan="2"></td>
+            </tr>
+        </table>
+        <!--/Reward-->
+    }
+    <div style="width: 620px;" class="l">
+        <input class="btn" type="button" id="transfer" value="Transfer" onclick="transfer.YesterdayTransactionsForm.validateValue();"></input>
+        @if (Model.IsShowReward)
+        {
+            <b>@Html.Raw("(TOTAL: " + Model.Total_YesterdayBalance_RewardPending + ")")</b>
         }
-        <tr>
-	        <td colspan="4" class="c">
-		        <input class="btn" type="button" id="transfer" value="Transfer" onclick="transfer.YesterdayTransactionsForm.validateValue();"></input> @if (Model.IsShowReward)
-		                                                                                                                                               {
-			                                                                                                                                               @Html.Raw("(TOTAL: " + Model.Total_YesterdayBalance_RewardPending + ")");
-		                                                                                                                                               }
-	        </td>
-        </tr>
-        <input type="hidden" id="rewardMaxTransId" value="@Model.RewardMaxTransId" />
-    </table>
+    </div>
+    <input type="hidden" id="rewardMaxTransId" value="@Model.RewardMaxTransId" />
+    <input type="hidden" id="isShowReward" value="@Model.IsShowReward" />
 </div>
 <iframe id="frmTransfer" width="350px" scrolling="no" height="110px" frameborder="0"
-        style="border: 0px none; margin-top: 5px">
-</iframe>
+        style="border: 0px none; margin-top: 5px"></iframe>

@@ -3,7 +3,7 @@ function OpenPopupTransfer(value, custName, RewardMaxTransId, RewardAmount, Rewa
    
     var url = 'CrossTransfer/Index?fromCustName=' + custName + '&fromAmount=' + value + '&isOpenInPopup=' + '1'  + '&RewardMaxTransId=' + RewardMaxTransId + '&RewardAmount=' + RewardAmount + '&RewardCurrency=' + RewardCurrency + '&TotalBalReward=' + TotalBalReward ;
 
-    parent.OpenPopup(url, "Transfer", 770, 440, true, true, window, 0, function (){refreshPage(); removeGuideline();},removeGuideline );
+    parent.OpenPopup(url, "Transfer", 770, 520, true, true, window, 0, function (){refreshPage(); removeGuideline();},removeGuideline );
 }
 
 function removeGuideline (){

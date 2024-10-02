@@ -799,41 +799,59 @@ transfer.YesterdayTransactionsForm = {
     },
     validateValue: function () {
         $('#errMsg').hide();
-        var _toUser = document.getElementById("touser").value;
-        if (_toUser.isNullOrEmpty()) {
-            $('#errMsg').show();
-            showAlertMessage("errMsg", "Invalid To User", 1);
+        var isTransferYesterday = $("#chk-confrimtransfer").is(":checked");
+        if (isTransferYesterday) {
+            var _toUser = document.getElementById("touser").value;
+            if (_toUser.isNullOrEmpty()) {
+                $('#errMsg').show();
+                showAlertMessage("errMsg", "Invalid To User", 1);
+                return false;
+            }
+
+            var _exRate = document.getElementById("exrate").value;
+            if (!_exRate.isNumeric() || parseFloat(_exRate) == 0) {
+                $('#errMsg').show();
+                showAlertMessage("errMsg", "Invalid Exchange Rate", 1);
+                return false;
+            }
+
+            var _amount = document.getElementById('txtamount').value;
+            if (!_amount.isNumeric() || parseFloat(_amount) == 0) {
+                $('#errMsg').show();
+                showAlertMessage("errMsg", "Invalid Amount", 1);
+                return false;
+            }
+
+            if (isNaN(parseFloat(_amount))) {
+                return false;
+            }            
+        }
+        var IsShowReward = $("#isShowReward").val();
+        var isConfrimReward = IsShowReward && $("#chk-confrimpayment").is(":checked");
+
+        if (!isTransferYesterday && !isConfrimReward) {
             return false;
         }
 
-        var _exRate = document.getElementById("exrate").value;
-        if (!_exRate.isNumeric() || parseFloat(_exRate) == 0) {
-            $('#errMsg').show();
-            showAlertMessage("errMsg", "Invalid Exchange Rate", 1);
-            return false;
-        }
-
-        var _amount = document.getElementById('txtamount').value;
-        if (!_amount.isNumeric() || parseFloat(_amount) == 0) {
-            $('#errMsg').show();
-            showAlertMessage("errMsg", "Invalid Amount", 1);
-            return false;
-        }
         var param = {
+            IsTransferYesterday: isTransferYesterday,
             fromCustName: fromUsername,
             toCustName: _toUser,
             exRate: _exRate,
-            amount: _amount,
+            amount: _amount.replace(/,/g, ""),
             remark: $("#remark").val(),
             isCollection: $("#chk-collection-yesterday").is(":checked")
-        };
+        };     
 
-        if (isNaN(parseFloat(_amount))) {
-            return false;
+        if (isConfrimReward) {
+            param.IsShowReward = isConfrimReward;
+            param.RewardMaxTransId = $("#rewardMaxTransId").val();
+            param.RewardAmount = $("#txtRewardAmount").val();
+            param.RewardExRate = $("#txtRewardRate").val();
         }
 
-        param.amount = param.amount.replace(/,/g, "");
         transfer.utils.blockUI();
+
         $.post("TransferYesterdayTransactionHandler", param,
             function (data) {
                 if (parseInt(data.ErrorCode) != 0) {
