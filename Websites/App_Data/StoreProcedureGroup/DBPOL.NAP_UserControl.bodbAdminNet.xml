@@ -9,6 +9,7 @@
   </Function>
   <Function Name="Login - Menu">
     <Setting Key="Acc_MenuSelByCustID" SpName="Acc_MenuSelByCustID" DbName="DBPOL.Nap_UserControl.wsv_nap" />
+    <Setting Key="Acc_GetExpiredDate_Admin" SpName="Acc_CheckExpiredDate_Admin" DbName="DBPOL.Nap_UserControl.wsv_nap" />
   </Function>
   <Function Name="User - Account Management">
     <Setting Key="GroupInfoSel" SpName="Acc_Con_GroupInfoSel" DbName="DBPOL.Nap_UserControl.wsv_nap" />
@@ -45,5 +46,9 @@
   </Function>
   <Function Name="External - Admin">
     <Setting Key="SelectGroupName" SpName="Acc_ExternalGroupSel" DbName="DBPOL.Nap_UserControl.wsv_nap" />
+  </Function>
+  <Function Name="Admin">
+    <Setting Key="Acc_DeniedSiteCurrency_Sel" SpName="Acc_DeniedSiteCurrency_Sel" DbName="DBPOL.Nap_UserControl.wsv_nap" />
+    <Setting Key="EAS_GroupInfoSelAllGroup" SpName="EAS_GroupInfoSelAllGroup" DbName="DBPOL.Nap_UserControl.wsv_nap" />
   </Function>
 </Functions>

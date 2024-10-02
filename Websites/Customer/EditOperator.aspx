@@ -25,6 +25,7 @@
                 </tr>
             </table>
             <div class="maincontent_box">
+                <div id="errMsg" class="error-message"></div>
             </div>
             <div class="bg_table">
                  <iframe name="frUpdate" height="0" width="0" frameborder="0"></iframe>

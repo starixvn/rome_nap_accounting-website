@@ -6,6 +6,7 @@ using Sunplus.Accounting.Core.Helper;
 using System;
 using System.Text;
 using System.Web.Security;
+using Sunplus.Accounting.Business.Security;
 
 /// <summary>
 /// CITS
@@ -120,6 +121,12 @@ public partial class ChangePassword_ChangePassword : RequiredAuthorizationPage
     {
         try
         {
+            if ((custid != userid)  && !Permissions.HasHostPermission(Enumerations.Functions.Customer.Password))
+            {
+                errMsg = "You are not authorized on this function.";
+                return false;
+            }
+
             IbcError error = Sunplus.Accounting.DataAccess.IBCDLL.Customer.UpdateCustomer.Acc_CustomerPwdUpd(custid, userpwd, userid, language, forceChangePwd);
 
             if (error.ErrorCode != 0)

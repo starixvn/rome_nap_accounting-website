@@ -14,6 +14,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
     using Sunplus.Accounting.Core.Configurations;
     using Sunplus.Accounting.Core.Extensions;
     using Sunplus.Accounting.Core.Helper;
+    using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
     using System;
     using System.Collections;
     using System.Collections.Generic;
@@ -119,7 +120,7 @@ namespace Fanex.Tarus.Customer.Business.CustomerList
                 hash.Add("totalitems", totalChildren);
                 hash.Add("system", AppSession.SYSTEM.ToString().ToUpper());
                 hash.Add("settingstatus", settingStatus);
-                hash.Add("userid", AppSession.AccId);
+                hash.Add("deniedlist", AccountCredit.Acc_DeniedSiteCurrency_Sel(AppSession.AccId));
                 var dtAgentList = _customerListAccess.GetCustomerList("Acc_CustomerSelByMAg", hash, ref totalPages, ref totalChildren);
 
                 CustomerListModel model = new CustomerListModel();

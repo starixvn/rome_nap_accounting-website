@@ -7,6 +7,7 @@ using Fanex.Tarus.Customer.Entities;
 using Fanex.Tarus.Customer.Entities.LicenseeDcsSetting;
 using Fanex.Tarus.Customer.Resources;
 using Fanex.Tarus.Infrastructure.Common;
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 
 namespace Fanex.Tarus.Customer.Business.LicenseeDcsSetting
 {
@@ -23,7 +24,7 @@ namespace Fanex.Tarus.Customer.Business.LicenseeDcsSetting
             => _settingDataAccess.GetSites(new GetSiteCriteria());
 
         public IEnumerable<BaseModel> GetSupers(string site)
-            => _settingDataAccess.GetSupers(new GetSuperCriteria(site, AppSession.AccId));
+            => _settingDataAccess.GetSupers(new GetSuperCriteria(site, AccountCredit.Acc_DeniedSiteCurrency_Sel(AppSession.AccId, 2)));
         
         public IEnumerable<BaseModelExtra> GetAgents(string superIds)
             => _settingDataAccess.GetAgents(new GetAgentCriteria(superIds, AppSession.AccId));
