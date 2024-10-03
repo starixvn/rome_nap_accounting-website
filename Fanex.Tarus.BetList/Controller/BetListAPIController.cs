@@ -20,6 +20,8 @@
     using Fanex.Tarus.BetList.DataAccess;
     using Fanex.Tarus.BetList.Models;
     using Fanex.Tarus.BetList.Param;
+    using Fanex.Tarus.Security.Constants;
+    using Fanex.Tarus.Security.Services;
 
     [ApiAuthorization]
     public class BetListApiController : Controller
@@ -37,7 +39,11 @@
         {
             if (param != null && !string.IsNullOrEmpty(param.RefNo) && BetListHelper.IsNumeric(param.RefNo.Trim()))
             {
-                param.UserId = Converter.To<int>(ConfigurationManager.AppSettings["BetListApi_UserId"]);
+                var userId = Converter.To<int>(ConfigurationManager.AppSettings["BetListApi_UserId"]);
+                var permissions = MangeAccountInfoPermissionBuilder.MapToPermissionParameter(userId, PolicyConst.Read).ToList();
+                param.UserId = userId;
+                param.Permission = string.Join(",", permissions);
+
                 var result = _betListService.GetBetListByRefNo(param);
                 _betListService.AssignCountry(result);
 
