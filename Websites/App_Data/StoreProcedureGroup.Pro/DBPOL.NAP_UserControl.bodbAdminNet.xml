@@ -49,5 +49,6 @@
   </Function>
   <Function Name="Admin">
     <Setting Key="Acc_DeniedSiteCurrency_Sel" SpName="Acc_DeniedSiteCurrency_Sel" DbName="DBPOL.Nap_UserControl.wsv_nap" />
+    <Setting Key="EAS_GroupInfoSelAllGroup" SpName="EAS_GroupInfoSelAllGroup" DbName="DBPOL.Nap_UserControl.wsv_nap" />
   </Function>
 </Functions>
