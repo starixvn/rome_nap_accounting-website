@@ -3,6 +3,8 @@
 using System;
 using System.Web;
 using DNAide.Core;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
@@ -15,35 +17,44 @@ public class UpdateTransferAllMember : BaseHandler
         context.Response.ContentType = "text/html";
         try
         {
-            int custID = CastAide.AsInt32(context.Session["AccId"], -1);
-            if (custID == -1) throw new AccException(IBCUtils.IbcError.ACCESS_DENIED_MSG);
-            string agentName = Username;
-            agentName = agentName.Trim();
+            if (Permissions.GetHostPermission(Enumerations.Functions.Transfer.Transfer))
+            {
+                int custID = CastAide.AsInt32(context.Session["AccId"], -1);
+                if (custID == -1) throw new AccException(IBCUtils.IbcError.ACCESS_DENIED_MSG);
+                string agentName = Username;
+                agentName = agentName.Trim();
 
-            string type = CastAide.AsString(context.Request["type"]);
-            var result = new Sunplus.Accounting.Entities.Result();
-            var custInfo = UpdateCustomer.GetCustInfo(agentName);
-            if (custInfo == null || custInfo.CustId == 0)
-            {
-                context.Response.Write("0|" + AlertMessage.GetMsg("User name not found", AlertMessage.MsgType.Error));
-                return;
-            }
-            if (type == "members")
-            {
-                result = Transfer.TransferAllMember(custID, agentName, custInfo.CustId, context.Request.UserHostAddress);
+                string type = CastAide.AsString(context.Request["type"]);
+                var result = new Sunplus.Accounting.Entities.Result();
+                var custInfo = UpdateCustomer.GetCustInfo(agentName);
+                if (custInfo == null || custInfo.CustId == 0)
+                {
+                    context.Response.Write("0|" + AlertMessage.GetMsg("User name not found", AlertMessage.MsgType.Error));
+                    return;
+                }
+
+                if (type == "members")
+                {
+                    result = Transfer.TransferAllMember(custID, agentName, custInfo.CustId, context.Request.UserHostAddress);
+                }
+                else
+                {
+                    result = Transfer.TransferAllDownlines(custID, agentName, custInfo.CustId, context.Request.UserHostAddress);
+                }
+
+                if (result.ErrorCode > 0)
+                {
+                    string errMsg = result.ErrorMessage.Replace("downlines", type);
+                    context.Response.Write("0|" + AlertMessage.GetMsg(errMsg, AlertMessage.MsgType.Error));
+                }
+                else
+                {
+                    context.Response.Write("1|" + AlertMessage.GetMsg("Transfer successfully!", AlertMessage.MsgType.Success));
+                }
             }
             else
             {
-                result = Transfer.TransferAllDownlines(custID, agentName, custInfo.CustId, context.Request.UserHostAddress);
-            }
-            if (result.ErrorCode > 0)
-            {
-                string errMsg = result.ErrorMessage.Replace("downlines", type);
-                context.Response.Write("0|" + AlertMessage.GetMsg(errMsg, AlertMessage.MsgType.Error));
-            }
-            else
-            {
-                context.Response.Write("1|" + AlertMessage.GetMsg("Transfer successfully!", AlertMessage.MsgType.Success));
+                context.Response.Write("0|" + AlertMessage.GetMsg("You are not authorized on this function.", AlertMessage.MsgType.Error));
             }
         }
         catch (AccException ex)

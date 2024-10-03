@@ -6,9 +6,11 @@
     {
         public string CustList { get; set; }
 
+        public int UserId { get; set; }
+
         public bool Lock { get; set; }
 
-        public int UserId { get; set; }
+        public string DeniedList { get; set; }
 
         public string IP { get; set; }
 

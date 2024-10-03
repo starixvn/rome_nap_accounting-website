@@ -1,4 +1,6 @@
-﻿namespace Fanex.Tarus.BetList.Business
+﻿using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
+
+namespace Fanex.Tarus.BetList.Business
 {
     using System;
     using System.Collections.Generic;
@@ -333,7 +335,7 @@
                 {
                     var siteDBCriteria = new SiteDBBetListByRefNoCriteria
                     {
-                        UserId = param.UserId,
+                        DeniedList = AccountCredit.Acc_DeniedSiteCurrency_Sel(AppSession.AccId),
                         RefNo = param.RefNo,
                         MoveBetsDay = ReportService.BalanceUp.MoveBetsDay,
                         Permission = param.Permission
@@ -346,7 +348,7 @@
             {
                 var mainCriteria = new BetListByRefNoCriteria
                 {
-                    UserId = param.UserId,
+                    DeniedList = AccountCredit.Acc_DeniedSiteCurrency_Sel(AppSession.AccId),
                     RefNo = param.RefNo,
                     MoveBetsDay = ReportService.BalanceUp.MoveBetsDay,
                     BalanceUpDay = ReportService.BalanceUp.BalanceUpDay,
@@ -422,7 +424,7 @@
 
             return GetBetListBy(new BetListByProductCriteria
             {
-                UserId = betListByProductCriteria.UserId,
+                DeniedList = AccountCredit.Acc_DeniedSiteCurrency_Sel(AppSession.AccId),
                 ProductId = betListByProductCriteria.ProductId,
                 Username = betListByProductCriteria.Username,
                 GameId = betListByProductCriteria.GameId,
@@ -750,6 +752,7 @@
             {
                 FromDate = fromDate,
                 IP = ip,
+                DeniedList = AccountCredit.Acc_DeniedSiteCurrency_Sel(AppSession.AccId),
                 MoveBetsDay = ReportUtils.BalanceUp.MoveBetsDay,
                 BalanceUpDay = ReportUtils.BalanceUp.BalanceUpDay,
                 Permission = permission

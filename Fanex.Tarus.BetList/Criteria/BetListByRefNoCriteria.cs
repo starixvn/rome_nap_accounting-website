@@ -6,7 +6,7 @@
 
     public class BetListByRefNoCriteria : CriteriaBase
     {
-        public int UserId { get; set; }
+        public string DeniedList { get; set; }
 
         public string RefNo { get; set; }
 
@@ -22,6 +22,6 @@
             => "BetList_SelByRefNo";
 
         public override bool IsValid()
-            => !string.IsNullOrEmpty(RefNo) && UserId > 0;
+            => !string.IsNullOrEmpty(RefNo);
     }
 }

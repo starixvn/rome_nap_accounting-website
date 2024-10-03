@@ -7,8 +7,10 @@ using System.Linq;
 using System.Web;
 using System.Web.UI.WebControls;
 using DNAide.Core;
+using DNAide.Web;
 using ExcelUtil.Spreadsheet;
 using Sunplus.Accounting.Business.CacheManager;
+using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
@@ -64,8 +66,16 @@ namespace Sunplus.Accounting.Business.CreditTerm
 
         public Result UpdateConsolidationReportAllowStatus(int custId, bool isViewReport)
         {
-            var result = _creditTermDAO.UpdateConsolidationReportAllowStatus(custId, isViewReport, AppSession.AccId);
+            if (!Permissions.GetHostPermission(Enumerations.Functions.Customer.OtherCust))
+            {
+                return new Result()
+                {
+                    ErrorCode = 101,
+                    ErrorMessage = "You don\'t have permission to access."
+                }; 
 
+            }
+            var result = _creditTermDAO.UpdateConsolidationReportAllowStatus(custId, isViewReport, AppSession.AccId);
             return result;
         }
 

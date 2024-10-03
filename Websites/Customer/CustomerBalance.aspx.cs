@@ -10,6 +10,7 @@ using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using System;
 using System.Data;
 using System.Text;
+using Sunplus.Accounting.Business.Security;
 
 public partial class CustomerBalance : PageBase
 {
@@ -170,15 +171,25 @@ public partial class CustomerBalance : PageBase
     {
         try
         {
-            Sunplus.Accounting.DataAccess.IBCDLL.Accounting.CustomerBalance.CustomerInsertClearBalance(_accId, _custId, _custIdList, isCheckAll, ref errmsg, Request.UserHostAddress);
+            if (Permissions.HasHostPermission(Enumerations.Functions.Customer.CustomerBalance))
+            {
+                Sunplus.Accounting.DataAccess.IBCDLL.Accounting.CustomerBalance.CustomerInsertClearBalance(_accId,
+                    _custId, _custIdList, isCheckAll, ref errmsg, Request.UserHostAddress);
 
-            string str = AlertMessage.GetMsg("Customer Balance Update Successfully. Please wait...", AlertMessage.MsgType.Success);
-            StringBuilder s = new StringBuilder();
-            string nl = Environment.NewLine;
-            s.Append("<script type='text/javascript'>" + nl);
-            s.Append("setTimeout(\"this.location.replace(this.location);\",3000);" + nl);
-            s.Append("</script>" + nl);
-            return str + s.ToString();
+                string str = AlertMessage.GetMsg("Customer Balance Update Successfully. Please wait...",
+                    AlertMessage.MsgType.Success);
+                StringBuilder s = new StringBuilder();
+                string nl = Environment.NewLine;
+                s.Append("<script type='text/javascript'>" + nl);
+                s.Append("setTimeout(\"this.location.replace(this.location);\",3000);" + nl);
+                s.Append("</script>" + nl);
+                return str + s.ToString();
+            }
+            else
+            {
+                errmsg = "You are not authorized on this function.";
+                return string.Empty;
+            }
         }
         catch
         {

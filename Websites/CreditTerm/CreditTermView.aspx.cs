@@ -14,6 +14,7 @@ using System.Data;
 using System.Text;
 using System.Web;
 using System.Web.UI.HtmlControls;
+using Sunplus.Accounting.Business.Security;
 
 /// <summary>
 /// CITS
@@ -53,30 +54,38 @@ public partial class CreditTerm_CreditTermView : PageBase
             bool isOpenTab = false;
             if (!string.IsNullOrEmpty(Request["btnsubmit"]))
             {
-                if (custid != 0 && userid != 0)
+                if (!Permissions.GetHostPermission(Enumerations.Functions.Customer.OtherCust))
                 {
-                    string creditgrade = Request["cbograde"];
-                    double preagreeamount = 0, installmentamount = 0;
-                    if (string.IsNullOrEmpty(Request["txtPreAmt"]) || string.IsNullOrEmpty(Request["txtInsAmt"]))
-                        msg = AlertMessage.GetMsg("Invalid format number.", AlertMessage.MsgType.Error);
-                    else if (!IBCUtils.Validator.isNumber(Request["txtPreAmt"]) || !IBCUtils.Validator.isNumber(Request["txtInsAmt"]))
-                        msg = AlertMessage.GetMsg("Invalid format number.", AlertMessage.MsgType.Error);
-                    else
-                    {
-                        preagreeamount = Convert.ToDouble(Request["txtPreAmt"]);
-                        installmentamount = Convert.ToDouble(Request["txtInsAmt"]);
-                        string installmentdate = Request["day"];
-                        string accountremark = Request["remark"];
-                        int groupid = Convert.ToInt32(Request["cbogroup"]);
-                        int IsGroupHeadline = 0; if (!string.IsNullOrEmpty(Request["groupheadline"])) IsGroupHeadline = 1;
-                        int checkerid = CastAide.AsInt32(Request["ddlCheckerList"], 0);
-                        var rs = AccountCredit.Acc_CreditTermUpdCustomer(custid, creditgrade, preagreeamount, installmentamount, installmentdate, accountremark, groupid, IsGroupHeadline, userid, checkerid);
-                        msg = AlertMessage.GetMsg(rs.ErrorMessage, rs.ErrorCode == 0 ? AlertMessage.MsgType.Success : AlertMessage.MsgType.Error);
-                        isOpenTab = rs.ErrorCode == 0 && IsGroupHeadline == 1;
-                        System.Threading.Thread.Sleep(2000);
-                    }
+                    msg = AlertMessage.GetMsg("You don\'t have permission to access", AlertMessage.MsgType.Error);
                 }
-                else msg = "";
+                else
+                {
+                    if (custid != 0 && userid != 0)
+                    {
+                        string creditgrade = Request["cbograde"];
+                        double preagreeamount = 0, installmentamount = 0;
+                        if (string.IsNullOrEmpty(Request["txtPreAmt"]) || string.IsNullOrEmpty(Request["txtInsAmt"]))
+                            msg = AlertMessage.GetMsg("Invalid format number.", AlertMessage.MsgType.Error);
+                        else if (!IBCUtils.Validator.isNumber(Request["txtPreAmt"]) || !IBCUtils.Validator.isNumber(Request["txtInsAmt"]))
+                            msg = AlertMessage.GetMsg("Invalid format number.", AlertMessage.MsgType.Error);
+                        else
+                        {
+
+                            preagreeamount = Convert.ToDouble(Request["txtPreAmt"]);
+                            installmentamount = Convert.ToDouble(Request["txtInsAmt"]);
+                            string installmentdate = Request["day"];
+                            string accountremark = Request["remark"];
+                            int groupid = Convert.ToInt32(Request["cbogroup"]);
+                            int IsGroupHeadline = 0; if (!string.IsNullOrEmpty(Request["groupheadline"])) IsGroupHeadline = 1;
+                            int checkerid = CastAide.AsInt32(Request["ddlCheckerList"], 0);
+                            var rs = AccountCredit.Acc_CreditTermUpdCustomer(custid, creditgrade, preagreeamount, installmentamount, installmentdate, accountremark, groupid, IsGroupHeadline, userid, checkerid);
+                            msg = AlertMessage.GetMsg(rs.ErrorMessage, rs.ErrorCode == 0 ? AlertMessage.MsgType.Success : AlertMessage.MsgType.Error);
+                            isOpenTab = rs.ErrorCode == 0 && IsGroupHeadline == 1;
+                            System.Threading.Thread.Sleep(2000);
+                        }
+                    }
+                    else msg = "";
+                }
             }
             else msg = "";
 

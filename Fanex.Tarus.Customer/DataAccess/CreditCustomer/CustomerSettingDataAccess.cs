@@ -5,6 +5,10 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using Fanex.Tarus.Security.Services;
+using Sunplus.Accounting.Business.Security;
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
+
 namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
 {
     using Customer.DataAccess;
@@ -47,6 +51,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
                     objDB.AddInParameter("system", DbType.String, system.ToUpper());
                     objDB.AddInParameter("mode", DbType.Int16, OfferSiteCredit);
                     objDB.AddInParameter("userid", DbType.Int32, AppSession.AccId);
+                    objDB.AddInParameter("deniedlist", DbType.String, AccountCredit.Acc_DeniedSiteCurrency_Sel(AppSession.AccId, 2));
                     using (var reader = objDB.ExecuteReader())
                     {
                         if (reader != null)
@@ -251,6 +256,13 @@ namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
             {
                 AffectedDownlinesInfo = new List<AffectedDownlinesInfoModel>()
             };
+
+            if (!Permissions.GetHostPermission(Enumerations.Functions.Customer.OtherCust))
+            {
+                result.ErrorCode = 500;
+                result.ErrorMessage = "You are not authorized on this function.";
+                return result;
+            }
 
             using (ObjectDb db = new ObjectDb("Acc_CustomerUpdTransferOption", 600))
             {

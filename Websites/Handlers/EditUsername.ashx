@@ -12,6 +12,8 @@ using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Helper;
 using Fanex.Tarus.Security.HttpModules.Services;
+using IBCUtils;
+using Sunplus.Accounting.Business.Security;
 
 public class EditUsername : BaseHandler
 {
@@ -31,9 +33,18 @@ public class EditUsername : BaseHandler
                 string newUser = context.Request["txtNewUname"] as string ?? string.Empty;
                 newUser = newUser.Trim();
                 string accId = context.Session["AccId"].ToString();
+                IbcError err = new IbcError();
 
                 int custid = 0;
-                IBCUtils.IbcError err = Sunplus.Accounting.DataAccess.IBCDLL.Customer.UpdateCustomer.CustomerUpdUserNameRpt(oldUser, newUser, accId, out custid);
+                if (Permissions.CheckPermission(Convert.ToInt32(accId), Enumerations.Functions.Customer.OtherCust, ref err.ErrorMsg) != 0)
+                {
+                    err.ErrorCode = 101;
+                }
+                else
+                {
+                   err = Sunplus.Accounting.DataAccess.IBCDLL.Customer.UpdateCustomer.CustomerUpdUserNameRpt(oldUser, newUser, accId, out custid);
+                }
+               
 
                 if (err.IsSuccess())
                 {

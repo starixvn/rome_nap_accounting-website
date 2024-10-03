@@ -3,14 +3,12 @@
 
 namespace Fanex.Tarus.Customer.Controller.Setting
 {
-    using Fanex.Tarus.Web.Controllers;
     using Fanex.Tarus.Customer.Business.SettingCustomer;
-    using Fanex.Tarus.Customer.Entities.SettingCustomer;
-    using System.Web.Mvc;
-    using Fanex.Tarus.Web.Controllers.Filters;
     using Fanex.Tarus.Customer.Entities;
+    using Fanex.Tarus.Security.Permission;
+    using Fanex.Tarus.Web.Controllers;
+    using System.Web.Mvc;
 
-   
     public class AbnormalBetController: BaseController
     {
         private IAbnormalBetService _abnormalbetService;
@@ -25,7 +23,7 @@ namespace Fanex.Tarus.Customer.Controller.Setting
             _abnormalbetService = abnormalBetService ?? new AbnormalBetService();
         }
 
-        
+        [CheckPermission(Permission = CheckPermissionAttribute.Auth.Host)]
         public JsonResult UpdateAbnormalCustomer(int custId, int updateDownline, int abnormalLevel)
         {
             var result = new Result();
@@ -33,7 +31,6 @@ namespace Fanex.Tarus.Customer.Controller.Setting
             var jsonResult = Json(result);
             jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             return jsonResult;
-           
         }
 
        
