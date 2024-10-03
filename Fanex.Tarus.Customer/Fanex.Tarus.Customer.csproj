@@ -71,8 +71,8 @@
       <HintPath>..\packages\Fanex.Common.1.1.0.1\lib\net40\Fanex.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Customer.Client, Version=1.0.1.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Customer.Client.1.0.1.3\lib\netstandard2.0\Fanex.Customer.Client.dll</HintPath>
+    <Reference Include="Fanex.Customer.Client, Version=1.0.1.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Customer.Client.1.0.1.2-beta04\lib\netstandard2.0\Fanex.Customer.Client.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Customer.Client.NETFramework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Customer.Client.NETFramework.1.0.0\lib\net461\Fanex.Customer.Client.NETFramework.dll</HintPath>
@@ -386,10 +386,12 @@
     <Compile Include="Business\LicenseeSubsidiary\LicenseeSubsidiaryService.cs" />
     <Compile Include="Business\ManageRobots2\IManageRobots2Service.cs" />
     <Compile Include="Business\ManageRobots2\ManageRobots2Service.cs" />
+    <Compile Include="Business\ManageSuperSettings\ManageSuperSettingsService.cs" />
     <Compile Include="Business\MultipleUpdateSuperStatus\MultipleUpdateSuperStatusService.cs" />
     <Compile Include="Business\ParlayMaxPayout\ParlayMaxPayoutService.cs" />
     <Compile Include="Business\SettingCustomer\OpenCustomer\OpenCustomerService.cs" />
     <Compile Include="Business\SettingCustomer\OpenCustomer\OpenCustomerServiceImpl.cs" />
+    <Compile Include="Business\TextToUsernames\TextToUsernamesService.cs" />
     <Compile Include="Business\ViewMaxPayoutSettingInformation\ViewMaxPayoutSettingInformationService.cs" />
     <Compile Include="Business\CreditCustomer\CustomerSettingService.cs" />
     <Compile Include="Business\CreditCustomer\ICustomerSettingService.cs" />
@@ -422,6 +424,7 @@
     <Compile Include="Controller\AGCasinoController.cs" />
     <Compile Include="Controller\AutoTransferAll\AutoTransferAllController.cs" />
     <Compile Include="Controller\BetCreditHistoryController.cs" />
+    <Compile Include="Controller\ManageSuperSettingsController.cs" />
     <Compile Include="Controller\CustomerController.cs" />
     <Compile Include="Controller\CustomerList\CustomerListController.cs" />
     <Compile Include="Controller\InitializingBetLimit\InitBetLimitController.cs" />
@@ -435,6 +438,7 @@
     <Compile Include="Controller\ParlayMaxPayoutController.cs" />
     <Compile Include="Controller\Player3rdController.cs" />
     <Compile Include="Controller\Setting\OpenCustomerController.cs" />
+    <Compile Include="Controller\TextToUsernamesController.cs" />
     <Compile Include="Controller\ViewMaxPayoutSettingInformationController.cs" />
     <Compile Include="Controller\ConfigureDirectAccountController.cs" />
     <Compile Include="Controller\CustomerLogin\CustomerOTPController.cs" />
@@ -473,6 +477,8 @@
     <Compile Include="Criteria\AutoTransferAll\UpdatedTransferCriteria.cs" />
     <Compile Include="Criteria\AutoTransferAll\InsertAgentsFromPopupCriteria.cs" />
     <Compile Include="Criteria\AutoTransferAll\SelectTransferAgentCriteria.cs" />
+    <Compile Include="Criteria\ManageSuperSettings\CheckSuperListCriteria.cs" />
+    <Compile Include="Criteria\ManageSuperSettings\GetWinLossLimitCriteria.cs" />
     <Compile Include="Criteria\CopySuperSetting\CheckSuperListCriteria.cs" />
     <Compile Include="Criteria\CopyVRSetting\CopyVRSettingCriteria.cs" />
     <Compile Include="Criteria\AutoTransfer\GetAutoTransferJobStatusCriteria.cs" />
@@ -571,6 +577,7 @@
     <Compile Include="Criteria\Suspend\GetSuspendInfoMatrixCriteria.cs" />
     <Compile Include="Criteria\Suspend\GetMultipleSuspendCustomerInfoCriteria.cs" />
     <Compile Include="Criteria\Suspend\GetSingleSuspendCustomerInfoCriteria.cs" />
+    <Compile Include="Criteria\TextToUsernames\GetUsernamesCriteria.cs" />
     <Compile Include="Criteria\ViewPT\IsDepositCustomerCriteria.cs" />
     <Compile Include="Criteria\VirtualRate\GetSportBetTypeReferencesCriteria.cs" />
     <Compile Include="Criteria\VirtualRate\GetVRAutoAdjustSporttypeCriteria.cs" />
@@ -625,6 +632,7 @@
     <Compile Include="DataAccess\LockUnsuspend\LockUnsuspendService.cs" />
     <Compile Include="DataAccess\ManageRobots2\IManageRobots2DataAccess.cs" />
     <Compile Include="DataAccess\ManageRobots2\ManageRobots2DataAccess.cs" />
+    <Compile Include="DataAccess\ManageSuperSettings\ManageSuperSettingsDataAccess.cs" />
     <Compile Include="DataAccess\MultipleUpdateSuperStatus\MultipleUpdateSuperStatusDataAccess.cs" />
     <Compile Include="DataAccess\NewLicensee\INewLicenseeRepository.cs" />
     <Compile Include="DataAccess\NewLicensee\NewLicenseeRepository.cs" />
@@ -646,6 +654,7 @@
     <Compile Include="DataAccess\SettingCustomer\OpenCustomer\OpenCustomerDataAccess.cs" />
     <Compile Include="DataAccess\SettingCustomer\OpenCustomer\OpenCustomerDataAccessImpl.cs" />
     <Compile Include="DataAccess\SettingCustomer\Suspend\SuspendStatusService.cs" />
+    <Compile Include="DataAccess\TextToUsernames\TextToUsernamesDataAccess.cs" />
     <Compile Include="DataAccess\ViewPT\IViewPTRepository.cs" />
     <Compile Include="DataAccess\ViewPT\ViewPTRepository.cs" />
     <Compile Include="DataAccess\VirtualRate\IVirtualRateRepository.cs" />
@@ -723,6 +732,17 @@
     <Compile Include="Entities\LicenseeDcsSetting\PTEntity.cs" />
     <Compile Include="Entities\LockUnsuspend\LockUnsuspendResultEntity.cs" />
     <Compile Include="Entities\ManageRobots2\RobotStatus.cs" />
+    <Compile Include="Entities\ManageSuperSettings\CheckSuperListResult.cs" />
+    <Compile Include="Entities\ManageSuperSettings\GroupItemDefault.cs" />
+    <Compile Include="Entities\ManageSuperSettings\GroupTypeModel.cs" />
+    <Compile Include="Entities\ManageSuperSettings\ProductGroupModel.cs" />
+    <Compile Include="Entities\ManageSuperSettings\SportsBookCommissionModel.cs" />
+    <Compile Include="Entities\ManageSuperSettings\GeneralInfoModel.cs" />
+    <Compile Include="Entities\ManageSuperSettings\CustomerSettingModel.cs" />
+    <Compile Include="Entities\ManageSuperSettings\CopyWinLostLimitResult.cs" />
+    <Compile Include="Entities\ManageSuperSettings\SportType.cs" />
+    <Compile Include="Entities\ManageSuperSettings\CopySettingInfoModel.cs" />
+    <Compile Include="Entities\ManageSuperSettings\WinLossLimitModel.cs" />
     <Compile Include="Entities\MultipleUpdateSuperStatus\SuperStatusEntity.cs" />
     <Compile Include="Entities\Player3rd\Player3rd.cs" />
     <Compile Include="Entities\SettingCustomer\OpenCustomer\SingleOpenDownline.cs" />
@@ -774,6 +794,16 @@
     <Compile Include="Requests\InitializingBetLimit\InsertBetLimitRequest.cs" />
     <Compile Include="Requests\LicenseeMember\InsertMemberRequest.cs" />
     <Compile Include="Requests\LicenseeOddsGroup\UpdateOddsGroupRequest.cs" />
+    <Compile Include="Requests\ManageSuperSettings\CopyBetSettingsRequest.cs" />
+    <Compile Include="Requests\ManageSuperSettings\EditSecurityCodeRequest.cs" />
+    <Compile Include="Requests\ManageSuperSettings\EditPasswordRequest.cs" />
+    <Compile Include="Requests\ManageSuperSettings\EditGivenCreditRequest.cs" />
+    <Compile Include="Requests\ManageSuperSettings\GetWinLossLimitRequest.cs" />
+    <Compile Include="Requests\ManageSuperSettings\IndexRequest.cs" />
+    <Compile Include="Requests\ManageSuperSettings\CheckSuperListRequest.cs" />
+    <Compile Include="Requests\ManageSuperSettings\CopyWinLossLimitRequest.cs" />
+    <Compile Include="Requests\ManageSuperSettings\EditSuperInfoRequest.cs" />
+    <Compile Include="Requests\ManageSuperSettings\UpdateMultipleCustomerRequest.cs" />
     <Compile Include="Requests\MultipleUpdateSuperStatus\UpdatedCustomerIinfo.cs" />
     <Compile Include="Requests\MultipleUpdateSuperStatus\UpdateSupersProtectedStatusRequest.cs" />
     <Compile Include="Requests\MultipleUpdateSuperStatus\UpdateSupersSuspendedStatusRequest.cs" />
@@ -782,6 +812,7 @@
     <Compile Include="Requests\ParlayMaxPayout\ParlayMaxPayoutSelectRequest.cs" />
     <Compile Include="Requests\ParlayMaxPayout\ParlayMaxPayoutUpdateRequest.cs" />
     <Compile Include="Requests\Customer\UpdateCustomerRequest.cs" />
+    <Compile Include="Requests\TextToUsernames\GetUsernamesRequest.cs" />
     <Compile Include="Resources\BetCreditHistoryLabels.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -871,9 +902,14 @@
     <Compile Include="ViewModels\LicenseeOddsGroup\AgentOddsGroupViewModel.cs" />
     <Compile Include="ViewModels\LicenseeOddsGroup\FilterViewModel.cs" />
     <Compile Include="ViewModels\LockUnsuspend\LockUnsuspendResultViewModel.cs" />
+    <Compile Include="ViewModels\ManageSuperSettings\AppConfigurationViewModel.cs" />
+    <Compile Include="ViewModels\ManageSuperSettings\SportBookInformationViewModel.cs" />
+    <Compile Include="ViewModels\ManageSuperSettings\CopyBetSettingsViewModel.cs" />
     <Compile Include="ViewModels\MultipleUpdateSuperStatus\SupersStatusViewModel.cs" />
     <Compile Include="ViewModels\MultipleUpdateSuperStatus\UpdateResultEntity.cs" />
     <Compile Include="ViewModels\ParlayMaxPayout\ParlayMaxPayoutViewModel.cs" />
+    <Compile Include="ViewModels\TextToUsernames\GetUsernamesViewModel.cs" />
+    <Compile Include="ViewModels\TextToUsernames\UsernameViewModel.cs" />
     <Compile Include="ViewModels\ViewMaxPayoutSettingInformation\SabaSportViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

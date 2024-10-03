@@ -1,0 +1,30 @@
+﻿<div id="tab-wll-errMsg"></div>
+<div id="tab-wll-errSupers"></div>
+<div class="bg_table">
+    <div>
+        <div class="inputSuper">
+            <label for="tab-wll-sourcesuper" class="bold">
+                Source Super<span style="color: red;">*</span>
+            </label>
+            <input type="text" class="txt-source-super" id="tab-wll-sourcesuper" maxlength="30" />
+        </div>
+        <div class="inputSuper">
+            <label for="tab-wll-superlist">
+                Enter list of Super Account usernames <span style="color: red;">*</span> (Maximum 500 supers, separated by comma ',')
+            </label>
+            <br />
+            <textarea type="text" style="margin-top: 5px;" id="tab-wll-superlist" class="superlist" rows="15" cols="100"></textarea>
+        </div>
+        <input type="button" id="tab-wll-btnSubmit" value="Select" class="btn inputSuper" onclick="copyWinLossLimit.checkSuperList()" />
+        <input type="button" id="tab-wll-btnReset" value="Reset" class="btn inputSuper" onclick="copyWinLossLimit.resetSelect()" />
+    </div>
+</div>
+<div id="tab-wll-superSetting" class="setting-actions hidden">
+    <div id="tab-wll-gridBettypeContainer" class="grid-container">
+        <div id="tab-wll-settings" class="freegrid"></div>
+    </div>
+    <div class="setting-actions">
+        <input type="button" value="Submit" class="btn" onclick="copyWinLossLimit.applySetting()" />
+        <input type="button" value="Reset" class="btn" onclick="copyWinLossLimit.resetSelect()" />
+    </div>
+</div>

@@ -8,7 +8,6 @@
     using Fanex.Tarus.Customer.Entities;
     using Fanex.Tarus.Customer.Entities.CopySuperSetting;
     using Fanex.Tarus.Infrastructure.Caching;
-    using Fanex.Tarus.Infrastructure.Extensions;
 
     public interface ICopySuperSettingDataAccess
     {
@@ -16,7 +15,7 @@
     }
     public class CopySuperSettingDataAccess : BaseDataAccess, ICopySuperSettingDataAccess
     {
-        private readonly int[] RepresentProductIds = new int[] {5};
+        private readonly int[] RepresentProductIds = new int[] { 5 };
         public CheckSuperListResult CheckSuperList(CheckSuperListCriteria criteria)
         {
             using (var db = new ObjectDb(criteria.GetSettingKey()))

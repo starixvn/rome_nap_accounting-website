@@ -561,4 +561,13 @@
   <data name="Yes" xml:space="preserve">
     <value>Yes</value>
   </data>
+  <data name="SuperGivenCreditUpdatedSuccessfully" xml:space="preserve">
+    <value>Super Given Credit is updated successfully</value>
+  </data>
+  <data name="PasswordChangedSuccessfully" xml:space="preserve">
+    <value>Password has been changed successfully.</value>
+  </data>
+  <data name="SecurityCodeChangedSuccessfully" xml:space="preserve">
+    <value>Reset security code successfully!</value>
+  </data>
 </root>
