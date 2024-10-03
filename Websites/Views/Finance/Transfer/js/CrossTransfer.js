@@ -800,7 +800,8 @@ transfer.YesterdayTransactionsForm = {
     validateValue: function () {
         $('#errMsg').hide();
         var isTransferYesterday = $("#chk-confrimtransfer").is(":checked");
-        var IsShowReward = $("#isShowReward").val();
+        var IsShowReward = $("#isShowReward").val() == "true";
+        var isConfrimReward = IsShowReward && $("#chk-confrimpayment").is(":checked");
 
         if (!isTransferYesterday && !isConfrimReward) {
             return false;
@@ -844,19 +845,18 @@ transfer.YesterdayTransactionsForm = {
                 remark: $("#remark").val(),
                 isCollection: $("#chk-collection-yesterday").is(":checked")
             };     
-        }
-        
-        var isConfrimReward = IsShowReward && $("#chk-confrimpayment").is(":checked");
-        param.IsShowReward = IsShowReward;
-        param.IsTransferYesterday = isTransferYesterday;            
+        } 
 
-        if (isConfrimReward) {           
-            param.IsShowReward = isConfrimReward;
+        if (isConfrimReward) {         
+            param.toCustName = fromUsername;
             param.RewardMaxTransId = $("#rewardMaxTransId").val();
-            param.RewardAmount = $("#txtRewardAmount").val();
+            param.RewardAmount = parseFloat($("#txtRewardAmount").val());
             param.RewardExRate = $("#txtRewardRate").val();
         }
 
+
+        param.IsShowReward = isConfrimReward;
+        param.IsTransferYesterday = isTransferYesterday;    
         transfer.utils.blockUI();
 
         $.post("TransferYesterdayTransactionHandler", param,

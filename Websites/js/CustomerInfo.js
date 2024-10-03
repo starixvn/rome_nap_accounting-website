@@ -565,9 +565,10 @@ function StatementClick() {
 
 //document.myFunc = function() { alert('!') } //is called from parent
 
-function DoTransfer(span, value, custName) {
+function DoTransfer(span, value, custName, isDirect) {
     if (span.className.indexOf('canchange') == -1) return;
-    var url = 'CrossTransfer/Index?fromCustName=' + custName + '&fromAmount=' + value;
+    var isDirectParams = isDirect ? "" : "&isDirect=true";
+    var url = 'CrossTransfer/Index?fromCustName=' + custName + '&fromAmount=' + value + isDirectParams;
     parent.gotoURL('centerFr', url);
     parent.resetMenu();
 }
