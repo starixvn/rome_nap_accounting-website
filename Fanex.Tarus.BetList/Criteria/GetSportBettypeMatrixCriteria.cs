@@ -8,7 +8,7 @@
 
         public override string GetSettingKey()
         {
-            return "Acc_SportBettypeMatrix_Sel";
+            return "Acc_BetList_SportBettypeMatrix_Sel";
         }
     }
 }

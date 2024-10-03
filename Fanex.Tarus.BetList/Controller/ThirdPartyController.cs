@@ -225,6 +225,9 @@
         public ActionResult NextspinResult(ThirdPartyResultRequest request)
             => BaseResult(request, "NextspinResultConfigs");
 
+        public ActionResult ONCasinoResult(ThirdPartyResultRequest request)
+            => BaseResult(request, "ONCasinoResultConfigs");
+
         private ActionResult BaseResult(ThirdPartyResultRequest request, string configName)
         {
             SetProductResultTitle(request.ProductId);
