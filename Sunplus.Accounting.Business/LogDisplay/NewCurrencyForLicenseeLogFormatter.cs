@@ -7,7 +7,7 @@
 
     public class NewCurrencyForLicenseeLogFormatter : NewLicenseeLogFormatter
     {
-        private readonly int logActionId = 2216;
+        private readonly List<int> logActionIds = new List<int> { 2216, 271004 };
 
         public NewCurrencyForLicenseeLogFormatter() : base()
         {
@@ -17,7 +17,7 @@
         {
         }
 
-        public bool IsNewCurrencyForLicenseeActionId(int actionId) => actionId == logActionId;
+        public bool IsNewCurrencyForLicenseeActionId(int actionId) => logActionIds.Contains(actionId);
 
         protected override TrackingNode ParseGeneralInfo(XElement element)
         {

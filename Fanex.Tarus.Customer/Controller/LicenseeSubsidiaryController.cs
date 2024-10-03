@@ -2,7 +2,6 @@
 using System.Web.SessionState;
 using Fanex.Tarus.Customer.Business.LicenseeSubsidiary;
 using Fanex.Tarus.Infrastructure.Common;
-using Fanex.Tarus.Infrastructure.Extensions;
 using Fanex.Tarus.Infrastructure.Helper;
 using Fanex.Tarus.Web.Controllers;
 using Fanex.Tarus.Web.Controllers.Filters;

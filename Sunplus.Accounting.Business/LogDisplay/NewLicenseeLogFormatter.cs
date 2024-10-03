@@ -8,7 +8,7 @@
 
     public class NewLicenseeLogFormatter
     {
-        private readonly int logActionId = 2214;
+        private readonly List<int> logActionIds = new List<int> { 2214, 271003 };
 
         private readonly IRemotingRefService _remotingRefService;
 
@@ -22,7 +22,7 @@
             _remotingRefService = remotingRefService ?? new RemotingRefService();
         }
 
-        public bool IsNewLicenseeActionId(int actionId) => actionId == logActionId;
+        public bool IsNewLicenseeActionId(int actionId) => logActionIds.Contains(actionId);
 
         public TrackingLog GenerateDetail(string trackingValue, string spName, string actionName)
         {
