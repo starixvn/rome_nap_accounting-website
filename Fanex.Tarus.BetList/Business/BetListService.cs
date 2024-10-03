@@ -335,7 +335,7 @@ namespace Fanex.Tarus.BetList.Business
                 {
                     var siteDBCriteria = new SiteDBBetListByRefNoCriteria
                     {
-                        DeniedList = AccountCredit.Acc_DeniedSiteCurrency_Sel(AppSession.AccId),
+                        DeniedList = AccountCredit.Acc_DeniedSiteCurrency_Sel(param.UserId),
                         RefNo = param.RefNo,
                         MoveBetsDay = ReportService.BalanceUp.MoveBetsDay,
                         Permission = param.Permission
@@ -348,7 +348,7 @@ namespace Fanex.Tarus.BetList.Business
             {
                 var mainCriteria = new BetListByRefNoCriteria
                 {
-                    DeniedList = AccountCredit.Acc_DeniedSiteCurrency_Sel(AppSession.AccId),
+                    DeniedList = AccountCredit.Acc_DeniedSiteCurrency_Sel(param.UserId),
                     RefNo = param.RefNo,
                     MoveBetsDay = ReportService.BalanceUp.MoveBetsDay,
                     BalanceUpDay = ReportService.BalanceUp.BalanceUpDay,
