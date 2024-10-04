@@ -123,6 +123,7 @@ namespace Sunplus.Accounting.Presentation
                 }
                 else
                 {
+                    TemplateHandler.Assign(ref formHtml, "{msg}", "");
                     TemplateHandler.Assign(ref formHtml, "{scriptRedirectWhenNoUser}", string.Empty);
                     string userrow = TemplateHandler.CopyBlock(formHtml, "UserRow");
                     TemplateHandler.RemoveBlock(ref formHtml, "UserRow");

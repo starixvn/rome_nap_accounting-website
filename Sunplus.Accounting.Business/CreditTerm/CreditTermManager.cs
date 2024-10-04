@@ -456,7 +456,7 @@ namespace Sunplus.Accounting.Business.CreditTerm
             currentColumn++;
 
             currentCell = workSheet.Cells[currentRow, currentColumn];
-            currentCell.Value = "Total (Yesterday Bal + Reward)";
+            currentCell.Value = "Combined Transfer Amount";
             currentCell.Style = headerTextStyle;
             currentColumn++;
 
