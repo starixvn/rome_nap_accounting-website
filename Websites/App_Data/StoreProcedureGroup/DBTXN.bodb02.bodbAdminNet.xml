@@ -33,6 +33,9 @@
     
     <Setting Key="Acc_RewardPayment_Transfer" SpName="Acc_RewardPayment_Transfer_xtest" DbName="DBTXN.bodb02.wsv_nap" />
     <Setting Key="Acc_RewardPayment_Transfer_Rollback" SpName="Acc_RewardPayment_Transfer_Rollback_xtest" DbName="DBTXN.bodb02.wsv_nap" />
+    <Setting Key="Acc_RewardPayment_UpdChecker" SpName="Acc_RewardPayment_UpdChecker" DbName="DBTXN.bodb02.wsv_nap" />
+    <Setting Key="Acc_RewardPayment_Reverse" SpName="Acc_RewardPayment_Reverse" DbName="DBTXN.bodb02.wsv_nap" />
+    <Setting Key="Acc_RewardPayment_Reverse_Rollback" SpName="Acc_RewardPayment_Reverse_Rollback" DbName="DBTXN.bodb02.wsv_nap" />
   </Function>
   <Function Name="Reset Winning">
     <Setting Key="Acc_ResetWinning_Ins" SpName="Acc_ResetWinning_Ins" DbName="DBTXN.bodb02.wsv_nap" />

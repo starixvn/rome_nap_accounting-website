@@ -194,10 +194,10 @@
             var ActionHTML = '';
             if (row.IsVerify) {
                 if (row.CheckerName == '') {
-                    ActionHTML = '<td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:75px;"><input id="' + row.RefNo + '" type="checkbox" onclick="financeStatement.checkSelectAll(this)"></div></td><td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:55px;"><input id="' + row.RefNo + '" class="verified" type="button" onclick="financeStatement.VerifyTrans(' + row.RefNo + ');" title="Verify" value="Verify"></div></td>';
+                    ActionHTML = '<td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:75px;"><input id="' + row.RefNo + '" type="checkbox" onclick="financeStatement.checkSelectAll(this)"></div></td><td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:55px;"><input id="' + row.RefNo + '" class="verified" type="button" onclick="financeStatement.VerifyTrans(' + row.RefNo + ', ' + row.IsReward + ');" title="Verify" value="Verify"></div></td>';
                 }
                 else {
-                    ActionHTML = '<td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:75px;"><input id="' + row.RefNo + '" type="checkbox" onclick="financeStatement.checkSelectAll(this)"</div></td><td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:55px;"><input id="' + row.RefNo + '" class="unverify" type="button" onclick="financeStatement.UnVerifyTrans(' + row.RefNo + ');" title="Verify" value="Unverify"></div></td>';
+                    ActionHTML = '<td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:75px;"><input id="' + row.RefNo + '" type="checkbox" onclick="financeStatement.checkSelectAll(this)"</div></td><td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:55px;"><input id="' + row.RefNo + '" class="unverify" type="button" onclick="financeStatement.UnVerifyTrans(' + row.RefNo + ', ' + row.IsReward + ');" title="Verify" value="Unverify"></div></td>';
                 }
             }
             else {
@@ -314,7 +314,7 @@
 
         return refNos.join(', ');
     },
-    VerifyTrans: function (id) {
+    VerifyTrans: function (id, isReward) {
         __confirm("Verify transaction", "Are you sure you want to verify the selected transaction(s)?", 400, 250, 'cfm_1', function () {
             __close(null, null, 'cfm_1', null);
             let selectedRefNo;
@@ -333,7 +333,7 @@
             try { parent.BlockUI(); } catch (e) { }
             $.ajax({
                 type: "POST",
-                url: window.rootUrl + "CustomerStatement/UpdateVerifyTrans",
+                url: window.rootUrl + "CustomerStatement/" + (isReward ? "UpdateVerifyRewardTrans" : "UpdateVerifyTrans"),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 data: JSON.stringify(financeStatement.VerifyParams),
@@ -379,7 +379,7 @@
 
         });
     },
-    UnVerifyTrans: function (id) {
+    UnVerifyTrans: function (id, isReward) {
 
         __confirm("Unverify transaction", "Are you sure you want to unverify the selected transaction(s)?", 400, 250, 'cfm_1', function () {
             __close(null, null, 'cfm_1', null);
@@ -389,7 +389,7 @@
             try { parent.BlockUI(); } catch (e) { }
             $.ajax({
                 type: "POST",
-                url: window.rootUrl + "CustomerStatement/UpdateVerifyTrans",
+                url: window.rootUrl + (isReward ? "CustomerStatement/UpdateVerifyRewardTrans" : "CustomerStatement/UpdateVerifyTrans"),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 data: JSON.stringify(financeStatement.VerifyParams),

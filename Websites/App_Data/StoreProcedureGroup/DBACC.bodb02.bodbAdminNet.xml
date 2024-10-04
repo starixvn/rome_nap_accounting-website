@@ -9,8 +9,8 @@
     <Setting Key="Balance_ResetWinning_ExtraPT" SpName="Task_ResetWinning_ExtraPT" DbName="DBACC.bodb02.wsv_nap" TimeOut="0" />
   </Function>
   <Function Name="Finance Module">
-    <Setting Key="Acc_StatementFinance" SpName="Acc_StatementFinance" DbName="DBACC.bodb02.wsv_nap" />
-    <Setting Key="Acc_StatementFinanceByRefno" SpName="Acc_StatementFinanceByRefno" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_StatementFinance" SpName="Acc_StatementFinance_xtest" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_StatementFinanceByRefno" SpName="Acc_StatementFinanceByRefno_xtest" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="Acc_FinanceAccountByCustId" SpName="Acc_FinanceAccountByCustId" DbName="DBACC.bodb02.wsv_nap" />
   </Function>
   <Function Name="Daily Transaction">
