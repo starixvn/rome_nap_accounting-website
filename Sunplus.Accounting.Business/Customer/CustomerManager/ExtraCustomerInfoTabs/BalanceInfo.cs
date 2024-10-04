@@ -3,15 +3,12 @@
     using Core.Common;
     using Core.Web;
     using DNAide.Web;
-    using Fanex.Tarus.Infrastructure.Configurations;
     using Security;
     using static Fanex.Tarus.Infrastructure.Common.Enumerations;
 
     public partial class CustomerManager
     {
-
         private static readonly string _statusCountTooltipMBC = "Active/Closed/Suspended";
-
         private static readonly string _statusCountTitleMBC = "A/C/S";
 
         private static string RenderBalanceInfo(
@@ -127,7 +124,7 @@
                 }
             }
 
-            if(customerInfoViewModel.IsDeposit)
+            if (customerInfoViewModel.IsDeposit)
             {
                 TemplateHandler.RemoveBlock(ref balanceinfo, "3rdPendingTransfer");
             }
@@ -135,6 +132,8 @@
             {
                 TemplateHandler.Assign(ref balanceinfo, "{3rdPendingTransfer}", string.Format("{0:n}", customerInfoViewModel.Currency + " " + IBCUtils.FormatHandler.FormatNumber20(customerInfoViewModel.PendingTransfer3rd)));
             }
+
+            TemplateHandler.Assign(ref balanceinfo, "{isDirect}", (customerInfoViewModel.CheckedDirectStatus || customerInfoViewModel.SearchAccountRoleId == (int)Role.Super).ToString().ToLower());
 
             TemplateHandler.Assign(ref htmlcontent, "{BalanceInfo}", balanceinfo);
             return htmlcontent;
