@@ -1196,6 +1196,11 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
 
         case 138: //ON Casino
             return getONCasinoParam(custId, transId3rd, gameId3rd, currencyId, siteId, bettype, winlostdate);
+
+        case 177: //VS2 Horse and Dog Racing
+        case 198:
+            return getVS2Param(matchid, sporttype, winlostdate);
+
         default:
             return undefined;
     }
@@ -1300,6 +1305,26 @@ function getVirtualHRParam(matchid, sporttype) {
             break;
         case 185:
             resultParam.title = "Virtual Cycling (Old)";
+            break;
+    }
+
+    return resultParam;
+}
+
+
+function getVS2Param(matchid, sporttype, eventdate) {
+    var resultParam = {
+        url: "Report/ViewVirtualRacingResult.aspx",
+        title: "",
+        jsonParam: { matchid: matchid, sporttype: sporttype, eventdate: eventdate }
+    };
+
+    switch (sporttype) {
+        case 198:
+            resultParam.title = "Virtual Horse Racing";
+            break;
+        case 177:
+            resultParam.title = "Virtual Dog Racing";
             break;
     }
 

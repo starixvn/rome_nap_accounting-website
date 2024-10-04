@@ -26,6 +26,7 @@
     <Setting Key="Acc_BetList_SelMatchResult2" SpName="Acc_BetList_SelMatchResult2" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="Acc_BetList_HRSelMatchResult2" SpName="Acc_BetList_HRSelMatchResult2" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="SelMatchResultNumberGame" SpName="Age_BetList_SelMatchResultNumberGame" DbName="DBAGE.bodb02.wsv_nap" />
+    <Setting Key="Age_BetList_SelRaceResult" SpName="Age_BetList_SelRaceResult" DbName="DBAGE.bodb02.wsv_nap" />
     <Setting Key="BetList_CustInfo_SystemParlay" SpName="Acc_BetlistCombinationParlay_ByTransID" DbName="DBAGE.bodb02.wsv_nap">
       <Mapping DataField="ip" ObjectProperty="IP" />
     </Setting>
