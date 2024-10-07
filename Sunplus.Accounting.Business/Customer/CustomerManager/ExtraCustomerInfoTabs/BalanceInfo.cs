@@ -133,7 +133,15 @@
                 TemplateHandler.Assign(ref balanceinfo, "{3rdPendingTransfer}", string.Format("{0:n}", customerInfoViewModel.Currency + " " + IBCUtils.FormatHandler.FormatNumber20(customerInfoViewModel.PendingTransfer3rd)));
             }
 
-            TemplateHandler.Assign(ref balanceinfo, "{isDirect}", (customerInfoViewModel.CheckedDirectStatus || customerInfoViewModel.SearchAccountRoleId == (int)Role.Super).ToString().ToLower());
+            string isDirectParams = "";
+
+            if (customerInfoViewModel.CheckedDirectStatus ||
+                customerInfoViewModel.SearchAccountRoleId == (int)Role.Super)
+            {
+                isDirectParams = "&RewardMaxTransId=" + customerInfoViewModel.RewardMaxTransId + "&RewardAmount=" + IBCUtils.FormatHandler.FormatNumber20(customerInfoViewModel.RewardPending) + "&RewardCurrency=" + customerInfoViewModel.RewardCurrency + "&TotalBalReward=" + IBCUtils.FormatHandler.FormatNumber20(customerInfoViewModel.RewardPending + customerInfoViewModel.YesterdayBal);
+            }
+
+            TemplateHandler.Assign(ref balanceinfo, "{DirectRewardParams}", isDirectParams);
 
             TemplateHandler.Assign(ref htmlcontent, "{BalanceInfo}", balanceinfo);
             return htmlcontent;

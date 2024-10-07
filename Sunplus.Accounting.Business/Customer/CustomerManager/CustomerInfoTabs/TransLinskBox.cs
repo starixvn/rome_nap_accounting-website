@@ -109,6 +109,15 @@
             TemplateHandler.Assign(ref htmlcontent, "{CustName}", AppSession.CustUName);
             TemplateHandler.Assign(ref htmlcontent, "{CustID}", AppSession.CustID);
 
+            string isDirectParams = "";
+            if (customerInfoViewModel.CheckedDirectStatus ||
+                customerInfoViewModel.SearchAccountRoleId == (int)Enumerations.Role.Super)
+            {
+                isDirectParams = "&RewardMaxTransId=" + customerInfoViewModel.RewardMaxTransId + "&RewardAmount=" + IBCUtils.FormatHandler.FormatNumber20(customerInfoViewModel.RewardPending) + "&RewardCurrency=" + customerInfoViewModel.RewardCurrency + "&TotalBalReward=" + IBCUtils.FormatHandler.FormatNumber20(customerInfoViewModel.RewardPending + customerInfoViewModel.YesterdayBal);
+            }
+
+            TemplateHandler.Assign(ref htmlcontent, "{DirectRewardParams}", isDirectParams);
+
             return htmlcontent;
         }
     }

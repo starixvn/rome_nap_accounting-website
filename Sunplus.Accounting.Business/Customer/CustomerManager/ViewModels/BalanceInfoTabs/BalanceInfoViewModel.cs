@@ -35,6 +35,8 @@
 
         public string Currency => Converter.ToString2(customerInfoRow["currency"]);
 
+        public string RewardMaxTransId => Converter.ToString2(cashRow["RewardMaxTransId"]);
+
         public string RewardCurrency => Converter.ToString2(cashRow["RewardCurrency"]);
 
         public decimal RewardPending => Utils.ToDecimal(cashRow["RewardPending"]);
