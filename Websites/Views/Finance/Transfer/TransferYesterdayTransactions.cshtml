@@ -3,7 +3,7 @@
         <tr>
             <td colspan="4" class="l" style="background-color:#b5c4d0  !important">
                 <input id="chk-confrimtransfer" checked="checked" type="checkbox" class="chk-confrimtransfer" />
-                <label for="chk-confrimtransfer">Transfer yesterday's total balance</label>
+                <label for="chk-confrimtransfer">Transfer Yesterday's Total Balance</label>
             </td>
         </tr>
         <tr>
@@ -34,7 +34,7 @@
             </td>
             <td class="l">
                 <input type="text" class="txt" id="txtamount" name="txtamount" size="10" value="@Model.FromAmount"
-                       style="text-align: right" />
+                       style="text-align: right" /> <span class="b" id="fromCurrencyText"></span>
             </td>
         </tr>
         <tr>
@@ -99,7 +99,7 @@
                     Expense Amount:
                 </td>
                 <td class="l">
-                    <input class="txt" type="text" id="txtExpanseAmount" name="txtExpanseAmount" size="5" value="@Model.Total_YesterdayBalance_RewardPending" disabled="disabled" readonly="" /> RM
+                    <input class="txt" type="text" id="txtExpanseAmount" name="txtExpanseAmount" size="5" value="@Model.ExpensiseAmount" disabled="disabled" readonly="" /> RM
                 </td>
                 <td class="l b" colspan="2"></td>
             </tr>
@@ -117,4 +117,6 @@
     <input type="hidden" id="isShowReward" value="@(Model.IsShowReward ? "true" : "false")" />
 </div>
 <iframe id="frmTransfer" width="350px" scrolling="no" height="110px" frameborder="0"
+        style="border: 0px none; margin-top: 5px"></iframe>
+<iframe id="frmReward" width="350px" scrolling="no" height="110px" frameborder="0"
         style="border: 0px none; margin-top: 5px"></iframe>

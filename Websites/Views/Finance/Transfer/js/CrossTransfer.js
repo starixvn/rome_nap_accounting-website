@@ -847,8 +847,10 @@ transfer.YesterdayTransactionsForm = {
             };     
         } 
 
-        if (isConfrimReward) {         
-            param.toCustName = fromUsername;
+        if (isConfrimReward) {  
+            if (!isTransferYesterday) {
+                param.toCustName = fromUsername;
+            }
             param.RewardMaxTransId = $("#rewardMaxTransId").val();
             param.RewardAmount = parseFloat($("#txtRewardAmount").val());
             param.RewardExRate = $("#txtRewardRate").val();
@@ -918,6 +920,7 @@ transfer.YesterdayTransactionsForm = {
         systemExRate = Math.round(systemExRate * 10000) / 10000;
         $("#systemExRateText").text(`(${fromCus.currency}/${toCus.currency}):`)
         $("#systemExRateValue").text(`${systemExRate}`);
+        $("#fromCurrencyText").text(`${fromCus.currency}`);
         
         if (isSameCurrency || hasRmCurrency) {
             transfer.utils.hideMessage();
