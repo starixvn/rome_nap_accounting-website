@@ -64,24 +64,6 @@
 	        </td>
         </tr>
         <!--/NetPosition-->
-        <!--HideOnMember-->
-        <tr>
-            <td class="dot_left">
-                Reward Receivable
-            </td>
-            <td class="dot_right b">
-                {RewardPending}
-            </td>
-        </tr>
-        <!--/HideOnMember-->
-        <tr>
-            <td class="dot_left">
-	            Reward Payable
-            </td>
-            <td class="dot_right b">
-                {RewardBalance}
-            </td>
-        </tr>
         <tr>
             <td class="dot_left">
                 Given Credit
@@ -132,12 +114,30 @@
             </td>
         </tr>
         <tr class="{hiddenbalance}">
-            <td class="dot_left">
-                <span>Used Credit [<a href="javascript: parent.gotoURL('centerFr','UsedCreditDetail.aspx');">Detail</a>]</span>
-            </td>
-            <td class="dot_right b">
-                <span>{UsedCredit}</span>
-            </td>
+	        <td class="dot_left">
+		        <span>Used Credit [<a href="javascript: parent.gotoURL('centerFr','UsedCreditDetail.aspx');">Detail</a>]</span>
+	        </td>
+	        <td class="dot_right b">
+		        <span>{UsedCredit}</span>
+	        </td>
+        </tr>
+        <!--HideOnMember-->
+        <tr>
+	        <td class="dot_left">
+		        Reward Receivable
+	        </td>
+	        <td class="dot_right b">
+		        {RewardPending}
+	        </td>
+        </tr>
+        <!--/HideOnMember-->
+        <tr>
+	        <td class="dot_left">
+		        Reward Payable
+	        </td>
+	        <td class="dot_right b">
+		        {RewardBalance}
+	        </td>
         </tr>
         <tr class="{superhidden}">
             <td class="dot_left" onmouseover="Tip('Total Super {statuscounttooltip}', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)"
