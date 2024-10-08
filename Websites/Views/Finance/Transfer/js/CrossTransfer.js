@@ -1,10 +1,9 @@
 ﻿var transfer = {
     ForexAccDefault: "DIFF10"
-
 };
 
 function closeDialogModal() {
-    const isPopup = window?.location?.toString().includes("isOpenInPopup");
+    const isPopup = window ?.location ?.toString().includes("isOpenInPopup");
     if (isPopup) {
         parent.afterUpdate(true);
         setTimeout(function () {
@@ -79,7 +78,7 @@ transfer.crossCurrencyTransfer = {
             $("#divAjaxLoaderImageFromUser").hide();
             return;
         }
-        var param = {username: $("#tbxFromUser").val()};
+        var param = { username: $("#tbxFromUser").val() };
         $.get("SelectCustomerExRate", param, $.proxy(function (rs) {
             if (rs == null || typeof rs == "undefined" || typeof rs.username == "undefined") {
                 $("#spanCurrencyFromUser").text('');
@@ -113,7 +112,7 @@ transfer.crossCurrencyTransfer = {
             $("#divAjaxLoaderImageToUser").hide();
             return;
         }
-        var param = {username: $("#tbxToUser").val()};
+        var param = { username: $("#tbxToUser").val() };
         $.get("SelectCustomerExRate", param, $.proxy(function (rs) {
             if (rs == null || typeof rs == "undefined" || typeof rs.username == "undefined") {
                 $("#spanCurrencyToUser").text('');
@@ -266,7 +265,6 @@ transfer.crossCurrencyTransfer = {
                         transfer.crossCurrencyTransfer.showExRateFromUser();
                     }, this), 1000);
             }
-
         });
 
         //tbxToUser
@@ -371,7 +369,7 @@ transfer.crossCurrencyTransfer2 = {
             $("#divAjaxLoaderImageFromUser2").hide();
             return;
         }
-        var param = {username: $("#tbxFromUser2").val()};
+        var param = { username: $("#tbxFromUser2").val() };
         $.get("SelectCustomerExRate", param, $.proxy(function (rs) {
             if (rs == null || typeof rs == "undefined" || typeof rs.username == "undefined") {
                 $("#spanCurrencyFromUser2").text('');
@@ -416,7 +414,7 @@ transfer.crossCurrencyTransfer2 = {
             $("#divAjaxLoaderImageToUser2").hide();
             return;
         }
-        var param = {username: $("#tbxToUser2").val()};
+        var param = { username: $("#tbxToUser2").val() };
         $.get("SelectCustomerExRate", param, $.proxy(function (rs) {
             if (rs == null || typeof rs == "undefined" || typeof rs.username == "undefined") {
                 $("#spanCurrencyToUser2").text('');
@@ -581,7 +579,6 @@ transfer.crossCurrencyTransfer2 = {
                         transfer.crossCurrencyTransfer2.showExRateFromUser();
                     }, this), 1000);
             }
-
         });
 
         //tbxToUser2
@@ -787,7 +784,6 @@ transfer.utils = {
     }
 };
 
-
 $(document).ready(function () {
     transfer.init();
 });
@@ -805,12 +801,12 @@ transfer.YesterdayTransactionsForm = {
 
         if (!isTransferYesterday && !isConfrimReward) {
             return false;
-        }  
+        }
 
         var param = {
             fromCustName: fromUsername
-        };   
-        
+        };
+
         if (isTransferYesterday) {
             var _toUser = document.getElementById("touser").value;
             if (_toUser.isNullOrEmpty()) {
@@ -844,10 +840,10 @@ transfer.YesterdayTransactionsForm = {
                 amount: _amount.replace(/,/g, ""),
                 remark: $("#remark").val(),
                 isCollection: $("#chk-collection-yesterday").is(":checked")
-            };     
-        } 
+            };
+        }
 
-        if (isConfrimReward) {  
+        if (isConfrimReward) {
             if (!isTransferYesterday) {
                 param.toCustName = fromUsername;
             }
@@ -856,9 +852,8 @@ transfer.YesterdayTransactionsForm = {
             param.RewardExRate = $("#txtRewardRate").val();
         }
 
-
         param.IsShowReward = isConfrimReward;
-        param.IsTransferYesterday = isTransferYesterday;    
+        param.IsTransferYesterday = isTransferYesterday;
         transfer.utils.blockUI();
 
         $.post("TransferYesterdayTransactionHandler", param,
@@ -866,7 +861,20 @@ transfer.YesterdayTransactionsForm = {
                 if (parseInt(data.ErrorCode) != 0) {
                     transfer.utils.showError(data.ErrorMessage);
                 } else {
-                    $("#frmTransfer").attr("src", '../TransferResult.aspx?fuser=' + escape(fromUsername) + "&touser=" + _toUser + "&exrate=" + _exRate);
+                    if (isTransferYesterday) {
+                        $("#frmTransfer").show();
+                        $("#frmTransfer").attr("src", '../TransferResult.aspx?fuser=' + escape(fromUsername) + "&touser=" + _toUser + "&exrate=" + _exRate);
+                    }
+                    else {
+                        $("#frmTransfer").hide();
+                    }
+                    if (isConfrimReward) {
+                        $("#frmReward").show();
+                        $("#frmReward").attr("src", '../TransferResult.aspx?fuser=' + escape(fromUsername) + "&touser=" + $("#RewardCode").val() + "&exrate=" + param.RewardExRate);
+                    }
+                    else {
+                        $("#frmReward").hide();
+                    }
                     closeDialogModal()
                 }
                 transfer.utils.unBlock();
@@ -889,7 +897,7 @@ transfer.YesterdayTransactionsForm = {
         $("#txtamount").keyup();
     },
     getUserInfo: function (username) {
-        return $.get("SelectCustomerExRate", {username: username}, $.proxy(function (rs) {
+        return $.get("SelectCustomerExRate", { username: username }, $.proxy(function (rs) {
             if (rs == null || typeof rs == "undefined" || typeof rs.username == "undefined") {
                 return null;
             } else {
@@ -898,30 +906,30 @@ transfer.YesterdayTransactionsForm = {
         }, this)).fail(function (e) {
             if (e.status == 403) {
                 transfer.utils.showError("You don't have permission to access");
-            }           
+            }
         });
     },
-    checkCurrency:async function (){
-        const fromCus =await transfer.YesterdayTransactionsForm.getUserInfo($("#fromuser").text().trim());
-        const toCus =await transfer.YesterdayTransactionsForm.getUserInfo($("#touser").val());
+    checkCurrency: async function () {
+        const fromCus = await transfer.YesterdayTransactionsForm.getUserInfo($("#fromuser").text().trim());
+        const toCus = await transfer.YesterdayTransactionsForm.getUserInfo($("#touser").val());
 
-        if(!toCus || !fromCus){
+        if (!toCus || !fromCus) {
             transfer.utils.showError("User does not exist");
             $("#transfer").attr("disabled", "disabled");
             $("#systemExRateText").text("");
             $("#systemExRateValue").text("");
             return;
         }
-        
+
         const isSameCurrency = fromCus.currencycode === toCus.currencycode;
         const hasRmCurrency = fromCus.currencycode === "MYR" || toCus.currencycode === "MYR"; // RM
         const hasUUSCurrency = fromCus.currency === "UUS" || toCus.currency === "UUS";
-        let systemExRate = hasUUSCurrency ? 0: fromCus.actualrate / toCus.actualrate;
+        let systemExRate = hasUUSCurrency ? 0 : fromCus.actualrate / toCus.actualrate;
         systemExRate = Math.round(systemExRate * 10000) / 10000;
         $("#systemExRateText").text(`(${fromCus.currency}/${toCus.currency}):`)
         $("#systemExRateValue").text(`${systemExRate}`);
         $("#fromCurrencyText").text(`${fromCus.currency}`);
-        
+
         if (isSameCurrency || hasRmCurrency) {
             transfer.utils.hideMessage();
             $("#transfer").removeAttr("disabled");
@@ -945,9 +953,6 @@ transfer.YesterdayTransactionsForm = {
                         transfer.YesterdayTransactionsForm.checkCurrency();
                     }, this), 1000);
             }
-
         });
     }
 }
-
-
