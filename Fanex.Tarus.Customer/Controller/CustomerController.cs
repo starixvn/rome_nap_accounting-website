@@ -232,6 +232,9 @@ namespace Fanex.Tarus.Customer.Controller
         public async Task<ActionResult> GetProductCategories(int? custId, string site, string siteLabel, int currency, string language = "en-US")
             => Content(await customerService.GetProductCategories(custId, site, siteLabel, currency, language));
 
+        public async Task<ActionResult> GetWinLossLimitInformation(int? custId, string site, string siteLabel, int currency, string language = "en-US")
+           => Content(await customerService.GetWinLossLimitInformation(custId, site, siteLabel, currency, language));
+
         [HttpPost]
         [NAPCustomerAuthFilter(IsHost = true)]
         public async Task<ActionResult> Create(CreateCustomerCommand request)
