@@ -870,7 +870,7 @@ transfer.YesterdayTransactionsForm = {
                     }
                     if (isConfrimReward) {
                         $("#frmReward").show();
-                        $("#frmReward").attr("src", '../TransferResult.aspx?fuser=' + escape(fromUsername) + "&touser=" + $("#RewardCode").val() + "&exrate=" + param.RewardExRate);
+                        $("#frmReward").attr("src", '../TransferResult.aspx?fuser=' + escape(fromUsername) + "&touser=" + $("#RewardCode").val() + "&exrate=" + param.RewardExRate + "&isReward=true");
                     }
                     else {
                         $("#frmReward").hide();

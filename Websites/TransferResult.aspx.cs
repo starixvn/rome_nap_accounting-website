@@ -17,6 +17,7 @@ public partial class TransferResult : PageBase
 
             var fromUser = WebUtility.HtmlDecode(Request["fuser"]);
             var toUser = WebUtility.HtmlDecode(Request["touser"]);
+            bool isNotReward = string.IsNullOrEmpty(Request["isReward"]);
             DbResult dr = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.Transfer.BettransInsertTransfer_Confirm(fromUser, toUser, exrate);
 
             string s = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("TransferResult.htm");
@@ -24,6 +25,14 @@ public partial class TransferResult : PageBase
             TemplateHandler.Assign(ref s, "{fusercurr}", dr.Outputs["fromcurrency"].ToString());
             TemplateHandler.Assign(ref s, "{tuser}", toUser);
             TemplateHandler.Assign(ref s, "{tusercurr}", dr.Outputs["tocurrency"].ToString());
+            if (isNotReward)
+            {
+                TemplateHandler.Assign(ref s, "{Title}", "Transfer successfully.");
+            }
+            else
+            {
+                TemplateHandler.Assign(ref s, "{Title}", "Reward Payment successfully.");
+            }
 
             string _message = dr.Outputs["errmsg"].ToString();
             if (DNAide.Core.CastAide.AsInt16(dr.Outputs["errcode"]) != 0)
