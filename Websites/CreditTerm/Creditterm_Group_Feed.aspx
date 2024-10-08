@@ -31,7 +31,7 @@
 
     .tooltip .tooltiptext {
         visibility: hidden;
-        width: 180px;
+        width: 280px;
         background-color: #197777;
         color: #fff;
         text-align: center;
@@ -41,7 +41,7 @@
         z-index: 1;
         bottom: 120%;
         left: 50%;
-        margin-left: -60px;
+        margin-left: -140px;
     }
 
     .tooltip .tooltiptext::after {

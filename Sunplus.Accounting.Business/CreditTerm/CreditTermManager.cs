@@ -435,7 +435,7 @@ namespace Sunplus.Accounting.Business.CreditTerm
             currentColumn++;
 
             currentCell = workSheet.Cells[currentRow, currentColumn];
-            currentCell.Value = "Yesterday Total Balance";
+            currentCell.Value = "Yesterday Balance";
             currentCell.Style = headerTextStyle;
             currentColumn++;
 
