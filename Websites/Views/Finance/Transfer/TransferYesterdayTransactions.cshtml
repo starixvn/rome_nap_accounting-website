@@ -3,7 +3,7 @@
 		<tr>
 			<td colspan="4" class="l" style="background-color:#b5c4d0  !important">
 				<input id="chk-confrimtransfer" checked="checked" type="checkbox" class="chk-confrimtransfer" />
-				<label for="chk-confrimtransfer">Transfer Yesterday's Total Balance</label>
+				<label for="chk-confrimtransfer" class="b">Transfer Yesterday's Total Balance</label>
 			</td>
 		</tr>
 		<tr>
@@ -68,20 +68,22 @@
 			<tr>
 				<td colspan="4" class="l" style="background-color:#b5c4d0  !important">
 					<input id="chk-confrimpayment" @(Model.RewardAmount == "0.00" ? "" : "checked" ) @(Model.RewardAmount == "0.00" ? "disabled" : "") type="checkbox" class="chk-confrimpayment" />
-					<label for="chk-confrimpayment">Reward Payment</label>
+					<label for="chk-confrimpayment" class="b">Reward Payment</label>
 				</td>
 			</tr>
 			<tr>
 				<td colspan="4" class="l">
-					The reward amount has been summed up to now.<br />
-					Confirm to reset the reward amount to zero. <br />
-					This action also records the reward amount into House expense code. <br />
+					<div style="border-radius: 10px; background: #E0EDF2; padding: 6px; margin: 6px;">
+					The reward amount has been summed up to now.<br/>
+					Confirm to reset the reward amount to zero. <br/>
+					This action also records the reward amount into House expense code. <br/>
 					Note that system do not make transfer if the reward amount is zero.
+					</div>
 				</td>
 			</tr>
 			<tr>
 				<td class="l b">
-					Await Amount:
+					Amount:
 				</td>
 				<td class="l">
 					<input class="txt" type="text" id="txtRewardAmount" name="txtRewardAmount" size="5" value="@Model.RewardAmount" disabled="disabled" readonly="" /> @Model.RewardCurrency
