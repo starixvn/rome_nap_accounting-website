@@ -255,7 +255,7 @@
       <HintPath>..\packages\Fanex.Result.Core.ThirdPartyResult.2.0.0\lib\net461\Fanex.Result.Core.ThirdParty.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Result.Core.VirtualRacing, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core.VirtualRacing.1.0.0-beta-07\lib\net461\Fanex.Result.Core.VirtualRacing.dll</HintPath>
+      <HintPath>..\packages\Fanex.Result.Core.VirtualRacing.1.0.0-beta-09\lib\net461\Fanex.Result.Core.VirtualRacing.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Entities, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Entities.1.0.0.8\lib\net40\Fanex.Tarus.Entities.dll</HintPath>

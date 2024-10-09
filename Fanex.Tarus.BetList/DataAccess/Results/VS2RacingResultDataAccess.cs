@@ -71,6 +71,7 @@
                 EventId = reader["eventid"] != DBNull.Value ? int.Parse(reader["eventid"].ToString()) : 0,
                 LeagueId = reader["leagueid"] != DBNull.Value ? int.Parse(reader["leagueid"].ToString()) : 0,
                 VendorMatchId = reader["vendormatchid"] != DBNull.Value ? int.Parse(reader["vendormatchid"].ToString()) : 0,
+                Distance = reader["distance"].ToString(),
                 EventStatus = reader["eventstatus"] != DBNull.Value ? reader["eventstatus"].ToString() : string.Empty,
                 BetStatus = reader["betstatus"] != DBNull.Value ? reader["betstatus"].ToString() : string.Empty,
                 EventTime = reader["eventtime"] != DBNull.Value ? DateTime.Parse(reader["eventtime"].ToString()) : DateTime.MinValue,
