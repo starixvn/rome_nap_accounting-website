@@ -50,3 +50,8 @@ body
 #cfm_2 span {
 	word-wrap: break-word;
 }
+
+input[type="radio"] {
+    margin-top: -1px;
+    vertical-align: middle;
+}

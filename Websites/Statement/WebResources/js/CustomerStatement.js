@@ -111,8 +111,9 @@ function completeUpdateIsInternal(rs) {
 
     jQuery('#GridContainer').addClass("hidden");
     jQuery('#statementCotent').removeClass("hidden");
+    var isReward = $('input[name="radWallet"]:checked').val() == '1';
     $.ajax({
-        url: 'GetData.ashx?fdate=' + fdate + '&tdate=' + tdate + '&repno=' + reportNo + "&custname=" + custName,
+        url: 'GetData.ashx?fdate=' + fdate + '&tdate=' + tdate + '&repno=' + reportNo + "&custname=" + custName + "&isReward=" + isReward,
         dataType: 'html',
         success: function (data) {
             $("#statementCotent").attr("style", "display:block");
