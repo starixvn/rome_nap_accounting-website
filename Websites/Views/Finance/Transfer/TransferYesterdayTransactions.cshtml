@@ -34,7 +34,7 @@
 			</td>
 			<td class="l">
 				<input type="text" class="txt" id="txtamount" name="txtamount" size="10" value="@Model.FromAmount"
-				       style="text-align: right" /> <span class="b" id="fromCurrencyText"></span>
+				       style="text-align: right" onfocusout="transfer.YesterdayTransactionsForm.CalclateTotal()" /> <span class="b" id="fromCurrencyText"></span>
 			</td>
 		</tr>
 		<tr>

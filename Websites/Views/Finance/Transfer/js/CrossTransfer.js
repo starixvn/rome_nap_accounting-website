@@ -958,12 +958,24 @@ transfer.YesterdayTransactionsForm = {
         });
     },
     checkTransfer: function () {
-        var enableTransfer = $("#chk-confrimtransfer").is(":checked") || $("#chk-confrimpayment").is(":checked");
+        var isYesterdayTransfer = $("#chk-confrimtransfer").is(":checked");
+        var isReward = $("#chk-confrimpayment").is(":checked");
+        var enableTransfer = isYesterdayTransfer || isReward;
+        var amount = isYesterdayTransfer ? parseFloat($("#txtamount").val().replace(/,/g, "")) : 0.0;
+        var rewardAmount = isReward ? parseFloat($("#txtRewardAmount").val().replace(/,/g, "")) : 0.0;
         if (enableTransfer) {
             $("#transfer").removeAttr("disabled");
         }
         else {
             $("#transfer").attr("disabled", "disabled");
         }
+        $("#lblTotal").text(formatNumber32(amount + rewardAmount));   
+    },
+    CalclateTotal: function () {
+        var isYesterdayTransfer = $("#chk-confrimtransfer").is(":checked");
+        var isReward = $("#chk-confrimpayment").is(":checked");       
+        var amount = isYesterdayTransfer ? parseFloat($("#txtamount").val().replace(/,/g, "")) : 0.0;
+        var rewardAmount = isReward ? parseFloat($("#txtRewardAmount").val().replace(/,/g, "")) : 0.0;  
+        $("#lblTotal").text(formatNumber32(amount + rewardAmount));   
     }
 }
