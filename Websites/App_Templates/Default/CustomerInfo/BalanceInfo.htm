@@ -56,12 +56,12 @@
         <!--/3rdPendingTransfer-->
         <!--NetPosition-->
         <tr>
-	        <td class="dot_left">
-		        Net Position
-	        </td>
-	        <td class="dot_right b">
-		        {NetPosition}
-	        </td>
+            <td class="dot_left">
+                Net Position
+            </td>
+            <td class="dot_right b">
+                {NetPosition}
+            </td>
         </tr>
         <!--/NetPosition-->
         <tr>
@@ -114,31 +114,33 @@
             </td>
         </tr>
         <tr class="{hiddenbalance}">
-	        <td class="dot_left">
-		        <span>Used Credit [<a href="javascript: parent.gotoURL('centerFr','UsedCreditDetail.aspx');">Detail</a>]</span>
-	        </td>
+            <td class="dot_left">
+                <span>Used Credit [<a href="javascript: parent.gotoURL('centerFr','UsedCreditDetail.aspx');">Detail</a>]</span>
+            </td>
+            <td class="dot_right b">
+                <span>{UsedCredit}</span>
+            </td>
+        </tr>
+        <tr>
+            <td class="dot_left">
+                Reward Receivable
+            </td>
 	        <td class="dot_right b">
-		        <span>{UsedCredit}</span>
+		        {RewardBalance}
 	        </td>
         </tr>
         <!--HideOnMember-->
         <tr>
 	        <td class="dot_left">
-		        Reward Receivable
+		        Reward Payable
 	        </td>
-            <td class="dot_right b">
-                {RewardBalance}
-            </td>
+	        <td class="dot_right b">
+		        {RewardPending}
+	        </td>
         </tr>
         <!--/HideOnMember-->
-        <tr>
-	        <td class="dot_left">
-		        {RewardMemberText}
-	        </td>
-            <td class="dot_right b">
-                {RewardPending}
-            </td>
-        </tr>
+
+       
         <tr class="{superhidden}">
             <td class="dot_left" onmouseover="Tip('Total Super {statuscounttooltip}', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)"
                 onmouseout="UnTip()">

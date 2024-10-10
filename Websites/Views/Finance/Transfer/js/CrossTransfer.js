@@ -822,7 +822,7 @@ transfer.YesterdayTransactionsForm = {
                 return false;
             }
 
-            var _amount = document.getElementById('txtamount').value;
+            var _amount = document.getElementById('txtamount').value.replace(/,/g, "");
             if (!_amount.isNumeric() || parseFloat(_amount) == 0) {
                 $('#errMsg').show();
                 showAlertMessage("errMsg", "Invalid Amount", 1);
@@ -837,7 +837,7 @@ transfer.YesterdayTransactionsForm = {
                 fromCustName: fromUsername,              
                 toCustName: _toUser,
                 exRate: _exRate,
-                amount: _amount.replace(/,/g, ""),
+                amount: parseFloat(_amount),
                 remark: $("#remark").val(),
                 isCollection: $("#chk-collection-yesterday").is(":checked")
             };
@@ -848,7 +848,7 @@ transfer.YesterdayTransactionsForm = {
                 param.toCustName = fromUsername;
             }
             param.RewardMaxTransId = $("#rewardMaxTransId").val();
-            param.RewardAmount = parseFloat($("#txtRewardAmount").val());
+            param.RewardAmount = parseFloat($("#txtRewardAmount").val().replace(/,/g, ""));
             param.RewardExRate = $("#txtRewardRate").val();
             param.RewardUserName = $("#RewardCode").val();
             param.RewardCurrency = rewardCurrency;

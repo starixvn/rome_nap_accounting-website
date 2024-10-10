@@ -112,7 +112,7 @@
 		<input class="btn" type="button" id="transfer" value="Transfer" onclick="transfer.YesterdayTransactionsForm.validateValue();"></input>
 		@if (Model.IsShowReward)
 		{
-			<b>@Html.Raw("(TOTAL: " + Model.Total_YesterdayBalance_RewardPending + ")")</b>
+			<b>(TOTAL: <span id='lblTotal'>@Model.Total_YesterdayBalance_RewardPending</span>)</b>
 		}
 	</div>
 	<div style="width: 620px; margin-top: 10px;" class="l">
