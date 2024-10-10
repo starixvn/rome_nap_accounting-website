@@ -13,6 +13,7 @@ using Fanex.Tarus.DataAccess.Interface.Customer;
 using Fanex.Tarus.Infrastructure.Common;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using Fanex.Tarus.Infrastructure.Extensions;
+using Fanex.Tarus.Customer.Constants;
 
 namespace Fanex.Tarus.Customer.Business.LicenseeDcsSetting
 {
@@ -475,7 +476,7 @@ namespace Fanex.Tarus.Customer.Business.LicenseeDcsSetting
 
         private void CreateDummyMember(string userName, int uplineId, string site, int siteDBGroupId, int creator, string ip)
         {
-            var registerAccountResult = _settingDataAccess.RegisterAccount(new RegisterAccountCriteria(userName, uplineId, RoleConstants.Member, site, siteDBGroupId));
+            var registerAccountResult = _settingDataAccess.RegisterAccount(new RegisterAccountCriteria(userName, uplineId, RoleIdConstants.MEMBER, site, siteDBGroupId));
             if (registerAccountResult.Item1.ErrorCode == 0)
             {
                 var insertMemberResult = _settingDataAccess.InsertMember(new InsertMemberCriteria

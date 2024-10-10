@@ -418,6 +418,7 @@
     <Compile Include="Admin\ExternalSite.cs" />
     <Compile Include="Admin\IExternalSite.cs" />
     <Compile Include="BootStrappers\UnityBootStrapper.cs" />
+    <Compile Include="LogDisplay\NewLicenseeMemberLogFormatter.cs" />
     <Compile Include="ProductGroupIdConstants.cs" />
     <Compile Include="CreditTerm\CreditTermManager.cs" />
     <Compile Include="CreditTerm\ICreditTermManager.cs" />

@@ -35,6 +35,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
         private readonly SimplifyCreateCustomerLogFormatter _simplifyCreateCustomerLogFormatter;
 
         private readonly CustomerSettingLogFormatter _customerSettingLogFormatter;
+        private readonly NewLicenseeMemberLogFormatter _newLicenseeMemberLogFormatter;
 
         private int[] listBetsettingActionIDLicensee = new int[] { 2012, 2013, 2019, 2036 };
 
@@ -45,7 +46,8 @@ namespace Sunplus.Accounting.Business.LogDisplay
             NewLicenseeLogFormatter newLicenseeLogFormatter,
             NewCurrencyForLicenseeLogFormatter newCurrencyForLicenseeLogFormatter,
             SimplifyCreateCustomerLogFormatter simplifyCreateCustomerLogFormatter,
-            CustomerSettingLogFormatter customerSettingLogFormatter)
+            CustomerSettingLogFormatter customerSettingLogFormatter,
+            NewLicenseeMemberLogFormatter newLicenseeMemberLogFormatter)
         {
             _logDAO = logDAO;
 
@@ -53,6 +55,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
             _newCurrencyForLicenseeLogFormatter = newCurrencyForLicenseeLogFormatter ?? new NewCurrencyForLicenseeLogFormatter();
             _simplifyCreateCustomerLogFormatter = simplifyCreateCustomerLogFormatter ?? new SimplifyCreateCustomerLogFormatter();
             _customerSettingLogFormatter = customerSettingLogFormatter ?? new CustomerSettingLogFormatter();
+            _newLicenseeMemberLogFormatter = newLicenseeMemberLogFormatter ?? new NewLicenseeMemberLogFormatter();
         }
 
         public Sunplus.Accounting.Entities.LogDisplay.ResultLog GetLogDisplay(LogParam param)
@@ -413,6 +416,11 @@ namespace Sunplus.Accounting.Business.LogDisplay
             if (_simplifyCreateCustomerLogFormatter.IsSimplifyCreateCustomerActionId(actionId))
             {
                 return _simplifyCreateCustomerLogFormatter.GenerateDetail(actionId, trackingValue, spName, actionName);
+            }
+
+            if (_newLicenseeMemberLogFormatter.IsNewLicenseeMemberActionId(actionId))
+            {
+                return _newLicenseeMemberLogFormatter.GenerateDetail(trackingValue, spName, actionName);
             }
 
             return _ParseTrackingValue(trackingValue, actionId, actionName, spName);
