@@ -2,7 +2,7 @@
 	<table class="tbllayout yesterdaytransfer" style="width: 620px;">
 		<tr>
 			<td colspan="4" class="l" style="background-color:#b5c4d0  !important">
-				<input id="chk-confrimtransfer" checked="checked" type="checkbox" class="chk-confrimtransfer" />
+				<input id="chk-confrimtransfer" checked="checked" type="checkbox" class="chk-confrimtransfer" onclick="transfer.YesterdayTransactionsForm.checkTransfer();" />
 				<label for="chk-confrimtransfer" class="b">Transfer Yesterday's Total Balance</label>
 			</td>
 		</tr>
@@ -67,7 +67,7 @@
 		<table class="tbllayout yesterdaytransfer" style="width: 620px;">
 			<tr>
 				<td colspan="4" class="l" style="background-color:#b5c4d0  !important">
-					<input id="chk-confrimpayment" @(Model.RewardAmount == "0.00" ? "" : "checked" ) @(Model.RewardAmount == "0.00" ? "disabled" : "") type="checkbox" class="chk-confrimpayment" />
+					<input id="chk-confrimpayment" @(Model.RewardAmount == "0.00" ? "" : "checked" ) @(Model.RewardAmount == "0.00" ? "disabled" : "") type="checkbox" class="chk-confrimpayment" onclick="transfer.YesterdayTransactionsForm.checkTransfer();" />
 					<label for="chk-confrimpayment" class="b">Reward Payment</label>
 				</td>
 			</tr>
@@ -121,4 +121,5 @@
 	<input type="hidden" id="rewardMaxTransId" value="@Model.RewardMaxTransId" />
 	<input type="hidden" id="isShowReward" value="@(Model.IsShowReward ? "true" : "false")" />
 	<input type="hidden" id="RewardCode" value="@Model.RewardCode" />
+	<input type="hidden" id="RewardCurrency" value="@Model.RewardCurrency" />
 </div>

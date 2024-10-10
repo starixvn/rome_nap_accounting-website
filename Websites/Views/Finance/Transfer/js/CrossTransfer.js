@@ -798,13 +798,13 @@ transfer.YesterdayTransactionsForm = {
         var isTransferYesterday = $("#chk-confrimtransfer").is(":checked");
         var IsShowReward = $("#isShowReward").val() == "true";
         var isConfrimReward = IsShowReward && $("#chk-confrimpayment").is(":checked");
-
+        var rewardCurrency = $("#RewardCurrency").val();
         if (!isTransferYesterday && !isConfrimReward) {
             return false;
         }
 
         var param = {
-            fromCustName: fromUsername
+            fromCustName: fromUsername         
         };
 
         if (isTransferYesterday) {
@@ -834,7 +834,7 @@ transfer.YesterdayTransactionsForm = {
             }
 
             param = {
-                fromCustName: fromUsername,
+                fromCustName: fromUsername,              
                 toCustName: _toUser,
                 exRate: _exRate,
                 amount: _amount.replace(/,/g, ""),
@@ -850,6 +850,8 @@ transfer.YesterdayTransactionsForm = {
             param.RewardMaxTransId = $("#rewardMaxTransId").val();
             param.RewardAmount = parseFloat($("#txtRewardAmount").val());
             param.RewardExRate = $("#txtRewardRate").val();
+            param.RewardUserName = $("#RewardCode").val();
+            param.RewardCurrency = rewardCurrency;
         }
 
         param.IsShowReward = isConfrimReward;
@@ -870,7 +872,7 @@ transfer.YesterdayTransactionsForm = {
                     }
                     if (isConfrimReward) {
                         $("#frmReward").show();
-                        $("#frmReward").attr("src", '../TransferResult.aspx?fuser=' + escape(fromUsername) + "&touser=" + $("#RewardCode").val() + "&exrate=" + param.RewardExRate + "&isReward=true");
+                        $("#frmReward").attr("src", '../TransferResult.aspx?fuser=' + escape(fromUsername) + "&touser=" + param.RewardUserName + "&exrate=" + param.RewardExRate + "&isReward=true");
                     }
                     else {
                         $("#frmReward").hide();
@@ -954,5 +956,14 @@ transfer.YesterdayTransactionsForm = {
                     }, this), 1000);
             }
         });
+    },
+    checkTransfer: function () {
+        var enableTransfer = $("#chk-confrimtransfer").is(":checked") || $("#chk-confrimpayment").is(":checked");
+        if (enableTransfer) {
+            $("#transfer").removeAttr("disabled");
+        }
+        else {
+            $("#transfer").attr("disabled", "disabled");
+        }
     }
 }

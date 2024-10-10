@@ -14,6 +14,11 @@
             if (customerInfoViewModel.SearchAccountRoleId == 1)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "hideonmember");
+                TemplateHandler.Assign(ref htmlcontent, "{RewardMemberText}", "Reward Receivable");
+            }
+            else
+            {
+                TemplateHandler.Assign(ref htmlcontent, "{RewardMemberText}", "Reward Payable");
             }
 
             if (!Permissions.HasPermission(Enumerations.Functions.Customer.ContactInfo))
