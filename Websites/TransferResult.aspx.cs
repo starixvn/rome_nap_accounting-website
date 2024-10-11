@@ -27,7 +27,7 @@ public partial class TransferResult : PageBase
             TemplateHandler.Assign(ref s, "{tusercurr}", dr.Outputs["tocurrency"].ToString());
             if (isNotReward)
             {
-                TemplateHandler.Assign(ref s, "{Title}", "Transfer successfully.");
+                TemplateHandler.Assign(ref s, "{Title}", "Transfer Main Wallet successfully.");
             }
             else
             {

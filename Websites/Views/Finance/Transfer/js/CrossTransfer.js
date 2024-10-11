@@ -862,6 +862,10 @@ transfer.YesterdayTransactionsForm = {
             function (data) {
                 if (parseInt(data.ErrorCode) != 0) {
                     transfer.utils.showError(data.ErrorMessage);
+                    if (data.IsMainTransferSuccess) {
+                        $("#frmTransfer").show();
+                        $("#frmTransfer").attr("src", '../TransferResult.aspx?fuser=' + escape(fromUsername) + "&touser=" + _toUser + "&exrate=" + _exRate);
+                    }
                 } else {
                     if (isTransferYesterday) {
                         $("#frmTransfer").show();
@@ -870,6 +874,7 @@ transfer.YesterdayTransactionsForm = {
                     else {
                         $("#frmTransfer").hide();
                     }
+
                     if (isConfrimReward) {
                         $("#frmReward").show();
                         $("#frmReward").attr("src", '../TransferResult.aspx?fuser=' + escape(fromUsername) + "&touser=" + param.RewardUserName + "&exrate=" + param.RewardExRate + "&isReward=true");
@@ -877,6 +882,7 @@ transfer.YesterdayTransactionsForm = {
                     else {
                         $("#frmReward").hide();
                     }
+
                     closeDialogModal()
                 }
                 transfer.utils.unBlock();
