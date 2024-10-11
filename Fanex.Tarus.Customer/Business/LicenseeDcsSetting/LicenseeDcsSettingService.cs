@@ -478,7 +478,7 @@ namespace Fanex.Tarus.Customer.Business.LicenseeDcsSetting
             var registerAccountResult = _settingDataAccess.RegisterAccount(new RegisterAccountCriteria(userName, uplineId, RoleIdConstants.MEMBER, site, siteDBGroupId));
             if (registerAccountResult.Item1.ErrorCode == 0)
             {
-                var insertMemberResult = _settingDataAccess.InsertMember(new InsertMemberCriteria
+                _settingDataAccess.InsertMember(new InsertMemberCriteria
                 {
                     CustId = registerAccountResult.Item2,
                     Creator = creator,
@@ -486,15 +486,6 @@ namespace Fanex.Tarus.Customer.Business.LicenseeDcsSetting
                     Recommend = uplineId,
                     IP = ip
                 });
-
-                if (insertMemberResult.ErrorCode == 0)
-                {
-                    _depositCustomerAccess.InsertBalanceWhenCreateNewMember(registerAccountResult.Item2, userName);
-                }
-                else
-                {
-                    _settingDataAccess.RollbackInsertAccount(registerAccountResult.Item2);
-                }
             }
         }
 
