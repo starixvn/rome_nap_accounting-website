@@ -35,7 +35,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
         private readonly SimplifyCreateCustomerLogFormatter _simplifyCreateCustomerLogFormatter;
 
         private readonly CustomerSettingLogFormatter _customerSettingLogFormatter;
-        private readonly NewLicenseeMemberLogFormatter _newLicenseeMemberLogFormatter;
+        private readonly NewFormatCommissionLogFormatter _newLicenseeMemberLogFormatter;
 
         private int[] listBetsettingActionIDLicensee = new int[] { 2012, 2013, 2019, 2036 };
 
@@ -47,7 +47,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
             NewCurrencyForLicenseeLogFormatter newCurrencyForLicenseeLogFormatter,
             SimplifyCreateCustomerLogFormatter simplifyCreateCustomerLogFormatter,
             CustomerSettingLogFormatter customerSettingLogFormatter,
-            NewLicenseeMemberLogFormatter newLicenseeMemberLogFormatter)
+            NewFormatCommissionLogFormatter newLicenseeMemberLogFormatter)
         {
             _logDAO = logDAO;
 
@@ -55,7 +55,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
             _newCurrencyForLicenseeLogFormatter = newCurrencyForLicenseeLogFormatter ?? new NewCurrencyForLicenseeLogFormatter();
             _simplifyCreateCustomerLogFormatter = simplifyCreateCustomerLogFormatter ?? new SimplifyCreateCustomerLogFormatter();
             _customerSettingLogFormatter = customerSettingLogFormatter ?? new CustomerSettingLogFormatter();
-            _newLicenseeMemberLogFormatter = newLicenseeMemberLogFormatter ?? new NewLicenseeMemberLogFormatter();
+            _newLicenseeMemberLogFormatter = newLicenseeMemberLogFormatter ?? new NewFormatCommissionLogFormatter();
         }
 
         public Sunplus.Accounting.Entities.LogDisplay.ResultLog GetLogDisplay(LogParam param)
@@ -418,7 +418,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
                 return _simplifyCreateCustomerLogFormatter.GenerateDetail(actionId, trackingValue, spName, actionName);
             }
 
-            if (_newLicenseeMemberLogFormatter.IsNewLicenseeMemberActionId(actionId))
+            if (_newLicenseeMemberLogFormatter.IsNewFormatCommissionActionId(actionId))
             {
                 return _newLicenseeMemberLogFormatter.GenerateDetail(trackingValue, spName, actionName);
             }

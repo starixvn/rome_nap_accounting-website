@@ -5,22 +5,22 @@ using Sunplus.Accounting.Entities.LogDisplay.SettingPT;
 
 namespace Sunplus.Accounting.Business.LogDisplay
 {
-    public class NewLicenseeMemberLogFormatter
+    public class NewFormatCommissionLogFormatter
     {
-        private readonly int logActionId = 271000;
+        private readonly IList<int> logActionIds = new List<int> { 271000, 271001, 2612 };
         private readonly IRemotingRefService _remotingRefService;
 
         private readonly IList<string> ignoreDisplayComm = new List<string> { "1_4", "1_5", "2_2" };
 
-        public NewLicenseeMemberLogFormatter() : this(null)
+        public NewFormatCommissionLogFormatter() : this(null)
         { }
 
-        public NewLicenseeMemberLogFormatter(RemotingRefService remotingRefService)
+        public NewFormatCommissionLogFormatter(RemotingRefService remotingRefService)
         {
             _remotingRefService = remotingRefService ?? new RemotingRefService();
         }
 
-        public bool IsNewLicenseeMemberActionId(int actionId) => logActionId == actionId;
+        public bool IsNewFormatCommissionActionId(int actionId) => logActionIds.Contains(actionId);
 
         public TrackingLog GenerateDetail(string trackingValue, string spName, string actionName)
         {
@@ -72,7 +72,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
                 if (!ignoreDisplayComm.Contains(sportBetType))
                 {
                     var productName = _remotingRefService.GetResourceDataByRefIdAndResourceId("Product_Sport_BT", sportBetType, "en_US", sportBetType);
-                    var ele = LogFormater.FormatElement(item.Attribute("PlayerDiscount"), null, $"simplify-{sportBetType}");
+                    var ele = LogFormater.FormatElement(item.Attribute("PlayerDiscount") ?? item.Attribute("Discount"), null, $"simplify-{sportBetType}");
                     ele.N = productName;
                     trackingGroup.Vals.Add(ele);
                 }

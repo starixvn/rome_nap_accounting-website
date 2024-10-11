@@ -7,7 +7,6 @@ using Fanex.Tarus.Customer.DataAccess.LicenseeDcsSetting;
 using Fanex.Tarus.Customer.Entities;
 using Fanex.Tarus.Customer.Entities.LicenseeDcsSetting;
 using Fanex.Tarus.Customer.Resources;
-using Fanex.Tarus.DataAccess.Implement.Constants;
 using Fanex.Tarus.DataAccess.Implement.Customer;
 using Fanex.Tarus.DataAccess.Interface.Customer;
 using Fanex.Tarus.Infrastructure.Common;
