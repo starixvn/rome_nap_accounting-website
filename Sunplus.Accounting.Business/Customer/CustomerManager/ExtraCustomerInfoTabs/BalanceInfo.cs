@@ -138,7 +138,7 @@
             if (customerInfoViewModel.CheckedDirectStatus ||
                 customerInfoViewModel.SearchAccountRoleId == (int)Role.Super)
             {
-                isDirectParams = "&RewardMaxTransId=" + customerInfoViewModel.RewardMaxTransId + "&RewardAmount=" + IBCUtils.FormatHandler.FormatNumber20(customerInfoViewModel.RewardPending) + "&RewardCurrency=" + customerInfoViewModel.RewardCurrency + "&TotalBalReward=" + IBCUtils.FormatHandler.FormatNumber20(customerInfoViewModel.RewardPending + customerInfoViewModel.YesterdayBal);
+                isDirectParams = "&RewardMaxTransId=" + customerInfoViewModel.RewardMaxTransId + "&RewardAmount=" + IBCUtils.FormatHandler.FormatNumber20(customerInfoViewModel.RewardBalance) + "&RewardCurrency=" + customerInfoViewModel.RewardCurrency + "&TotalBalReward=" + IBCUtils.FormatHandler.FormatNumber20(customerInfoViewModel.RewardPending + customerInfoViewModel.YesterdayBal);
             }
 
             TemplateHandler.Assign(ref balanceinfo, "{DirectRewardParams}", isDirectParams);
