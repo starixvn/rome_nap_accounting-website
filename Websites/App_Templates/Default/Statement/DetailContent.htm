@@ -2,7 +2,7 @@
 <!--ReportHeader-->
     <tr>
         <!--DelAllHeaderRow-->
-        <td colspan="7"></td>
+        <td colspan="{colspan}"></td>
         <td style="width: 75px;">
             <span id="selectedCount"></span>
         </td>
@@ -19,7 +19,9 @@
         <td class="c">Remark</td>
         <td class="c">Debit</td>
         <td class="c">Credit</td>
+        <!--ColumnTotal-->
         <td class="c">Total</td>
+        <!--/ColumnTotal-->
         <td class="c">Creator</td>
         <!--DelHeader-->
         <td class="c"><input type="checkbox" id="chkAll" onclick="onClickAllCheckBox();" /></td>
@@ -34,7 +36,9 @@
         <td class="l"><b>{Remark}</b></td>
         <td class="r">{Debit}</td>
         <td class="r">{Credit}</td>
+        <!--ColumnTotal-->
         <td class="r">{Total}</td>
+        <!--/ColumnTotal-->
         <td align="center">{Creator}</td>
         <!--DelCol-->
         <td class="c">

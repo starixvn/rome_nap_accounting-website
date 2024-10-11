@@ -20,11 +20,11 @@ namespace Sunplus.Accounting.WcfServiceLibrary
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
-        bool VerifyTransaction(string refNoList);
+        bool VerifyTransaction(string refNoList, string rewardRefNoList);
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
-        bool UnVerifyTransaction(string refNo);
+        bool UnVerifyTransaction(string refNo, string rewardRefNo);
 
         /*[OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]

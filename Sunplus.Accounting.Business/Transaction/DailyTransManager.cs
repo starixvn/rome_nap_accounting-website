@@ -189,7 +189,7 @@ namespace Sunplus.Accounting.Business.Transaction
         /// </summary>
         /// <param name="refNoList"></param>
         /// <returns></returns>
-        public bool VerifyTransaction(string refNoList)
+        public bool VerifyTransaction(string refNoList, string rewardRefNoList)
         {
             bool isSuccessfull = false;
 
@@ -208,7 +208,7 @@ namespace Sunplus.Accounting.Business.Transaction
             #endregion check permision before update to DB
 
             var userService = CommonBootStrapper.Locator.GetInstance<IUserService>();
-            isSuccessfull = userService.VerfiyDailyTransactions(user, refNoList);
+            isSuccessfull = userService.VerfiyDailyTransactions(user, refNoList, rewardRefNoList);
 
             return isSuccessfull;
         }
@@ -218,7 +218,7 @@ namespace Sunplus.Accounting.Business.Transaction
         /// </summary>
         /// <param name="refNo"></param>
         /// <returns></returns>
-        public bool UnVerifyTransaction(string refNo)
+        public bool UnVerifyTransaction(string refNo, string rewardRefNo)
         {
             bool isSuccessfull = false;
 
@@ -237,7 +237,7 @@ namespace Sunplus.Accounting.Business.Transaction
             #endregion check permision before update to DB
 
             var userService = CommonBootStrapper.Locator.GetInstance<IUserService>();
-            isSuccessfull = userService.UnverifyTransaction(user, refNo);
+            isSuccessfull = userService.UnverifyTransaction(user, refNo, rewardRefNo);
 
             return isSuccessfull;
         }

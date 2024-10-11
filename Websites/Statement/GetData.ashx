@@ -30,6 +30,7 @@ public class GetData : BaseHandler
         int reportNo = 1;
         string strData = string.Empty;
         reportNo = CastAide.AsInt32(context.Request["repno"], 1);
+        var isReward = CastAide.AsBoolean(context.Request["isReward"]);
         if (reportNo < 1 || reportNo > 5 || reportNo == 2) //combine reportNo 1&2
             reportNo = 1;
 
@@ -43,18 +44,18 @@ public class GetData : BaseHandler
         switch (reportNo)
         {
             case 1:
-                strData = StatementHTML.GetMemberStatement(CastAide.AsString(context.Request["fdate"]), CastAide.AsString(context.Request["tdate"]));
+                strData = StatementHTML.GetMemberStatement(CastAide.AsString(context.Request["fdate"]), CastAide.AsString(context.Request["tdate"]), isReward);
                 AppSession.CustUName = Username;
                 context.Response.Write(strData);
                 break;
 
             case 3:
-                strData = StatementHTML.GetDetailStatement(CastAide.AsString(context.Request["fdate"]), CastAide.AsString(context.Request["tdate"]));
+                strData = StatementHTML.GetDetailStatement(CastAide.AsString(context.Request["fdate"]), CastAide.AsString(context.Request["tdate"]), isReward);
                 context.Response.Write(strData);
                 break;
 
             case 4:
-                strData = StatementHTML.GetAuditStatement();
+                strData = StatementHTML.GetAuditStatement(isReward);
                 context.Response.Write(strData);
                 break;
 

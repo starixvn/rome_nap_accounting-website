@@ -30,16 +30,16 @@ namespace Sunplus.Accounting.WcfServiceLibrary
             return dailyList;
         }
 
-        public bool VerifyTransaction(string refNoList)
+        public bool VerifyTransaction(string refNoList, string rewardRefNoList)
         {
             var dailyManager = new DailyTransManager();
-            return dailyManager.VerifyTransaction(refNoList);
+            return dailyManager.VerifyTransaction(refNoList, rewardRefNoList);
         }
 
-        public bool UnVerifyTransaction(string refNo)
+        public bool UnVerifyTransaction(string refNo, string rewardRefNo)
         {
             var dailyManager = new DailyTransManager();
-            return dailyManager.UnVerifyTransaction(refNo);
+            return dailyManager.UnVerifyTransaction(refNo, rewardRefNo);
         }
 
         public Dictionary<string, int> GetListTotalTransPerGroup(List<DailyTransaction> entity)

@@ -410,6 +410,8 @@ jQuery(document).ready(function () {
     if (isNewStatementTab == "0") {
         $("#notemessage").addClass("display-none");
     }
+
+    $('input[name="radWallet"]').change(GetDataReport);
 });
 
 function viewDetail(fdate, transtypeid) {
