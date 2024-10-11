@@ -12,6 +12,13 @@ function closeDialogModal() {
     }
 }
 
+function reloadData() {
+    const isPopup = window?.location ?.toString().includes("isOpenInPopup");
+    if (isPopup) {
+        parent.afterUpdate(true);      
+    }
+}
+
 transfer.init = function () {
     transfer.tab.init();
     transfer.crossCurrencyTransfer.init();
@@ -865,6 +872,9 @@ transfer.YesterdayTransactionsForm = {
                     if (data.IsMainTransferSuccess) {
                         $("#frmTransfer").show();
                         $("#frmTransfer").attr("src", '../TransferResult.aspx?fuser=' + escape(fromUsername) + "&touser=" + _toUser + "&exrate=" + _exRate);
+                        setTimeout(function () {
+                            reloadData();
+                        }, 1000);
                     }
                 } else {
                     if (isTransferYesterday) {
