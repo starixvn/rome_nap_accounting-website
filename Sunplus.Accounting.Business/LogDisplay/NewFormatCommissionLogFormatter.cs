@@ -68,12 +68,15 @@ namespace Sunplus.Accounting.Business.LogDisplay
             trackingGroup.Tables = trackingGroup.Tables ?? new List<TrackingTable>();
             foreach (var item in xmlLoad.Elements())
             {
-                var sportBetType = $"{item.Attribute("SportType").Value}_{item.Attribute("BetType").Value}";
+                string sportType = item.Attribute("SportType").Value;
+                string betType = item.Attribute("BetType").Value;
+                var sportBetType = $"{sportType}_{betType}";
                 if (!ignoreDisplayComm.Contains(sportBetType))
                 {
                     var productName = _remotingRefService.GetResourceDataByRefIdAndResourceId("Product_Sport_BT", sportBetType, "en_US", sportBetType);
-                    var ele = LogFormater.FormatElement(item.Attribute("PlayerDiscount") ?? item.Attribute("Discount"), null, $"simplify-{sportBetType}");
+                    var ele = LogFormater.FormatElement(item.Attribute("PlayerDiscount") ?? item.Attribute("Discount"), null, $"simplify-{sportType}-{betType}");
                     ele.N = productName;
+                    ele.DiffRowIndex = 1;
                     trackingGroup.Vals.Add(ele);
                 }
             }

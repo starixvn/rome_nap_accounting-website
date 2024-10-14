@@ -35,7 +35,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
         private readonly SimplifyCreateCustomerLogFormatter _simplifyCreateCustomerLogFormatter;
 
         private readonly CustomerSettingLogFormatter _customerSettingLogFormatter;
-        private readonly NewFormatCommissionLogFormatter _newLicenseeMemberLogFormatter;
+        private readonly NewFormatCommissionLogFormatter _newFormatCommissionLogFormatter;
 
         private int[] listBetsettingActionIDLicensee = new int[] { 2012, 2013, 2019, 2036 };
 
@@ -55,7 +55,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
             _newCurrencyForLicenseeLogFormatter = newCurrencyForLicenseeLogFormatter ?? new NewCurrencyForLicenseeLogFormatter();
             _simplifyCreateCustomerLogFormatter = simplifyCreateCustomerLogFormatter ?? new SimplifyCreateCustomerLogFormatter();
             _customerSettingLogFormatter = customerSettingLogFormatter ?? new CustomerSettingLogFormatter();
-            _newLicenseeMemberLogFormatter = newLicenseeMemberLogFormatter ?? new NewFormatCommissionLogFormatter();
+            _newFormatCommissionLogFormatter = newLicenseeMemberLogFormatter ?? new NewFormatCommissionLogFormatter();
         }
 
         public Sunplus.Accounting.Entities.LogDisplay.ResultLog GetLogDisplay(LogParam param)
@@ -176,6 +176,11 @@ namespace Sunplus.Accounting.Business.LogDisplay
                             //trackingvalueold = trackingvalueold.Replace("=\"\"", "=\"Unassigned\"");
                             _customerSettingLogFormatter.GenerateDetail(record, actionId, trackingvalue, trackingvalueold, spName, actionName);
                             record.Diffs = _DiffsTrackingValue(trackingvalue, CastAide.AsString(trackingvalueold, string.Empty), true);
+                        }else
+                        if (_newFormatCommissionLogFormatter.IsNewFormatCommissionActionId(actionId))
+                        {
+                            record.Detail= _newFormatCommissionLogFormatter.GenerateDetail(trackingvalue, spName, actionName);
+                            record.Diffs = _DiffsTrackingValue(trackingvalue, CastAide.AsString(trackingvalueold, string.Empty),true);
                         }
                         else
                         {
@@ -416,11 +421,6 @@ namespace Sunplus.Accounting.Business.LogDisplay
             if (_simplifyCreateCustomerLogFormatter.IsSimplifyCreateCustomerActionId(actionId))
             {
                 return _simplifyCreateCustomerLogFormatter.GenerateDetail(actionId, trackingValue, spName, actionName);
-            }
-
-            if (_newLicenseeMemberLogFormatter.IsNewFormatCommissionActionId(actionId))
-            {
-                return _newLicenseeMemberLogFormatter.GenerateDetail(trackingValue, spName, actionName);
             }
 
             return _ParseTrackingValue(trackingValue, actionId, actionName, spName);
