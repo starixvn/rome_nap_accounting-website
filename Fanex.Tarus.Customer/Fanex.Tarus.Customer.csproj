@@ -476,6 +476,7 @@
     <Compile Include="Criteria\CopySuperSetting\CheckSuperListCriteria.cs" />
     <Compile Include="Criteria\CopyVRSetting\CopyVRSettingCriteria.cs" />
     <Compile Include="Criteria\AutoTransfer\GetAutoTransferJobStatusCriteria.cs" />
+    <Compile Include="Criteria\CreditCustomer\CheckSyncedNovaCasinoCriteria.cs" />
     <Compile Include="Criteria\CreditCustomer\GetHeadlineBelongSiteCriteria.cs" />
     <Compile Include="Criteria\CreditCustomer\SuperPrefixCriteria.cs" />
     <Compile Include="Criteria\AutoTransfer\InsertToastMessageCriteria.cs" />

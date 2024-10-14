@@ -8,7 +8,6 @@
 namespace Fanex.Tarus.Customer.CreditCustomer.Business
 {
     using Criteria.CreditCustomer;
-    using Fanex.PTEngine.BusinessObjects;
     using Fanex.Tarus.Admin.ViewModel;
     using Fanex.Tarus.Customer.CreditCustomer.Entities;
     using System.Collections.Generic;
@@ -18,6 +17,8 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
     /// </summary>
     public interface ICustomerSettingService
     {
+        bool IsSynceNovaCasino(string username);
+
         /// <summary>
         /// Get CurrencyList
         /// </summary>

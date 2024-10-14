@@ -9,6 +9,7 @@
     <link href="../App_Themes/Public/table.css" rel="stylesheet" type="text/css" />
     <link href="../App_Themes/Public/Message.css" rel="stylesheet" type="text/css" />
 
+    <script src="../js/jQuery/jquery.js" type="text/javascript"></script>
     <script type="text/javascript" src="../js/common.js"></script>
 
     <script type="text/javascript">
@@ -33,39 +34,61 @@
                 obj("txtNewUname").focus();
                 return false;
             }
-            var strC = confirm("Are you sure you want to change this User Name?");
-            if (strC) {
-                obj("errMsg").innerHTML = "";
-                document.getElementById('fEditUsername').submit();
-                try{parent.BlockUI();}catch(e){}
-                return true;
-            }
-            else {
-                return false;
-            }
+
+            try { parent.BlockUI(); } catch (e) { }
+            $.ajax({
+                type: "POST",
+                url: "/Customer/CheckSyncedNovaCasino",
+                async: true,
+                data: 'username=' + $('#txtOldUname').val(),
+                success: function (result) {
+                    var message = "";
+                    if (result && result.IsSynced) {
+                        message += "Accounts has joined Nova Casino.\n"
+                    }
+                    message += "Are you sure you want to change this User Name?";
+                    var strC = confirm(message);
+                    if (strC) {
+                        obj("errMsg").innerHTML = "";
+                        document.getElementById('fEditUsername').submit();
+                        try { parent.BlockUI(); } catch (e) { }
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+
+                },
+                error: function (err) {
+                    if (err.status == 403) {
+                        showAlertMessage('errMsg', "You don't have permission to access.", 1);
+                    }
+                    else {
+                        showAlertMessage('errMsg', 'Internal server error.', 1);
+                    }
+                    try { parent.jQuery.unblockUI(); } catch (e) { }
+                },
+            });
         }
     </script>
-
 </head>
 <body style="margin: 0px;">
     <div class="main">
         <div class="maincontent">
-              <table border="0" cellpadding="0px" cellspacing="0px" class="maincontent_header">
+            <table border="0" cellpadding="0px" cellspacing="0px" class="maincontent_header">
                 <tr>
-                    <td class="maincontent_headerL">
-                    </td>
+                    <td class="maincontent_headerL"></td>
                     <td class="maincontent_headerC fixfont">
-                    <asp:Literal ID="EditUserNameHeaderStr" runat="server"></asp:Literal>
+                        <asp:Literal ID="EditUserNameHeaderStr" runat="server"></asp:Literal>
                     </td>
-                    <td class="maincontent_headerR">
-                    </td>
+                    <td class="maincontent_headerR"></td>
                 </tr>
             </table>
             <div class="maincontent_box">
-            <div id="errMsg" class="error-message"></div>
-            <div id="clear2"></div>
-            <iframe class="hidden" name="frUpdate"></iframe>
-                    <form name="fEditUsername" id="fEditUsername" method="post" action="../Handlers/EditUsername.ashx" target="frUpdate">
+                <div id="errMsg" class="error-message"></div>
+                <div id="clear2"></div>
+                <iframe class="hidden" name="frUpdate"></iframe>
+                <form name="fEditUsername" id="fEditUsername" method="post" action="../Handlers/EditUsername.ashx" target="frUpdate">
                     <asp:Literal ID="EditUserNameContentHtml" runat="server"></asp:Literal>
                 </form>
             </div>

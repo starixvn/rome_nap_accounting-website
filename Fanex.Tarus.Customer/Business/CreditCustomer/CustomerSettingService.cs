@@ -7,15 +7,11 @@
 
 namespace Fanex.Tarus.Customer.CreditCustomer.Business
 {
-    using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Data;
     using System.Linq;
     using Criteria.CreditCustomer;
-    using DNAide.Utils;
-    using Fanex.Data;
-    using Fanex.PTEngine.BusinessObjects;
     using Fanex.Tarus.Admin.ViewModel;
     using Fanex.Tarus.Customer.Constants;
     using Fanex.Tarus.Customer.CreditCustomer.DataAccess;
@@ -23,12 +19,9 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
     using Fanex.Tarus.Customer.Criteria.AutoTransfer;
     using Fanex.Tarus.Customer.DataAccess.AutoTransfer;
     using NAP.Framework.Data;
-    using Resources;
     using Sunplus.Accounting.Business.Security;
     using Sunplus.Accounting.Core.Common;
     using Sunplus.Accounting.Core.Configurations;
-    using Sunplus.Accounting.Core.Helper;
-    using static Infrastructure.Common.Enumerations;
 
     public class CustomerSettingService : ICustomerSettingService
     {
@@ -46,6 +39,9 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
             _customerSettingDataAccess = customerSettingDataAccess ?? new CustomerSettingDataAccess();
             _autoTransferDataAccess = autoTransferDataAccess ?? new AutoTransferDatalAccess();
         }
+
+        public bool IsSynceNovaCasino(string username)
+            => _customerSettingDataAccess.IsSyncedNovaCasino(new CheckSyncedNovaCasinoCriteria(username));
 
         /// <summary>
         /// Get CurrencyList
