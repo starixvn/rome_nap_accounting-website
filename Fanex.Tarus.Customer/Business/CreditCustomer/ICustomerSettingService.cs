@@ -17,7 +17,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
     /// </summary>
     public interface ICustomerSettingService
     {
-        bool IsSynceNovaCasino(string username);
+        bool IsSyncedNovaCasino(string username);
 
         /// <summary>
         /// Get CurrencyList

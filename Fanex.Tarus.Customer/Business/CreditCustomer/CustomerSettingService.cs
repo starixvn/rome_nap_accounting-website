@@ -40,7 +40,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
             _autoTransferDataAccess = autoTransferDataAccess ?? new AutoTransferDatalAccess();
         }
 
-        public bool IsSynceNovaCasino(string username)
+        public bool IsSyncedNovaCasino(string username)
             => _customerSettingDataAccess.IsSyncedNovaCasino(new CheckSyncedNovaCasinoCriteria(username));
 
         /// <summary>

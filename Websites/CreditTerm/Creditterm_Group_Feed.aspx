@@ -200,17 +200,7 @@
                             listuser += $(this).val() + ",";
                             var username = $(this).val().split('|')[1];
                             listusername.push(username);
-                            $.ajax({
-                                type: "POST",
-                                url: "/Customer/CheckSyncedNovaCasino",
-                                async: true,
-                                data: 'username=' + username,
-                                success: function (result) {
-                                    if (result && result.IsSynced) {
-                                        listSynced.push(username);
-                                    }
-                                },
-                            });
+
                         });
                     if (listuser == "") {
                         showAlertMessage("errMsg", "Please select user.", 1);
@@ -219,31 +209,55 @@
                     }
             }
 
-            var syncedNovaCasinoMessage = "";
-            if (listSynced && listSynced.length) {
-                syncedNovaCasinoMessage += `Accounts has joined Nova Casino: ${listSynced.join(", ")}.</br>`;
-            }
+            if (type == 3) {
+                var checkSynced = listusername.map(username => new Promise((resolve, reject) => {
+                    $.ajax({
+                        type: "POST",
+                        url: window.rootUrl + "Customer/CheckSyncedNovaCasino",
+                        async: true,
+                        data: 'username=' + username,
+                        success: function (result) {
+                            if (result && result.IsSynced) {
+                                listSynced.push(username)
+                            }
+                            resolve();
+                        },
+                        error: function (error) {
+                            reject(error);
+                        }
+                    });
+                }));
 
-            if (type == 3 && isshowConfirm) {
-                var message = `${syncedNovaCasinoMessage}The group has only 1 member (is Headline). Are you sure you want to remove this group?`;
-                __confirm("Please Confirm", message, 325, 210, null,
-                    function () { ProcessGetData(type, listuser); },
-                    function () {
-                        __close(false, null, null, null);
-                    },
-                    null, false);
-                return;
-            }
-            var groupId = $('#groupid').val();
+                Promise.all(checkSynced).then(() => {
+                    var syncedNovaCasinoMessage = "";
+                    if (listSynced && listSynced.length) {
+                        syncedNovaCasinoMessage += `Accounts has joined Nova Casino: ${listSynced.join(", ")}.</br>`;
+                    }
 
-            if (type == 3 && !isshowConfirm) {
-                var message = `${syncedNovaCasinoMessage}Are you sure you want to remove the following account(s) from GroupID ${groupId} of ${headline}?</br>${listusername.join(", ")}`;
-                __confirm("Please Confirm", message, 325, 'auto', null,
-                    function () { ProcessGetData(type, listuser); },
-                    function () {
-                        __close(false, null, null, null);
-                    },
-                    null, false);
+                    if (isshowConfirm) {
+                        var message = `${syncedNovaCasinoMessage}The group has only 1 member (is Headline). Are you sure you want to remove this group?`;
+                        __confirm("Please Confirm", message, 325, 210, null,
+                            function () { ProcessGetData(type, listuser); },
+                            function () {
+                                __close(false, null, null, null);
+                            },
+                            null, false);
+                        return;
+                    }
+
+                    if (!isshowConfirm) {
+                        var groupId = $('#groupid').val();
+                        var message = `${syncedNovaCasinoMessage}Are you sure you want to remove the following account(s) from GroupID ${groupId} of ${headline}?</br>${listusername.join(", ")}`;
+                        __confirm("Please Confirm", message, 325, 'auto', null,
+                            function () { ProcessGetData(type, listuser); },
+                            function () {
+                                __close(false, null, null, null);
+                            },
+                            null, false);
+                        return;
+                    }
+                });
+
                 return;
             }
 

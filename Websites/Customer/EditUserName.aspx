@@ -13,6 +13,7 @@
     <script type="text/javascript" src="../js/common.js"></script>
 
     <script type="text/javascript">
+        window.rootUrl = '<%=Page.ResolveUrl("~/")%>';
         function CheckInputValue() {
             if (isEmpty("txtOldUname")) {
                 showAlertMessage("errMsg", "Please enter Old User Name.", 1);
@@ -38,7 +39,7 @@
             try { parent.BlockUI(); } catch (e) { }
             $.ajax({
                 type: "POST",
-                url: "/Customer/CheckSyncedNovaCasino",
+                url: window.rootUrl + "Customer/CheckSyncedNovaCasino",
                 async: true,
                 data: 'username=' + $('#txtOldUname').val(),
                 success: function (result) {
@@ -55,6 +56,7 @@
                         return true;
                     }
                     else {
+                        try { parent.unblockUI(); } catch (e) { }
                         return false;
                     }
 
@@ -68,6 +70,9 @@
                     }
                     try { parent.jQuery.unblockUI(); } catch (e) { }
                 },
+                complete: function () {
+                    try { parent.jQuery.unblockUI(); } catch (e) { }
+                }
             });
         }
     </script>

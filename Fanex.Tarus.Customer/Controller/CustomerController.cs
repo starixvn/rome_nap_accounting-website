@@ -55,7 +55,7 @@ namespace Fanex.Tarus.Customer.Controller
 
         [HttpPost]
         public ActionResult CheckSyncedNovaCasino(string username)
-            => Json(new { IsSynced = _customerSettingService.IsSynceNovaCasino(username) });
+            => Json(new { IsSynced = _customerSettingService.IsSyncedNovaCasino(username) });
 
         public ActionResult GetHeadlineBelongSite()
             => Content(JsonConvert.SerializeObject(
