@@ -220,7 +220,8 @@
 
         public static bool IsSabaclub(int betTypeId)
         {
-            return 1611 <= betTypeId && betTypeId <= 1699;
+            return (1611 <= betTypeId && betTypeId <= 1699) ||
+                (13200 <= betTypeId && betTypeId <= 13499);
         }
 
         public static bool IsTableGames(int betTypeId)
@@ -265,7 +266,8 @@
                 return SportContants.BigGame;
             if (3611 <= betTypeId && betTypeId <= 3620)
                 return SportContants.SportsLottery;
-            if (3801 <= betTypeId && betTypeId <= 3899)
+            if ((3801 <= betTypeId && betTypeId <= 3899) ||
+                (13500 <= betTypeId && betTypeId <= 13799))
                 return SportContants.VGaming;
             if (6401 <= betTypeId && betTypeId <= 6700)
                 return SportContants.Joker;            
