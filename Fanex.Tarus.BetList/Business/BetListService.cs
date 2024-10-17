@@ -903,10 +903,9 @@ namespace Fanex.Tarus.BetList.Business
                 }
 
                 if (dataSet != null &&
-                    dataSet.Tables.Count >= 2)
+                    dataSet.Tables.Count >= 1)
                 {
                     DataTable ticketDetailTable = dataSet.Tables[0];
-                    DataTable ticketEventTable = dataSet.Tables[1];
                     foreach (DataRow r in ticketDetailTable.Rows)
                     {
                         decimal commTmp = Converter.ToDecimal(r["commission"]);
@@ -994,19 +993,6 @@ namespace Fanex.Tarus.BetList.Business
 
                         betDetails.Add(ticketDetailTmp);
                     }
-
-                    foreach (DataRow row in ticketEventTable.Rows)
-                    {
-                        outputLiveCasino.Add(new TicketData
-                        {
-                            RefNo = Converter.ToString2(row["refno"]),
-                            BetTypeId = Converter.To<int>(row["bettype"]),
-                            Status = Converter.ToString2(row["status"]),
-                            Odds = Converter.To<decimal>(row["odds"]),
-                            Stake = Converter.To<decimal>(row["stake"]),
-                            BetTeam = Converter.ToString2(row["betteam"])
-                        });
-                    }
                 }
 
                 if (betDetails != null && pageIndex > 0)
@@ -1081,10 +1067,9 @@ namespace Fanex.Tarus.BetList.Business
                 }
 
                 if (dataSet != null &&
-                    dataSet.Tables.Count >= 2)
+                    dataSet.Tables.Count >= 1)
                 {
                     var ticketDetailTable = dataSet.Tables[0];
-                    var ticketEventTable = dataSet.Tables[1];
                     foreach (DataRow r in ticketDetailTable.Rows)
                     {
                         var commTmp = Converter.ToDecimal(r["commission"]);
@@ -1187,32 +1172,7 @@ namespace Fanex.Tarus.BetList.Business
                             DeviceType = r.Table.Columns.Contains("DeviceType") && !r.IsNull("DeviceType") ? Converter.To<int>(r["DeviceType"]) : (int?)null
                         };
 
-                        foreach (DataRow row in ticketEventTable.Rows)
-                        {
-                            if (Converter.ToString2(row["refno"]) == ticketDetailTmp.Ticket.RefNo)
-                            {
-                                ticketDetailTmp.Ticket.AgentPositionTaking = Converter.ToDecimal(row["apositiontaking"]);
-                                ticketDetailTmp.Ticket.MasterPositionTaking = Converter.ToDecimal(row["mpositiontaking"]);
-                                ticketDetailTmp.Ticket.SuperPositionTaking = Converter.ToDecimal(row["spositiontaking"]);
-                                break;
-                            }
-                        }
-
                         betDetails.Add(ticketDetailTmp);
-                    }
-
-                    foreach (DataRow row in ticketEventTable.Rows)
-                    {
-                        outputLiveCasino.Add(new TicketData
-                        {
-                            RefNo = Converter.ToString2(row["refno"]),
-                            BetTypeId = Converter.To<int>(row["bettype"]),
-                            Status = Converter.ToString2(row["status"]),
-                            Odds = Converter.To<decimal>(row["odds"]),
-                            Stake = Converter.To<decimal>(row["stake"]),
-                            BetTeam = Converter.ToString2(row["betteam"]),
-                            TransDesc = Converter.ToString2(row["TransDesc"])
-                        });
                     }
                 }
 

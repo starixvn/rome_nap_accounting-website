@@ -558,11 +558,11 @@ table {
 
         table.racing .cl-win,
         table.racing .cl-place {
-            width: 100px;
+            width: 50px;
         }
 
         table.racing .cl-status {
-            width: 150px;
+            width: 80px;
         }
 
             table.racing .cl-status .official {
@@ -571,7 +571,7 @@ table {
             }
 
         table.racing .cl-race-name {
-            width: 83px;
+            width: 200px;
         }
 
         table.racing .cl-placing {

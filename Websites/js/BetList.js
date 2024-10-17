@@ -1196,6 +1196,11 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
 
         case 138: //ON Casino
             return getONCasinoParam(custId, transId3rd, gameId3rd, currencyId, siteId, bettype, winlostdate);
+
+        case 177: //VS2 Horse and Dog Racing
+        case 198:
+            return getVS2Param(matchid, sporttype, winlostdate);
+
         default:
             return undefined;
     }
@@ -1206,7 +1211,7 @@ function getResultParamByBetType(matchid, race, bettype, sporttype, refno, usern
         case bettype === 9 || bettype === 29 || bettype === 2799 || bettype == 10449: // System Parlay, MixParlayVirtualSports2
             return getSystemParlayParam(matchid, refno_mixparlay, bettype, betid);
 
-        case bettype === 1231 || bettype === 1232 || bettype === 1233: // Virtual Horse Racing.
+        case bettype === 1231 || bettype === 1232 || bettype === 1233: // Virtual Horse Racing (Old).
             return getVirtualHRAndTennisParam(matchid, sporttype);
 
         case 801 <= bettype && bettype <= 899: // Metric Gaming.
@@ -1287,19 +1292,39 @@ function getVirtualHRParam(matchid, sporttype) {
 
     switch (sporttype) {
         case 181:
-            resultParam.title = "Virtual Horse Racing";
+            resultParam.title = "Virtual Horse Racing (Old)";
             break;
         case 182:
-            resultParam.title = "Virtual Greyhounds";
+            resultParam.title = "Virtual Greyhounds (Old)";
             break;
         case 183:
-            resultParam.title = "Virtual Speedway";
+            resultParam.title = "Virtual Speedway (Old)";
             break;
         case 184:
-            resultParam.title = "Virtual Motorsports";
+            resultParam.title = "Virtual Motorsports (Old)";
             break;
         case 185:
-            resultParam.title = "Virtual Cycling";
+            resultParam.title = "Virtual Cycling (Old)";
+            break;
+    }
+
+    return resultParam;
+}
+
+
+function getVS2Param(matchid, sporttype, eventdate) {
+    var resultParam = {
+        url: "Report/ViewVirtualRacingResult.aspx",
+        title: "",
+        jsonParam: { matchid: matchid, sporttype: sporttype, eventdate: eventdate }
+    };
+
+    switch (sporttype) {
+        case 198:
+            resultParam.title = "Virtual Horse Racing";
+            break;
+        case 177:
+            resultParam.title = "Virtual Dog Racing";
             break;
     }
 
