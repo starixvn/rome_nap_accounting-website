@@ -98,7 +98,8 @@
             var ipInfo = IBCProvider.Utils.GetIPInformation(HttpContext.Request.UserHostAddress);
             var resultRequest = new ResultRequest(request.CustId, request.TransId3rd, request.GameId3rd, request.CurrencyId, request.SiteId)
             {
-                Location = ipInfo != null ? ipInfo.CountryShort : string.Empty
+                Location = ipInfo != null ? ipInfo.CountryShort : string.Empty,
+                BetTypeId = request.BetTypeId
             };
 
             var result = service.GetResultGET(resultRequest);

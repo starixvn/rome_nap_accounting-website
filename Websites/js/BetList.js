@@ -1131,7 +1131,7 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
             return getLeapGamingParam(transId3rd);
 
         case 232: // PG Soft
-            return getPGSoftCasinoParam(custId, transId3rd, gameId3rd, currencyId, siteId);
+            return getPGSoftCasinoParam(custId, transId3rd, gameId3rd, currencyId, siteId, bettype);
 
         case 239: // BG
             return getBGParam(custId, transId3rd, gameId3rd, currencyId, siteId);
@@ -1408,11 +1408,11 @@ function getRNGWarCasinoParam(custId, transId3rd, gameId3rd, currencyId, siteId)
     };
 }
 
-function getPGSoftCasinoParam(custId, transId3rd, gameId3rd, currencyId, siteId) {
+function getPGSoftCasinoParam(custId, transId3rd, gameId3rd, currencyId, siteId, bettype) {
     return {
         url: "ThirdParty/PGSoftResult",
         title: "PG Soft Result",
-        jsonParam: { custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, currencyId: currencyId, siteId: siteId, productId: 55 },
+        jsonParam: { custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, currencyId: currencyId, siteId: siteId, productId: 55, betTypeId: bettype },
         width: 945,
         height: 800
     };
