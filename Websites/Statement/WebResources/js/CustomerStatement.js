@@ -249,8 +249,7 @@ function ReverseTrans(refno) {
 }
 
 function GetSelectedRefNo() {
-    var refNos;
-    refNos = "";
+    var refNos = "";
 
     $("input[type='checkbox'][id!='chkAll']").each(function () {
         if (this.checked == true && !this.disabled)
@@ -266,12 +265,13 @@ function VerifyTrans(btn) {
         __close(null, null, 'cfm_1', null);
 
         let selectedRefNo;
+        let isReward = btn.dataset.isReward == 'true';
         if (btn.id.toLowerCase() == "btnverify") {
             //verify multiple
-            selectedRefNo = '{"refNoList":"' + GetSelectedRefNo() + '"}';
+            selectedRefNo = '{"' + (isReward ? 'rewardRefNoList' : 'refNoList') + '":"' + GetSelectedRefNo() + '"}';
         }
         else {
-            selectedRefNo = '{"refNoList":"' + btn.id + '"}';
+            selectedRefNo = '{"' + (isReward ? 'rewardRefNoList' : 'refNoList') + '":"' + btn.id + '"}';
         }
 
         try { parent.BlockUI(); } catch (e) { }
@@ -289,7 +289,8 @@ function VerifyTrans(btn) {
 function UnVerifyTrans(trans) {
     __confirm("UnVerify transaction", "Are you sure you want to unverify the selected transaction(s)?", 400, 250, 'cfm_1', function () {
         __close(null, null, 'cfm_1', null);
-        var selectedRefNo = '{"refNo":' + trans.id + '}';
+        let isReward = trans.dataset.isReward == 'true';
+        var selectedRefNo = '{"' + (isReward ? 'rewardRefNo' : 'refNo') + '":' + trans.id + '}';
         try { parent.BlockUI(); } catch (e) { }
         $.ajax({
             type: "POST",

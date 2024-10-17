@@ -30,10 +30,10 @@ namespace Sunplus.Accounting.Business.Statement
         #region All page
 
         private const string TEMPLATE_UNVERIFIED_BUTTON =
-            "<input type=\"button\" class=\"unverify\"  value=\"Unverify\" title=\"Unverify\"  onclick=\"return UnVerifyTrans(this);\"  id=\"{0}\"/>";
+            "<input type=\"button\" class=\"unverify\" data-is-reward=\"{1}\" value=\"Unverify\" title=\"Unverify\"  onclick=\"return UnVerifyTrans(this);\"  id=\"{0}\"/>";
 
         private const string TEMPLATE_VERIFIED_BUTTON =
-            "<input type=\"button\" class=\"verified\" value=\"Verify\" title=\"Verify\"  onclick=\"return VerifyTrans(this);\"  id=\"{0}\"/>";
+            "<input type=\"button\" class=\"verified\" data-is-reward=\"{1}\" value=\"Verify\" title=\"Verify\"  onclick=\"return VerifyTrans(this);\"  id=\"{0}\"/>";
 
         /// <summary>
         ///
@@ -566,7 +566,7 @@ namespace Sunplus.Accounting.Business.Statement
                             if (entity.IsAllowedVerified)
                             {
                                 templateAction = string.Format(TEMPLATE_UNVERIFIED_BUTTON,
-                                                               entity.RefNo);
+                                                               entity.RefNo, isReward);
 
                                 TemplateHandler.Assign(ref rowHtml, "{checked}", "checked=checked");
                                 TemplateHandler.Assign(ref rowHtml, "{disabled}", "disabled=disabled");
@@ -586,7 +586,7 @@ namespace Sunplus.Accounting.Business.Statement
                             if (entity.IsAllowedVerified)
                             {
                                 templateAction = string.Format(TEMPLATE_VERIFIED_BUTTON,
-                                                               entity.RefNo);
+                                                               entity.RefNo, isReward);
                                 TemplateHandler.Assign(ref rowHtml, "{checked}", string.Empty);
                                 TemplateHandler.Assign(ref rowHtml, "{disabled}", string.Empty);
 
@@ -612,6 +612,7 @@ namespace Sunplus.Accounting.Business.Statement
 
                         TemplateHandler.Assign(ref rowHtml, "{action}", templateAction);
                         TemplateHandler.Assign(ref rowHtml, "{id}", entity.RefNo);
+                        TemplateHandler.Assign(ref rowHtml, "{isReward}", isReward.ToString().ToLower());
 
                         htmlReport.Append(rowHtml);
                         TemplateHandler.RemoveBlock(ref rowHtml, "nobr");

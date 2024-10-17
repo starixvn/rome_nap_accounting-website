@@ -4,7 +4,7 @@
         <!--verifyheader-->
         <tr>
             <th colspan="5"></th><th class="verified"><input type="button"
-                id="btnVerify" style="width:100%" onclick='VerifyTrans(this)'  disabled="disabled" class="verifiedDisabled" value="Verify" /> </th><th colspan="3">
+                id="btnVerify" data-is-reward="{isReward}" style="width:100%" onclick='VerifyTrans(this)'  disabled="disabled" class="verifiedDisabled" value="Verify" /> </th><th colspan="3">
                 </th>
         </tr>
         <!--/verifyheader-->
@@ -51,7 +51,7 @@
          <!--verifyheader-->
       <td>
       <!--verifycheckbox-->
-      <input type="checkbox" id="{id}" {checked} {disabled} data-is-reward="{isReward}"  onclick="CheckSelectItem(this)"/>
+      <input type="checkbox" id="{id}" {checked} {disabled} onclick="CheckSelectItem(this)"/>
        <!--/verifycheckbox--></td>  <!--/verifyheader-->
      <td class="c">{verifiedby}</td>
     <td class="c">{checkedtime}</td>
