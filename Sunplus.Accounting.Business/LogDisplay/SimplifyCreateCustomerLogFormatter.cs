@@ -72,59 +72,6 @@ namespace Sunplus.Accounting.Business.LogDisplay
         public bool IsSimplifyCreateCustomerActionId(int actionId)
             => ActionIds.Contains(actionId);
 
-        public List<List<TrackingValue>> GeneratePTTemplateDiffsTrackingValue(
-            string trackingValue,
-            string trackingValue2,
-            Func<string, (List<Dictionary<string, TrackingValue>> trackingParams, bool hasAttr)> generateDetailFunction)
-        {
-            var result = new List<List<TrackingValue>>();
-            var diffs = new List<TrackingValue>();
-            if (!trackingValue.Equals(trackingValue2) && !string.IsNullOrEmpty(trackingValue2))
-            {
-                trackingValue = trackingValue.Replace("\a", "");
-                trackingValue2 = trackingValue2.Replace("\a", "");
-                var (listVal, hasAttr) = generateDetailFunction(trackingValue);
-                var (listVal2, hasAttr2) = generateDetailFunction(trackingValue2);
-
-                if (listVal.Count == listVal2.Count && hasAttr == hasAttr2)
-                {
-                    var index = 0;
-                    foreach (var elms in listVal)
-                    {
-                        var isDiff = false;
-                        diffs = new List<TrackingValue>();
-                        foreach (var elm in elms)
-                        {
-                            try
-                            {
-                                var elm2 = listVal2.ElementAt(index)[elm.Key];
-                                if (!elm.Value.Val.Equals(elm2.Val, StringComparison.CurrentCultureIgnoreCase))
-                                {
-                                    isDiff = true;
-                                    elm2.DiffRowIndex = index + (hasAttr ? 1 : 0);
-                                    elm2.P = "";
-                                    diffs.Add(elm2);
-                                }
-                            }
-                            catch
-                            {
-                                continue;
-                            }
-                        }
-
-                        ++index;
-
-                        if (isDiff)
-                        {
-                            result.Add(diffs);
-                        }
-                    }
-                }
-            }
-
-            return result;
-        }
-
         public TrackingLog GenerateDetail(int actionId, string trackingValue, string spName, string actionName)
         {
             var detail = new TrackingLog();
@@ -187,60 +134,6 @@ namespace Sunplus.Accounting.Business.LogDisplay
                 || actionId == PTTemplateIns_Member
                 || actionId == PTTemplateUpd_Member;
             //|| actionId == PTTemplateDel_Member;
-        }
-
-        private TrackingNode ParsePTTemplateLog(string actionName, XElement element, int custLevel)
-        {
-            var trackingNode = new TrackingNode();
-            trackingNode.Groups = new List<TrackingGroup>();
-            trackingNode.N = actionName;
-            var trackingGroup = new TrackingGroup();
-            trackingGroup.N = actionName;
-            trackingGroup.Vals = new List<TrackingElement>();
-            trackingGroup.Tables = new List<TrackingTable>();
-            var trackingTable = new TrackingTable();
-            trackingTable.HeaderRows = new List<List<string>>();
-            trackingTable.Rows = new List<List<TrackingValue>>();
-            var headerRow1 = new List<string>() { "Template Name" };
-            var headerRow2 = new List<string>() { "Template Name" };
-            var tableRow = new List<TrackingValue>() { new TrackingValue { Val = element.Attribute("TemplateName").Value } };
-            foreach (var productGroup in element.Elements().GroupBy(e => e.Attribute("GroupID")))
-            {
-                if (productGroup.Count() == 1)
-                {
-                    var xmlRow = productGroup.First();
-                    var groupName = CacheRef.GetProductGroupName(int.Parse(xmlRow.Attribute("GroupID").Value));
-                    headerRow1.Add(GetCustomerLevelText(custLevel) + " PT");
-                    headerRow2.Add(groupName);
-                    tableRow.Add(LogFormater.FormatTrackingValue(xmlRow.Attribute("PT")));
-                }
-                else
-                {
-                    foreach (var pt in productGroup)
-                    {
-                        var subGroupName = CacheRef.GetSubGroupName(int.Parse(pt.Attribute("SubGroupID").Value));
-                        headerRow1.Add(GetCustomerLevelText(custLevel) + " PT");
-                        headerRow2.Add(subGroupName);
-                        tableRow.Add(LogFormater.FormatTrackingValue(pt.Attribute("PT")));
-                    }
-                }
-            }
-
-            headerRow1.Add("Selected by Default");
-            headerRow2.Add("Selected by Default");
-            tableRow.Add(LogFormater.FormatTrackingValue(element.Attribute("IsDefault")));
-            headerRow1.Add("Sub Acc Name");
-            headerRow2.Add("Sub Acc Name");
-            tableRow.Add(LogFormater.FormatTrackingValue(element.Attribute("SubAccName")));
-            headerRow1.Add("IP");
-            headerRow2.Add("IP");
-            tableRow.Add(LogFormater.FormatTrackingValue(element.Attribute("IP")));
-            //trackingTable.HeaderRows.Add(headerRow1);
-            trackingTable.HeaderRows.Add(headerRow2);
-            trackingTable.Rows.Add(tableRow);
-            trackingGroup.Tables.Add(trackingTable);
-            trackingNode.Groups.Add(trackingGroup);
-            return trackingNode;
         }
 
         private TrackingNode ParseSnapshootLog(XElement element)
