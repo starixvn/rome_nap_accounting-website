@@ -540,9 +540,6 @@ var ViewPT = {
             case 173: //VGaming
                 ViewPT.viewPTBasedOnKindOfCustomer(userName, 0, 0, 66);
                 break;
-            case 175: //Bitcoin Betting
-                ViewPT.viewPTBasedOnKindOfCustomer(userName, 0, 0, 69);
-                break;
             case 208: // Saba Casino
             case 209: // Saba Casino
             case 210: // Saba Casino

@@ -289,9 +289,6 @@
     <Reference Include="Fanex.Customer.Client.NETFramework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Customer.Client.NETFramework.1.0.0\lib\net461\Fanex.Customer.Client.NETFramework.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Client40, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.1.2.0\lib\net40\Fanex.CustomerSetting.Client40.dll</HintPath>
-    </Reference>
     <Reference Include="Fanex.CustomerSetting.EnableStatus.AllInOne, Version=2.0.3.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.CustomerSetting.EnableStatus.AllInOne.2.0.3.4\lib\net461\Fanex.CustomerSetting.EnableStatus.AllInOne.dll</HintPath>
     </Reference>
@@ -492,7 +489,7 @@
       <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.4.19\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Security, Version=1.0.1.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Security.1.0.2.4\lib\net40\Fanex.Tarus.Security.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.Security.1.0.2.5-RemoveMyanmarOdds02\lib\net40\Fanex.Tarus.Security.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Statements, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Statements.1.0.0.1\lib\net40\Fanex.Tarus.Statements.dll</HintPath>

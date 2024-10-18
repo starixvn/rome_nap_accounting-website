@@ -15,17 +15,11 @@ public partial class Others_Menu : System.Web.UI.Page
 {
     private string tplMenu = string.Empty;
     public string IsDirectCustomer = "false";
-    private enum products
-    {
-        virtualsport = 5,
-        Bitcoin = 69,
-    };
 
     protected void Page_Load(object sender, EventArgs e)
     {
         this.tplMenu = WebUtils.LoadTemplate("Customer/v2/MenuUpdatePT.htm");
         Boolean AllowedCS, hideVirtualSports, hideRNGLottery, hideLiveAndRNGCasino, hideRNGGames;
-        Boolean hideBitcoin;
         string[] queryStringParams = Request.UrlReferrer.Query.Split('&');
         string custID = queryStringParams[0].ToString();
         custID = custID.Substring(8, custID.Length - 8);
@@ -49,34 +43,12 @@ public partial class Others_Menu : System.Web.UI.Page
         int accId = Sunplus.Accounting.Core.Common.AppSession.AccId;
         hideVirtualSports = !CastAide.AsBoolean(db.Outputs["allowedvs"]) || !WebSettings.EnableVirtualSports;
         hideRNGLottery = !CastAide.AsBoolean(db.Outputs["allowedrnglottery"]) || Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdRNGLottery == 0;
-        hideBitcoin = !CastAide.AsBoolean(db.Outputs["allowedbitcoin"]) || !WebSettings.IsShowBitcoinBetting;
         hideLiveAndRNGCasino = !CastAide.AsBoolean(db.Outputs["allowedliverngcasino"]);
         hideRNGGames = !CastAide.AsBoolean(db.Outputs["allowedrnggames"]);
 
-        string creditDCSLink = string.Empty;
-
-
-        if (roleid == 1)
-        {
-            creditDCSLink = Page.ResolveUrl("~/DCS/ViewCustomerSetting?productId={0}&customerLevel=1&uplinelevel=2&customerId=" + custID);
-        }
-        else if (roleid == 2)
-        {
-            creditDCSLink = Page.ResolveUrl("~/DCS/ViewCustomerSetting?productId={0}&customerLevel=2&customerId=" + custID);
-        }
-        else if (roleid == 3)
-        {
-            creditDCSLink = Page.ResolveUrl("~/DCS/ViewCustomerSetting?productId={0}&customerLevel=3&customerId=" + custID);
-        }
-        else
-        {
-            var exChangeId = CastAide.AsInt32(queryStringParams[4].Split('=')[1]);
-            creditDCSLink = Page.ResolveUrl("~/DCS/ViewCustomerSetting?productId={0}&customerLevel=4&customerId=" + custID);
-        }
 
         this.RenderSettingTab("LiveAndRNGCasino", "{liveAndRNGCasinoLinkSetting}", BuildSettingUrl(CastAide.AsInt32(custID), roleid, roleid + 1, ProductGroupIdConstants.LiveAndRNGCasino), hideLiveAndRNGCasino);
         this.RenderSettingTab("RNGGames", "{rngGamesLinkSetting}", BuildSettingUrl(CastAide.AsInt32(custID), roleid, roleid + 1, ProductGroupIdConstants.RNGGames), hideRNGGames);
-        this.RenderSettingTab("Bitcoin", "{BitcoinLinkSetting}", string.Format(creditDCSLink, (int)products.Bitcoin), hideBitcoin);
         this.sMenu.Text = this.tplMenu;
     }
 

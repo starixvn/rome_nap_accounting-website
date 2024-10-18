@@ -143,7 +143,7 @@
       <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.4.19\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Security, Version=1.0.1.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Security.1.0.2.4\lib\net40\Fanex.Tarus.Security.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.Security.1.0.2.5-RemoveMyanmarOdds02\lib\net40\Fanex.Tarus.Security.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Statements, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Statements.1.0.0.1\lib\net40\Fanex.Tarus.Statements.dll</HintPath>
@@ -430,7 +430,6 @@
     <Compile Include="Customer\CustomerManager\ExtraCustomerInfoTabs\DownLineList.cs" />
     <Compile Include="Customer\CustomerManager\SettingTabs\OnlineList.cs" />
     <Compile Include="Customer\CustomerManager\ViewModels\CustomerInfoTabs\DownlineStatusViewModel.cs" />
-    <Compile Include="Customer\CustomerManager\ViewModels\SettingTabs\BitcoinBettingViewModel.cs" />
     <Compile Include="Customer\CustomerManager\ViewModels\BalanceInfoTabs\BalanceInfoViewModel.cs" />
     <Compile Include="Customer\CustomerManager\ViewModels\CustomerInfoTabs\CustInfoViewModel.cs" />
     <Compile Include="Customer\CustomerManager\ViewModels\CustomerInfoViewModel.cs" />

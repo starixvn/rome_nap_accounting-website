@@ -92,7 +92,6 @@
             TemplateHandler.Assign(ref htmlcontent, "{linkSettingInfo}", infoUrl);
             TemplateHandler.Assign(ref htmlcontent, "{liveAndRNGCasinoLinkSetting}", BuildDetailUrl(customerInfoViewModel.IsDeposit, custId, roleId, userName, customerInfoViewModel.CustomerSite, ProductGroupIdConstants.LiveAndRNGCasino));
             TemplateHandler.Assign(ref htmlcontent, "{rngGamesLinkSetting}", BuildDetailUrl(customerInfoViewModel.IsDeposit, custId, roleId, userName, customerInfoViewModel.CustomerSite, ProductGroupIdConstants.RNGGames));
-            TemplateHandler.Assign(ref htmlcontent, "{BitcoinLinkSetting}", string.Format(creditDCSLink, 69));
             TemplateHandler.Assign(ref htmlcontent, "{agcasinoLinkSetting}", agCasinoLinkSetting);
 
             //---- for menu details -----------
@@ -131,11 +130,6 @@
             if (customerInfoViewModel.HideRNGGames)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-RNGGames");
-            }
-
-            if (customerInfoViewModel.HideBitcoin)
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Bitcoin");
             }
 
             return htmlcontent;
