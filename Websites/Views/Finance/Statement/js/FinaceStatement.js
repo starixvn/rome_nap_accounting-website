@@ -16,6 +16,7 @@
     arrayMark: new Array(),
     VerifyParams: {
         RefNo: '',
+        RewardRefNo: '',
         IsVerify: false
     },
     getFinanceStatement: function () {

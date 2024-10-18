@@ -566,7 +566,7 @@ namespace Sunplus.Accounting.Business.Statement
                             if (entity.IsAllowedVerified)
                             {
                                 templateAction = string.Format(TEMPLATE_UNVERIFIED_BUTTON,
-                                                               entity.RefNo, isReward);
+                                                               entity.RefNo, isReward.ToString().ToLower());
 
                                 TemplateHandler.Assign(ref rowHtml, "{checked}", "checked=checked");
                                 TemplateHandler.Assign(ref rowHtml, "{disabled}", "disabled=disabled");
@@ -586,7 +586,7 @@ namespace Sunplus.Accounting.Business.Statement
                             if (entity.IsAllowedVerified)
                             {
                                 templateAction = string.Format(TEMPLATE_VERIFIED_BUTTON,
-                                                               entity.RefNo, isReward);
+                                                               entity.RefNo, isReward.ToString().ToLower());
                                 TemplateHandler.Assign(ref rowHtml, "{checked}", string.Empty);
                                 TemplateHandler.Assign(ref rowHtml, "{disabled}", string.Empty);
 
@@ -612,7 +612,6 @@ namespace Sunplus.Accounting.Business.Statement
 
                         TemplateHandler.Assign(ref rowHtml, "{action}", templateAction);
                         TemplateHandler.Assign(ref rowHtml, "{id}", entity.RefNo);
-                        TemplateHandler.Assign(ref rowHtml, "{isReward}", isReward.ToString().ToLower());
 
                         htmlReport.Append(rowHtml);
                         TemplateHandler.RemoveBlock(ref rowHtml, "nobr");
@@ -646,6 +645,9 @@ namespace Sunplus.Accounting.Business.Statement
                         TemplateHandler.Assign(ref contentTemplate, "{AllVerifyDisabled}", "disabled='disabled'");
                     else
                         TemplateHandler.Assign(ref contentTemplate, "{AllVerifyDisabled}", string.Empty);
+
+
+                    TemplateHandler.Assign(ref contentTemplate, "{isReward}", isReward.ToString().ToLower());
                 }
                 else
                 {

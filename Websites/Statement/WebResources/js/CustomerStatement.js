@@ -268,19 +268,23 @@ function VerifyTrans(btn) {
         let isReward = btn.dataset.isReward == 'true';
         if (btn.id.toLowerCase() == "btnverify") {
             //verify multiple
-            selectedRefNo = '{"' + (isReward ? 'rewardRefNoList' : 'refNoList') + '":"' + GetSelectedRefNo() + '"}';
+            selectedRefNo = GetSelectedRefNo();
         }
         else {
-            selectedRefNo = '{"' + (isReward ? 'rewardRefNoList' : 'refNoList') + '":"' + btn.id + '"}';
+            selectedRefNo = btn.id;
         }
 
         try { parent.BlockUI(); } catch (e) { }
         $.ajax({
             type: "POST",
-            url: "../Services/WCF/ServiceDailyTran.svc/VerifyTransaction",
+            url: window.rootUrl + "CustomerStatement/UpdateVerifyTrans",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
-            data: selectedRefNo,
+            data: JSON.stringify({
+                RefNo: (isReward ? "" : selectedRefNo),
+                RewardRefNo: (isReward ? selectedRefNo : ""),
+                IsVerify: true
+            }),
             success: VerifyTransCallBack
         });
     });
@@ -290,14 +294,18 @@ function UnVerifyTrans(trans) {
     __confirm("UnVerify transaction", "Are you sure you want to unverify the selected transaction(s)?", 400, 250, 'cfm_1', function () {
         __close(null, null, 'cfm_1', null);
         let isReward = trans.dataset.isReward == 'true';
-        var selectedRefNo = '{"' + (isReward ? 'rewardRefNo' : 'refNo') + '":' + trans.id + '}';
+        var selectedRefNo = trans.id;
         try { parent.BlockUI(); } catch (e) { }
         $.ajax({
             type: "POST",
-            url: "../Services/WCF/ServiceDailyTran.svc/UnVerifyTransaction",
+            url: window.rootUrl + "CustomerStatement/UpdateVerifyTrans",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
-            data: selectedRefNo,
+            data: JSON.stringify({
+                RefNo: (isReward ? "" : selectedRefNo),
+                RewardRefNo: (isReward ? selectedRefNo : ""),
+                IsVerify: false
+            }),
             success: VerifyTransCallBack
         });
     });
@@ -307,7 +315,7 @@ function UnVerifyTrans(trans) {
 function VerifyTransCallBack(data) {
 
     //request to process data successful
-    if (data == true) {
+    if (data.ErrorResults.length == 0) {
         setTimeout(() => {
             GetDataReport();
             __showMessage("", "Update data successfully", 350, 250);
