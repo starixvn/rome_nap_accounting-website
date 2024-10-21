@@ -240,6 +240,9 @@
         public ActionResult ONCasinoResult(ThirdPartyResultRequest request)
             => BaseResult(request, "ONCasinoResultConfigs");
 
+        public ActionResult PlaytechResult(ThirdPartyResultRequest request)
+            => BaseResult(request, "PlaytechResultConfigs");
+
         private ActionResult BaseResult(ThirdPartyResultRequest request, string configName)
         {
             SetProductResultTitle(request.ProductId);
