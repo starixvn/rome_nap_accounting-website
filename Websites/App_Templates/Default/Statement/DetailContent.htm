@@ -43,12 +43,12 @@
         <!--DelCol-->
         <td class="c">
             <!--ReverseCheckbox-->
-            <input type="checkbox" id="chkReverse_{Refno}" name="chkReverse" onclick="onClickCheckBoxItem('chkReverse_{Refno}')" />
+            <input type="checkbox" id="chkReverse_{Refno}" data-is-reward="{isReward}" name="chkReverse" onclick="onClickCheckBoxItem('chkReverse_{Refno}')" />
             <!--/ReverseCheckbox-->
         </td>
         <td align="center">
             <!--ReverseLink-->
-            <input class="reversed" type="button" onclick="ReverseTrans('{Refno}');" title="Reverse" value="Reverse">
+            <input class="reversed" type="button" onclick="ReverseTrans('{Refno}', {isReward});" title="Reverse" value="Reverse">
             <!--/ReverseLink-->
         </td>
         <!--/DelCol-->

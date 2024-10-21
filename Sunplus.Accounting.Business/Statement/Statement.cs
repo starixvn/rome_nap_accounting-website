@@ -299,6 +299,7 @@ namespace Sunplus.Accounting.Business.Statement
                             TemplateHandler.Assign(ref rowHtml, "{Date}", transDate);
                             TemplateHandler.Assign(ref rowHtml, "{Creator}", creator);
                             TemplateHandler.Assign(ref rowHtml, "{Refno}", refno);
+                            TemplateHandler.Assign(ref rowHtml, "{isReward}", isReward.ToString().ToLower());
                             TemplateHandler.Assign(ref rowHtml, "{Debit}", FormatHandler.FormatNumber20(debitAmt));
                             TemplateHandler.Assign(ref rowHtml, "{Credit}", FormatHandler.FormatNumber20(creditAmt));
                             if (isReward)

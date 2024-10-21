@@ -223,13 +223,13 @@ function exportStatementReport(rs) {
     statementReportManager.exportStatementReport(statementReportCriteria);
 }
 
-function ReverseTrans(refno) {
+function ReverseTrans(refno, isReward) {
     __confirm("Reverse transaction", "Do you want to reverse the transaction with Ref.No: " + refno + "?", 250, 150, 'cfm_1', function () {
         __close(null, null, 'cfm_1', null);
         __confirm("Reverse transaction", "To double check, do you want to reverse the transaction with Ref.No: " + refno + "?", 250, 180, 'cfm_2', function () {
             try { parent.BlockUI(); } catch (e) { }
             $.ajax({
-                url: 'DelTrans.ashx?refno=' + refno + '&custName=' + custName,
+                url: 'DelTrans.ashx?refno=' + refno + '&custName=' + custName + '&isReward=' + isReward,
                 dataType: 'html',
                 success: function (data) {
                     __close(null, null, 'cfm_2', null);
@@ -463,7 +463,7 @@ function ReverseTransAll() {
     let transIds = [];
     $("input[name='chkReverse']").each(function () {
         if (this.checked) {
-            transIds.push(this.id.replace('chkReverse_', ''));
+            transIds.push(this.id.replace('chkReverse_', '') + '_' + (this.dataset.isReward == 'true' ? 1 : 0));
         }
     });
     const refsno = transIds.join(', ');

@@ -195,17 +195,17 @@
             var ActionHTML = '';
             if (row.IsVerify) {
                 if (row.CheckerName == '') {
-                    ActionHTML = '<td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:75px;"><input id="' + row.RefNo + '" type="checkbox" onclick="financeStatement.checkSelectAll(this)" data-is-reward="' + row.IsReward +'"></div></td><td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:55px;"><input id="' + row.RefNo + '" class="verified" type="button" onclick="financeStatement.VerifyTrans(' + row.RefNo + ', ' + row.IsReward + ');" title="Verify" value="Verify"></div></td>';
+                    ActionHTML = '<td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:75px;"><input id="' + row.RefNo + '" type="checkbox" onclick="financeStatement.checkSelectAll(this)" data-is-reward="' + row.IsReward + '"></div></td><td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:55px;"><input id="' + row.RefNo + '" class="verified" type="button" onclick="financeStatement.VerifyTrans(' + row.RefNo + ', ' + row.IsReward + ');" title="Verify" value="Verify"></div></td>';
                 }
                 else {
-                    ActionHTML = '<td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:75px;"><input id="' + row.RefNo + '" type="checkbox" onclick="financeStatement.checkSelectAll(this)" data-is-reward="' + row.IsReward +'"</div></td><td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:55px;"><input id="' + row.RefNo + '" class="unverify" type="button" onclick="financeStatement.UnVerifyTrans(' + row.RefNo + ', ' + row.IsReward + ');" title="Verify" value="Unverify"></div></td>';
+                    ActionHTML = '<td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:75px;"><input id="' + row.RefNo + '" type="checkbox" onclick="financeStatement.checkSelectAll(this)" data-is-reward="' + row.IsReward + '"</div></td><td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:55px;"><input id="' + row.RefNo + '" class="unverify" type="button" onclick="financeStatement.UnVerifyTrans(' + row.RefNo + ', ' + row.IsReward + ');" title="Verify" value="Unverify"></div></td>';
                 }
             }
             else {
                 ActionHTML = '<td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:55px;">&nbsp;</div></td><td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:55px;">&nbsp;</div></td>';
             }
             html += ActionHTML;
-            ReverseHTML = '<td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:55px;"><input id="' + row.RefNo + '" class="reversed" type="button" onclick="financeStatement.DeleteTrans(\'' + row.RefNo + '\');" title="Reverse" value="Reverse"></div></td></tr>';
+            ReverseHTML = '<td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:55px;"><input id="' + row.RefNo + '" class="reversed" type="button" onclick="financeStatement.DeleteTrans(\'' + row.RefNo + '\', ' + row.IsReward + ');" title="Reverse" value="Reverse"></div></td></tr>';
         }
         html += ReverseHTML;
 
@@ -444,8 +444,18 @@
             });
         });
     },
+    GetSelectedRefNoForReverse: function (isReward) {
+        let refNos = [];
+
+        $("input[type='checkbox'][id!='chkAll']").each(function () {
+            if (this.checked == true && !this.disabled && this.dataset.isReward == isReward ?.toString())
+                refNos.push(this.id + '_' + (this.dataset.isReward == 'true' ? 1 : 0));
+        });
+
+        return refNos.join(', ');
+    },
     ReverseMultipleTrans: function () {
-        const refsno = financeStatement.GetSelectedRefNo();
+        const refsno = financeStatement.GetSelectedRefNoForReverse();
         __confirm("Reverse transaction", "Do you want to reverse the transaction(s) with Ref.No: " + refsno + "?", 400, 250, 'cfm_1', function () {
             __close(null, null, 'cfm_1', null);
             __confirm("Reverse transaction", "To double check, do you want to reverse the transaction(s) with Ref.No: " + refsno + "?", 400, 250, 'cfm_2', function () {
@@ -474,9 +484,9 @@
             });
         });
     },
-    DeleteTrans: function (refno) {
+    DeleteTrans: function (refno, isReward) {
         financeStatement.VerifyParams.RefNo = refno;
-
+        financeStatement.VerifyParams.IsReward = isReward;
         __confirm("Reverse transaction", "Do you want to reverse the transaction with Ref.No: " + refno + "?", 400, 250, 'cfm_1', function () {
             __close(null, null, 'cfm_1', null);
             __confirm("Reverse transaction", "To double check, do you want to reverse the transaction with Ref.No: " + refno + "?", 400, 250, 'cfm_2', function () {
