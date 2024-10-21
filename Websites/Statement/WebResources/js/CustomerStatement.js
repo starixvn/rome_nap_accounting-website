@@ -468,9 +468,9 @@ function ReverseTransAll() {
     });
     const refsno = transIds.join(', ');
     const _this = this;
-    __confirm("Reverse transaction", "Do you want to reverse the transaction(s) with Ref.No: " + refsno + "?", 350, 250, 'cfm_1', function () {
+    __confirm("Reverse transaction", "Do you want to reverse the transaction(s) with Ref.No: " + refsno.replaceAll('_0', '').replaceAll('_1', '') + "?", 350, 250, 'cfm_1', function () {
         __close(null, null, 'cfm_1', null);
-        __confirm("Reverse transaction", "To double check, do you want to reverse the transaction(s) with Ref.No: " + refsno + "?", 350, 250, 'cfm_2', function () {
+        __confirm("Reverse transaction", "To double check, do you want to reverse the transaction(s) with Ref.No: " + refsno.replaceAll('_0', '').replaceAll('_1', '') + "?", 350, 250, 'cfm_2', function () {
             try { parent.BlockUI(); } catch (e) { }
             $.ajax({
                 url: 'ReverseMultipleTrans.ashx?refsno=' + refsno + '&custName=' + custName,
