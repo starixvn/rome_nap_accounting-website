@@ -16,6 +16,8 @@
     <Setting Key="AdminSelByGroupID" SpName="Acc_Con_AdminSelByGroupID" DbName="DBPOL.Nap_UserControl.wsv_nap" />
     <Setting Key="GroupPolicySel" SpName="Acc_Con_GroupPolicySel" DbName="DBPOL.Nap_UserControl.wsv_nap" />
     <Setting Key="AdminPolicySelByCustID" SpName="Acc_Con_AdminPolicySelByCustID" DbName="DBPOL.Nap_UserControl.wsv_nap" />
+    <Setting Key="Acc_Con_AdminPolicyIns" SpName="Acc_Con_AdminPolicyIns" DbName="DBPOL.Nap_UserControl.wsv_nap" />
+    <Setting Key="NAP_Admin_OTPIns" SpName="NAP_Admin_OTPIns" DbName="DBPOL.Nap_UserControl.wsv_nap" />
   </Function>
   <Function Name="Policy">
     <Setting Key="Con_CheckPermission" SpName="Acc_Con_CheckPermission" DbName="DBPOL.Nap_UserControl.wsv_nap" />

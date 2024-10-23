@@ -120,13 +120,13 @@ $.fn.forceNumber = function (keyupCallback) {
                 }
             },
             "json")
-        .fail(function (jqXHR) {
-            if (jqXHR.status === 401 || jqXHR.status === 403) {
-                var denyObject = $.parseJSON(jqXHR.responseText);
-                showMessage(jqXHR.status, denyObject.ErrorMessage);
-            }
-        })
-        .always($.unblockUI);
+            .fail(function (jqXHR) {
+                if (jqXHR.status === 401 || jqXHR.status === 403) {
+                    var denyObject = $.parseJSON(jqXHR.responseText);
+                    showMessage(jqXHR.status, denyObject.ErrorMessage);
+                }
+            })
+            .always($.unblockUI);
     }
 
     function validateSourceAgentAndRenderPreviewTable() {
@@ -150,13 +150,13 @@ $.fn.forceNumber = function (keyupCallback) {
                 }
             },
             "json")
-        .fail(function (jqXHR) {
-            if (jqXHR.status === 401 || jqXHR.status === 403) {
-                var denyObject = $.parseJSON(jqXHR.responseText);
-                showMessage(jqXHR.status, denyObject.ErrorMessage);
-            }
-        })
-        .always($.unblockUI);
+            .fail(function (jqXHR) {
+                if (jqXHR.status === 401 || jqXHR.status === 403) {
+                    var denyObject = $.parseJSON(jqXHR.responseText);
+                    showMessage(jqXHR.status, denyObject.ErrorMessage);
+                }
+            })
+            .always($.unblockUI);
     }
 
     function getAgentUsernames() {
@@ -239,15 +239,15 @@ $.fn.forceNumber = function (keyupCallback) {
                     }
                 },
                 "json")
-            .fail(function (jqXHR) {
-                if (jqXHR.status === 401 || jqXHR.status === 403) {
-                    var denyObject = $.parseJSON(jqXHR.responseText);
-                    rowAccount.addClass("text-red").html(denyObject.ErrorMessage);
-                }
-            })
-            .always(function () {
-                copyMultipleAccounts(existedAgent, agentUsernames);
-            });
+                .fail(function (jqXHR) {
+                    if (jqXHR.status === 401 || jqXHR.status === 403) {
+                        var denyObject = $.parseJSON(jqXHR.responseText);
+                        rowAccount.addClass("text-red").html(denyObject.ErrorMessage);
+                    }
+                })
+                .always(function () {
+                    copyMultipleAccounts(existedAgent, agentUsernames);
+                });
         }
     }
 

@@ -1,19 +1,20 @@
 ﻿using System.Collections.Generic;
 using Fanex.NAP.Framework.Data;
 using Fanex.Tarus.Customer.Criteria.LicenseeDcsSetting;
+using Fanex.Tarus.Customer.DataAccess.Licensee;
 using Fanex.Tarus.Customer.Entities;
 using Fanex.Tarus.Customer.Entities.LicenseeDcsSetting;
 
 namespace Fanex.Tarus.Customer.DataAccess.LicenseeDcsSetting
 {
-    internal interface ILicenseeDcsSettingDataAccess
+    internal interface ILicenseeDcsSettingDataAccess : ILicenseeDataAccess
     {
         IEnumerable<string> GetSites(ICriteria criteria);
 
         IEnumerable<BaseModel> GetSupers(ICriteria criteria);
 
         IEnumerable<BaseModelExtra> GetAgents(ICriteria criteria);
-        
+
         IEnumerable<ProductSettingTypeEntity> GetProducts(ICriteria criteria);
 
         IEnumerable<PTEntity> GetPositionTaking(ICriteria criteria);
@@ -37,5 +38,7 @@ namespace Fanex.Tarus.Customer.DataAccess.LicenseeDcsSetting
         IEnumerable<StakeLevelGroupEntity> GetStakeLevelGroups(GetStakeLevelGroupCriteria criteria);
 
         Result ExecuteNonQuery(ICriteria criteria);
+
+        UpdateStatusResult UpdateStatus(UpdateStatusCriteria criteria);
     }
 }

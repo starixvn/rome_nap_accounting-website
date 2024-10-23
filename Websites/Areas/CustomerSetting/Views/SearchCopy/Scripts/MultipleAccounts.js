@@ -222,7 +222,8 @@ $.fn.forceNumber = function () {
             sourceCustId: userid,
             custLevel: existedUser.roleId,
             uplineId: parentId,
-            code: vm.code
+            code: vm.code,
+            currency: isSuper ? $('#currency').data().currencyId : null
         };
     }
 
@@ -543,8 +544,8 @@ $.fn.forceNumber = function () {
         });
     }
 
-    function renderCurrency(currency) {
-        $("#currency").text(currency);
+    function renderCurrency(currency, currencyid) {
+        $("#currency").text(currency).data('currency-id', currencyid);
     }
 
     function formatCurrency(value) {
@@ -592,7 +593,7 @@ $.fn.forceNumber = function () {
                 existedUser.site = custInfo.Site;
                 existedUser.isDirectCustomer = custInfo.IsDirectCustomer;
 
-                renderCurrency(custInfo.CurrencyName);
+                renderCurrency(custInfo.CurrencyName, custInfo.CurrencyId);
 
                 if (custInfo.RoleId == MEMBER) {
                     renderMemberMaxCredit(custInfo);

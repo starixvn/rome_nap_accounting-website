@@ -4,6 +4,7 @@
     using Fanex.Tarus.Customer.Business.LicenseeMember;
     using Fanex.Tarus.Customer.Requests.LicenseeMember;
     using Fanex.Tarus.Infrastructure.Common;
+    using Fanex.Tarus.Infrastructure.Extensions;
     using Fanex.Tarus.Infrastructure.Helper;
     using Fanex.Tarus.Web.Controllers;
     using Fanex.Tarus.Web.Controllers.Filters;
@@ -11,6 +12,7 @@
     public class LicenseeMemberController : BaseController
     {
         private readonly ILicenseeMemberService service;
+
         public LicenseeMemberController() : this(null)
         {
         }
@@ -29,7 +31,10 @@
         [HttpGet, AuthenticateHost]
         public ActionResult CheckExistAgent(string agentName)
         {
-            return Json(service.CheckExistAgent(agentName), JsonRequestBehavior.AllowGet);
+            var siteDB = ObjectDbExtensions.GetSiteDBConfigByUsername(agentName);
+            var agentId = service.CheckExistAgent(agentName, siteDB.CustDBGroupID);
+
+            return Json(new { agentId, custDBGroupID = siteDB.CustDBGroupID, site = siteDB.Site }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost, AuthenticateHost]

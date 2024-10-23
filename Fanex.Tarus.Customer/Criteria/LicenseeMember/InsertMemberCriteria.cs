@@ -16,7 +16,7 @@
 
         public string Language { get; set; }
 
-        public  int SubAccID { get; set; }
+        public int SubAccID { get; set; }
 
         public int CustId { get; set; }
 
@@ -24,10 +24,20 @@
 
         public string ErrMsg { get; set; }
 
+        [SpParam(Ignored = true)]
+        public int CustDBGroupId { get; set; }
+
         public override string GetSettingKey()
-            => "NewLicensee_AdNewMember";
+        {
+            if (CustDBGroupId == 0)
+            {
+                return "NewLicensee_AdNewMember";
+            }
+
+            return $"SiteDB{CustDBGroupId}_NewLicensee_AdNewMember";
+        }
 
         public override bool IsValid()
-            => Recommend > 0 && !string.IsNullOrWhiteSpace(Username) && Creator > 0; 
+            => Recommend > 0 && !string.IsNullOrWhiteSpace(Username) && Creator > 0;
     }
 }

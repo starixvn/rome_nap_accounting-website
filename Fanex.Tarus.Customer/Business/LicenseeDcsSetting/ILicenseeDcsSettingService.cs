@@ -10,9 +10,9 @@ namespace Fanex.Tarus.Customer.Business.LicenseeDcsSetting
         IEnumerable<string> GetSites();
 
         IEnumerable<BaseModel> GetSupers(string site);
-        
+
         IEnumerable<BaseModelExtra> GetAgents(string superIds);
-        
+
         IEnumerable<ProductSettingTypeEntity> GetProducts();
 
         IEnumerable<PTEntity> GetPositionTaking(int productId, int superId);
@@ -104,6 +104,5 @@ namespace Fanex.Tarus.Customer.Business.LicenseeDcsSetting
             bool isAgentOnly,
             int userId,
             string ip);
-        
     }
 }

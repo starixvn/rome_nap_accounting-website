@@ -5,5 +5,9 @@
         public int Recommend { get; set; }
 
         public string Username { get; set; }
+
+        public int CustDBGroupID { get; set; }
+
+        public string Site { get; set; }
     }
 }

@@ -25,7 +25,6 @@
     <Setting Key="Acc_CustomerUpdDoubleCommLosing" SpName="Acc_CustomerUpdDoubleCommLosing" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_CustomerSettingsCloneFromRealAccount" SpName="Acc_CustomerSettingsCloneFromRealAccount" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_CustSetting_DCSSettingCopyInsertMember" SpName="Acc_CustSetting_DCSSettingCopyInsertMember" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="Acc_SiteDBConfigSel" SpName="Acc_SiteDBConfigSel_KL" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Customer Status">
 
@@ -126,8 +125,8 @@
     <Setting Key="Acc_CreditTermUpdSetGroupHeadline" SpName="Acc_CreditTermUpdSetGroupHeadline" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="User control">
-    <Setting Key="Con_AdminIns" SpName="Acc_Con_AdminIns" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="Acc_Con_AdminSelPwdVerify" SpName="Acc_Con_AdminSelPwdVerify" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Con_AdminIns" SpName="Acc_Con_AdminIns" DbName="DBCust3.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerInsUserInfo_Rollback" SpName="Acc_CustomerInsUserInfo_Rollback" DbName="DBCust3.CustDB.wsv_nap" />
     <Setting Key="Con_AdminUpd" SpName="Acc_Con_AdminUpd" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="AdminUpdClosed" SpName="Acc_Con_AdminUpdClosed" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_OperatorDel" SpName="Acc_OperatorDel" DbName="DBCust.CustDB.wsv_nap" />
@@ -149,9 +148,12 @@
     <Setting Key="Age_CustomerUpdMemBetSetting" SpName="Age_CustomerUpdMemBetSetting" DbName="DBCust.CustDB.wsv_nap" Plain="0" />
   </Function>
   <Function Name="SearchCopy">
-    <Setting Key="Acc_CustomerSelExistingUsernames" SpName="Acc_CustomerSelExistingUsernames" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerSelExistingUsernames" SpName="Acc_CustomerSelExistingUsernames" DbName="DBGLOB.GlobCustDB.wsv_nap" />
     <Setting Key="Acc_CustomerInsMember_CloneSetting_Com" SpName="Acc_CustomerInsMember_CloneSetting_Com" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_CustomerUplineUserNameSel" SpName="Acc_CustomerUplineUserNameSel" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerUplineUserNameSel" SpName="DBSite1_Acc_CustomerUplineUserNameSel" DbName="DBCust1.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerUplineUserNameSel" SpName="DBSite2_Acc_CustomerUplineUserNameSel" DbName="DBCust2.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerUplineUserNameSel" SpName="DBSite3_Acc_CustomerUplineUserNameSel" DbName="DBCust3.CustDB.wsv_nap" />
   </Function>
   <Function Name="Esports">
     <Setting Key="Acc_CustomerUpdDisableEsports" SpName="Acc_CustomerUpdDisableEsports" DbName="DBCust.CustDB.wsv_nap" />
@@ -233,7 +235,6 @@
     <Setting Key="Acc_CustomerNoCommCheck" SpName="Acc_CustomerNoCommCheck" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Licensee DCS Setting">
-    <Setting Key="NAP_LM_LicenseeSuperList" SpName="NAP_LM_LicenseeSuperList" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_CustomerSelAgentListBySuper" SpName="Acc_CustomerSelAgentListBySuper" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_Dep_SelDCSProduct" SpName="Acc_Dep_SelDCSProduct" DbName="DBCust.CustDB.wsv_nap" />
 
@@ -326,9 +327,8 @@
     <Setting Key="Acc_CustomerSelPlayerId" SpName="Acc_CustomerSelPlayerId" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Create Licensee Subsidiary">
-    <Setting Key="Acc_Dep_CustomerGenLicenseeSubUsername" SpName="Acc_Dep_CustomerGenLicenseeSubUsername" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_Dep_CustomerInsLicenseeSubsidiary" SpName="Acc_Dep_CustomerInsLicenseeSubsidiary" DbName="DBCust.CustDB.wsv_nap" />
-  </Function>  
+  </Function>
   <Function Name="Lock un-suspend/reopen">
     <Setting Key="Acc_CustomerLockSuspendSel" SpName="Acc_CustomerLockSuspendSel" DbName="DBCUST.CustDB.wsv_nap" Plain="0" />
     <Setting Key="Acc_CustomerLockSuspendUpd" SpName="Acc_CustomerLockSuspendUpd" DbName="DBCUST.CustDB.wsv_nap" Plain="0" />
@@ -454,9 +454,6 @@
   </Function>
   <Function Name="Licensee Configuration > New Licensee Member">
     <Setting Key="Acc_Dep_CheckExistedAccount" SpName="Acc_Dep_CheckExistedAccount" DbName="DBCUST.CustDB.wsv_nap" />
-  </Function>
-  <Function Name="Helper">
-    <Setting Key="DBCUST_Acc_SiteDBConfigSel" SpName="Acc_SiteDBConfigSel" DbName="DBCUST.CustDB.wsv_nap" />
   </Function>
   <Function Name="Customer Setting">
     <Setting Key="Acc_LiteMode_CustSetting_ProductProfileSelect" SpName="Acc_LiteMode_CustSetting_ProductProfileSelect" DbName="DBCUST.CustDB.wsv_nap" />

@@ -133,14 +133,14 @@
     <Reference Include="Fanex.Tarus.Admin, Version=1.0.5.12, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Admin.1.0.5.13\lib\net461\Fanex.Tarus.Admin.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Tarus.DataAccess.Implement, Version=1.0.1.10, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.DataAccess.Implement.1.0.1.11\lib\net40\Fanex.Tarus.DataAccess.Implement.dll</HintPath>
+    <Reference Include="Fanex.Tarus.DataAccess.Implement, Version=1.0.1.12, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.DataAccess.Implement.1.0.1.12\lib\net40\Fanex.Tarus.DataAccess.Implement.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Excels, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Excels.1.0.0.3\lib\net40\Fanex.Tarus.Excels.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.4.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.4.15\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
+    <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.4.17, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.4.17\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Security, Version=1.0.1.9, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Security.1.0.2.4\lib\net40\Fanex.Tarus.Security.dll</HintPath>
@@ -259,8 +259,8 @@
     <Reference Include="SixLabors.ImageSharp, Version=2.0.0.0, Culture=neutral, PublicKeyToken=d998eea7b14cab13, processorArchitecture=MSIL">
       <HintPath>..\packages\SixLabors.ImageSharp.2.1.4\lib\netstandard2.0\SixLabors.ImageSharp.dll</HintPath>
     </Reference>
-    <Reference Include="Sunplus.Accounting.Core, Version=2.0.4.29, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.Core.2.0.4.31\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
+    <Reference Include="Sunplus.Accounting.Core, Version=2.0.4.32, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sunplus.Accounting.Core.2.0.4.32\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.9.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.9.4\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
@@ -418,6 +418,7 @@
     <Compile Include="Admin\ExternalSite.cs" />
     <Compile Include="Admin\IExternalSite.cs" />
     <Compile Include="BootStrappers\UnityBootStrapper.cs" />
+    <Compile Include="LogDisplay\NewFormatCommissionLogFormatter.cs" />
     <Compile Include="ProductGroupIdConstants.cs" />
     <Compile Include="CreditTerm\CreditTermManager.cs" />
     <Compile Include="CreditTerm\ICreditTermManager.cs" />
