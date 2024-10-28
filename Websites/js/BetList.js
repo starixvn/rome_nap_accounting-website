@@ -1141,9 +1141,11 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
         case 241: // BBIN
             return getBBinParam(custId, transId3rd, gameId3rd, currencyId, siteId);
 
+        case 243: // Sexy Gaming
+            return getSexyGamingParam(custId, transId3rd, currencyId, siteId, gameId3rd);
+
         case 211: // Allbet.        
-        case 242: // GTCasino.
-        case 243: // SexyGaming.
+        case 242: // GTCasino.        
         case 244: // SaGaming.
         case 233: // WM
         case 159: // YeeBet
@@ -1354,16 +1356,14 @@ function getRNGCasinoParam(custId, transId3rd, gameId3rd, currencyId, siteId) {
 function getLiveCasinoParam(transdesc, betcheck, bettype, sporttype) {
     var sporttypes = {};
     sporttypes["211"] = "Allbet Result";
-    sporttypes["242"] = "IBCBet Live Casino Result";
-    sporttypes["243"] = "AE Sexy Result";
+    sporttypes["242"] = "IBCBet Live Casino Result";    
     sporttypes["244"] = "SA Gaming Result";
     sporttypes["233"] = "WM Result";
     sporttypes["159"] = "YeeBet Result";
 
     var resultPageBySportTypes = {};
     resultPageBySportTypes["211"] = "Report/ViewAllbetCasinoResult.aspx";
-    resultPageBySportTypes["242"] = "Report/ViewGTCasinoResult.aspx";
-    resultPageBySportTypes["243"] = "Report/ViewSexyGamingResult.aspx";
+    resultPageBySportTypes["242"] = "Report/ViewGTCasinoResult.aspx";    
     resultPageBySportTypes["244"] = "Report/ViewSAGamingResult.aspx";
     resultPageBySportTypes["233"] = "Report/ViewWMResult.aspx";
     resultPageBySportTypes["159"] = "Report/ViewWMResult.aspx";
@@ -1502,6 +1502,16 @@ function getJiliParam(custId, transId3rd, gameId3rd, currencyId, betType, siteId
         url: "ThirdParty/JiliResult",
         title: "Jili Result",
         jsonParam: { custId: custId, transId3rd: transId3rd, siteId: siteId, gameId3rd: gameId3rd, currencyId: currencyId, BetTypeId: betType, productId: 75 },
+        width: 850,
+        height: 800
+    };
+}
+
+function getSexyGamingParam(custId, transId3rd, currencyId, siteId, siteName) {
+    return {
+        url: "ThirdParty/SexyGamingResult",
+        title: "AE Sexy Result",
+        jsonParam: { custId: custId, transId3rd: transId3rd, siteId: siteId, currencyId: currencyId, siteName: siteName, productId: 45 },
         width: 850,
         height: 800
     };

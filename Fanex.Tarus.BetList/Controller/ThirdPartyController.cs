@@ -1,5 +1,6 @@
 ﻿namespace Fanex.Tarus.BetList.Controller
 {
+    using System.Collections.Generic;
     using System.Web.Mvc;
     using CustomerSetting.Module.Core.Web.Controllers;
     using Fanex.Result.Core.ThirdParty;
@@ -13,8 +14,7 @@
         private string ProductResultTitle = string.Empty;
 
         public ThirdPartyController()
-        {
-        }
+        { }
 
         public ActionResult SportsLotteryResult(ThirdPartyResultRequest request)
         {
@@ -182,7 +182,7 @@
             var result = service.GetResultGET(resultRequest);
 
             return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(ProductResultTitle, result));
-        }   
+        }
 
         public ActionResult JiliResult(ThirdPartyResultRequest request)
         {
@@ -198,12 +198,22 @@
         public ActionResult WEResult(ThirdPartyResultRequest request)
             => BaseResult(request, "WEResultConfigs");
 
+        public ActionResult SexyGamingResult(ThirdPartyResultRequest request)
+        {
+            var resultRequest = new ResultRequest(request.CustId, request.TransId3rd, request.GameId3rd, request.CurrencyId, request.SiteId)
+            {
+                Site = request.GameId3rd
+            };
+
+            return BaseResult(request, resultRequest, "SexyGamingResultConfigs");
+        }        
+
         public ActionResult Live22Result(ThirdPartyResultRequest request)
             => BaseResult(request, "Live22ResultConfigs");
 
         public ActionResult UUSlotsResult(ThirdPartyResultRequest request)
             => BaseResult(request, "UUSlotsResultConfigs");
-            
+
         public ActionResult VGamingResult(ThirdPartyResultRequest request)
         {
             SetProductResultTitle(request.ProductId);
@@ -222,7 +232,7 @@
 
         public ActionResult FACHAIResult(ThirdPartyResultRequest request)
             => BaseResult(request, "FACHAIResultConfigs");
-            
+
         public ActionResult NextspinResult(ThirdPartyResultRequest request)
             => BaseResult(request, "NextspinResultConfigs");
 
@@ -275,5 +285,7 @@
         public int BetTypeId { get; set; }
 
         public string EndTime { get; set; }
+
+        public string Site { get; set; }
     }
 }
