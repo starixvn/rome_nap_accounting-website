@@ -53,8 +53,14 @@ namespace Fanex.Tarus.Customer.Controller
         [AuthenticateRead]
         public ActionResult GetAgentOddGroups(string custids, string siteName)
         {
-            string listOfferNewOddGroupSites = ConfigurationManager.AppSettings["OfferNewOddGroupSites"].ToString();
-            ViewBag.IsDisplayNewOddsGroup = listOfferNewOddGroupSites.Split(',').ToList().FindIndex(x => x.Equals(siteName, StringComparison.OrdinalIgnoreCase)) != -1;
+            string listOfferOddGroupISites = ConfigurationManager.AppSettings["OfferOddGroupISites"].ToString();
+            ViewBag.IsDisplayOddsGroupI = listOfferOddGroupISites.Split(',').ToList().FindIndex(x => x.Equals(siteName, StringComparison.OrdinalIgnoreCase)) != -1;
+
+            string listOfferOddGroupMSites = ConfigurationManager.AppSettings["OfferOddGroupMSites"].ToString();
+            ViewBag.IsDisplayOddsGroupM = listOfferOddGroupMSites.Split(',').ToList().FindIndex(x => x.Equals(siteName, StringComparison.OrdinalIgnoreCase)) != -1;
+
+            string listOfferOddGroupQSites = ConfigurationManager.AppSettings["OfferOddGroupQSites"].ToString();
+            ViewBag.IsDisplayOddsGroupQ = listOfferOddGroupQSites.Split(',').ToList().FindIndex(x => x.Equals(siteName, StringComparison.OrdinalIgnoreCase)) != -1;
 
             string listOfferOddGroupGSites = ConfigurationManager.AppSettings["OfferOddGroupGSites"].ToString();
             ViewBag.IsDisplayOddsGroupG = listOfferOddGroupGSites.Split(',').ToList().FindIndex(x => x.Equals(siteName, StringComparison.OrdinalIgnoreCase)) != -1;

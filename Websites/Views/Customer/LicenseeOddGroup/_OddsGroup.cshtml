@@ -50,11 +50,17 @@
                             <option value="d" @(item.OddsGroup.Equals("d") ? "selected" : string.Empty)>d</option>
                             <option value="e" @(item.OddsGroup.Equals("e") ? "selected" : string.Empty)>e</option>
                             <option value="f" @(item.OddsGroup.Equals("f") ? "selected" : string.Empty)>f</option>
-                            @if (ViewBag.IsDisplayNewOddsGroup)
+                            @if (ViewBag.IsDisplayOddsGroupI)
                             {
                                 <option value="i" @(item.OddsGroup.Equals("i") ? "selected" : string.Empty)>i</option>
-                                <option value="m" @(item.OddsGroup.Equals("m") ? "selected" : string.Empty)>m</option>
-                                <option value="q" @(item.OddsGroup.Equals("q") ? "selected" : string.Empty)>q</option>
+                            }
+                            @if (ViewBag.IsDisplayOddsGroupM)
+                            {
+	                            <option value="m" @(item.OddsGroup.Equals("m") ? "selected" : string.Empty)>m</option>
+                            }
+                            @if (ViewBag.IsDisplayOddsGroupQ)
+                            {
+	                            <option value="q" @(item.OddsGroup.Equals("q") ? "selected" : string.Empty)>q</option>
                             }
                             @if (ViewBag.IsDisplayOddsGroupG)
                             {
