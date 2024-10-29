@@ -806,6 +806,7 @@ transfer.YesterdayTransactionsForm = {
         var IsShowReward = $("#isShowReward").val() == "true";
         var isConfrimReward = IsShowReward && $("#chk-confrimpayment").is(":checked");
         var rewardCurrency = $("#RewardCurrency").val();
+        var expenseCurrency = $("#ExpenseCurrency").val();
         if (!isTransferYesterday && !isConfrimReward) {
             return false;
         }
@@ -859,6 +860,7 @@ transfer.YesterdayTransactionsForm = {
             param.RewardExRate = $("#txtRewardRate").val();
             param.RewardUserName = $("#RewardCode").val();
             param.RewardCurrency = rewardCurrency;
+            param.expenseCurrency = expenseCurrency;
         }
 
         param.IsShowReward = isConfrimReward;
