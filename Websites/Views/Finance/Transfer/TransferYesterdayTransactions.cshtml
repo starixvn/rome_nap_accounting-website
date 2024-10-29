@@ -88,9 +88,9 @@
 				<td class="l">
 					<input class="txt" type="text" id="txtRewardAmount" name="txtRewardAmount" size="5" value="@Model.RewardAmount" disabled="disabled" readonly="" /> @Model.RewardCurrency
 				</td>
-				<td class="l b">
-					System Ex.Rate (@Model.RewardCurrency/RM):
-				</td>
+                <td class="l b">
+                    System Ex.Rate (@Model.RewardCurrency/@Model.ExpenseCurrency):
+                </td>
 				<td class="l">
 					<input type="text" class="txt" id="txtRewardRate" name="txtRewardRate" size="10" value="@Model.RewardExrate" readonly=""
 					       style="text-align: left; border: none" />
@@ -100,9 +100,9 @@
 				<td class="l b">
 					Expense Amount:
 				</td>
-				<td class="l">
-					<input class="txt" type="text" id="txtExpanseAmount" name="txtExpanseAmount" size="5" value="@Model.ExpensiseAmount" disabled="disabled" readonly="" /> RM
-				</td>
+                <td class="l">
+                    <input class="txt" type="text" id="txtExpanseAmount" name="txtExpanseAmount" size="5" value="@Model.ExpensiseAmount" disabled="disabled" readonly="" /> @Model.ExpenseCurrency
+                </td>
 				<td class="l b" colspan="2"></td>
 			</tr>
 		</table>
