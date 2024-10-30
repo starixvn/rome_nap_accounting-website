@@ -347,7 +347,11 @@
                 data: JSON.stringify(financeStatement.VerifyParams),
                 success: function (result) {
                     let message = "";
-                    const successRefNos = result.SuccessRefNos;
+                    const successRefNos = result.SuccessRefNos.reduce(function (a, b) {
+                        if (a.indexOf(b) < 0) a.push(b);
+                        return a;
+                    }, []);
+;
                     if (successRefNos && successRefNos.length > 0) {
                         message = "<div style='color:green'>Update successfully: " + successRefNos.join(', ') + "</div>";
                     }
@@ -406,7 +410,10 @@
                 data: JSON.stringify(financeStatement.VerifyParams),
                 success: function (result) {
                     let message = "";
-                    const successRefNos = result.SuccessRefNos;
+                    const successRefNos = result.SuccessRefNos.reduce(function (a, b) {
+                        if (a.indexOf(b) < 0) a.push(b);
+                        return a;
+                    }, []);
                     if (successRefNos && successRefNos.length > 0) {
                         message = "<div style='color:green'>Update successfully: " + successRefNos.join(', ') + "</div>";
                     }
