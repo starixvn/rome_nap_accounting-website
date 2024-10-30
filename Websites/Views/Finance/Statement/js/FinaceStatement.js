@@ -195,10 +195,10 @@
             var ActionHTML = '';
             if (row.IsVerify) {
                 if (row.CheckerName == '') {
-                    ActionHTML = '<td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:75px;"><input id="' + row.RefNo + '" type="checkbox" onclick="financeStatement.checkSelectAll(this)" data-is-reward="' + row.IsReward + '"></div></td><td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:55px;"><input id="' + row.RefNo + '" class="verified" type="button" onclick="financeStatement.VerifyTrans(' + row.RefNo + ', ' + row.IsReward + ');" title="Verify" value="Verify"></div></td>';
+                    ActionHTML = '<td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:75px;"><input id="' + row.RefNo + '" type="checkbox" onclick="financeStatement.checkSelectAll(this)" data-is-reward="' + row.IsReward + '"></div></td><td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:55px;"><input id="' + row.RefNo + '" class="verified" type="button" onclick="financeStatement.VerifyTrans(\'' + row.RefNo + '\', ' + row.IsReward + ');" title="Verify" value="Verify"></div></td>';
                 }
                 else {
-                    ActionHTML = '<td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:75px;"><input id="' + row.RefNo + '" type="checkbox" onclick="financeStatement.checkSelectAll(this)" data-is-reward="' + row.IsReward + '"</div></td><td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:55px;"><input id="' + row.RefNo + '" class="unverify" type="button" onclick="financeStatement.UnVerifyTrans(' + row.RefNo + ', ' + row.IsReward + ');" title="Verify" value="Unverify"></div></td>';
+                    ActionHTML = '<td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:75px;"><input id="' + row.RefNo + '" type="checkbox" onclick="financeStatement.checkSelectAll(this)" data-is-reward="' + row.IsReward + '"</div></td><td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:55px;"><input id="' + row.RefNo + '" class="unverify" type="button" onclick="financeStatement.UnVerifyTrans(\'' + row.RefNo + '\', ' + row.IsReward + ');" title="Verify" value="Unverify"></div></td>';
                 }
             }
             else {
