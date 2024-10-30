@@ -4,4 +4,7 @@
     <Setting Key="Acc_CRM_HeadlineUpd" SpName="Acc_CRM_HeadlineUpd" DbName="DBCRM.bodb_CRM.wsv_nap" Plain="0" />
     <Setting Key="Acc_CRM_CustomerSiteUpd" SpName="Acc_CRM_CustomerSiteUpd" DbName="DBCRM.bodb_CRM.wsv_nap" Plain="0" />
   </Function>
+  <Function Name="Change UserName">
+    <Setting Key="Acc_CRM_CustomerUpdUsername" SpName="Acc_CRM_CustomerUpdUsername_UAT2" DbName="DBCRM.bodb_CRM.wsv_nap" />
+  </Function>
 </Functions>

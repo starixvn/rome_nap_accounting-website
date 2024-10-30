@@ -48,7 +48,7 @@ public class EditUsername : BaseHandler
 
                 if (err.IsSuccess())
                 {
-                    context.Response.Write("parent.parent.jQuery.unblockUI();parent.alert_error('" + AlertMessage.GetMsg("Update CustId successfully.", AlertMessage.MsgType.Success) + "','errMsg');");
+                    context.Response.Write("parent.parent.jQuery.unblockUI();parent.alert_error('" + AlertMessage.GetMsg("Update Username successfully.", AlertMessage.MsgType.Success) + "','errMsg');");
                 }
                 else
                 {
