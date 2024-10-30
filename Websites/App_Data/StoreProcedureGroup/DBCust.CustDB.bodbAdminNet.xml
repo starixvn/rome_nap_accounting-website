@@ -92,14 +92,14 @@
     <Setting Key="Acc_CustomerUpdMoveMaster" SpName="Acc_CustomerUpdMoveMaster" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Customer - Move Site">
-    <Setting Key="Acc_CustomerMoveSite_Validate" SpName="Acc_CustomerMoveSite_Validate" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="DBSite1_Acc_CustomerMoveSite_Validate" SpName="Acc_CustomerMoveSite_Validate" DbName="DBCust1.CustDB.wsv_nap" />
-    <Setting Key="DBSite2_Acc_CustomerMoveSite_Validate" SpName="Acc_CustomerMoveSite_Validate" DbName="DBCust2.CustDB.wsv_nap" />
-    <Setting Key="DBSite3_Acc_CustomerMoveSite_Validate" SpName="Acc_CustomerMoveSite_Validate" DbName="DBCust3.CustDB.wsv_nap" />
-    <Setting Key="Acc_CustomerUpdMoveSite" SpName="Acc_CustomerUpdMoveSite" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="DBSite1_Acc_CustomerUpdMoveSite" SpName="Acc_CustomerUpdMoveSite" DbName="DBCust1.CustDB.wsv_nap" />
-    <Setting Key="DBSite2_Acc_CustomerUpdMoveSite" SpName="Acc_CustomerUpdMoveSite" DbName="DBCust2.CustDB.wsv_nap" />
-    <Setting Key="DBSite3_Acc_CustomerUpdMoveSite" SpName="Acc_CustomerUpdMoveSite" DbName="DBCust3.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerMoveSite_Validate" SpName="Acc_CustomerMoveSite_Validate_UAT2" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="DBSite1_Acc_CustomerMoveSite_Validate" SpName="Acc_CustomerMoveSite_Validate_UAT2" DbName="DBCust1.CustDB.wsv_nap" />
+    <Setting Key="DBSite2_Acc_CustomerMoveSite_Validate" SpName="Acc_CustomerMoveSite_Validate_UAT2" DbName="DBCust2.CustDB.wsv_nap" />
+    <Setting Key="DBSite3_Acc_CustomerMoveSite_Validate" SpName="Acc_CustomerMoveSite_Validate_UAT2" DbName="DBCust3.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerUpdMoveSite" SpName="Acc_CustomerUpdMoveSite_UAT2" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="DBSite1_Acc_CustomerUpdMoveSite" SpName="Acc_CustomerUpdMoveSite_UAT2" DbName="DBCust1.CustDB.wsv_nap" />
+    <Setting Key="DBSite2_Acc_CustomerUpdMoveSite" SpName="Acc_CustomerUpdMoveSite_UAT2" DbName="DBCust2.CustDB.wsv_nap" />
+    <Setting Key="DBSite3_Acc_CustomerUpdMoveSite" SpName="Acc_CustomerUpdMoveSite_UAT2" DbName="DBCust3.CustDB.wsv_nap" />
   </Function>
   <Function Name="Security Code">
     <Setting Key="DBA_ResetSecurityCode_Agent" SpName="Acc_CustomerUpdSecurityCode" DbName="DBCust.CustDB.wsv_nap" />
