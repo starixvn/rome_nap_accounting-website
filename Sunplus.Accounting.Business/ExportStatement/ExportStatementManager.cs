@@ -236,21 +236,23 @@ namespace Sunplus.Accounting.Business.ExportStatement
                 DataRow[] Rows = rs.ResultSet.Tables[0].Select();
                 decimal Total = 0, Balance = 0;
                 string oddeven = "odd";
-                string username = "", username_p = "", transtype = "";
+                string username = "", username_p = "", transtype = "", walletType = "", walletType_p = "";
                 int index = 0;
                 string strColspan = "<tr bgcolor='white'><td colspan='9'>&nbsp;</td></tr>";
                 foreach (DataRow dr in Rows)
                 {
                     username_p = CastAide.AsString(dr["username"]);
+                    walletType_p = CastAide.AsString(dr["wallettype"]);
                     index++;
                     string row = tplContent;
 
-                    if (username != username_p)
+                    if (!username.Equals(username_p) || !walletType.Equals(walletType_p))
                     {
                         if (index > 1)
                             html.Append(strColspan);
 
                         username = username_p;
+                        walletType = walletType_p;
                         Balance = 0;
                     }
 
@@ -438,16 +440,17 @@ namespace Sunplus.Accounting.Business.ExportStatement
 
             int i = 1, countOpenBalance = 0;
             decimal Balance = 0;
-            string username = "", username_p = "", transtype = "", transdesc = "";
+            string username = "", username_p = "", transtype = "", transdesc = "", walletType = "", walletType_p = "";
             foreach (DataRow dr in Rows)
             {
                 username_p = CastAide.AsString(dr["username"]);
+                walletType_p = CastAide.AsString(dr["wallettype"]);
                 int bettypeId = 0;
                 int.TryParse(dr["transtype"].ToString(), out bettypeId);
                 transtype = bettypeId == 0 ? dr["transtype"].ToString() : CacheRef.GetBettype(dr["transtype"]);
                 transdesc = CastAide.AsString(dr["transdesc"]);
 
-                if (username.ToLower() != username_p.ToLower())
+                if (!username.Equals(username_p) || !walletType.Equals(walletType_p))
                 {
                     if (i >= 2)
                     {
@@ -456,6 +459,7 @@ namespace Sunplus.Accounting.Business.ExportStatement
                     }
 
                     username = username_p;
+                    walletType = walletType_p;
                     Balance = 0;
                     countOpenBalance = 0;
                 }
