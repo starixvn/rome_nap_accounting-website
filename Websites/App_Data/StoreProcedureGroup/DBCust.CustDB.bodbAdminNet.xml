@@ -1,5 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Functions SiteId="104" SiteName="NAP - Accounting">
+  <Function Name="Nova Casino">
+    <Setting Key="Acc_CustomerCheckSynced" SpName="Acc_CustomerCheckSynced" DbName="DBCust.CustDB.wsv_nap" Plain="0" TimeOut="600" />
+  </Function>
   <Function Name="Customer - Third Party">
     <Setting Key="Acc_CustomerUpdDisableSuperLive" SpName="Acc_CustomerUpdDisableSuperLive" DbName="DBCust.CustDB.wsv_nap" Plain="0" TimeOut="600" />
     <Setting Key="Acc_3rdProductSelSuperStatus" SpName="Acc_3rdProductSelSuperStatus" DbName="DBCust.CustDB.wsv_nap" Plain="0" TimeOut="600" />

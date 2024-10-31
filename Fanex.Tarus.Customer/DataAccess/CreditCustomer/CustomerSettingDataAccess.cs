@@ -5,12 +5,13 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Fanex.Tarus.Security.Services;
-using Sunplus.Accounting.Business.Security;
-using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
-
 namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Linq;
     using Customer.DataAccess;
     using CustomerSetting.Module.Core;
     using DNAide.Core;
@@ -18,23 +19,41 @@ namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
     using Fanex.Tarus.Admin.Entities;
     using Fanex.Tarus.Admin.ViewModel;
     using Fanex.Tarus.Customer.CreditCustomer.Entities;
+    using Fanex.Tarus.Customer.Criteria.CreditCustomer;
     using Fanex.Tarus.Customer.Entities;
     using Fanex.Tarus.Customer.Entities.AutoTransfer;
     using NAP.Framework.Data;
+    using Sunplus.Accounting.Business.Security;
     using Sunplus.Accounting.Core.Common;
     using Sunplus.Accounting.Core.Extensions;
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Data;
-    using System.Linq;
-
+    using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
     public class CustomerSettingDataAccess : BaseDataAccess, ICustomerSettingDataAccess
     {
+        public bool IsSyncedNovaCasino(CheckSyncedNovaCasinoCriteria criteria)
+        {
+            try
+            {
+                using (ObjectDb db = new ObjectDb(criteria.GetSettingKey()))
+                {
+                    db.ExecuteNonQuery(criteria.GetSpParams());
+                    var outputParams = db.GetOuputParams();
+                    return outputParams.ContainsKey("issynced") 
+                        ? Convert.ToBoolean(outputParams["issynced"]) 
+                        : false;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+                return false;
+            }
+        }
+
         /// <summary>
         /// Get CurrencyList
         /// </summary>

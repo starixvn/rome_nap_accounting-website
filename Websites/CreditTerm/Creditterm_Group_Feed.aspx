@@ -17,7 +17,7 @@
     <link href="../js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css" rel="stylesheet" type="text/css" />
     <link href="../js/jQuery/GridScroller/gridscroller.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript">
-      function RedirectToGroupList() {
+        function RedirectToGroupList() {
             setTimeout(function () {
                 window.location.href = "../CreditTerm/CreditTermGroupView.aspx";
             }, 3000)
@@ -182,6 +182,7 @@
             $("#errMsg,#errMsg1").html('');
             var listuser = "";
             var listusername = [];
+            var listSynced = [];
             var headline = $("#headline").val();
             switch (type) {
                 case '1':
@@ -198,7 +199,8 @@
                         function () {
                             listuser += $(this).val() + ",";
                             var username = $(this).val().split('|')[1];
-                            listusername.push(username)
+                            listusername.push(username);
+
                         });
                     if (listuser == "") {
                         showAlertMessage("errMsg", "Please select user.", 1);
@@ -206,26 +208,56 @@
                         break;
                     }
             }
-            if (type == 3 && isshowConfirm) {
-                var message = `The group has only 1 member (is Headline). Are you sure you want to remove this group?`;
-                __confirm("Please Confirm", message, 325, 210, null,
-                    function () { ProcessGetData(type, listuser); },
-                    function () {
-                        __close(false, null, null, null);
-                    },
-                    null, false);
-                return;
-            }
-            var groupId = $('#groupid').val();
 
-            if (type == 3 && !isshowConfirm) {
-                var message = `Are you sure you want to remove the following account(s) from GroupID ${groupId} of ${headline}?</br>${listusername.join(", ")}`;
-                __confirm("Please Confirm", message, 325, 'auto', null,
-                    function () { ProcessGetData(type, listuser); },
-                    function () {
-                        __close(false, null, null, null);
-                    },
-                    null, false);
+            if (type == 3) {
+                var checkSynced = listusername.map(username => new Promise((resolve, reject) => {
+                    $.ajax({
+                        type: "POST",
+                        url: window.rootUrl + "Customer/CheckSyncedNovaCasino",
+                        async: true,
+                        data: 'username=' + username,
+                        success: function (result) {
+                            if (result && result.IsSynced) {
+                                listSynced.push(username)
+                            }
+                            resolve();
+                        },
+                        error: function (error) {
+                            reject(error);
+                        }
+                    });
+                }));
+
+                Promise.all(checkSynced).then(() => {
+                    var syncedNovaCasinoMessage = "";
+                    if (listSynced && listSynced.length) {
+                        syncedNovaCasinoMessage += `Accounts has joined Nova Casino: ${listSynced.join(", ")}.</br>`;
+                    }
+
+                    if (isshowConfirm) {
+                        var message = `${syncedNovaCasinoMessage}The group has only 1 member (is Headline). Are you sure you want to remove this group?`;
+                        __confirm("Please Confirm", message, 325, 210, null,
+                            function () { ProcessGetData(type, listuser); },
+                            function () {
+                                __close(false, null, null, null);
+                            },
+                            null, false);
+                        return;
+                    }
+
+                    if (!isshowConfirm) {
+                        var groupId = $('#groupid').val();
+                        var message = `${syncedNovaCasinoMessage}Are you sure you want to remove the following account(s) from GroupID ${groupId} of ${headline}?</br>${listusername.join(", ")}`;
+                        __confirm("Please Confirm", message, 325, 'auto', null,
+                            function () { ProcessGetData(type, listuser); },
+                            function () {
+                                __close(false, null, null, null);
+                            },
+                            null, false);
+                        return;
+                    }
+                });
+
                 return;
             }
 
@@ -245,29 +277,29 @@
 
         function ProcessGetData(type, listuser) {
             try { parent.BlockUI(); } catch (e) { }
-                __close(false, null, null, null);
-                var param = '';
-                param += '&mode=9';
-                param += '&type=' + type;
-                param += '&username=' + $('#txtuser').val();
-                param += '&lstlistname=' + listuser;
-                $.ajax(
-                    {
-                        type: "POST",
-                        url: "../Report/GetData.ashx",
-                        data: param,
-                        success: GetJSONResult,
-                        error: function (xhr) {
-                            if (xhr.status === 403) {
-                                showAlertMessage("errMsg", $.parseJSON(xhr.responseText).ErrorMessage, 1);
-                            }
-                        },
-                        complete: function () {
-                            try { parent.jQuery.unblockUI(); } catch (e) { }
+            __close(false, null, null, null);
+            var param = '';
+            param += '&mode=9';
+            param += '&type=' + type;
+            param += '&username=' + $('#txtuser').val();
+            param += '&lstlistname=' + listuser;
+            $.ajax(
+                {
+                    type: "POST",
+                    url: "../Report/GetData.ashx",
+                    data: param,
+                    success: GetJSONResult,
+                    error: function (xhr) {
+                        if (xhr.status === 403) {
+                            showAlertMessage("errMsg", $.parseJSON(xhr.responseText).ErrorMessage, 1);
                         }
+                    },
+                    complete: function () {
+                        try { parent.jQuery.unblockUI(); } catch (e) { }
                     }
-                       
-                );
+                }
+
+            );
         }
 
         function GetJSONResult(resContent) {
@@ -286,6 +318,6 @@
             $('#form').submit();
         }
     </script>
-   <script src="js/Creditterm_Group_Feed.js?v=<%= AccCommon.Version()%>" type="text/javascript"></script>
+    <script src="js/Creditterm_Group_Feed.js?v=<%= AccCommon.Version()%>" type="text/javascript"></script>
 </body>
 </html>

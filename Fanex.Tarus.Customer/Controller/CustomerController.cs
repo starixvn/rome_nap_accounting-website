@@ -4,6 +4,7 @@ using System.Net;
 using System.Runtime.Caching;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Fanex.Customer.Client;
 using Fanex.Customer.Client.Constants;
 using Fanex.Customer.Client.Models;
 using Fanex.Customer.Client.Params;
@@ -13,17 +14,16 @@ using Fanex.CustomerSetting.Module.Core.Attributes;
 using Fanex.Tarus.Customer.Constants;
 using Fanex.Tarus.Customer.CreditCustomer.Business;
 using Fanex.Tarus.Customer.Criteria.CreditCustomer;
+using Fanex.Tarus.Customer.Filters;
 using Fanex.Tarus.Customer.Requests.Customer;
 using Fanex.Tarus.Customer.ViewModels.Customer;
 using Fanex.Tarus.Web.Controllers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Agent.Utilities;
-using Sunplus.Accounting.Business.Security;
-using Fanex.Tarus.Customer.Filters;
-using Fanex.Customer.Client;
 
 namespace Fanex.Tarus.Customer.Controller
 {
@@ -52,6 +52,10 @@ namespace Fanex.Tarus.Customer.Controller
             this.encryptor = encryptor ?? new EncryptorImpl();
             this.customerService = customerService ?? new CustomerService();
         }
+
+        [HttpPost]
+        public ActionResult CheckSyncedNovaCasino(string username)
+            => Json(new { IsSynced = _customerSettingService.IsSyncedNovaCasino(username) });
 
         public ActionResult GetHeadlineBelongSite()
             => Content(JsonConvert.SerializeObject(
