@@ -189,7 +189,8 @@
 
             var resultRequest = new ResultRequest(request.CustId, request.TransId3rd, request.GameId3rd, request.CurrencyId, request.SiteId)
             {
-                BetTypeId = request.BetTypeId
+                BetTypeId = request.BetTypeId,
+                TransDesc = request.TransDesc
             };
 
             return BaseResult(request, resultRequest, "JiliResultConfigs");
@@ -287,5 +288,6 @@
         public string EndTime { get; set; }
 
         public string Site { get; set; }
+        public string TransDesc { get; set; }
     }
 }

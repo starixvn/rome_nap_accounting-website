@@ -1003,7 +1003,7 @@ function ViewNewCashOutHistory(transId, custId, winlostDate) {
     openResultsPopUp(cashoutParam);
 }
 
-function ViewResult(matchid, race, bettype, sporttype, refno, username, winlostdate, refno_mixparlay, league, is_outright, betid, matchcode, betcheck, transdesc, siteId) {
+function ViewResult(matchid, race, bettype, sporttype, refno, username, winlostdate, refno_mixparlay, league, is_outright, betid, matchcode, betcheck, transdesc, siteId, transDesc) {
     if(sporttype == 170){
         var param = getPPLiveCasinoParam(bettype, betcheck, transdesc, matchcode, betid, siteId, bettype);
         
@@ -1022,7 +1022,7 @@ function ViewResult(matchid, race, bettype, sporttype, refno, username, winlostd
         });
     }
     else{
-       var resultParam = getResultParamBySportType(matchid, race, bettype, sporttype, refno, username, winlostdate, refno_mixparlay, league, is_outright, betid, matchcode, betcheck, transdesc, siteId);
+       var resultParam = getResultParamBySportType(matchid, race, bettype, sporttype, refno, username, winlostdate, refno_mixparlay, league, is_outright, betid, matchcode, betcheck, transdesc, siteId, transDesc);
 
         resultParam = resultParam || getResultParamByBetType(matchid, race, bettype, sporttype, refno, username, winlostdate, refno_mixparlay, league, is_outright, betid, matchcode);
 
@@ -1055,7 +1055,7 @@ function isFM2(betttype) {
     return (betttype >= 221 && betttype <= 227)
 }
 
-function getResultParamBySportType(matchid, race, bettype, sporttype, refno, username, winlostdate, refno_mixparlay, league, is_outright, currencyId, gameId3rd, custId, transId3rd, siteId) {
+function getResultParamBySportType(matchid, race, bettype, sporttype, refno, username, winlostdate, refno_mixparlay, league, is_outright, currencyId, gameId3rd, custId, transId3rd, siteId, transDesc) {
     switch (sporttype) {
         case 5: // Tennis.
             return getTennisParam();
@@ -1071,7 +1071,7 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
         case 155:
             return getMGParam(custId, transId3rd, gameId3rd, currencyId, bettype, siteId);
         case 158:
-            return getJiliParam(custId, transId3rd, gameId3rd, currencyId, bettype, siteId);
+            return getJiliParam(custId, transId3rd, gameId3rd, currencyId, bettype, siteId, transDesc);
 
         case 161: // Number Game.
             return getNumberGameParam(matchid);
@@ -1497,11 +1497,11 @@ function getMGParam(custId, transId3rd, gameId3rd, currencyId, betType, siteId) 
     };
 }
 
-function getJiliParam(custId, transId3rd, gameId3rd, currencyId, betType, siteId) {
+function getJiliParam(custId, transId3rd, gameId3rd, currencyId, betType, siteId, transDesc) {
     return {
         url: "ThirdParty/JiliResult",
         title: "Jili Result",
-        jsonParam: { custId: custId, transId3rd: transId3rd, siteId: siteId, gameId3rd: gameId3rd, currencyId: currencyId, BetTypeId: betType, productId: 75 },
+        jsonParam: { custId: custId, transId3rd: transId3rd, siteId: siteId, gameId3rd: gameId3rd, currencyId: currencyId, BetTypeId: betType, TransDesc: transDesc, productId: 75 },
         width: 850,
         height: 800
     };
