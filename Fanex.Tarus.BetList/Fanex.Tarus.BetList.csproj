@@ -257,8 +257,8 @@
     <Reference Include="Fanex.Tarus.Entities, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Entities.1.0.0.8\lib\net40\Fanex.Tarus.Entities.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.4.19, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.4.19\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
+    <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.4.18, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.4.18-BetBy-01\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Security, Version=1.0.1.9, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Security.1.0.2.5\lib\net40\Fanex.Tarus.Security.dll</HintPath>
@@ -537,6 +537,7 @@
     <Compile Include="Business\ReportService.cs" />
     <Compile Include="Business\ResultService.cs" />
     <Compile Include="Business\Results\AGCasinoResultService.cs" />
+    <Compile Include="Business\Results\BetbyResultService.cs" />
     <Compile Include="Business\Results\IVS2RacingResultService.cs" />
     <Compile Include="Business\Results\LeapGamingResultService.cs" />
     <Compile Include="Business\Results\IAGCasinoResultService.cs" />
@@ -643,6 +644,7 @@
     <Compile Include="DataAccess\ISystemParlayRepository.cs" />
     <Compile Include="DataAccess\BetBuilder\BetBuilderRepository.cs" />
     <Compile Include="DataAccess\ReportDataAccess.cs" />
+    <Compile Include="DataAccess\Results\BetbyResultDataAccess.cs" />
     <Compile Include="DataAccess\Results\IAGCasinoResultDataAccess.cs" />
     <Compile Include="DataAccess\Results\AGCasinoResultDataAccess.cs" />
     <Compile Include="DataAccess\Results\IPInfoDataAccess.cs" />
