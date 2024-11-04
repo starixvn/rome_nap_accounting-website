@@ -1511,7 +1511,7 @@ function getSexyGamingParam(custId, transId3rd, currencyId, siteId, siteName) {
     return {
         url: "ThirdParty/SexyGamingResult",
         title: "AE Sexy Result",
-        jsonParam: { custId: custId, transId3rd: transId3rd, siteId: siteId, currencyId: currencyId, siteName: siteName, productId: 45 },
+        jsonParam: { custId: custId, transId3rd: transId3rd, siteId: siteId, currencyId: currencyId, gameId3rd: siteName, productId: 45 },
         width: 850,
         height: 800
     };
