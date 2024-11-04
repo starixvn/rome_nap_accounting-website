@@ -51,7 +51,7 @@
   </Function>
   <Function Name="Virtual Rate">
     <Setting Key="Customer_VirtualRate_UpdateMultiple" SpName="Acc_VirtualRateMulUpd" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="Customer_VirtualRate_UpdateVirtualRate" SpName="Acc_CustomerUpdVirtualMultiplier" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Customer_VirtualRate_UpdateVirtualRate" SpName="Acc_CustomerUpdVirtualMultiplier" DbName="DBCust.CustDB.wsv_nap" TimeOut="600" />
     <Setting Key="Customer_VirtualRate_GetSportBetTypeReferences" SpName="Acc_CustomerSelReferenceVirtualRateSetting" DbName="DBTXN.bodb02.wsv_nap" />
     <Setting Key="Acc_CustomerVRAdjust_Confirm" SpName="Acc_CustomerVRAdjust_Confirm" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_CustomerCopyVRSetting" SpName="Acc_CustomerCopyVRSetting" DbName="DBCust.CustDB.wsv_nap" />
