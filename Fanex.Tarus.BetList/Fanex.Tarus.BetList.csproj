@@ -115,8 +115,8 @@
     <Reference Include="Fanex.BetList.GTCasino, Version=2.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.GTCasino.2.0.0.2\lib\net461\Fanex.BetList.GTCasino.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.Jili, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Betlist.Jili.1.0.0.2\lib\net461\Fanex.BetList.Jili.dll</HintPath>
+    <Reference Include="Fanex.BetList.Jili, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Betlist.Jili.1.0.0.3\lib\net461\Fanex.BetList.Jili.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.LiveCasinoCore, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.LiveCasinoCore.1.0.0.3\lib\net461\Fanex.BetList.LiveCasinoCore.dll</HintPath>
@@ -248,8 +248,8 @@
     <Reference Include="Fanex.Result.Core.Sportsbook, Version=2.0.1.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core-Sportsbook.2.0.1.4\lib\net461\Fanex.Result.Core.Sportsbook.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Result.Core.ThirdParty, Version=2.0.0.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core.ThirdPartyResult.2.0.0.3\lib\net461\Fanex.Result.Core.ThirdParty.dll</HintPath>
+    <Reference Include="Fanex.Result.Core.ThirdParty, Version=2.0.0.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Result.Core.ThirdPartyResult.2.0.0.4\lib\net461\Fanex.Result.Core.ThirdParty.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Result.Core.VirtualRacing, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.VirtualRacing.1.0.0\lib\net461\Fanex.Result.Core.VirtualRacing.dll</HintPath>
