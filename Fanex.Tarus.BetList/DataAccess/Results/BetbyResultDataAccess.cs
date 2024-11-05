@@ -4,6 +4,7 @@ namespace Fanex.Tarus.BetList.DataAccess.Results
     using System;
     using System.Collections.Generic;
     using System.Data;
+    using System.Linq;
     using Fanex.Data;
     using Fanex.Result.Core.Sportsbook.DTO;
     using Fanex.Tarus.BetList.Criteria.Results;
@@ -18,6 +19,7 @@ namespace Fanex.Tarus.BetList.DataAccess.Results
         public List<Sportsbook> GetResult(GetBitcoinResultCriteria criteria)
         {
             var result = new List<Sportsbook>();
+            var detail = new List<GameDetail>();
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
                 using (var reader = db.ExecuteReader(criteria.GetSpParams()))
@@ -26,6 +28,23 @@ namespace Fanex.Tarus.BetList.DataAccess.Results
                     {
                         result.Add(BindSportbook(reader));
                     }
+
+                    if (reader.NextResult())
+                    {
+                        while (reader.Read())
+                        {
+                            detail.Add(BindGameDetail(reader));
+                        }
+                    }
+                }
+            }
+
+            foreach (var item in result)
+            {
+                var gameDetail = detail.Where(i => i.MatchId == item.MatchId);
+                if (gameDetail != null)
+                {
+                    item.GameDetails = gameDetail.ToList();
                 }
             }
 
@@ -42,12 +61,20 @@ namespace Fanex.Tarus.BetList.DataAccess.Results
                 EventDate = reader["eventdate"] != DBNull.Value ? DateTime.Parse(reader["eventdate"].ToString()) : DateTime.MinValue,
                 BetStatus = reader["betstatus"] != DBNull.Value ? reader["betstatus"].ToString() : string.Empty,
                 MatchCode = reader["MatchCode"] != DBNull.Value ? reader["MatchCode"].ToString() : string.Empty,
-                HtHomeScore = reader["HtHomeScore"] != DBNull.Value ? int.Parse(reader["HtHomeScore"].ToString()) : (int?)null,
-                HtAwayScore = reader["HtAwayScore"] != DBNull.Value ? int.Parse(reader["HtAwayScore"].ToString()) : (int?)null,
-                FinalHomeScore = reader["FinalHomeScore"] != DBNull.Value ? int.Parse(reader["FinalHomeScore"].ToString()) : (int?)null,
-                FinalAwayScore = reader["FinalAwayScore"] != DBNull.Value ? int.Parse(reader["FinalAwayScore"].ToString()) : (int?)null,
                 HomeId = reader["HomeId"] != DBNull.Value ? int.Parse(reader["HomeId"].ToString()) : 0,
                 AwayId = reader["AwayId"] != DBNull.Value ? int.Parse(reader["AwayId"].ToString()) : 0
+            };
+        }
+
+        private static GameDetail BindGameDetail(IDataReader reader)
+        {
+            return new GameDetail
+            {
+                MatchId = reader["matchid"] != DBNull.Value ? int.Parse(reader["matchid"].ToString()) : 0,
+                HomeValue = reader["Custom1"] != DBNull.Value ? reader["Custom1"].ToString() : string.Empty,
+                AwayValue = reader["Custom2"] != DBNull.Value ? reader["Custom2"].ToString() : string.Empty,
+                SettlementStatusID = reader["SettlementStatusID"] != DBNull.Value ? int.Parse(reader["SettlementStatusID"].ToString()) : 0,
+                ResourceId = reader["ResourceId"] != DBNull.Value ? reader["ResourceId"].ToString() : string.Empty
             };
         }
     }
