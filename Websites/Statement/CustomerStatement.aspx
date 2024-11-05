@@ -23,13 +23,11 @@
         <div class="maincontent">
             <table border="0" id="bannerFilter" cellpadding="0px" cellspacing="0px" class="maincontent_header">
                 <tr>
-                    <td class="maincontent_headerL">
-                    </td>
+                    <td class="maincontent_headerL"></td>
                     <td class="maincontent_headerC">
                         <asp:Literal ID="reportHeader" runat="server"></asp:Literal>
                     </td>
-                    <td class="maincontent_headerR">
-                    </td>
+                    <td class="maincontent_headerR"></td>
                 </tr>
             </table>
             <div class="maincontent_box" id="bannerFilter">
@@ -42,13 +40,15 @@
             </div>
             <div id="GridContainer" class="freegrid" style="margin-top: 10px;">
             </div>
-            <div id="errBox" class="alertboxerr"><div></div></div>
+            <div id="errBox" class="alertboxerr">
+                <div></div>
+            </div>
             <iframe id="frm" width="0" height="0" frameborder="0" style="display: none"></iframe>
             <div id="popup" style="display: none;">
             </div>
         </div>
     </div>
-    
+
     <div id="betListContent" style="margin-top: 10px;">
     </div>
     <script type="text/javascript" src="../Scripts/_Libs/jQuery/jquery-1.8.2.min.js"></script>
@@ -66,10 +66,10 @@
     <script src="WebResources/js/CustomerStatement.js?v=<%=WebSettings.Version%>" type="text/javascript"></script>
     <script src="../Areas/Statement/Views/Report/Scripts/StatementReportManager.js?v=<%=WebSettings.Version%>" type="text/javascript"></script>
     <script language="javascript" type="text/javascript">
-        window.rootUrl = '<%=Page.ResolveUrl("~/")%>'; 
+        window.rootUrl = '<%=Page.ResolveUrl("~/")%>';
         var isInternalCustomer = <%=isInternalCustomer%>;
         var balanceUpDay = '<%=balanceUpDay%>';
-        var moveBetsDay = '<%=moveBetsDay%>'; 
+        var moveBetsDay = '<%=moveBetsDay%>';
         var newLayoutDate = '<%=newLayoutDate%>';
         var domain = window.rootUrl;
         var isNewStatementTab = '<%=isNewStatementTab%>';
@@ -93,9 +93,18 @@
         };
 
         GetDataReport();
-        jQuery(document).ready(function() {
-            $("#notemessage").click(function() {
+        jQuery(document).ready(function () {
+            $("#notemessage").click(function () {
                 viewGuidelines();
+            });
+
+            $('input[type=radio][name=radWallet]').change(function () {
+                if (this.value == '0') {
+                    $('#notemessage').show();
+                }
+                else {
+                    $('#notemessage').hide();
+                }
             });
         });
     </script>
