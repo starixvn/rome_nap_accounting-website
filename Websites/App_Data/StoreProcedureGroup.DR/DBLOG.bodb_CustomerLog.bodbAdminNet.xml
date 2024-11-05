@@ -14,5 +14,6 @@
     <Setting Key="GetLogLoginTotal" SpName="NAP_UserLog_LoginSelTotalRecords" DbName="DBLOG.bodb_CustomerLog.wsv_nap" />
     <Setting Key="GetLogCredit" SpName="NAP_UserLog_CreditSel" DbName="DBLOG.bodb_CustomerLog.wsv_nap" />
     <Setting Key="GetLogCreditTotal" SpName="NAP_UserLog_CreditSelTotalRecords" DbName="DBLOG.bodb_CustomerLog.wsv_nap" />
+    <Setting Key="WriteLog_UserLog_RunSP" SpName="WriteLog_UserLog_RunSP" DbName="DBLOG.bodb_CustomerLog.wsv_nap" />
   </Function>
 </Functions>
