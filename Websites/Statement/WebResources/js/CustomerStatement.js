@@ -194,7 +194,8 @@ function ExportToExcel() {
                 toDate: moment(new Date(tdate)).format("MM/DD/YYYY"),
                 custId: 0,
                 roleId: 0,
-                username: custName
+                username: custName,
+                isReward: $("input[name='radWallet']:checked").val() == '1'
             };
 
             var reportNo = obj('repno').value;
@@ -213,7 +214,7 @@ function ExportToExcel() {
             }
 
             location.href = 'CustomerStatement.aspx?fdate=' + fdate + '&tdate=' + tdate + '&repno=' + obj('repno').value + '&IsExport=1'
-                + "&custname=" + encodeURIComponent($("#txtCustName").attr("value"));
+                + "&custname=" + encodeURIComponent($("#txtCustName").attr("value")) + "&isReward=" + criteria.isReward;
         });
 }
 

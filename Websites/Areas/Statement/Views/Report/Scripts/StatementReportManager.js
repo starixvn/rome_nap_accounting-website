@@ -660,7 +660,10 @@ var StatementReportManager = function () {
 
     self.exportStatementReport = function (criteria) {
         var url = domain;
-        if (criteria.roleId === self.Enums.RoleId.Member) {
+        if (criteria.isReward) {
+            url += 'NapStatement/StatementReport/ExportRewardStatement?';
+        }
+        else if (criteria.roleId === self.Enums.RoleId.Member) {
             url += 'NapStatement/StatementReport/ExportMemberStatement?';
         } else {
             url += 'NapStatement/StatementReport/ExportSMAStatement?';
