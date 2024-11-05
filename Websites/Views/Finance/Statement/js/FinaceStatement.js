@@ -455,7 +455,7 @@
         let refNos = [];
 
         $("input[type='checkbox'][id!='chkAll']").each(function () {
-            if (this.checked == true && !this.disabled && this.dataset.isReward == isReward ?.toString())
+            if (this.checked == true && !this.disabled)
                 refNos.push(this.id + '_' + (this.dataset.isReward == 'true' ? 1 : 0));
         });
 
