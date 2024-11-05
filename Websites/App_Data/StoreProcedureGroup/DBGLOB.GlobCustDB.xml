@@ -11,7 +11,7 @@
     <Setting Key="Acc_Dep_CustomerGenLicenseeSubUsername" SpName="Acc_Dep_CustomerGenLicenseeSubUsername" DbName="DBGLOB.GlobCustDB.wsv_nap" />
   </Function>
   <Function Name="Change UserName">
-    <Setting Key="Acc_CustomerEditUserName_Register" SpName="Acc_CustomerEditUserName_Register_UAT2" DbName="DBGLOB.GlobCustDB.wsv_nap" />
-    <Setting Key="Acc_CustInfoMiniEditUserName_Rollback" SpName="Acc_CustInfoMiniEditUserName_Rollback_UAT2" DbName="DBGLOB.GlobCustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerEditUserName_Register" SpName="Acc_CustomerEditUserName_Register" DbName="DBGLOB.GlobCustDB.wsv_nap" />
+    <Setting Key="Acc_CustInfoMiniEditUserName_Rollback" SpName="Acc_CustInfoMiniEditUserName_Rollback" DbName="DBGLOB.GlobCustDB.wsv_nap" />
   </Function>
 </Functions>
