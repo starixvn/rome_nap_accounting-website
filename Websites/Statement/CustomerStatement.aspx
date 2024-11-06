@@ -99,11 +99,13 @@
             });
 
             $('input[type=radio][name=radWallet]').change(function () {
-                if (this.value == '0') {
-                    $('#notemessage').show();
-                }
-                else {
-                    $('#notemessage').hide();
+                if (isNewStatementTab == '1') {
+                    if (this.value == '0') {
+                        $('#notemessage').show();
+                    }
+                    else {
+                        $('#notemessage').hide();
+                    }
                 }
             });
         });
