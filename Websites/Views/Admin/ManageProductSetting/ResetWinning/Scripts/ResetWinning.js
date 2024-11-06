@@ -168,7 +168,7 @@ function RenderDWLListData(data) {
         row.Columns.push({ Name: 'ProductId', Value: data[i].ProductId });
         row.Columns.push({ Name: 'Product', Value: data[i].Product });
         row.Columns.push({ Name: 'Seq', Value: data[i].Seq });
-        row.Columns.push({ Name: 'IsDisabled', Value: data[i].isDisabled === "True" ? 1 : 0 });
+        row.Columns.push({ Name: 'IsDisabled', Value: data[i].IsDisabled === "True" ? 1 : 0 });
         row.Columns.push({
             Name: 'Action',
             Value: '<img class="edit-entity" alt="Edit" title="Edit" src="../App_Themes/Images/icn_edit.png" style="cursor: pointer" onclick="EditDWLList(' + i + ')" >&nbsp;'
