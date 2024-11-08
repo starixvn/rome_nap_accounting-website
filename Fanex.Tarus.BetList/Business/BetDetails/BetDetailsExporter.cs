@@ -283,7 +283,6 @@
             return service.BetDetails(criteria);
         }
 
-
         private static IEnumerable<TicketDetail> GetRNGCasinoTickets(long refNo, int custId, byte transType, DateTime winlostDate)
         {
             var criteria = new GetRNGCasinoBetDetailsCriteria

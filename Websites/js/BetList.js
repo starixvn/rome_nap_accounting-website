@@ -1222,10 +1222,7 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
 
         case 138: //ON Casino
             return getONCasinoParam(custId, transId3rd, gameId3rd, currencyId, siteId, bettype, winlostdate);
-            
-        case 147: //Virtually Sports
-            return getVirtuallySportParam(matchid, sporttype, league);
-            
+
         case 147: //Virtually Sports
             return getVirtuallySportParam(matchid, sporttype, league);
 
@@ -1249,9 +1246,8 @@ function getResultParamByBetType(matchid, race, bettype, sporttype, refno, usern
         case bettype === 9 || bettype === 29 || bettype === 2799 || bettype == 10449: // System Parlay, MixParlayVirtualSports2
             return getSystemParlayParam(matchid, refno_mixparlay, bettype, betid);
 
-        case bettype == 11099: 
-            return getParlay3rdParam(matchid, refno_mixparlay, bettype, betid);
-
+        case bettype = 11099:
+            return getParlay3rdParam(refno_mixparlay);
 
         case bettype === 1231 || bettype === 1232 || bettype === 1233: // Virtual Horse Racing (Old).
             return getVirtualHRAndTennisParam(matchid, sporttype);
@@ -1302,14 +1298,6 @@ function getBitcoinParam(matchid, sporttype) {
         url: "Report/ViewBitcoinResult.aspx",
         title: "Bitcoin",
         jsonParam: { matchid: matchid, sporttype: sporttype }
-    };
-}
-
-function getVirtuallySportParam(matchid, sporttype, league) {
-    return {
-        url: "Report/ViewVirtuallySportResult.aspx",
-        title: "Virtually Soccer",
-        jsonParam: { matchid: matchid, sporttype: sporttype, league: league }
     };
 }
 
@@ -1782,21 +1770,11 @@ function getSystemParlayParam(matchid, refno, bettype, betid) {
     };
 }
 
-function getParlay3rdParam(matchid, refno, bettype, betid) {
+function getParlay3rdParam(refno) {
     return {
-        url: "Report/ViewParlay3rdResult.aspx",
+        url: "Report/ViewParlay3rdResult.aspx.aspx",
         title: "Mix Parlay",
-        jsonParam: { refno: refno, matchid: matchid, bettype: bettype, betid: betid },
-        width: 945,
-        height: 500
-    };
-}
-
-function getParlay3rdParam(matchid, refno, bettype, betid) {
-    return {
-        url: "Report/ViewParlay3rdResult.aspx",
-        title: "Mix Parlay",
-        jsonParam: { refno: refno, matchid: matchid, bettype: bettype, betid: betid },
+        jsonParam: { refno: refno},
         width: 945,
         height: 500
     };

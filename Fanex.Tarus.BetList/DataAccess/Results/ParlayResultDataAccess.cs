@@ -170,7 +170,7 @@ namespace Fanex.Tarus.BetList.DataAccess.Results
                     sportbooks = new List<Sportsbook>();
                 }
 
-                sportbooks.Add(Bind3rdSportbook(reader));
+                sportbooks.Add(Bind3rdSportsbook(reader));
 
                 leagueId = newLeagueId;
                 sportId = newsportId;
@@ -254,7 +254,7 @@ namespace Fanex.Tarus.BetList.DataAccess.Results
         /// </summary>
         /// <param name="reader">The IDATAREADER.</param>
         /// <returns>The SPORTBOOK DTO.</returns>
-        private static Sportsbook Bind3rdSportbook(System.Data.IDataReader reader)
+        private static Sportsbook Bind3rdSportsbook(System.Data.IDataReader reader)
         {
             var item = new Sportsbook
             {
@@ -269,35 +269,6 @@ namespace Fanex.Tarus.BetList.DataAccess.Results
                 Color = ColumnExisted(reader, "lcolor") && reader["lcolor"] != DBNull.Value ? reader["lcolor"].ToString() : string.Empty,
                 FinalHomeScore = reader["finalhomescore"] != DBNull.Value ? int.Parse(reader["finalhomescore"].ToString()) : new int?(),
                 MatchCode = reader["matchcode"] != DBNull.Value ? reader["matchcode"].ToString() : string.Empty,
-                HtHomeScore = reader["hthomescore"] != DBNull.Value ? int.Parse(reader["hthomescore"].ToString()) : new int?(),
-                KickOffTime = reader["eventdate"] != DBNull.Value ? DateTime.Parse(reader["eventdate"].ToString()) : DateTime.MinValue,
-                GameDetails = new List<GameDetail>(),
-                LiveHomeScore = reader["livehomescore"] != DBNull.Value ? int.Parse(reader["livehomescore"].ToString()) : new int?(),
-                LiveAwayScore = reader["liveawayscore"] != DBNull.Value ? int.Parse(reader["liveawayscore"].ToString()) : new int?(),
-            };
-
-            return item;
-        }
-
-        /// <summary>
-        /// Bind data from IDATAREADER to DTO.
-        /// </summary>
-        /// <param name="reader">The IDATAREADER.</param>
-        /// <returns>The SPORTBOOK DTO.</returns>
-        private static Sportsbook Bind3rdSportbook(System.Data.IDataReader reader)
-        {
-            var item = new Sportsbook
-            {
-                AwayId = reader["awayID"] != DBNull.Value ? int.Parse(reader["awayID"].ToString()) : 0,
-                HomeId = reader["homeID"] != DBNull.Value ? int.Parse(reader["homeID"].ToString()) : 0,
-                BetStatus = reader["betstatus"] != DBNull.Value ? reader["betstatus"].ToString() : string.Empty,
-                LeagueId = reader["leagueid"] != DBNull.Value ? int.Parse(reader["leagueid"].ToString()) : 0,
-                MatchId = reader["matchid"] != DBNull.Value ? int.Parse(reader["matchid"].ToString()) : 0,
-                EventStatus = reader["eventstatus"] != DBNull.Value ? reader["eventstatus"].ToString() : string.Empty,
-                FinalAwayScore = reader["finalawayscore"] != DBNull.Value ? int.Parse(reader["finalawayscore"].ToString()) : new int?(),
-                HtAwayScore = reader["htawayscore"] != DBNull.Value ? int.Parse(reader["htawayscore"].ToString()) : new int?(),
-                Color = ColumnExisted(reader, "lcolor") && reader["lcolor"] != DBNull.Value ? reader["lcolor"].ToString() : string.Empty,
-                FinalHomeScore = reader["finalhomescore"] != DBNull.Value ? int.Parse(reader["finalhomescore"].ToString()) : new int?(),
                 HtHomeScore = reader["hthomescore"] != DBNull.Value ? int.Parse(reader["hthomescore"].ToString()) : new int?(),
                 KickOffTime = reader["eventdate"] != DBNull.Value ? DateTime.Parse(reader["eventdate"].ToString()) : DateTime.MinValue,
                 GameDetails = new List<GameDetail>(),

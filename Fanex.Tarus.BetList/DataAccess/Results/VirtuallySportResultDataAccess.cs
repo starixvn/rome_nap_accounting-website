@@ -10,12 +10,12 @@ namespace Fanex.Tarus.BetList.DataAccess.Results
 
     public interface IVirtuallySportResultDataAccess
     {
-        List<Sportsbook> GetResult(GetBitcoinResultCriteria criteria);
+        List<Sportsbook> GetResult(Get3rdResultCriteria criteria);
     }
 
     public class VirtuallySportResultDataAccess : IVirtuallySportResultDataAccess
     {
-        public List<Sportsbook> GetResult(GetBitcoinResultCriteria criteria)
+        public List<Sportsbook> GetResult(Get3rdResultCriteria criteria)
         {
             var result = new List<Sportsbook>();
             using (var db = new ObjectDb(criteria.GetSettingKey()))
@@ -24,7 +24,7 @@ namespace Fanex.Tarus.BetList.DataAccess.Results
                 {
                     while (reader.Read())
                     {
-                        result.Add(BindBitcoin(reader));
+                        result.Add(Bind3rdProduct(reader));
                     }
                 }
             }
@@ -32,7 +32,7 @@ namespace Fanex.Tarus.BetList.DataAccess.Results
             return result;
         }
 
-        private static Sportsbook BindBitcoin(IDataReader reader)
+        private static Sportsbook Bind3rdProduct(IDataReader reader)
         {
             return new Sportsbook
             {
