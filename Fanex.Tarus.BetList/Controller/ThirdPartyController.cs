@@ -242,6 +242,9 @@
 
         public ActionResult PlaytechResult(ThirdPartyResultRequest request)
             => BaseResult(request, "PlaytechResultConfigs");
+            
+        public ActionResult GPIResult(ThirdPartyResultRequest request)
+            => BaseResult(request, "GPIRNGResultConfigs");
 
         private ActionResult BaseResult(ThirdPartyResultRequest request, string configName)
         {

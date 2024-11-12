@@ -991,6 +991,18 @@ function showPlaytechBetDetails(refno, winlossDate, custId, transType) {
     openResultsPopUp(params);
 }
 
+function showGPIBetDetails(refno, winlossDate, custId, transType) {
+    var params = {
+        url: "RNGCasinoBetList/BetDetails",
+        title: "GPI - Detailed Bet list - " + winlossDate.split(" ")[0],
+        jsonParam: { TransId: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 145, PageSize: 500 },
+        width: 1250,
+        height: 600
+    };
+
+    openResultsPopUp(params);
+}
+
 function ViewCashOutHistory(transId, refNo, betType, originalTransId, title) {
     var cashoutParam = {
         url: "BetList/GetCashOutDetails",
@@ -1217,6 +1229,9 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
 
         case 148: //Playtech
             return getPlaytechParam(custId, transId3rd, gameId3rd, currencyId, siteId, bettype, winlostdate);
+            
+        case 145: //GPI
+            return getGPIParam(custId, transId3rd, gameId3rd, currencyId, siteId, bettype, winlostdate);
 
         default:
             return undefined;
@@ -1888,6 +1903,26 @@ function getPlaytechParam(custId, transId3rd, gameId3rd, currencyId, siteId, bet
         jsonParam:
         {
             productId: 100,
+            custId: custId,
+            transId3rd: transId3rd,
+            gameId3rd: gameId3rd,
+            BetTypeId: betType,
+            EndTime: endTime,
+            SiteId: siteId,
+            CurrencyId: currencyId
+        },
+        width: 945,
+        height: 500
+    };
+}
+
+function getGPIParam(custId, transId3rd, gameId3rd, currencyId, siteId, betType, endTime) {
+    return {
+        url: "ThirdParty/GPIResult",
+        title: "GPI Result",
+        jsonParam:
+        {
+            productId: 48,
             custId: custId,
             transId3rd: transId3rd,
             gameId3rd: gameId3rd,
