@@ -113,7 +113,8 @@
                 sportType == SportContants.SabaxD ||
                 sportType == SportContants.FastSpin ||
                 sportType == SportContants.FACHAI ||
-                sportType == SportContants.Nextspin)
+                sportType == SportContants.Nextspin ||
+                sportType == SportContants.Playtech)
             {
                 return GetRNGCasinoTickets(refNo, custId, transType, winlostDate);
             }

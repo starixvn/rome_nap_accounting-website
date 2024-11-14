@@ -104,6 +104,7 @@
         public const int FACHAI = 146;
         public const int Nextspin = 229;
         public const int ONCasino = 138;
+        public const int Playtech = 148;
 
     }
 }
