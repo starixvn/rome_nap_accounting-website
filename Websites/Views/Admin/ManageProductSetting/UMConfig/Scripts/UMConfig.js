@@ -833,11 +833,11 @@ function ShowConfirmDelete(message, deleteRows) {
             var responses = arguments;
             if (deleteRows.length === 1) {
                 if (responses[1] === "success") {
-                    if (responses[0].ErrorCode !== 0 && response[0].ErrorCode !== 1) {
+                    if (responses[0].ErrorCode !== 0 && responses[0].ErrorCode !== 1) {
                         divError = divError + "Config ID: " + deleteRows[0].ConfigId + ' ' + responses[0].ErrorMessage + "\n";
                     }
 
-                    if (response[0].ErrorCode === 1) {
+                    if (responses[0].ErrorCode === 1) {
                         notExistConfigIds.push(deleteRows[0].ConfigId);
                     }
                 } else {
