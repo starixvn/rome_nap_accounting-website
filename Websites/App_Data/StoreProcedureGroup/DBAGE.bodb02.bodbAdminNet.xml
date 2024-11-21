@@ -53,7 +53,7 @@
   </Function>
   <Function Name="Core - Customer Info">
     <Setting Key="Acc_CustomerSelByUserName" SpName="Acc_CustomerSelByUserName" DbName="DBAGE.bodb02.wsv_nap" />
-    <Setting Key="Acc_CustomerSelBalanceCashInfo" SpName="Acc_CustomerSelBalanceCashInfo_xtest" DbName="DBAGE.bodb02.wsv_nap" Plain="0" />
+    <Setting Key="Acc_CustomerSelBalanceCashInfo" SpName="Acc_CustomerSelBalanceCashInfo" DbName="DBAGE.bodb02.wsv_nap" Plain="0" />
   </Function>
   <Function Name="Admin - SMA Management">
     <Setting Key="Acc_SiteSel_Credit" SpName="Acc_SiteSel_Credit" DbName="DBCust.CustDB.wsv_nap" />
@@ -91,7 +91,7 @@
     <Setting Key="OperatorSelByID" SpName="Acc_OperatorSelByID" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Credit Term">
-    <Setting Key="CreditTermSelByGroupID" SpName="Acc_CreditTermSelByGroupID_xtest" DbName="DBAGE.bodb02.wsv_nap" />
+    <Setting Key="CreditTermSelByGroupID" SpName="Acc_CreditTermSelByGroupID" DbName="DBAGE.bodb02.wsv_nap" />
     <Setting Key="CreditTermSelByCustID" SpName="Acc_CreditTermSelByCustID" DbName="DBAGE.bodb02.wsv_nap" />
     <Setting Key="CreditTermSelGroupHeadlineByGroupID" SpName="Acc_CreditTermSelGroupHeadlineByGroupID" DbName="DBAGE.bodb02.wsv_nap" />
     <Setting Key="Acc_CreditTermSelGroupByUsername" SpName="Acc_CreditTermSelGroupByUsername" DbName="DBAGE.bodb02.wsv_nap" />

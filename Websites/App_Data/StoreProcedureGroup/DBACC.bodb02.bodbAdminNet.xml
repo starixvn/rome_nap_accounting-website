@@ -9,8 +9,8 @@
     <Setting Key="Balance_ResetWinning_ExtraPT" SpName="Task_ResetWinning_ExtraPT" DbName="DBACC.bodb02.wsv_nap" TimeOut="0" />
   </Function>
   <Function Name="Finance Module">
-    <Setting Key="Acc_StatementFinance" SpName="Acc_StatementFinance_xtest" DbName="DBACC.bodb02.wsv_nap" />
-    <Setting Key="Acc_StatementFinanceByRefno" SpName="Acc_StatementFinanceByRefno_xtest" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_StatementFinance" SpName="Acc_StatementFinance" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_StatementFinanceByRefno" SpName="Acc_StatementFinanceByRefno" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="Acc_FinanceAccountByCustId" SpName="Acc_FinanceAccountByCustId" DbName="DBACC.bodb02.wsv_nap" />
   </Function>
   <Function Name="Daily Transaction">
@@ -54,12 +54,12 @@
     <Setting Key="Acc_CustomerSelByRefno" SpName="Acc_CustomerSelByRefno" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="Acc_SiteDBGroupIDSelByRefnos" SpName="Acc_SiteDBGroupIDSelByRefnos" DbName="DBACC.bodb02.wsv_nap" />
 
-    <Setting Key="Acc_AllStatementReward_Full" SpName="Acc_AllStatementReward_Full_xtest" DbName="DBACC.bodb02.wsv_nap" />
-    <Setting Key="Acc_StatementRewardSel" SpName="Acc_StatementRewardSel_xtest" DbName="DBACC.bodb02.wsv_nap" />
-    <Setting Key="Acc_StatementRewardSel_Detail" SpName="Acc_StatementRewardSel_Detail_xtest" DbName="DBACC.bodb02.wsv_nap" />
-    <Setting Key="Acc_StatementReward_Detail" SpName="Acc_StatementReward_Detail_xtest" DbName="DBACC.bodb02.wsv_nap" />
-    <Setting Key="Acc_AllStatement4Agent_Reward" SpName="Acc_AllStatement4Agent_Reward_xtest" DbName="DBACC.bodb02.wsv_nap" />
-    <Setting Key="Acc_RewardPayment_CustomerSelByRefNo" SpName="Acc_RewardPayment_CustomerSelByRefNo_xtest" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_AllStatementReward_Full" SpName="Acc_AllStatementReward_Full" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_StatementRewardSel" SpName="Acc_StatementRewardSel" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_StatementRewardSel_Detail" SpName="Acc_StatementRewardSel_Detail" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_StatementReward_Detail" SpName="Acc_StatementReward_Detail" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_AllStatement4Agent_Reward" SpName="Acc_AllStatement4Agent_Reward" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_RewardPayment_CustomerSelByRefNo" SpName="Acc_RewardPayment_CustomerSelByRefNo" DbName="DBACC.bodb02.wsv_nap" />
     
   </Function>
   <Function Name="Report">

@@ -31,6 +31,11 @@
     <Setting Key="SiteDB3_Acc_BettransInsTransferAllMembers" SpName="Acc_BettransInsTransferAllMembers" DbName="DBTXN.bodb02.wsv_nap" />
     <Setting Key="SiteDB3_Acc_ClearBalanceAllDownlines" SpName="Acc_ClearBalanceAllDownlines" DbName="DBTXN.bodb02.wsv_nap" />
     <Setting Key="SiteDB3_Acc_CustomerInsClearBalance" SpName="Acc_CustomerInsClearBalance" DbName="DBTXN.bodb02.wsv_nap"></Setting>
+    <Setting Key="SiteDB3_Acc_RewardPayment_Transfer" SpName="Acc_RewardPayment_Transfer" DbName="DBTXN.bodb02.wsv_nap" />
+    <Setting Key="SiteDB3_Acc_RewardPayment_Transfer_Rollback" SpName="Acc_RewardPayment_Transfer_Rollback" DbName="DBTXN.bodb02.wsv_nap" />
+    <Setting Key="SiteDB3_Acc_RewardPayment_UpdChecker" SpName="Acc_RewardPayment_UpdChecker" DbName="DBSIC.bodb02.wsv_nap" />
+    <Setting Key="SiteDB3_Acc_RewardPayment_Reverse" SpName="Acc_RewardPayment_Reverse" DbName="DBSIC.bodb02.wsv_nap" />
+    <Setting Key="SiteDB3_Acc_RewardPayment_Reverse_Rollback" SpName="Acc_RewardPayment_Reverse_Rollback" DbName="DBSIC.bodb02.wsv_nap" />
   </Function>
   <Function Name="Left Panel - BalanceInfo">
     <Setting Key="SiteDB3_Acc_CustomerSelBalanceCashInfo" SpName="Acc_CustomerSelBalanceCashInfo" DbName="DBAGE.bodb02.wsv_nap" Plain="0" />

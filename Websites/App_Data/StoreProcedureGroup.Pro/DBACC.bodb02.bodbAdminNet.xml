@@ -54,6 +54,7 @@
     <Setting Key="Acc_CustomerSelByRefno" SpName="Acc_CustomerSelByRefno" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="Acc_SiteDBGroupIDSelByRefnos" SpName="Acc_SiteDBGroupIDSelByRefnos" DbName="DBACC.bodb02.wsv_nap" />
 
+    <Setting Key="Acc_AllStatementReward_Full" SpName="Acc_AllStatementReward_Full" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="Acc_StatementRewardSel" SpName="Acc_StatementRewardSel" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="Acc_StatementRewardSel_Detail" SpName="Acc_StatementRewardSel_Detail" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="Acc_StatementReward_Detail" SpName="Acc_StatementReward_Detail" DbName="DBACC.bodb02.wsv_nap" />
