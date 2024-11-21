@@ -138,7 +138,7 @@ namespace Fanex.Tarus.Customer.Business.LicenseeDcsSetting
                 var superId = agentsExtraInfo.FirstOrDefault(e => e.Id == agentId)?.SuperID ?? 0;
                 result = UpdatePositionTaking(productId, superId, superPT, agentId, isAgentOnly, userId, ip);
 
-                if (result.ErrorCode != 0)
+                if (result.ErrorCode != 0 && !errorResults.Any(err => err.ErrorCode == result.ErrorCode))
                 {
                     errorResults.Add(result);
                 }
