@@ -1,183 +1,82 @@
-﻿.inputSuper {
-    margin-top: 10px;
-}
+﻿@import "../../../../App_Themes/Public-ver2/tabs.css";
+@import "../../../../App_Themes/Public-ver2/input.css";
+@import "../../../../App_Themes/Public-ver2/buttons.css";
+@import "../../../../App_Themes/Public-ver2/alert.css";
 
-.selectHeader {
-    display: inline-flex;
-}
-
-    .selectHeader > input {
-        margin: 5px 5px;
-    }
-
-.setting-actions {
-    margin-top: 10px;
-    margin-bottom: 20px;
-}
-
-#tab-esi-superSetting {
-    border: 1px solid #a6a6a6;
-    background-color: #fff;
-    width: 690px;
-    padding: 0 10px;
-    padding-bottom: 0px;
-    margin-top: 10px;
-    padding-bottom: 10px;
-}
-
-#tab-esi-selectedSupers {
-    margin-top: 10px;
+.bg_table {
     border: 1px solid #d1d1d1;
-    font-weight: 700;
+    padding: 11px;
+    border-radius: 5px;
+    margin-bottom: 11px;
+}
+.inputSuper {
+    margin-bottom: 12px;
+}
+.inputSuper label {
+    font-size: 13px;
+    line-height: 15.23px;
+    font-weight: 500;
     color: #333;
-    padding: 5px 10px 2px;
-    border-radius: 3px;
-    background: rgba(0,0,0,.03);
-    margin-bottom: 10px;
-    overflow-wrap: break-word;
+    display: block;
+    margin-bottom: 4px;
 }
-
-#tab-esi-superSetting .update-selection .selections {
-    display: inline-flex;
+.inputSuper label.small-label{
+    font-weight: 400;
+    line-height: 24px;
+    margin-bottom: 0;
 }
-
-    #tab-esi-superSetting .update-selection .selections .select-item {
-        padding: 0 10px;
-    }
-
-#tab-esi-superSetting .form-title {
-    font-weight: bold;
-    background-color: #909EB6;
-    height: 28px;
-    line-height: 28px;
-    padding-left: 10px;
-    margin-top: 10px;
+.maincontent{
+    padding: 0 12px;
 }
-
-#tab-esi-superSetting .form-super-update {
-    background-color: #f1f1f2;
-    padding: 10px;
-    margin-bottom: 10px;
+.btn-reset{
+    margin-left: 16px;
 }
-
-#tab-esi-superSetting .form-add .group {
-    display: table;
-    width: 100%;
-    margin-bottom: 10px;
+.content-iframe {
+    border: 1px solid #d1d1d1;
+    padding: 11px;
+    border-radius:0 5px 5px;
 }
-
-#tab-esi-superSetting .group {
-    height: 25px;
+.form-control-short{
+    display: flex;
+    align-items: center;
 }
-
-.ic-pwd-eye {
-    margin-right: 4px;
+.form-control-short .btn-submit{
+    margin-left: 15px;
+}
+.setting-actions {
+    border: 1px solid #d1d1d1;
+    padding: 11px;
+    border-radius: 5px;
+}
+.update-selection{
+    margin-bottom: 15px;
+}
+.selections {
+    display: flex;
+}
+.selections .select-item{
+    margin-right: 24px;
+}
+.selections .select-item input{
+    margin-right: 9px;
+}
+.block-update-content + .block-update-content{
+    margin-top: 15px;
+}
+.block-update-content {
+    border: 1px solid #d1d1d1;
+    border-radius: 5px;
+}
+.block-update-content .form-title {
+    background: #BCCBDC;
+    position: relative;
+    padding: 6px 30px 6px 12px;
+    font-weight: 700;
+}
+.block-update-content .form-title .icon-save {
     position: absolute;
-    margin-top: 4px;
-    left: 460px;
-    cursor: pointer;
-    color: #444;
-    width: 25px;
-    height: 25px;
-}
-
-.ic-pwd-eye-visible {
-    background-image: url(eye-visible.png);
-}
-
-.ic-pwd-eye-visible-off {
-    background-image: url(eye-visible-off.png);
-}
-
-.form-add .label {
-    text-align: right;
-    line-height: 28px;
-}
-
-.form-add .form-control {
-    margin-left: 10px;
-    height: 28px;
-}
-
-.width-140 {
-    width: 140px;
-}
-
-.form-add .width-info {
-    width: 320px;
-}
-
-.div-submit {
-    width: 100%;
-    display: inline-block;
-}
-
-.width-info.note-given-credit {
-    color: red;
-    width: 520px;
-    margin-left: 10px;
-}
-
-.icon-alert-circle-outline {
-    vertical-align: middle;
-}
-
-#ForceChangePassword, #ForceChange {
-    margin-left: 10px;
-}
-
-.icon-info {
-    cursor: pointer;
-    margin-left: 3px;
-    width: 16px;
-    height: 16px;
-    background-image: url(information-icon2.png);
-    cursor: pointer;
-    display: inline-block;
+    right: 4px;
     top: 3px;
-    position: relative;
-}
-
-.icon-save {
+    font-size: 24px;
     cursor: pointer;
-    margin-right: 3px;
-    width: 12px;
-    height: 12px;
-    background-image: url(save1.jpg);
-    cursor: pointer;
-    display: inline-block;
-    top: 3px;
-    position: relative;
-}
-
-.superlist {
-    height: 50px;
-}
-
-.bold {
-    font-weight: bold;
-}
-
-.left_tab a span > div {
-    display: inline-block;
-    position: relative;
-}
-
-.left_tab a .icon-info {
-    cursor: pointer;
-    margin-left: 3px;
-    width: 14px;
-    height: 12px;
-    background-image: url(information-icon2.png);
-    cursor: pointer;
-    display: inline-block;
-    top: 1px;
-    position: relative;
-    background-size: 14px 12px;
-}
-
-.txt-source-super {
-    margin-top: 5px;
-    height: 18px;
-    width: 200px;
 }

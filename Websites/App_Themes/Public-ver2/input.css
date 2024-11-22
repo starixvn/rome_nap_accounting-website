@@ -1,0 +1,25 @@
+﻿input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+select, input[type='password'], input[type="text"] {
+    padding: 0 3px;
+    background: #fff;
+    border: 1px solid #d1d1d1;
+    border-radius: 5px;
+    box-shadow: none;
+    width: 100%;
+    max-width: 300px;
+    font-size: 13px;
+    height: 28px;
+    outline: none;
+    line-height: 26px;
+}
+textarea {
+    padding: 3px;
+    background: #fff;
+    border: 1px solid #d1d1d1;
+    border-radius: 5px;
+    font-family: inherit;
+    display: block;
+    resize: none;
+}

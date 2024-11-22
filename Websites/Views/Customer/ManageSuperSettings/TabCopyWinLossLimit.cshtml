@@ -9,14 +9,13 @@
             <input type="text" class="txt-source-super" id="tab-wll-sourcesuper" maxlength="30" />
         </div>
         <div class="inputSuper">
-            <label for="tab-wll-superlist">
+            <label for="tab-wll-superlist" class="small-label">
                 Enter list of Super Account usernames <span style="color: red;">*</span> (Maximum 500 supers, separated by comma ',')
-            </label>
-            <br />
-            <textarea type="text" style="margin-top: 5px;" id="tab-wll-superlist" class="superlist" rows="15" cols="100"></textarea>
+            </label>         
+            <textarea type="text" id="tab-wll-superlist" class="superlist" rows="4" cols="100"></textarea>
         </div>
-        <input type="button" id="tab-wll-btnSubmit" value="Select" class="btn inputSuper" onclick="copyWinLossLimit.checkSuperList()" />
-        <input type="button" id="tab-wll-btnReset" value="Reset" class="btn inputSuper" onclick="copyWinLossLimit.resetSelect()" />
+        <input type="button" id="tab-wll-btnSubmit" value="Select" class="btn-submit" onclick="copyWinLossLimit.checkSuperList()" />
+        <input type="button" id="tab-wll-btnReset" value="Reset" class="btn-reset" onclick="copyWinLossLimit.resetSelect()" />
     </div>
 </div>
 <div id="tab-wll-superSetting" class="setting-actions hidden">

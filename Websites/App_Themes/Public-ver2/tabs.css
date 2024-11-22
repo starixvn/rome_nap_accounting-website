@@ -1,0 +1,77 @@
+﻿.tab-folder#tabs {
+    display: flex;
+    align-items: center;
+    position: relative;
+    top: 1px;
+}
+.tab-folder#tabs li {
+    position: relative;
+    display: block;
+    padding: 5px 12px 6px;
+    text-decoration: none;
+    margin: 0 8px 0 0;
+    background: #e6e6e6;
+    overflow-y: clip;
+    border-top: 1px solid #d1d1d1;
+    border-left: 1px solid #d1d1d1;
+    font-size: 13px;
+    text-transform: uppercase;
+    color: #325275;
+    font-weight: 700;
+    z-index: 2;
+    height: 31px;
+}
+.tab-folder#tabs li.current {
+    z-index: 20 !important;
+    color: #325275;
+    font-weight: 700;
+    background-color: #ffffff;
+}
+.tab-folder#tabs li:before {
+    position: absolute;
+    top: -1px;
+    right: -14px;
+    content: "";
+    width: 15px;
+    height: 31px;
+    background-image: url('data:image/svg+xml,<svg width="15" height="32" viewBox="0 0 15 32" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(%23clip0_1149_2773)"><path d="M0 0L15 32H0V0Z" fill="%23E6E6E6"/><path d="M0 0L15 32" stroke="%23D1D1D1"/></g><defs><clipPath id="clip0_1149_2773"><rect width="15" height="32" fill="white"/></clipPath></defs></svg>');
+    pointer-events: none;
+}
+.tab-folder#tabs li.current:before {
+    background-image: url('data:image/svg+xml,<svg width="15" height="32" viewBox="0 0 15 32" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(%23clip0_1149_2773)"><path d="M0 0L15 32H0V0Z" fill="white"/><path d="M0 0L15 32" stroke="%23D1D1D1"/></g><defs><clipPath id="clip0_1149_2773"><rect width="15" height="32" fill="white"/></clipPath></defs></svg>');
+}
+
+ul.tabs {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #d1d1d1;
+}
+ul.tabs li {
+    position: relative;
+    display: block;
+    padding: 8px 6px;
+    text-decoration: none;
+    margin: 0 20px 0 0;    
+    font-size: 13px;
+    color: #537090;
+    font-weight: 700;       
+    z-index: 2;
+    height: 31px;
+}
+    ul.tabs li a span {
+        display: flex;
+        align-items: center;
+    }
+        ul.tabs li a span .icon-info{
+            margin-left: 6px;
+            font-size: 16px;
+        }
+        ul.tabs li.current:after {
+            position: absolute;
+            content: "";
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #537090;
+        }
