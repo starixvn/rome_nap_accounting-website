@@ -184,6 +184,24 @@ namespace Fanex.Tarus.Customer.Controller
         }
 
         [NAPCustomerAuthFilter]
+        public ActionResult CreateDirectMember(CreateDirectMemberRequest request)
+        {
+            request.NoPermissionEditCredit = !Permissions.GetHostPermission(Enumerations.Functions.Customer.Credit);
+
+            var viewModel = new CreateCustomerViewModel(
+                request,
+                new AppConfiguration(GetApplicationPath()),
+                cdnUri,
+                GetAssetsVersion(),
+                GetHashKey());
+
+            return View(
+                HttpContext.IsDebuggingEnabled
+                    ? "~/Views/Customer/CreateDirectMember-Debug.cshtml"
+                    : "~/Views/Customer/CreateDirectMember.cshtml", viewModel);
+        }
+
+        [NAPCustomerAuthFilter]
         public ActionResult EditCustomer(EditCustomerRequest request)
         {
             request.NoPermissionEditCredit = !Permissions.GetHostPermission(Enumerations.Functions.Customer.Credit);

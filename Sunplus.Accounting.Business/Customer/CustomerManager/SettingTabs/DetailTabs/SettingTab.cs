@@ -38,6 +38,7 @@
             string infoUrl = string.Empty;
             string downlineListURL = string.Empty;
             string addDownlineURL = string.Empty;
+            string addNewDirectMemberUrl = string.Empty;
 
             var agCasinoLinkSetting = string.Empty;
 
@@ -45,9 +46,6 @@
 
             switch (roleId)
             {
-                case 0:
-                    break;
-
                 case 1: // member
                     infoUrl = "Customer/EditCustomerInfo.aspx?custId=" + custId + "&type=Super";
                     agCasinoLinkSetting = string.Format("AGCasino/EditAGCasinoGameSetting?customerId={0}&uplineId={1}&roleId={2}", custId, parentId, roleId);
@@ -73,6 +71,7 @@
                     agCasinoLinkSetting = string.Format("AGCasino/EditAGCasinoGameSetting?customerId={0}&uplineId={1}&roleId={2}", custId, superId, roleId);
                     TemplateHandler.Assign(ref htmlcontent, "{type}", "Master");
                     creditDCSLink = "DCS/ViewCustomerSetting?productId={0}&language=en-US&customerLevel=3&customerId=" + custId;
+                    addNewDirectMemberUrl = "Customer/CreateDirectMember?theme=nap&uplineId=" + custId + "&uplineRoleId=3";
                     break;
 
                 case 4: // super
@@ -83,6 +82,7 @@
                     TemplateHandler.Assign(ref htmlcontent, "{type}", "Super");
                     if (custId < 100) TemplateHandler.RemoveBlock(ref htmlcontent, "editTransferTime"); // for dummy super
                     creditDCSLink = "DCS/ViewCustomerSetting?productId={0}&language=en-US&customerLevel=4&customerId=" + custId;
+                    addNewDirectMemberUrl = "Customer/CreateDirectMember?theme=nap&uplineId=" + custId + "&uplineRoleId=4";
                     break;
 
                 default:
@@ -98,6 +98,7 @@
             TemplateHandler.Assign(ref htmlcontent, "{linkSettingDetail}", BuildDetailUrl(customerInfoViewModel.IsDeposit, custId, roleId, userName, customerInfoViewModel.CustomerSite, ProductGroupIdConstants.SportsBook));
             TemplateHandler.Assign(ref htmlcontent, "{linkDownlineList}", downlineListURL);
             TemplateHandler.Assign(ref htmlcontent, "{linkAddnewDownline}", addDownlineURL);
+            TemplateHandler.Assign(ref htmlcontent, "{linkAddNewDirectMember}", addNewDirectMemberUrl);
             TemplateHandler.Assign(ref htmlcontent, "{IsShow1}", "hidden");
 
             return htmlcontent;
@@ -112,6 +113,11 @@
 
         private string RemoveSettingBlock(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
         {
+            if (!customerInfoViewModel.IsAllowAddDirectMember)
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "addNewDirectMember");
+            }
+
             if (customerInfoViewModel.IsDeposit)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "addNew-Deposite");

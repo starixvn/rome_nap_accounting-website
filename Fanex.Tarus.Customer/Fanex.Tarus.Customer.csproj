@@ -780,6 +780,7 @@
     <Compile Include="Requests\CustomerSetting\Suspend\GetMultipleSuspendCustomerInfoQuery.cs" />
     <Compile Include="Requests\CustomerSetting\Suspend\GetSingleSuspendCustomerInfoQuery.cs" />
     <Compile Include="Requests\Customer\CreateCustomerRequest.cs" />
+    <Compile Include="Requests\Customer\CreateDirectMemberRequest.cs" />
     <Compile Include="Requests\Customer\EditCustomerRequest.cs" />
     <Compile Include="Requests\Customer\GetCustomerSettingRequest.cs" />
     <Compile Include="Requests\Customer\IndirectEditMemberRequest.cs" />

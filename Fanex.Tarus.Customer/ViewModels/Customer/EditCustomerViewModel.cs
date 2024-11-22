@@ -1,5 +1,4 @@
-﻿using Fanex.Tarus.Customer.Constants;
-using Fanex.Tarus.Customer.Requests.Customer;
+﻿using Fanex.Tarus.Customer.Requests.Customer;
 
 namespace Fanex.Tarus.Customer.ViewModels.Customer
 {
