@@ -29,7 +29,6 @@
                 <input type="checkbox" id="ckbGivenCredit" checked />
                 <label for="ckbGivenCredit">Update Given Credit</label>
             </div>
-
             <div class="select-item">
                 <input type="checkbox" id="ckbResetPwd" checked />
                 <label for="ckbResetPwd">Reset Password</label>
@@ -50,16 +49,20 @@
                 </div>
             </div>
             <form class="form-super-update form-add">
-                <div class="group">
-                    <div class="pull-left width-140">
+                <div class="group-label">
+                    <div class="pull-left">
                         <label class="label" for="SuperGivenCredit">New Given Credit</label>
                     </div>
-                    <div class="pull-left">
+                    <div class="pull-right">
                         <input class="form-control width-info" id="SuperGivenCredit" name="GivenCredit" maxlength="14" type="text" value="">
                     </div>
                 </div>
-                <div class="group">                    
-                    <div class="msg-warning">@notesGivenCredit</div>
+                <div class="group-label">
+                    <div class="pull-left">                        
+                    </div>
+                    <div class="pull-right">
+                        <div class="msg-warning">@notesGivenCredit</div>
+                    </div>                    
                 </div>
             </form>
         </div>
@@ -72,25 +75,25 @@
                 </div>
             </div>
             <form class="form-super-update form-add">
-                <div class="group">
-                    <div class="pull-left width-140">
+                <div class="group-label ">
+                    <div class="pull-left">
                         <label class="label" for="SuperPassword">Password</label>
                     </div>
-                    <div class="pull-left input-password-container">
+                    <div class="pull-right input-password-container">
                         <input class="form-control width-info" id="SuperPassword" maxlength="10" name="Password" type="password" autocomplete="new-password">
                         <span class="btn-icon icon-eye" data-id="SuperPassword"></span>
                     </div>
                 </div>
-                <div class="group">
-                    
-                    <label for="SuperConfirmPwd" class="label">Confirm password</label>
-                 
-                    <div class="input-password-container">
+                <div class="group-label">
+                    <div class="pull-left">
+                        <label for="SuperConfirmPwd" class="label">Confirm password</label>
+                    </div>
+                    <div class="pull-right input-password-container">
                         <input id="SuperConfirmPwd" type="password" class="form-control width-info" maxlength="10" autocomplete="new-password">
                         <span class="btn-icon icon-eye" data-id="SuperConfirmPwd"></span>
                     </div>
                 </div>
-                <div class="group group-checkbox">                    
+                <div class="group-label group-checkbox">                    
                     <input id="ForceChangePassword" type="checkbox" checked="checked" class="checkbox">
                     <label for="ForceChangePassword" class="label">Force change</label>                   
                 </div>
@@ -106,23 +109,23 @@
                 </div>
             </div>
             <form class="form-super-update form-add">
-                <div class="group">
-                    <div class="pull-left width-140">
+                <div class="group-label ">
+                    <div class="pull-left">
                         <label for="SuperSecCode" class="label">Security Code<span class="icon-info" id="notesSecCode" title="@notesSecCode" data-toggle="@notesSecCode" data-placement="right"></span></label>
                     </div>
-                    <div class="pull-left">
+                    <div class="pull-right">
                         <input id="SuperSecCode" maxlength="6" type="text" class="form-control width-info">
                     </div>
                 </div>
-                <div class="group">
+                <div class="group-label">
                     <div class="pull-left width-140">
                         <label for="SuperConfirmSecCode" class="label">Confirm Security Code</label>
                     </div>
-                    <div class="pull-left">
+                    <div class="pull-right">
                         <input type="text" id="SuperConfirmSecCode" maxlength="6" class="form-control width-info">
                     </div>
                 </div>
-                <div class="group group-checkbox">    
+                <div class="group-label group-checkbox">    
                     <input id="SuperForceChangeSecCode" type="checkbox" checked="checked" class="checkbox">
                     <label for="SuperForceChangeSecCode" class="label">Force change</label>                                       
                 </div>

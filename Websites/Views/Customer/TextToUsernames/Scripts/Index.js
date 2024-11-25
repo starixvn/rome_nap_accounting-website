@@ -5,6 +5,13 @@
             gravity: 'nw'
         });
 
+        $('#tab-ttu-text').keyup(function (e) {
+            var code = e.keyCode || e.which;
+            if (code === 13) {
+                textToUsernames.getUsernames();
+            }
+        });
+
         $("#tab-ttu-btnSubmit").click(function () { textToUsernames.getUsernames(); });
         $("#copy-valids").click(function () {
             var copyText = $(".row-usernames");
