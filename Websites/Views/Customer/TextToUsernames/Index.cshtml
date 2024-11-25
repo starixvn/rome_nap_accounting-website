@@ -1,29 +1,25 @@
 ﻿@using Sunplus.Accounting.Core.Configurations;
 @{
     var noteText = "Support to remove delimiters: Hyphen (-), Comma (,), and Semicolon (;)\nMaximum length is 200 characters.";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
 }
 <html>
 <head>
-    <link href="@Url.Content("~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
-    <link href="@Url.Content("~/App_Themes/Public/common.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
-    <link href="@Url.Content("~/App_Themes/Public/table.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
-    <link href="@Url.Content("~/App_Themes/LeftPanel/left_panel.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
-    <link href="@Url.Content("~/js/ToolTip/Tipsy-Tooltip/tipsy.css")" rel="stylesheet" type="text/css" />
-    <link href="@Url.Content("~/Views/Customer/TextToUsernames/Styles/text-to-usernames.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Views/Customer/ManageSuperSettings/Styles/manage-super-settings.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <div class="main">
         <div class="maincontent">
-            <div id="divMainHeader" style="height:27px; background-color:#fff; position:fixed; width:100%; margin-top:-4px; padding-top:10px;">
+            <div id="divMainHeader" style="position: sticky;top: 0;padding-top: 30px; background: #fff;z-index: 100;margin-bottom: 11px;">
                 <div class="box_header" style="width: 100%;">
                     <div class="left_tab" style="width: 100%">
-                        <ul id="tabs">
-                            <li id="tab_1"><a><span>Text to Super Usernames</span></a></li>
+                        <ul id="tabs" class="tabs">
+                            <li class="current" id="tab_1"><a><span>Text to Super Usernames</span></a></li>
                         </ul>
                     </div>
                 </div>
             </div>
-            <div id="tab_1_content" class="tab_content" style="margin-top:38px;">
+            <div id="tab_1_content" class="tab_content">
                 <div id="tab-ttu-errMsg"></div>
                 <div class="bg_table">
                     <div>
@@ -32,14 +28,14 @@
                                 Text<span style="color: red;">*</span>
                             </label>
                             <input type="text" style="margin-top: 5px;" id="tab-ttu-text" maxlength="200" value="" />
-                            <input type="button" id="tab-ttu-btnSubmit" value="Get Usernames" class="btn" />
+                            <input type="button" id="tab-ttu-btnSubmit" value="Get Usernames" class="btn-submit" />
                         </div>
                     </div>
                     <div class="b">@noteText</div>
                 </div>
             </div>
             <div id="tab-ttu-usernames" class="hidden">
-                <table class="tbl-valid-usernames">
+                <table class="tb tbl-valid-usernames">
                     <thead>
                         <tr>
                             <th>Valid Usernames</th>
@@ -56,7 +52,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <table class="tbl-invalid-usernames">
+                <table class="tb tbl-invalid-usernames">
                     <thead>
                         <tr>
                             <th>Invalid Usernames</th>

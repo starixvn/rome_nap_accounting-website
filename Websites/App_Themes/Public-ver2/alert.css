@@ -3,7 +3,7 @@
 .alertboxerr {
     border-width: 1px;
     border-style: solid;
-    padding: 11px 22px 11px 43px;
+    padding: 11px 22px 11px 30px;
     position: relative;
     margin: 12px 0;
     border-radius: 3px;
@@ -27,7 +27,7 @@
         -moz-osx-font-smoothing: grayscale;
         font-size: 20px;
         position: absolute;
-        left: 9px;
+        left: 6px;
         top: 8px;
         line-height: 1;
         content: "\e900";
@@ -37,7 +37,7 @@
 .msg-warning {
     border-width: 1px;
     border-style: solid;
-    padding: 11px 22px 11px 43px;
+    padding: 11px 22px 11px 30px;
     position: relative;
     margin: 12px 0;
     border-radius: 4px;
@@ -58,8 +58,8 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     position: absolute;
-    left: 9px;
-    top: 8px;
+    left: 4px;
+    top: 7px;
     line-height: 1;
     font-size: 24px;
     content: '\e903';
