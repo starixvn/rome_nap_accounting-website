@@ -285,7 +285,7 @@ namespace Sunplus.Accounting.Business.ExportStatement
                         TemplateHandler.Assign(ref row, "Debit", NumberFormat.DecFormat(Total * (-1), 2));
                     }
 
-                    Balance = transtype.Equals("BAL") ? Total : Balance + Total;
+                    Balance = transtype.Equals("BAL") || transtype.Equals("BALR") ? Total : Balance + Total;
 
                     TemplateHandler.Assign(ref row, "Balance", NumberFormat.DecFormat(Balance, 2));
 

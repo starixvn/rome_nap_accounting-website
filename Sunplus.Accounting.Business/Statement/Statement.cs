@@ -477,7 +477,7 @@ namespace Sunplus.Accounting.Business.Statement
                         //Total 2
                         //what is it
                         int index = remark.ToLower().IndexOf("opening balance");
-                        isBalance = index >= 0 && type.ToLower().Equals("bal");
+                        isBalance = index >= 0 && (type.ToLower().Equals("bal") || type.ToLower().Equals("balr"));
                         if (isBalance)
                         {
                             if (gotopen == 0)
