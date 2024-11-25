@@ -23,7 +23,7 @@
     <div id="tab-esi-update-result">
     </div>
     <div class="update-selection">
-        <p>Selection:</p>
+        <p><b>Selection:</b></p>
         <div class="selections">
             <div class="select-item">
                 <input type="checkbox" id="ckbGivenCredit" checked />
@@ -58,9 +58,8 @@
                         <input class="form-control width-info" id="SuperGivenCredit" name="GivenCredit" maxlength="14" type="text" value="">
                     </div>
                 </div>
-                <div class="group">
-                    <div class="pull-left width-140">&nbsp;</div>
-                    <div class="pull-left width-info note-given-credit">@notesGivenCredit</div>
+                <div class="group">                    
+                    <div class="msg-warning">@notesGivenCredit</div>
                 </div>
             </form>
         </div>
@@ -79,25 +78,21 @@
                     </div>
                     <div class="pull-left input-password-container">
                         <input class="form-control width-info" id="SuperPassword" maxlength="10" name="Password" type="password" autocomplete="new-password">
-                        <span class="ic-pwd-eye ic-pwd-eye-visible" data-id="SuperPassword"></span>
+                        <span class="btn-icon icon-eye" data-id="SuperPassword"></span>
                     </div>
                 </div>
                 <div class="group">
-                    <div class="pull-left width-140">
-                        <label for="SuperConfirmPwd" class="label">Confirm password</label>
-                    </div>
-                    <div class="pull-left input-password-container">
+                    
+                    <label for="SuperConfirmPwd" class="label">Confirm password</label>
+                 
+                    <div class="input-password-container">
                         <input id="SuperConfirmPwd" type="password" class="form-control width-info" maxlength="10" autocomplete="new-password">
-                        <span class="ic-pwd-eye ic-pwd-eye-visible" data-id="SuperConfirmPwd"></span>
+                        <span class="btn-icon icon-eye" data-id="SuperConfirmPwd"></span>
                     </div>
                 </div>
-                <div class="group">
-                    <div class="pull-left width-140">
-                        <label for="ForceChangePassword" class="label">Force change</label>
-                    </div>
-                    <div class="pull-left" style="line-height: 23px;">
-                        <input id="ForceChangePassword" type="checkbox" checked="checked" class="checkbox">
-                    </div>
+                <div class="group group-checkbox">                    
+                    <input id="ForceChangePassword" type="checkbox" checked="checked" class="checkbox">
+                    <label for="ForceChangePassword" class="label">Force change</label>                   
                 </div>
             </form>
         </div>
@@ -127,19 +122,15 @@
                         <input type="text" id="SuperConfirmSecCode" maxlength="6" class="form-control width-info">
                     </div>
                 </div>
-                <div class="group">
-                    <div class="pull-left width-140">
-                        <label for="SuperForceChangeSecCode" class="label">Force change</label>
-                    </div>
-                    <div class="pull-left" style="line-height: 23px;">
-                        <input id="SuperForceChangeSecCode" type="checkbox" checked="checked" class="checkbox">
-                    </div>
+                <div class="group group-checkbox">    
+                    <input id="SuperForceChangeSecCode" type="checkbox" checked="checked" class="checkbox">
+                    <label for="SuperForceChangeSecCode" class="label">Force change</label>                                       
                 </div>
             </form>
         </div>
 
-        <div class="div-submit">
-            <input id="btnSubmitUpdate" class="btn pull-right" type="button" value="Update">
+        <div class="button-submit">
+            <input id="btnSubmitUpdate" class="btn-submit" type="button" value="Update">
         </div>
     </div>
 </div>

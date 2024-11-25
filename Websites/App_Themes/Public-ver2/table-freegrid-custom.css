@@ -1,0 +1,27 @@
+﻿.freegrid .free-top-left table thead th, .freegrid .col_header table thead th {
+    background: #BCCBDC;
+    color: #333;
+}
+.freegrid [class^="btn-"] {
+    padding: 0 8px;
+    height: 24px;
+    line-height: 24px;
+    margin: 0 5px;
+}
+.freegrid .selectHeader {
+    display: flex;
+    flex-wrap: nowrap;
+    padding: 4px 0;
+}
+.freegrid .freegrid thead th, .freegrid .grid-fixed-table thead th {
+    padding: 3px 6px;
+}
+.freegrid td, .freegrid .grid-fixed-table td {
+    padding: 3px 6px;
+}
+.freegrid .freegrid-even td {
+    background-color: #fff;
+}
+.freegrid tr.highlight-row:hover td {
+    background: #F8F9FD;
+}

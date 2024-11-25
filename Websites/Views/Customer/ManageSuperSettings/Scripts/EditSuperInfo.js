@@ -39,7 +39,7 @@
         $('#ckbGivenCredit').click(function () { editSuperInfo.showHideGivenCredit(); });
         $('#ckbResetPwd').click(function () { editSuperInfo.showHideUpdatePassword(); });
         $('#ckbResetSecCode').click(function () { editSuperInfo.showHideUpdateSecurityCode(); });
-        $('.ic-pwd-eye').click(function () { editSuperInfo.showHidePwd($(this)); });
+        $('.btn-icon').click(function () { editSuperInfo.showHidePwd($(this)); });
 
         $("#save-ugc").click(function () { editSuperInfo.saveGivenCredit(); });
         $("#save-pwd").click(function () { editSuperInfo.savePassword(); });
@@ -109,11 +109,11 @@
         var currentType = $("#" + targetId).prop("type");
         if (currentType === "text") {
             $("#" + targetId).prop("type", "password");
-            iConSpan.removeClass("ic-pwd-eye-visible-off").addClass("ic-pwd-eye-visible");
+            iConSpan.removeClass("icon-eye-off").addClass("icon-eye");
         }
         else {
             $("#" + targetId).prop("type", "text");
-            iConSpan.removeClass("ic-pwd-eye-visible").addClass("ic-pwd-eye-visible-off");
+            iConSpan.removeClass("icon-eye").addClass("icon-eye-off");
         }
     },
 

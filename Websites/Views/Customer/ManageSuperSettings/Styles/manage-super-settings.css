@@ -2,7 +2,17 @@
 @import "../../../../App_Themes/Public-ver2/input.css";
 @import "../../../../App_Themes/Public-ver2/buttons.css";
 @import "../../../../App_Themes/Public-ver2/alert.css";
+@import "../../../../App_Themes/Public-ver2/table.css";
+@import "../../../../App_Themes/Public-ver2/tipsy.css";
 
+@import "../../../../Scripts/_Libs/FanexGrid/Fanex.Grid.css";
+@import "../../../../App_Themes/Public-ver2/table-freegrid-custom.css";
+.tab_content {
+    padding-bottom: 1px;
+}
+.alertboxerr{
+    max-width: 780px;
+}
 .bg_table {
     border: 1px solid #d1d1d1;
     padding: 11px;
@@ -43,10 +53,14 @@
 .form-control-short .btn-submit{
     margin-left: 15px;
 }
+.update-content{
+    max-width: 650px;
+}
 .setting-actions {
     border: 1px solid #d1d1d1;
     padding: 11px;
     border-radius: 5px;
+    margin-bottom: 15px;
 }
 .update-selection{
     margin-bottom: 15px;
@@ -54,8 +68,9 @@
 .selections {
     display: flex;
 }
-.selections .select-item{
+.selections .select-item {
     margin-right: 24px;
+    display: inline-flex;
 }
 .selections .select-item input{
     margin-right: 9px;
@@ -64,7 +79,7 @@
     margin-top: 15px;
 }
 .block-update-content {
-    border: 1px solid #d1d1d1;
+    border: 1px solid #a4a4a4;
     border-radius: 5px;
 }
 .block-update-content .form-title {
@@ -79,4 +94,73 @@
     top: 3px;
     font-size: 24px;
     cursor: pointer;
+}
+.form-super-update{
+    padding: 11px;
+    padding-bottom: 0;
+}
+.input-password-container{
+    display: inline-block;
+    min-width: 300px;
+    position: relative;
+
+}
+    .input-password-container .btn-icon {
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 100%;
+        width: 25px;
+        text-align: center;
+        line-height: 28px;
+        font-size: 16px;
+        cursor: pointer;
+        color: #323232;
+    }
+    .group {
+        margin-bottom: 11px;
+    }
+.group .label {
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 15px;
+    margin-bottom: 4px;
+    display: block;
+}
+    .group .label .icon-info {
+        font-size: 16px;
+        color: #333;
+        display: inline-block;
+        vertical-align: middle;
+        margin-left: 4px;
+    }
+        .group .label .icon-info:before {
+            color: #333;
+        }
+        .group .form-control {
+        }
+.group-checkbox{
+    display: flex;
+}
+.group-checkbox .label{
+    margin: 0 0 0 6px;
+    cursor: pointer;
+}
+.button-submit{
+    margin-top: 16px;
+}
+.tbl-valid-usernames, .tbl-invalid-usernames {
+    margin-top: 10px;
+    min-width: 400px;
+    border-collapse: collapse;
+}
+.icon-copy {
+    font-size: 20px;
+    cursor: pointer;
+}
+.tbl-invalid-usernames tr th {
+    background: #FFE8E8;
+}
+#tab-ttu-text {
+    max-width: 500px;
 }

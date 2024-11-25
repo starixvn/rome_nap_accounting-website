@@ -93,7 +93,7 @@
         {
             columns: [
                 { HeaderText: "Maximun Win Loss Limit", Width: 400, Name: "Name", HeaderAlign: "center", CellAlign: "left" },
-                { HeaderText: "Copy<br /><div class=\"selectHeader\"><input type=\"button\" value=\"Select All\" class=\"btn\" onclick=\"copyWinLossLimit.selectAllSports(1)\" /><input type=\"button\" value=\"Deselect All\" class=\"btn\" onclick=\"copyWinLossLimit.selectAllSports(0)\" /> </div>", Width: 150, Name: "Select", HeaderAlign: "center", CellAlign: "center" }
+                { HeaderText: "Copy<br /><div class=\"selectHeader\"><input type=\"button\" value=\"Select All\" class=\"btn-submit\" onclick=\"copyWinLossLimit.selectAllSports(1)\" /><input type=\"button\" value=\"Deselect All\" class=\"btn-reset\" onclick=\"copyWinLossLimit.selectAllSports(0)\" /> </div>", Width: 150, Name: "Select", HeaderAlign: "center", CellAlign: "center" }
             ],
             bodyRows: bodyRows,
             showDistinctRow: true,
