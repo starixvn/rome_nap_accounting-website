@@ -1,10 +1,9 @@
 ﻿table {
-    border: 1px solid #D1D1D1;
-    
+    border: 1px solid #A4A4A4;
 }
-table th, table td {
-    border: 1px solid #D1D1D1;
-}
+    table th, table td {
+        border: 1px solid #A4A4A4;
+    }
 .tb thead th {
     background-color: #bccbdc;
     text-align: center;

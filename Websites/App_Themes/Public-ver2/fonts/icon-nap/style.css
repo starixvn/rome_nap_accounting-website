@@ -1,9 +1,9 @@
 @font-face {
   font-family: 'icon-nap';
   src:
-    url('fonts/icon-nap.ttf?gssk5h') format('truetype'),
-    url('fonts/icon-nap.woff?gssk5h') format('woff'),
-    url('fonts/icon-nap.svg?gssk5h#icon-nap') format('svg');
+    url('fonts/icon-nap.ttf?d1bm6') format('truetype'),
+    url('fonts/icon-nap.woff?d1bm6') format('woff'),
+    url('fonts/icon-nap.svg?d1bm6#icon-nap') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -29,6 +29,10 @@
 }
 .icon-eye:before {
   content: "\e905";
+}
+.icon-close:before {
+  content: "\e908";
+  color: #4f4f4f;
 }
 .icon-eye-off:before {
   content: "\e906";

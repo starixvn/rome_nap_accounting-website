@@ -5,6 +5,8 @@
 @import "../../../../App_Themes/Public-ver2/table.css";
 @import "../../../../App_Themes/Public-ver2/tipsy.css";
 
+@import "../../../../App_Themes/Public-ver2/modal-popup.css";
+
 @import "../../../../Scripts/_Libs/FanexGrid/Fanex.Grid.css";
 @import "../../../../App_Themes/Public-ver2/table-freegrid-custom.css";
 .tab_content {
@@ -34,6 +36,9 @@
     font-weight: 400;
     line-height: 24px;
     margin-bottom: 0;
+}
+.inputSuper label.small-label.short{
+    margin-top: -5px;
 }
 .maincontent{
     padding: 0 12px;
@@ -158,8 +163,13 @@
     font-size: 20px;
     cursor: pointer;
 }
+.tbl-valid-usernames tr th {
+    background: #E5F4EE;
+    height: 55px;
+}
 .tbl-invalid-usernames tr th {
-    background: #FFE8E8;
+    background: #FFDFDF;
+    height: 55px;
 }
 #tab-ttu-text {
     max-width: 500px;
