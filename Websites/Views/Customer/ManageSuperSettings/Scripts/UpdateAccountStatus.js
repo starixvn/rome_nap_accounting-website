@@ -113,7 +113,8 @@
             ],
             bodyRows: bodyRows,
             showDistinctRow: true,
-            gridExpandHeight: 0
+            gridExpandHeight: 0,
+            bodyRowHeight: 30
         };
 
         $('#MultipleUpdateSuperStatus_grid').fanexGrid(gridOptions);
@@ -263,6 +264,7 @@
                     return;
                 }
 
+                data.SuperList = data.Supers;
                 updateAccountStatus.updateData = data;
 
                 if (data.SuperList.length > 0) {

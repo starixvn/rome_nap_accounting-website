@@ -97,7 +97,8 @@
             ],
             bodyRows: bodyRows,
             showDistinctRow: true,
-            gridExpandHeight: 0
+            gridExpandHeight: 0,
+            bodyRowHeight: 30
         };
 
         $('#tab-wll-settings').fanexGrid(gridOptions);

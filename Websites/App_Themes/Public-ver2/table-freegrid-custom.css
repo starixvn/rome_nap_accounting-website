@@ -2,11 +2,15 @@
     background: #BCCBDC;
     color: #333;
 }
+.freegrid {
+    border-color: #a4a4a4 !important;
+}
 .freegrid [class^="btn-"] {
-    padding: 0 8px;
-    height: 24px;
-    line-height: 24px;
+    padding: 0 6px;
+    height: 19px;
+    line-height: 19px;
     margin: 0 5px;
+    font-size: 12px;
 }
 .freegrid .selectHeader {
     display: flex;
@@ -15,9 +19,11 @@
 }
 .freegrid .freegrid thead th, .freegrid .grid-fixed-table thead th {
     padding: 3px 6px;
+    border-color: #a4a4a4;
 }
 .freegrid td, .freegrid .grid-fixed-table td {
     padding: 3px 6px;
+    border-color: #a4a4a4;
 }
 .freegrid .freegrid-even td {
     background-color: #fff;
@@ -25,3 +31,7 @@
 .freegrid tr.highlight-row:hover td {
     background: #F8F9FD;
 }
+.freegrid tbody td{
+    height: 32px;
+}
+ 
