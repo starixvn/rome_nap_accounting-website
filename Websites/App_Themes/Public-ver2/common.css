@@ -581,16 +581,16 @@ a, a:focus, a:active, a:target, a:hover {
 .link {
     color: #045ace;
 }
-
-    .link:hover {
-        color: #F60;
-    }
-
-
+.link:hover {
+    color: #F60;
+}
 .display-none {
     display: none;
 }
 
 .hidden {
     display: none !important;
+}
+.mb-0{
+    margin-bottom: 0!important;
 }

@@ -1,98 +1,53 @@
 ﻿
-
-.alertboxerr {
+.alertboxerr, .msg-warning, .alertboxscc {
     border-width: 1px;
     border-style: solid;
     padding: 5px 22px 5px 30px;
     position: relative;
-    margin: 12px 0;
+    margin: 6px 0;
     border-radius: 3px;
     font-size: 13px;
     line-height: 1.3;
     font-weight: 500;
+}
+.alertboxerr:before, .msg-warning:before, .alertboxscc:before {
+    font-family: 'icon-nap' !important;
+    speak: never;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 18px;
+    position: absolute;
+    left: 6px;
+    top: 4px;
+    line-height: 1;
+}
+.alertboxerr {    
     background-color: #FFE8E8;
     border-color: #E2B6B6;
     color: #333333;
 }
-
 .alertboxerr:before {
-    font-family: 'icon-nap' !important;
-    speak: never;
-    font-style: normal;
-    font-weight: normal;
-    font-variant: normal;
-    text-transform: none;
-    line-height: 1;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    font-size: 18px;
-    position: absolute;
-    left: 6px;
-    top: 4px;
-    line-height: 1;
     content: "\e900";
     color: #E50000;
 }
-
 .msg-warning {
-    border-width: 1px;
-    border-style: solid;
-    padding: 5px 22px 5px 30px;
-    position: relative;
-    margin: 12px 0;
-    border-radius: 4px;
-    font-size: 13px;
-    line-height: 1.3;
-    font-weight: 400;
     border-color: #C6A180;
     color: #333;
 }
 .msg-warning:before {
-    font-family: 'icon-nap' !important;
-    speak: never;
-    font-style: normal;
-    font-weight: normal;
-    font-variant: normal;
-    text-transform: none;
-    line-height: 1;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    font-size: 18px;
-    position: absolute;
-    left: 6px;
-    top: 4px;
-    line-height: 1;
     content: '\e903';
     color: #A75000;
 }
 .alertboxscc {
-    border-width: 1px;
-    border-style: solid;
-    padding: 5px 22px 5px 30px;
-    position: relative;
-    margin: 12px 0;
-    border-radius: 4px;
-    font-size: 13px;
-    line-height: 1.3;
-    font-weight: 400;
     border-color: #B5D0C9;
     color: #333;
 }
 .alertboxscc:before {
-    font-family: 'icon-nap' !important;
-    speak: never;
-    font-style: normal;
-    font-weight: normal;
-    font-variant: normal;
-    text-transform: none;
-    line-height: 1;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    font-size: 18px;
-    position: absolute;
-    left: 6px;
-    top: 4px;
-    line-height: 1;
     content: '\e902';
     color: #268026;
 }

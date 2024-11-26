@@ -22,7 +22,7 @@
     margin-bottom: 11px;
 }
 .inputSuper {
-    margin-bottom: 12px;
+    margin-bottom: 10px;
 }
 .inputSuper label {
     font-size: 13px;
@@ -66,12 +66,12 @@ textarea {
 }
 .setting-actions {
     border: 1px solid #d1d1d1;
-    padding: 11px;
+    padding: 10px;
     border-radius: 5px;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 .update-selection{
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 .selections {
     display: flex;
@@ -113,18 +113,18 @@ textarea {
     position: relative;
 
 }
-    .input-password-container .btn-icon {
-        position: absolute;
-        top: 0;
-        right: 0;
-        height: 100%;
-        width: 25px;
-        text-align: center;
-        line-height: 28px;
-        font-size: 16px;
-        cursor: pointer;
-        color: #323232;
-    }
+.input-password-container .btn-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 25px;
+    text-align: center;
+    line-height: 28px;
+    font-size: 16px;
+    cursor: pointer;
+    color: #323232;
+}
 .msg-warning{
     margin-top: 0;
 }
@@ -153,24 +153,26 @@ textarea {
 .group-label .pull-left{
     width: 140px;
 }
-    .group-label .pull-right input[type="text"] {
-        width: 300px;
-    }
-
-    .group-checkbox {
-        display: flex;
-    }
+.group-label .pull-right input[type="text"] {
+    width: 300px;
+}
+.group-checkbox {
+    display: flex;
+}
 .group-checkbox .label{
     margin: 0 0 0 6px;
     cursor: pointer;
 }
 .button-submit{
-    margin-top: 16px;
+    margin-top: 10px;
 }
 .tbl-valid-usernames, .tbl-invalid-usernames {
     margin-top: 10px;
-    width: 400px;
+    width: 450px;
     border-collapse: collapse;
+}
+.tbl-invalid-usernames tbody tr td:last-child{
+    white-space: nowrap;
 }
 .icon-copy {
     font-size: 20px;
@@ -178,11 +180,9 @@ textarea {
 }
 .tbl-valid-usernames tr th {
     background: #E5F4EE;
-    height: 55px;
 }
 .tbl-invalid-usernames tr th {
     background: #FFDFDF;
-    height: 55px;
 }
 #tab-ttu-text {
     max-width: 500px;
