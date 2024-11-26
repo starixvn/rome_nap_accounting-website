@@ -89,6 +89,7 @@ namespace Fanex.Tarus.Customer.Controller
         }
 
         [HttpPost, AuthenticateHost]
+        [ValidateInput(false)]
         public ActionResult EditSuperInfo(EditSuperInfoRequest request)
         {
             if (request.EditGivenCreditRequest != null)
