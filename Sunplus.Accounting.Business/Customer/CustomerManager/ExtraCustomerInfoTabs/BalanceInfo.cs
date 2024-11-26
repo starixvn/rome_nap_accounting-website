@@ -3,15 +3,12 @@
     using Core.Common;
     using Core.Web;
     using DNAide.Web;
-    using Fanex.Tarus.Infrastructure.Configurations;
     using Security;
     using static Fanex.Tarus.Infrastructure.Common.Enumerations;
 
     public partial class CustomerManager
     {
-
         private static readonly string _statusCountTooltipMBC = "Active/Closed/Suspended";
-
         private static readonly string _statusCountTitleMBC = "A/C/S";
 
         private static string RenderBalanceInfo(
@@ -41,20 +38,26 @@
             TemplateHandler.Assign(ref balanceinfo, "{CustName}", customerInfoViewModel.UserName);
 
             TemplateHandler.Assign(ref balanceinfo, "{AccOutstandTxn}", string.Format("{0:n}", customerInfoViewModel.Currency + " " + IBCUtils.FormatHandler.FormatNumber20(customerInfoViewModel.AccOutstanding)));
+
+            TemplateHandler.Assign(ref balanceinfo, "{RewardBalance}", string.Format("{0:n}", customerInfoViewModel.RewardCurrency + " " + IBCUtils.FormatHandler.FormatNumber20(customerInfoViewModel.RewardBalance)));
             if (customerInfoViewModel.SearchAccountRoleId == 1)
             {
-                TemplateHandler.Assign(ref balanceinfo, "{NetPosition}", customerInfoViewModel.Currency + " " + IBCUtils.FormatHandler.FormatNumber20(customerInfoViewModel.NetPosition));
+                TemplateHandler.Assign(ref balanceinfo, "{NetPosition}",
+                    customerInfoViewModel.Currency + " " +
+                    IBCUtils.FormatHandler.FormatNumber20(customerInfoViewModel.NetPosition));
                 TemplateHandler.Assign(ref balanceinfo, "{hiddenbalance}", "hidden");
+                TemplateHandler.RemoveBlock(ref balanceinfo, "HideOnMember");
             }
             else
             {
                 TemplateHandler.RemoveBlock(ref balanceinfo, "NetPosition");
-
                 TemplateHandler.Assign(ref balanceinfo, "{hiddenbalance}", "");
                 TemplateHandler.Assign(ref balanceinfo, "{colorYesterdayBal}", (hasTransferPermission ? " canchange" : string.Empty) + ((customerInfoViewModel.YesterdayBal >= 0) ? " b" : " hilight"));
                 TemplateHandler.Assign(ref balanceinfo, "{YesterdayBal}", string.Format("{0:####.##}", customerInfoViewModel.YesterdayBal));
                 TemplateHandler.Assign(ref balanceinfo, "{YesterdayBalCur}", string.Format("{0:n}", IBCUtils.FormatHandler.FormatNumber20(customerInfoViewModel.YesterdayBal)));
                 TemplateHandler.Assign(ref balanceinfo, "{CurYesterdayBalCur}", customerInfoViewModel.Currency + " ");
+                TemplateHandler.Assign(ref balanceinfo, "{OutstandTxn}", string.Format("{0:n}", customerInfoViewModel.Currency + " " + IBCUtils.FormatHandler.FormatNumber20(customerInfoViewModel.OutStanding)));
+                TemplateHandler.Assign(ref balanceinfo, "{RewardPending}", string.Format("{0:n}", customerInfoViewModel.RewardCurrency + " " + IBCUtils.FormatHandler.FormatNumber20(customerInfoViewModel.RewardPending)));
             }
 
             //Check Given Credit Permission
@@ -121,7 +124,7 @@
                 }
             }
 
-            if(customerInfoViewModel.IsDeposit)
+            if (customerInfoViewModel.IsDeposit)
             {
                 TemplateHandler.RemoveBlock(ref balanceinfo, "3rdPendingTransfer");
             }
@@ -129,6 +132,16 @@
             {
                 TemplateHandler.Assign(ref balanceinfo, "{3rdPendingTransfer}", string.Format("{0:n}", customerInfoViewModel.Currency + " " + IBCUtils.FormatHandler.FormatNumber20(customerInfoViewModel.PendingTransfer3rd)));
             }
+
+            string isDirectParams = "";
+
+            if (customerInfoViewModel.CheckedDirectStatus ||
+                customerInfoViewModel.SearchAccountRoleId == (int)Role.Super)
+            {
+                isDirectParams = "&RewardMaxTransId=" + customerInfoViewModel.RewardMaxTransId + "&RewardAmount=" + IBCUtils.FormatHandler.FormatNumber20(customerInfoViewModel.RewardBalance) + "&RewardCurrency=" + customerInfoViewModel.RewardCurrency + "&TotalBalReward=" + IBCUtils.FormatHandler.FormatNumber20(customerInfoViewModel.RewardPending + customerInfoViewModel.YesterdayBal);
+            }
+
+            TemplateHandler.Assign(ref balanceinfo, "{DirectRewardParams}", isDirectParams);
 
             TemplateHandler.Assign(ref htmlcontent, "{BalanceInfo}", balanceinfo);
             return htmlcontent;

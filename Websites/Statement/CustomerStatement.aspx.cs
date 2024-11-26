@@ -52,6 +52,7 @@ public partial class Statement_CustomerStatement : PageBase
             string tdate = WebUtils.GetQueryStringValue<string>("tdate", DateTime.Now.ToString("MM/dd/yyyy"));
             //  CastAide.AsString(Request.QueryString["tdate"]);
             string custname = WebUtils.GetQueryStringValue<string>("custname", string.Empty);
+            bool isReward = WebUtils.GetQueryStringValue<string>("isReward", "false").Equals("true");
             DateTime fdt, tdt;
 
             if (!Validator.ValidDateMMDDYYYYNotNull(fdate, out fdt).IsSuccess())
@@ -69,8 +70,8 @@ public partial class Statement_CustomerStatement : PageBase
             if (CastAide.AsInt32(Request.QueryString["IsExport"], 0) == 1)
             {
                 string reportContent = string.Empty;
-                string filenameSuffix = "-" + CastAide.AsString(AppSession.CustUName, string.Empty)
-                                        + "-" + fdt.ToString("yyyyMMdd") + "-" + tdt.ToString("yyyyMMdd");
+                string filenameSuffix = (isReward ? "-Reward" : string.Empty) + "-" + CastAide.AsString(AppSession.CustUName, string.Empty)
+                                         + "-" + fdt.ToString("yyyyMMdd") + "-" + tdt.ToString("yyyyMMdd");
 
                 switch (reportNo)
                 {

@@ -111,8 +111,9 @@ function completeUpdateIsInternal(rs) {
 
     jQuery('#GridContainer').addClass("hidden");
     jQuery('#statementCotent').removeClass("hidden");
+    var isReward = $('input[name="radWallet"]:checked').val() == '1';
     $.ajax({
-        url: 'GetData.ashx?fdate=' + fdate + '&tdate=' + tdate + '&repno=' + reportNo + "&custname=" + custName,
+        url: 'GetData.ashx?fdate=' + fdate + '&tdate=' + tdate + '&repno=' + reportNo + "&custname=" + custName + "&isReward=" + isReward,
         dataType: 'html',
         success: function (data) {
             $("#statementCotent").attr("style", "display:block");
@@ -193,7 +194,8 @@ function ExportToExcel() {
                 toDate: moment(new Date(tdate)).format("MM/DD/YYYY"),
                 custId: 0,
                 roleId: 0,
-                username: custName
+                username: custName,
+                isReward: $("input[name='radWallet']:checked").val() == '1'
             };
 
             var reportNo = obj('repno').value;
@@ -212,7 +214,7 @@ function ExportToExcel() {
             }
 
             location.href = 'CustomerStatement.aspx?fdate=' + fdate + '&tdate=' + tdate + '&repno=' + obj('repno').value + '&IsExport=1'
-                + "&custname=" + encodeURIComponent($("#txtCustName").attr("value"));
+                + "&custname=" + encodeURIComponent($("#txtCustName").attr("value")) + "&isReward=" + criteria.isReward;
         });
 }
 
@@ -222,13 +224,13 @@ function exportStatementReport(rs) {
     statementReportManager.exportStatementReport(statementReportCriteria);
 }
 
-function ReverseTrans(refno) {
+function ReverseTrans(refno, isReward) {
     __confirm("Reverse transaction", "Do you want to reverse the transaction with Ref.No: " + refno + "?", 250, 150, 'cfm_1', function () {
         __close(null, null, 'cfm_1', null);
         __confirm("Reverse transaction", "To double check, do you want to reverse the transaction with Ref.No: " + refno + "?", 250, 180, 'cfm_2', function () {
             try { parent.BlockUI(); } catch (e) { }
             $.ajax({
-                url: 'DelTrans.ashx?refno=' + refno + '&custName=' + custName,
+                url: 'DelTrans.ashx?refno=' + refno + '&custName=' + custName + '&isReward=' + isReward,
                 dataType: 'html',
                 success: function (data) {
                     __close(null, null, 'cfm_2', null);
@@ -248,8 +250,7 @@ function ReverseTrans(refno) {
 }
 
 function GetSelectedRefNo() {
-    var refNos;
-    refNos = "";
+    var refNos = "";
 
     $("input[type='checkbox'][id!='chkAll']").each(function () {
         if (this.checked == true && !this.disabled)
@@ -265,21 +266,26 @@ function VerifyTrans(btn) {
         __close(null, null, 'cfm_1', null);
 
         let selectedRefNo;
+        let isReward = btn.dataset.isReward == 'true';
         if (btn.id.toLowerCase() == "btnverify") {
             //verify multiple
-            selectedRefNo = '{"refNoList":"' + GetSelectedRefNo() + '"}';
+            selectedRefNo = GetSelectedRefNo();
         }
         else {
-            selectedRefNo = '{"refNoList":"' + btn.id + '"}';
+            selectedRefNo = btn.id;
         }
 
         try { parent.BlockUI(); } catch (e) { }
         $.ajax({
             type: "POST",
-            url: "../Services/WCF/ServiceDailyTran.svc/VerifyTransaction",
+            url: window.rootUrl + "CustomerStatement/UpdateVerifyTrans",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
-            data: selectedRefNo,
+            data: JSON.stringify({
+                RefNo: (isReward ? "" : selectedRefNo),
+                RewardRefNo: (isReward ? selectedRefNo : ""),
+                IsVerify: true
+            }),
             success: VerifyTransCallBack
         });
     });
@@ -288,14 +294,19 @@ function VerifyTrans(btn) {
 function UnVerifyTrans(trans) {
     __confirm("UnVerify transaction", "Are you sure you want to unverify the selected transaction(s)?", 400, 250, 'cfm_1', function () {
         __close(null, null, 'cfm_1', null);
-        var selectedRefNo = '{"refNo":' + trans.id + '}';
+        let isReward = trans.dataset.isReward == 'true';
+        var selectedRefNo = trans.id;
         try { parent.BlockUI(); } catch (e) { }
         $.ajax({
             type: "POST",
-            url: "../Services/WCF/ServiceDailyTran.svc/UnVerifyTransaction",
+            url: window.rootUrl + "CustomerStatement/UpdateVerifyTrans",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
-            data: selectedRefNo,
+            data: JSON.stringify({
+                RefNo: (isReward ? "" : selectedRefNo),
+                RewardRefNo: (isReward ? selectedRefNo : ""),
+                IsVerify: false
+            }),
             success: VerifyTransCallBack
         });
     });
@@ -305,7 +316,7 @@ function UnVerifyTrans(trans) {
 function VerifyTransCallBack(data) {
 
     //request to process data successful
-    if (data == true) {
+    if (data.ErrorResults.length == 0) {
         setTimeout(() => {
             GetDataReport();
             __showMessage("", "Update data successfully", 350, 250);
@@ -409,6 +420,8 @@ jQuery(document).ready(function () {
     if (isNewStatementTab == "0") {
         $("#notemessage").addClass("display-none");
     }
+
+    $('input[name="radWallet"]').change(GetDataReport);
 });
 
 function viewDetail(fdate, transtypeid) {
@@ -451,14 +464,14 @@ function ReverseTransAll() {
     let transIds = [];
     $("input[name='chkReverse']").each(function () {
         if (this.checked) {
-            transIds.push(this.id.replace('chkReverse_', ''));
+            transIds.push(this.id.replace('chkReverse_', '') + '_' + (this.dataset.isReward == 'true' ? 1 : 0));
         }
     });
     const refsno = transIds.join(', ');
     const _this = this;
-    __confirm("Reverse transaction", "Do you want to reverse the transaction(s) with Ref.No: " + refsno + "?", 350, 250, 'cfm_1', function () {
+    __confirm("Reverse transaction", "Do you want to reverse the transaction(s) with Ref.No: " + refsno.replaceAll('_0', '').replaceAll('_1', '') + "?", 350, 250, 'cfm_1', function () {
         __close(null, null, 'cfm_1', null);
-        __confirm("Reverse transaction", "To double check, do you want to reverse the transaction(s) with Ref.No: " + refsno + "?", 350, 250, 'cfm_2', function () {
+        __confirm("Reverse transaction", "To double check, do you want to reverse the transaction(s) with Ref.No: " + refsno.replaceAll('_0', '').replaceAll('_1', '') + "?", 350, 250, 'cfm_2', function () {
             try { parent.BlockUI(); } catch (e) { }
             $.ajax({
                 url: 'ReverseMultipleTrans.ashx?refsno=' + refsno + '&custName=' + custName,

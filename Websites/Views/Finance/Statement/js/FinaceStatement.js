@@ -16,6 +16,7 @@
     arrayMark: new Array(),
     VerifyParams: {
         RefNo: '',
+        RewardRefNo: '',
         IsVerify: false
     },
     getFinanceStatement: function () {
@@ -194,17 +195,17 @@
             var ActionHTML = '';
             if (row.IsVerify) {
                 if (row.CheckerName == '') {
-                    ActionHTML = '<td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:75px;"><input id="' + row.RefNo + '" type="checkbox" onclick="financeStatement.checkSelectAll(this)"></div></td><td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:55px;"><input id="' + row.RefNo + '" class="verified" type="button" onclick="financeStatement.VerifyTrans(' + row.RefNo + ');" title="Verify" value="Verify"></div></td>';
+                    ActionHTML = '<td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:75px;"><input id="' + row.RefNo + '" type="checkbox" onclick="financeStatement.checkSelectAll(this)" data-is-reward="' + row.IsReward + '"></div></td><td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:55px;"><input id="' + row.RefNo + '" class="verified" type="button" onclick="financeStatement.VerifyTrans(\'' + row.RefNo + '\', ' + row.IsReward + ');" title="Verify" value="Verify"></div></td>';
                 }
                 else {
-                    ActionHTML = '<td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:75px;"><input id="' + row.RefNo + '" type="checkbox" onclick="financeStatement.checkSelectAll(this)"</div></td><td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:55px;"><input id="' + row.RefNo + '" class="unverify" type="button" onclick="financeStatement.UnVerifyTrans(' + row.RefNo + ');" title="Verify" value="Unverify"></div></td>';
+                    ActionHTML = '<td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:75px;"><input id="' + row.RefNo + '" type="checkbox" onclick="financeStatement.checkSelectAll(this)" data-is-reward="' + row.IsReward + '"</div></td><td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:55px;"><input id="' + row.RefNo + '" class="unverify" type="button" onclick="financeStatement.UnVerifyTrans(\'' + row.RefNo + '\', ' + row.IsReward + ');" title="Verify" value="Unverify"></div></td>';
                 }
             }
             else {
                 ActionHTML = '<td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:55px;">&nbsp;</div></td><td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:55px;">&nbsp;</div></td>';
             }
             html += ActionHTML;
-            ReverseHTML = '<td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:55px;"><input id="' + row.RefNo + '" class="reversed" type="button" onclick="financeStatement.DeleteTrans(\'' + row.RefNo + '\');" title="Reverse" value="Reverse"></div></td></tr>';
+            ReverseHTML = '<td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:55px;"><input id="' + row.RefNo + '" class="reversed" type="button" onclick="financeStatement.DeleteTrans(\'' + row.RefNo + '\', ' + row.IsReward + ');" title="Reverse" value="Reverse"></div></td></tr>';
         }
         html += ReverseHTML;
 
@@ -304,30 +305,37 @@
 
         //        ? '' : Helper.trim($('#txtRefNo').val())
     },
-    GetSelectedRefNo: function () {
+    GetSelectedRefNo: function (isReward) {
         let refNos = [];
 
         $("input[type='checkbox'][id!='chkAll']").each(function () {
-            if (this.checked == true && !this.disabled)
+            if (this.checked == true && !this.disabled && this.dataset.isReward == isReward?.toString())
                 refNos.push(this.id);
         });
 
         return refNos.join(', ');
     },
-    VerifyTrans: function (id) {
+    VerifyTrans: function (id, isReward) {
         __confirm("Verify transaction", "Are you sure you want to verify the selected transaction(s)?", 400, 250, 'cfm_1', function () {
             __close(null, null, 'cfm_1', null);
-            let selectedRefNo;
+            let selectedRefNo, selectedRewardRefNo;
 
             if (id == "btnVerify") {
                 //verify multiple
-                selectedRefNo = financeStatement.GetSelectedRefNo();
+                selectedRefNo = financeStatement.GetSelectedRefNo(false);
+                selectedRewardRefNo = financeStatement.GetSelectedRefNo(true);
             }
             else {
-                selectedRefNo = id;
+                if (isReward) {
+                    selectedRewardRefNo = id;
+                }
+                else {
+                    selectedRefNo = id;
+                }
             }
 
             financeStatement.VerifyParams.RefNo = selectedRefNo;
+            financeStatement.VerifyParams.RewardRefNo = selectedRewardRefNo;
             financeStatement.VerifyParams.IsVerify = true;
 
             try { parent.BlockUI(); } catch (e) { }
@@ -339,7 +347,11 @@
                 data: JSON.stringify(financeStatement.VerifyParams),
                 success: function (result) {
                     let message = "";
-                    const successRefNos = result.SuccessRefNos;
+                    const successRefNos = result.SuccessRefNos.reduce(function (a, b) {
+                        if (a.indexOf(b) < 0) a.push(b);
+                        return a;
+                    }, []);
+;
                     if (successRefNos && successRefNos.length > 0) {
                         message = "<div style='color:green'>Update successfully: " + successRefNos.join(', ') + "</div>";
                     }
@@ -379,12 +391,15 @@
 
         });
     },
-    UnVerifyTrans: function (id) {
+    UnVerifyTrans: function (id, isReward) {
 
         __confirm("Unverify transaction", "Are you sure you want to unverify the selected transaction(s)?", 400, 250, 'cfm_1', function () {
             __close(null, null, 'cfm_1', null);
-            selectedRefNo = id;
-            financeStatement.VerifyParams.RefNo = selectedRefNo;
+            if (isReward) {
+                financeStatement.VerifyParams.RewardRefNo = id;
+            } else {
+                financeStatement.VerifyParams.RefNo = id;
+            }
             financeStatement.VerifyParams.IsVerify = false;
             try { parent.BlockUI(); } catch (e) { }
             $.ajax({
@@ -395,7 +410,10 @@
                 data: JSON.stringify(financeStatement.VerifyParams),
                 success: function (result) {
                     let message = "";
-                    const successRefNos = result.SuccessRefNos;
+                    const successRefNos = result.SuccessRefNos.reduce(function (a, b) {
+                        if (a.indexOf(b) < 0) a.push(b);
+                        return a;
+                    }, []);
                     if (successRefNos && successRefNos.length > 0) {
                         message = "<div style='color:green'>Update successfully: " + successRefNos.join(', ') + "</div>";
                     }
@@ -433,11 +451,21 @@
             });
         });
     },
+    GetSelectedRefNoForReverse: function (isReward) {
+        let refNos = [];
+
+        $("input[type='checkbox'][id!='chkAll']").each(function () {
+            if (this.checked == true && !this.disabled)
+                refNos.push(this.id + '_' + (this.dataset.isReward == 'true' ? 1 : 0));
+        });
+
+        return refNos.join(', ');
+    },
     ReverseMultipleTrans: function () {
-        const refsno = financeStatement.GetSelectedRefNo();
-        __confirm("Reverse transaction", "Do you want to reverse the transaction(s) with Ref.No: " + refsno + "?", 400, 250, 'cfm_1', function () {
+        const refsno = financeStatement.GetSelectedRefNoForReverse();
+        __confirm("Reverse transaction", "Do you want to reverse the transaction(s) with Ref.No: " + refsno.replaceAll('_0', '').replaceAll('_1', '') + "?", 400, 250, 'cfm_1', function () {
             __close(null, null, 'cfm_1', null);
-            __confirm("Reverse transaction", "To double check, do you want to reverse the transaction(s) with Ref.No: " + refsno + "?", 400, 250, 'cfm_2', function () {
+            __confirm("Reverse transaction", "To double check, do you want to reverse the transaction(s) with Ref.No: " + refsno.replaceAll('_0', '').replaceAll('_1', '') + "?", 400, 250, 'cfm_2', function () {
                 try { parent.BlockUI(); } catch (e) { }
                 $.ajax({
                     url: '../Statement/ReverseMultipleTrans.ashx?refsno=' + refsno + '&custName=' + financeStatement.Params.custName,
@@ -463,9 +491,9 @@
             });
         });
     },
-    DeleteTrans: function (refno) {
+    DeleteTrans: function (refno, isReward) {
         financeStatement.VerifyParams.RefNo = refno;
-
+        financeStatement.VerifyParams.IsReward = isReward;
         __confirm("Reverse transaction", "Do you want to reverse the transaction with Ref.No: " + refno + "?", 400, 250, 'cfm_1', function () {
             __close(null, null, 'cfm_1', null);
             __confirm("Reverse transaction", "To double check, do you want to reverse the transaction with Ref.No: " + refno + "?", 400, 250, 'cfm_2', function () {
@@ -535,7 +563,7 @@
                 for (var j = 0; j < subrowspan; j++) {
                     subTran = tran.ListSubTrans[j];
                     if (j == 0) {
-                        tplMain += '<td><div style="width:235px;' + (Helper.isExistLongWord(subTran.Remark) ? 'min-height:42px;display:block' : 'height:42px;') + '" class="b table-cell" ><a onclick="financeStatement.showHide(false, this,' + row.RefNo + ')"  class="tree-expanded"> </a>' + subTran.Remark + '</div></td><td><div class="r" style="width:110px;">' + Helper.formatCSS(subTran.Amount) + '</div></td><td rowspan=' + subrowspan + '><div class="r" style="width:110px;">' + Helper.formatCSS(tran.Total) + '</div></td><td rowspan=' + subrowspan + '><div class="r" style="width:110px;">' + Helper.formatCSS(tran.AccumTotal) + '</div></td><td ><div class="c" style="width:70px;font-size: 10px;">' + tran.TransDate + '</div></td><td rowspan=' + rowspanWinLoss + '><div class="c" style="width:100px;">' + row.RefNo + '</div></td><td rowspan=' + rowspanCreator + '><div class="c" style="width:80px;">' + tran.Creator + '</div></td><td rowspan=' + rowspanWinLoss + '><div class="c" style="width:80px;">' + row.CheckerName + '</div></td><td rowspan=' + rowspanWinLoss + '><div class="c" style="width:80px;">' + row.CheckerTime + '</div></td><td rowspan=' + rowspanWinLoss + '><div class="c" style="width:55px;"></div></td><td rowspan=' + rowspanWinLoss + '><div class="c" style="width:55px;"></div></td><td rowspan=' + rowspanWinLoss + '><div class="c" style="width:55px;"></div></td></tr>';
+                        tplMain += '<td><div style="width:235px;' + (Helper.isExistLongWord(subTran.Remark) ? 'min-height:42px;display:block' : 'height:42px;') + '" class="b table-cell" ><a onclick="financeStatement.showHide(false, this,\'' + row.RefNo + '\')"  class="tree-expanded"> </a>' + subTran.Remark + '</div></td><td><div class="r" style="width:110px;">' + Helper.formatCSS(subTran.Amount) + '</div></td><td rowspan=' + subrowspan + '><div class="r" style="width:110px;">' + Helper.formatCSS(tran.Total) + '</div></td><td rowspan=' + subrowspan + '><div class="r" style="width:110px;">' + Helper.formatCSS(tran.AccumTotal) + '</div></td><td ><div class="c" style="width:70px;font-size: 10px;">' + tran.TransDate + '</div></td><td rowspan=' + rowspanWinLoss + '><div class="c" style="width:100px;">' + row.RefNo + '</div></td><td rowspan=' + rowspanCreator + '><div class="c" style="width:80px;">' + tran.Creator + '</div></td><td rowspan=' + rowspanWinLoss + '><div class="c" style="width:80px;">' + row.CheckerName + '</div></td><td rowspan=' + rowspanWinLoss + '><div class="c" style="width:80px;">' + row.CheckerTime + '</div></td><td rowspan=' + rowspanWinLoss + '><div class="c" style="width:55px;"></div></td><td rowspan=' + rowspanWinLoss + '><div class="c" style="width:55px;"></div></td><td rowspan=' + rowspanWinLoss + '><div class="c" style="width:55px;"></div></td></tr>';
                     }
                     else {
                         tplMain += '<tr name="' + row.RefNo + '_Detail"><td><div style="width:235px;' + (Helper.isExistLongWord(subTran.Remark) ? 'min-height:42px;display:block' : 'height:42px;') + '" class="b table-cell">' + subTran.Remark + '</div></td><td><div class="r" style="width:110px;">' + Helper.formatCSS(subTran.Amount) + '</div></td><td><div class="c" style="width:70px; font-size: 10px;">' + Helper.formatCSS(tran.TransDate) + '</div></td></tr>';
@@ -581,7 +609,7 @@
                 for (var j = 0; j < subrowspan; j++) {
                     subTran = tran.ListSubTrans[j];
                     if (j == 0) {
-                        tplLef += '<td><div style="width:235px;' + (Helper.isExistLongWord(subTran.Remark) ? 'min-height:42px;display:block' : 'height:42px;') + '" class="b table-cell" ><a onclick="financeStatement.showHide(false, this,' + row.RefNo + ')"  class="tree-expanded"> </a>' + subTran.Remark + '</div></td><td><div class="r" style="width:110px;">' + Helper.formatCSS(subTran.Amount) + '</div></td></tr>';
+                        tplLef += '<td><div style="width:235px;' + (Helper.isExistLongWord(subTran.Remark) ? 'min-height:42px;display:block' : 'height:42px;') + '" class="b table-cell" ><a onclick="financeStatement.showHide(false, this,\'' + row.RefNo + '\')"  class="tree-expanded"> </a>' + subTran.Remark + '</div></td><td><div class="r" style="width:110px;">' + Helper.formatCSS(subTran.Amount) + '</div></td></tr>';
                     }
                     else {
                         tplLef += '<tr name="' + row.RefNo + '_Detail"><td><div style="width:235px;' + (Helper.isExistLongWord(subTran.Remark) ? 'min-height:42px;display:block' : 'height:42px;') + '" class="b table-cell">' + subTran.Remark + '</div></td><td><div class="r" style="width:110px;">' + Helper.formatCSS(subTran.Amount) + '</div></td></tr>';

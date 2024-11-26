@@ -7,11 +7,14 @@ using DNAide.Web;
 using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Helper;
+using Fanex.Tarus.Finance.Business.Statement;
 
 
-public class DelTrans : IHttpHandler,IRequiresSessionState {
-    
-    public void ProcessRequest (HttpContext context) {
+public class DelTrans : IHttpHandler, IRequiresSessionState
+{
+
+    public void ProcessRequest(HttpContext context)
+    {
         context.Response.ContentType = "text/html";
         context.Response.Cache.SetCacheability(HttpCacheability.NoCache);
 
@@ -23,6 +26,7 @@ public class DelTrans : IHttpHandler,IRequiresSessionState {
         else
         {
             var custName = context.Request["custName"].ToString();
+            var isReward = Convert.ToBoolean(context.Request["isReward"]);
             var userService = Sunplus.Accounting.Business.BootStrappers.CommonBootStrapper.Locator.GetInstance<Sunplus.Accounting.Business.IUserService>();
             int custId = userService.GetCustomerIdByUsername(custName);
             long refno = 0;
@@ -36,10 +40,13 @@ public class DelTrans : IHttpHandler,IRequiresSessionState {
                 {
                     if (Permissions.GetHostPermission(Enumerations.Functions.Transfer.DeleteTrans))
                     {
-                        IBCUtils.IbcError error = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.AccountStatement.Acc_BettransDelTransaction(refno, custId , (int)context.Session["AccId"], context.Request.UserHostAddress);
+                            
+                        var service = new FinanceStatementBusiness();
+                        var error = service.DeleteTransBusiness(refno, custId, (int)context.Session["AccId"], isReward);
+                        //IBCUtils.IbcError error = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.AccountStatement.Acc_BettransDelTransaction(refno, custId, (int)context.Session["AccId"], context.Request.UserHostAddress,isReward);
                         if (error.ErrorCode != 0)
                         {
-                            context.Response.Write("1|" + error.ErrorMsg);
+                            context.Response.Write("1|" + error.ErrorMessage);
                         }
                         else
                         {
@@ -50,20 +57,22 @@ public class DelTrans : IHttpHandler,IRequiresSessionState {
                     {
                         context.Response.Write("1|You are not authorized on this function.");
                     }
-                
-                   
+
+
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-                    context.Response.Write("1|" + AlertMessage.GetMsg(IBCUtils.IbcError.INTERNAL_ERROR_MSG, AlertMessage.MsgType.Error));                    
-                }                
+                    context.Response.Write("1|" + AlertMessage.GetMsg(IBCUtils.IbcError.INTERNAL_ERROR_MSG, AlertMessage.MsgType.Error));
+                }
             }
         }
     }
- 
-    public bool IsReusable {
-        get {
+
+    public bool IsReusable
+    {
+        get
+        {
             return false;
         }
     }

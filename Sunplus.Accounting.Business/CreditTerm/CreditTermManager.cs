@@ -306,7 +306,11 @@ namespace Sunplus.Accounting.Business.CreditTerm
                         TotalBalance = IBCUtils.FormatHandler.FormatNumber20(drow["totalbalance"]),
                         PendingTransfer3rd = IBCUtils.FormatHandler.FormatNumber20(drow["pendingtransfer3rd"]),
                         MaxLoss = GetMaxLossValue(drow["maxloss"]),
-                        IsGroupHeadline = CastAide.AsBoolean(drow["isgroupheadline"])
+                        IsGroupHeadline = CastAide.AsBoolean(drow["isgroupheadline"]),
+                        RewardMaxTransId = CastAide.AsString(drow["RewardMaxTransId"]),
+                        Reward = IBCUtils.FormatHandler.FormatNumber20(drow["RewardBalance"]),
+                        RewardCurrency = CastAide.AsString(drow["RewardCurrency"]),
+                        Total_YesterdayBalance_Reward = IBCUtils.FormatHandler.FormatNumber20(drow["Total_YesterdayBalance_Reward"])
                     });
                 }
 
@@ -325,7 +329,9 @@ namespace Sunplus.Accounting.Business.CreditTerm
                         TotalBalance = IBCUtils.FormatHandler.FormatNumber20(totalrow["totalbalance_rm"]),
                         MaxLoss = GetMaxLossValue(totalrow["totalmaxloss_rm"]),
                         PendingTransfer3rd = IBCUtils.FormatHandler.FormatNumber20(totalrow["pendingtransfer3rd_rm"]),
-                        IsGroupHeadline = false
+                        IsGroupHeadline = false,
+                        Reward = IBCUtils.FormatHandler.FormatNumber20(totalrow["RewardBalance_RM"]),
+                        Total_YesterdayBalance_Reward = IBCUtils.FormatHandler.FormatNumber20(totalrow["Total_YesterdayBalance_Reward_RM"])
                     });
                 }
             }
@@ -374,14 +380,17 @@ namespace Sunplus.Accounting.Business.CreditTerm
 
             // set columns width
             int fontWidth = 30;
-            int maxColumnIndex = 6;
+            int maxColumnIndex = 9;
             workSheet.Columns[0].Width = 60 * fontWidth;
             workSheet.Columns[1].Width = 300 * fontWidth;
             workSheet.Columns[2].Width = 120 * fontWidth;
             workSheet.Columns[3].Width = 180 * fontWidth;
             workSheet.Columns[4].Width = 120 * fontWidth;
-            workSheet.Columns[5].Width = 180 * fontWidth;
+            workSheet.Columns[5].Width = 120 * fontWidth;
             workSheet.Columns[6].Width = 120 * fontWidth;
+            workSheet.Columns[7].Width = 180 * fontWidth;
+            workSheet.Columns[8].Width = 180 * fontWidth;
+            workSheet.Columns[9].Width = 120 * fontWidth;
 
             // title
             string title = sheetName;
@@ -426,12 +435,28 @@ namespace Sunplus.Accounting.Business.CreditTerm
             currentColumn++;
 
             currentCell = workSheet.Cells[currentRow, currentColumn];
-            currentCell.Value = "Yesterday Total Balance";
+            currentCell.Value = "Yesterday Balance";
             currentCell.Style = headerTextStyle;
             currentColumn++;
 
             currentCell = workSheet.Cells[currentRow, currentColumn];
             currentCell.Value = "Total Balance";
+            currentCell.Style = headerTextStyle;
+            currentColumn++;
+
+
+            currentCell = workSheet.Cells[currentRow, currentColumn];
+            currentCell.Value = "Reward";
+            currentCell.Style = headerTextStyle;
+            currentColumn++;
+
+            currentCell = workSheet.Cells[currentRow, currentColumn];
+            currentCell.Value = "Reward Currency";
+            currentCell.Style = headerTextStyle;
+            currentColumn++;
+
+            currentCell = workSheet.Cells[currentRow, currentColumn];
+            currentCell.Value = "Combined Transfer Amount";
             currentCell.Style = headerTextStyle;
             currentColumn++;
 
@@ -517,6 +542,35 @@ namespace Sunplus.Accounting.Business.CreditTerm
                 currentCell = workSheet.Cells[currentRow, currentColumn];
                 currentCell.Value = group.TotalBalance;
                 if (group.TotalBalance.StartsWith("-"))
+                {
+                    currentCell.Style = i % 2 == 0 ? redOddTextStyle : redEvenTextStyle;
+                }
+                else
+                {
+                    currentCell.Style = textStyle;
+                }
+                currentColumn++;
+
+                currentCell = workSheet.Cells[currentRow, currentColumn];
+                currentCell.Value = group.Reward;
+                if (group.Reward.StartsWith("-"))
+                {
+                    currentCell.Style = i % 2 == 0 ? redOddTextStyle : redEvenTextStyle;
+                }
+                else
+                {
+                    currentCell.Style = textStyle;
+                }
+                currentColumn++;
+
+                currentCell = workSheet.Cells[currentRow, currentColumn];
+                currentCell.Value = group.RewardCurrency;
+                currentCell.Style = textStyle;
+                currentColumn++;
+
+                currentCell = workSheet.Cells[currentRow, currentColumn];
+                currentCell.Value = group.Total_YesterdayBalance_Reward;
+                if (group.Total_YesterdayBalance_Reward.StartsWith("-"))
                 {
                     currentCell.Style = i % 2 == 0 ? redOddTextStyle : redEvenTextStyle;
                 }

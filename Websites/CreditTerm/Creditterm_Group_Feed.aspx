@@ -23,9 +23,45 @@
             }, 3000)
         }
     </script>
+    <style>
+    .tooltip {
+        position: relative;
+        display: inline-block;      
+    }
+
+    .tooltip .tooltiptext {
+        visibility: hidden;
+        width: 280px;
+        background-color: #197777;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+        position: absolute;
+        z-index: 1;
+        bottom: 120%;
+        left: 50%;
+        margin-left: -140px;
+    }
+
+    .tooltip .tooltiptext::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: #197777 transparent transparent transparent;
+    }
+
+    .tooltip:hover .tooltiptext {
+        visibility: visible;
+    }
+</style>
 </head>
 <body style="overflow: scroll !important;">
-    <div class="main" style="width: 916px">
+    <div class="main" style="width: 1236px">
         <div class="maincontent">
             <table border="0" cellpadding="0px" cellspacing="0px" class="maincontent_header">
                 <tr>
@@ -45,7 +81,7 @@
                 <%=strfilter%>
             </div>
             <div class="bg_table">
-                <div style="width: 900px">
+                <div style="width: 1220px">
                     <div id="sContent">
                         <%=strContent%>
                     </div>

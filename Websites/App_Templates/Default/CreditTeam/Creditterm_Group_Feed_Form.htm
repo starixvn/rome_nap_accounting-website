@@ -41,12 +41,15 @@
                 <th>#</th>
                 <th class="sorter" onclick="sortColumn(1,'string')">UserName</th>
                 <th class="sorter" onclick="sortColumn(2,'string')" style="width:80px;">Currency</th>
-                <th class="sorter" onclick="sortColumn(3,'number')" style="width:100px;">Yesterday Balance</th>
-                <th class="sorter" onclick="sortColumn(4,'number')" style="width:100px;">Total Balance</th>
-                <th class="sorter" onclick="sortColumn(5,'number')" style="width:120px;">3rd Party Pending Tranfer</th>
+                <th class="sorter" onclick="sortColumn(3,'number')" style="width:130px;">Yesterday Balance</th>
+	            <th class="sorter" onclick="sortColumn(4,'number')" style="width:120px;">Total Balance</th>
+	            <th class="sorter" onclick="sortColumn(5,'number')" style="width:100px;">Reward</th>
+	            <th style="width:80px;">Reward Currency</th>
+	            <th class="sorter" onclick="sortColumn(7,'number')" style="width:120px;"><div class="tooltip">Combined Transfer Amount (i)<span class="tooltiptext">Total sum of Yesterday Balance and Reward</span></div></th>
+                <th class="sorter" onclick="sortColumn(8,'number')" style="width:120px;">3rd Party Pending Transfer</th>
                 <th style="width:100px;">Max Loss</th>
-                <th style="width:80px;">Set Headline</th>
-                <th style="width:80px;"><input type="checkbox" id="chkcheckall" onclick="checkall();" /></th>
+                <th style="width:60px;">Set Headline</th>
+                <th style="width:60px;"><input type="checkbox" id="chkcheckall" onclick="checkall();" /></th>
             </tr>
         </thead>
         <tbody>
@@ -55,8 +58,11 @@
                 <td>{No}</td>
                 <td class="{headlineclasstext}" value="{OnlyUserName}">{UserName}</td>
                 <td class="c" value="{Currency}">{Currency}</td>
-                <td class="r {canClick}" onclick="{jsTranferPopup}" value="{YesterdayBalanceNoneFormat}">{YesterdayTotalBalance}</td>
-                <td class="r" value="{TotalBalanceNoneFormat}">{TotalBalance} </td>
+                <td class="r "  value="{YesterdayBalanceNoneFormat}">{YesterdayTotalBalance}</td>
+	            <td class="r" value="{TotalBalanceNoneFormat}">{TotalBalance} </td>
+	            <td class="r" value="{Reward}">{Reward} </td>
+                <td class="r" >{RewardCurrency} </td>
+                <td class="r {canClick}" onclick="{jsTranferPopup}" value="{TotalYesterdayBalRewardRaw}">{TotalYesterdayBalReward} </td>
                 <td class="r" value="{PendingTranfer3rdNoneFormat}">{PendingTranfer3rd} </td>
                 <td class="r">{MaxLoss}</td>
                 <td class="c">
@@ -73,7 +79,10 @@
                 <td colspan="2" class="r b">Group Total Balance</td>
                 <td class="c b">RM</td>
                 <td class="c r">{SumYesterdayTotalBalance}</td>
-                <td class="c r">{SumTotalBalance}</td>
+	            <td class="c r">{SumTotalBalance}</td>
+                <td class="c r">{SumReward}</td>
+	            <td></td>
+	            <td class="c r">{SumTotalYesterdayBalReward}</td>
                 <td class="c r">{SumPendingTranfer3rd}</td>
                 <td></td>
                 <td></td>
@@ -84,7 +93,10 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td></td>
+	            <td></td>
+	            <td></td>
+	            <td></td>
+	            <td></td>
                 <td></td>
                 <td></td>
                 <td></td>

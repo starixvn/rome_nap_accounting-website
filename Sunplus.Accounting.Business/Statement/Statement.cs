@@ -30,16 +30,16 @@ namespace Sunplus.Accounting.Business.Statement
         #region All page
 
         private const string TEMPLATE_UNVERIFIED_BUTTON =
-            "<input type=\"button\" class=\"unverify\"  value=\"Unverify\" title=\"Unverify\"  onclick=\"return UnVerifyTrans(this);\"  id=\"{0}\"/>";
+            "<input type=\"button\" class=\"unverify\" data-is-reward=\"{1}\" value=\"Unverify\" title=\"Unverify\"  onclick=\"return UnVerifyTrans(this);\"  id=\"{0}\"/>";
 
         private const string TEMPLATE_VERIFIED_BUTTON =
-            "<input type=\"button\" class=\"verified\" value=\"Verify\" title=\"Verify\"  onclick=\"return VerifyTrans(this);\"  id=\"{0}\"/>";
+            "<input type=\"button\" class=\"verified\" data-is-reward=\"{1}\" value=\"Verify\" title=\"Verify\"  onclick=\"return VerifyTrans(this);\"  id=\"{0}\"/>";
 
         /// <summary>
         ///
         /// </summary>
         /// <returns>html string</returns>
-        public static string GetAuditStatement()
+        public static string GetAuditStatement(bool isReward)
         {
             string tpl = WebUtils.LoadTemplate("Statement/AuditContent.htm");
             string excelTpl = tpl;
@@ -62,7 +62,7 @@ namespace Sunplus.Accounting.Business.Statement
 
                 if (custId > 0)
                 {
-                    ds = AccountStatement.Acc_AuditStatement(custId);
+                    ds = AccountStatement.Acc_AuditStatement(custId, isReward);
                     if (ds.ResultSet.Tables.Count > 0 && ds.ResultSet.Tables[0].Rows.Count > 0)
                     {
                         foreach (DataRow row in ds.ResultSet.Tables[0].Rows)
@@ -96,7 +96,7 @@ namespace Sunplus.Accounting.Business.Statement
                             TemplateHandler.RemoveBlock(ref rowHtml, "nobr");
 
                             // For new export excel function.
-                            auditStatements.Add(new AuditStatement 
+                            auditStatements.Add(new AuditStatement
                             {
                                 Date = strAccDate.Replace("<!--nobr--><br><!--/nobr-->", string.Empty),
                                 Remark = remark,
@@ -239,7 +239,7 @@ namespace Sunplus.Accounting.Business.Statement
             return contentTemplate;
         }
 
-        public static string GetDetailStatement(string fdate, string tdate)
+        public static string GetDetailStatement(string fdate, string tdate, bool isReward)
         {
             string tpl = WebUtils.LoadTemplate("Statement/DetailContent.htm");
             var htmlReport = new StringBuilder();
@@ -250,6 +250,11 @@ namespace Sunplus.Accounting.Business.Statement
 
             try
             {
+                if (isReward)
+                {
+                    TemplateHandler.RemoveBlock(ref tpl, "ColumnTotal");
+                }
+
                 if (!Validator.ValidDateMMDDYYYYNotNull(fdate, out fdt).IsSuccess())
                 {
                     fdt = DateTime.Now;
@@ -269,7 +274,7 @@ namespace Sunplus.Accounting.Business.Statement
 
                 if (custId > 0)
                 {
-                    ds = AccountStatement.Acc_DetailStatement(fdt, tdt, custId);
+                    ds = AccountStatement.Acc_DetailStatement(fdt, tdt, custId, isReward);
                     if (ds.ResultSet.Tables.Count > 0 && ds.ResultSet.Tables[0].Rows.Count > 0)
                     {
                         candelete = Permissions.GetHostPermission(Enumerations.Functions.Transfer.DeleteTrans);
@@ -282,7 +287,7 @@ namespace Sunplus.Accounting.Business.Statement
                             string remark = CastAide.AsString(row["transdesc"]);
                             decimal debitAmt = CastAide.AsDecimal(row["debitamt"]);
                             decimal creditAmt = CastAide.AsDecimal(row["creditamt"]);
-                            decimal totalAmt = CastAide.AsDecimal(row["runningtotal"]);
+                            decimal totalAmt = isReward ? 0 : CastAide.AsDecimal(row["runningtotal"]);
                             string creator = CastAide.AsString(row["creator"]);
 
                             if (index % 2 != 0)
@@ -294,9 +299,18 @@ namespace Sunplus.Accounting.Business.Statement
                             TemplateHandler.Assign(ref rowHtml, "{Date}", transDate);
                             TemplateHandler.Assign(ref rowHtml, "{Creator}", creator);
                             TemplateHandler.Assign(ref rowHtml, "{Refno}", refno);
+                            TemplateHandler.Assign(ref rowHtml, "{isReward}", isReward.ToString().ToLower());
                             TemplateHandler.Assign(ref rowHtml, "{Debit}", FormatHandler.FormatNumber20(debitAmt));
                             TemplateHandler.Assign(ref rowHtml, "{Credit}", FormatHandler.FormatNumber20(creditAmt));
-                            TemplateHandler.Assign(ref rowHtml, "{Total}", FormatHandler.FormatNumber20(totalAmt));
+                            if (isReward)
+                            {
+                                TemplateHandler.Assign(ref rowHtml, "{colspan}", 6);
+                            }
+                            else
+                            {
+                                TemplateHandler.Assign(ref rowHtml, "{colspan}", 7);
+                                TemplateHandler.Assign(ref rowHtml, "{Total}", FormatHandler.FormatNumber20(totalAmt));
+                            }
 
                             total += creditAmt - debitAmt;
                             if (!CastAide.AsBoolean(row["IsAllowReversal"], true) || !candelete)
@@ -308,7 +322,7 @@ namespace Sunplus.Accounting.Business.Statement
                             htmlReport.Append(rowHtml);
 
                             // For new export excel function.
-                            detailStatements.Add(new DetailStatement 
+                            detailStatements.Add(new DetailStatement
                             {
                                 Date = transDate,
                                 RefNo = refno,
@@ -350,7 +364,7 @@ namespace Sunplus.Accounting.Business.Statement
             return tpl;
         }
 
-        public static string GetMemberStatement(string fromDate, string toDate)
+        public static string GetMemberStatement(string fromDate, string toDate, bool isReward)
         {
             //get persmission of logined user
             bool hasUpdateTransPermission = Permissions.GetHostPermission
@@ -366,7 +380,7 @@ namespace Sunplus.Accounting.Business.Statement
             // For new export excel function.
             OldStatement oldStatement = null;
             IList<OldStatement> oldStatements = new List<OldStatement>();
-            
+
             try
             {
                 balanceUpDay = ReportUtils.BalanceUp.BalanceUpDay;
@@ -397,7 +411,7 @@ namespace Sunplus.Accounting.Business.Statement
                 customer.Username = WebUtils.GetQueryStringValue("custname", string.Empty);
                 var userService = CommonBootStrapper.Locator.GetInstance<IUserService>();
                 List<Entities.Statement> entityList = userService.GetCustomerStatement(
-                    customer, fdt, tdt, balanceUpDay, includeAccBal);
+                    customer, fdt, tdt, balanceUpDay, includeAccBal, isReward);
 
                 if (entityList.Count > 0)
                 {
@@ -463,7 +477,7 @@ namespace Sunplus.Accounting.Business.Statement
                         //Total 2
                         //what is it
                         int index = remark.ToLower().IndexOf("opening balance");
-                        isBalance = index >= 0 && type.ToLower().Equals("bal");
+                        isBalance = index >= 0 && (type.ToLower().Equals("bal") || type.ToLower().Equals("balr"));
                         if (isBalance)
                         {
                             if (gotopen == 0)
@@ -553,7 +567,7 @@ namespace Sunplus.Accounting.Business.Statement
                             if (entity.IsAllowedVerified)
                             {
                                 templateAction = string.Format(TEMPLATE_UNVERIFIED_BUTTON,
-                                                               entity.RefNo);
+                                                               entity.RefNo, isReward.ToString().ToLower());
 
                                 TemplateHandler.Assign(ref rowHtml, "{checked}", "checked=checked");
                                 TemplateHandler.Assign(ref rowHtml, "{disabled}", "disabled=disabled");
@@ -573,7 +587,7 @@ namespace Sunplus.Accounting.Business.Statement
                             if (entity.IsAllowedVerified)
                             {
                                 templateAction = string.Format(TEMPLATE_VERIFIED_BUTTON,
-                                                               entity.RefNo);
+                                                               entity.RefNo, isReward.ToString().ToLower());
                                 TemplateHandler.Assign(ref rowHtml, "{checked}", string.Empty);
                                 TemplateHandler.Assign(ref rowHtml, "{disabled}", string.Empty);
 
@@ -632,6 +646,9 @@ namespace Sunplus.Accounting.Business.Statement
                         TemplateHandler.Assign(ref contentTemplate, "{AllVerifyDisabled}", "disabled='disabled'");
                     else
                         TemplateHandler.Assign(ref contentTemplate, "{AllVerifyDisabled}", string.Empty);
+
+
+                    TemplateHandler.Assign(ref contentTemplate, "{isReward}", isReward.ToString().ToLower());
                 }
                 else
                 {

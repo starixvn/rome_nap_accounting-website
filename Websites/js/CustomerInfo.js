@@ -565,9 +565,9 @@ function StatementClick() {
 
 //document.myFunc = function() { alert('!') } //is called from parent
 
-function DoTransfer(span, value, custName) {
-    if (span.className.indexOf('canchange') == -1) return;
-    var url = 'CrossTransfer/Index?fromCustName=' + custName + '&fromAmount=' + value;
+function DoTransfer(span, value, custName, isDirect) {
+    if (span.className.indexOf('canchange') == -1) return;    
+    var url = 'CrossTransfer/Index?fromCustName=' + custName + '&fromAmount=' + value + isDirect;
     parent.gotoURL('centerFr', url);
     parent.resetMenu();
 }

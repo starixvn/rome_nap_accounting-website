@@ -9,6 +9,7 @@ using Sunplus.Accounting.Core.Helper;
 using System.Linq;
 using System.Collections.Generic;
 using Sunplus.Accounting.Business.Security;
+using Fanex.Tarus.Finance.Business.Statement;
 
 public class ReverseMultipleTrans : IHttpHandler, IRequiresSessionState
 {
@@ -39,8 +40,11 @@ public class ReverseMultipleTrans : IHttpHandler, IRequiresSessionState
 
                 List<ReverseError> reverseErrors = new List<ReverseError>();
                 List<string> successRefs = new List<string>();
-                foreach (var refno in refsno)
+                foreach (var item in refsno)
                 {
+                    var itemArray = item.Split('_');
+                    var refno = itemArray[0];
+                    bool isReward = itemArray[1].Equals("1");
                     long parsedRefno = 0;
                     if (!long.TryParse(refno, out parsedRefno))
                     {
@@ -51,11 +55,12 @@ public class ReverseMultipleTrans : IHttpHandler, IRequiresSessionState
                     {
                         try
                         {
-
-                            IBCUtils.IbcError error = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.AccountStatement.Acc_BettransDelTransaction(parsedRefno, custId, (int)context.Session["AccId"], context.Request.UserHostAddress);
+                            var service = new FinanceStatementBusiness();
+                            var error = service.DeleteTransBusiness(parsedRefno, custId, (int)context.Session["AccId"], isReward);
+                            //IBCUtils.IbcError error = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.AccountStatement.Acc_BettransDelTransaction(parsedRefno, custId, (int)context.Session["AccId"], context.Request.UserHostAddress);
                             if (error.ErrorCode != 0)
                             {
-                                reverseErrors.Add(new ReverseError() { Refno = parsedRefno.ToString(), Message = error.ErrorMsg });
+                                reverseErrors.Add(new ReverseError() { Refno = parsedRefno.ToString(), Message = error.ErrorMessage });
 
                             }
                             else

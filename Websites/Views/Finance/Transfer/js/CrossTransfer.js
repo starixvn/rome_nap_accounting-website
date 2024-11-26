@@ -1,15 +1,21 @@
 ﻿var transfer = {
     ForexAccDefault: "DIFF10"
-
 };
 
 function closeDialogModal() {
-    const isPopup = window?.location?.toString().includes("isOpenInPopup");
+    const isPopup = window ?.location ?.toString().includes("isOpenInPopup");
     if (isPopup) {
         parent.afterUpdate(true);
         setTimeout(function () {
             parent.ClosePopup();
         }, 4000);
+    }
+}
+
+function reloadData() {
+    const isPopup = window?.location ?.toString().includes("isOpenInPopup");
+    if (isPopup) {
+        parent.afterUpdate(true);      
     }
 }
 
@@ -79,7 +85,7 @@ transfer.crossCurrencyTransfer = {
             $("#divAjaxLoaderImageFromUser").hide();
             return;
         }
-        var param = {username: $("#tbxFromUser").val()};
+        var param = { username: $("#tbxFromUser").val() };
         $.get("SelectCustomerExRate", param, $.proxy(function (rs) {
             if (rs == null || typeof rs == "undefined" || typeof rs.username == "undefined") {
                 $("#spanCurrencyFromUser").text('');
@@ -113,7 +119,7 @@ transfer.crossCurrencyTransfer = {
             $("#divAjaxLoaderImageToUser").hide();
             return;
         }
-        var param = {username: $("#tbxToUser").val()};
+        var param = { username: $("#tbxToUser").val() };
         $.get("SelectCustomerExRate", param, $.proxy(function (rs) {
             if (rs == null || typeof rs == "undefined" || typeof rs.username == "undefined") {
                 $("#spanCurrencyToUser").text('');
@@ -266,7 +272,6 @@ transfer.crossCurrencyTransfer = {
                         transfer.crossCurrencyTransfer.showExRateFromUser();
                     }, this), 1000);
             }
-
         });
 
         //tbxToUser
@@ -371,7 +376,7 @@ transfer.crossCurrencyTransfer2 = {
             $("#divAjaxLoaderImageFromUser2").hide();
             return;
         }
-        var param = {username: $("#tbxFromUser2").val()};
+        var param = { username: $("#tbxFromUser2").val() };
         $.get("SelectCustomerExRate", param, $.proxy(function (rs) {
             if (rs == null || typeof rs == "undefined" || typeof rs.username == "undefined") {
                 $("#spanCurrencyFromUser2").text('');
@@ -416,7 +421,7 @@ transfer.crossCurrencyTransfer2 = {
             $("#divAjaxLoaderImageToUser2").hide();
             return;
         }
-        var param = {username: $("#tbxToUser2").val()};
+        var param = { username: $("#tbxToUser2").val() };
         $.get("SelectCustomerExRate", param, $.proxy(function (rs) {
             if (rs == null || typeof rs == "undefined" || typeof rs.username == "undefined") {
                 $("#spanCurrencyToUser2").text('');
@@ -581,7 +586,6 @@ transfer.crossCurrencyTransfer2 = {
                         transfer.crossCurrencyTransfer2.showExRateFromUser();
                     }, this), 1000);
             }
-
         });
 
         //tbxToUser2
@@ -787,7 +791,6 @@ transfer.utils = {
     }
 };
 
-
 $(document).ready(function () {
     transfer.init();
 });
@@ -799,47 +802,99 @@ transfer.YesterdayTransactionsForm = {
     },
     validateValue: function () {
         $('#errMsg').hide();
-        var _toUser = document.getElementById("touser").value;
-        if (_toUser.isNullOrEmpty()) {
-            $('#errMsg').show();
-            showAlertMessage("errMsg", "Invalid To User", 1);
+        var isTransferYesterday = $("#chk-confrimtransfer").is(":checked");
+        var IsShowReward = $("#isShowReward").val() == "true";
+        var isConfrimReward = IsShowReward && $("#chk-confrimpayment").is(":checked");
+        var rewardCurrency = $("#RewardCurrency").val();
+        var expenseCurrency = $("#ExpenseCurrency").val();
+        if (!isTransferYesterday && !isConfrimReward) {
             return false;
         }
 
-        var _exRate = document.getElementById("exrate").value;
-        if (!_exRate.isNumeric() || parseFloat(_exRate) == 0) {
-            $('#errMsg').show();
-            showAlertMessage("errMsg", "Invalid Exchange Rate", 1);
-            return false;
-        }
-
-        var _amount = document.getElementById('txtamount').value;
-        if (!_amount.isNumeric() || parseFloat(_amount) == 0) {
-            $('#errMsg').show();
-            showAlertMessage("errMsg", "Invalid Amount", 1);
-            return false;
-        }
         var param = {
-            fromCustName: fromUsername,
-            toCustName: _toUser,
-            exRate: _exRate,
-            amount: _amount,
-            remark: $("#remark").val(),
-            isCollection: $("#chk-collection-yesterday").is(":checked")
+            fromCustName: fromUsername         
         };
 
-        if (isNaN(parseFloat(_amount))) {
-            return false;
+        if (isTransferYesterday) {
+            var _toUser = document.getElementById("touser").value;
+            if (_toUser.isNullOrEmpty()) {
+                $('#errMsg').show();
+                showAlertMessage("errMsg", "Invalid To User", 1);
+                return false;
+            }
+
+            var _exRate = document.getElementById("exrate").value;
+            if (!_exRate.isNumeric() || parseFloat(_exRate) == 0) {
+                $('#errMsg').show();
+                showAlertMessage("errMsg", "Invalid Exchange Rate", 1);
+                return false;
+            }
+
+            var _amount = document.getElementById('txtamount').value.replace(/,/g, "");
+            if (!_amount.isNumeric() || parseFloat(_amount) == 0) {
+                $('#errMsg').show();
+                showAlertMessage("errMsg", "Invalid Amount", 1);
+                return false;
+            }
+
+            if (isNaN(parseFloat(_amount))) {
+                return false;
+            }
+
+            param = {
+                fromCustName: fromUsername,              
+                toCustName: _toUser,
+                exRate: _exRate,
+                amount: parseFloat(_amount),
+                remark: $("#remark").val(),
+                isCollection: $("#chk-collection-yesterday").is(":checked")
+            };
         }
 
-        param.amount = param.amount.replace(/,/g, "");
+        if (isConfrimReward) {
+            if (!isTransferYesterday) {
+                param.toCustName = fromUsername;
+            }
+            param.RewardMaxTransId = $("#rewardMaxTransId").val();
+            param.RewardAmount = parseFloat($("#txtRewardAmount").val().replace(/,/g, ""));
+            param.RewardExRate = $("#txtRewardRate").val();
+            param.RewardUserName = $("#RewardCode").val();
+            param.RewardCurrency = rewardCurrency;
+            param.expenseCurrency = expenseCurrency;
+        }
+
+        param.IsShowReward = isConfrimReward;
+        param.IsTransferYesterday = isTransferYesterday;
         transfer.utils.blockUI();
+
         $.post("TransferYesterdayTransactionHandler", param,
             function (data) {
                 if (parseInt(data.ErrorCode) != 0) {
                     transfer.utils.showError(data.ErrorMessage);
+                    if (data.IsMainTransferSuccess) {
+                        $("#frmTransfer").show();
+                        $("#frmTransfer").attr("src", '../TransferResult.aspx?fuser=' + escape(fromUsername) + "&touser=" + _toUser + "&exrate=" + _exRate);
+                        setTimeout(function () {
+                            reloadData();
+                        }, 1000);
+                    }
                 } else {
-                    $("#frmTransfer").attr("src", '../TransferResult.aspx?fuser=' + escape(fromUsername) + "&touser=" + _toUser + "&exrate=" + _exRate);
+                    if (isTransferYesterday) {
+                        $("#frmTransfer").show();
+                        $("#frmTransfer").attr("src", '../TransferResult.aspx?fuser=' + escape(fromUsername) + "&touser=" + _toUser + "&exrate=" + _exRate);
+                    }
+                    else {
+                        $("#frmTransfer").hide();
+                    }
+
+                    if (isConfrimReward) {
+                        $("#frmReward").show();
+                        $("#frmReward").attr("src", '../TransferResult.aspx?fuser=' + escape(fromUsername) + "&touser=" + param.RewardUserName + "&exrate=" + param.RewardExRate + "&isReward=true");
+                    }
+                    else {
+                        $("#frmReward").hide();
+                    }
+
                     closeDialogModal()
                 }
                 transfer.utils.unBlock();
@@ -862,7 +917,7 @@ transfer.YesterdayTransactionsForm = {
         $("#txtamount").keyup();
     },
     getUserInfo: function (username) {
-        return $.get("SelectCustomerExRate", {username: username}, $.proxy(function (rs) {
+        return $.get("SelectCustomerExRate", { username: username }, $.proxy(function (rs) {
             if (rs == null || typeof rs == "undefined" || typeof rs.username == "undefined") {
                 return null;
             } else {
@@ -871,29 +926,30 @@ transfer.YesterdayTransactionsForm = {
         }, this)).fail(function (e) {
             if (e.status == 403) {
                 transfer.utils.showError("You don't have permission to access");
-            }           
+            }
         });
     },
-    checkCurrency:async function (){
-        const fromCus =await transfer.YesterdayTransactionsForm.getUserInfo($("#fromuser").text().trim());
-        const toCus =await transfer.YesterdayTransactionsForm.getUserInfo($("#touser").val());
+    checkCurrency: async function () {
+        const fromCus = await transfer.YesterdayTransactionsForm.getUserInfo($("#fromuser").text().trim());
+        const toCus = await transfer.YesterdayTransactionsForm.getUserInfo($("#touser").val());
 
-        if(!toCus || !fromCus){
+        if (!toCus || !fromCus) {
             transfer.utils.showError("User does not exist");
             $("#transfer").attr("disabled", "disabled");
             $("#systemExRateText").text("");
             $("#systemExRateValue").text("");
             return;
         }
-        
+
         const isSameCurrency = fromCus.currencycode === toCus.currencycode;
         const hasRmCurrency = fromCus.currencycode === "MYR" || toCus.currencycode === "MYR"; // RM
         const hasUUSCurrency = fromCus.currency === "UUS" || toCus.currency === "UUS";
-        let systemExRate = hasUUSCurrency ? 0: fromCus.actualrate / toCus.actualrate;
+        let systemExRate = hasUUSCurrency ? 0 : fromCus.actualrate / toCus.actualrate;
         systemExRate = Math.round(systemExRate * 10000) / 10000;
         $("#systemExRateText").text(`(${fromCus.currency}/${toCus.currency}):`)
         $("#systemExRateValue").text(`${systemExRate}`);
-        
+        $("#fromCurrencyText").text(`${fromCus.currency}`);
+
         if (isSameCurrency || hasRmCurrency) {
             transfer.utils.hideMessage();
             $("#transfer").removeAttr("disabled");
@@ -917,9 +973,27 @@ transfer.YesterdayTransactionsForm = {
                         transfer.YesterdayTransactionsForm.checkCurrency();
                     }, this), 1000);
             }
-
         });
+    },
+    checkTransfer: function () {
+        var isYesterdayTransfer = $("#chk-confrimtransfer").is(":checked");
+        var isReward = $("#chk-confrimpayment").is(":checked");
+        var enableTransfer = isYesterdayTransfer || isReward;
+        var amount = isYesterdayTransfer ? parseFloat($("#txtamount").val().replace(/,/g, "")) : 0.0;
+        var rewardAmount = isReward ? parseFloat($("#txtRewardAmount").val().replace(/,/g, "")) : 0.0;
+        if (enableTransfer) {
+            $("#transfer").removeAttr("disabled");
+        }
+        else {
+            $("#transfer").attr("disabled", "disabled");
+        }
+        $("#lblTotal").text(formatNumber32(amount + rewardAmount));   
+    },
+    CalclateTotal: function () {
+        var isYesterdayTransfer = $("#chk-confrimtransfer").is(":checked");
+        var isReward = $("#chk-confrimpayment").is(":checked");       
+        var amount = isYesterdayTransfer ? parseFloat($("#txtamount").val().replace(/,/g, "")) : 0.0;
+        var rewardAmount = isReward ? parseFloat($("#txtRewardAmount").val().replace(/,/g, "")) : 0.0;  
+        $("#lblTotal").text(formatNumber32(amount + rewardAmount));   
     }
 }
-
-

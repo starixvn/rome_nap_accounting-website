@@ -5,7 +5,7 @@
                 Total Cash
             </td>
             <td class="dot_right b" style="width: 140px;">
-                {CurTotalCashBalCur}<span class="{colorTotalCash}" onclick="DoTransfer(this, '{TotalCashBal}', '{CustName}');">{TotalCashBalCur}</span>
+                {CurTotalCashBalCur}<span class="{colorTotalCash}" onclick="DoTransfer(this, '{TotalCashBal}', '{CustName}', '{DirectRewardParams}');">{TotalCashBalCur}</span>
             </td>
         </tr>
         <tr>
@@ -13,7 +13,7 @@
                 Yesterday Cash
             </td>
             <td class="dot_right b">
-                {CurYesterdayCashBalCur} <span class="{colorYesterdayCash}" onclick="DoTransfer(this, '{YesterdayCashBal}', '{CustName}');">
+                {CurYesterdayCashBalCur} <span class="{colorYesterdayCash}" onclick="DoTransfer(this, '{YesterdayCashBal}', '{CustName}', '{DirectRewardParams}');">
                     {YesterdayCashBalCur}
                 </span>
             </td>
@@ -23,7 +23,7 @@
                 Total Balance
             </td>
             <td class="dot_right b">
-                {CurTotalBalCur}<span class="{colorTotalBal}" onclick="DoTransfer(this, '{TotalBal}', '{CustName}');">{TotalBalCur}</span>
+                {CurTotalBalCur}<span class="{colorTotalBal}" onclick="DoTransfer(this, '{TotalBal}', '{CustName}', '{DirectRewardParams}');">{TotalBalCur}</span>
             </td>
         </tr>
         <tr class="{hiddenbalance}">
@@ -31,7 +31,7 @@
                 Yesterday Balance
             </td>
             <td class="dot_right b">
-                {CurYesterdayBalCur}<span class="{colorYesterdayBal}" onclick="DoTransfer(this, '{YesterdayBal}', '{CustName}');">
+                {CurYesterdayBalCur}<span class="{colorYesterdayBal}" onclick="DoTransfer(this, '{YesterdayBal}', '{CustName}', '{DirectRewardParams}');">
                     {YesterdayBalCur}
                 </span>
             </td>
@@ -121,6 +121,26 @@
                 <span>{UsedCredit}</span>
             </td>
         </tr>
+        <tr>
+            <td class="dot_left">
+                Reward Receivable
+            </td>
+	        <td class="dot_right b">
+		        {RewardBalance}
+	        </td>
+        </tr>
+        <!--HideOnMember-->
+        <tr>
+	        <td class="dot_left">
+		        Reward Payable
+	        </td>
+	        <td class="dot_right b">
+		        {RewardPending}
+	        </td>
+        </tr>
+        <!--/HideOnMember-->
+
+       
         <tr class="{superhidden}">
             <td class="dot_left" onmouseover="Tip('Total Super {statuscounttooltip}', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)"
                 onmouseout="UnTip()">

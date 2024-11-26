@@ -21,11 +21,11 @@ namespace Sunplus.Accounting.Business.Transaction
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
-        bool VerifyTransaction(string refNoList);
+        bool VerifyTransaction(string refNoList, string rewardRefNoList);
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
-        bool UnVerifyTransaction(string refNo);
+        bool UnVerifyTransaction(string refNo, string rewardRefNo);
 
         void ExportToExcelforDailyAllTxn(string date, string type, string creator, int totalRows);
 
