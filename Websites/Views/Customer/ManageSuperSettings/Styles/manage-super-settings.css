@@ -12,7 +12,7 @@
 .tab_content {
     padding-bottom: 1px;
 }
-.alertboxerr{
+.alertboxerr, .alertboxscc {
     max-width: 780px;
 }
 .bg_table {
@@ -186,4 +186,8 @@ textarea {
 }
 #tab-ttu-text {
     max-width: 500px;
+}
+
+.inner-mess > *:nth-child(1) {
+    margin-top: 0;
 }
