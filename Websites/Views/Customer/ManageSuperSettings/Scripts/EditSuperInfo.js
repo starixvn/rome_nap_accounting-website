@@ -45,6 +45,11 @@
         $("#save-pwd").click(function () { editSuperInfo.savePassword(); });
         $("#save-scc").click(function () { editSuperInfo.saveSecurityCode(); });
         $("#btnSubmitUpdate").click(function () { editSuperInfo.saveInfo(); });
+        $('#SuperGivenCredit').change(function (e) {
+            var $this = $(this);
+            var val = $this.val();
+            $this.val(val.replace(/,/g, '').replace(/(?<!\..*)(\d)(?=(?:\d{3})+(?:\.|$))/g, '$1,'));
+        });
     },
     createMessageBox: function (msg, isError) {
         if (isError) {
@@ -201,7 +206,7 @@
         var resultContainer = $("#tab-esi-update-result");
         resultContainer.empty();
 
-        var amount = $('#SuperGivenCredit').val();
+        var amount = $('#SuperGivenCredit').val().replace(/,/g, '');
         if (!amount.isNumeric()) {
             resultContainer.append(editSuperInfo.createMessageBox('Invalid Given Credit value!', true));
             parent.jQuery.unblockUI();
@@ -417,7 +422,7 @@
 
         var isUpdateGivenCredit = $("#ckbGivenCredit").prop("checked");
         if (isUpdateGivenCredit) {
-            var amount = $('#SuperGivenCredit').val();
+            var amount = $('#SuperGivenCredit').val().replace(/,/g, '');
             if (!amount.isNumeric()) {
                 resultContainer.append(editSuperInfo.createMessageBox('Invalid Given Credit value!', true));
                 parent.jQuery.unblockUI();
