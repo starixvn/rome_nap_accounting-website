@@ -1,0 +1,74 @@
+﻿@using Sunplus.Accounting.Core.Configurations;
+@using Sunplus.Accounting.Business.Security;
+@using Fanex.Tarus.Customer.Requests.ManageSuperSettings;
+@model IndexRequest
+@{
+    var editBetSettingNote = "- Update Supers Minbet won't cause adjust downlines.\n- Update Maxbet/ MaxperMatch/ MaxPayoutPerMatch/ MaxperNumber will adjust according setting value of downlines.\n- Update Super Maxbet < downlines Minbet, will adjust downlines Minbet = Super Maxbet.";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+<html>
+<head>
+ 
+    <link href="@Url.Content("~/Views/Customer/ManageSuperSettings/Styles/manage-super-settings.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+
+</head>
+<body>
+    <div class="main">
+        <div class="maincontent">
+            <div id="divMainHeader" style="position: sticky;top: 0;padding-top: 30px; background: #fff;z-index: 100;margin-bottom: 11px;" >
+                <div class="box_header" style="width: 100%;">
+                    <div class="left_tab" style="width: 100%">
+                        <ul id="tabs" class="tabs">
+                            <li id="tab_1"><a href="javascript:SwitchTab('tab_1');"><span><div>Copy Bet Setting</div><div class="icon-info" title="@editBetSettingNote"></div></span></a></li>
+                            <li id="tab_2"><a href="javascript:SwitchTab('tab_2');"><span><div>Edit Bet Setting</div><div class="icon-info" title="@editBetSettingNote"></div></span></a></li>
+                            <li id="tab_3"><a href="javascript:SwitchTab('tab_3');"><span>Edit Super Info</span></a></li>
+                            <li id="tab_4"><a href="javascript:SwitchTab('tab_4');"><span>Copy Win Loss Limit</span></a></li>
+                            <li id="tab_5"><a href="javascript:SwitchTab('tab_5');"><span>Update Account Status</span></a></li>
+
+                            @if (Permissions.HasPermission("TextToUsernames"))
+                            {
+                                <li id="tab_6"><a href="javascript:SwitchTab('tab_6');"><span>Text to Usernames</span></a></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div id="tab_1_content" class="tab_content" style="display: none;">
+                @Html.Partial("~/Views/Customer/ManageSuperSettings/TabCopyBetSetting.cshtml")
+            </div>
+            <div id="tab_2_content" class="tab_content" style="display: none;">
+                @Html.Partial("~/Views/Customer/ManageSuperSettings/TabEditBetSetting.cshtml")
+            </div>
+            <div id="tab_3_content" class="tab_content" style="display: none;">
+                @Html.Partial("~/Views/Customer/ManageSuperSettings/TabEditSuperInfo.cshtml")
+            </div>
+            <div id="tab_4_content" class="tab_content" style="display: none;">
+                @Html.Partial("~/Views/Customer/ManageSuperSettings/TabCopyWinLossLimit.cshtml")
+            </div>
+            <div id="tab_5_content" class="tab_content" style="display: none;">
+                @Html.Partial("~/Views/Customer/ManageSuperSettings/TabUpdateAccountStatus.cshtml")
+            </div>
+            <div id="tab_6_content" class="tab_content" style="display: none;">
+                @Html.Partial("~/Views/Customer/ManageSuperSettings/TextToUsernames.cshtml")
+            </div>
+        </div>
+
+    </div>
+    @Html.Hidden("tab-name", Model.TabName)
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-1.8.2.min.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-ui-1.9.1.min.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/js/common.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Grid.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Pagination.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/js/encode.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Views/Customer/ManageSuperSettings/Scripts/TabHandler.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Views/Customer/ManageSuperSettings/Scripts/CopyBetSetting.js?v=10" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Views/Customer/ManageSuperSettings/Scripts/EditBetSetting.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Views/Customer/ManageSuperSettings/Scripts/EditSuperInfo.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Views/Customer/ManageSuperSettings/Scripts/CopyWinLossLimit.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Views/Customer/ManageSuperSettings/Scripts/UpdateAccountStatus.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/Views/Customer/ManageSuperSettings/Scripts/Index.js?v=" + WebSettings.Version)"></script>
+    <script type="text/javascript" src="@Url.Content("~/js/ToolTip/Tipsy-Tooltip/jquery.tipsy.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Views/Customer/TextToUsernames/Scripts/Index.js?v=95" + WebSettings.Version)"></script>
+</body>
+</html>

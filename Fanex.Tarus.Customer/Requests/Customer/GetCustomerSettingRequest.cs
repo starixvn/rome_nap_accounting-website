@@ -15,5 +15,9 @@
         public string Language { get; set; } = "en-US";
 
         public string SiteLabel { get; set; } = "";
+
+        public bool IsMultipleMode { get; set; } = false;
+
+        public bool IsCopy { get; set; } = false;
     }
 }

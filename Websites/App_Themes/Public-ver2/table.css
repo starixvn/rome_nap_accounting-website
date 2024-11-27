@@ -1,0 +1,16 @@
+﻿table {
+    border: 1px solid #A4A4A4;
+}
+    table th, table td {
+        border: 1px solid #A4A4A4;
+    }
+.tb thead th {
+    background-color: #bccbdc;
+    text-align: center;
+}
+.tb thead th, .tb tbody td, .tb tfoot td {
+    height: 33px;
+    padding: 3px 6px;
+    line-height: 17.29px;
+    vertical-align: middle;
+}

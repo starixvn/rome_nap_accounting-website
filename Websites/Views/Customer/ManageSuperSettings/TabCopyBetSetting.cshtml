@@ -1,0 +1,35 @@
+﻿<div id="tab-cbs-errMsg"></div>
+<div id="tab-cbs-errSupers"></div>
+<div class="bg_table">
+    <div>
+        <div class="inputSuper">
+            <label for="tab-cbs-sourcesuper" class="bold">
+                Source Super <span style="color: red;">*</span>
+            </label>
+            <input type="text" class="txt-source-super" id="tab-cbs-sourcesuper" maxlength="30" value="" />
+        </div>
+        <div class="inputSuper">
+            <label for="tab-cbs-superlist" class="small-label">
+                Enter list of Super Account usernames <span style="color: red;">*</span> (Maximum 100 supers, separated by comma ',')
+            </label>         
+            <textarea type="text" id="tab-cbs-superlist" class="superlist" rows="2" cols="100"></textarea>
+        </div>
+        <input type="button" id="tab-cbs-btnSubmit" value="Select" class="btn-submit" onclick="copyBetSetting.checkSuperList()" />
+        <input type="button" id="tab-cbs-btnReset" value="Reset" class="btn-reset" onclick="copyBetSetting.resetSelect()" />
+    </div>
+</div>
+<div id="tab-cbs-superSetting" class="setting-actions hidden">
+    <div style="width:100%;top: 0;position: relative;z-index: 10;">
+        <div class="box_header" style="width: 100%;">
+            <div class="left_tab" style="width: 100%">
+                <ul id="tabs" class="tab-folder">
+                    <li class="tab-product current tab-product-1"><a href="javascript:copyBetSetting.changeProduct(1);"><span>Sportsbook</span></a></li>
+                    <li class="tab-product tab-product-2"><a href="javascript:copyBetSetting.changeProduct(2);"><span>RNG Games</span></a></li>
+                    <li class="tab-product tab-product-3"><a href="javascript:copyBetSetting.changeProduct(3);"><span>Live & RNG Casino</span></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <iframe class="content-iframe" id="tab-cbs-iframe" src="~/_loading.htm"
+            width="100%" height="800px"></iframe>
+</div>

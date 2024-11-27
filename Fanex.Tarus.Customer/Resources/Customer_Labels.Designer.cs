@@ -19,7 +19,7 @@ namespace Fanex.Tarus.Customer.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Customer_Labels {
@@ -898,6 +898,15 @@ namespace Fanex.Tarus.Customer.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Password has been changed successfully..
+        /// </summary>
+        public static string PasswordChangedSuccessfully {
+            get {
+                return ResourceManager.GetString("PasswordChangedSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Phone.
         /// </summary>
         public static string Phone {
@@ -930,6 +939,15 @@ namespace Fanex.Tarus.Customer.Resources {
         public static string Reason {
             get {
                 return ResourceManager.GetString("Reason", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset security code successfully!.
+        /// </summary>
+        public static string SecurityCodeChangedSuccessfully {
+            get {
+                return ResourceManager.GetString("SecurityCodeChangedSuccessfully", resourceCulture);
             }
         }
         
@@ -984,6 +1002,15 @@ namespace Fanex.Tarus.Customer.Resources {
         public static string Super {
             get {
                 return ResourceManager.GetString("Super", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Super Given Credit is updated successfully.
+        /// </summary>
+        public static string SuperGivenCreditUpdatedSuccessfully {
+            get {
+                return ResourceManager.GetString("SuperGivenCreditUpdatedSuccessfully", resourceCulture);
             }
         }
         

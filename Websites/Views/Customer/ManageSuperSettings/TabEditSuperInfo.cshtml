@@ -1,0 +1,142 @@
+﻿@{
+    var notesGivenCredit = "One by one Super will be updated the new given credit, which cannot lower than their Used Credit";
+    var notesSecCode = "*Security Code must be a 6-digit number, contains at least 2 different digits and must not be consecutive numbers.\nFor example: 123456, 765432, 456789, etc.are NOT allowed.";
+}
+
+<div id="tab-esi-errMsg"></div>
+<div id="tab-esi-errSupers"></div>
+<div class="bg_table">
+    <div>
+        <div class="inputSuper">
+            <label for="tab-esi-superlist" class="small-label short">
+                Enter list of Super Account usernames<span style="color: red;">*</span> (Maximum 100 Supers, separated by comma ',')
+            </label>
+      
+            <textarea type="text" id="tab-esi-superlist" class="superlist" rows="2" cols="100"></textarea>
+        </div>
+        <input type="button" id="tab-esi-btnCheckSupers" value="Select" class="btn-submit" onclick="editSuperInfo.getSuperInfo()" />
+        <input type="button" id="tab-esi-btnReset" value="Reset" class="btn-reset" onclick="editSuperInfo.resetSelect()" />
+    </div>
+</div>
+
+<div id="tab-esi-superSetting" class="setting-actions hidden">
+    <div id="tab-esi-update-result" class="inner-mess">
+    </div>
+    <div class="update-selection">
+        <p><b>Selection:</b></p>
+        <div class="selections">
+            <div class="select-item">
+                <input type="checkbox" id="ckbGivenCredit" checked />
+                <label for="ckbGivenCredit">Update Given Credit</label>
+            </div>
+            <div class="select-item">
+                <input type="checkbox" id="ckbResetPwd" checked />
+                <label for="ckbResetPwd">Reset Password</label>
+            </div>
+
+            <div class="select-item">
+                <input type="checkbox" id="ckbResetSecCode" checked />
+                <label for="ckbResetSecCode">Reset Security Code</label>
+            </div>
+        </div>
+    </div>
+    <div class="update-content">
+        <div id="updateGivenCredit" class="block-update-content">
+            <div class="form-title">
+                Update Given Credit
+                <div class="pull-right">
+                    <span class="icon-save" id="save-ugc" title="Save" data-toggle="Save" data-placement="right"></span>
+                </div>
+            </div>
+            <form class="form-super-update form-add">
+                <div class="group-label">
+                    <div class="pull-left">
+                        <label class="label" for="SuperGivenCredit">New Given Credit</label>
+                    </div>
+                    <div class="pull-right">
+                        <input class="form-control width-info" id="SuperGivenCredit" name="GivenCredit" maxlength="14" type="text" value="">
+                    </div>
+                </div>
+                <div class="group-label">
+                    <div class="pull-left">                        
+                    </div>
+                    <div class="pull-right">
+                        <div class="msg-warning mb-0">@notesGivenCredit</div>
+                    </div>                    
+                </div>
+            </form>
+        </div>
+
+        <div id="updatePwdTab" class="block-update-content">
+            <div class="form-title">
+                Reset Password
+                <div class="pull-right">
+                    <span class="icon-save" id="save-pwd" title="Save" data-toggle="Save" data-placement="right"></span>
+                </div>
+            </div>
+            <form class="form-super-update form-add">
+                <div class="group-label ">
+                    <div class="pull-left">
+                        <label class="label" for="SuperPassword">Password</label>
+                    </div>
+                    <div class="pull-right input-password-container">
+                        <input class="form-control width-info" id="SuperPassword" maxlength="10" name="Password" type="password" autocomplete="new-password">
+                        <span class="btn-icon icon-eye" data-id="SuperPassword"></span>
+                    </div>
+                </div>
+                <div class="group-label">
+                    <div class="pull-left">
+                        <label for="SuperConfirmPwd" class="label">Confirm password</label>
+                    </div>
+                    <div class="pull-right input-password-container">
+                        <input id="SuperConfirmPwd" type="password" class="form-control width-info" maxlength="10" autocomplete="new-password">
+                        <span class="btn-icon icon-eye" data-id="SuperConfirmPwd"></span>
+                    </div>
+                </div>
+                <div class="group-label group-checkbox">                    
+                    <input id="ForceChangePassword" type="checkbox" checked="checked" class="checkbox">
+                    <label for="ForceChangePassword" class="label">Force change</label>                   
+                </div>
+            </form>
+        </div>
+
+
+        <div id="updateSecCodeTab" class="block-update-content">
+            <div class="form-title">
+                Reset Security Code
+                <div class="pull-right">
+                    <span class="icon-save" id="save-scc" title="Save" data-toggle="Save" data-placement="right"></span>
+                </div>
+            </div>
+            <form class="form-super-update form-add">
+                <div class="group-label ">
+                    <div class="pull-left">
+                        <label for="SuperSecCode" class="label">Security Code<span class="icon-info" id="notesSecCode" title="@notesSecCode" data-toggle="@notesSecCode" data-placement="right"></span></label>
+                    </div>
+                    <div class="pull-right">
+                        <input id="SuperSecCode" maxlength="6" type="text" class="form-control width-info">
+                    </div>
+                </div>
+                <div class="group-label">
+                    <div class="pull-left width-140">
+                        <label for="SuperConfirmSecCode" class="label">Confirm Security Code</label>
+                    </div>
+                    <div class="pull-right">
+                        <input type="text" id="SuperConfirmSecCode" maxlength="6" class="form-control width-info">
+                    </div>
+                </div>
+                <div class="group-label group-checkbox">    
+                    <input id="SuperForceChangeSecCode" type="checkbox" checked="checked" class="checkbox">
+                    <label for="SuperForceChangeSecCode" class="label">Force change</label>                                       
+                </div>
+            </form>
+        </div>
+
+        <div class="button-submit">
+            <input id="btnSubmitUpdate" class="btn-submit" type="button" value="Update">
+        </div>
+    </div>
+</div>
+<div id="tab-esi-dialog-confirm" title="Confirmation">
+</div>
+@Html.Hidden("EncryptorCode", Fanex.Tarus.Security.Services.Encryptor.Code)

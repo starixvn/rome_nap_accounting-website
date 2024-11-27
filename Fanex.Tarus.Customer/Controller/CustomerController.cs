@@ -24,6 +24,7 @@ using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Agent.Utilities;
+using Fanex.Tarus.Customer.Requests.ManageSuperSettings;
 
 namespace Fanex.Tarus.Customer.Controller
 {
@@ -198,7 +199,7 @@ namespace Fanex.Tarus.Customer.Controller
                 : "~/Views/Customer/EditCustomer.cshtml", editCustomerViewModel);
         }
 
-        public ActionResult SportBookInformation(SportBookInformationRequest request)
+        public ActionResult NAPSportBookInformation(SportBookInformationRequest request)
         {
             var appPath = GetApplicationPath();
             request.ApplicationPath = appPath;
@@ -214,7 +215,7 @@ namespace Fanex.Tarus.Customer.Controller
 
         public async Task<ActionResult> GetCustomerSetting(GetCustomerSettingRequest request)
         {
-            return Content(await customerService.GetCustomerSetting(request.CustId, request.RoleId, CustomerClientManager.ClientConfigs.SystemId, request.UplineRoleId, request.Language, request.IsGetUpLine, request.ProductGroupId, request.SiteLabel));
+            return Content(await customerService.GetCustomerSetting(request.CustId, request.RoleId, CustomerClientManager.ClientConfigs.SystemId, request.UplineRoleId, request.Language, request.IsGetUpLine, request.ProductGroupId, request.SiteLabel, request.IsMultipleMode, "", request.IsCopy));
         }
 
         public async Task<ActionResult> GetCurrentWinLossAmount(int custId, int sportType, int betType, string language = "en-US")
@@ -292,6 +293,43 @@ namespace Fanex.Tarus.Customer.Controller
                 "en-US"));
 
             return Content(response);
+        }
+
+        [HttpPost]
+        [NAPCustomerAuthFilter(IsHost = true)]
+        public async Task<ActionResult> UpdateMultipleCustomers(UpdateMultipleCustomerRequest request)
+        {
+            var response = await customerService.UpdateMultipleCustomers(
+                  new UpdateMultipleCustomerParam(
+                      request.ProductGroups,
+                      AppSession.AccId,
+                      0,
+                      request.CustId,
+                      "",
+                      request.RoleId,
+                      request.UplineRoleId,
+                      HttpContext.Request.UserHostAddress,
+                      ObjectDbExtensions.GetSiteDBConfigByCustId(request.CustId)?.CustDBGroupID ?? 0,
+                      request.CustomerIds,
+                      request.CustomerNames,
+                      request.Site,
+                      request.SiteLabel));
+
+            return Content(response);
+        }
+
+        public ActionResult SportBookInformation(SportBookInformationRequest request)
+        {
+            const int SystemCode_NAP = 1;
+            var appPath = GetApplicationPath();
+            request.ApplicationPath = appPath;
+            var viewModel = new Fanex.Tarus.Customer.ViewModels.ManageSuperSettings.SportBookInformationViewModel(
+                new Fanex.Tarus.Customer.ViewModels.ManageSuperSettings.AppConfigurationViewModel(appPath, SystemCode_NAP),
+                ConfigurationManager.AppSettings["Fanex.Customer:CdnUri"],
+                GetAssetsVersion(),
+                request.ToJson());
+
+            return PartialView("SportBookInformation", viewModel);
         }
 
         private string GetApplicationPath()

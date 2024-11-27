@@ -1,0 +1,193 @@
+﻿@import "../../../../App_Themes/Public-ver2/tabs.css";
+@import "../../../../App_Themes/Public-ver2/input.css";
+@import "../../../../App_Themes/Public-ver2/buttons.css";
+@import "../../../../App_Themes/Public-ver2/alert.css";
+@import "../../../../App_Themes/Public-ver2/table.css";
+@import "../../../../App_Themes/Public-ver2/tipsy.css";
+
+@import "../../../../App_Themes/Public-ver2/modal-popup.css";
+
+@import "../../../../Scripts/_Libs/FanexGrid/Fanex.Grid.css";
+@import "../../../../App_Themes/Public-ver2/table-freegrid-custom.css";
+.tab_content {
+    padding-bottom: 1px;
+}
+.alertboxerr, .alertboxscc {
+    max-width: 780px;
+}
+.bg_table {
+    border: 1px solid #d1d1d1;
+    padding: 11px;
+    border-radius: 5px;
+    margin-bottom: 11px;
+}
+.inputSuper {
+    margin-bottom: 10px;
+}
+.inputSuper label {
+    font-size: 13px;
+    line-height: 15.23px;
+    font-weight: 500;
+    color: #333;
+    display: block;
+    margin-bottom: 4px;
+}
+.inputSuper label.small-label{
+    font-weight: 400;
+    line-height: 24px;
+    margin-bottom: 0;
+}
+.inputSuper label.small-label.short{
+    margin-top: -5px;
+}
+.maincontent{
+    padding: 0 12px;
+}
+.btn-reset{
+    margin-left: 16px;
+}
+.content-iframe {
+    border: 1px solid #d1d1d1;
+    padding: 11px;
+    border-radius:0 5px 5px;
+}
+.form-control-short{
+    display: flex;
+    align-items: center;
+}
+.form-control-short .btn-submit{
+    margin-left: 15px;
+}
+.update-content{
+    max-width: 800px;
+}
+textarea {
+    max-width: 800px;
+}
+.setting-actions {
+    border: 1px solid #d1d1d1;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+.update-selection{
+    margin-bottom: 10px;
+}
+.selections {
+    display: flex;
+}
+.selections .select-item {
+    margin-right: 24px;
+    display: inline-flex;
+}
+.selections .select-item input{
+    margin-right: 9px;
+}
+.block-update-content + .block-update-content{
+    margin-top: 10px;
+}
+.block-update-content {
+    border: 1px solid #a4a4a4;
+    border-radius: 5px;
+}
+.block-update-content .form-title {
+    background: #BCCBDC;
+    position: relative;
+    padding: 6px 30px 6px 12px;
+    font-weight: 700;
+}
+.block-update-content .form-title .icon-save {
+    position: absolute;
+    right: 4px;
+    top: 3px;
+    font-size: 24px;
+    cursor: pointer;
+}
+.form-super-update{
+    padding: 11px;
+    padding-bottom: 0;
+}
+.input-password-container{
+    display: inline-block;
+    min-width: 300px;
+    position: relative;
+
+}
+.input-password-container .btn-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 25px;
+    text-align: center;
+    line-height: 28px;
+    font-size: 16px;
+    cursor: pointer;
+    color: #323232;
+}
+.msg-warning{
+    margin-top: 0;
+}
+.group-label .label {
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 15px;
+    margin-bottom: 4px;
+    display: block;
+}
+.group-label .label .icon-info {
+    font-size: 16px;
+    color: #333;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 4px;
+}
+.group-label .label .icon-info:before {
+    color: #333;
+}
+.group-label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 11px;
+}
+.group-label .pull-left{
+    width: 140px;
+}
+.group-label .pull-right input[type="text"] {
+    width: 300px;
+}
+.group-checkbox {
+    display: flex;
+}
+.group-checkbox .label{
+    margin: 0 0 0 6px;
+    cursor: pointer;
+}
+.button-submit{
+    margin-top: 10px;
+}
+.tbl-valid-usernames, .tbl-invalid-usernames {
+    margin-top: 10px;
+    width: 450px;
+    border-collapse: collapse;
+}
+.tbl-invalid-usernames tbody tr td:last-child{
+    white-space: nowrap;
+}
+.icon-copy {
+    font-size: 20px;
+    cursor: pointer;
+}
+.tbl-valid-usernames tr th {
+    background: #E5F4EE;
+}
+.tbl-invalid-usernames tr th {
+    background: #FFDFDF;
+}
+#tab-ttu-text {
+    max-width: 500px;
+}
+
+.inner-mess > *:nth-child(1) {
+    margin-top: 0;
+}

@@ -1,0 +1,50 @@
+﻿ 
+input[type=submit], input[type=reset] {
+    border-radius: 3px;
+}
+
+.btn-reset, .btn-submit {
+    border: none;
+    cursor: pointer;
+    height: 28px;
+    line-height: 28px;
+    outline: none;
+    margin: 0;
+    padding: 0 16px;
+    white-space: nowrap;
+    -webkit-appearance: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 500;
+    -webkit-appearance: none;
+    box-shadow: none;
+    text-decoration: none !important;
+    display: inline-block;
+}
+
+.btn-reset[disabled], .btn-submit[disabled], .btn-reset .disabled, .btn-submit .disabled {
+    opacity: 0.8;
+    cursor: not-allowed;
+}
+
+.btn-reset:hover, .btn-submit:hover, .btn-reset:focus, .btn-submit:focus {
+    color: #fff;
+    background-color: #0a5494;
+}
+
+.btn-reset {
+    background-color: #696969;
+}
+
+.btn-reset:hover, .btn-reset:focus {
+    background-color: #636363;
+}
+
+.btn-submit {
+    background-color: #0B599C;
+}
+
+.btn-submit:hover, .btn-submit:focus {
+    background-color: #0a5494;
+}

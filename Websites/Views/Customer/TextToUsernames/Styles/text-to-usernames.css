@@ -1,0 +1,60 @@
+﻿
+#tab-ttu-text {
+    width: 300px;
+    height: 20px;
+}
+
+.icon-info {
+    cursor: pointer;
+    margin-left: 3px;
+    width: 16px;
+    height: 16px;
+    background-image: url(information-icon2.png);
+    cursor: pointer;
+    display: inline-block;
+    top: 3px;
+    position: relative;
+}
+
+.icon-copy {
+    cursor: pointer;
+    margin-left: 3px;
+    width: 20px;
+    height: 20px;
+    background-image: url(copy-icon.png);
+    cursor: pointer;
+    display: inline-block;
+    top: 3px;
+    position: relative;
+}
+
+.tbl-valid-usernames {
+    margin-top: 10px;
+    min-width: 400px;
+    border-collapse: collapse;
+}
+
+    .tbl-valid-usernames th, .tbl-valid-usernames td {
+        padding: 0 4px;
+        border: solid 1px #7C98A4;
+    }
+
+    .tbl-valid-usernames th {
+        background-color: #C6E0B3;
+    }
+
+.tbl-invalid-usernames {
+    min-width: 400px;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+    .tbl-invalid-usernames th {
+        background-color: #FCE5D7;
+        text-align: center;
+    }
+
+    .tbl-invalid-usernames th, .tbl-invalid-usernames td {
+        padding: 0 4px;
+        border: solid 1px #7C98A4;
+    }
