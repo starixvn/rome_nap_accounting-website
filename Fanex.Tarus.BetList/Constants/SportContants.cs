@@ -105,6 +105,7 @@
         public const int Nextspin = 229;
         public const int ONCasino = 138;
         public const int Playtech = 148;
+        public const int GPI = 145;
 
     }
 }
