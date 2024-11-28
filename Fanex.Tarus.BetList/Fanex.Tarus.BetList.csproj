@@ -100,8 +100,8 @@
     <Reference Include="Fanex.BetList.ColossusBets, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.ColossusBets.2.0.0\lib\net461\Fanex.BetList.ColossusBets.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.Core, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Core.3.0.4.3\lib\net461\Fanex.BetList.Core.dll</HintPath>
+    <Reference Include="Fanex.BetList.Core, Version=3.0.4.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.Core.3.0.4.4\lib\net461\Fanex.BetList.Core.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.Core.RemotingRef, Version=1.1.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Core.RemotingRef.2.0.0.2\lib\net461\Fanex.BetList.Core.RemotingRef.dll</HintPath>
@@ -208,8 +208,8 @@
     <Reference Include="Fanex.Result.Core.Allbet, Version=2.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.AllBetCasino.2.0.0.2\lib\net461\Fanex.Result.Core.Allbet.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Result.Core.Base, Version=3.0.1.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core-NPOI.2.0.6.3.0.1.2\lib\net461\Fanex.Result.Core.Base.dll</HintPath>
+    <Reference Include="Fanex.Result.Core.Base, Version=3.0.1.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Result.Core-NPOI.2.0.6.3.0.1.5\lib\net461\Fanex.Result.Core.Base.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Result.Core.Bitcoin, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core-Bitcoin.2.0.0\lib\net461\Fanex.Result.Core.Bitcoin.dll</HintPath>
@@ -245,8 +245,8 @@
     <Reference Include="Fanex.Result.Core.SAGaming, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.SAGaming.2.0.0\lib\net461\Fanex.Result.Core.SAGaming.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Result.Core.Sportsbook, Version=2.0.1.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core-Sportsbook.2.0.1.4\lib\net461\Fanex.Result.Core.Sportsbook.dll</HintPath>
+    <Reference Include="Fanex.Result.Core.Sportsbook, Version=2.0.1.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Result.Core-Sportsbook.2.0.1.6\lib\net461\Fanex.Result.Core.Sportsbook.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Result.Core.ThirdParty, Version=2.0.0.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.ThirdPartyResult.2.0.0.4\lib\net461\Fanex.Result.Core.ThirdParty.dll</HintPath>
@@ -257,8 +257,8 @@
     <Reference Include="Fanex.Tarus.Entities, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Entities.1.0.0.8\lib\net40\Fanex.Tarus.Entities.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.4.17, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.4.17\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
+    <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.4.19, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.4.19\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Security, Version=1.0.1.9, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.Security.1.0.2.4\lib\net40\Fanex.Tarus.Security.dll</HintPath>
@@ -545,6 +545,7 @@
     <Compile Include="Business\Results\MetricGamingResultService.cs" />
     <Compile Include="Business\Results\IMetricGamingResultService.cs" />
     <Compile Include="Business\Results\BitcoinResultService.cs" />
+    <Compile Include="Business\Results\VirtuallySportResultService.cs" />
     <Compile Include="Business\Results\VirtualTennisResultService.cs" />
     <Compile Include="Business\Results\IVirtualRacingResultService.cs" />
     <Compile Include="Business\Results\VirtualRacingResultService.cs" />
@@ -593,6 +594,7 @@
     <Compile Include="Criteria\IPInfo\GetIPV4InfoCriteria.cs" />
     <Compile Include="Criteria\IPInfo\GetIPV6InfoCriteria.cs" />
     <Compile Include="Criteria\Results\GetVS2RacingResultCriteria.cs" />
+    <Compile Include="Criteria\Results\GetParlay3rdResultCriteria.cs" />
     <Compile Include="Criteria\SiteDB_MixParlayDetailCriteria.cs" />
     <Compile Include="Criteria\SiteDB_BetListByCustInfoByRefnoCriteria.cs" />
     <Compile Include="Criteria\BetListByCustInfoByRefnoCriteria.cs" />
@@ -623,7 +625,7 @@
     <Compile Include="Criteria\MapPlayerId3rdToCustIdCriteria.cs" />
     <Compile Include="Criteria\MixParlayDetailCriteria.cs" />
     <Compile Include="Criteria\Results\GetAGCasinoResultCriteria.cs" />
-    <Compile Include="Criteria\Results\GetBitcoinResultCriteria.cs" />
+    <Compile Include="Criteria\Results\Get3rdResultCriteria.cs" />
     <Compile Include="Criteria\Results\GetVirtualTennisResultCriteria.cs" />
     <Compile Include="Criteria\Results\GetVirtualRacingResultCriteria.cs" />
     <Compile Include="Criteria\Results\GetNumberGamePopupResultCriteria.cs" />
@@ -649,6 +651,7 @@
     <Compile Include="DataAccess\Results\MetricGamingResultDataAccess.cs" />
     <Compile Include="DataAccess\Results\IMetricGamingResultDataAccess.cs" />
     <Compile Include="DataAccess\Results\BitcoinResultDataAccess.cs" />
+    <Compile Include="DataAccess\Results\VirtuallySportResultDataAccess.cs" />
     <Compile Include="DataAccess\Results\VirtualTennisResultDataAccess.cs" />
     <Compile Include="DataAccess\Results\IVirtualRacingResultDataAccess.cs" />
     <Compile Include="DataAccess\Results\VirtualRacingResultDataAccess.cs" />

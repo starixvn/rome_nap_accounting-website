@@ -26,7 +26,7 @@ namespace Fanex.Tarus.BetList.Business.Results
 
         public string GetResult(int matchId, int sportType)
         {
-            var criteria = new GetBitcoinResultCriteria
+            var criteria = new Get3rdResultCriteria
             {
                 MatchId = matchId
             };

@@ -11,12 +11,12 @@ namespace Fanex.Tarus.BetList.DataAccess.Results
 
     public interface IBitcoinResultDataAccess
     {
-        List<Bitcoin> GetResult(GetBitcoinResultCriteria criteria);
+        List<Bitcoin> GetResult(Get3rdResultCriteria criteria);
     }
 
     public class BitcoinResultDataAccess : IBitcoinResultDataAccess
     {
-        public List<Bitcoin> GetResult(GetBitcoinResultCriteria criteria)
+        public List<Bitcoin> GetResult(Get3rdResultCriteria criteria)
         {
             var result = new List<Bitcoin>();
             var detail = new List<GameDetail>();
