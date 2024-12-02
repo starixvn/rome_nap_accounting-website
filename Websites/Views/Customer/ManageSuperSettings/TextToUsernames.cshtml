@@ -1,7 +1,4 @@
-﻿@{
-    var noteText = "Support to remove delimiters: Hyphen (-), Comma (,), and Semicolon (;)\nMaximum length is 200 characters.";
-}
-<div id="tab-ttu-errMsg"></div>
+﻿<div id="tab-ttu-errMsg"></div>
 <div class="bg_table">
     <div>
         <div class="inputSuper">
@@ -13,7 +10,7 @@
                 <input type="button" id="tab-ttu-btnSubmit" value="Get Usernames" class="btn-submit" />
             </div>
         </div>
-        <label class="small-label">@noteText</label>
+        <label class="small-label">@Html.Raw(Resources.Language.TextToUsernames_Note)</label>
     </div>
 </div>
 <div id="tab-ttu-usernames" class="hidden">
