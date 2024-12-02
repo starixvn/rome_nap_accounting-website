@@ -1,6 +1,5 @@
 ﻿@using Sunplus.Accounting.Core.Configurations;
 @{
-    var noteText = "Support to remove delimiters: Hyphen (-), Comma (,), and Semicolon (;)\nMaximum length is 200 characters.";
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
 <html>
@@ -32,8 +31,8 @@
                                 <input type="button" id="tab-ttu-btnSubmit" value="Get Usernames" class="btn-submit" />
                             </div>
                         </div>
-                        <label class="small-label">@noteText</label>
-                    </div>                    
+                        <label class="small-label">@Html.Raw(Resources.Language.TextToUsernames_Note)</label>
+                    </div>
                 </div>
             </div>
             <div id="tab-ttu-usernames" class="hidden">
