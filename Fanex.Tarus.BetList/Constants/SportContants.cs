@@ -106,6 +106,7 @@
         public const int ONCasino = 138;
         public const int Playtech = 148;
         public const int GPI = 145;
+        public const int GPILiveCasino = 144;
 
     }
 }

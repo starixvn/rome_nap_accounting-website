@@ -78,7 +78,8 @@
                 sportType == SportContants.FGG ||
                 sportType == SportContants.YeeBet ||
                 sportType == SportContants.WE ||
-                sportType == SportContants.ONCasino)
+                sportType == SportContants.ONCasino ||
+                sportType == SportContants.GPILiveCasino)
             {
                 return GetLiveCasinoTickets(refNo, custId, transType, winlostDate);
             }
