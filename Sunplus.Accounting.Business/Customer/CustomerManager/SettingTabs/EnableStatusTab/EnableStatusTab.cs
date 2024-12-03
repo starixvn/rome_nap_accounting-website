@@ -33,7 +33,6 @@
                 Username = customerInfoViewModel.UserName,
                 AccId = AppSession.AccId,
                 IsShowSabaVirtualSports = !customerInfoViewModel.HideSabaVirtualSports,
-                IsShowBitcoin = !customerInfoViewModel.HideBitcoin,
                 IsShowCashout = !customerInfoViewModel.HideCashout,
                 IsShowMuayThai = !customerInfoViewModel.HideMuayThai,
                 IsShowLiveAndRNGCasino = !customerInfoViewModel.HideLiveAndRNGCasino,
@@ -416,20 +415,6 @@
                                                renderLeftPanelParameter,
                                                "Update Saba Virtual Sports Status",
                                                Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdSabaVirtualSports);
-                            break;
-
-                        case "69":
-                            _renderLeftPanelService.RenderEnableProductBoxDCS2(
-                                               row1,
-                                               productRow,
-                                               sg,
-                                               ref htmlcontent,
-                                               isManageCustomerAccess,
-                                               "Bitcoin",
-                                               renderLeftPanelParameter.IsShowBitcoin,
-                                               renderLeftPanelParameter,
-                                               "Update Bitcoin Status",
-                                               69);
                             break;
                     }
                 }

@@ -54,11 +54,6 @@
                    "RNG Games");
             }
 
-            if (renderLeftPanelParameter.IsShowBitcoin)
-            {
-                superSettingTab += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?productId=69&language=en-US&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=4\");' target='centerFr'>Bitcoin</a>";
-            }
-
             string masterSettingTab = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + BuildSettingUrl(custId, RoleIdConstants.Member, RoleIdConstants.Master, userName, siteName, ProductGroupIdConstants.SportsBook) + "\");' target='centerFr'>Sportsbook</a>";
 
             if (!customerInfoViewModel.HideLiveAndRNGCasino)
@@ -73,11 +68,6 @@
                 masterSettingTab += string.Format(
                     "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + BuildSettingUrl(custId, RoleIdConstants.Member, RoleIdConstants.Master, userName, siteName, ProductGroupIdConstants.RNGGames) + "\");' target='centerFr'>{0}</a>",
                     "RNG Games");
-            }
-
-            if (renderLeftPanelParameter.IsShowBitcoin)
-            {
-                masterSettingTab += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "DCS/ViewCustomerSetting?productId=69&language=en-US&customerLevel=1&customerId=" + custId.ToString() + "&uplinelevel=3\");' target='centerFr'>Bitcoin</a>";
             }
 
             TemplateHandler.Assign(ref htmlcontent, "{contentminmax}", superSettingTab);

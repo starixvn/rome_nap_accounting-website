@@ -70,7 +70,7 @@
 {
     var bg = rowCSS(superItem);
     var idAllow = superItem.ChildID.ToString() + '_' + superItem.UserName;
-    string siteName = superItem.IsMyanmarOdds ? "76666B" : string.Empty;
+    string siteName = string.Empty;
 
     <tr name="tr_@superItem.ChildID" class="@bg">
         <td>
@@ -162,7 +162,6 @@
 @helper renderContent(Fanex.Tarus.Customer.Entities.CustomerList.CustomerList superItem, Hashtable hash)
 {
     var bg = rowCSS(superItem);
-    string discountMyanmarOdss = superItem.IsMyanmarOdds ? superItem.DiscountMyanmarOdds.ToString() : "N/A";
     <tr name="tr_@superItem.ChildID" class="@bg" style="height: 20px;">
         <td>
             <div class="table-cell c" style="width: 40px; height: 18px;">
@@ -264,7 +263,7 @@
         </td>
         <td>
             <div class="table-cell c" style="width: 70px; height: 18px;">
-                @discountMyanmarOdss
+                @("N/A")
             </div>
         </td>
         <td>

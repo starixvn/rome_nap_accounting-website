@@ -78,8 +78,6 @@
 
         public bool DisableOutright => Utils.ToBoolean(customerInfoRow["DisableOutright"]);
 
-        public bool HideBitcoin { get; private set; } = true;
-
         public bool HideCashout { get; private set; } = true;
 
         public bool HideSabaVirtualSports { get; private set; } = true;
@@ -128,11 +126,6 @@
 
                             case "54":
                                 HideSabaVirtualSports = Utils.ToBoolean(row["IsHidden"]) || !WebSettings.IsShowSabaVirtualSports;
-                                break;
-
-                            case "69":
-                                bool isHideBitcoin = Utils.ToBoolean(row["IsHidden"]);
-                                HideBitcoin = !WebSettings.IsShowBitcoinBetting || isHideBitcoin;
                                 break;
                         }
                     }

@@ -13,7 +13,6 @@
 <%@ Import Namespace="Microsoft.Practices.Unity.Configuration" %>
 <%@ Import Namespace="Fanex.Tarus.Web.Controllers.Areas" %>
 <%@ Import Namespace="Fanex.Tarus.Web.Controllers.Filters" %>
-<%@ Import Namespace="Fanex.CustomerSetting.Client40" %>
 <%@ Import Namespace="Fanex.CustomerSetting.MatrixClient" %>
 <%@ Import Namespace="Fanex.Tarus.Security.Authenticate" %>
 <%@ Import Namespace="Sunplus.Accounting.Core.Configurations" %>
@@ -64,7 +63,6 @@
         AreaRegistration.RegisterAllAreas();
 
         Fanex.Data.Configuration.DbSettingProviderManager.Current.Start();
-        CustomerSettingRegistration.Init();
         SettingMatrixRegistration.Init();
         CustomerClientManager.UseConfig(new Fanex.Customer.Client.Configurations.CustomerClientConfiguration().Initialize());
 
