@@ -19,5 +19,7 @@
         public bool IsMultipleMode { get; set; } = false;
 
         public bool IsCopy { get; set; } = false;
+
+        public bool IsDirectMember { get; set; } = false;
     }
 }

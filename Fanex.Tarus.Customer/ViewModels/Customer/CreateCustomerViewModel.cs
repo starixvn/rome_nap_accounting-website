@@ -38,6 +38,6 @@ namespace Fanex.Tarus.Customer.ViewModels.Customer
 
         public string SecretKey { get; }
 
-        public string PageTitle { get; }
+        public string PageTitle { get; internal set; }
     }
 }

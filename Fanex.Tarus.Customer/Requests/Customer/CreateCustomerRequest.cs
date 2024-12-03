@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
+using Sunplus.Accounting.Business;
 
 namespace Fanex.Tarus.Customer.Requests.Customer
 {
@@ -20,6 +21,6 @@ namespace Fanex.Tarus.Customer.Requests.Customer
         public bool NoPermissionEditCredit { get; set; } = false;
 
         internal virtual string ToJson()
-            => JsonConvert.SerializeObject(new { UplineId, UplineRoleId, RoleId, Site, SiteLabel, NoPermissionEditCredit }, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+            => JsonConvert.SerializeObject(new { UplineId, UplineRoleId, RoleId, Site, SiteLabel, NoPermissionEditCredit, ProductGroupId = ProductGroupIdConstants.SportsBook }, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
     }
 }

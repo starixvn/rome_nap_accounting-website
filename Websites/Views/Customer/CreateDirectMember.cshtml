@@ -1,8 +1,15 @@
-﻿@model Fanex.Tarus.Customer.ViewModels.Customer.CreateCustomerViewModel
+﻿@model Fanex.Tarus.Customer.ViewModels.Customer.CreateDirectMemberViewModel
 @{
     var version = Sunplus.Accounting.Core.Configurations.WebSettings.Version;
 }
-<link rel="stylesheet" href="@(Model.CdnUri)create-customer/index.css?version=@(Model.AssetsVersion)" />
+@if (HttpContext.Current.IsDebuggingEnabled)
+{
+    <link rel="stylesheet" href="http://localhost:4210/src/styles.scss" />
+}
+else
+{
+    <link rel="stylesheet" href="@(Model.CdnUri)direct-member/create/index.css?version=@(Model.AssetsVersion)" />
+}
 <div class="maincontent">
     <table border="0" cellpadding="0px" cellspacing="0px" class="maincontent_header">
         <tr>
@@ -22,11 +29,22 @@
 <script>
     const appConfig = @Html.Raw(Model.AppConfig);
     const params = @Html.Raw(Model.Params);
-    window.redirectToSettingPage = (response) => {
-        const custId = response.custId;
-        const redirectUrl = appConfig.applicationPath + "Customer/V2/UpdatePT.aspx?custid=" + custId + "&insert=" + "true" + "&roleid=" + (params.uplineRoleId - 1) + "&uplineid=" + params.uplineRoleId;
-        window.location.replace(redirectUrl);
-    };
 </script>
 <script type="text/javascript" src="@Url.Content("~/js/encode.js?v=" + version)"></script>
-<script type="module" src="@(Model.CdnUri)create-customer/index.js?version=@(Model.AssetsVersion)"></script>
+@if (HttpContext.Current.IsDebuggingEnabled)
+{
+    <script type="module">
+        import RefreshRuntime from "http://localhost:4210/@@react-refresh";
+        RefreshRuntime.injectIntoGlobalHook(window);
+        window.$RefreshReg$ = () => { };
+        window.$RefreshSig$ = () => (type) => type;
+        window.__vite_plugin_react_preamble_installed__ = true;
+    </script>
+    <script type="module" src=@("http://localhost:4210/@vite/client")></script>
+
+    <script type="module" src="http://localhost:4210/src/main.tsx"></script>
+}
+else
+{
+    <script type="module" src="@(Model.CdnUri)direct-member/create/index.js?version=@(Model.AssetsVersion)"></script>
+}
