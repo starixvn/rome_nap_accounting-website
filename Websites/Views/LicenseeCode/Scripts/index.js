@@ -579,7 +579,7 @@ function OpenNoteMessage() {
         title: 'Info',
         modal: true,
         width: 500,
-        height: 110
+        height: 140
     });
 }
 
