@@ -43,7 +43,7 @@
             rowHL.Columns.push({ Name: 'Remark', Value: dataRow.Remark, MergeRowNumber: 3 });
             rowHL.Columns.push({
                 Name: 'Action',
-                Value: '<img alt="Edit" title="Edit" src="' + window.rootUrl + '/App_Themes/Images/icn_edit.png" style="cursor: pointer" onclick="whiteLabel.EditWhiteLabel(\'' + dataRow.UserName + '\')">'
+                Value: '<img alt="Edit" title="Edit" src="' + window.rootUrl + 'App_Themes/Images/icn_edit.png" style="cursor: pointer" onclick="whiteLabel.EditWhiteLabel(\'' + dataRow.UserName + '\')">'
                 , MergeRowNumber: 3
             });
 
@@ -282,7 +282,7 @@
     }
 
     self.RenderDropdowPercent = function (ele, selectedVal) {
-        for (let i = 99; i >= 1; i--) {
+        for (let i = 99; i >= 0; i--) {
             ele.append($('<option>', {
                 value: i,
                 text: i.toString(),
