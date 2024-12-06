@@ -478,5 +478,6 @@
     <Setting Key="Acc_WhiteLabelSetting_Sel" SpName="Acc_WhiteLabelSetting_Sel_xpre" DbName="DBCUST.CustDB.wsv_nap" />
     <Setting Key="Acc_WhiteLabelSetting_Ins" SpName="Acc_WhiteLabelSetting_Ins_xpre" DbName="DBCUST.CustDB.wsv_nap" />
     <Setting Key="Acc_WhiteLabelSetting_Upd" SpName="Acc_WhiteLabelSetting_Upd_xpre" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_WhiteLabel_SelByUpline" SpName="Acc_WhiteLabel_SelByUpline_xpre" DbName="DBCUST.CustDB.wsv_nap" />
   </Function>
 </Functions>

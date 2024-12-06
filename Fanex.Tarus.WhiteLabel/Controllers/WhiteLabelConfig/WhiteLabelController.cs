@@ -89,5 +89,9 @@ namespace Fanex.Tarus.WhiteLabel.Controller.WhiteLabelConfig
                 Remark = request.Remark,
                 UserId = AppSession.AccId
             }));
+
+        public string GetListWhiteLabelByUsernames(string usernames)
+            => service.GetListWhiteLabelByUsernames(new GetWhiteLabelByUsernamesCriteria() { Usernames = usernames });
     }
+    
 }

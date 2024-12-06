@@ -4,6 +4,7 @@ using Fanex.Tarus.Infrastructure.Helper;
 using Fanex.Tarus.WhiteLabel.Criteria.WhiteLabelConfig;
 using Fanex.Tarus.WhiteLabel.Models;
 using Fanex.Tarus.WhiteLabel.Models.WhiteLabelConfig;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -23,6 +24,8 @@ namespace Fanex.Tarus.WhiteLabel.Services.WhiteLabelConfig
         Result Update(EditWhiteLabelSettingCriteria criteria);
 
         Result Add(AddWhiteLabelSettingCriteria criteria);
+
+        string GetListWhiteLabelByUsernames(GetWhiteLabelByUsernamesCriteria criteria);
     }
 
     public class WhiteLabelService : IWhiteLabelService
@@ -49,13 +52,15 @@ namespace Fanex.Tarus.WhiteLabel.Services.WhiteLabelConfig
                 var reader = objDb.ExecuteReader();
                 while (reader.Read())
                 {
-                    yield return new SelectListItem {
+                    yield return new SelectListItem
+                    {
                         Text = reader["WhiteLabel"].ToString(),
                         Value = reader["CustId"].ToString()
                     };
                 }
             }
         }
+
         public Result Check(CheckWhiteLabelSettingCriteria criteria)
         {
             using (var objDB = new ObjectDb(criteria.GetSettingKey()))
@@ -86,6 +91,33 @@ namespace Fanex.Tarus.WhiteLabel.Services.WhiteLabelConfig
                 var outputs = objDB.GetOuputParams();
                 return new Result(DataUtils.ToInt32(outputs["errcode"]), DataUtils.ToString(outputs["errmsg"]));
             }
+        }
+
+        public string GetListWhiteLabelByUsernames(GetWhiteLabelByUsernamesCriteria criteria)
+        {
+            string result = string.Empty;
+            using (var objDB = new ObjectDb(criteria.GetSettingKey()))
+            {
+                objDB.AssignParamValues(criteria.GetSpParams());
+                using (var reader = objDB.ExecuteReader())
+                {
+                    List<string> usernames = new List<string>();
+
+                    while (reader.Read())
+                    {
+                        if (reader["Username"] != DBNull.Value)
+                        {
+                            usernames.Add(reader["Username"].ToString());
+                        }
+                    }
+
+                    if (usernames.Any())
+                    {
+                        result = string.Join(", ", usernames);
+                    }
+                }
+            }
+            return result;
         }
     }
 }

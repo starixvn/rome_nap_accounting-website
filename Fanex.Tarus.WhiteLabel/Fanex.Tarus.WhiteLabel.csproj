@@ -95,6 +95,7 @@
     <Compile Include="Criteria\WhiteLabelConfig\AddWhiteLabelSettingCriteria.cs" />
     <Compile Include="Criteria\WhiteLabelConfig\CheckWhiteLabelSettingCriteria.cs" />
     <Compile Include="Criteria\WhiteLabelConfig\EditWhiteLabelSettingCriteria.cs" />
+    <Compile Include="Criteria\WhiteLabelConfig\GetWhiteLabelByUserNameCriteria.cs" />
     <Compile Include="Criteria\WhiteLabelConfig\GetWhiteLabelInfoCriteria.cs" />
     <Compile Include="Criteria\WhiteLabelConfig\GetWhiteLabelSettingCriteria.cs" />
     <Compile Include="Models\Result.cs" />

@@ -120,12 +120,42 @@ function SetChecker(elemt, check) {
 }
 
 function SubmitUpdate() {
-    var isRemoveMapping = !$('#groupheadline').is(":checked") && $("#cbogroup option:selected").text() === $("#txtcustomer").val();
+    var username = $("#txtcustomer").val();
+    var isRemoveMapping = !$('#groupheadline').is(":checked") && $("#cbogroup option:selected").text() === username;
     if (selectedGroupId === '0' || isRemoveMapping) {
-        $("#btnCreditViewSubmit").click();
+        var message = "Are you sure you want to save changes for " + username + "?";
+        GetListWhiteLabel(username, function (result) {          
+            if (result != "") {
+                message += "<br><br><b>Note:</b> Remove/Update group headline will affect White Label settings: <span style=\"word-wrap: break-word; color:r ed\">" + result + "</span>.<br>";
+                message += "By your action, headline earning of White Label setting will be updated accordingly.If you need to revise the rate, please help update it in the [Manage White Label] function.";
+            }
+            __confirm("Please Confirm", message, 425, 'auto', null,
+                function () {
+                    __close(false, null, null, null);
+                    $("#btnCreditViewSubmit").click();
+                },
+                function () {
+                    __close(false, null, null, null);
+                },
+                null, false);
+        });      
+
     } else {
         OpenDialogConfirm($("#txtcustomer").val(), selectedGroupId);
     }
+}
+
+function GetListWhiteLabel(usernames, callback) { 
+    $.ajax({
+        type: "GET",
+        url: window.rootUrl + "WhiteLabel/GetListWhiteLabelByUsernames?usernames=" + usernames,
+        contentType: "text/plain; charset=utf-8",
+        success: function (result) {
+            callback(result);
+        },
+        error: function () {
+        }
+    });
 }
 
 function OpenDialogConfirm(usernames, groupId) {

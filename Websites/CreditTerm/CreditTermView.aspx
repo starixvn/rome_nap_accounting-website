@@ -60,5 +60,6 @@
 <script src="../js/Controls/StyledCheckbox/custom-form-elements.js" type="text/javascript"></script>
 <script src="../js/CreditTerm.js?v=<%= AccCommon.Version() %>" type="text/javascript"></script>
 <script src="../js/common.js" type="text/javascript"></script>
+<script src="../js/Popup/confirmbox.js" type="text/javascript"></script>
 <script type="text/javascript" src="../Scripts/_Libs/FanexGrid/Fanex.Grid.js?v=<%= AccCommon.Version() %>"></script>
 </html>
