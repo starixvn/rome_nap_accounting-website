@@ -199,7 +199,7 @@
             cellAddr = builder.AddCell(new HSSFRichTextString(BetListResources.No), headerStyle);
             builder.SetColumnWidth(cellAddr.ColumnIndex, 1200);
 
-            cellAddr = builder.AddCell(new HSSFRichTextString(sportType == SportContants.AllBet || sportType == SportContants.SaGaming ? BetListResources.Trans_Time : BetListResources.Date), headerStyle);
+            cellAddr = builder.AddCell(new HSSFRichTextString(BetListResources.Trans_Time), headerStyle);
             builder.SetColumnWidth(cellAddr.ColumnIndex, 5400);
 
             cellAddr = builder.AddCell(new HSSFRichTextString(BetListResources.Choice), headerStyle);
