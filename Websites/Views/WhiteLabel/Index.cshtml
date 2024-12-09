@@ -18,22 +18,27 @@
     <div class="maincontent_box">
         <div id="result-message"><div id="error-messages"></div></div>
         <table>
-            <tr>
-                <td class="b">White Label</td>
-                <td>
-                    @Html.DropDownList("selWhiteLabel", (IEnumerable<SelectListItem>)ViewBag.WhiteLabelInfoList, new { @id = "selWhiteLabel" })
-                </td>
-                <td class="b w50">Username</td>
-                <td class="w105">
-                    <input type="text" class="text" id="txtWhiteLabelUsername" />
-                </td>
-                <td class="w40">
-                    <button type="button" class="btn" id="btnSubmit">Submit</button>
-                </td>
-                <td>
-                    <img alt="Add" title="Add" src="~/App_Themes/Images/icn_add.png" style="cursor: pointer" onclick="whiteLabel.AddWhiteLabel()">
-                </td>
-            </tr>
+	        <tr>
+		        <td class="b">White Label</td>
+		        <td>
+			        @Html.DropDownList("selWhiteLabel", (IEnumerable<SelectListItem>)ViewBag.WhiteLabelInfoList, new { @id = "selWhiteLabel" })
+		        </td>
+		        <td class="b w50">Username</td>
+		        <td class="w105">
+			        <input type="text" class="text" id="txtWhiteLabelUsername" />
+		        </td>
+		        <td class="w40">
+			        <button type="button" class="btn" id="btnSubmit">Submit</button>
+		        </td>
+		        <td>
+			        <img alt="Add" title="Add" src="~/App_Themes/Images/icn_add.png" style="cursor: pointer" onclick="whiteLabel.AddWhiteLabel()">
+		        </td>
+	        </tr>
+	        <tr>
+		        <td colspan="6">
+			        <b>Note:</b> Updating the charge rate or changing the headline today will only take effect tomorrow.
+		        </td>
+	        </tr>
         </table>
     </div>
     <div id="grid-container">
