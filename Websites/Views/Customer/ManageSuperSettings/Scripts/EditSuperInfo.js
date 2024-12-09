@@ -280,6 +280,7 @@
         var request = {
             Supers: editSuperInfo.updateData.SuperList,
             EditPasswordRequest: {
+                code: code,
                 password: password.encrypt(code),
                 confirmedPassword: confirmedPassword.encrypt(code),
                 forceChangePassword: $("#ForceChangePassword").prop("checked")
@@ -349,6 +350,7 @@
         var request = {
             Supers: editSuperInfo.updateData.SuperList,
             EditSecurityCodeRequest: {
+                code: code,
                 SecurityCode: secCode.encrypt(code),
                 ConfirmedSecurityCode: confirmedSecCode.encrypt(code),
                 ForceChangeSecurityCode: $("#SuperForceChangeSecCode").prop("checked")
@@ -489,11 +491,13 @@
             Supers: editSuperInfo.updateData.SuperList,
             EditGivenCreditRequest: isUpdateGivenCredit ? { amount: amount } : null,
             EditPasswordRequest: isUpdatePassword ? {
+                code: code,
                 password: password.encrypt(code),
                 confirmedPassword: confirmedPassword.encrypt(code),
                 forceChangePassword: $("#ForceChangePassword").prop("checked")
             } : null,
             EditSecurityCodeRequest: isUpdateSecurityCode ? {
+                code: code,
                 SecurityCode: secCode.encrypt(code),
                 ConfirmedSecurityCode: confirmedSecCode.encrypt(code),
                 ForceChangeSecurityCode: $("#SuperForceChangeSecCode").prop("checked")
