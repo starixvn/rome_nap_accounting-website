@@ -2,6 +2,7 @@
 {
     public class EditSecurityCodeRequest
     {
+        public string Code { get; set; }
         public string SecurityCode { get; set; }
         public string ConfirmedSecurityCode { get; set; }
         public bool ForceChangeSecurityCode { get; set; }

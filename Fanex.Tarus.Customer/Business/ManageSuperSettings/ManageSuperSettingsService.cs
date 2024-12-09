@@ -177,12 +177,6 @@
                 return result;
             }
 
-            if (request.EditSecurityCodeRequest != null
-                && !ValidateSecurityCode(request.EditSecurityCodeRequest, result))
-            {
-                return result;
-            }
-
             foreach (var super in request.Supers)
             {
                 if (request.EditGivenCreditRequest != null)
@@ -219,7 +213,7 @@
 
         public Entities.Result EditPassword(SuperStatusEntity super, EditPasswordRequest request, int userId)
         {
-            var password = Fanex.Tarus.Security.Services.Encryptor.Decrypt(request.Password, Fanex.Tarus.Security.Services.Encryptor.Code);
+            var password = Security.Services.Encryptor.Decrypt(request.Password, request.Code);
             var updateResult = UpdateCustomer.Acc_CustomerPwdUpd(
                 super.CustId,
                 IBCUtils.Encryption.CfsEnCode(password),
@@ -242,7 +236,7 @@
         {
             var criteria = new ResetSecurityCodeCriteria
             {
-                Securitycode = Fanex.Tarus.Security.Services.Encryptor.Decrypt(request.SecurityCode, Fanex.Tarus.Security.Services.Encryptor.Code),
+                Securitycode = Security.Services.Encryptor.Decrypt(request.SecurityCode, request.Code),
                 Custid = super.CustId,
                 Userid = userId,
                 IsForcedChangeSecurityCode = request.ForceChangeSecurityCode,
@@ -286,85 +280,27 @@
 
         private bool ValidatePassword(EditPasswordRequest request, List<Entities.Result> updateResult)
         {
-            if (string.IsNullOrWhiteSpace(request.Password))
+            var password = Security.Services.Encryptor.Decrypt(request.Password, request.Code);
+            if (string.IsNullOrWhiteSpace(password))
             {
                 updateResult.Add(new Entities.Result(1, "Sorry, password cannot be empty."));
                 return false;
             }
 
-            if (request.Password.Length < 4)
+            if (password.Length < 4)
             {
                 updateResult.Add(new Entities.Result(1, "Password must have at least 4 characters."));
                 return false;
             }
 
-            if (request.Password != request.ConfirmedPassword)
+            var confirmedPassword = Security.Services.Encryptor.Decrypt(request.ConfirmedPassword, request.Code);
+            if (password != confirmedPassword)
             {
                 updateResult.Add(new Entities.Result(1, "Password was not correctly confirmed."));
                 return false;
             }
 
             return true;
-        }
-
-        private bool ValidateSecurityCode(EditSecurityCodeRequest request, List<Entities.Result> updateResult)
-        {
-            if (string.IsNullOrWhiteSpace(request.SecurityCode))
-            {
-                updateResult.Add(new Entities.Result(1, "Sorry, security code can't be empty."));
-                return false;
-            }
-
-            if (request.SecurityCode != request.ConfirmedSecurityCode)
-            {
-                updateResult.Add(new Entities.Result(1, "Sorry, confirm security code doesn't match with security code."));
-                return false;
-            }
-
-            if (!IsValidSecurityCode(request.SecurityCode))
-            {
-                updateResult.Add(new Entities.Result(1, "Sorry, security code is incorrect format."));
-                return false;
-            }
-
-            return true;
-        }
-
-        private bool IsValidSecurityCode(string encryptedSecCode)
-        {
-            var secCode = Fanex.Tarus.Security.Services.Encryptor.Decrypt(encryptedSecCode, Fanex.Tarus.Security.Services.Encryptor.Code);
-            var secCodeLength = secCode.Length;
-            if (secCodeLength != 6)
-            {
-                return false;
-            }
-
-            var regex = new Regex("/^([0-9])(?!\\1+$)[0-9]+$/");
-            var result = regex.Match(secCode).Length == 0 ? true : false;
-            if (result)
-            {
-                var isForwardRun = true;
-                var isBackwardRun = true;
-                var forward = int.Parse(secCode[0].ToString());
-                var backward = int.Parse(secCode[0].ToString());
-                for (var i = 1; i < secCodeLength; i++)
-                {
-                    var current = int.Parse(secCode[i].ToString());
-                    if (++forward != current)
-                    {
-                        isForwardRun = false;
-                    }
-
-                    if (--backward != current)
-                    {
-                        isBackwardRun = false;
-                    }
-                }
-
-                result = !(isForwardRun || isBackwardRun);
-            }
-
-            return result;
         }
     }
 }
