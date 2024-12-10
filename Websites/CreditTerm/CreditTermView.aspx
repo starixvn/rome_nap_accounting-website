@@ -44,6 +44,7 @@
                 <p>Beside adding super(s) into the selected Headline Group, the following super(s) will be added into External Group with Primary Extra PT Group indicated.</p>
                 <p id="headlineName"></p>
                 <div id="supermapping" class="freegrid grid_mapping"></div>
+                <p id="whitelabelNote" style="margin: 10px;"></p>
             </div>
         </div>
         <div>
