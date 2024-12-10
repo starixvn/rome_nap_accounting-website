@@ -79,7 +79,7 @@
         color: #333;
         cursor: pointer;
     }
-.icon-down {
+.tab-ttu-icon-collapse-expand {
     position: absolute;
     bottom: -8px;
     left: 50%;
@@ -94,8 +94,21 @@
     border-radius: 3px 3px 0 0;
 }
 
-    .icon-down:before {
+    .tab-ttu-icon-collapse-expand:before {
         color: #fff;
         transform: rotate(180deg);
         display: block;
+        content: "\e90a";
+        line-height: 15px;
+        font-family: 'icon-nap' !important;
+        speak: never;
+        font-style: normal;
+        font-weight: normal;
+        font-variant: normal;
+        text-transform: none;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    .tab-ttu-icon-collapse-expand.icon-up:before {
+        transform: rotate(0deg);
     }

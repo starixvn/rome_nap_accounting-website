@@ -192,7 +192,7 @@ textarea {
 .inner-mess > *:nth-child(1) {
     margin-top: 0;
 }
-.icon-down {
+.icon-collapse-expand {
     position: absolute;
     bottom: -8px;
     left: 50%;
@@ -206,8 +206,20 @@ textarea {
     line-height: 15px;
     border-radius: 3px 3px 0 0;
 }
-    .icon-down:before {
-        color: #fff;
-        transform: rotate(180deg);
-        display: block;
-    }
+.icon-collapse-expand:before {
+    color: #fff;
+    transform: rotate(180deg);
+    display: block;
+    content: "\e90a";
+    line-height: 15px;
+    font-family: 'icon-nap' !important;
+    speak: never;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    -webkit-font-smoothing: antialiased;
+}
+.icon-collapse-expand.icon-up:before {
+    transform: rotate(0deg);
+}
