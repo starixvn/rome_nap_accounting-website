@@ -3,7 +3,7 @@
 $(document).ready(function () {
     var tabName = $("#tab-name").val() || 'tab_1';
     SwitchTab(tabName);
-    InitElements();
+    InitManageSettingsPage();
     editSuperInfo.init();
 });
 
@@ -11,7 +11,7 @@ function Reset(tabName) {
     location.href = "./Index?tabName=" + tabName;
 }
 
-function InitElements() {
+function InitManageSettingsPage() {
     $(".superlist").off("change").on("change", function () {
         var superlist = $(this);
         var superlistValue = $.trim(superlist.val());
@@ -34,7 +34,7 @@ function InitElements() {
         }
     });
 
-    $(".icon-collapse-expand").click(function () {
+    $(".icon-collapse-expand").click(function (e) {
         var $this = $(this);
         var $filter = $this.parent().find('>div');
 
@@ -47,5 +47,11 @@ function InitElements() {
             $this.addClass("icon-down");
             $filter.removeClass('hidden');
         }
+    });
+
+    $('.icon-close').click(function () {
+        var $this = $(this);
+        var target = $this.attr('target');
+        target && $('#' + target).val('');
     });
 }

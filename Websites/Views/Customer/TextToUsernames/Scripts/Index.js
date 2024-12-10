@@ -32,7 +32,7 @@
             setTimeout(function () { $('#copy-tipsy').tipsy('hide'); }, 3000);
         });
 
-        $(".icon-collapse-expand").click(function () {
+        $(".tab-ttu-icon-collapse-expand").click(function () {
             var $this = $(this);
             var $filter = $this.parent().find('>div');
 
@@ -45,6 +45,12 @@
                 $this.addClass("icon-down");
                 $filter.removeClass('hidden');
             }
+        });
+
+        $('.tab-ttu-icon-close').click(function () {
+            var $this = $(this);
+            var target = $this.attr('target');
+            target && $('#' + target).val('');
         });
     },
     getUsernames: function () {
