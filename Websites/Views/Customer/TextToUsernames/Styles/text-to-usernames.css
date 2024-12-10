@@ -58,3 +58,44 @@
         padding: 0 4px;
         border: solid 1px #7C98A4;
     }
+.form-inline {
+    display: inline-block;
+    min-width: 300px;
+}
+
+.form-inline-clear {
+    position: relative;
+}
+
+    .form-inline-clear input, .form-inline-clear textarea {
+        padding-right: 23px;
+    }
+
+    .form-inline-clear .icon-close {
+        position: absolute;
+        top: 3px;
+        right: 3px;
+        font-size: 20px;
+        color: #333;
+        cursor: pointer;
+    }
+.icon-down {
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateY(-50%);
+    font-size: 7px;
+    cursor: pointer;
+    width: 35px;
+    background: #333;
+    height: 15px;
+    text-align: center;
+    line-height: 15px;
+    border-radius: 3px 3px 0 0;
+}
+
+    .icon-down:before {
+        color: #fff;
+        transform: rotate(180deg);
+        display: block;
+    }

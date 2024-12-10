@@ -4,7 +4,7 @@
 @import "../../../../App_Themes/Public-ver2/alert.css";
 @import "../../../../App_Themes/Public-ver2/table.css";
 @import "../../../../App_Themes/Public-ver2/tipsy.css";
-
+@import "../../../../App_Themes/Public-ver2/filter.css";
 @import "../../../../App_Themes/Public-ver2/modal-popup.css";
 
 @import "../../../../Scripts/_Libs/FanexGrid/Fanex.Grid.css";
@@ -20,6 +20,7 @@
     padding: 11px;
     border-radius: 5px;
     margin-bottom: 11px;
+    position: relative;
 }
 .inputSuper {
     margin-bottom: 10px;
@@ -191,3 +192,22 @@ textarea {
 .inner-mess > *:nth-child(1) {
     margin-top: 0;
 }
+.icon-down {
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateY(-50%);
+    font-size: 7px;
+    cursor: pointer;
+    width: 35px;
+    background: #333;
+    height: 15px;
+    text-align: center;
+    line-height: 15px;
+    border-radius: 3px 3px 0 0;
+}
+    .icon-down:before {
+        color: #fff;
+        transform: rotate(180deg);
+        display: block;
+    }

@@ -1,9 +1,9 @@
 @font-face {
   font-family: 'icon-nap';
   src:
-    url('fonts/icon-nap.ttf?d1bm6') format('truetype'),
-    url('fonts/icon-nap.woff?d1bm6') format('woff'),
-    url('fonts/icon-nap.svg?d1bm6#icon-nap') format('svg');
+    url('fonts/icon-nap.ttf?a567us') format('truetype'),
+    url('fonts/icon-nap.woff?a567us') format('woff'),
+    url('fonts/icon-nap.svg?a567us#icon-nap') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -24,13 +24,20 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-down:before {
+  content: "\e90a";
+  color: #4f4f4f;
+}
+.icon-close:before {
+  content: "\e909";
+}
 .icon-copy:before {
   content: "\e907";
 }
 .icon-eye:before {
   content: "\e905";
 }
-.icon-close:before {
+.icon-close1:before {
   content: "\e908";
   color: #4f4f4f;
 }

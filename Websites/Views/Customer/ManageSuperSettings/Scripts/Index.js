@@ -3,7 +3,7 @@
 $(document).ready(function () {
     var tabName = $("#tab-name").val() || 'tab_1';
     SwitchTab(tabName);
-    InitSuperList();
+    InitElements();
     editSuperInfo.init();
 });
 
@@ -11,7 +11,7 @@ function Reset(tabName) {
     location.href = "./Index?tabName=" + tabName;
 }
 
-function InitSuperList() {
+function InitElements() {
     $(".superlist").off("change").on("change", function () {
         var superlist = $(this);
         var superlistValue = $.trim(superlist.val());
@@ -31,6 +31,21 @@ function InitSuperList() {
             superlistValue = superlistValue.replace(/\s/g, ",");
             var superlistArray = superlistValue.split(",").filter(item => item.length > 0);
             superlist.val(superlistArray.join(","));
+        }
+    });
+
+    $(".icon-collapse-expand").click(function () {
+        var $this = $(this);
+        var $filter = $this.parent().find('>div');
+
+        if ($this.hasClass("icon-down")) {
+            $this.removeClass("icon-down");
+            $this.addClass("icon-up");
+            $filter.addClass('hidden');
+        } else {
+            $this.removeClass("icon-up");
+            $this.addClass("icon-down");
+            $filter.removeClass('hidden');
         }
     });
 }

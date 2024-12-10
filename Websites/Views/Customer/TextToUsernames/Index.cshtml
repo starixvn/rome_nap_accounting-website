@@ -9,7 +9,7 @@
 <body>
     <div class="main">
         <div class="maincontent">
-            <div id="divMainHeader" style="position: sticky;top: 0;padding-top: 30px; background: #fff;z-index: 100;margin-bottom: 11px;">
+            <div id="divMainHeader" style="position: sticky;top: 0;padding-top: 10px; background: #fff;z-index: 100;margin-bottom: 11px;">
                 <div class="box_header" style="width: 100%;">
                     <div class="left_tab" style="width: 100%">
                         <ul id="tabs" class="tabs">
@@ -27,12 +27,16 @@
                                 Text<span style="color: red;">*</span>
                             </label>
                             <div class="form-control-short">
-                                <input type="text" id="tab-ttu-text" maxlength="200" value="" />
+                                <div class="form-inline form-inline-clear">
+                                    <input type="text" id="tab-ttu-text" maxlength="200" value="" />
+                                    <span class="icon-close" title="clear text"></span>
+                                </div>
                                 <input type="button" id="tab-ttu-btnSubmit" value="Get Usernames" class="btn-submit" />
                             </div>
                         </div>
                         <label class="small-label">@Html.Raw(Resources.Language.TextToUsernames_Note)</label>
                     </div>
+                    <span class="icon-collapse-expand icon-down" title="toggle"></span>
                 </div>
             </div>
             <div id="tab-ttu-usernames" class="hidden">

@@ -1,0 +1,18 @@
+﻿.form-inline{
+    display: inline-block;
+    min-width: 300px;
+}
+.form-inline-clear{
+    position: relative;
+}
+.form-inline-clear input, .form-inline-clear textarea{
+    padding-right: 23px;
+}
+.form-inline-clear .icon-close {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    font-size: 20px;
+    color: #333;
+    cursor: pointer;
+}

@@ -11,12 +11,15 @@
             <label for="tab-esi-superlist" class="small-label short">
                 Enter list of Super Account usernames<span style="color: red;">*</span> (Maximum 100 Supers, separated by comma ',')
             </label>
-      
-            <textarea type="text" id="tab-esi-superlist" class="superlist" rows="2" cols="100"></textarea>
+            <div class="form-inline form-inline-clear">
+                <textarea type="text" id="tab-esi-superlist" class="superlist" rows="2" cols="100"></textarea>
+                <span class="icon-close" title="clear text"></span>
+            </div>
         </div>
         <input type="button" id="tab-esi-btnCheckSupers" value="Select" class="btn-submit" onclick="editSuperInfo.getSuperInfo()" />
         <input type="button" id="tab-esi-btnReset" value="Reset" class="btn-reset" onclick="editSuperInfo.resetSelect()" />
     </div>
+    <span class="icon-collapse-expand icon-down" title="toggle"></span>
 </div>
 
 <div id="tab-esi-superSetting" class="setting-actions hidden">
@@ -58,11 +61,11 @@
                     </div>
                 </div>
                 <div class="group-label">
-                    <div class="pull-left">                        
+                    <div class="pull-left">
                     </div>
                     <div class="pull-right">
                         <div class="msg-warning mb-0">@notesGivenCredit</div>
-                    </div>                    
+                    </div>
                 </div>
             </form>
         </div>
@@ -93,9 +96,9 @@
                         <span class="btn-icon icon-eye" data-id="SuperConfirmPwd"></span>
                     </div>
                 </div>
-                <div class="group-label group-checkbox">                    
+                <div class="group-label group-checkbox">
                     <input id="ForceChangePassword" type="checkbox" checked="checked" class="checkbox">
-                    <label for="ForceChangePassword" class="label">Force change</label>                   
+                    <label for="ForceChangePassword" class="label">Force change</label>
                 </div>
             </form>
         </div>
@@ -125,9 +128,9 @@
                         <input type="text" id="SuperConfirmSecCode" maxlength="6" class="form-control width-info">
                     </div>
                 </div>
-                <div class="group-label group-checkbox">    
+                <div class="group-label group-checkbox">
                     <input id="SuperForceChangeSecCode" type="checkbox" checked="checked" class="checkbox">
-                    <label for="SuperForceChangeSecCode" class="label">Force change</label>                                       
+                    <label for="SuperForceChangeSecCode" class="label">Force change</label>
                 </div>
             </form>
         </div>
