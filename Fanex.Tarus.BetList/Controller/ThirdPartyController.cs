@@ -247,7 +247,18 @@
             => BaseResult(request, "GPIRNGResultConfigs");
 
         public ActionResult GPILiveCasinoResult(ThirdPartyResultRequest request)
-            => BaseResult(request, "GPILiveCasinoResultConfigs");
+        {
+            SetProductResultTitle(request.ProductId);
+            var service = new ThirdPartyResult("GPILiveCasinoResultConfigs");
+            var resultRequest = new ResultRequest(request.CustId, request.TransId3rd, request.GameId3rd, request.CurrencyId, request.SiteId)
+            {
+                EndTime = request.EndTime,
+                BetTypeId = request.BetTypeId
+            };
+
+            var result = service.GetResultGET(resultRequest);
+            return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(ProductResultTitle, result));
+        }
 
         private ActionResult BaseResult(ThirdPartyResultRequest request, string configName)
         {
