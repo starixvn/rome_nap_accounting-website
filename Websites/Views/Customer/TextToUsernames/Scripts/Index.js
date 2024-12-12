@@ -46,12 +46,6 @@
                 $filter.removeClass('hidden');
             }
         });
-
-        $('.tab-ttu-icon-close').click(function () {
-            var $this = $(this);
-            var target = $this.attr('target');
-            target && $('#' + target).val('');
-        });
     },
     getUsernames: function () {
         parent.BlockUI();

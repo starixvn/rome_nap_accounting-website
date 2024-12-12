@@ -48,10 +48,4 @@ function InitManageSettingsPage() {
             $filter.removeClass('hidden');
         }
     });
-
-    $('.icon-close').click(function () {
-        var $this = $(this);
-        var target = $this.attr('target');
-        target && $('#' + target).val('');
-    });
 }
