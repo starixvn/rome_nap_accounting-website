@@ -49,9 +49,6 @@ input[type="file"] >input[type="button"]::-moz-focus-inner{border:none}
 	}
 .contentbox {
 	width: 100%;
-	min-width: 1610px;
-	display: flex;
-	flex-wrap: nowrap;
 }
 .leftcontent
 {
@@ -65,7 +62,6 @@ input[type="file"] >input[type="button"]::-moz-focus-inner{border:none}
 	float: right;
 	height: 100%;
 	width: 100%;
-	min-width: 1336px;
 }
 
 .top_banner2

@@ -49,3 +49,7 @@ function InitManageSettingsPage() {
         }
     });
 }
+
+function scrollPageToTop() {
+    window.$('.mCustomScrollbar').mCustomScrollbar("scrollTo", "top");
+}
