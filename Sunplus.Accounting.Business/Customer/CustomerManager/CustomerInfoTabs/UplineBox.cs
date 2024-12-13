@@ -78,6 +78,18 @@ namespace Sunplus.Accounting.Business.Customer
                 robotIds.Add(customerInfoViewModel.MemberId);
             }
 
+            if (customerInfoViewModel.SuperDirectMember)
+            {
+                TemplateHandler.RemoveBlock(ref uplineboxhtml, "MasterInfo");
+                TemplateHandler.RemoveBlock(ref uplineboxhtml, "AgentInfo");
+            }
+
+
+            if (customerInfoViewModel.MasterDirectMember)
+            {
+                TemplateHandler.RemoveBlock(ref uplineboxhtml, "AgentInfo");
+            }
+
             TemplateHandler.Assign(ref uplineboxhtml, "{RobotIds}", string.Join(",", robotIds));
             TemplateHandler.Assign(ref htmlcontent, "{UplineBox}", uplineboxhtml);
 

@@ -35,8 +35,8 @@
             string siteName = customerInfoViewModel.CustomerSite;
 
             TemplateHandler.Assign(ref htmlcontent, "{isHiddenMember}", "inline");
-            TemplateHandler.Assign(ref htmlcontent, "{lblMinMax}", isDeposit ? string.Empty : "<li id=\"detail_tab_1\" onclick=\"detail_tabnew_Click(this)\"><a href=\"javascript:void(0);\"><span>Super PT</span></a></li>");
-            TemplateHandler.Assign(ref htmlcontent, "{lblMinMax1}", isDeposit ? string.Empty : "<a href=\"javascript:void(0);\"><span>Master PT</span></a>");
+            TemplateHandler.Assign(ref htmlcontent, "{lblMinMax}", isDeposit || customerInfoViewModel.SuperDirectMember ? string.Empty : "<li id=\"detail_tab_1\" onclick=\"detail_tabnew_Click(this)\"><a href=\"javascript:void(0);\"><span>Super PT</span></a></li>");
+            TemplateHandler.Assign(ref htmlcontent, "{lblMinMax1}", isDeposit || customerInfoViewModel.SuperDirectMember || customerInfoViewModel.MasterDirectMember ? string.Empty : "<a href=\"javascript:void(0);\"><span>Master PT</span></a>");
 
             string superSettingTab = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + BuildSettingUrl(custId, RoleIdConstants.Member, RoleIdConstants.Super, userName, siteName, ProductGroupIdConstants.SportsBook) + "\");' target='centerFr'>Sportsbook</a>";
 
