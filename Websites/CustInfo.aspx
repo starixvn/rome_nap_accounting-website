@@ -55,6 +55,7 @@
         var result = "";
         var custid; var roleid;
         var totalPage = 1;
+        var totalDirectMemberPage = 1;
 
         $(document).ready(
             function init() {
@@ -62,6 +63,7 @@
                 $('#pane2').jScrollPane({ showArrows: true, scrollbarWidth: 15, arrowSize: 16 });
                 if (custid != null && roleid != null) {
                     ajaxGetDownlinelist(custid, roleid, 1);
+                    ajaxGetDirectMemberlist(custid, roleid, 1);
                     window.setTimeout(function () {
                         ajaxOnlinelist(custid);
                     }, 5000);
@@ -122,7 +124,7 @@
             }
         }
         function ajaxGetDownlinelist(custid, roleid, pageindex, iscallbypager) {
-            var params = '{"custId":' + custid + ', "roleId":' + roleid + ', "pageIndex":' + pageindex + '}';
+            var params = '{"custId":' + custid + ',"isdirectmember":false,"roleId":' + roleid + ', "pageIndex":' + pageindex + '}';
             $.ajax({
                 type: "POST",
                 url: "Services/WCF/Customer/ServiceCustomerInfo.svc/GenDownlineList",
@@ -145,7 +147,50 @@
                             if (isNumberNotNull("txtpage")) {
                                 var cpage = $("#txtpage").val();
                                 if (parseInt(cpage) <= totalPage) {
-                                    ajaxGetDownlinelist(custid, roleid, cpage, "");
+                                    ajaxGetDownlinelist(custid,  roleid, cpage, "");
+                                }
+                            }
+                            return false;
+                        });
+                    }
+                },
+                error: function (xhr, status) {
+                    if (xhr.status === 403) {
+                        var denyObject = $.parseJSON(xhr.responseText);
+                        $("#downlinecontent").html(denyObject.ErrorMessage);
+                    }
+                    else {
+                        $("#downlinecontent").html(status);
+                    }
+                }
+            });
+        }
+
+         function ajaxGetDirectMemberlist(custid, roleid, pageindex, iscallbypager) {
+            var params = '{"custId":' + custid + ',"isdirectmember":true,"roleId":' + roleid + ', "pageIndex":' + pageindex + '}';
+            $.ajax({
+                type: "POST",
+                url: "Services/WCF/Customer/ServiceCustomerInfo.svc/GenDownlineList",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: params,
+                success: function (rs) {
+                    var rsvalue = $.evalJSON(rs);
+
+                    //var rsvalue = jQuery.parseJSON(rs);
+                    totalDirectMemberPage = parseInt(rsvalue.Totalpages);
+                    $("#directmembercontent").html(rsvalue.Content);
+                    //Add Pager
+                    if (iscallbypager != null) {
+                        left_Tab1_Click(document.getElementById("left_tab1_4"));
+                    }
+                    if (totalDirectMemberPage > 1) {
+                        $("#dllpagerdirectmember").html(rsvalue.Pager);
+                        $(".pagenav_ibtn").click(function () {
+                            if (isNumberNotNull("txtpage")) {
+                                var cpage = $("#txtpage").val();
+                                if (parseInt(cpage) <= totalPage) {
+                                    ajaxGetDirectMemberlist(custid,  roleid, cpage, "");
                                 }
                             }
                             return false;
@@ -165,6 +210,10 @@
         }
         function pageritemclick(pageindex) {
             ajaxGetDownlinelist(custid, roleid, pageindex, "")
+        }
+
+        function pagerdirectmemberitemclick(pageindex) {
+            ajaxGetDirectMemberlist(custid, roleid, pageindex, "")
         }
 
 

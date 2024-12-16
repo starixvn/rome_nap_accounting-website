@@ -15,10 +15,10 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Customer
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class ServiceCustomerInfo : IServiceCustomerInfo
     {
-        public string GenDownlineList(int custId, int roleId, int pageIndex)
+        public string GenDownlineList(int custId, bool isdirectmember, int roleId, int pageIndex)
         {
             var customerService = new Sunplus.Accounting.Business.ServiceCustomerInfo();
-            return customerService.GenDownlineList(custId, roleId, pageIndex);
+            return customerService.GenDownlineList(custId, isdirectmember, roleId, pageIndex);
         }
 
         public string GenOnlineList(int custId)

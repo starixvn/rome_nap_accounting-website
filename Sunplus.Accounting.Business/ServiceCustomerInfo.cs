@@ -18,12 +18,12 @@ namespace Sunplus.Accounting.Business
 
         #region IServiceCustomerInfo Members
 
-        public string GenDownlineList(int custId, int roleId, int pageIndex)
+        public string GenDownlineList(int custId, bool isDirectMember, int roleId, int pageIndex)
         {
             try
             {
                 Hashtable ht;
-                ht = customer.GenDownlineList(custId, roleId, pageIndex);
+                ht = customer.GenDownlineList(custId, isDirectMember, roleId, pageIndex);
                 return JsonUtil.ToJson(ht);
             }
             catch (Exception ex)

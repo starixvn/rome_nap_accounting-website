@@ -34,6 +34,12 @@
                 directCustomerInfoRow = directCustomerInfo.ResultSet.Tables[0].Rows[0];
             }
 
+            if (!(customerInfoViewModel.SearchAccountRoleId == (int)Enumerations.Role.Super ||
+                customerInfoViewModel.SearchAccountRoleId == (int)Enumerations.Role.Master))
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "hasdirectmember");
+            }
+
             if (directCustomerInfoRow == null)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "directinfo");

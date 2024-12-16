@@ -10,7 +10,8 @@ namespace Sunplus.Accounting.Business
     {
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
-        string GenDownlineList(int custId, int roleId, int pageIndex);
+        string GenDownlineList(int custId, bool isDirectMember, int roleId, int pageIndex);
+      
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]

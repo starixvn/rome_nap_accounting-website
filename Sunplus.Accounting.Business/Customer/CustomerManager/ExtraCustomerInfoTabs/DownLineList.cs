@@ -12,7 +12,7 @@
 
     public partial class CustomerManager
     {
-        public Hashtable GenDownlineList(int custId, int roleId, int pageIndex)
+        public Hashtable GenDownlineList(int custId, bool isDirectMember, int roleId, int pageIndex)
         {
             Hashtable returndata = new Hashtable();
             string content = "";
@@ -20,19 +20,19 @@
             string tplRowData = TemplateHandler.CopyBlock(tplDownlineList, "rowdata");
             if (roleId != (int)Role.Headline && (roleId <= (int)Role.Member || roleId > (int)Role.Super))
             {
-                content = "<div style='width:250px;text-align:center;'>No downline list</div>";
+                content = "<div style='width:250px;text-align:center;'>No data.</div>";
                 returndata.Add("Content", content);
                 returndata.Add("Totalpages", 1);
                 return returndata;
             }
-            DbResult lsDownline = SiteProvider.Customer().GetDownLineList(custId, 100, pageIndex);
+            DbResult lsDownline = SiteProvider.Customer().GetDownLineList(custId, isDirectMember, 100, pageIndex);
             DataRowCollection rows = lsDownline.ResultSet.Tables[0].Rows;
             int totalDownline = lsDownline.ResultSet.Tables[0].Rows.Count;
             int TotalPages = (int)lsDownline.Outputs["totalpages"];
 
             if (totalDownline == 0)
             {
-                content = "<div style='width:250px;text-align:center;'>No downline list</div>";
+                content = "<div style='width:250px;text-align:center;'>No data.</div>";
                 returndata.Add("Content", content);
                 returndata.Add("Totalpages", 1);
                 return returndata;
@@ -59,7 +59,7 @@
             string strpager = "";
             if (TotalPages > 1)
             {
-                strpager = Pager.InitPager(TotalPages, pageIndex, "pageritemclick");
+                strpager = Pager.InitPager(TotalPages, pageIndex,isDirectMember ? "pagerdirectmemberitemclick" : "pageritemclick");
             }
 
             returndata.Add("Content", tplDownlineList);
