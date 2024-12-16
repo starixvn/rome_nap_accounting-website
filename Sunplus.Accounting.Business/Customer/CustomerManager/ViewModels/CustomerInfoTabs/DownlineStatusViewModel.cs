@@ -41,5 +41,9 @@
         public int MemberViewOnly => Converter.ToInt(downlineStatusInfoRow["MemberViewOnly"]);
 
         public int MemberInactive => Converter.ToInt(downlineStatusInfoRow["MemberInactive"]);
+
+        public int DirectMemberActive => Converter.ToInt(downlineStatusInfoRow["DirectMemberActive"]);
+        public int DirectMemberClosed => Converter.ToInt(downlineStatusInfoRow["DirectMemberClosed"]);
+        public int DirectMemberSuspended => Converter.ToInt(downlineStatusInfoRow["DirectMemberSuspended"]);
     }
 }

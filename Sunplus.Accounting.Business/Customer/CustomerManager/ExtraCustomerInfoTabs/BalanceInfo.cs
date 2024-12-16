@@ -166,11 +166,16 @@
                                     string.Format("<span style='color:blue'>{0}</span>/<span style='color:red'>{1}</span>/{2}",
                                                     customerInfoViewModel.MemberActive, customerInfoViewModel.MemberClosed, customerInfoViewModel.MemberSuspended));
 
+            TemplateHandler.Assign(ref balanceInfo, "{directmemberactive}",
+                string.Format("<span style='color:blue'>{0}</span>/<span style='color:red'>{1}</span>/{2}",
+                    customerInfoViewModel.DirectMemberActive, customerInfoViewModel.DirectMemberClosed, customerInfoViewModel.DirectMemberSuspended));
+
             TemplateHandler.Assign(ref balanceInfo, "{statuscounttooltip}", _statusCountTooltipMBC);
             TemplateHandler.Assign(ref balanceInfo, "{statuscounttitle}", _statusCountTitleMBC);
             TemplateHandler.Assign(ref balanceInfo, "{masterhidden}", customerInfoViewModel.SearchAccountRoleId > 3 ? string.Empty : "hidden");
             TemplateHandler.Assign(ref balanceInfo, "{agenthidden}", customerInfoViewModel.SearchAccountRoleId > 2 ? string.Empty : "hidden");
             TemplateHandler.Assign(ref balanceInfo, "{memberhidden}", customerInfoViewModel.SearchAccountRoleId > 1 ? string.Empty : "hidden");
+            TemplateHandler.Assign(ref balanceInfo, "{agentmemberhidden}", customerInfoViewModel.SearchAccountRoleId > 2 ? string.Empty : "hidden");
         }
     }
 }

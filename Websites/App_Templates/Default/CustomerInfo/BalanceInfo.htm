@@ -169,13 +169,22 @@
             </td>
         </tr>
         <tr class="{memberhidden}">
-            <td class="dot_left" onmouseover="Tip('Total Member {statuscounttooltip}', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)"
+	        <td class="dot_left" onmouseover="Tip('Total Member {statuscounttooltip}', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)"
+	            onmouseout="UnTip()">
+		        Members {statuscounttitle}&nbsp;
+	        </td>
+	        <td class="dot_right b">
+		        {memberactive}&nbsp;
+	        </td>
+        </tr>
+        <tr class="{agentmemberhidden}">
+            <td style="width:114px;" class="dot_left" onmouseover="Tip('Total Direct Member {statuscounttooltip}', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)"
                 onmouseout="UnTip()">
-                Members {statuscounttitle}&nbsp;
+                Direct Members A/C/S}
             </td>
-            <td class="dot_right b">
-                {memberactive}&nbsp;
-            </td>
+	        <td class="dot_right b">
+		        {directmemberactive}&nbsp;
+	        </td>
         </tr>
     </table>
 </div>
