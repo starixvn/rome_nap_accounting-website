@@ -110,8 +110,8 @@
     <Reference Include="Fanex.BetList.Bitcoin, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Bitcoin.2.0.0.1\lib\net461\Fanex.BetList.Bitcoin.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.CardClub, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.CardClub.2.0.0\lib\net461\Fanex.BetList.CardClub.dll</HintPath>
+    <Reference Include="Fanex.BetList.CardClub, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.CardClub.2.0.0.1-API-01\lib\net461\Fanex.BetList.CardClub.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.CashOut, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.CashOut.2.0.0\lib\net461\Fanex.BetList.CashOut.dll</HintPath>
