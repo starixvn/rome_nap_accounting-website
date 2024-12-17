@@ -92,7 +92,7 @@
     <Setting Key="Acc_Customer_SuspendInfoMatrixSel" SpName="Acc_Customer_SuspendInfoMatrixSel_UAT2" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_Customer_CloseInfoSel" SpName="Acc_Customer_CloseInfoSel" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_Customer_CloseInfoDetailSel" SpName="Acc_Customer_CloseInfoDetailSel" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="Acc_Customer_CloseInfoMatrixSel" SpName="Acc_Customer_CloseInfoMatrixSel" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_Customer_CloseInfoMatrixSel" SpName="Acc_Customer_CloseInfoMatrixSel_UAT2" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Move Customer">
     <Setting Key="Acc_CustomerUpdMoveAgent" SpName="Acc_CustomerUpdMoveAgent" DbName="DBCust.CustDB.wsv_nap" />

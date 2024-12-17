@@ -69,8 +69,7 @@
     });
 
     var RenderSuspendMatrixCell = function (agentId, col, row, value) {
-        if (col <= row)
-        {   
+        if (col <= row) {
             if (agentId == -4 && (col == 1 || col == 2)) {
                 return '<td class="disabled"></td>';
             }
@@ -79,16 +78,16 @@
             }
             else {
                 return '<td>' + (value ? '1' : '0') + '</td>';
-            }            
+            }
         }
         else {
             return '<td class="disabled"></td>';
         }
-    }
+    };
 
     var clearMessage = function () {
         DOMElements.errMsg.empty().hide();
-    }
+    };
 
 
     DOMElements.btnSubmit.click();

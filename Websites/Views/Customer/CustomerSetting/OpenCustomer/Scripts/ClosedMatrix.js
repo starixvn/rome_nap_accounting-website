@@ -44,17 +44,19 @@
                         (i === 0 ? '<b>' + customerInfo.UserName + '</b>' : customerInfo.UserName) + '&nbsp;(' + customerInfo.CustId + ')</td></tr>';
                 }
 
-                for (var j = 0; j < result.ClosedMatrixList.length; j++) {
-                    var closedMatrix = result.ClosedMatrixList[j];
-                    var k = 0;
-                    htmlClosedMatrixRow += '<tr class="trbgov">';
-                    htmlClosedMatrixRow += '<td class="ViewPTHeader l">' + RoleName[closedMatrix.RoleId] + ' [' + closedMatrix.RoleId + ']</td>';
-                    htmlClosedMatrixRow += '<td>' + (closedMatrix.Closed ? 'Yes' : 'No') + '</td>';
-                    htmlClosedMatrixRow += RenderClosedMatrixCell(k++, j, closedMatrix.SClosed);
-                    htmlClosedMatrixRow += RenderClosedMatrixCell(k++, j, closedMatrix.MClosed);
-                    htmlClosedMatrixRow += RenderClosedMatrixCell(k++, j, closedMatrix.AClosed);
-                    htmlClosedMatrixRow += RenderClosedMatrixCell(k++, j, closedMatrix.PClosed);
-                    htmlClosedMatrixRow += '</tr>';
+                for (var j = 0; j < 4 ; j++) {                
+                    var closedMatrix = result.ClosedMatrixList.find(item => item.RoleId == (4 - j));
+                    if (closedMatrix != null) {
+                        var k = 0;
+                        htmlClosedMatrixRow += '<tr class="trbgov">';
+                        htmlClosedMatrixRow += '<td class="ViewPTHeader l">' + RoleName[closedMatrix.RoleId] + ' [' + closedMatrix.RoleId + ']</td>';
+                        htmlClosedMatrixRow += '<td>' + (closedMatrix.Closed ? 'Yes' : 'No') + '</td>';
+                        htmlClosedMatrixRow += RenderClosedMatrixCell(closedMatrix.AgentId, k++, j, closedMatrix.SClosed);
+                        htmlClosedMatrixRow += RenderClosedMatrixCell(closedMatrix.AgentId, k++, j, closedMatrix.MClosed);
+                        htmlClosedMatrixRow += RenderClosedMatrixCell(closedMatrix.AgentId, k++, j, closedMatrix.AClosed);
+                        htmlClosedMatrixRow += RenderClosedMatrixCell(closedMatrix.AgentId, k++, j, closedMatrix.PClosed);
+                        htmlClosedMatrixRow += '</tr>';
+                    }                   
                 }
 
                 $('tbody', DOMElements.tblCustInfo).html(htmlCustinfoRow);
@@ -67,9 +69,17 @@
         });
     });
 
-    var RenderClosedMatrixCell = function (col, row, value) {
+    var RenderClosedMatrixCell = function (agentId, col, row, value) {
         if (col <= row) {
-            return '<td>' + (value ? '1' : '0') + '</td>';
+            if (agentId == -4 && (col == 1 || col == 2)) {
+                return '<td class="disabled"></td>';
+            }
+            else if (agentId == -3 && col == 2) {
+                return '<td class="disabled"></td>';
+            }
+            else {
+                return '<td>' + (value ? '1' : '0') + '</td>';
+            }
         }
         else {
             return '<td class="disabled"></td>';
