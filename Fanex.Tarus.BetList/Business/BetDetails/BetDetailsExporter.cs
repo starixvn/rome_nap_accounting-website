@@ -78,7 +78,8 @@
                 sportType == SportContants.FGG ||
                 sportType == SportContants.YeeBet ||
                 sportType == SportContants.WE ||
-                sportType == SportContants.ONCasino)
+                sportType == SportContants.ONCasino ||
+                sportType == SportContants.GPILiveCasino)
             {
                 return GetLiveCasinoTickets(refNo, custId, transType, winlostDate);
             }
@@ -198,7 +199,7 @@
             cellAddr = builder.AddCell(new HSSFRichTextString(BetListResources.No), headerStyle);
             builder.SetColumnWidth(cellAddr.ColumnIndex, 1200);
 
-            cellAddr = builder.AddCell(new HSSFRichTextString(sportType == SportContants.AllBet || sportType == SportContants.SaGaming ? BetListResources.Trans_Time : BetListResources.Date), headerStyle);
+            cellAddr = builder.AddCell(new HSSFRichTextString(BetListResources.Trans_Time), headerStyle);
             builder.SetColumnWidth(cellAddr.ColumnIndex, 5400);
 
             cellAddr = builder.AddCell(new HSSFRichTextString(BetListResources.Choice), headerStyle);
