@@ -43,17 +43,19 @@
                         (i == 0 ? '<b>' + dataRow.UserName + '</b>' : dataRow.UserName) + '&nbsp;(' + dataRow.CustId + ')</td></tr>';
                 }
 
-                for (var i = 0 ; i < result.SuspendMatrix.length; i++) {
-                    var dataRow = result.SuspendMatrix[i];
-                    var j = 0;
-                    htmlSuspendMatrixRow += '<tr class="trbgov">';
-                    htmlSuspendMatrixRow += '<td class="ViewPTHeader l">' + RoleName[dataRow.RoleId] + ' [' + dataRow.RoleId + ']</td>';
-                    htmlSuspendMatrixRow += '<td>' + (dataRow.Suspend ? 'Yes' : 'No') + '</td>';
-                    htmlSuspendMatrixRow += RenderSuspendMatrixCell(j++, i, dataRow.sSuspend);
-                    htmlSuspendMatrixRow += RenderSuspendMatrixCell(j++, i, dataRow.mSuspend);
-                    htmlSuspendMatrixRow += RenderSuspendMatrixCell(j++, i, dataRow.aSuspend);
-                    htmlSuspendMatrixRow += RenderSuspendMatrixCell(j++, i, dataRow.pSuspend);
-                    htmlSuspendMatrixRow += '</tr>';
+                for (var i = 0; i < 4 ; i++) {
+                    var dataRow = result.SuspendMatrix.find(item => item.RoleId == (4 - i));
+                    if (dataRow != null) {
+                        var j = 0;
+                        htmlSuspendMatrixRow += '<tr class="trbgov">';
+                        htmlSuspendMatrixRow += '<td class="ViewPTHeader l">' + RoleName[dataRow.RoleId] + ' [' + dataRow.RoleId + ']</td>';
+                        htmlSuspendMatrixRow += '<td>' + (dataRow.Suspend ? 'Yes' : 'No') + '</td>';
+                        htmlSuspendMatrixRow += RenderSuspendMatrixCell(dataRow.AgentId, j++, i, dataRow.sSuspend);
+                        htmlSuspendMatrixRow += RenderSuspendMatrixCell(dataRow.AgentId, j++, i, dataRow.mSuspend);
+                        htmlSuspendMatrixRow += RenderSuspendMatrixCell(dataRow.AgentId, j++, i, dataRow.aSuspend);
+                        htmlSuspendMatrixRow += RenderSuspendMatrixCell(dataRow.AgentId, j++, i, dataRow.pSuspend);
+                        htmlSuspendMatrixRow += '</tr>';
+                    }
                 }
 
                 $('tbody', DOMElements.tblCustInfo).html(htmlCustinfoRow);
@@ -66,9 +68,18 @@
         });
     });
 
-    var RenderSuspendMatrixCell = function (col, row, value) {
-        if (col <= row) {
-            return '<td>' + (value ? '1' : '0') + '</td>';
+    var RenderSuspendMatrixCell = function (agentId, col, row, value) {
+        if (col <= row)
+        {   
+            if (agentId == -4 && (col == 1 || col == 2)) {
+                return '<td class="disabled"></td>';
+            }
+            else if (agentId == -3 && col == 2) {
+                return '<td class="disabled"></td>';
+            }
+            else {
+                return '<td>' + (value ? '1' : '0') + '</td>';
+            }            
         }
         else {
             return '<td class="disabled"></td>';

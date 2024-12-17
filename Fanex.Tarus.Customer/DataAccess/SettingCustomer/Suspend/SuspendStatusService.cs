@@ -84,7 +84,9 @@
                         Utils.ToBoolean(reader["SuspendBySuper"]),
                         Utils.ToBoolean(reader["SuspendByMaster"]),
                         Utils.ToBoolean(reader["SuspendByAgent"]),
-                        Utils.ToBoolean(reader["SuspendMember"])));
+                        Utils.ToBoolean(reader["SuspendMember"]),
+                                Utils.ToInt32(reader["AgentId"])));
+
                 }
             }
 

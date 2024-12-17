@@ -89,7 +89,7 @@
     <Setting Key="Acc_CustomerList_SuspendInfoSel" SpName="Acc_CustomerList_SuspendInfoSel" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_Customer_SuspendInfoSel" SpName="Acc_Customer_SuspendInfoSel" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_Customer_SuspendInfoDetailSel" SpName="Acc_Customer_SuspendInfoDetailSel" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="Acc_Customer_SuspendInfoMatrixSel" SpName="Acc_Customer_SuspendInfoMatrixSel" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_Customer_SuspendInfoMatrixSel" SpName="Acc_Customer_SuspendInfoMatrixSel_UAT2" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_Customer_CloseInfoSel" SpName="Acc_Customer_CloseInfoSel" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_Customer_CloseInfoDetailSel" SpName="Acc_Customer_CloseInfoDetailSel" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_Customer_CloseInfoMatrixSel" SpName="Acc_Customer_CloseInfoMatrixSel" DbName="DBCust.CustDB.wsv_nap" />
