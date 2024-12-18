@@ -47,9 +47,8 @@ input[type="file"] >input[type="button"]::-moz-focus-inner{border:none}
 	background: url(../images/icon_welcome.gif) center left no-repeat;
 	padding-left:12px;
 	}
-.contentbox
-{
-    width: 100%;
+.contentbox {
+	width: 100%;
 }
 .leftcontent
 {
@@ -59,11 +58,10 @@ input[type="file"] >input[type="button"]::-moz-focus-inner{border:none}
     display:none;
   
 }
-.rightcontent
-{
-    float: right;
-    height: 100%;
-    width:100%;
+.rightcontent {
+	float: right;
+	height: 100%;
+	width: 100%;
 }
 
 .top_banner2

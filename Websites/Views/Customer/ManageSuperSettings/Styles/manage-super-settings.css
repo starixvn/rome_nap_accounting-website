@@ -4,11 +4,21 @@
 @import "../../../../App_Themes/Public-ver2/alert.css";
 @import "../../../../App_Themes/Public-ver2/table.css";
 @import "../../../../App_Themes/Public-ver2/tipsy.css";
-
+@import "../../../../App_Themes/Public-ver2/filter.css";
 @import "../../../../App_Themes/Public-ver2/modal-popup.css";
 
 @import "../../../../Scripts/_Libs/FanexGrid/Fanex.Grid.css";
 @import "../../../../App_Themes/Public-ver2/table-freegrid-custom.css";
+.maincontent {
+    min-width: 1310px;
+    height: 100%;
+    padding-right: 10px;
+}
+.main {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+}
 .tab_content {
     padding-bottom: 1px;
 }
@@ -17,12 +27,16 @@
 }
 .bg_table {
     border: 1px solid #d1d1d1;
-    padding: 11px;
+    padding: 6px 11px 8px;
     border-radius: 5px;
     margin-bottom: 11px;
+    position: relative;
 }
 .inputSuper {
-    margin-bottom: 10px;
+    margin-bottom: 7px;
+}
+.inputSuper + .inputSuper {
+    margin-bottom: 3px;
 }
 .inputSuper label {
     font-size: 13px;
@@ -40,16 +54,16 @@
 .inputSuper label.small-label.short{
     margin-top: -5px;
 }
-.maincontent{
-    padding: 0 12px;
-}
+
 .btn-reset{
     margin-left: 16px;
 }
 .content-iframe {
     border: 1px solid #d1d1d1;
     padding: 11px;
-    border-radius:0 5px 5px;
+    border-radius: 0 5px 5px;
+    min-height: 1260px;
+    width: 1260px;
 }
 .form-control-short{
     display: flex;
@@ -190,4 +204,42 @@ textarea {
 
 .inner-mess > *:nth-child(1) {
     margin-top: 0;
+}
+.icon-collapse-expand {
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateY(-50%);
+    font-size: 7px;
+    cursor: pointer;
+    width: 35px;
+    background: #333;
+    height: 15px;
+    text-align: center;
+    line-height: 15px;
+    border-radius: 3px 3px 0 0;
+    z-index: 20;
+}
+.icon-collapse-expand:before {
+    color: #fff;
+    transform: rotate(180deg);
+    display: block;
+    content: "\e90a";
+    line-height: 15px;
+    font-family: 'icon-nap' !important;
+    speak: never;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    -webkit-font-smoothing: antialiased;
+}
+.icon-collapse-expand.icon-up:before {
+    transform: rotate(0deg);
+}
+div.mCSB_container_wrapper{
+    margin-right: 15px;
+}
+div.mCSB_container_wrapper > .mCSB_container{
+    padding-right: 0;
 }

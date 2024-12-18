@@ -6,23 +6,28 @@
             <label for="tab-wll-sourcesuper" class="bold">
                 Source Super<span style="color: red;">*</span>
             </label>
-            <input type="text" class="txt-source-super" id="tab-wll-sourcesuper" maxlength="30" />
+            <div class="form-inline form-inline-clear">
+                <input type="text" class="txt-source-super" id="tab-wll-sourcesuper" maxlength="30" />
+            </div>
         </div>
         <div class="inputSuper">
             <label for="tab-wll-superlist" class="small-label">
                 Enter list of Super Account usernames <span style="color: red;">*</span> (Maximum 500 supers, separated by comma ',')
-            </label>         
-            <textarea type="text" id="tab-wll-superlist" class="superlist" rows="2" cols="100"></textarea>
+            </label>
+            <div class="form-inline form-inline-clear">
+                <textarea type="text" id="tab-wll-superlist" class="superlist" rows="2" cols="100"></textarea>
+            </div>
         </div>
         <input type="button" id="tab-wll-btnSubmit" value="Select" class="btn-submit" onclick="copyWinLossLimit.checkSuperList()" />
         <input type="button" id="tab-wll-btnReset" value="Reset" class="btn-reset" onclick="copyWinLossLimit.resetSelect()" />
     </div>
+    <span class="icon-collapse-expand icon-down" title="toggle"></span>
 </div>
 <div id="tab-wll-superSetting" class="setting-actions hidden">
     <div id="tab-wll-gridBettypeContainer" class="grid-container">
         <div id="tab-wll-settings" class="freegrid"></div>
     </div>
     <div class="button-submit">
-        <input type="button" value="Submit" class="btn-submit" onclick="copyWinLossLimit.applySetting()" />        
+        <input type="button" value="Submit" class="btn-submit" onclick="copyWinLossLimit.applySetting()" />
     </div>
 </div>

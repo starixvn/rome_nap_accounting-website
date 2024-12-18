@@ -3,7 +3,7 @@
 $(document).ready(function () {
     var tabName = $("#tab-name").val() || 'tab_1';
     SwitchTab(tabName);
-    InitSuperList();
+    InitManageSettingsPage();
     editSuperInfo.init();
 });
 
@@ -11,7 +11,7 @@ function Reset(tabName) {
     location.href = "./Index?tabName=" + tabName;
 }
 
-function InitSuperList() {
+function InitManageSettingsPage() {
     $(".superlist").off("change").on("change", function () {
         var superlist = $(this);
         var superlistValue = $.trim(superlist.val());
@@ -33,4 +33,23 @@ function InitSuperList() {
             superlist.val(superlistArray.join(","));
         }
     });
+
+    $(".icon-collapse-expand").click(function (e) {
+        var $this = $(this);
+        var $filter = $this.parent().find('>div');
+
+        if ($this.hasClass("icon-down")) {
+            $this.removeClass("icon-down");
+            $this.addClass("icon-up");
+            $filter.addClass('hidden');
+        } else {
+            $this.removeClass("icon-up");
+            $this.addClass("icon-down");
+            $filter.removeClass('hidden');
+        }
+    });
+}
+
+function scrollPageToTop() {
+    window.$('.mCustomScrollbar').mCustomScrollbar("scrollTo", "top");
 }

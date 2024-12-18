@@ -31,6 +31,21 @@
             $('#copy-tipsy').tipsy('show');
             setTimeout(function () { $('#copy-tipsy').tipsy('hide'); }, 3000);
         });
+
+        $(".tab-ttu-icon-collapse-expand").click(function () {
+            var $this = $(this);
+            var $filter = $this.parent().find('>div');
+
+            if ($this.hasClass("icon-down")) {
+                $this.removeClass("icon-down");
+                $this.addClass("icon-up");
+                $filter.addClass('hidden');
+            } else {
+                $this.removeClass("icon-up");
+                $this.addClass("icon-down");
+                $filter.removeClass('hidden');
+            }
+        });
     },
     getUsernames: function () {
         parent.BlockUI();
