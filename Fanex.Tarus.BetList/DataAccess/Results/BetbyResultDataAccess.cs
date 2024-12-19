@@ -11,12 +11,12 @@ namespace Fanex.Tarus.BetList.DataAccess.Results
 
     public interface IBetbyResultDataAccess
     {
-        List<Sportsbook> GetResult(GetBitcoinResultCriteria criteria);
+        List<Sportsbook> GetResult(Get3rdResultCriteria criteria);
     }
 
     public class BetbyResultDataAccess : IBetbyResultDataAccess
     {
-        public List<Sportsbook> GetResult(GetBitcoinResultCriteria criteria)
+        public List<Sportsbook> GetResult(Get3rdResultCriteria criteria)
         {
             var result = new List<Sportsbook>();
             var detail = new List<GameDetail>();
