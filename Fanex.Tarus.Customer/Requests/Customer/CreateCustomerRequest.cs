@@ -20,6 +20,8 @@ namespace Fanex.Tarus.Customer.Requests.Customer
 
         public bool NoPermissionEditCredit { get; set; } = false;
 
+        public int AgentId { get; set; } = 0;
+
         internal virtual string ToJson()
             => JsonConvert.SerializeObject(new { UplineId, UplineRoleId, RoleId, Site, SiteLabel, NoPermissionEditCredit, ProductGroupId = ProductGroupIdConstants.SportsBook }, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
     }

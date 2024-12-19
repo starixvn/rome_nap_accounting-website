@@ -22,6 +22,6 @@ namespace Fanex.Tarus.Customer.Requests.Customer
 
         public string SiteLabel { get; set; }
 
-        public bool IsDirectMember { get; set; } = false;
+        public int AgentId { get; set; }
     }
 }

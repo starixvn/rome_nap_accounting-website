@@ -77,14 +77,14 @@
     <Setting Key="Acc_CustomerSelSiteByUserName" SpName="Acc_CustomerSelSiteByUserName" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="CustomerSelDownLineList" SpName="Acc_CustomerSelList_UAT2" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="CustomerSelUserInfo" SpName="Acc_CustomerSelUserInfo" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo" DbName="DBCust.CustDB.wsv_nap">
+    <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo_UAT2" DbName="DBCust.CustDB.wsv_nap">
       <Mapping DataField="Currency" ObjectProperty="CurrencyId" />
     </Setting>
     <Setting Key="CustomerSelClearBalance" SpName="Acc_CustomerSelClearBalance" DbName="DBAGE.bodb02.wsv_nap" />
     <Setting Key="CustomerSelSuspended" SpName="Acc_CustomerSelSuspended" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="CustomerSelMatchLimit" SpName="Acc_CustomerSelMatchLimit" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="CustomerSelUserSearch" SpName="Acc_CustomerSelUserSearch" DbName="DBAGE.bodb02.wsv_nap" />
-    <Setting Key="Customer_AutoSuspend_GetCustomerStatus" SpName="Acc_CustomerSelAutoSuspendStatus" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Customer_AutoSuspend_GetCustomerStatus" SpName="Acc_CustomerSelAutoSuspendStatus_UAT2" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="User Control">
     <Setting Key="OperatorSel" SpName="Acc_OperatorSel" DbName="DBCust.CustDB.wsv_nap" />
@@ -121,7 +121,7 @@
   </Function>
   <Function Name="External Betting Limit">
     <Setting Key="Age_CustomerSelBetSetting" SpName="Age_CustomerSelBetSetting" DbName="DBCust.CustDB.wsv_nap" Plain="0" />
-    <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo" DbName="DBCust.CustDB.wsv_nap" Plain="0" />
+    <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo_UAT2" DbName="DBCust.CustDB.wsv_nap" Plain="0" />
   </Function>
   <Function Name="DCS-ViewComm">
     <Setting Key="Acc_CustSetting_ProductNamesSelect" SpName="Acc_CustSetting_ProductNamesSelect" DbName="DBAGE.bodb02.wsv_nap" Plain="0" />

@@ -10,8 +10,6 @@ namespace Fanex.Tarus.Customer.Requests.Customer
 
         public string ProductGroups { get; set; }
 
-        public bool IsDirectMember { get; set; } = false;
-
         public int NumberOfAccounts { get; set; } = 1;
     }
 }

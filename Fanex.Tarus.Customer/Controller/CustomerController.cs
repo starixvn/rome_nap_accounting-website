@@ -241,7 +241,7 @@ namespace Fanex.Tarus.Customer.Controller
                 request.IsMultipleMode,
                 "",
                 request.IsCopy,
-                isDirectMember: request.IsDirectMember));
+                request.AgentId));
 
         public async Task<ActionResult> GetCurrentWinLossAmount(int custId, int sportType, int betType, string language = "en-US")
             => Content(await customerService.GetCustomerCurrentWinLossAmounts(custId, sportType, betType, language));
@@ -293,7 +293,6 @@ namespace Fanex.Tarus.Customer.Controller
                 generalInfo.Site,
                 generalInfo.SiteLabel,
                 ObjectDbExtensions.GetSiteDBConfigBySite(request.GeneralInfo.Site).CustDBGroupID,
-                request.IsDirectMember,
                 request.NumberOfAccounts,
                 CreationModes.FullMode));
 
@@ -317,7 +316,7 @@ namespace Fanex.Tarus.Customer.Controller
                 ObjectDbExtensions.GetSiteDBConfigByCustId(request.CustId)?.CustDBGroupID ?? 0,
                 request.Site,
                 request.SiteLabel,
-                request.IsDirectMember,
+                request.AgentId,
                 "en-US"));
 
             return Content(response);
@@ -342,7 +341,7 @@ namespace Fanex.Tarus.Customer.Controller
                       request.CustomerNames,
                       request.Site,
                       request.SiteLabel,
-                      request.Group));
+                      request.AgentId));
 
             return Content(response);
         }

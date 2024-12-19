@@ -71,7 +71,7 @@
                     agCasinoLinkSetting = string.Format("AGCasino/EditAGCasinoGameSetting?customerId={0}&uplineId={1}&roleId={2}", custId, superId, roleId);
                     TemplateHandler.Assign(ref htmlcontent, "{type}", "Master");
                     creditDCSLink = "DCS/ViewCustomerSetting?productId={0}&language=en-US&customerLevel=3&customerId=" + custId;
-                    addNewDirectMemberUrl = "Customer/CreateDirectMember?theme=nap&uplineId=" + custId + "&uplineRoleId=3";
+                    addNewDirectMemberUrl = "Customer/CreateDirectMember?theme=nap&uplineId=" + custId + "&uplineRoleId=3&agentId=-3";
                     break;
 
                 case 4: // super
@@ -82,7 +82,7 @@
                     TemplateHandler.Assign(ref htmlcontent, "{type}", "Super");
                     if (custId < 100) TemplateHandler.RemoveBlock(ref htmlcontent, "editTransferTime"); // for dummy super
                     creditDCSLink = "DCS/ViewCustomerSetting?productId={0}&language=en-US&customerLevel=4&customerId=" + custId;
-                    addNewDirectMemberUrl = "Customer/CreateDirectMember?theme=nap&uplineId=" + custId + "&uplineRoleId=4";
+                    addNewDirectMemberUrl = "Customer/CreateDirectMember?theme=nap&uplineId=" + custId + "&uplineRoleId=4&agentId=-4";
                     break;
 
                 default:

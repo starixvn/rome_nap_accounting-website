@@ -2,7 +2,7 @@
 <Functions SiteId="104" SiteName="NAP - Accounting">
   <Function Name="Manage Admin">
     <Setting Key="API_CustomerIns_Register" SpName="API_CustomerIns_Register" DbName="DBGLOB.GlobCustDB.wsv_nap" Plain="0" />
-    <Setting Key="Acc_CustomerIns_Register" SpName="Acc_CustomerIns_Register" DbName="DBGLOB.GlobCustDB.wsv_nap" Plain="0" />
+    <Setting Key="Acc_CustomerIns_Register" SpName="Acc_CustomerIns_Register_UAT2" DbName="DBGLOB.GlobCustDB.wsv_nap" Plain="0" />
     <Setting Key="Acc_CustomerIns_Rollback" SpName="Acc_CustomerIns_Rollback" DbName="DBGLOB.GlobCustDB.wsv_nap" Plain="0" />
     <Setting Key="NAP_Admin_AddNewSite" SpName="NAP_Admin_AddNewSite" DbName="DBGLOB.GlobCustDB.wsv_nap" />
   </Function>

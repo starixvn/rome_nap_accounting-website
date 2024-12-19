@@ -20,6 +20,6 @@
 
         public bool IsCopy { get; set; } = false;
 
-        public bool IsDirectMember { get; set; } = false;
+        public int AgentId { get; set; } = 0;
     }
 }
