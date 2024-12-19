@@ -41,11 +41,11 @@ public partial class UsedCreditDetail : RequiredAuthorizationPage
             string _resetall = Request["resetAll"] as string ?? string.Empty;
             if (!string.IsNullOrEmpty(_resetclosedonly))
             {
-                _s = AgentResetMemberCredit(_custid, _roleid,true);
+                _s = AgentResetMemberCredit(_custid,true);
             }
             else if (!string.IsNullOrEmpty(_resetall))
             {
-                _s = AgentResetMemberCredit(_custid, _roleid,false);
+                _s = AgentResetMemberCredit(_custid,false);
             }
             else
             {
@@ -53,19 +53,19 @@ public partial class UsedCreditDetail : RequiredAuthorizationPage
                 {
                     case 2: //agent
                         _sHeader = HeaderTab("","");
-                        _s = "<form method=\"post\">" + AgentCredit(0,0,_custid) + "</form>";
+                        _s = "<form method=\"post\">" + AgentCredit(_custid) + "</form>";
                         break;
 
                     case 3: //master
                         _sHeader = HeaderTab("Agent", "Direct Member");
                         _s = MasterCredit(_custid);
-                        _s2 = "<form method=\"post\">" + AgentCredit(0,_custid,0) + "</form>";
+                        _s2 = "<form method=\"post\">" + AgentCredit(_custid) + "</form>";
                         break;
 
                     case 4: // super
                         _sHeader = HeaderTab("Master", "Direct Member");
                         _s = SuperCredit(_custid);
-                        _s2 = "<form method=\"post\">" + AgentCredit(_custid, 0,0) + "</form>";
+                        _s2 = "<form method=\"post\">" + AgentCredit(_custid) + "</form>";
                         break;
 
                     default:
@@ -112,7 +112,7 @@ public partial class UsedCreditDetail : RequiredAuthorizationPage
     }
 
     
-    private string AgentCredit(int _superId, int _masterId, int _agentId)
+    private string AgentCredit(int _custid)
     {
         string sAgent = string.Empty;
         try
@@ -126,7 +126,7 @@ public partial class UsedCreditDetail : RequiredAuthorizationPage
             bool hasInactive = false;
             double _activeSum = 0.0, _inactiveSum = 0.0;
             string odd_even = "";
-            using (DataTable dt = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.UserCredit.SelectAgentCredit( _superId, _masterId, _agentId))
+            using (DataTable dt = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.UserCredit.SelectAgentCredit(_custid))
             {
                 foreach(DataRow dr in dt.Rows)
                 {
@@ -283,7 +283,7 @@ public partial class UsedCreditDetail : RequiredAuthorizationPage
         return sSuper;
     }
 
-    private string AgentResetMemberCredit(int _custid,int _roleid, bool _isClosedOnly)
+    private string AgentResetMemberCredit(int _custid, bool _isClosedOnly)
     {
         string str = string.Empty;
         if (!Permissions.GetHostPermission(Enumerations.Functions.Customer.Credit))
@@ -292,22 +292,7 @@ public partial class UsedCreditDetail : RequiredAuthorizationPage
         }
         try
         {
-            switch (_roleid)
-            {
-                    case 2: //agent
-                        Sunplus.Accounting.DataAccess.IBCDLL.Accounting.UserCredit.ResetMemberCredit(_accid, 0,0,_custid, _isClosedOnly);
-                        break;
-
-                    case 3: //master
-                        Sunplus.Accounting.DataAccess.IBCDLL.Accounting.UserCredit.ResetMemberCredit(_accid, 0,_custid,0, _isClosedOnly);
-                        break;
-
-                    case 4: // super
-                        Sunplus.Accounting.DataAccess.IBCDLL.Accounting.UserCredit.ResetMemberCredit(_accid, _custid,0,0, _isClosedOnly);
-                        break;
-                    default:
-                        throw new AccException(IbcError.USERID_INVALID_MSG);
-            }
+            Sunplus.Accounting.DataAccess.IBCDLL.Accounting.UserCredit.ResetMemberCredit(_accid, _custid, _isClosedOnly);
             string msg = (_isClosedOnly) ? "Reset All Closed Account Credit Successfully!" : "Reset All Account Credit Successfully!";
             str = AlertMessage.GetMsg(msg, AlertMessage.MsgType.Success);
             str += "<input class='btn' type='button' value='BACK' onclick='javascript:document.location.replace(document.location);'/>";
