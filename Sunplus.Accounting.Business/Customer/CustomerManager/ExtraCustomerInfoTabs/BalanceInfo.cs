@@ -79,6 +79,7 @@
                 TemplateHandler.Assign(ref balanceinfo, "{masterhidden}", string.Empty);
                 TemplateHandler.Assign(ref balanceinfo, "{agenthidden}", string.Empty);
                 TemplateHandler.Assign(ref balanceinfo, "{memberhidden}", string.Empty);
+                TemplateHandler.Assign(ref balanceinfo, "{agentmemberhidden}", "hidden");
             }
             else
             {
@@ -98,6 +99,9 @@
 
                 TemplateHandler.Assign(ref balanceinfo, "{GivenCreditCurrency}", customerInfoViewModel.Currency + " ");
                 TemplateHandler.Assign(ref balanceinfo, "{GivenCredit}", string.Format("{0:n}", customerInfoViewModel.Credit));
+              
+                TemplateHandler.Assign(ref balanceinfo, "{agentmemberhidden}", customerInfoViewModel.SearchAccountRoleId > 2 ? "" : "hidden");
+
                 if (customerInfoViewModel.SearchAccountRoleId > 1)
                 {
                     TemplateHandler.RemoveBlock(ref balanceinfo, "betcredit");
@@ -120,7 +124,7 @@
                     TemplateHandler.Assign(ref balanceinfo, "{ishiddenmember}", "");
                     TemplateHandler.Assign(ref balanceinfo, "{masterhidden}", "hidden");
                     TemplateHandler.Assign(ref balanceinfo, "{agenthidden}", "hidden");
-                    TemplateHandler.Assign(ref balanceinfo, "{memberhidden}", "hidden");
+                    TemplateHandler.Assign(ref balanceinfo, "{memberhidden}", "hidden");                   
                 }
             }
 
@@ -175,7 +179,6 @@
             TemplateHandler.Assign(ref balanceInfo, "{masterhidden}", customerInfoViewModel.SearchAccountRoleId > 3 ? string.Empty : "hidden");
             TemplateHandler.Assign(ref balanceInfo, "{agenthidden}", customerInfoViewModel.SearchAccountRoleId > 2 ? string.Empty : "hidden");
             TemplateHandler.Assign(ref balanceInfo, "{memberhidden}", customerInfoViewModel.SearchAccountRoleId > 1 ? string.Empty : "hidden");
-            TemplateHandler.Assign(ref balanceInfo, "{agentmemberhidden}", customerInfoViewModel.SearchAccountRoleId > 2 ? string.Empty : "hidden");
         }
     }
 }
