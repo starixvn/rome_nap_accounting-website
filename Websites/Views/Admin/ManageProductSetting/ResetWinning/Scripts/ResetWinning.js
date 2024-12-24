@@ -82,13 +82,13 @@ function SearchDWLList() {
         return;
     }
 
-    var isDeleted = false;
-    if ($('#txtDWLListIsDeleted').val() === '') {
-        isDeleted = null;
+    var isDisabled = false;
+    if ($('#txtDWLListIsDisabled').val() === '') {
+        isDisabled = null;
     }
 
-    if ($('#txtDWLListIsDeleted').val() === '1') {
-        isDeleted = true;
+    if ($('#txtDWLListIsDisabled').val() === '1') {
+        isDisabled = true;
     }
 
     $.ajax({
@@ -99,7 +99,7 @@ function SearchDWLList() {
             Username: $('#txtDWLListUsername').val(),
             ProductId: $('#txtDWLListProductId').val(),
             Product: $('#txtDWLListProduct').val(),
-            IsDeleted: isDeleted,
+            IsDisabled: isDisabled,
             IsTest: isTest
         },
         success: function (data) {
@@ -126,13 +126,13 @@ function SearchDWLListTest() {
 
     parent.BlockUI();
 
-    var isDeleted = false;
-    if ($('#txtDWLListTestIsDeleted').val() === '') {
-        isDeleted = null;
+    var isDisabled = false;
+    if ($('#txtDWLListTestIsDisabled').val() === '') {
+        isDisabled = null;
     }
 
-    if ($('#txtDWLListTestIsDeleted').val() === '1') {
-        isDeleted = true;
+    if ($('#txtDWLListTestIsDisabled').val() === '1') {
+        isDisabled = true;
     }
 
     $.ajax({
@@ -143,7 +143,7 @@ function SearchDWLListTest() {
             Username: $('#txtDWLListTestUsername').val(),
             ProductId: $('#txtDWLListTestProductId').val(),
             Product: $('#txtDWLListTestProduct').val(),
-            IsDeleted: isDeleted,
+            IsDisabled: isDisabled,
             IsTest: isTest
         },
         success: function (data) {
@@ -168,7 +168,7 @@ function RenderDWLListData(data) {
         row.Columns.push({ Name: 'ProductId', Value: data[i].ProductId });
         row.Columns.push({ Name: 'Product', Value: data[i].Product });
         row.Columns.push({ Name: 'Seq', Value: data[i].Seq });
-        row.Columns.push({ Name: 'IsDeleted', Value: data[i].IsDeleted === "True" ? 1 : 0 });
+        row.Columns.push({ Name: 'IsDisabled', Value: data[i].IsDisabled === "True" ? 1 : 0 });
         row.Columns.push({
             Name: 'Action',
             Value: '<img class="edit-entity" alt="Edit" title="Edit" src="../App_Themes/Images/icn_edit.png" style="cursor: pointer" onclick="EditDWLList(' + i + ')" >&nbsp;'
@@ -185,7 +185,7 @@ function RenderDWLListData(data) {
             { HeaderText: "ProductId", Width: 100, Name: "ProductId", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "Product", Width: 200, Name: "Product", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "Seq", Width: 80, Name: "Seq", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: "IsDeleted", Width: 100, Name: "IsDeleted", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "IsDisabled", Width: 100, Name: "IsDisabled", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "Action", Width: 100, Name: "Action", HeaderAlign: "center", CellAlign: "center" }
         ],
         bodyRows: bodyRows,
@@ -211,7 +211,7 @@ function EditDWLList(index) {
     $('#DWLListProduct').text(item.Product);
     $('#DWLListProductId').val(item.ProductId);
     $('#DWLListSeq').val(item.Seq);
-    $('#DWLListIsDeleted').prop('checked', item.IsDeleted === "True");
+    $('#DWLListIsDisabled').prop('checked', item.IsDisabled === "True");
     $('#btnDWLListUpdate').off();
     $('#btnDWLListUpdate').click(function () { return UpdateDWLList(index); });
     if (isTest) {
@@ -254,7 +254,7 @@ function UpdateDWLList(index) {
             Product: item.Product,
             ProductID: $('#DWLListProductId').val(),
             Seq: $('#DWLListSeq').val(),
-            IsDeleted: $('#DWLListIsDeleted').is(":checked"),
+            IsDisabled: $('#DWLListIsDisabled').is(":checked"),
             IsTest: isTest
         },
         success: function (result) {
@@ -544,8 +544,8 @@ function DeleteDWLListExtraPT(index) {
 
 $(document).ready(function () {
     UpdateResetWinningSampleUrl();
-    $("#txtDWLListIsDeleted").select2({ width: "138px" });
+    $("#txtDWLListIsDisabled").select2({ width: "138px" });
     $("#txtDWLListExtraIsDisabled").select2({ width: "138px" });
     $("#txtDWLListExtraTestIsDisabled").select2({ width: "138px" });
-    $("#txtDWLListTestIsDeleted").select2({ width: "138px" });
+    $("#txtDWLListTestIsDisabled").select2({ width: "138px" });
 });
