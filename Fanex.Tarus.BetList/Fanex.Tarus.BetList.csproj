@@ -208,8 +208,8 @@
     <Reference Include="Fanex.Result.Core.Allbet, Version=2.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.AllBetCasino.2.0.0.2\lib\net461\Fanex.Result.Core.Allbet.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Result.Core.Base, Version=3.0.1.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core-NPOI.2.0.6.3.0.1.5\lib\net461\Fanex.Result.Core.Base.dll</HintPath>
+    <Reference Include="Fanex.Result.Core.Base, Version=3.0.1.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Result.Core-NPOI.2.0.6.3.0.1.7\lib\net461\Fanex.Result.Core.Base.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Result.Core.Bitcoin, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core-Bitcoin.2.0.0\lib\net461\Fanex.Result.Core.Bitcoin.dll</HintPath>
@@ -245,8 +245,8 @@
     <Reference Include="Fanex.Result.Core.SAGaming, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.SAGaming.2.0.0\lib\net461\Fanex.Result.Core.SAGaming.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Result.Core.Sportsbook, Version=2.0.1.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Result.Core-Sportsbook.2.0.1.6\lib\net461\Fanex.Result.Core.Sportsbook.dll</HintPath>
+    <Reference Include="Fanex.Result.Core.Sportsbook, Version=2.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Result.Core-Sportsbook.2.0.2\lib\net461\Fanex.Result.Core.Sportsbook.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Result.Core.ThirdParty, Version=2.0.0.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.ThirdPartyResult.2.0.0.4\lib\net461\Fanex.Result.Core.ThirdParty.dll</HintPath>
@@ -537,6 +537,7 @@
     <Compile Include="Business\ReportService.cs" />
     <Compile Include="Business\ResultService.cs" />
     <Compile Include="Business\Results\AGCasinoResultService.cs" />
+    <Compile Include="Business\Results\BetbyResultService.cs" />
     <Compile Include="Business\Results\IVS2RacingResultService.cs" />
     <Compile Include="Business\Results\LeapGamingResultService.cs" />
     <Compile Include="Business\Results\IAGCasinoResultService.cs" />
@@ -643,6 +644,7 @@
     <Compile Include="DataAccess\ISystemParlayRepository.cs" />
     <Compile Include="DataAccess\BetBuilder\BetBuilderRepository.cs" />
     <Compile Include="DataAccess\ReportDataAccess.cs" />
+    <Compile Include="DataAccess\Results\BetbyResultDataAccess.cs" />
     <Compile Include="DataAccess\Results\IAGCasinoResultDataAccess.cs" />
     <Compile Include="DataAccess\Results\AGCasinoResultDataAccess.cs" />
     <Compile Include="DataAccess\Results\IPInfoDataAccess.cs" />

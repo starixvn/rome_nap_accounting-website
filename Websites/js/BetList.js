@@ -1247,6 +1247,10 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
             
         case 145: //GPI RNG
             return getGPIParam(custId, transId3rd, gameId3rd, currencyId, siteId, bettype, winlostdate);
+            
+        case 134: //Betby
+            return getBetbyParam(matchid, sporttype, league);
+
 
         case 144: //GPI Live Casino
             return getGPILiveCasinoParam(custId, transId3rd, gameId3rd, currencyId, siteId, bettype, winlostdate);
@@ -1399,6 +1403,15 @@ function getVirtualHRAndTennisParam(matchid, sporttype) {
         jsonParam: { matchid: matchid, sporttype: sporttype }
     };
 }
+
+function getBetbyParam(matchid, sporttype, league) {
+    return {
+        url: "Report/ViewBetbyResult.aspx",
+        title: "Virtual Betby Basketball",
+        jsonParam: { matchid: matchid, sporttype: sporttype, league: league }
+    };
+}
+
 
 function getRNGCasinoParam(custId, transId3rd, gameId3rd, currencyId, siteId) {
     return {
