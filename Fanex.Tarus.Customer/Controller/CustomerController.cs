@@ -360,6 +360,12 @@ namespace Fanex.Tarus.Customer.Controller
             return PartialView("SportBookInformation", viewModel);
         }
 
+        public async Task<ActionResult> SearchSuggestDirectMembers(int uplineCustId, string searchUsername)
+            => Json(await customerService.SearchSuggestDirectMembers(uplineCustId, searchUsername), JsonRequestBehavior.AllowGet);
+
+        public async Task<int> CheckDirectMemberUserName(int uplineCustId, string searchUsername)
+            => await customerService.CheckDirectMemberUserName(uplineCustId, searchUsername);
+
         private string GetApplicationPath()
         {
             var applicationPath = Response.ApplyAppPathModifier(Request.ApplicationPath);
