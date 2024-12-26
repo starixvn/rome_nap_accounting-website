@@ -13,11 +13,13 @@ namespace Fanex.Tarus.Customer.Requests.Customer
 
         public byte UplineRoleId { get; set; }
 
+        public int AgentId { get; set; }
+
         public string UName { get; set; }
 
         public bool NoPermissionEditCredit { get; set; }
 
         internal string ToJson()
-            => JsonConvert.SerializeObject(new { CustId, RoleId, UplineRoleId, NoPermissionEditCredit, ProductGroupId }, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+            => JsonConvert.SerializeObject(new { CustId, RoleId, UplineRoleId, NoPermissionEditCredit, ProductGroupId, AgentId }, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
     }
 }

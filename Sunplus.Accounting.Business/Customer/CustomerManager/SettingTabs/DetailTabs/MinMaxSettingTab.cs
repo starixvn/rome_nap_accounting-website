@@ -33,40 +33,41 @@
             string userName = customerInfoViewModel.UserName;
             bool isDeposit = customerInfoViewModel.IsDeposit;
             string siteName = customerInfoViewModel.CustomerSite;
+            int agentId = customerInfoViewModel.AgentId;
 
             TemplateHandler.Assign(ref htmlcontent, "{isHiddenMember}", "inline");
             TemplateHandler.Assign(ref htmlcontent, "{lblMinMax}", isDeposit || customerInfoViewModel.SuperDirectMember ? string.Empty : "<li id=\"detail_tab_1\" onclick=\"detail_tabnew_Click(this)\"><a href=\"javascript:void(0);\"><span>Super PT</span></a></li>");
             TemplateHandler.Assign(ref htmlcontent, "{lblMinMax1}", isDeposit || customerInfoViewModel.SuperDirectMember || customerInfoViewModel.MasterDirectMember ? string.Empty : "<a href=\"javascript:void(0);\"><span>Master PT</span></a>");
 
-            string superSettingTab = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + BuildSettingUrl(custId, RoleIdConstants.Member, RoleIdConstants.Super, userName, siteName, ProductGroupIdConstants.SportsBook) + "\");' target='centerFr'>Sportsbook</a>";
+            string superSettingTab = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + BuildSettingUrl(custId, RoleIdConstants.Member, RoleIdConstants.Super, userName, siteName, ProductGroupIdConstants.SportsBook, agentId) + "\");' target='centerFr'>Sportsbook</a>";
 
             if (!customerInfoViewModel.HideLiveAndRNGCasino)
             {
                 superSettingTab += string.Format(
-                   "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + BuildSettingUrl(custId, RoleIdConstants.Member, RoleIdConstants.Super, userName, siteName, ProductGroupIdConstants.LiveAndRNGCasino) + "\");' target='centerFr'>{0}</a>",
+                   "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + BuildSettingUrl(custId, RoleIdConstants.Member, RoleIdConstants.Super, userName, siteName, ProductGroupIdConstants.LiveAndRNGCasino, agentId) + "\");' target='centerFr'>{0}</a>",
                    "Live & RNG Casino");
             }
 
             if (!customerInfoViewModel.HideRNGGames)
             {
                 superSettingTab += string.Format(
-                   "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + BuildSettingUrl(custId, RoleIdConstants.Member, RoleIdConstants.Super, userName, siteName, ProductGroupIdConstants.RNGGames) + "\");' target='centerFr'>{0}</a>",
+                   "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + BuildSettingUrl(custId, RoleIdConstants.Member, RoleIdConstants.Super, userName, siteName, ProductGroupIdConstants.RNGGames, agentId) + "\");' target='centerFr'>{0}</a>",
                    "RNG Games");
             }
 
-            string masterSettingTab = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + BuildSettingUrl(custId, RoleIdConstants.Member, RoleIdConstants.Master, userName, siteName, ProductGroupIdConstants.SportsBook) + "\");' target='centerFr'>Sportsbook</a>";
+            string masterSettingTab = "<a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + BuildSettingUrl(custId, RoleIdConstants.Member, RoleIdConstants.Master, userName, siteName, ProductGroupIdConstants.SportsBook, agentId) + "\");' target='centerFr'>Sportsbook</a>";
 
             if (!customerInfoViewModel.HideLiveAndRNGCasino)
             {
                 masterSettingTab += string.Format(
-                    "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + BuildSettingUrl(custId, RoleIdConstants.Member, RoleIdConstants.Master, userName, siteName, ProductGroupIdConstants.LiveAndRNGCasino) + "\");' target='centerFr'>{0}</a>",
+                    "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + BuildSettingUrl(custId, RoleIdConstants.Member, RoleIdConstants.Master, userName, siteName, ProductGroupIdConstants.LiveAndRNGCasino, agentId) + "\");' target='centerFr'>{0}</a>",
                     "Live & RNG Casino");
             }
 
             if (!customerInfoViewModel.HideRNGGames)
             {
                 masterSettingTab += string.Format(
-                    "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + BuildSettingUrl(custId, RoleIdConstants.Member, RoleIdConstants.Master, userName, siteName, ProductGroupIdConstants.RNGGames) + "\");' target='centerFr'>{0}</a>",
+                    "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + BuildSettingUrl(custId, RoleIdConstants.Member, RoleIdConstants.Master, userName, siteName, ProductGroupIdConstants.RNGGames, agentId) + "\");' target='centerFr'>{0}</a>",
                     "RNG Games");
             }
 
@@ -75,9 +76,9 @@
             return htmlcontent;
         }
 
-        private string BuildSettingUrl(int custId, int roleId, int uplineRoleId, string userName, string siteName, int productGroupId)
+        private string BuildSettingUrl(int custId, int roleId, int uplineRoleId, string userName, string siteName, int productGroupId, int agentId)
         {
-            return $"Customer/EditCustomer?roleId={roleId}&uplineRoleId={uplineRoleId}&custId={custId}&uname={userName}&siteName={siteName}&productGroupId={productGroupId}";
+            return $"Customer/EditCustomer?roleId={roleId}&uplineRoleId={uplineRoleId}&custId={custId}&uname={userName}&siteName={siteName}&productGroupId={productGroupId}&agentId={agentId}";
         }
     }
 }
