@@ -116,16 +116,21 @@
                     $('#txtSite', dialog).text(data.Site);
                     $('#txtWhiteLabel', dialog).val('');
                     $('#txtAgentName', dialog).text(data.Agent);
-                    self.RenderDropdowPercent($('#selAgentRate', dialog), 88);
+                    self.RenderDropdowPercent($('#selAgentRate', dialog), -1);
                     $('#txtMasterName', dialog).text(data.Master);
-                    self.RenderDropdowPercent($('#selMasterRate', dialog), 1);
+                    self.RenderDropdowPercent($('#selMasterRate', dialog), -1);
                     $('#txtSuperName', dialog).text(data.Super);
-                    self.RenderDropdowPercent($('#selSuperRate', dialog), 1);
+                    self.RenderDropdowPercent($('#selSuperRate', dialog), -1);
                     $('#txtHeadlineName', dialog).text(data.Headline);
-                    self.RenderDropdowPercent($('#selHeadlineRate', dialog), 1);
+                    self.RenderDropdowPercent($('#selHeadlineRate', dialog), -1);
                     $('#txtRemark', dialog).val('');
                     $('#btnSubmit', dialog).off().click(function () {
                         parent.BlockUI();
+                        if ($('#selAgentRate', dialog).val() == '' || $('#selMasterRate', dialog).val() == '' || $('#selSuperRate', dialog).val() == '' || $('#selHeadlineRate', dialog).val() == '') {
+                            self.showErrMsg(dialog, "Please select rates for middleman.");
+                            parent.jQuery.unblockUI();
+                            return;
+                        }
                         var params = {
                             CustId: $('#hidCustId', dialog).val(),
                             WhiteLabel: $('#txtWhiteLabel', dialog).val(),
@@ -282,6 +287,14 @@
     }
 
     self.RenderDropdowPercent = function (ele, selectedVal) {
+        if (selectedVal < 0) {
+            ele.append($('<option>', {
+                value: "",
+                text: "Please select",
+                selected: true,
+                disabled: true
+            }));
+        }
         for (let i = 99; i >= 0; i--) {
             ele.append($('<option>', {
                 value: i,
@@ -289,8 +302,10 @@
                 selected: i == selectedVal
             }));
         }
-
-        ele.val(selectedVal);
+        if (selectedVal >= 0) {
+            ele.val(selectedVal);
+        }
+        
     }
 
     self.initialize = function () {
