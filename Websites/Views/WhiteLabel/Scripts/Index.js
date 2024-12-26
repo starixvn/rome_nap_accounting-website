@@ -287,6 +287,7 @@
     }
 
     self.RenderDropdowPercent = function (ele, selectedVal) {
+        ele.empty();
         if (selectedVal < 0) {
             ele.append($('<option>', {
                 value: "",
@@ -302,6 +303,7 @@
                 selected: i == selectedVal
             }));
         }
+
         if (selectedVal >= 0) {
             ele.val(selectedVal);
         }
