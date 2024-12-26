@@ -471,4 +471,13 @@
   <Function Name="Customer Setting">
     <Setting Key="Acc_LiteMode_CustSetting_ProductProfileSelect" SpName="Acc_LiteMode_CustSetting_ProductProfileSelect" DbName="DBCUST.CustDB.wsv_nap" />
   </Function>
+  <Function Name="S1 Integration">
+    <Setting Key="Acc_WhiteLabelSetting_Check" SpName="Acc_WhiteLabelSetting_Check" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_WhiteLabel_SelCustInfo" SpName="Acc_WhiteLabel_SelCustInfo" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_WhiteLabelInfo_Sel" SpName="Acc_WhiteLabelInfo_Sel" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_WhiteLabelSetting_Sel" SpName="Acc_WhiteLabelSetting_Sel" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_WhiteLabelSetting_Ins" SpName="Acc_WhiteLabelSetting_Ins" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_WhiteLabelSetting_Upd" SpName="Acc_WhiteLabelSetting_Upd" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_WhiteLabel_SelByUpline" SpName="Acc_WhiteLabel_SelByUpline" DbName="DBCUST.CustDB.wsv_nap" />
+  </Function>
 </Functions>

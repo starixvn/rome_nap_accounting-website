@@ -24,41 +24,41 @@
         }
     </script>
     <style>
-    .tooltip {
-        position: relative;
-        display: inline-block;      
-    }
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
 
-    .tooltip .tooltiptext {
-        visibility: hidden;
-        width: 280px;
-        background-color: #197777;
-        color: #fff;
-        text-align: center;
-        border-radius: 6px;
-        padding: 5px 0;
-        position: absolute;
-        z-index: 1;
-        bottom: 120%;
-        left: 50%;
-        margin-left: -140px;
-    }
+            .tooltip .tooltiptext {
+                visibility: hidden;
+                width: 280px;
+                background-color: #197777;
+                color: #fff;
+                text-align: center;
+                border-radius: 6px;
+                padding: 5px 0;
+                position: absolute;
+                z-index: 1;
+                bottom: 120%;
+                left: 50%;
+                margin-left: -140px;
+            }
 
-    .tooltip .tooltiptext::after {
-        content: "";
-        position: absolute;
-        top: 100%;
-        left: 50%;
-        margin-left: -5px;
-        border-width: 5px;
-        border-style: solid;
-        border-color: #197777 transparent transparent transparent;
-    }
+                .tooltip .tooltiptext::after {
+                    content: "";
+                    position: absolute;
+                    top: 100%;
+                    left: 50%;
+                    margin-left: -5px;
+                    border-width: 5px;
+                    border-style: solid;
+                    border-color: #197777 transparent transparent transparent;
+                }
 
-    .tooltip:hover .tooltiptext {
-        visibility: visible;
-    }
-</style>
+            .tooltip:hover .tooltiptext {
+                visibility: visible;
+            }
+    </style>
 </head>
 <body style="overflow: scroll !important;">
     <div class="main" style="width: 1236px">
@@ -97,6 +97,7 @@
         <p>Beside adding super(s) into the selected Headline Group, the following super(s) will be added into External Group with Primary Extra PT Group indicated.</p>
         <p style="font-weight: bold;" id="headlineName"></p>
         <div id="supermapping" class="freegrid grid_mapping"></div>
+        <p id="whitelabelNote" style="margin: 10px;"></p>
     </div>
 
     <script src="../js/jQuery/jquery-1.7.2.min.js" type="text/javascript"></script>
@@ -134,7 +135,7 @@
                 return;
             }
 
-            try { parent.jQuery.BlockUI(); } catch (e) { }
+            try { parent.BlockUI(); } catch (e) { }
             var usernames = $('#txtuser').val();
             var groupId = $('#groupid').val();
             $.ajax({
@@ -142,13 +143,12 @@
                 url: window.rootUrl + "HeadlineExternalGroupMapping/GetExternalGroupHeadlineMappingSuper?usernames=" + usernames + "&groupId=" + groupId,
                 contentType: "application/json; charset=utf-8",
                 success: function (result) {
-
                     if (result.Supers !== null && result.Supers.length > 0) {
                         $confirmAddUsername.removeClass("hidden").dialog("open");
                         $("#headlineName").html("Headline: " + $("#headline").val());
-                        RenderMapping(result.Supers);
+                        getRenderMappingWithWhiteLabelNote(usernames, result.Supers);
                     } else {
-                        ExecuteCreditTerm('1');
+                        getConfirmMessage("1", usernames, groupId, $("#headline").val());
                     }
                 },
                 error: function () {
@@ -188,6 +188,54 @@
             };
 
             $('#supermapping').fanexGrid(gridOptions);
+        }
+
+        function getConfirmMessage(type, usernames, groudId, headlineName) {
+            var message = "Are you sure you want to add account(s) into GroupID " + groudId + " of " + headlineName + "?<br><br>";
+            GetListWhiteLabel(usernames, function (result) {
+                if (result != "") {
+                    message += renderWhiteLabelNote(result)
+                }
+                __confirm("Please Confirm", message, 425, 'auto', null,
+                    function () {
+                        __close(false, null, null, null);
+                        ExecuteCreditTerm(type);
+                    },
+                    function () {
+                        __close(false, null, null, null);
+                    },
+                    null, false);
+            });
+        }
+
+        function getRenderMappingWithWhiteLabelNote(usernames, supers) {
+            var message = "";
+            GetListWhiteLabel(usernames, function (result) {
+                if (result != "") {
+                    message = renderWhiteLabelNote(result)
+                }
+                $('#whitelabelNote').html(message);
+                RenderMapping(supers);
+            });
+        }
+
+        function GetListWhiteLabel(usernames, callback) {
+            $.ajax({
+                type: "GET",
+                url: window.rootUrl + "WhiteLabel/GetListWhiteLabelByUsernames?usernames=" + usernames,
+                contentType: "text/plain; charset=utf-8",
+                success: function (result) {
+                    callback(result);
+                },
+                error: function () {
+                }
+            });
+        }
+
+        function renderWhiteLabelNote(listWhiteLabel) {
+            var message = "<b>Note:</b> Remove/Update group headline will affect White Label settings: <span style=\"word-wrap: break-word;color: red\">" + listWhiteLabel + "</span>.<br>";
+            message += "By your action, headline earning of White Label setting will be updated accordingly.If you need to revise the rate, please help update it in the [Manage White Label] function.";
+            return message;
         }
 
         function ValidateUsername() {
@@ -246,6 +294,7 @@
             }
 
             if (type == 3) {
+                try { parent.BlockUI(); } catch (e) { }
                 var checkSynced = listusername.map(username => new Promise((resolve, reject) => {
                     $.ajax({
                         type: "POST",
@@ -270,28 +319,29 @@
                         syncedNovaCasinoMessage += `Accounts has joined Nova Casino: ${listSynced.join(", ")}.</br>`;
                     }
 
-                    if (isshowConfirm) {
-                        var message = `${syncedNovaCasinoMessage}The group has only 1 member (is Headline). Are you sure you want to remove this group?`;
-                        __confirm("Please Confirm", message, 325, 210, null,
+                    GetListWhiteLabel(listusername.join(","), function (result) {
+                        try { parent.jQuery.unblockUI(); } catch (e) { }
+                        var whiteLabelNote = "";
+                        if (result != "") {
+                            whiteLabelNote = "<br><br>" + renderWhiteLabelNote(result);
+                        }
+                        if (isshowConfirm) {
+                            var message = `${syncedNovaCasinoMessage}The group has only 1 member (is Headline). Are you sure you want to remove this group?`;
+                            message += whiteLabelNote;
+                        } else {
+                            var groupId = $('#groupid').val();
+                            var message = `${syncedNovaCasinoMessage}Are you sure you want to remove the following account(s) from GroupID ${groupId} of ${headline}?<br>${listusername.join(", ")}`;
+                            message += whiteLabelNote;
+                        }
+                        __confirm("Please Confirm", message, 425, 'auto', null,
                             function () { ProcessGetData(type, listuser); },
                             function () {
                                 __close(false, null, null, null);
                             },
                             null, false);
                         return;
-                    }
+                    });
 
-                    if (!isshowConfirm) {
-                        var groupId = $('#groupid').val();
-                        var message = `${syncedNovaCasinoMessage}Are you sure you want to remove the following account(s) from GroupID ${groupId} of ${headline}?</br>${listusername.join(", ")}`;
-                        __confirm("Please Confirm", message, 325, 'auto', null,
-                            function () { ProcessGetData(type, listuser); },
-                            function () {
-                                __close(false, null, null, null);
-                            },
-                            null, false);
-                        return;
-                    }
                 });
 
                 return;

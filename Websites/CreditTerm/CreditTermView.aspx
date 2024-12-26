@@ -44,6 +44,7 @@
                 <p>Beside adding super(s) into the selected Headline Group, the following super(s) will be added into External Group with Primary Extra PT Group indicated.</p>
                 <p id="headlineName"></p>
                 <div id="supermapping" class="freegrid grid_mapping"></div>
+                <p id="whitelabelNote" style="margin: 10px;"></p>
             </div>
         </div>
         <div>
@@ -60,5 +61,6 @@
 <script src="../js/Controls/StyledCheckbox/custom-form-elements.js" type="text/javascript"></script>
 <script src="../js/CreditTerm.js?v=<%= AccCommon.Version() %>" type="text/javascript"></script>
 <script src="../js/common.js" type="text/javascript"></script>
+<script src="../js/Popup/confirmbox.js" type="text/javascript"></script>
 <script type="text/javascript" src="../Scripts/_Libs/FanexGrid/Fanex.Grid.js?v=<%= AccCommon.Version() %>"></script>
 </html>

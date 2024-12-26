@@ -2,6 +2,7 @@ namespace Fanex.Tarus.Customer.DataAccess
 {
     using CustomerSetting.Module.Core.Models;
     using Fanex.Data;
+    using Fanex.Tarus.Infrastructure.Helper;
     using NAP.Framework.Data;
     using Sunplus.Accounting.Core.Common;
     using System.Data;
@@ -27,11 +28,7 @@ namespace Fanex.Tarus.Customer.DataAccess
                 objDB.AssignParamValues(criteria.GetSpParams());
                 objDB.ExecuteNonQuery();
                 var outputs = objDB.GetOuputParams();
-                return new Result()
-                {
-                    ErrorCode = (int)outputs["errcode"],
-                    ErrorMessage = outputs["errmsg"]?.ToString()
-                };
+                return new Result(DataUtils.ToInt32(outputs["errcode"]), DataUtils.ToString(outputs["errmsg"]));
             }
         }
     }

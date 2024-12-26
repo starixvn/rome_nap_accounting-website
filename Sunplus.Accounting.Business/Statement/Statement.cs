@@ -96,7 +96,7 @@ namespace Sunplus.Accounting.Business.Statement
                             TemplateHandler.RemoveBlock(ref rowHtml, "nobr");
 
                             // For new export excel function.
-                            auditStatements.Add(new AuditStatement
+                            auditStatements.Add(new AuditStatement 
                             {
                                 Date = strAccDate.Replace("<!--nobr--><br><!--/nobr-->", string.Empty),
                                 Remark = remark,
@@ -322,7 +322,7 @@ namespace Sunplus.Accounting.Business.Statement
                             htmlReport.Append(rowHtml);
 
                             // For new export excel function.
-                            detailStatements.Add(new DetailStatement
+                            detailStatements.Add(new DetailStatement 
                             {
                                 Date = transDate,
                                 RefNo = refno,
@@ -380,7 +380,7 @@ namespace Sunplus.Accounting.Business.Statement
             // For new export excel function.
             OldStatement oldStatement = null;
             IList<OldStatement> oldStatements = new List<OldStatement>();
-
+            
             try
             {
                 balanceUpDay = ReportUtils.BalanceUp.BalanceUpDay;

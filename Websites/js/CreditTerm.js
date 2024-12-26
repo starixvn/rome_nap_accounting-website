@@ -115,21 +115,53 @@ function SetChecker(elemt, check) {
                 CheckerList.options[i].selected = true;
             }
         }
-    }
-    
+    }    
 }
 
 function SubmitUpdate() {
-    var isRemoveMapping = !$('#groupheadline').is(":checked") && $("#cbogroup option:selected").text() === $("#txtcustomer").val();
+    var username = $("#txtcustomer").val();
+    var isRemoveMapping = !$('#groupheadline').is(":checked") && $("#cbogroup option:selected").text() === username;
     if (selectedGroupId === '0' || isRemoveMapping) {
-        $("#btnCreditViewSubmit").click();
+        var message = "Are you sure you want to save changes for " + username + "?<br>";
+        GetListWhiteLabel(username, function (result) {          
+            OpenConfirmWithWhiteLabel(result, message);
+        });      
+
     } else {
-        OpenDialogConfirm($("#txtcustomer").val(), selectedGroupId);
+        OpenDialogConfirm(username, selectedGroupId);
     }
 }
 
+function OpenConfirmWithWhiteLabel(result, message) {
+    if (result != "") {
+        message += renderWhiteLabelNote(result);
+    }
+    __confirm("Please Confirm", message, 425, 'auto', null,
+        function () {
+            __close(false, null, null, null);
+            $("#btnCreditViewSubmit").click();
+        },
+        function () {
+            __close(false, null, null, null);
+        },
+        null, false);
+}
+
+function GetListWhiteLabel(usernames, callback) { 
+    $.ajax({
+        type: "GET",
+        url: window.rootUrl + "WhiteLabel/GetListWhiteLabelByUsernames?usernames=" + usernames,
+        contentType: "text/plain; charset=utf-8",
+        success: function (result) {
+            callback(result);
+        },
+        error: function () {
+        }
+    });
+}
+
 function OpenDialogConfirm(usernames, groupId) {
-    try { parent.jQuery.BlockUI(); } catch (e) { }
+    try { parent.BlockUI(); } catch (e) { }
     $.ajax({
         type: "GET",
         url: window.rootUrl + "HeadlineExternalGroupMapping/GetExternalGroupHeadlineMappingSuper?usernames=" + usernames + "&groupId=" + groupId,
@@ -151,10 +183,13 @@ function OpenDialogConfirm(usernames, groupId) {
                     height: 'auto'
                 }).dialog("open");
                 $("#headlineName").html("Headline " + headlineName);
-                RenderMapping(result.Supers);
+                getRenderMappingWithWhiteLabelNote(usernames, result.Supers);            
                 
             } else {
-                $("#btnCreditViewSubmit").click();
+                var message = "Are you sure you want to save changes for " + usernames + "?<br>";
+                GetListWhiteLabel(usernames, function (result) {
+                    OpenConfirmWithWhiteLabel(result, message);
+                });               
             }
         },
         error: function () {
@@ -163,6 +198,23 @@ function OpenDialogConfirm(usernames, groupId) {
             try { parent.jQuery.unblockUI(); } catch (e) { }
         }
     });
+}
+
+function getRenderMappingWithWhiteLabelNote(usernames, supers) {
+    var message = "";
+    GetListWhiteLabel(usernames, function (result) {
+        if (result != "") {
+            message = renderWhiteLabelNote(result)
+        }
+        $('#whitelabelNote').html(message);
+        RenderMapping(supers);
+    });
+}
+
+function renderWhiteLabelNote(listWhiteLabel) {
+    var message = "<b>Note:</b> Remove/Update group headline will affect White Label settings: <span style=\"word-wrap: break-word;color: red\">" + listWhiteLabel + "</span>.<br>";
+    message += "By your action, headline earning of White Label setting will be updated accordingly.If you need to revise the rate, please help update it in the [Manage White Label] function.";
+    return message;
 }
 
 function RenderMapping(data) {
