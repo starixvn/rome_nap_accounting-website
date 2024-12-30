@@ -2483,7 +2483,10 @@
     <value>Muay Thai has been disabled at upline</value>
   </data>
   <data name="TextToUsernames_Note" xml:space="preserve">
-    <value>Support to remove delimiters: Hyphen (-), Comma (,), and Semicolon (;)&lt;br /&gt;Maximum length is 200 characters.&lt;br /&gt;Use # to separate the texts. Ex: input DD1-2-3 # EE1,2,3 -&gt; Result: DD1, DD2, DD3, EE1, EE2, EE3</value>
+    <value>Support to remove delimiters: Hyphen (-), Comma (,), and Semicolon (;)
+&lt;br /&gt;Maximum length is 200 characters.
+&lt;br /&gt;Use # to separate the texts. Ex: input DD1-2-3 # EE1,2,3 -&gt; Result: DD1, DD2, DD3, EE1, EE2, EE3
+&lt;br /&gt;Use &gt; to get continuous usernames. Ex: input DD1&gt;3 # EEA&gt;C -&gt; Result: DD1, DD2, DD3, EEA, EEB, EEC</value>
   </data>
   <data name="AddWhiteLabelTrans" xml:space="preserve">
     <value>Add White Label Transaction</value>
