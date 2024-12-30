@@ -143,14 +143,13 @@
                             Remark: $('#txtRemark', dialog).val()
                         };
 
-                        if (params.CustId == undefined || params.CustId == '' || params.CustId == 0) {
-                            self.showErrMsg(dialog, "Agent is required.");
+                        if (params.CustId == undefined || params.CustId == '' || params.CustId == 0) {                           
                             parent.jQuery.unblockUI();
                             return;
                         }
 
                         if (params.WhiteLabel == undefined || params.WhiteLabel == '') {
-                            self.showErrMsg(dialog, "WhiteLabel is required.");
+                            self.showErrMsg(dialog, "White Label is required.");
                             parent.jQuery.unblockUI();
                             return;
                         }
