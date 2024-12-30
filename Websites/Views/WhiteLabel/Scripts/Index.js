@@ -104,6 +104,7 @@
         $('#txtUsername', dialog).focusout(function () {
             $.get(window.rootUrl + "WhiteLabel/GetAgentInfoForAddNew?agentName=" + $(this).val(), function (data) {
                 parent.BlockUI();
+                $('#hidCustId', dialog).val(0);
                 if (data.ErrorCode == 999) {
                     self.showErrMsg(dialog, data.ErrorMessage);
                 }
@@ -143,7 +144,7 @@
                         };
 
                         if (params.CustId == undefined || params.CustId == '' || params.CustId == 0) {
-                            self.showErrMsg(dialog, "CustId is required.");
+                            self.showErrMsg(dialog, "Agent is required.");
                             parent.jQuery.unblockUI();
                             return;
                         }
