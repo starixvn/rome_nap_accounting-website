@@ -2,6 +2,7 @@
 {
     using System;
     using DNAide.Web;
+    using Fanex.Tarus.Infrastructure.Constants;
 
     public partial class CustomerManager
     {
@@ -101,9 +102,19 @@
 
         private string BuildDetailUrl(bool isDeposit, int custId, int roleId, string userName, string site, int productGroupId, int agentId)
         {
+            var uplineRoleId = roleId + 1;
+            if (agentId == -4)
+            {
+                uplineRoleId = RoleIdConstants.Super;
+            }
+            else if (agentId == -3)
+            {
+                uplineRoleId = RoleIdConstants.Master;
+            }
+
             return isDeposit
                 ? "DepositCustomer/EditSettingAgent"
-                : $"Customer/EditCustomer?theme=nap&uplineRoleId={roleId + 1}&custId={custId}&roleId={roleId}&uname={userName}&siteName={site}&productGroupId={productGroupId}&agentId={agentId}";
+                : $"Customer/EditCustomer?theme=nap&uplineRoleId={uplineRoleId}&custId={custId}&roleId={roleId}&uname={userName}&siteName={site}&productGroupId={productGroupId}&agentId={agentId}";
         }
 
         private string RemoveSettingBlock(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
