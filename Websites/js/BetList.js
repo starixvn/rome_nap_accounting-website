@@ -1003,6 +1003,18 @@ function showGPIBetDetails(refno, winlossDate, custId, transType) {
     openResultsPopUp(params);
 }
 
+function showPlayStarBetDetails(refno, winlossDate, custId, transType) {
+    var params = {
+        url: "RNGCasinoBetList/BetDetails",
+        title: "PLAYSTAR - Detailed Bet list - " + winlossDate.split(" ")[0],
+        jsonParam: { TransId: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 143, PageSize: 500 },
+        width: 1250,
+        height: 600
+    };
+
+    openResultsPopUp(params);
+}
+
 function showGPILCBetDetails(refno, winlossDate, custId, transType) {
     var params = {
         url: "AGCasinoBetList/BetDetails",
@@ -1251,6 +1263,8 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
         case 134: //Betby
             return getBetbyParam(matchid, sporttype, league);
 
+        case 143: //Play Star
+            return getPlayStarParam(custId, transId3rd, gameId3rd, currencyId, siteId, bettype, winlostdate);
 
         case 144: //GPI Live Casino
             return getGPILiveCasinoParam(custId, transId3rd, gameId3rd, currencyId, siteId, bettype, winlostdate);
@@ -1975,6 +1989,26 @@ function getGPIParam(custId, transId3rd, gameId3rd, currencyId, siteId, betType,
         jsonParam:
         {
             productId: 48,
+            custId: custId,
+            transId3rd: transId3rd,
+            gameId3rd: gameId3rd,
+            BetTypeId: betType,
+            EndTime: endTime,
+            SiteId: siteId,
+            CurrencyId: currencyId
+        },
+        width: 945,
+        height: 500
+    };
+}
+
+function getPlayStarParam(custId, transId3rd, gameId3rd, currencyId, siteId, betType, endTime) {
+    return {
+        url: "ThirdParty/PlayStarResult",
+        title: "PLAYSTAR Result",
+        jsonParam:
+        {
+            productId: 91,
             custId: custId,
             transId3rd: transId3rd,
             gameId3rd: gameId3rd,

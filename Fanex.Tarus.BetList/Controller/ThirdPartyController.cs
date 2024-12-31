@@ -246,6 +246,9 @@
         public ActionResult GPIResult(ThirdPartyResultRequest request)
             => BaseResult(request, "GPIRNGResultConfigs");
 
+        public ActionResult PlayStarResult(ThirdPartyResultRequest request)
+            => BaseResult(request, "PlayStarResultConfigs");
+
         public ActionResult GPILiveCasinoResult(ThirdPartyResultRequest request)
         {
             SetProductResultTitle(request.ProductId);
