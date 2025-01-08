@@ -393,7 +393,7 @@
   </Function>
   <Function Name="Manage Extra PT for External Groups">
     <Setting Key="Acc_GroupExtraPT_Group_Sel" SpName="Acc_GroupExtraPT_Group_Sel" DbName="DBCUST.CustDB.wsv_nap" />
-    <Setting Key="Acc_GroupExtraPT_Product_Sel" SpName="Acc_GroupExtraPT_Product_Sel_xtest" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_GroupExtraPT_Product_Sel" SpName="Acc_GroupExtraPT_Product_Sel" DbName="DBCUST.CustDB.wsv_nap" />
   </Function>
   <Function Name="Transaction - Automate Finance Transfer">
     <Setting Key="Acc_FinanceCrossTransferMulInsTmpExcel" SpName="Acc_FinanceCrossTransferMulInsTmpExcel" DbName="DBCUST.CustDB.wsv_nap" />
