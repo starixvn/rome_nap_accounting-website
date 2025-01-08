@@ -49,7 +49,7 @@
         <div class="bg_table" id="left_tab1_1_content">
             <asp:Literal ID="sBody" runat="server"></asp:Literal>
         </div>
-        <div class="bg_table" id="left_tab1_2_content">
+        <div class="bg_table" id="left_tab1_2_content" style="display: none;">
             <asp:Literal ID="sBody2" runat="server"></asp:Literal>
         </div>
     </div>
