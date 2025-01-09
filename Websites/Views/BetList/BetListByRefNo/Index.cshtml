@@ -6,71 +6,7 @@
 @using Fanex.Tarus.Infrastructure.Caching;
 
 @model  BetListByRefNoViewModel
-@{
-    var allowedProducts = new System.Text.StringBuilder();
-    allowedProducts.Append("Casino/Keno/Metricgaming/Colossus Bets/AG Casino/Macau Games/Allbet/ION/AE Sexy/IBCBet Live Casino")
-        .Append("/WM")
-        .Append("/BG")
-        .Append("/PP Live Casino")
-        .Append("/Lottery/Table Game");
 
-    var productIdPP = Fanex.Tarus.Infrastructure.Configurations.AppSettings.ProductIdPP;
-    if (productIdPP != 0)
-    {
-        allowedProducts.Append("/").Append(CacheRef.GetProductName(productIdPP));
-    }
-    var productIdCardClub = ConfigurationManager.AppSettings["ProductIdCardClub"];
-    if (!string.IsNullOrEmpty(productIdCardClub))
-    {
-        allowedProducts.Append("/").Append(CacheRef.GetProductName(int.Parse(productIdCardClub)));
-    }
-
-    var productIdSG = ConfigurationManager.AppSettings["ProductIdSG"];
-    if (!string.IsNullOrEmpty(productIdSG))
-    {
-        allowedProducts.Append("/").Append("SG");
-    }
-    var productIdVirtualGames = 38;
-    if (productIdVirtualGames != 0)
-    {
-        allowedProducts.Append("/").Append(CacheRef.GetProductName(productIdVirtualGames));
-    }
-
-    allowedProducts.Append("/").Append(CacheRef.GetProductName(42));
-    allowedProducts.Append("/").Append(CacheRef.GetProductName(66));
-    allowedProducts.Append("/Togel 4D");
-    allowedProducts.Append("/").Append(CacheRef.GetProductName(50));
-    allowedProducts.Append("/PG Soft");
-    allowedProducts.Append("/Joker");
-    allowedProducts.Append("/Happy 5 Linked Games");
-    allowedProducts.Append("/MaxGame");
-    allowedProducts.Append("/Sports Lottery");
-    allowedProducts.Append("/Habanero");
-    allowedProducts.Append("/CG");
-    allowedProducts.Append("/").Append(CacheRef.GetProductName(67));
-    allowedProducts.Append("/").Append(CacheRef.GetProductName(68));
-    allowedProducts.Append("/").Append(CacheRef.GetProductName(70));
-    allowedProducts.Append("/").Append(CacheRef.GetProductName(72));
-    allowedProducts.Append("/").Append(CacheRef.GetProductName(73));
-    allowedProducts.Append("/").Append(CacheRef.GetProductName(75));
-    allowedProducts.Append("/").Append(CacheRef.GetProductName(76));
-    allowedProducts.Append("/").Append(CacheRef.GetProductName(80));
-    allowedProducts.Append("/").Append(CacheRef.GetProductName(79));
-    allowedProducts.Append("/").Append(CacheRef.GetProductName(78));
-    allowedProducts.Append("/").Append(CacheRef.GetProductName(86));
-    allowedProducts.Append("/").Append(CacheRef.GetProductName(87));
-    allowedProducts.Append("/").Append(CacheRef.GetProductName(89));
-    allowedProducts.Append("/").Append(CacheRef.GetProductName(85));
-    allowedProducts.Append("/").Append(CacheRef.GetProductName(96));
-    allowedProducts.Append("/").Append(CacheRef.GetProductName(100));
-    allowedProducts.Append("/").Append(CacheRef.GetProductName(48));
-
-    var productResultRelatedByGameId = new System.Text.StringBuilder();
-    productResultRelatedByGameId.Append("Allbet/SA Gaming/AE Sexy/IBCBet Live Casino/BBIN/WM/BG/FGG/YeeBet/WE Live Casino");
-    productResultRelatedByGameId.Append("/").Append(CacheRef.GetProductName(96));
-    productResultRelatedByGameId.Append("/").Append(CacheRef.GetProductName(90));
-
-}
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/input.css" />
@@ -168,22 +104,10 @@
                                     <option value="45">AE Sexy</option>
                                     <option value="47">BBIN</option>
                                     <option value="46">IBCBet Live Casino</option>
-                                    @if (productIdPP != 0)
-                                    {
-                                        <option value="@productIdPP">@CacheRef.GetProductName(productIdPP)</option>
-                                    }
-                                    @if (!string.IsNullOrEmpty(productIdCardClub))
-                                    {
-                                        <option value="@productIdCardClub" data-vendor-id="33">@CacheRef.GetProductName(int.Parse(productIdCardClub))</option>
-                                    }
-                                    @if (!string.IsNullOrEmpty(productIdSG))
-                                    {
-                                        <option value="@productIdSG" data-vendor-id="36">SG</option>
-                                    }
-                                    @if (productIdVirtualGames != 0)
-                                    {
-                                        <option value="@productIdVirtualGames">@CacheRef.GetProductName(productIdVirtualGames)</option>
-                                    }
+                                    <option value="32">@CacheRef.GetProductName(32)</option>
+                                    <option value="34">@CacheRef.GetProductName(34)</option>
+                                    <option value="36">@CacheRef.GetProductName(36)</option>
+                                    <option value="38">@CacheRef.GetProductName(38)</option>
                                     <option value="42">@CacheRef.GetProductName(42)</option>
                                     <option value="55">@CacheRef.GetProductName(55)</option>
                                     <option value="51">@CacheRef.GetProductName(51)</option>
@@ -213,7 +137,7 @@
                                     <option value="100">@CacheRef.GetProductName(100)</option>
                                     <option value="48">@CacheRef.GetProductName(48)</option>
                                     <option value="90">@CacheRef.GetProductName(90)</option>
-
+                                    <option value="91">@CacheRef.GetProductName(91)</option>
                                 </select>
                             </td>
                             <td style="min-width: 65px">
@@ -284,13 +208,12 @@
     <div id="Popup" style="display: none">
     </div>
     <form id="noteMessage" style="display:none;">
-        @allowedProducts.ToString() tickets with win loss dates from @Model.BalanceUpDay.ToShortDateString() are supported.
-        For @productResultRelatedByGameId.ToString(), the search result includes the related tickets with the same GameID.<br />
-        For Sportsbook, the search result includes the related Bonus/Cash tickets.
+        - You can only view the tickets of non-sport products with win loss date from @Model.BalanceUpDay.ToShortDateString() (mm/dd/yyyy).<br />
+        - For Sportsbook, the search result includes the related Bonus/Cash tickets.
     </form>
     <script type="text/javascript">
         window.rootUrl = '@Url.Content("~")';
-                head.js("@Url.Content("~/js/jQuery/jquery.js")",                
+                head.js("@Url.Content("~/js/jQuery/jquery.js")",
                 "@Url.Content("~/js/json2.js")",
                 "@Url.Content("~/js/jQuery/GridScroller/jquery.gridscroller.1.0.js?ver=1")",
                 "@Url.Content("~/js/jQuery/UI/jquery-ui-1.8.10.custom.min.js")",

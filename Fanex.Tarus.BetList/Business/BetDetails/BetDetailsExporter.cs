@@ -89,39 +89,7 @@
                 return GetBBinTickets(refNo, custId, transType);
             }
 
-            if (sportType == SportContants.RNG_RNGGame ||
-                sportType == SportContants.RNG_MiniGame ||
-                sportType == SportContants.RNG_Mobile ||
-                sportType == SportContants.Joker ||
-                sportType == SportContants.Sabaclub ||
-                sportType == SportContants.MaxGame ||
-                sportType == SportContants.Habanero ||
-                sportType == SportContants.CG ||
-                sportType == SportContants.VGaming ||
-                sportType == SportContants.AdvantPlay ||
-                sportType == SportContants.AdvantPlayMini ||
-                sportType == SportContants.Voidbridge ||
-                sportType == SportContants.PP ||
-                sportType == SportContants.CardClub ||
-                sportType == SportContants.Spadegaming ||
-                sportType == SportContants.PGSoft ||
-                sportType == SportContants.RNGWar ||
-                sportType == SportContants.SealEntertainment ||
-                sportType == SportContants.MGRNG ||
-                sportType == SportContants.Jili ||
-                sportType == SportContants.Live22 ||
-                sportType == SportContants.UUSlots ||
-                sportType == SportContants.SabaxD ||
-                sportType == SportContants.FastSpin ||
-                sportType == SportContants.FACHAI ||
-                sportType == SportContants.Nextspin ||
-                sportType == SportContants.Playtech ||
-                sportType == SportContants.GPI)
-            {
-                return GetRNGCasinoTickets(refNo, custId, transType, winlostDate);
-            }
-
-            return Enumerable.Empty<TicketDetail>();
+            return GetRNGCasinoTickets(refNo, custId, transType, winlostDate);
         }
 
         public IEnumerable<TicketDetail> GetJackpotDetails(long transId, int custId, int betType, DateTime winlostDate)
