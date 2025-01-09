@@ -173,8 +173,8 @@
     <Reference Include="Fanex.BetList.Live22, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Live22.1.0.0.1\lib\net461\Fanex.BetList.Live22.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.LiveCasinoCore, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.LiveCasinoCore.1.0.0.3\lib\net461\Fanex.BetList.LiveCasinoCore.dll</HintPath>
+    <Reference Include="Fanex.BetList.LiveCasinoCore, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.LiveCasinoCore.1.0.0.4\lib\net461\Fanex.BetList.LiveCasinoCore.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.MaxGame, Version=2.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.MaxGame.2.0.0.2\lib\net461\Fanex.BetList.MaxGame.dll</HintPath>
@@ -269,8 +269,8 @@
     <Reference Include="Fanex.BetList.WM, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.WM.2.0.0.1\lib\net461\Fanex.BetList.WM.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.YeeBet, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.YeeBet.1.0.0\lib\net461\Fanex.BetList.YeeBet.dll</HintPath>
+    <Reference Include="Fanex.BetList.YeeBet, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.YeeBet.1.0.0.1\lib\net461\Fanex.BetList.YeeBet.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Caching, Version=2.2.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Caching.2.2.2\lib\net461\Fanex.Caching.dll</HintPath>
