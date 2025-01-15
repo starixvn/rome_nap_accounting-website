@@ -174,7 +174,7 @@
       <HintPath>..\packages\Fanex.BetList.Live22.1.0.0.1\lib\net461\Fanex.BetList.Live22.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.LiveCasinoCore, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.LiveCasinoCore.1.0.0.5-sa-03\lib\net461\Fanex.BetList.LiveCasinoCore.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.LiveCasinoCore.1.0.0.5\lib\net461\Fanex.BetList.LiveCasinoCore.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.MaxGame, Version=2.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.MaxGame.2.0.0.2\lib\net461\Fanex.BetList.MaxGame.dll</HintPath>
@@ -231,7 +231,7 @@
       <HintPath>..\packages\Fanex.BetList.SABAxD.1.0.0\lib\net461\Fanex.BetList.SABAxD.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.SAGaming, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.SAGaming.2.0.0.1-Beta-07\lib\net461\Fanex.BetList.SAGaming.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.SAGaming.2.0.0.1\lib\net461\Fanex.BetList.SAGaming.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.SealEntertainment, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.SealEntertainment.2.0.0.1\lib\net461\Fanex.BetList.SealEntertainment.dll</HintPath>
