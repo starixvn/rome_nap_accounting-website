@@ -727,3 +727,7 @@ span.underdog, span.favorite {
     margin-right: 2px;
     top: 3px;
 }
+
+.licenseeTxid {
+    word-break: break-word;
+}
