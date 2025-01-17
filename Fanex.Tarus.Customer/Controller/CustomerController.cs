@@ -293,6 +293,7 @@ namespace Fanex.Tarus.Customer.Controller
                 generalInfo.Site,
                 generalInfo.SiteLabel,
                 ObjectDbExtensions.GetSiteDBConfigBySite(request.GeneralInfo.Site).CustDBGroupID,
+                request.Group,
                 request.NumberOfAccounts,
                 CreationModes.FullMode));
 
@@ -316,8 +317,8 @@ namespace Fanex.Tarus.Customer.Controller
                 ObjectDbExtensions.GetSiteDBConfigByCustId(request.CustId)?.CustDBGroupID ?? 0,
                 request.Site,
                 request.SiteLabel,
-                request.AgentId,
-                "en-US"));
+                request.Group,
+                request.AgentId));
 
             return Content(response);
         }
@@ -341,7 +342,8 @@ namespace Fanex.Tarus.Customer.Controller
                       request.CustomerNames,
                       request.Site,
                       request.SiteLabel,
-                      request.AgentId));
+                      string.Empty,
+                      0));
 
             return Content(response);
         }
