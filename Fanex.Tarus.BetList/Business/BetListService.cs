@@ -2,16 +2,6 @@
 
 namespace Fanex.Tarus.BetList.Business
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Configuration;
-    using System.Data;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Linq;
-    using System.Text;
-    using System.Text.RegularExpressions;
-    using System.Threading;
-    using System.Threading.Tasks;
     using Alpha.IPInfo.DataAccess;
     using Alpha.IPInfo.Models;
     using Alpha.IPInfo.Services;
@@ -29,9 +19,12 @@ namespace Fanex.Tarus.BetList.Business
     using Fanex.CustomerSetting.Module.Core;
     using Fanex.Data;
     using Fanex.Logging.Extensions.Web;
+    using Fanex.NAP.Framework.Data;
     using Fanex.RemotingRef;
+    using Fanex.Tarus.BetList.Controllers;
     using Fanex.Tarus.BetList.DataAccess.Results;
     using Fanex.Tarus.BetList.Entities.BetList;
+    using Fanex.Tarus.BetList.Entities;
     using Fanex.Tarus.BetList.Param;
     using Fanex.Tarus.Infrastructure.Configurations;
     using Models;
@@ -40,6 +33,13 @@ namespace Fanex.Tarus.BetList.Business
     using Sunplus.Accounting.Core.Common;
     using Sunplus.Accounting.Core.Extensions;
     using Sunplus.Accounting.DataAccess.Report;
+    using System;
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.Data;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
+    using System.Text;
 
     public class BetListService : IBetListService
     {
@@ -54,6 +54,7 @@ namespace Fanex.Tarus.BetList.Business
         private readonly IIPInfoService _ipInfoService;
         private readonly ICacheService _cacheService;
         private readonly IIPInfoDataAccess _iPInfoDataAccess;
+        private readonly IDynamicRepository dynamicRepository;
         private readonly Func<DataRow, TicketDetail> mapTicketObjectFunction = r => new TicketDetail
         {
             Ticket = new Ticket
@@ -139,7 +140,7 @@ namespace Fanex.Tarus.BetList.Business
             MasterPositionTaking2 = r.Table.Columns.Contains("mpositiontaking2") ? Converter.ToDecimal(r["mpositiontaking2"]) : 0,
             SuperPositionTaking2 = r.Table.Columns.Contains("spositiontaking2") ? Converter.ToDecimal(r["spositiontaking2"]) : 0,
             IsChinaView = r.Table.Columns.Contains("IsChinaView") && Converter.ToBool(r["IsChinaView"]),
-            SpecialPlatfrom = r.Table.Columns.Contains("SpecialPlatfrom") ? Converter.ToInt(r["SpecialPlatfrom"]) : 0,            
+            SpecialPlatfrom = r.Table.Columns.Contains("SpecialPlatfrom") ? Converter.ToInt(r["SpecialPlatfrom"]) : 0,
             IP = Converter.ToString2(r["ip"]),
             DeviceType = r.Table.Columns.Contains("DeviceType") && !r.IsNull("DeviceType") ? Converter.To<int>(r["DeviceType"]) : (int?)null
         };
@@ -179,7 +180,7 @@ namespace Fanex.Tarus.BetList.Business
             OddHtml = string.Empty,
             StakeHtml = string.Empty,
             IsChinaView = r.Table.Columns.Contains("IsChinaView") && Converter.ToBool(r["IsChinaView"]),
-            SpecialPlatfrom = r.Table.Columns.Contains("SpecialPlatfrom") ? Converter.ToInt(r["SpecialPlatfrom"]) : 0,            
+            SpecialPlatfrom = r.Table.Columns.Contains("SpecialPlatfrom") ? Converter.ToInt(r["SpecialPlatfrom"]) : 0,
             DeviceType = r.Table.Columns.Contains("DeviceType") && !r.IsNull("DeviceType") ? Converter.To<int>(r["DeviceType"]) : (int?)null
         };
         public BetListService()
@@ -194,10 +195,14 @@ namespace Fanex.Tarus.BetList.Business
                 IPV6CacheInMinutes = AppSettings.IPV6CacheInMinutes
             }, _cacheService, _iPInfoDataAccess);
             _betListRepository = new BetListRepository();
+            this.dynamicRepository = dynamicRepository ?? new DynamicRepository();
         }
 
         public IList<ProductEntity> GetProductList()
             => _betListRepository.GetProductList(new SelectProductCriteria());
+
+        public IEnumerable<ShadowAccountModel> GetShadowAccount(int custId)
+            => dynamicRepository.Fetch<ShadowAccountModel>(new GetShadowAcountCriteria(custId));
 
         public void AssignCountry(IEnumerable<TicketDetail> tickets)
         {
@@ -275,7 +280,7 @@ namespace Fanex.Tarus.BetList.Business
                         "<div class='ticketList'>"
                             + builder.BuildChoice(betDetail.Ticket, ticketHelper, null, false)
                             + builder.BuildTransEventDateAndStatusResult(betDetail.Ticket, null)
-                        + (totalItem > 0 ? "</div>" + "<div class=\"line\"></div>" : "</div>");                    
+                        + (totalItem > 0 ? "</div>" + "<div class=\"line\"></div>" : "</div>");
                 }
 
                 return tickets;
@@ -395,7 +400,7 @@ namespace Fanex.Tarus.BetList.Business
 
             return false;
         }
-        
+
         public IList<TicketDetail> GetBetListBetTradeDetails(BetListBetTradeDetailCriteria criteria)
         {
             return GetBetListBy(criteria);
@@ -442,7 +447,7 @@ namespace Fanex.Tarus.BetList.Business
             });
         }
 
-        public IList<BetType> GetBetTypeByDate(BetTypeByDateCriteria mainCriteria)
+        public IList<BetType> GetBetTypeByDate(GetBettypeRequest mainCriteria)
         {
             var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(mainCriteria.CustId);
             if (siteDB != null)
@@ -454,6 +459,7 @@ namespace Fanex.Tarus.BetList.Business
                     var siteDBCriteria = new BetTypeByDateInSiteDBCriteria
                     {
                         CustId = mainCriteria.CustId,
+                        ShadowIds = mainCriteria.ShadowIds,
                         FromDate = mainCriteria.FromDate,
                         ToDate = mainCriteria.ToDate
                     };
@@ -463,8 +469,14 @@ namespace Fanex.Tarus.BetList.Business
                 if (!siteDB.IsSiteDB ||
                     (siteDB.IsSiteDB && mainCriteria.FromDate <= ReportService.BalanceUp.MoveBetsDay))
                 {
-                    mainCriteria.ExcludeBettrans = siteDB.IsSiteDB;
-                    mainDBTickets = _betListRepository.GetBetTypeByDate(mainCriteria);
+                    mainDBTickets = _betListRepository.GetBetTypeByDate(new BetTypeByDateCriteria
+                    {
+                        CustId = mainCriteria.CustId,
+                        ShadowIds = mainCriteria.ShadowIds,
+                        FromDate = mainCriteria.FromDate,
+                        ToDate = mainCriteria.ToDate,
+                        ExcludeBettrans = siteDB.IsSiteDB
+                    });
                 }
 
                 var tickets = siteDBTickets.Concat(mainDBTickets).GroupBy(g => g.BetTypeID).Select(g => g.First()).ToList();
@@ -489,6 +501,7 @@ namespace Fanex.Tarus.BetList.Business
 
         public KeyValuePair<string, IList<TicketDetail>> GetBetListByCustInfo_DateRange(
             int custId,
+            string shadowIds,
             DateTime fromDate,
             DateTime toDate,
             int betType,
@@ -508,6 +521,7 @@ namespace Fanex.Tarus.BetList.Business
                     var siteDBCriteria = new SiteDBBetListByCustInfoCriteria
                     {
                         CustId = custId,
+                        ShadowIds = shadowIds,
                         FromDate = fromDate,
                         ToDate = toDate,
                         BetType = betType,
@@ -531,6 +545,7 @@ namespace Fanex.Tarus.BetList.Business
                     var mainCriteria = new BetListByCustInfoCriteria
                     {
                         CustId = custId,
+                        ShadowIds = shadowIds,
                         FromDate = fromDate,
                         ToDate = toDate,
                         BetType = betType,
@@ -585,7 +600,7 @@ namespace Fanex.Tarus.BetList.Business
             return new KeyValuePair<string, IList<TicketDetail>>(string.Empty, new List<TicketDetail>());
         }
 
-        public KeyValuePair<string, IList<TicketDetail>> GetBetListByCustInfo_Refno(string transactionId, int customerId)
+        public KeyValuePair<string, IList<TicketDetail>> GetBetListByCustInfo_Refno(string transactionId, int customerId, string shadowIds)
         {
             var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(customerId);
             if (siteDB != null)
@@ -598,6 +613,7 @@ namespace Fanex.Tarus.BetList.Business
                     {
                         RefNo = transactionId,
                         CustId = customerId,
+                        ShadowIds = shadowIds,
                         MoveBetsDay = ReportService.BalanceUp.MoveBetsDay,
                         BalanceUpDay = ReportService.BalanceUp.BalanceUpDay
                     };
@@ -610,6 +626,7 @@ namespace Fanex.Tarus.BetList.Business
                     {
                         RefNo = transactionId,
                         CustId = customerId,
+                        ShadowIds = shadowIds,
                         MoveBetsDay = ReportService.BalanceUp.MoveBetsDay,
                         BalanceUpDay = ReportService.BalanceUp.BalanceUpDay,
                         ExcludeBettrans = siteDB.IsSiteDB
@@ -1454,7 +1471,7 @@ namespace Fanex.Tarus.BetList.Business
 
             var matrix = sportBettypeMatrix.FirstOrDefault(sbm => sbm.BetType == betType);
 
-            if(matrix == null || matrix.ProductId == SportbookProductId)
+            if (matrix == null || matrix.ProductId == SportbookProductId)
             {
                 return 0;
             }
@@ -1465,7 +1482,7 @@ namespace Fanex.Tarus.BetList.Business
         private IEnumerable<SportBettypeMatrixModel> GetSportBetTypeSettingMatrix()
         {
             var sportBettypeMatrix = _cacheService.Get<IEnumerable<SportBettypeMatrixModel>>(BetListSportBettypeMatrix);
-            if(sportBettypeMatrix == null)
+            if (sportBettypeMatrix == null)
             {
                 sportBettypeMatrix = _betListRepository.SelectSportBettypeMatrix();
                 _cacheService.Set(BetListSportBettypeMatrix, sportBettypeMatrix, new CacheItemOptions { SlidingExpiration = TimeSpan.FromDays(1) });

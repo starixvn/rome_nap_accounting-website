@@ -1,7 +1,10 @@
-﻿@{
+﻿@using Fanex.Tarus.BetList.Entities;
+     
+@{
     var isCredit = (bool)ViewBag.IsCredit;
     var ticketStatus = (IEnumerable<SelectListItem>)ViewBag.TicketStatus;
     var bookedStatus = (IEnumerable<SelectListItem>)ViewBag.BookedStatus;
+    var shadowAccounts = (IEnumerable<ShadowAccountModel>)ViewBag.ShadowAccount;
 
 }
 <html>
@@ -44,7 +47,7 @@
                                 <span>Booked Bet</span>
                             </a>
                         </li>
-                        @if ((bool)ViewBag.IsSabaCoins)
+                        @if ((bool)ViewBag.showSabaCoinTab)
                         {
                             <li class="" id="Li5" onclick="BetListByCustInfo.viewSabaCoinsTab();">
                                 <a href="javascript:;">
@@ -206,6 +209,11 @@
             </div>
 
             <div id="betlistMain_saba">                
+                <div id="sabaCoinList" class="hidden" style="margin-top: 10px; width:1220px">
+                    Shadow Account: @Html.Raw(string.Join(", ", shadowAccounts))
+                </div>
+                
+
                 <div id="betListContent_saba" class="hidden" style="margin-top: 10px;">
                 </div>
             </div>
@@ -221,7 +229,7 @@
         var _today = '@DateTime.Today.ToShortDateString()';
         var _yesterday = '@DateTime.Today.AddDays(-1).ToShortDateString()';
         var _custID = '@ViewBag.CustID';
-        var _shadowcustId = '@ViewBag.ShadowCustID';
+        var _shadowIds = '@string.Join(",", shadowAccounts.Select(i=>i.CustId))';
         var _fromDate = '@ViewBag.FromDate';
         var _toDate = '@ViewBag.ToDate';
         var _accId = '@Fanex.Tarus.Infrastructure.Common.AppSession.AccId';

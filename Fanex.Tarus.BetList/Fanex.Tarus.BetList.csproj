@@ -101,7 +101,7 @@
       <HintPath>..\packages\Fanex.BetList.ColossusBets.2.0.0\lib\net461\Fanex.BetList.ColossusBets.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.Core, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Core.3.0.5.2\lib\net461\Fanex.BetList.Core.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.Core.3.0.5.3-sabacoin-01\lib\net461\Fanex.BetList.Core.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.Core.RemotingRef, Version=1.1.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Core.RemotingRef.2.0.0.2\lib\net461\Fanex.BetList.Core.RemotingRef.dll</HintPath>
@@ -591,6 +591,7 @@
     <Compile Include="Criteria\BetTypeByDateInSiteDBCriteria.cs" />
     <Compile Include="Criteria\GetAGCasinoBetDetailsInSiteDBCriteria.cs" />
     <Compile Include="Criteria\GetCashOutHistoryInSiteDBCriteria.cs" />
+    <Compile Include="Criteria\GetShadowAcountCriteria.cs" />
     <Compile Include="Criteria\GetSportBettypeMatrixCriteria.cs" />
     <Compile Include="Criteria\IPInfo\GetIPV4InfoByTopCountryCriteria.cs" />
     <Compile Include="Criteria\IPInfo\GetIPV4InfoCriteria.cs" />
@@ -670,6 +671,7 @@
     <Compile Include="Entities\BetList\BetDetail.cs" />
     <Compile Include="Entities\BetList\ProductEntity.cs" />
     <Compile Include="Entities\NumberGame\NumberWheelChoice.cs" />
+    <Compile Include="Entities\ShadowAccountModel.cs" />
     <Compile Include="Extensions\BetListExtension.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Extensions\NpoiExcelExtensions.cs" />

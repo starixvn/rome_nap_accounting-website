@@ -121,7 +121,7 @@ namespace Fanex.Tarus.BetList.Controllers
         /// <param name="betTypeByDateCriteria">The bet type by date criteria.</param>
         /// <returns>Bet types after change date range.</returns>
         [HttpPost]
-        public JsonResult GetBetTypes(BetTypeByDateCriteria betTypeByDateCriteria)
+        public JsonResult GetBetTypes(GetBettypeRequest betTypeByDateCriteria)
         {
             var result = _betListService.GetBetTypeByDate(betTypeByDateCriteria);
             return Json(result);
@@ -135,12 +135,12 @@ namespace Fanex.Tarus.BetList.Controllers
         /// <returns>The bet list by customer info ref no.</returns>
         [AuthorizeFunctions("ViewInfo")]
         [SmartPunterFilter(SmartPunterFilter.AuthenticationType.Read)]
-        public ActionResult GetBetListByCustInfo_Refno(string transactionId, int customerId)
+        public ActionResult GetBetListByCustInfo_Refno(string transactionId, int customerId, string shadowIds)
         {
             KeyValuePair<string, IList<TicketDetail>> result = new KeyValuePair<string, IList<TicketDetail>>(string.Empty, new List<TicketDetail>());
             if (BetListHelper.IsNumeric(transactionId.Trim()))
             {
-                result = _betListService.GetBetListByCustInfo_Refno(transactionId, customerId);
+                result = _betListService.GetBetListByCustInfo_Refno(transactionId, customerId, shadowIds);
             }
 
             Hashtable paramHastable = new Hashtable();
@@ -150,6 +150,7 @@ namespace Fanex.Tarus.BetList.Controllers
 
             ViewBag.Quantity = 1;
             ViewBag.NumberBegining = 1;
+            ViewBag.ShowUserNameColumn = !string.IsNullOrEmpty(shadowIds);
             ViewBag.ResultTitle = CreateResultTitle(result.Value);
             return PartialView("~/Views/BetList/BetlistByCustInfo/Betlist/_BetList.cshtml", result);
         }        
@@ -401,5 +402,16 @@ namespace Fanex.Tarus.BetList.Controllers
 
             return string.Empty;
         }
+    }
+
+    public class GetBettypeRequest
+    {
+        public int CustId { get; set; }
+
+        public string ShadowIds { get; set; }
+
+        public DateTime FromDate { get; set; }
+
+        public DateTime ToDate { get; set; }
     }
 }

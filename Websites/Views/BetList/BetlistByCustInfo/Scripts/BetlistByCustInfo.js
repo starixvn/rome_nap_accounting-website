@@ -306,6 +306,7 @@
             data: params,
             success: function (result) {
                 $("#betListContent_saba").removeClass('hidden');
+                $("#sabaCoinList").removeClass('hidden');
                 $("#betListContent_saba").html(result);
 
                 if (typeof _length != "undefined") {
@@ -335,7 +336,7 @@
                         page_index = page_index < max_page ? page_index : max_page - 1;
 
                         BetListByCustInfo.paramGetBetBetlist_saba.pageIndex = page_index + 1;
-                        BetListByCustInfo.paramGetBetBetlist._sabapageSize = _items_per_page;
+                        BetListByCustInfo.paramGetBetBetlist_saba.pageSize = _items_per_page;
                         BetListByCustInfo.getBetListByCustInfo_saba(false);
                         return false;
                     };
@@ -406,25 +407,27 @@
             var toDateTmp = $('#txttodate_saba').val();
             var bettypeTmp = $('#ddlBettype_saba').val() == null ? 0 : $('#ddlBettype_saba').val();
             var statusIds = BetListByCustInfo.getSelectedStatus_saba();
-            if (BetListByCustInfo.paramGetBetBetlist.fromDate != fromDateTmp ||
-                BetListByCustInfo.paramGetBetBetlist.toDate != toDateTmp ||
-                BetListByCustInfo.paramGetBetBetlist.betType != bettypeTmp ||
-                BetListByCustInfo.paramGetBetBetlist.statusIds != statusIds) {
-                BetListByCustInfo.paramGetBetBetlist.pageIndex = 1;
-                BetListByCustInfo.paramGetBetBetlist.pageSize = 100;
+            if (BetListByCustInfo.paramGetBetBetlist_saba.fromDate != fromDateTmp ||
+                BetListByCustInfo.paramGetBetBetlist_saba.toDate != toDateTmp ||
+                BetListByCustInfo.paramGetBetBetlist_saba.betType != bettypeTmp ||
+                BetListByCustInfo.paramGetBetBetlist_saba.statusIds != statusIds) {
+                BetListByCustInfo.paramGetBetBetlist_saba.pageIndex = 1;
+                BetListByCustInfo.paramGetBetBetlist_saba.pageSize = 100;
             }
 
-            BetListByCustInfo.paramGetBetBetlist.fromDate = fromDateTmp;
-            BetListByCustInfo.paramGetBetBetlist.toDate = toDateTmp;
-            BetListByCustInfo.paramGetBetBetlist.custId = _shadowcustId;
-            BetListByCustInfo.paramGetBetBetlist.betType = bettypeTmp;
-            BetListByCustInfo.paramGetBetBetlist.statusIds = BetListByCustInfo.getSelectedStatus_saba();
-            BetListByCustInfo.paramGetBetBetlist.language = $("#languageCodeHidden").val();
+            BetListByCustInfo.paramGetBetBetlist_saba.fromDate = fromDateTmp;
+            BetListByCustInfo.paramGetBetBetlist_saba.toDate = toDateTmp;
+            BetListByCustInfo.paramGetBetBetlist_saba.custId = _custID;
+            BetListByCustInfo.paramGetBetBetlist_saba.shadowIds = _shadowIds;
+            BetListByCustInfo.paramGetBetBetlist_saba.betType = bettypeTmp;
+            BetListByCustInfo.paramGetBetBetlist_saba.statusIds = BetListByCustInfo.getSelectedStatus_saba();
+            BetListByCustInfo.paramGetBetBetlist_saba.language = $("#languageCodeHidden").val();
             BetListByCustInfo.URL =  "TarusBetList/GetBetListByCustInfo_DateRange";
-            return BetListByCustInfo.paramGetBetBetlist;
+            return BetListByCustInfo.paramGetBetBetlist_saba;
         }
         else {
-            BetListByCustInfo.paramGetBetBetlistbyRefno.customerId = _shadowcustId;
+            BetListByCustInfo.paramGetBetBetlistbyRefno.customerId = _custID;
+            BetListByCustInfo.paramGetBetBetlistbyRefno.shadowIds = _shadowIds;
             BetListByCustInfo.paramGetBetBetlistbyRefno.transactionId = $('#txtRefNo_saba').val();
             BetListByCustInfo.paramGetBetBetlistbyRefno.language = $("#languageCodeHidden").val();
 
@@ -449,6 +452,7 @@
             BetListByCustInfo.paramGetBetBetlist.fromDate = fromDateTmp;
             BetListByCustInfo.paramGetBetBetlist.toDate = toDateTmp;
             BetListByCustInfo.paramGetBetBetlist.custId = _custID;
+            BetListByCustInfo.paramGetBetBetlist.shadowIds = "";
             BetListByCustInfo.paramGetBetBetlist.betType = bettypeTmp;
             BetListByCustInfo.paramGetBetBetlist.statusIds = BetListByCustInfo.getSelectedStatus();
             BetListByCustInfo.paramGetBetBetlist.language = $("#languageCodeHidden").val();
@@ -457,6 +461,7 @@
         }
         else {
             BetListByCustInfo.paramGetBetBetlistbyRefno.customerId = _custID;
+            BetListByCustInfo.paramGetBetBetlistbyRefno.shadowIds = "";
             BetListByCustInfo.paramGetBetBetlistbyRefno.transactionId = $('#txtRefNo').val();
             BetListByCustInfo.paramGetBetBetlistbyRefno.language = $("#languageCodeHidden").val();
 
@@ -505,7 +510,8 @@
         var paramGetBetTypes = {
             FromDate: $('#txtfromdate_saba').val(),
             ToDate: $('#txttodate_saba').val(),
-            CustID: _shadowcustId
+            CustID: _custID,
+            ShadowIds: _shadowIds
         };
         try { parent.BlockUI(); } catch (e) { }
         $.ajax({
@@ -636,6 +642,7 @@
         //Saba coins
         $('#maincontent_sabacoins').addClass('hidden');
         $('#betListContent_saba').addClass('allhidden');
+        $('#sabaCoinList').addClass('allhidden');
     },
     viewBetListTab: function () {
         //change tab
@@ -661,6 +668,7 @@
         //Saba coins
         $('#maincontent_sabacoins').addClass('hidden');
         $('#betListContent_saba').addClass('allhidden');
+        $('#sabaCoinList').addClass('allhidden');
     },
 
     viewBookedBetTab: function () {
@@ -688,6 +696,7 @@
         //Saba coins
         $('#maincontent_sabacoins').addClass('hidden');
         $('#betListContent_saba').addClass('allhidden');
+        $('#sabaCoinList').addClass('allhidden');
     },
     viewExchangeTab: function () {
         //change tab
@@ -715,6 +724,7 @@
         //Saba coins
         $('#maincontent_sabacoins').addClass('hidden');
         $('#betListContent_saba').addClass('allhidden');
+        $('#sabaCoinList').addClass('allhidden');
     },
 
     viewSabaCoinsTab: function () {
@@ -743,6 +753,7 @@
         //Saba coins
         $('#maincontent_sabacoins').removeClass('hidden');
         $('#betListContent_saba').removeClass('allhidden');
+        $('#sabaCoinList').removeClass('allhidden');
     }
 
 };

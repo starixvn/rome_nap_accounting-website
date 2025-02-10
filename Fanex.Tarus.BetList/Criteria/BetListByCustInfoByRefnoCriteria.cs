@@ -8,6 +8,8 @@
 
         public int CustId { get; set; }
 
+        public string ShadowIds { get; set; }
+
         public string RefNo { get; set; }
 
         public DateTime MoveBetsDay { get; set; }

@@ -80,7 +80,7 @@
                     lblDownlineList = "Member List";
                     break;
                 case Globals.AccountType.Member:
-                    downlineListURL = $"TarusBetList/BetListByCustInfo?CustID={customerInfoViewModel.CustId}&isDeposit={customerInfoViewModel.IsDeposit}&isSabaCoins={customerInfoViewModel.IsSabaCoins}&shadowCustId={customerInfoViewModel.ShadowCustId}";
+                    downlineListURL = $"TarusBetList/BetListByCustInfo?CustID={customerInfoViewModel.CustId}&isDeposit={customerInfoViewModel.IsDeposit}&showSabaCoinTab={customerInfoViewModel.ShowSabaCoinTab}";
                     lblDownlineList = "Bet List";
                     TemplateHandler.RemoveBlock(ref tplTransLink, "balance");
                     break;

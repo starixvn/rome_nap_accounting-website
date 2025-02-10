@@ -131,4 +131,8 @@
     <Setting Key="Acc_ReferenceSetting_Sel" SpName="Acc_ReferenceSetting_Sel" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="Acc_ReferenceSetting_Check" SpName="Acc_ReferenceSetting_Check" DbName="DBACC.bodb02.wsv_nap" />
   </Function>
+  <Function Name ="Saba coin">
+    <Setting Key="Acc_Dep_CustomerSelBySabaID" SpName="Acc_Dep_CustomerSelBySabaID" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_Dep_CustomerSel_Shadow" SpName="Acc_Dep_CustomerSel_Shadow" DbName="DBACC.bodb02.wsv_nap" />
+  </Function>
 </Functions>

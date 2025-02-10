@@ -22,6 +22,8 @@
 
         private DataRow downlineStatusInfoRow { get; set; }
 
+        private SabaCoinModel sabaCoinModel { get; set; }
+
         public CustomerInfoViewModel(
             DataRow customerInfoRow,
             DataRow lineInfoRow,
@@ -37,6 +39,7 @@
             this.lineInfoRow = lineInfoRow;
             this.cashRow = cashRow;
             this.downlineStatusInfoRow = downlineStatusInfoRow;
+            this.sabaCoinModel = new SabaCoinModel(customerInfoRow);
 
             JsParam = new Hashtable
             {
@@ -58,9 +61,11 @@
 
         public bool ViewFiAcc => Permissions.FinancePermission.IsViewFiAcc(IsInternalUser);
 
-        public bool IsSabaCoins => Utils.ToBoolean(customerInfoRow["IsSabaCoins"]);
+        public bool ShowSabaCoinTab => sabaCoinModel.IsRealAccount;
 
-        public int ShadowCustId => Utils.ToInt32(customerInfoRow["ShadowCustId"]);
+        public long SabaId => sabaCoinModel.SabaId;
+
+        public bool IsShadowMember => sabaCoinModel.IsShadowMember;
 
         public bool HideDirectStatus => Utils.ToBoolean(customerInfoRow["IsHideDirectStatus"]);
 
@@ -159,5 +164,25 @@
                 }
             }
         }
+    }
+
+    public class SabaCoinModel
+    {
+        public SabaCoinModel(DataRow dataRow)
+        {
+            SabaId = Utils.ToInt64(dataRow["SabaID"]);
+            CustType = Utils.ToInt16(dataRow["CustType"]);
+
+            IsShadowMember = CustType == 1 && SabaId != 0;
+            IsRealAccount = SabaId != 0 && !IsShadowMember;
+        }
+
+        public bool IsRealAccount { get; set; }
+
+        public bool IsShadowMember { get; set; }
+
+        public long SabaId { get; set; }
+
+        private int CustType { get; set; }
     }
 }

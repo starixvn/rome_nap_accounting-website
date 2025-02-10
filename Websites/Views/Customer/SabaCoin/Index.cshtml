@@ -1,0 +1,145 @@
+﻿@using Sunplus.Accounting.Core.Configurations;
+@using Fanex.Tarus.Customer.Entities.SabaCoin;
+
+@model List<SabaCoinModel>
+    @{
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    @section Styles{
+        <link href="~/App_Themes/Report/reportgrid.css" rel="stylesheet" type="text/css" />
+        <link href="@Url.Content("~/App_Themes/Public/table.css?v=" + WebSettings.Version)" rel="stylesheet" type="text/css" />
+    }
+
+    @section Scripts{
+
+    }
+    <div class="main">
+        <div class="maincontent">
+
+            <table border="0" cellpadding="0px" cellspacing="0px" class="maincontent_header">
+                <tr>
+                    <td class="maincontent_headerL"></td>
+                    <td class="maincontent_headerC">
+                        Saba Coin Accounts
+                    </td>
+                    <td class="maincontent_headerR"></td>
+                </tr>
+            </table>
+
+            <div id="divContainer" style="margin-top: 4px">
+                <div id="divMainGrid" class="content-warper" style="width: 1101px;">
+                    <div class="content-header clearfix">
+                        <div class="header-scroll">
+                            <table class="tbl-header-scroll">
+                                <tr>
+                                    <td style="border-bottom: none 0px;" class="title2">
+                                        <div class="col40 c">
+                                            No.
+                                        </div>
+                                    </td>
+                                    <td style="border-bottom: none 0px;" class="title2">
+                                        <div class="col200 c">
+                                            Member
+                                        </div>
+                                    </td>
+                                    <td style="border-bottom: none 0px;" class="title2">
+                                        <div class="col200 c">
+                                            Super
+                                        </div>
+                                    </td>
+                                    <td style="border-bottom: none 0px;" class="title2">
+                                        <div class="col200 c">
+                                            Master
+                                        </div>
+                                    </td>
+                                    <td style="border-bottom: none 0px;" class="title2">
+                                        <div class="col200 c">
+                                            Agent
+                                        </div>
+                                    </td>
+                                    <td style="border-bottom: none 0px;" class="title2">
+                                        <div class="col120 c">
+                                            Is Real Account?
+                                        </div>
+                                    </td>
+                                    <td style="border-bottom: none 0px;" class="title2">
+                                        <div class="col120 c">
+                                            Saba ID
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="content-body clearfix">
+                        <div class="body-scroll">
+                            <table class="tbl-body-scroll">
+                                <tbody id="tobdyMainGrid">
+                                    @if (Model.Count > 0)
+                                    {
+                                        for (var i = 0; i < Model.Count; ++i)
+                                        {
+                                            <tr class="@(i%2!=0?"bgeven":"")">
+                                                <td><div class="col40 c">@(i+1)</div></td>
+                                                <td>
+                                                    <div class="col200 c">
+                                                        <b>@Model[i].UserName</b>
+                                                        <br />
+                                                        (@Model[i].CustId)
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="col200 c">
+                                                        <b>@Model[i].SuperName</b>
+                                                        <br />
+                                                        (@Model[i].SuperID)
+                                                    </div>
+                                                </td>
+
+                                                <td>
+                                                    <div class="col200 c">
+                                                        <b>@Model[i].MasterName</b>
+                                                        <br />
+                                                        (@Model[i].MasterID)
+                                                    </div>
+                                                </td>
+
+                                                <td>
+                                                    <div class="col200 c">
+                                                        <b>@Model[i].AgentName</b>
+                                                        <br />
+                                                        (@Model[i].AgentID)
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="col120 c">
+                                                        <input type="checkbox" disabled="disabled" checked="@Model[i].IsRealAccount"/>                                                               
+                                                    </div>
+                                                </td>
+
+                                                <td>
+                                                    <div class="col120 c">
+                                                        @Model[i].SabaId
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <td>
+                                                <div style="text-align: center; width: 1101px">
+                                                    There is no information!
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>                            
+                    </div>
+                </div>                
+            </div>
+        </div>
+    </div>
+</div>

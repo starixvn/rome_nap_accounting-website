@@ -68,7 +68,7 @@ namespace Fanex.Tarus.BetList.Controller
         /// <returns></returns>
         [AuthorizeFunctions("ViewInfo")]
         [SmartPunterFilter(SmartPunterFilter.AuthenticationType.Read)]
-        public ActionResult BetListByCustInfo(int CustID, bool isDeposit, bool isSabaCoins, int shadowCustId)
+        public ActionResult BetListByCustInfo(int CustID, bool isDeposit, bool showSabaCoinTab)
         {
             _smartPunterService.TryLogIfSmartPunter(new CheckSmartPunterCriteria
             {
@@ -87,10 +87,10 @@ namespace Fanex.Tarus.BetList.Controller
             ViewBag.FromDate = fromDate == dateTmp ? DateTime.Today.AddDays(-1) : fromDate;
             ViewBag.ToDate = toDate == dateTmp ? DateTime.Today : toDate;
             ViewBag.IsCredit = isDeposit;
-            ViewBag.IsSabaCoins = isSabaCoins;
-            ViewBag.ShadowCustId = shadowCustId;
+            ViewBag.showSabaCoinTab = showSabaCoinTab;
             ViewBag.TicketStatus = TicketStatusConstants.List.Select(i => new SelectListItem { Text = BetListResources.ResourceManager.GetString(i.Value), Value = i.Key.ToString() });
             ViewBag.BookedStatus = BookedBetStatusConstants.List.Select(i => new SelectListItem { Text = i.Value, Value = i.Key.ToString() });
+            ViewBag.ShadowAccount = _betListService.GetShadowAccount(CustID);
             return View("~/Views/BetList/BetlistByCustInfo/Index.cshtml");
         }
 
@@ -106,14 +106,14 @@ namespace Fanex.Tarus.BetList.Controller
         /// <returns></returns>
         [AuthorizeFunctions("ViewInfo")]
         [SmartPunterFilter(SmartPunterFilter.AuthenticationType.Read)]
-        public ActionResult GetBetListByCustInfo_DateRange(int CustID, DateTime FromDate, DateTime ToDate, string statusIds, int Bettype, int PageSize, int PageIndex)
+        public ActionResult GetBetListByCustInfo_DateRange(int CustID, string shadowIds, DateTime FromDate, DateTime ToDate, string statusIds, int Bettype, int PageSize, int PageIndex)
         {
             int quantity = 0;
             PageIndex = PageIndex <= 0 ? 1 : PageIndex;
-            var result = _betListService.GetBetListByCustInfo_DateRange(CustID, FromDate, ToDate, Bettype, statusIds, PageSize, PageIndex, ref quantity);
+            var result = _betListService.GetBetListByCustInfo_DateRange(CustID, shadowIds, FromDate, ToDate, Bettype, statusIds, PageSize, PageIndex, ref quantity);
             ViewBag.Quantity = quantity;
             ViewBag.NumberBegining = (PageSize * (PageIndex - 1)) + 1;
-
+            ViewBag.ShowUserNameColumn = !string.IsNullOrEmpty(shadowIds);
             Hashtable paramHastable = new Hashtable();
             paramHastable.Add("custId", CustID);
 
