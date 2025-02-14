@@ -285,6 +285,9 @@
 
         public ActionResult SabaxDResult(ThirdPartyResultRequest request)
             => BaseResult(request, "SabaxDResultConfigs");
+        
+        public ActionResult ASKMESLOTResult(ThirdPartyResultRequest request)
+            => BaseResult(request, "ASKMESLOTResultConfigs");
 
         private void SetProductResultTitle(int productId)
             => ProductResultTitle = CacheRef.GetProductName(productId) + " Result";

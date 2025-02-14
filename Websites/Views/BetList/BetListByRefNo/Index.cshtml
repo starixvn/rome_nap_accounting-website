@@ -138,6 +138,7 @@
                                     <option value="48">@CacheRef.GetProductName(48)</option>
                                     <option value="90">@CacheRef.GetProductName(90)</option>
                                     <option value="91">@CacheRef.GetProductName(91)</option>
+                                    <option value="103">@CacheRef.GetProductName(103)</option>
                                 </select>
                             </td>
                             <td style="min-width: 65px">
@@ -208,8 +209,7 @@
     <div id="Popup" style="display: none">
     </div>
     <form id="noteMessage" style="display:none;">
-        - You can only view the tickets of non-sport products with win loss date from @Model.BalanceUpDay.ToShortDateString() (mm/dd/yyyy).<br />
-        - For Sportsbook, the search result includes the related Bonus/Cash tickets.
+        - You can only view the tickets of non-sport products with win loss date from @Model.BalanceUpDay.ToShortDateString() (mm/dd/yyyy).
     </form>
     <script type="text/javascript">
         window.rootUrl = '@Url.Content("~")';
