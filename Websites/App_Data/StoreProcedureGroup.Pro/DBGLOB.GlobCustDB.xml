@@ -14,4 +14,30 @@
     <Setting Key="Acc_CustomerEditUserName_Register" SpName="Acc_CustomerEditUserName_Register" DbName="DBGLOB.GlobCustDB.wsv_nap" />
     <Setting Key="Acc_CustInfoMiniEditUserName_Rollback" SpName="Acc_CustInfoMiniEditUserName_Rollback" DbName="DBGLOB.GlobCustDB.wsv_nap" />
   </Function>
+  <Function Name="Init Customer Setting - Init Cust Setting">
+    <Setting Key="Acc_Dep_Initial_DCS_SettingConfig_Ins" SpName="Acc_Dep_Initial_DCS_SettingConfig_Ins" DbName="DBGLOB.GlobCustDB.wsv_nap" />
+    <Setting Key="Acc_Dep_Initial_DCS_SettingConfig_Upd" SpName="Acc_Dep_Initial_DCS_SettingConfig_Upd" DbName="DBGLOB.GlobCustDB.wsv_nap" />
+    <Setting Key="Acc_Dep_Initial_DCS_SettingConfig_Del" SpName="Acc_Dep_Initial_DCS_SettingConfig_Del" DbName="DBGLOB.GlobCustDB.wsv_nap" />
+    <Setting Key="Acc_Dep_Initial_DCS_ConfigStatus_Upd" SpName="Acc_Dep_Initial_DCS_ConfigStatus_Upd" DbName="DBGLOB.GlobCustDB.wsv_nap" />
+    <Setting Key="Acc_Initial_DCS_ConfigStatus_Upd" SpName="Acc_Initial_DCS_ConfigStatus_Upd" DbName="DBGLOB.GlobCustDB.wsv_nap" />
+  </Function>
+  <Function Name="Initializing Bet Limit">
+    <Setting Key="Acc_InitializingGlobal_BetLimitIns" SpName="Acc_InitializingGlobal_BetLimitIns" DbName="DBGLOB.GlobCustDB.wsv_nap" />
+  </Function>
+  <Function Name="Admin - Manage Product Setting">
+    <Setting Key="Acc_ReferenceSetting_Ins" SpName="Acc_ReferenceSetting_Ins" DbName="DBGLOB.GlobCustDB.wsv_nap" Plain="0" />
+    <Setting Key="Acc_ReferenceSetting_Upd" SpName="Acc_ReferenceSetting_Upd" DbName="DBGLOB.GlobCustDB.wsv_nap" Plain="0" />
+    <Setting Key="Acc_ReferenceSetting_Del" SpName="Acc_ReferenceSetting_Del" DbName="DBGLOB.GlobCustDB.wsv_nap" Plain="0" />
+  </Function>
+  <Function Name="Admin - Site management">
+    <Setting Key="NAP_Admin_AddNewSite" SpName="NAP_Admin_AddNewSite" DbName="DBGLOB.GlobCustDB.wsv_nap" />
+  </Function>
+  <Function Name="Exchange Daily">
+    <Setting Key="Acc_ExchangeIns" SpName="Acc_ExchangeIns" DbName="DBGLOB.GlobCustDB.wsv_nap" />
+    <Setting Key="EchangeUpd" SpName="Acc_ExchangeUpd" DbName="DBGLOB.GlobCustDB.wsv_nap" />
+    <Setting Key="ExchangeDailyCryptoUpd" SpName="Acc_ExchangeDaily_Crypto_Upd" DbName="DBGLOB.GlobCustDB.wsv_nap" />
+  </Function>
+  <Function Name="Ex.rate">
+    <Setting Key="Acc_ExchangeMultiBaseRateUpd" SpName="Acc_ExchangeMultiBaseRateUpd" DbName="DBGLOB.GlobCustDB.wsv_nap" />
+  </Function>
 </Functions>

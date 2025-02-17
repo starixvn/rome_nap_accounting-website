@@ -157,10 +157,7 @@
     <Setting Key="Acc_LoginAdmin" SpName="Acc_LoginAdmin" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Exchange Daily">
-    <Setting Key="Acc_ExchangeIns" SpName="Acc_ExchangeIns" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_ExchangeSel" SpName="Acc_ExchangeSel" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="EchangeUpd" SpName="Acc_ExchangeUpd" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="ExchangeDailyCryptoUpd" SpName="Acc_ExchangeDaily_Crypto_Upd" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="EchangeSelById" SpName="Acc_ExchangeSelByID" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="External Betting Limit">
@@ -237,7 +234,6 @@
   </Function>
   <Function Name="Admin - Site management">
     <Setting Key="NAP_Admin_VerifySiteName" SpName="NAP_Admin_VerifySiteName" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="NAP_Admin_AddNewSite" SpName="NAP_Admin_AddNewSite" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="External - Admin">
     <Setting Key="Acc_GroupExtraPT_GroupByProduct_Ins" SpName="Acc_GroupExtraPT_GroupByProduct_Ins" DbName="DBCust.CustDB.wsv_nap" />
@@ -382,9 +378,6 @@
     <Setting Key="Acc_VendorGlobalSetting_Upd" SpName="Acc_VendorGlobalSetting_Upd" DbName="DBCUST.CustDB.wsv_nap" Plain="0" />
     <Setting Key="Acc_VendorGlobalSetting_Del" SpName="Acc_VendorGlobalSetting_Del" DbName="DBCUST.CustDB.wsv_nap" Plain="0" />
     <Setting Key="Acc_UMTool_MarketSel" SpName="Acc_UMTool_MarketSel" DbName="DBCUST.CustDB.wsv_nap" Plain="0" />
-    <Setting Key="Acc_ReferenceSetting_Ins" SpName="Acc_ReferenceSetting_Ins" DbName="DBCUST.CustDB.wsv_nap" Plain="0" />
-    <Setting Key="Acc_ReferenceSetting_Upd" SpName="Acc_ReferenceSetting_Upd" DbName="DBCUST.CustDB.wsv_nap" Plain="0" />
-    <Setting Key="Acc_ReferenceSetting_Del" SpName="Acc_ReferenceSetting_Del" DbName="DBCUST.CustDB.wsv_nap" Plain="0" />
   </Function>
   <Function Name="UM On product">
     <Setting Key="Acc_CheckUM" SpName="Acc_CheckUM" DbName="DBCUST.CustDB.wsv_nap" />
@@ -444,14 +437,9 @@
     <Setting Key="Acc_Initial_DCS_SettingConfig_Ins" SpName="Acc_Initial_DCS_SettingConfig_Ins" DbName="DBCUST.CustDB.wsv_nap" />
     <Setting Key="Acc_Initial_DCS_SettingConfig_Upd" SpName="Acc_Initial_DCS_SettingConfig_Upd" DbName="DBCUST.CustDB.wsv_nap" />
     <Setting Key="Acc_Initial_DCS_SettingConfig_Del" SpName="Acc_Initial_DCS_SettingConfig_Del" DbName="DBCUST.CustDB.wsv_nap" />
-    <Setting Key="Acc_Initial_DCS_ConfigStatus_Upd" SpName="Acc_Initial_DCS_ConfigStatus_Upd" DbName="DBCUST.CustDB.wsv_nap" />
     <Setting Key="Acc_Dep_Initial_DCS_SettingConfig_Sel" SpName="Acc_Dep_Initial_DCS_SettingConfig_Sel" DbName="DBCUST.CustDB.wsv_nap" />
     <Setting Key="Acc_Dep_Initial_DCS_ProductProfile_Sel" SpName="Acc_Dep_Initial_DCS_ProductProfile_Sel" DbName="DBCUST.CustDB.wsv_nap" />
     <Setting Key="Acc_Dep_Initial_DCS_SettingConfigDetail_Sel" SpName="Acc_Dep_Initial_DCS_SettingConfigDetail_Sel" DbName="DBCUST.CustDB.wsv_nap" />
-    <Setting Key="Acc_Dep_Initial_DCS_SettingConfig_Ins" SpName="Acc_Dep_Initial_DCS_SettingConfig_Ins" DbName="DBCUST.CustDB.wsv_nap" />
-    <Setting Key="Acc_Dep_Initial_DCS_SettingConfig_Upd" SpName="Acc_Dep_Initial_DCS_SettingConfig_Upd" DbName="DBCUST.CustDB.wsv_nap" />
-    <Setting Key="Acc_Dep_Initial_DCS_SettingConfig_Del" SpName="Acc_Dep_Initial_DCS_SettingConfig_Del" DbName="DBCUST.CustDB.wsv_nap" />
-    <Setting Key="Acc_Dep_Initial_DCS_ConfigStatus_Upd" SpName="Acc_Dep_Initial_DCS_ConfigStatus_Upd" DbName="DBCUST.CustDB.wsv_nap" />
     <Setting Key="Acc_Dep_Initial_DCS_BetSetting_Sel" SpName="Acc_Dep_Initial_DCS_BetSetting_Sel" DbName="DBCUST.CustDB.wsv_nap" />
   </Function>
   <Function Name="Admin - Finance Groups Config">
@@ -467,13 +455,7 @@
     <Setting Key="Acc_FinanceGroupsConfig_CodesIns" SpName="Acc_FinanceGroupsConfig_CodesIns" DbName="DBCUST.CustDB.wsv_nap" />
     <Setting Key="Acc_FinanceGroupsConfig_GroupSel" SpName="Acc_FinanceGroupsConfig_GroupSel" DbName="DBCUST.CustDB.wsv_nap" />
     <Setting Key="Acc_FinanceGroupsConfig_GetValidCustid" SpName="Acc_FinanceGroupsConfig_GetValidCustid" DbName="DBPOL.NAP_UserControl.wsv_nap" />
-  </Function>
-  <Function Name="Ex.rate">
-    <Setting Key="Acc_ExchangeMultiBaseRateUpd" SpName="Acc_ExchangeMultiBaseRateUpd" DbName="DBCUST.CustDB.wsv_nap" />
-  </Function>
-  <Function Name="Initializing Bet Limit">
-    <Setting Key="Acc_InitializingGlobal_BetLimitIns" SpName="Acc_InitializingGlobal_BetLimitIns" DbName="DBCUST.CustDB.wsv_nap" />
-  </Function>
+  </Function> 
   <Function Name="Licensee Configuration > New Licensee Member">
     <Setting Key="Acc_Dep_CheckExistedAccount" SpName="Acc_Dep_CheckExistedAccount" DbName="DBCUST.CustDB.wsv_nap" />
   </Function>
