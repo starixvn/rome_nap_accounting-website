@@ -258,7 +258,7 @@
       <HintPath>..\packages\Fanex.BetList.VirtualGames.2.0.0.2\lib\net461\Fanex.BetList.VirtualGames.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.VirtualSports, Version=2.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.VirtualSports.2.0.2-VS5-01\lib\net461\Fanex.BetList.VirtualSports.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.VirtualSports.2.0.2\lib\net461\Fanex.BetList.VirtualSports.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.VoidBridge, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.VoidBridge.2.0.0\lib\net461\Fanex.BetList.VoidBridge.dll</HintPath>
