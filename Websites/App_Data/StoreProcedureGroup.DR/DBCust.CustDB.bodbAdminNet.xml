@@ -437,10 +437,6 @@
     <Setting Key="Acc_Initial_DCS_SettingConfig_Ins" SpName="Acc_Initial_DCS_SettingConfig_Ins" DbName="DBCUST.CustDB.wsv_nap" />
     <Setting Key="Acc_Initial_DCS_SettingConfig_Upd" SpName="Acc_Initial_DCS_SettingConfig_Upd" DbName="DBCUST.CustDB.wsv_nap" />
     <Setting Key="Acc_Initial_DCS_SettingConfig_Del" SpName="Acc_Initial_DCS_SettingConfig_Del" DbName="DBCUST.CustDB.wsv_nap" />
-    <Setting Key="Acc_Dep_Initial_DCS_SettingConfig_Sel" SpName="Acc_Dep_Initial_DCS_SettingConfig_Sel" DbName="DBCUST.CustDB.wsv_nap" />
-    <Setting Key="Acc_Dep_Initial_DCS_ProductProfile_Sel" SpName="Acc_Dep_Initial_DCS_ProductProfile_Sel" DbName="DBCUST.CustDB.wsv_nap" />
-    <Setting Key="Acc_Dep_Initial_DCS_SettingConfigDetail_Sel" SpName="Acc_Dep_Initial_DCS_SettingConfigDetail_Sel" DbName="DBCUST.CustDB.wsv_nap" />
-    <Setting Key="Acc_Dep_Initial_DCS_BetSetting_Sel" SpName="Acc_Dep_Initial_DCS_BetSetting_Sel" DbName="DBCUST.CustDB.wsv_nap" />
   </Function>
   <Function Name="Admin - Finance Groups Config">
     <Setting Key="Acc_FinanceGroupsConfig_FinanceGroupSel" SpName="Acc_FinanceGroupsConfig_FinanceGroupSel" DbName="DBCUST.CustDB.wsv_nap" />
