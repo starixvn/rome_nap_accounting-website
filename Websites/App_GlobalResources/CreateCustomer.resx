@@ -231,6 +231,9 @@
   <data name="MaxWinLimit" xml:space="preserve">
     <value>Maximum Win</value>
   </data>
+  <data name="MasterDiscount" xml:space="preserve">
+    <value>Comm For Master</value>
+  </data>
   <data name="AgentDiscount" xml:space="preserve">
     <value>Comm For Agent</value>
   </data>

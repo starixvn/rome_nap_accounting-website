@@ -113,7 +113,7 @@ var LeftPanelManager = function () {
             isGroup: true
         };
         var url = "ProductStatusSetting/Index?" + $.param(param);
-        var width = 750;
+        var width = 850;
         var height = 360;
 
         parent.OpenNextPopup("ProductStatusSetting", url, title, width, height, true, false, window, 0, null, null);
