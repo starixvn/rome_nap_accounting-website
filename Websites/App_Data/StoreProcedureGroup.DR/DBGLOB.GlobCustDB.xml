@@ -4,6 +4,7 @@
     <Setting Key="API_CustomerIns_Register" SpName="API_CustomerIns_Register" DbName="DBGLOB.GlobCustDB.wsv_nap" Plain="0" />
     <Setting Key="Acc_CustomerIns_Register" SpName="Acc_CustomerIns_Register" DbName="DBGLOB.GlobCustDB.wsv_nap" Plain="0" />
     <Setting Key="Acc_CustomerIns_Rollback" SpName="Acc_CustomerIns_Rollback" DbName="DBGLOB.GlobCustDB.wsv_nap" Plain="0" />
+    <Setting Key="NAP_Admin_AddNewSite" SpName="NAP_Admin_AddNewSite" DbName="DBGLOB.GlobCustDB.wsv_nap" />
   </Function>
   <Function Name="Scaleout DB">
     <Setting Key="Acc_ServerDBConfigSel" SpName="Acc_ServerDBConfigSel" DbName="DBGLOB.GlobCustDB.wsv_nap" />
