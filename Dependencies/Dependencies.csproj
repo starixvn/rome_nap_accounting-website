@@ -210,7 +210,7 @@
       <HintPath>..\packages\Fanex.BetList.Playtech.1.0.0\lib\net461\Fanex.BetList.Playtech.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.PP, Version=2.0.0.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.PP.2.0.0.4-ExtendBettype-01\lib\net461\Fanex.BetList.PP.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.PP.2.0.0.4\lib\net461\Fanex.BetList.PP.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.PragmaticLiveCasino, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.PragmaticLiveCasino.2.0.0.1\lib\net461\Fanex.BetList.PragmaticLiveCasino.dll</HintPath>
