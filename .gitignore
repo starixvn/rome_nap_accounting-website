@@ -52,3 +52,11 @@ CasinoLibrary.txt
 /Dependencies/Content/*
 /Fanex.Tarus.BetList/Content/*
 .idea
+/Dependencies/.vs/Dependencies.csproj.dtbcache.json
+/Fanex.Tarus.BetList/.vs/Fanex.Tarus.BetList.csproj.dtbcache.json
+/Fanex.Tarus.Customer/.vs/Fanex.Tarus.Customer.csproj.dtbcache.json
+/Fanex.Tarus.OTP/.vs/Fanex.Tarus.OTP.csproj.dtbcache.json
+/Fanex.Tarus.WhiteLabel/.vs/Fanex.Tarus.WhiteLabel.csproj.dtbcache.json
+/GlobalResources/.vs/GlobalResources.csproj.dtbcache.json
+/Sunplus.Accounting.Business/.vs/Sunplus.Accounting.Business.csproj.dtbcache.json
+/Sunplus.Accounting.WcfServiceLibrary/.vs/Sunplus.Accounting.WcfServiceLibrary.csproj.dtbcache.json
