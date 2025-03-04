@@ -257,7 +257,7 @@ namespace Fanex.Tarus.Customer.Controller
 
             var rawPassword = Security.Services.Encryptor.Decrypt(generalInfo.Password,
                 HttpContext.Session[HashKeySessionKey].ToString());
-            generalInfo.Password = encryptor.CfsEnCode(rawPassword);
+            generalInfo.Password = rawPassword;
 
             var response = await customerService.CreateCustomer(new CreateCustomerParam(
                 generalInfo,
