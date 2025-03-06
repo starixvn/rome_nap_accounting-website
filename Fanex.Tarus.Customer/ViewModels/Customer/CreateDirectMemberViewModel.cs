@@ -12,7 +12,7 @@ namespace Fanex.Tarus.Customer.ViewModels.Customer
             string secretKey)
             : base(request, appConfig, cndUri, assetsVersion, secretKey)
         {
-            PageTitle = "Add New Direct Member";
+            PageTitle = $"Add New Direct Member to {request.UplineUsername}";
         }
     }
 }

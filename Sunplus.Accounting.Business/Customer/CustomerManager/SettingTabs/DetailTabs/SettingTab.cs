@@ -55,7 +55,7 @@
 
                 case 2: // agent
                     downlineListURL = "Customer/MemberList.aspx?agentId=" + custId;
-                    addDownlineURL = customerInfoViewModel.IsDeposit ? "DepositCustomer/AddNewAgent" : "Customer/CreateCustomer?theme=nap&uplineId=" + custId + "&uplineRoleId=2";
+                    addDownlineURL = customerInfoViewModel.IsDeposit ? "DepositCustomer/AddNewAgent" : "Customer/CreateCustomer?theme=nap&uplineId=" + custId + "&uplineRoleId=2&UplineUsername=" + userName;
                     infoUrl = "Customer/EditCustomerInfo.aspx?custId=" + custId + "&type=Agent";
                     agCasinoLinkSetting = string.Format("AGCasino/EditAGCasinoGameSetting?customerId={0}&uplineId={1}&roleId={2}", custId, masterId, roleId);
                     TemplateHandler.Assign(ref htmlcontent, "{type}", "Agent");
@@ -64,21 +64,21 @@
 
                 case 3: // master
                     infoUrl = "Customer/EditCustomerInfo.aspx?custId=" + custId + "&type=Master";
-                    addDownlineURL = customerInfoViewModel.IsDeposit ? "DepositCustomer/AddNewAgent" : "Customer/CreateCustomer?theme=nap&uplineId=" + custId + "&uplineRoleId=3";
+                    addDownlineURL = customerInfoViewModel.IsDeposit ? "DepositCustomer/AddNewAgent" : "Customer/CreateCustomer?theme=nap&uplineId=" + custId + "&uplineRoleId=3&UplineUsername=" + userName;
                     downlineListURL = "Customer/AgentList.aspx?masterId=" + custId;
                     agCasinoLinkSetting = string.Format("AGCasino/EditAGCasinoGameSetting?customerId={0}&uplineId={1}&roleId={2}", custId, superId, roleId);
                     TemplateHandler.Assign(ref htmlcontent, "{type}", "Master");
-                    addNewDirectMemberUrl = "Customer/CreateDirectMember?theme=nap&uplineId=" + custId + "&uplineRoleId=3&agentId=-3";
+                    addNewDirectMemberUrl = "Customer/CreateDirectMember?theme=nap&uplineId=" + custId + "&uplineRoleId=3&agentId=-3&UplineUsername=" + userName;
                     break;
 
                 case 4: // super
-                    addDownlineURL = customerInfoViewModel.IsDeposit ? "DepositCustomer/AddNewAgent" : "Customer/CreateCustomer?theme=nap&uplineId=" + custId + "&uplineRoleId=4";
+                    addDownlineURL = customerInfoViewModel.IsDeposit ? "DepositCustomer/AddNewAgent" : "Customer/CreateCustomer?theme=nap&uplineId=" + custId + "&uplineRoleId=4&UplineUsername=" + userName;
                     downlineListURL = "Customer/MasterAgentList.aspx?superId=" + custId;
                     infoUrl = "Customer/EditCustomerInfo.aspx?custId=" + custId + "&type=Super";
                     agCasinoLinkSetting = string.Format("AGCasino/EditAGCasinoGameSetting?customerId={0}&uplineId={1}&roleId={2}&exchangeId={3}", custId, 0, roleId, customerInfoViewModel.ExchangeId);
                     TemplateHandler.Assign(ref htmlcontent, "{type}", "Super");
                     if (custId < 100) TemplateHandler.RemoveBlock(ref htmlcontent, "editTransferTime"); // for dummy super
-                    addNewDirectMemberUrl = "Customer/CreateDirectMember?theme=nap&uplineId=" + custId + "&uplineRoleId=4&agentId=-4";
+                    addNewDirectMemberUrl = "Customer/CreateDirectMember?theme=nap&uplineId=" + custId + "&uplineRoleId=4&agentId=-4&UplineUsername=" + userName;
                     break;
 
                 default:

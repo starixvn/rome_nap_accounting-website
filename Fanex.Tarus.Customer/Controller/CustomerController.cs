@@ -187,7 +187,6 @@ namespace Fanex.Tarus.Customer.Controller
         public ActionResult CreateDirectMember(CreateDirectMemberRequest request)
         {
             request.NoPermissionEditCredit = !Permissions.GetHostPermission(Enumerations.Functions.Customer.Credit);
-
             var viewModel = new CreateDirectMemberViewModel(
                 request,
                 new AppConfiguration(GetApplicationPath()),
