@@ -410,8 +410,8 @@
     <Setting Key="Acc_ExternalGroupHeadline_MappingSuper" SpName="Acc_ExternalGroupHeadline_MappingSuper" DbName="DBCUST.CustDB.wsv_nap" />
   </Function>
   <Function Name="Admin - Dormant Account List">
-    <Setting Key="Acc_DormantAccountListByHeadline_Sel" SpName="Acc_DormantAccountListByHeadline_Sel" DbName="DBCUST.CustDB.wsv_nap" />
-    <Setting Key="Acc_DormantDownlineListByHeadline_Sel" SpName="Acc_DormantDownlineListByHeadline_Sel" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_DormantAccountListByHeadline_Sel" SpName="Acc_DormantAccountListByHeadline_Sel_UAT2" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_DormantDownlineListByHeadline_Sel" SpName="Acc_DormantDownlineListByHeadline_Sel_UAT2" DbName="DBCUST.CustDB.wsv_nap" />
   </Function>
   <Function Name="Customer - Copy Super Setting">
     <Setting Key="Acc_CopySetting_CustomerCheckSuperList" SpName="Acc_CopySetting_CustomerCheckSuperList" DbName="DBCUST.CustDB.wsv_nap" />
