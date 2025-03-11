@@ -237,7 +237,7 @@
       <HintPath>..\packages\Fanex.BetList.SealEntertainment.2.0.0.1\lib\net461\Fanex.BetList.SealEntertainment.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.SexyGaming, Version=2.0.0.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.SexyGaming.2.0.0.6-tip-02\lib\net461\Fanex.BetList.SexyGaming.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.SexyGaming.2.0.0.6-tip-03\lib\net461\Fanex.BetList.SexyGaming.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.Spadegaming, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Spadegaming.2.0.0.1\lib\net461\Fanex.BetList.Spadegaming.dll</HintPath>
