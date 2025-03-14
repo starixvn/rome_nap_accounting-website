@@ -276,4 +276,7 @@
   <data name="IsAutoMasterPT" xml:space="preserve">
     <value>Is Auto Master PT</value>
   </data>
+  <data name="SuperDiscount" xml:space="preserve">
+    <value>Comm For Super</value>
+  </data>
 </root>
