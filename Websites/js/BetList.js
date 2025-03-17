@@ -1809,15 +1809,6 @@ function getPPLiveCasinoParam(bettype, custId, transId3rd, gameId3rd, currencyId
     };
 }
 
-function getFunkyGamesParam(custId, transId3rd, gameId3rd, currencyId, siteId) {
-    return {
-        url: "ThirdParty/FunkyGamesResult",
-        title: "Funky Games Result",
-        jsonParam: { custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, currencyId: currencyId, siteId: siteId, productId: 50 },
-        width: 945,
-        height: 500
-    };
-}
 
 function getSportsLotteryParam(custId, transId3rd, gameId3rd, currencyId, siteId) {
     return {

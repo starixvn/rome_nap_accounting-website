@@ -144,7 +144,7 @@
       <HintPath>..\packages\Fanex.BetList.FGG.2.0.0.1\lib\net461\Fanex.BetList.FGG.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.FunkyGames, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.FunkyGames.1.0.0-beta-01\lib\net461\Fanex.BetList.FunkyGames.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.FunkyGames.1.0.0-beta-02\lib\net461\Fanex.BetList.FunkyGames.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.GPI, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.GPI.1.0.1\lib\net461\Fanex.BetList.GPI.dll</HintPath>
