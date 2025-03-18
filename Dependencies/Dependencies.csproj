@@ -99,7 +99,7 @@
       <HintPath>..\packages\Fanex.BetList.Allbet.2.0.0.2\lib\net461\Fanex.BetList.Allbet.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.ASKMESLOT, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.ASKMESLOT.1.0.0-Beta-02\lib\net461\Fanex.BetList.ASKMESLOT.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.ASKMESLOT.1.0.0\lib\net461\Fanex.BetList.ASKMESLOT.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.BBIN, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.BBIN.2.0.0.1\lib\net461\Fanex.BetList.BBIN.dll</HintPath>
