@@ -2,6 +2,7 @@
 @model ThirdPartyResultViewModel
 @{
     Layout = null;
+    var classPopup ="third-party-result"+ ViewBag.ProductId;
 }
 <!DOCTYPE html>
 <html>
@@ -11,7 +12,7 @@
     <title>@Model.Title</title>
 </head>
 <body>
-    <div class="third-party-result">
+    <div class="@classPopup">
         <iframe src="@Model.Result" frameborder="0" class="handhistory-iframe"></iframe>
     </div>
 </body>
