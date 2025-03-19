@@ -87,6 +87,16 @@
             return BaseResult(request, resultRequest, "AdvantPlayResultConfigs");
         }
 
+        public ActionResult SabaKenoResult(ThirdPartyResultRequest request)
+        {
+            var resultRequest = new ResultRequest(request.CustId, request.TransId3rd, request.GameId3rd, request.CurrencyId, request.SiteId)
+            {
+                BetTypeId = request.BetTypeId
+            };
+            ViewBag.ProductId = request.ProductId;
+            return BaseResult(request, resultRequest, "SabaKenoResultConfigs");
+        }
+
         public ActionResult AdvantPlayMiniResult(ThirdPartyResultRequest request) => BaseResult(request, "AdvantPlayMiniResultConfigs");
 
         public ActionResult JokerResult(ThirdPartyResultRequest request) => BaseResult(request, "JokerResultConfigs");

@@ -1003,6 +1003,18 @@ function showGPIBetDetails(refno, winlossDate, custId, transType) {
     openResultsPopUp(params);
 }
 
+function showSabaKenoDetails (refno, winlossDate, custId, transType) {
+    var params = {
+        url: "RNGCasinoBetList/BetDetails",
+        title: "SABA Keno - Detailed Bet list - " + winlossDate.split(" ")[0],
+        jsonParam: { TransId: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 133, PageSize: 500 },
+        width: 1250,
+        height: 600
+    };
+
+    openResultsPopUp(params);
+}
+
 function showPlayStarBetDetails(refno, winlossDate, custId, transType) {
     var params = {
         url: "RNGCasinoBetList/BetDetails",
@@ -1125,6 +1137,9 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
             return getBaseballParam();
         case 50: // Cricket
             return getCricketParam(matchid, bettype, sporttype, currencyId, gameId3rd);
+
+        case 133: //Saba Keno
+            return getSabaKenoParam(custId, transId3rd, gameId3rd, currencyId, siteId, bettype, winlostdate);
 
         case 156:
             return getSEALParam(bettype, custId, transId3rd, gameId3rd, currencyId, siteId);
@@ -1272,7 +1287,7 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
             
         case 145: //GPI RNG
             return getGPIParam(custId, transId3rd, gameId3rd, currencyId, siteId, bettype, winlostdate);
-            
+
         case 134: //Betby
             return getBetbyParam(matchid, sporttype, league);
 
@@ -2015,6 +2030,26 @@ function getGPIParam(custId, transId3rd, gameId3rd, currencyId, siteId, betType,
         },
         width: 945,
         height: 500
+    };
+}
+
+function getSabaKenoParam(custId, transId3rd, gameId3rd, currencyId, siteId, betType, endTime) {
+    return {
+        url: "ThirdParty/SabaKenoResult",
+        title: "SABA Keno Result",
+        jsonParam:
+        {
+            productId: 102,
+            custId: custId,
+            transId3rd: transId3rd,
+            gameId3rd: gameId3rd,
+            BetTypeId: betType,
+            EndTime: endTime,
+            SiteId: siteId,
+            CurrencyId: currencyId
+        },
+        width: 1410,
+        height: 700
     };
 }
 

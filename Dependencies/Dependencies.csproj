@@ -230,6 +230,9 @@
     <Reference Include="Fanex.BetList.SabaClub, Version=2.0.0.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.SabaClub.2.0.0.4\lib\net461\Fanex.BetList.SabaClub.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.BetList.SABAKeno, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.SABAKeno.1.0.0\lib\net461\Fanex.BetList.SABAKeno.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.BetList.SABAxD, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.SABAxD.1.0.0\lib\net461\Fanex.BetList.SABAxD.dll</HintPath>
     </Reference>
