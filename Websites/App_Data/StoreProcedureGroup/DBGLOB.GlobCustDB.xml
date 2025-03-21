@@ -32,5 +32,6 @@
     <Setting Key="Acc_Dep_Initial_DCS_SettingConfig_Ins" SpName="Acc_Dep_Initial_DCS_SettingConfig_Ins" DbName="DBGLOB.GlobCustDB.wsv_nap" />
     <Setting Key="Acc_Dep_Initial_DCS_SettingConfig_Upd" SpName="Acc_Dep_Initial_DCS_SettingConfig_Upd" DbName="DBGLOB.GlobCustDB.wsv_nap" />
     <Setting Key="Acc_Dep_Initial_DCS_ConfigStatus_Upd" SpName="Acc_Dep_Initial_DCS_ConfigStatus_Upd" DbName="DBGLOB.GlobCustDB.wsv_nap" />
+    <Setting Key="Acc_Dep_CustSetting_GlobalStakeLevelUpdate" SpName="Acc_Dep_CustSetting_GlobalStakeLevelUpdate" DbName="DBGLOB.GlobCustDB.wsv_nap" />
   </Function>
 </Functions>

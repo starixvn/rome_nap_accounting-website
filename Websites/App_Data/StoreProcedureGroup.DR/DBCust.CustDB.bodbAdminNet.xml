@@ -280,8 +280,7 @@
     </Function>
 
     <Function Name="Setting Type 0 - Global Stake Level">
-      <Setting Key="Acc_Dep_CustSetting_GlobalStakeLevelSelect" SpName="Acc_Dep_CustSetting_GlobalStakeLevelSelect" DbName="DBCust.CustDB.wsv_nap" />
-      <Setting Key="Acc_Dep_CustSetting_GlobalStakeLevelUpdate" SpName="Acc_Dep_CustSetting_GlobalStakeLevelUpdate" DbName="DBCust.CustDB.wsv_nap" />
+      <Setting Key="Acc_Dep_CustSetting_GlobalStakeLevelSelect" SpName="Acc_Dep_CustSetting_GlobalStakeLevelSelect" DbName="DBCust.CustDB.wsv_nap" />   
     </Function>
 
     <Function Name="Setting Type 7, 8 - Stake Level, Stake Group Level">
