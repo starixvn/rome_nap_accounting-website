@@ -446,7 +446,7 @@ function showRnGCasinoDetails(transId, winlossDate, custId, transType) {
 function showRNGWARBetDetails(transId, winlossDate, custId, transType) {
     var rngCasinoParam = {
         url: "RNGCasinoBetList/BetDetails",
-        title: "Funky Games (old) - Detailed Bet list -" + winlossDate.split(" ")[0],
+        title: "Funky Games (Old) - Detailed Bet list -" + winlossDate.split(" ")[0],
         jsonParam: { TransId: transId, WinLossDate: winlossDate, TransType: transType, CustId: custId, SportType: 224, PageSize: 500 },
         width: 1250,
         height: 600
@@ -1208,7 +1208,7 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
         case 210: // RNG Casino.
             return getRNGCasinoParam(custId, transId3rd, gameId3rd, currencyId, siteId);
 
-        case 224: //Funky Games (old)
+        case 224: //Funky Games (Old)
             return getRNGWarCasinoParam(custId, transId3rd, gameId3rd, currencyId, siteId);
 
         case 225: // ION Casino
@@ -1534,7 +1534,7 @@ function getBBinParam(custId, transId3rd, gameId3rd, currencyId, siteId) {
 function getRNGWarCasinoParam(custId, transId3rd, gameId3rd, currencyId, siteId) {
     return {
         url: "ThirdParty/RNGWarResult",
-        title: "Funky Games (old) Result",
+        title: "Funky Games (Old) Result",
         jsonParam: { custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, currencyId: currencyId, siteId: siteId, productId: 50},
         width: 945,
         height: 500
