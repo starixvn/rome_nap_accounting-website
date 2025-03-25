@@ -446,7 +446,7 @@ function showRnGCasinoDetails(transId, winlossDate, custId, transType) {
 function showRNGWARBetDetails(transId, winlossDate, custId, transType) {
     var rngCasinoParam = {
         url: "RNGCasinoBetList/BetDetails",
-        title: "Funky Games - Detailed Bet list -" + winlossDate.split(" ")[0],
+        title: "Funky Games (Old) - Detailed Bet list -" + winlossDate.split(" ")[0],
         jsonParam: { TransId: transId, WinLossDate: winlossDate, TransType: transType, CustId: custId, SportType: 224, PageSize: 500 },
         width: 1250,
         height: 600
@@ -1052,6 +1052,19 @@ function showASKMESLOTBetDetails(refno, winlossDate, custId, transType) {
     openResultsPopUp(params);
 }
 
+function showFunkyGamesBetDetails(transId, winlossDate, custId, transType) {
+    var rngCasinoParam = {
+        url: "RNGCasinoBetList/BetDetails",
+        title: "Funky Games - Detailed Bet list -" + winlossDate.split(" ")[0],
+        jsonParam: { TransId: transId, WinLossDate: winlossDate, TransType: transType, CustId: custId, SportType: 131, PageSize: 500 },
+        width: 1250,
+        height: 600
+    };
+
+    openResultsPopUp(rngCasinoParam);
+}
+
+
 function ViewCashOutHistory(transId, refNo, betType, originalTransId, title) {
     var cashoutParam = {
         url: "BetList/GetCashOutDetails",
@@ -1195,7 +1208,7 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
         case 210: // RNG Casino.
             return getRNGCasinoParam(custId, transId3rd, gameId3rd, currencyId, siteId);
 
-        case 224: //Funky Games
+        case 224: //Funky Games (Old)
             return getRNGWarCasinoParam(custId, transId3rd, gameId3rd, currencyId, siteId);
 
         case 225: // ION Casino
@@ -1299,6 +1312,9 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
 
         case 130: //ASKMESLOT
             return getASKMESLOTParam(custId, transId3rd, gameId3rd, currencyId, siteId, bettype, winlostdate);
+            
+        case 131: //Funky Games
+            return getFunkyGamesParam(custId, transId3rd, gameId3rd, currencyId, siteId, bettype, winlostdate);
 
         default:
             return undefined;
@@ -1518,7 +1534,7 @@ function getBBinParam(custId, transId3rd, gameId3rd, currencyId, siteId) {
 function getRNGWarCasinoParam(custId, transId3rd, gameId3rd, currencyId, siteId) {
     return {
         url: "ThirdParty/RNGWarResult",
-        title: "Funky Games Result",
+        title: "Funky Games (Old) Result",
         jsonParam: { custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, currencyId: currencyId, siteId: siteId, productId: 50},
         width: 945,
         height: 500
@@ -1792,6 +1808,7 @@ function getPPLiveCasinoParam(bettype, custId, transId3rd, gameId3rd, currencyId
         height: 500
     };
 }
+
 
 function getSportsLotteryParam(custId, transId3rd, gameId3rd, currencyId, siteId) {
     return {
@@ -2100,6 +2117,26 @@ function getASKMESLOTParam(custId, transId3rd, gameId3rd, currencyId, siteId, be
         jsonParam:
         {
             productId: 103,
+            custId: custId,
+            transId3rd: transId3rd,
+            gameId3rd: gameId3rd,
+            BetTypeId: betType,
+            EndTime: endTime,
+            SiteId: siteId,
+            CurrencyId: currencyId
+        },
+        width: 945,
+        height: 500
+    };
+}
+
+function getFunkyGamesParam(custId, transId3rd, gameId3rd, currencyId, siteId, betType, endTime) {
+    return {
+        url: "ThirdParty/FunkyGamesResult",
+        title: "Funky Games Result",
+        jsonParam:
+        {
+            productId: 104,
             custId: custId,
             transId3rd: transId3rd,
             gameId3rd: gameId3rd,

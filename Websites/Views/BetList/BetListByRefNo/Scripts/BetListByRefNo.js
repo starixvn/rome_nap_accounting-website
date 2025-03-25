@@ -98,7 +98,7 @@ BetList.BetListByRefNo = (function ($) {
         $betId.removeAttr("disabled");
         $playerId3rd.attr("disabled", "disabled");
 
-        var productIdSetDisabledGameId = ["22", "24", "32", "34", "36", "52", "55", "56", "60", "61", "62", "67", "68", "72", "73", "75", "79", "78", "65", "86", "87", "89", "85", "100", "48", "91", "103", "102"];
+        var productIdSetDisabledGameId = ["22", "24", "32", "34", "36", "52", "55", "56", "60", "61", "62", "67", "68", "72", "73", "75", "79", "78", "65", "86", "87", "89", "85", "100", "48", "91", "103", "102", "104"];
         var selProductValue = $selectedProduct.val();
         if (selProductValue === "-1") {
             $gameId.attr("disabled", "disabled");
@@ -154,7 +154,7 @@ BetList.BetListByRefNo = (function ($) {
             return false;
         }
 
-        var productRequireBetId = ["22", "24", "32", "34", "36", "52", "55", "56", "60", "61", "62", "66", "67", "68", "72", "73", "75", "79", "78", "65", "86", "87", "89", "85", "100", "48", "91", "103", "102"];
+        var productRequireBetId = ["22", "24", "32", "34", "36", "52", "55", "56", "60", "61", "62", "66", "67", "68", "72", "73", "75", "79", "78", "65", "86", "87", "89", "85", "100", "48", "91", "103", "102", "104"];
         if ((isSabaclub || productRequireBetId.indexOf(selProductValue) !== -1) && $betId.val().trim() === "") {
             showError("BetID is required");
             return false;

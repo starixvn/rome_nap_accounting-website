@@ -303,6 +303,9 @@
             return BaseResult(request, "ASKMESLOTResultConfigs");
         }
 
+        public ActionResult FunkyGamesResult(ThirdPartyResultRequest request)
+            => BaseResult(request, "FunkyGamesResultConfigs");
+
         private void SetProductResultTitle(int productId)
             => ProductResultTitle = CacheRef.GetProductName(productId) + " Result";
     }
