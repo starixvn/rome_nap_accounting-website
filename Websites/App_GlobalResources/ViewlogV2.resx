@@ -1954,4 +1954,16 @@ Max Keno (20+1) 2</value>
   <data name="Disable9919_1501" xml:space="preserve">
     <value>Disabled Keno/Lottery</value>
   </data>
+  <data name="UpdateAllSuperDirectMembers" xml:space="preserve">
+    <value>Update All Super Direct Members</value>
+  </data>
+  <data name="DisableAllSuperDirectMembers" xml:space="preserve">
+    <value>Is Disabled - All Super Direct Members</value>
+  </data>
+  <data name="UpdateAllMasterDirectMembers" xml:space="preserve">
+    <value>Update All Master Direct Members</value>
+  </data>
+  <data name="DisableAllMasterDirectMembers" xml:space="preserve">
+    <value>Is Disabled - All Master Direct Members</value>
+  </data>
 </root>
