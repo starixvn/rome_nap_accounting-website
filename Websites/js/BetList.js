@@ -1039,6 +1039,29 @@ function showGPILCBetDetails(refno, winlossDate, custId, transType) {
     openResultsPopUp(params);
 }
 
+function showHotDogBetDetails(refno, winlossDate, custId, transType) {
+    var params = {
+        url: "RNGCasinoBetList/BetDetails",
+        title: "HOTDOG - Detailed Bet list - " + winlossDate.split(" ")[0],
+        jsonParam: { TransId: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 139, PageSize: 500 },
+        width: 1250,
+        height: 600
+    };
+
+    openResultsPopUp(params);
+}
+
+function showOdinGamingBetDetails(refno, winlossDate, custId, transType) {
+    var params = {
+        url: "RNGCasinoBetList/BetDetails",
+        title: "ODIN Gaming - Detailed Bet list - " + winlossDate.split(" ")[0],
+        jsonParam: { TransId: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 128, PageSize: 500 },
+        width: 1250,
+        height: 600
+    };
+
+    openResultsPopUp(params);
+}
 
 function showASKMESLOTBetDetails(refno, winlossDate, custId, transType) {
     var params = {
