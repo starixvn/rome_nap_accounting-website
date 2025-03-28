@@ -31,6 +31,7 @@ namespace Fanex.Tarus.BetList.Business
     using Fanex.Logging.Extensions.Web;
     using Fanex.RemotingRef;
     using Fanex.Tarus.BetList.DataAccess.Results;
+    using Fanex.Tarus.BetList.Entities.BetList;
     using Fanex.Tarus.BetList.Param;
     using Fanex.Tarus.Infrastructure.Configurations;
     using Models;
@@ -194,6 +195,9 @@ namespace Fanex.Tarus.BetList.Business
             }, _cacheService, _iPInfoDataAccess);
             _betListRepository = new BetListRepository();
         }
+
+        public IList<ProductEntity> GetProductList()
+            => _betListRepository.GetProductList(new SelectProductCriteria());
 
         public void AssignCountry(IEnumerable<TicketDetail> tickets)
         {

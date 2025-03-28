@@ -4,6 +4,7 @@
     using Criteria;
     using Fanex.BetList.Core.Entities;
     using Fanex.NAP.Framework.Data;
+    using Fanex.Tarus.BetList.Entities.BetList;
     using Models;
     using System;
     using System.Collections;
@@ -12,6 +13,8 @@
 
     public interface IBetListRepository
     {
+        IList<ProductEntity> GetProductList(SelectProductCriteria criteria);
+
         IList<BetType> GetBetTypeByDate(BetTypeByDateCriteria criteria);
 
         IList<BetType> GetBetTypeByDate(BetTypeByDateInSiteDBCriteria criteria, string AGIP);

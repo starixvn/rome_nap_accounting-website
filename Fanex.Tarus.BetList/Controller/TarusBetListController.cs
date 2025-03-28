@@ -25,6 +25,7 @@ namespace Fanex.Tarus.BetList.Controller
     using SmartPunterFilter = AuthenticationFilter.AuthenticateSmartPunterAction;
     using Fanex.Tarus.BetList.Resources;
     using Fanex.Tarus.BetList.ViewModel;
+    using System.Collections.Generic;
 
     public class TarusBetListController : Controller
     {
@@ -48,7 +49,15 @@ namespace Fanex.Tarus.BetList.Controller
         [SmartPunterFilter(SmartPunterFilter.AuthenticationType.Read)]
         public ActionResult BetListByRefNo_Main()
         {
-            var viewModel = new BetListByRefNoViewModel();
+            var excludeProductIds = new List<int> { 6, 11, 50 };
+            var casinoType = new List<int> { 1, 2 };
+            var allProducts = _betListService.GetProductList();
+            var activeProduct = allProducts
+                .Where(i => i.Enabled &&
+                        casinoType.Any(j => j == i.CasinoType) &&
+                        i.GroupType == 0 &&
+                        !excludeProductIds.Any(j => j == i.ProductID));
+            var viewModel = new BetListByRefNoViewModel(activeProduct);
 
             return View("~/Views/BetList/BetListByRefNo/Index.cshtml", viewModel);
         }
@@ -115,13 +124,13 @@ namespace Fanex.Tarus.BetList.Controller
             AppSession.AddSession(System.Web.HttpContext.Current.Session, "TO_DATE", ToDate);
             return PartialView("~/Views/BetList/BetlistByCustInfo/Betlist/_BetList.cshtml", result);
         }
-       
+
         [AuthorizeFunctions("ViewInfo")]
         public ActionResult GetBookedBetData(int CustID, DateTime FromDate, DateTime ToDate, string statusIds, int PageSize, int PageIndex)
         {
             int quantity = 0;
             var result = _bookedBetService.Get(CustID, FromDate, ToDate, statusIds, PageSize, PageIndex, ref quantity);
-            ViewBag.Quantity = quantity;            
+            ViewBag.Quantity = quantity;
             ViewBag.NumberBegining = (PageSize * (PageIndex - 1)) + 1;
 
             Hashtable paramHastable = new Hashtable();

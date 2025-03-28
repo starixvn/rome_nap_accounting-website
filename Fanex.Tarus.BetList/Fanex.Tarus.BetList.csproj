@@ -140,7 +140,7 @@
       <HintPath>..\packages\Fanex.BetList.RnGCasino.2.0.0.2\lib\net461\Fanex.BetList.RnGCasino.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.RNGCore, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.RNGCore.1.0.1-beta-02\lib\net461\Fanex.BetList.RNGCore.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.RNGCore.1.0.1-beta-03\lib\net461\Fanex.BetList.RNGCore.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.RNGWar, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.RNGWar.2.0.0.1\lib\net461\Fanex.BetList.RNGWar.dll</HintPath>
@@ -596,6 +596,7 @@
     <Compile Include="Criteria\IPInfo\GetIPV6InfoCriteria.cs" />
     <Compile Include="Criteria\Results\GetVS2RacingResultCriteria.cs" />
     <Compile Include="Criteria\Results\GetParlay3rdResultCriteria.cs" />
+    <Compile Include="Criteria\SelectProductCriteria.cs" />
     <Compile Include="Criteria\SiteDB_MixParlayDetailCriteria.cs" />
     <Compile Include="Criteria\SiteDB_BetListByCustInfoByRefnoCriteria.cs" />
     <Compile Include="Criteria\BetListByCustInfoByRefnoCriteria.cs" />
@@ -666,6 +667,7 @@
     <Compile Include="DataAccess\Results\VS2RacingResultDataAccess.cs" />
     <Compile Include="DataAccess\SystemParlayRepository.cs" />
     <Compile Include="Entities\BetList\BetDetail.cs" />
+    <Compile Include="Entities\BetList\ProductEntity.cs" />
     <Compile Include="Entities\NumberGame\NumberWheelChoice.cs" />
     <Compile Include="Extensions\BetListExtension.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />

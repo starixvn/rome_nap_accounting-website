@@ -13,12 +13,38 @@
     using Fanex.Common;
     using Fanex.Data;
     using Fanex.NAP.Framework.Data;
+    using Fanex.Tarus.BetList.Entities.BetList;
+    using Fanex.Tarus.Infrastructure.Helper;
     using Models;
     using Resources;
     using Sunplus.Accounting.Core.Extensions;
 
     public class BetListRepository : IBetListRepository
     {
+        public IList<ProductEntity> GetProductList(SelectProductCriteria criteria)
+        {
+            var entities = new List<ProductEntity>();
+            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = objDb.ExecuteReader(criteria.GetSpParams()))
+                {
+                    while (reader.Read())
+                    {
+                        entities.Add(new ProductEntity
+                        {
+                            ProductID = DataUtils.ToInt16(reader["ProductID"]),
+                            ProductName = DataUtils.ToString(reader["ProductName"]),                            
+                            Enabled = DataUtils.ToBoolean(reader["Enabled"]),                            
+                            GroupType = DataUtils.ToInt16(reader["GroupType"]),
+                            CasinoType = DataUtils.ToInt16(reader["CasinoType"])                            
+                        });
+                    }
+                }
+
+                return entities;
+            }
+        }
+
         public IList<BetType> GetBetTypeByDate(BetTypeByDateCriteria criteria)
         {
             var betTypeList = new List<BetType>();
