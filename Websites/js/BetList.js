@@ -1316,6 +1316,9 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
 
         case 177: //VS2 Horse and Dog Racing
         case 198:
+        case 125:
+        case 126:
+        case 127:
             return getVS2Param(matchid, sporttype, winlostdate);
 
         case 148: //Playtech
@@ -1469,6 +1472,15 @@ function getVS2Param(matchid, sporttype, eventdate) {
     };
 
     switch (sporttype) {
+        case 125:
+            resultParam.title = "Virtual Steeple Chase";
+            break;
+        case 126:
+            resultParam.title = "Virtual Harness Racing";
+            break;
+        case 127:
+            resultParam.title = "Virtual Motor Racing";
+            break;
         case 198:
             resultParam.title = "Virtual Horse Racing";
             break;
