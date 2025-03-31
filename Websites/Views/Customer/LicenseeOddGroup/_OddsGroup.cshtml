@@ -70,6 +70,11 @@
                             {
 	                            <option value="k" @(item.OddsGroup.Equals("k") ? "selected" : string.Empty)>k</option>
                             }
+                            @if (ViewBag.IsDisplayOddsGroupHJ)
+                            {
+	                            <option value="h" @(item.OddsGroup.Equals("h") ? "selected" : string.Empty)>h</option>
+	                            <option value="j" @(item.OddsGroup.Equals("j") ? "selected" : string.Empty)>j</option>
+                            }
                             <option value="" @(string.IsNullOrWhiteSpace(item.OddsGroup) ? "selected" : string.Empty)>N/A</option>
                         </select>
                     </td>

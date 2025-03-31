@@ -68,6 +68,9 @@ namespace Fanex.Tarus.Customer.Controller
             string listOfferOddGroupKSites = ConfigurationManager.AppSettings["OfferOddGroupKSites"].ToString();
             ViewBag.IsDisplayOddsGroupK = listOfferOddGroupKSites.Split(',').ToList().FindIndex(x => x.Equals(siteName, StringComparison.OrdinalIgnoreCase)) != -1;
 
+            string listOfferOddGroupHJSites = ConfigurationManager.AppSettings["OfferOddGroupHJSites"].ToString();
+            ViewBag.IsDisplayOddsGroupHJ = listOfferOddGroupHJSites.Split(',').ToList().FindIndex(x => x.Equals(siteName, StringComparison.OrdinalIgnoreCase)) != -1;
+
             var model = _settingOddsGroupService.GetAgentOddsGroups(custids);            
             return PartialView("~/Views/Customer/LicenseeOddGroup/_OddsGroup.cshtml", model.ToList());
         }
