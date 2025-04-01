@@ -1380,6 +1380,11 @@ namespace Fanex.Tarus.BetList.Business
                 const int VirtualSports4ProductId = 83;
                 sportName = GetProductName(VirtualSports4ProductId);
             }
+            else if (ReportService.IsVirtualSports7(betTypeId))
+            {
+                const int VirtualSports7ProductId = 106;
+                sportName = GetProductName(VirtualSports7ProductId);
+            }
             else if (ReportService.IsSabaclub(betTypeId))
             {
                 sportName = ticketHelper.GetSportNameById(SportContants.Sabaclub);
