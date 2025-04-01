@@ -1,113 +1,124 @@
-﻿@using Fanex.Tarus.Customer.Resources
+﻿@using Fanex.Tarus.Customer.Helpers
+@using Fanex.Tarus.Customer.Resources
 @using Fanex.Tarus.Customer.ViewModels.LicenseeOddsGroup;
 @model IEnumerable<AgentOddsGroupEntity>
-@{
-    Layout = null;   
-    bool isFirst = true;
-}
 
-<div id="update_section">
-    <label>
-        <input type="checkbox" id="apply_members_checkbox" /><span class="b">@LicenseeDcsSettingLabels.ApplyExistingMembers</span>
-    </label>
-    <table class="tblcollapse betsetting_table mT5" id="oddsgroup_table">
-        <thead>
-            <tr class="title_1">
-                <th>
-                    @if (Model.Count() > 1)
-                    {
-                        <input type="checkbox" id="select-all-checkbox" />
-                    }
-                </th>
-                <th>
-                    @LicenseeOddsGroup.AgentList
-                    @if (Model.Count() > 1)
-                    {
-                        <span title="@LicenseeOddsGroup.CopyFrom1stRow" class="icon-copy-setting" id="copy_setting_icon"></span>
-                    }
-                </th>
-                <th>
-                    @LicenseeOddsGroup.OperatorID
-                </th>
-                <th>@LicenseeOddsGroup.OddsGroup</th>
-                <th>@LicenseeOddsGroup.Active</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr data-custid="@item.CustId" data-username="@item.UserName" data-operatorid="@item.OperatorId" data-oddsgroup="@item.OddsGroup" data-isactive="@item.IsActive">
-                    <td>
-                        <input type="checkbox" class="select-checkbox @(isFirst ? "first-row" : string.Empty)" />
-                    </td>
-                    <td class="l">@item.UserName</td>
-                    <td class="l">@item.OperatorId</td>
-                    <td class="l w300">
-                        <select id="dropdownOddsGroup_@item.CustId" class="dropdownOddsGroup @(isFirst ? "first-row" : string.Empty)" disabled>
-                            <option value="a" @(item.OddsGroup.Equals("a") ? "selected" : string.Empty)>a</option>
-                            <option value="b" @(item.OddsGroup.Equals("b") ? "selected" : string.Empty)>b</option>
-                            <option value="c" @(item.OddsGroup.Equals("c") ? "selected" : string.Empty)>c</option>
-                            <option value="d" @(item.OddsGroup.Equals("d") ? "selected" : string.Empty)>d</option>
-                            <option value="e" @(item.OddsGroup.Equals("e") ? "selected" : string.Empty)>e</option>
-                            <option value="f" @(item.OddsGroup.Equals("f") ? "selected" : string.Empty)>f</option>
-                            @if (ViewBag.IsDisplayOddsGroupI)
-                            {
-                                <option value="i" @(item.OddsGroup.Equals("i") ? "selected" : string.Empty)>i</option>
-                            }
-                            @if (ViewBag.IsDisplayOddsGroupM)
-                            {
-	                            <option value="m" @(item.OddsGroup.Equals("m") ? "selected" : string.Empty)>m</option>
-                            }
-                            @if (ViewBag.IsDisplayOddsGroupQ)
-                            {
-	                            <option value="q" @(item.OddsGroup.Equals("q") ? "selected" : string.Empty)>q</option>
-                            }
-                            @if (ViewBag.IsDisplayOddsGroupG)
-                            {
-                                <option value="g" @(item.OddsGroup.Equals("g") ? "selected" : string.Empty)>g</option>
-                            }
-                            @if (ViewBag.IsDisplayOddsGroupK)
-                            {
-	                            <option value="k" @(item.OddsGroup.Equals("k") ? "selected" : string.Empty)>k</option>
-                            }
-                            @if (ViewBag.IsDisplayOddsGroupHJ)
-                            {
-	                            <option value="h" @(item.OddsGroup.Equals("h") ? "selected" : string.Empty)>h</option>
-	                            <option value="j" @(item.OddsGroup.Equals("j") ? "selected" : string.Empty)>j</option>
-                            }
-                            <option value="" @(string.IsNullOrWhiteSpace(item.OddsGroup) ? "selected" : string.Empty)>N/A</option>
-                        </select>
-                    </td>
-                    <td>
-                        <input type="checkbox" class="isactive-checkbox @(isFirst ? "first-row" : string.Empty)" id="chkIsActive_@item.CustId" @(item.IsActive ? "checked" : string.Empty) disabled />
-                    </td>
+    @{
+        Layout = null;
+        bool isFirst = true;
+
+        // Retrieve display flags from ViewData
+        var displayFlags = new Dictionary<string, bool>
+{
+    { "I", ViewHelper.GetBooleanFromViewData(ViewData, "IsDisplayOddsGroupI") },
+    { "M", ViewHelper.GetBooleanFromViewData(ViewData, "IsDisplayOddsGroupM") },
+    { "Q", ViewHelper.GetBooleanFromViewData(ViewData, "IsDisplayOddsGroupQ") },
+    { "G", ViewHelper.GetBooleanFromViewData(ViewData, "IsDisplayOddsGroupG") },
+    { "K", ViewHelper.GetBooleanFromViewData(ViewData, "IsDisplayOddsGroupK") },
+    { "HJ", ViewHelper.GetBooleanFromViewData(ViewData, "IsDisplayOddsGroupHJ") }
+};
+    }
+
+    <div id="update_section">
+        <label>
+            <input type="checkbox" id="apply_members_checkbox" />
+            <span class="b">@LicenseeDcsSettingLabels.ApplyExistingMembers</span>
+        </label>
+        <table class="tblcollapse betsetting_table mT5" id="oddsgroup_table">
+            <thead>
+                <tr class="title_1">
+                    <th>
+                        @if (Model.Count() > 1)
+                        {
+                            <input type="checkbox" id="select-all-checkbox" />
+                        }
+                    </th>
+                    <th>
+                        @LicenseeOddsGroup.AgentList
+                        @if (Model.Count() > 1)
+                        {
+                            <span title="@LicenseeOddsGroup.CopyFrom1stRow" class="icon-copy-setting" id="copy_setting_icon"></span>
+                        }
+                    </th>
+                    <th>@LicenseeOddsGroup.OperatorID</th>
+                    <th>@LicenseeOddsGroup.OddsGroup</th>
+                    <th>@LicenseeOddsGroup.Active</th>
                 </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr data-custid="@item.CustId" data-username="@item.UserName" data-operatorid="@item.OperatorId" data-oddsgroup="@item.OddsGroup" data-isactive="@item.IsActive">
+                        <td>
+                            <input type="checkbox" class="select-checkbox @(isFirst ? "first-row" : string.Empty)" />
+                        </td>
+                        <td class="l">@item.UserName</td>
+                        <td class="l">@item.OperatorId</td>
+                        <td class="l w300">
+                            <select id="dropdownOddsGroup_@item.CustId" class="dropdownOddsGroup @(isFirst ? "first-row" : string.Empty)" disabled>
+                                @foreach (var group in new[] { "a", "b", "c", "d", "e", "f" })
+                                {
+                                    <option value="@group" @(item.OddsGroup.Equals(group) ? "selected" : string.Empty)>@group</option>
+                                }
 
-                isFirst = false;
-            }
-        </tbody>
-    </table>
-    <div class="btnNextR mT5" id="btnNext">
-        <div class="btnNextL">@LicenseeDcsSettingLabels.Next</div>
+                                @if (displayFlags["I"])
+                                {
+                                    <option value="i" @(item.OddsGroup.Equals("i") ? "selected" : string.Empty)>i</option>
+                                }
+                                @if (displayFlags["M"])
+                                {
+                                    <option value="m" @(item.OddsGroup.Equals("m") ? "selected" : string.Empty)>m</option>
+                                }
+                                @if (displayFlags["Q"])
+                                {
+                                    <option value="q" @(item.OddsGroup.Equals("q") ? "selected" : string.Empty)>q</option>
+                                }
+                                @if (displayFlags["G"])
+                                {
+                                    <option value="g" @(item.OddsGroup.Equals("g") ? "selected" : string.Empty)>g</option>
+                                }
+                                @if (displayFlags["K"])
+                                {
+                                    <option value="k" @(item.OddsGroup.Equals("k") ? "selected" : string.Empty)>k</option>
+                                }
+                                @if (displayFlags["HJ"])
+                                {
+                                    <option value="h" @(item.OddsGroup.Equals("h") ? "selected" : string.Empty)>h</option>
+                                    <option value="j" @(item.OddsGroup.Equals("j") ? "selected" : string.Empty)>j</option>
+                                }
+                                <option value="" @(string.IsNullOrWhiteSpace(item.OddsGroup) ? "selected" : string.Empty)>N/A</option>
+                            </select>
+                        </td>
+                        <td>
+                            <input type="checkbox" class="isactive-checkbox @(isFirst ? "first-row" : string.Empty)" id="chkIsActive_@item.CustId" @(item.IsActive ? "checked" : string.Empty) disabled />
+                        </td>
+                    </tr>
+                    isFirst = false;
+                }
+            </tbody>
+        </table>
+        <div class="btnNextR mT5" id="btnNext">
+            <div class="btnNextL">@LicenseeDcsSettingLabels.Next</div>
+        </div>
     </div>
-</div>
-<div class="hide" id="review_section">
-    <div class="review-apply-members">@LicenseeDcsSettingLabels.ApplyExistingMembers: <span id="apply_members_span"></span></div>
-    <table class="tblcollapse reviewoddsgroup_table mT5" id="reviewoddsgroup_table">
-        <thead>
-            <tr class="title_1">
-                <th>@LicenseeOddsGroup.AgentList</th>
-                <th>@LicenseeOddsGroup.OperatorID</th>
-                <th>@LicenseeOddsGroup.OddsGroup</th>
-                <th>@LicenseeOddsGroup.Active</th>
-                <th>@LicenseeDcsSettingLabels.Updated</th>
-                <th>@LicenseeDcsSettingLabels.Message</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-    <button type="button" class="update-setting-button mT5" id="btnBetSettingUpdate">@LicenseeDcsSettingLabels.Update</button>
-    <div class="btnNextR mT5" id="btnBack">
-        <div class="btnNextL">@LicenseeDcsSettingLabels.Back</div>
+
+    <div class="hide" id="review_section">
+        <div class="review-apply-members">@LicenseeDcsSettingLabels.ApplyExistingMembers: <span id="apply_members_span"></span></div>
+        <table class="tblcollapse reviewoddsgroup_table mT5" id="reviewoddsgroup_table">
+            <thead>
+                <tr class="title_1">
+                    <th>@LicenseeOddsGroup.AgentList</th>
+                    <th>@LicenseeOddsGroup.OperatorID</th>
+                    <th>@LicenseeOddsGroup.OddsGroup</th>
+                    <th>@LicenseeOddsGroup.Active</th>
+                    <th>@LicenseeDcsSettingLabels.Updated</th>
+                    <th>@LicenseeDcsSettingLabels.Message</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <button type="button" class="update-setting-button mT5" id="btnBetSettingUpdate">@LicenseeDcsSettingLabels.Update</button>
+        <div class="btnNextR mT5" id="btnBack">
+            <div class="btnNextL">@LicenseeDcsSettingLabels.Back</div>
+        </div>
     </div>
-</div>

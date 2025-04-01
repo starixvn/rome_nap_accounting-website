@@ -18,67 +18,97 @@ namespace Fanex.Tarus.Customer.Controller
 {
     public class LicenseeOddsGroupController : BaseController
     {
-        private readonly ILicenseeDcsSettingService _settingDCSService;
-        private readonly ILicenseeOddsGroupService _settingOddsGroupService;
+        private readonly ILicenseeDcsSettingService _settingDcsService;
+        private readonly ILicenseeOddsGroupService _oddsGroupService;
+        private const string ViewPathPrefix = "~/Views/Customer/LicenseeOddGroup/";
 
         public LicenseeOddsGroupController()
             : this(null, null)
         {
         }
 
-        internal LicenseeOddsGroupController(ILicenseeDcsSettingService settingDCSService, ILicenseeOddsGroupService settingOddsGroupService)
+        internal LicenseeOddsGroupController(ILicenseeDcsSettingService settingDcsService, ILicenseeOddsGroupService oddsGroupService)
         {
-            _settingDCSService = settingDCSService ?? new LicenseeDcsSettingService();
-            _settingOddsGroupService = settingOddsGroupService ?? new LicenseeOddsGroupService();
+            _settingDcsService = settingDcsService ?? new LicenseeDcsSettingService();
+            _oddsGroupService = oddsGroupService ?? new LicenseeOddsGroupService();
         }
 
         [AuthenticateRead]
         public ActionResult Index()
         {
-            var sites = _settingDCSService.GetSites().ToList();
-
-            var supers = sites.Count == 0 ?
-                new List<BaseModel>() :
-                _settingDCSService.GetSupers(sites[0]).ToList();
-
-            var agents = supers.Count == 0 ?
-                Enumerable.Empty<BaseModel>() :
-                _settingOddsGroupService.GetAgents(supers[0].Id);
-
-            var model = new FilterViewModel(sites, supers, agents);
-
-            return View("~/Views/Customer/LicenseeOddGroup/Index.cshtml", model);
+            try
+            {
+                var model = GetFilterViewModel();
+                return View($"{ViewPathPrefix}Index.cshtml", model);
+            }
+            catch (Exception ex)
+            {
+                return HandleError(ex);
+            }
         }
 
         [AuthenticateRead]
         public ActionResult GetAgentOddGroups(string custids, string siteName)
         {
-            string listOfferOddGroupISites = ConfigurationManager.AppSettings["OfferOddGroupISites"].ToString();
-            ViewBag.IsDisplayOddsGroupI = listOfferOddGroupISites.Split(',').ToList().FindIndex(x => x.Equals(siteName, StringComparison.OrdinalIgnoreCase)) != -1;
-
-            string listOfferOddGroupMSites = ConfigurationManager.AppSettings["OfferOddGroupMSites"].ToString();
-            ViewBag.IsDisplayOddsGroupM = listOfferOddGroupMSites.Split(',').ToList().FindIndex(x => x.Equals(siteName, StringComparison.OrdinalIgnoreCase)) != -1;
-
-            string listOfferOddGroupQSites = ConfigurationManager.AppSettings["OfferOddGroupQSites"].ToString();
-            ViewBag.IsDisplayOddsGroupQ = listOfferOddGroupQSites.Split(',').ToList().FindIndex(x => x.Equals(siteName, StringComparison.OrdinalIgnoreCase)) != -1;
-
-            string listOfferOddGroupGSites = ConfigurationManager.AppSettings["OfferOddGroupGSites"].ToString();
-            ViewBag.IsDisplayOddsGroupG = listOfferOddGroupGSites.Split(',').ToList().FindIndex(x => x.Equals(siteName, StringComparison.OrdinalIgnoreCase)) != -1;
-
-            string listOfferOddGroupKSites = ConfigurationManager.AppSettings["OfferOddGroupKSites"].ToString();
-            ViewBag.IsDisplayOddsGroupK = listOfferOddGroupKSites.Split(',').ToList().FindIndex(x => x.Equals(siteName, StringComparison.OrdinalIgnoreCase)) != -1;
-
-            string listOfferOddGroupHJSites = ConfigurationManager.AppSettings["OfferOddGroupHJSites"].ToString();
-            ViewBag.IsDisplayOddsGroupHJ = listOfferOddGroupHJSites.Split(',').ToList().FindIndex(x => x.Equals(siteName, StringComparison.OrdinalIgnoreCase)) != -1;
-
-            var model = _settingOddsGroupService.GetAgentOddsGroups(custids);            
-            return PartialView("~/Views/Customer/LicenseeOddGroup/_OddsGroup.cshtml", model.ToList());
+            try
+            {
+                ConfigureOddsGroupVisibility(siteName);
+                var model = _oddsGroupService.GetAgentOddsGroups(custids).ToList();
+                return PartialView($"{ViewPathPrefix}_OddsGroup.cshtml", model);
+            }
+            catch (Exception ex)
+            {
+                return HandleError(ex);
+            }
         }
 
         [HttpPost, AuthenticateHost]
         public JsonResult UpdateOddsGroup(UpdateOddsGroupRequest request)
         {
-            var criteria = new UpdateOddsGroupCriteria()
+            try
+            {
+                var criteria = CreateUpdateOddsGroupCriteria(request);
+                var result = _oddsGroupService.UpdateOddsGroup(criteria);
+                return Json(result);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "An error occurred while updating odds group." });
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Agents(int superId)
+        {
+            try
+            {
+                var agents = _oddsGroupService.GetAgents(superId);
+                return Json(agents);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Failed to retrieve agents." });
+            }
+        }
+
+        #region Private Methods
+
+        private FilterViewModel GetFilterViewModel()
+        {
+            var sites = _settingDcsService.GetSites().ToList();
+            var supers = sites.Any()
+                ? _settingDcsService.GetSupers(sites[0]).ToList()
+                : new List<BaseModel>();
+            var agents = supers.Any()
+                ? _oddsGroupService.GetAgents(supers[0].Id)
+                : Enumerable.Empty<BaseModel>();
+
+            return new FilterViewModel(sites, supers, agents);
+        }
+
+        private UpdateOddsGroupCriteria CreateUpdateOddsGroupCriteria(UpdateOddsGroupRequest request)
+        {
+            return new UpdateOddsGroupCriteria
             {
                 CustId = request.CustId,
                 OddsGroup = request.OddsGroup,
@@ -87,12 +117,28 @@ namespace Fanex.Tarus.Customer.Controller
                 IP = Utils.GetClientIP(),
                 UserId = AppSession.AccId
             };
-
-            return Json(_settingOddsGroupService.UpdateOddsGroup(criteria));
         }
 
-        [HttpPost]
-        public ActionResult Agents(int superId)
-            => Json(_settingOddsGroupService.GetAgents(superId));
+        private void ConfigureOddsGroupVisibility(string siteName)
+        {
+            var oddsGroupTypes = new[] { "I", "M", "Q", "G", "K", "HJ" };
+
+            foreach (var type in oddsGroupTypes)
+            {
+                string siteList = ConfigurationManager.AppSettings[$"OfferOddGroup{type}Sites"] ?? string.Empty;
+                bool isVisible = !string.IsNullOrEmpty(siteList) &&
+                                 siteList.Split(',')
+                                         .Any(x => x.Equals(siteName, StringComparison.OrdinalIgnoreCase));
+                ViewData[$"IsDisplayOddsGroup{type}"] = isVisible;
+            }
+        }
+
+        private ActionResult HandleError(Exception ex)
+        {
+            // Log the error (replace with your logging mechanism)
+            return View("Error", new HandleErrorInfo(ex, "LicenseeOddsGroup", "Index"));
+        }
+
+        #endregion
     }
 }

@@ -753,6 +753,7 @@
     <Compile Include="Filters\NAPCustomerAuthFilterAttribute.cs" />
     <Compile Include="Helpers\HmacAuthenticator.cs" />
     <Compile Include="Helpers\NumberFormater.cs" />
+    <Compile Include="Helpers\ViewHelper.cs" />
     <Compile Include="ManageLicenseeCode\Criterias\LicenseeSelCriteria.cs" />
     <Compile Include="ManageLicenseeCode\Criterias\LicenseeTransferCodeSelCriteria.cs" />
     <Compile Include="ManageLicenseeCode\Criterias\LicenseeTransferCodeInsCriteria.cs" />
