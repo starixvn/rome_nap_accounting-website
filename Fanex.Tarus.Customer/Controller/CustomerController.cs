@@ -93,7 +93,7 @@ namespace Fanex.Tarus.Customer.Controller
                 request.CustLevel,
                 string.Empty,
                 request.UserName,
-                IBCUtils.Encryption.CfsEnCode(Security.Services.Encryptor.Decrypt(request.Password, code)),
+                Security.Services.Encryptor.Decrypt(request.Password, code),
                 request.Credit,
                 0,
                 request.SourceCustId,
