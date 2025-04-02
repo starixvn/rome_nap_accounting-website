@@ -26,10 +26,10 @@ namespace Sunplus.Accounting.Business.Customer.ConfigureDirectAccount
         /// Adds the mark direct account setting control.
         /// </summary>
         /// <param name="criteria">The criteria.</param>
-        public string AddMarkDirectAccountSettingControl(AddMarkDirectAccountSettingControlCriteria criteria, string htmlContent)
+        public string AddMarkDirectAccountSettingControl(AddMarkDirectAccountSettingControlCriteria criteria, string htmlContent, int agentId)
         {
             var hasPermission = Permissions.HasPermission(Enumerations.Functions.Customer.ConfigureDirectAccount);
-            if (!hasPermission || !criteria.DirectAccountStatusInfo.IsShowDirectStatus)
+            if (agentId < 0 || !hasPermission || !criteria.DirectAccountStatusInfo.IsShowDirectStatus)
             {
                 TemplateHandler.RemoveBlock(ref htmlContent, "directAccountControl");
                 return htmlContent;
