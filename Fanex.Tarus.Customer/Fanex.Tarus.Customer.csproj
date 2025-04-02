@@ -750,6 +750,7 @@
     <Compile Include="Entities\UpdateTransferOptionResult.cs" />
     <Compile Include="Entities\VirtualRate\DownlineVirtualRateModel.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
+    <Compile Include="Extensions\ViewDataExtensions.cs" />
     <Compile Include="Filters\NAPCustomerAuthFilterAttribute.cs" />
     <Compile Include="Helpers\HmacAuthenticator.cs" />
     <Compile Include="Helpers\NumberFormater.cs" />

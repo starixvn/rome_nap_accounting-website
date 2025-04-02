@@ -1,4 +1,4 @@
-﻿@using Fanex.Tarus.Customer.Helpers
+﻿@using Fanex.Tarus.Customer.Extensions
 @using Fanex.Tarus.Customer.Resources
 @using Fanex.Tarus.Customer.ViewModels.LicenseeOddsGroup;
 @model IEnumerable<AgentOddsGroupEntity>
@@ -9,14 +9,14 @@
 
         // Retrieve display flags from ViewData
         var displayFlags = new Dictionary<string, bool>
-{
-    { "I", ViewHelper.GetBooleanFromViewData(ViewData, "IsDisplayOddsGroupI") },
-    { "M", ViewHelper.GetBooleanFromViewData(ViewData, "IsDisplayOddsGroupM") },
-    { "Q", ViewHelper.GetBooleanFromViewData(ViewData, "IsDisplayOddsGroupQ") },
-    { "G", ViewHelper.GetBooleanFromViewData(ViewData, "IsDisplayOddsGroupG") },
-    { "K", ViewHelper.GetBooleanFromViewData(ViewData, "IsDisplayOddsGroupK") },
-    { "HJ", ViewHelper.GetBooleanFromViewData(ViewData, "IsDisplayOddsGroupHJ") }
-};
+    {
+        { "I", ViewData.GetBoolean("IsDisplayOddsGroupI") },
+        { "M", ViewData.GetBoolean("IsDisplayOddsGroupM") },
+        { "Q", ViewData.GetBoolean("IsDisplayOddsGroupQ") },
+        { "G", ViewData.GetBoolean("IsDisplayOddsGroupG") },
+        { "K", ViewData.GetBoolean("IsDisplayOddsGroupK") },
+        { "HJ", ViewData.GetBoolean("IsDisplayOddsGroupHJ") }
+    };
     }
 
     <div id="update_section">
