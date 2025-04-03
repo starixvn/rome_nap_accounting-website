@@ -1342,6 +1342,8 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
         case 131: //Funky Games
             return getFunkyGamesParam(custId, transId3rd, gameId3rd, currencyId, siteId, bettype, winlostdate);
 
+        case 139:
+            return getHotDogParam(custId, transId3rd, gameId3rd, currencyId, siteId, bettype, winlostdate);
         default:
             return undefined;
     }
@@ -2172,6 +2174,25 @@ function getFunkyGamesParam(custId, transId3rd, gameId3rd, currencyId, siteId, b
         jsonParam:
         {
             productId: 104,
+            custId: custId,
+            transId3rd: transId3rd,
+            gameId3rd: gameId3rd,
+            BetTypeId: betType,
+            EndTime: endTime,
+            SiteId: siteId,
+            CurrencyId: currencyId
+        },
+        width: 945,
+        height: 500
+    };
+}
+function getHotDogParam(custId, transId3rd, gameId3rd, currencyId, siteId, betType, endTime) {
+    return {
+        url: "ThirdParty/HotDogResult",
+        title: "HOTDOG Result",
+        jsonParam:
+        {
+            productId: 95,
             custId: custId,
             transId3rd: transId3rd,
             gameId3rd: gameId3rd,

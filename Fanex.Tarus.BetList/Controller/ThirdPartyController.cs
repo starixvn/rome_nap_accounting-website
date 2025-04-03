@@ -306,6 +306,9 @@
         public ActionResult FunkyGamesResult(ThirdPartyResultRequest request)
             => BaseResult(request, "FunkyGamesResultConfigs");
 
+        public ActionResult HotDogResult(ThirdPartyResultRequest request)
+            => BaseResult(request, "HotDogResultConfigs");
+
         private void SetProductResultTitle(int productId)
             => ProductResultTitle = CacheRef.GetProductName(productId) + " Result";
     }
