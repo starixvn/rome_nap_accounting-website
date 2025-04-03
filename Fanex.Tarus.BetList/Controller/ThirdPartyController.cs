@@ -16,6 +16,9 @@
         public ThirdPartyController()
         { }
 
+        public ActionResult MicrogamingLiveResult(ThirdPartyResultRequest request)
+            => BaseResult(request, "MicrogamingLiveResultConfigs");
+
         public ActionResult SportsLotteryResult(ThirdPartyResultRequest request)
         {
             SetProductResultTitle(request.ProductId);
@@ -217,7 +220,7 @@
             };
 
             return BaseResult(request, resultRequest, "SexyGamingResultConfigs");
-        }        
+        }
 
         public ActionResult Live22Result(ThirdPartyResultRequest request)
             => BaseResult(request, "Live22ResultConfigs");
@@ -252,7 +255,7 @@
 
         public ActionResult PlaytechResult(ThirdPartyResultRequest request)
             => BaseResult(request, "PlaytechResultConfigs");
-            
+
         public ActionResult GPIResult(ThirdPartyResultRequest request)
             => BaseResult(request, "GPIRNGResultConfigs");
 
@@ -295,7 +298,7 @@
 
         public ActionResult SabaxDResult(ThirdPartyResultRequest request)
             => BaseResult(request, "SabaxDResultConfigs");
-        
+
         public ActionResult ASKMESLOTResult(ThirdPartyResultRequest request)
         {
             ViewBag.ProductId = request.ProductId;

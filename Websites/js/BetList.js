@@ -1039,6 +1039,20 @@ function showGPILCBetDetails(refno, winlossDate, custId, transType) {
     openResultsPopUp(params);
 }
 
+
+function showMicroGamingLCBetDetails(refno, winlossDate, custId, transType) {
+    var params = {
+        url: "AGCasinoBetList/BetDetails",
+        title: "Microgaming Live - Detailed Bet list - " + winlossDate.split(" ")[0],
+        jsonParam: { Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 124, PageSize: 500 },
+        width: 1250,
+        height: 600
+    };
+
+    openResultsPopUp(params);
+}
+
+
 function showHotDogBetDetails(refno, winlossDate, custId, transType) {
     var params = {
         url: "RNGCasinoBetList/BetDetails",
@@ -1332,6 +1346,9 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
 
         case 143: //Play Star
             return getPlayStarParam(custId, transId3rd, gameId3rd, currencyId, siteId, bettype, winlostdate);
+
+        case 124:
+            return getMicrogamingLiveParam(custId, transId3rd, gameId3rd, currencyId, siteId, bettype, winlostdate);
 
         case 144: //GPI Live Casino
             return getGPILiveCasinoParam(custId, transId3rd, gameId3rd, currencyId, siteId, bettype, winlostdate);
@@ -2131,6 +2148,26 @@ function getGPILiveCasinoParam(custId, transId3rd, gameId3rd, currencyId, siteId
     return {
         url: "ThirdParty/GPILiveCasinoResult",
         title: "GPI Live Casino Result",
+        jsonParam:
+        {
+            productId: 90,
+            custId: custId,
+            transId3rd: transId3rd,
+            gameId3rd: gameId3rd,
+            BetTypeId: betType,
+            EndTime: endTime,
+            SiteId: siteId,
+            CurrencyId: currencyId
+        },
+        width: 945,
+        height: 500
+    };
+}
+
+function getMicrogamingLiveParam(custId, transId3rd, gameId3rd, currencyId, siteId, betType, endTime) {
+    return {
+        url: "ThirdParty/MicrogamingLiveResult",
+        title: "Microgaming Live Result",
         jsonParam:
         {
             productId: 90,
