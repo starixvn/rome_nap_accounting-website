@@ -85,7 +85,7 @@ var LeftPanelManager = function () {
             productId: productId
         };
         var url = "ProductStatusSetting/Index?" + $.param(param);
-        var width = 680;
+        var width = 810;
         var height = 320;
         if (productId === 8) {
             height = 520;
