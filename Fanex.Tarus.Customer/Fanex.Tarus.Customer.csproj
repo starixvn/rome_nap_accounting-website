@@ -750,9 +750,11 @@
     <Compile Include="Entities\UpdateTransferOptionResult.cs" />
     <Compile Include="Entities\VirtualRate\DownlineVirtualRateModel.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
+    <Compile Include="Extensions\ViewDataExtensions.cs" />
     <Compile Include="Filters\NAPCustomerAuthFilterAttribute.cs" />
     <Compile Include="Helpers\HmacAuthenticator.cs" />
     <Compile Include="Helpers\NumberFormater.cs" />
+    <Compile Include="Helpers\ViewHelper.cs" />
     <Compile Include="ManageLicenseeCode\Criterias\LicenseeSelCriteria.cs" />
     <Compile Include="ManageLicenseeCode\Criterias\LicenseeTransferCodeSelCriteria.cs" />
     <Compile Include="ManageLicenseeCode\Criterias\LicenseeTransferCodeInsCriteria.cs" />
