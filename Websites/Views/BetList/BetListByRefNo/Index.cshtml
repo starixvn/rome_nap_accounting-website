@@ -96,50 +96,10 @@
                             <td>
                                 <select id="selProduct">
                                     <option value="-1"> Please select...</option>
-                                    <option value="22">Macau Games</option>
-                                    <option value="21">Allbet</option>
-                                    <option value="52">ION</option>
-                                    <option value="39">SA Gaming</option>
-                                    <option value="45">AE Sexy</option>
-                                    <option value="47">BBIN</option>
-                                    <option value="46">IBCBet Live Casino</option>
-                                    <option value="32">@CacheRef.GetProductName(32)</option>
-                                    <option value="34">@CacheRef.GetProductName(34)</option>
-                                    <option value="36">@CacheRef.GetProductName(36)</option>
-                                    <option value="38">@CacheRef.GetProductName(38)</option>
-                                    <option value="42">@CacheRef.GetProductName(42)</option>
-                                    <option value="55">@CacheRef.GetProductName(55)</option>
-                                    <option value="51">@CacheRef.GetProductName(51)</option>
-                                    <option value="56">@CacheRef.GetProductName(56)</option>
-                                    <option value="57">@CacheRef.GetProductName(57)</option>
-                                    <option value="60">@CacheRef.GetProductName(60)</option>
-                                    <option value="63">@CacheRef.GetProductName(63)</option>
-                                    <option value="65">@CacheRef.GetProductName(65)</option>
-                                    <option value="61">@CacheRef.GetProductName(61)</option>
-                                    <option value="62">@CacheRef.GetProductName(62)</option>
-                                    <option value="66">@CacheRef.GetProductName(66)</option>
-                                    <option value="67">@CacheRef.GetProductName(67)</option>
-                                    <option value="68">@CacheRef.GetProductName(68)</option>
-                                    <option value="70">@CacheRef.GetProductName(70)</option>
-                                    <option value="72">@CacheRef.GetProductName(72)</option>
-                                    <option value="73">@CacheRef.GetProductName(73)</option>
-                                    <option value="75">@CacheRef.GetProductName(75)</option>
-                                    <option value="76">@CacheRef.GetProductName(76)</option>
-                                    <option value="80">@CacheRef.GetProductName(80)</option>
-                                    <option value="79">@CacheRef.GetProductName(79)</option>
-                                    <option value="78">@CacheRef.GetProductName(78)</option>
-                                    <option value="86">@CacheRef.GetProductName(86)</option>
-                                    <option value="87">@CacheRef.GetProductName(87)</option>
-                                    <option value="89">@CacheRef.GetProductName(89)</option>
-                                    <option value="85">@CacheRef.GetProductName(85)</option>
-                                    <option value="96">@CacheRef.GetProductName(96)</option>
-                                    <option value="100">@CacheRef.GetProductName(100)</option>
-                                    <option value="48">@CacheRef.GetProductName(48)</option>
-                                    <option value="90">@CacheRef.GetProductName(90)</option>
-                                    <option value="91">@CacheRef.GetProductName(91)</option>
-                                    <option value="103">@CacheRef.GetProductName(103)</option>
-                                    <option value="102">@CacheRef.GetProductName(102)</option>
-                                    <option value="104">@CacheRef.GetProductName(104)</option>
+                                    @foreach (var item in Model.ProductList)
+                                    {
+                                        <option value="@item.ProductID">@item.ProductName</option>
+                                    }
                                 </select>
                             </td>
                             <td style="min-width: 65px">
@@ -213,6 +173,7 @@
         - You can only view the tickets of non-sport products with win loss date from @Model.BalanceUpDay.ToShortDateString() (mm/dd/yyyy).
     </form>
     <script type="text/javascript">
+
         window.rootUrl = '@Url.Content("~")';
                 head.js("@Url.Content("~/js/jQuery/jquery.js")",
                 "@Url.Content("~/js/json2.js")",

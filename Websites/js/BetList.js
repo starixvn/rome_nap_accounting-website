@@ -1040,6 +1040,43 @@ function showGPILCBetDetails(refno, winlossDate, custId, transType) {
 }
 
 
+function showMicroGamingLCBetDetails(refno, winlossDate, custId, transType) {
+    var params = {
+        url: "AGCasinoBetList/BetDetails",
+        title: "Microgaming Live - Detailed Bet list - " + winlossDate.split(" ")[0],
+        jsonParam: { Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 124, PageSize: 500 },
+        width: 1250,
+        height: 600
+    };
+
+    openResultsPopUp(params);
+}
+
+
+function showHotDogBetDetails(refno, winlossDate, custId, transType) {
+    var params = {
+        url: "RNGCasinoBetList/BetDetails",
+        title: "HOTDOG - Detailed Bet list - " + winlossDate.split(" ")[0],
+        jsonParam: { TransId: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 139, PageSize: 500 },
+        width: 1250,
+        height: 600
+    };
+
+    openResultsPopUp(params);
+}
+
+function showOdinGamingBetDetails(refno, winlossDate, custId, transType) {
+    var params = {
+        url: "RNGCasinoBetList/BetDetails",
+        title: "ODIN Gaming - Detailed Bet list - " + winlossDate.split(" ")[0],
+        jsonParam: { TransId: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 128, PageSize: 500 },
+        width: 1250,
+        height: 600
+    };
+
+    openResultsPopUp(params);
+}
+
 function showASKMESLOTBetDetails(refno, winlossDate, custId, transType) {
     var params = {
         url: "RNGCasinoBetList/BetDetails",
@@ -1293,6 +1330,9 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
 
         case 177: //VS2 Horse and Dog Racing
         case 198:
+        case 125:
+        case 126:
+        case 127:
             return getVS2Param(matchid, sporttype, winlostdate);
 
         case 148: //Playtech
@@ -1307,6 +1347,9 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
         case 143: //Play Star
             return getPlayStarParam(custId, transId3rd, gameId3rd, currencyId, siteId, bettype, winlostdate);
 
+        case 124:
+            return getMicrogamingLiveParam(custId, transId3rd, gameId3rd, currencyId, siteId, bettype, winlostdate);
+
         case 144: //GPI Live Casino
             return getGPILiveCasinoParam(custId, transId3rd, gameId3rd, currencyId, siteId, bettype, winlostdate);
 
@@ -1316,6 +1359,8 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
         case 131: //Funky Games
             return getFunkyGamesParam(custId, transId3rd, gameId3rd, currencyId, siteId, bettype, winlostdate);
 
+        case 139:
+            return getHotDogParam(custId, transId3rd, gameId3rd, currencyId, siteId, bettype, winlostdate);
         default:
             return undefined;
     }
@@ -1446,6 +1491,15 @@ function getVS2Param(matchid, sporttype, eventdate) {
     };
 
     switch (sporttype) {
+        case 125:
+            resultParam.title = "Virtual Steeple Chase";
+            break;
+        case 126:
+            resultParam.title = "Virtual Harness Racing";
+            break;
+        case 127:
+            resultParam.title = "Virtual Motor Racing";
+            break;
         case 198:
             resultParam.title = "Virtual Horse Racing";
             break;
@@ -2110,6 +2164,26 @@ function getGPILiveCasinoParam(custId, transId3rd, gameId3rd, currencyId, siteId
     };
 }
 
+function getMicrogamingLiveParam(custId, transId3rd, gameId3rd, currencyId, siteId, betType, endTime) {
+    return {
+        url: "ThirdParty/MicrogamingLiveResult",
+        title: "Microgaming Live Result",
+        jsonParam:
+        {
+            productId: 90,
+            custId: custId,
+            transId3rd: transId3rd,
+            gameId3rd: gameId3rd,
+            BetTypeId: betType,
+            EndTime: endTime,
+            SiteId: siteId,
+            CurrencyId: currencyId
+        },
+        width: 945,
+        height: 500
+    };
+}
+
 function getASKMESLOTParam(custId, transId3rd, gameId3rd, currencyId, siteId, betType, endTime) {
     return {
         url: "ThirdParty/ASKMESLOTResult",
@@ -2137,6 +2211,25 @@ function getFunkyGamesParam(custId, transId3rd, gameId3rd, currencyId, siteId, b
         jsonParam:
         {
             productId: 104,
+            custId: custId,
+            transId3rd: transId3rd,
+            gameId3rd: gameId3rd,
+            BetTypeId: betType,
+            EndTime: endTime,
+            SiteId: siteId,
+            CurrencyId: currencyId
+        },
+        width: 945,
+        height: 500
+    };
+}
+function getHotDogParam(custId, transId3rd, gameId3rd, currencyId, siteId, betType, endTime) {
+    return {
+        url: "ThirdParty/HotDogResult",
+        title: "HOTDOG Result",
+        jsonParam:
+        {
+            productId: 95,
             custId: custId,
             transId3rd: transId3rd,
             gameId3rd: gameId3rd,

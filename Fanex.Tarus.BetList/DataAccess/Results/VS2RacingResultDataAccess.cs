@@ -7,6 +7,7 @@
     using Fanex.Data;
     using Fanex.Result.Core.VirtualRacing.DTO;
     using Fanex.Tarus.BetList.Criteria.Results;
+    using Fanex.Tarus.Infrastructure.Helper;
 
     public class VS2RacingResultDataAccess : IVS2RacingResultDataAccess
     {
@@ -68,13 +69,13 @@
         {
             return new VirtualRacing
             {
-                EventId = reader["eventid"] != DBNull.Value ? int.Parse(reader["eventid"].ToString()) : 0,
-                LeagueId = reader["leagueid"] != DBNull.Value ? int.Parse(reader["leagueid"].ToString()) : 0,
-                VendorMatchId = reader["vendormatchid"] != DBNull.Value ? int.Parse(reader["vendormatchid"].ToString()) : 0,
+                EventId = reader["eventid"] != DBNull.Value ? DataUtils.ToInt32(reader["eventid"].ToString()) : 0,
+                LeagueId = reader["leagueid"] != DBNull.Value ? DataUtils.ToInt32(reader["leagueid"].ToString()) : 0,
+                VendorMatchId = reader["vendormatchid"].ToString(),
                 Distance = reader["distance"].ToString(),
                 EventStatus = reader["eventstatus"] != DBNull.Value ? reader["eventstatus"].ToString() : string.Empty,
                 BetStatus = reader["betstatus"] != DBNull.Value ? reader["betstatus"].ToString() : string.Empty,
-                EventTime = reader["eventtime"] != DBNull.Value ? DateTime.Parse(reader["eventtime"].ToString()) : DateTime.MinValue,
+                EventTime = reader["eventtime"] != DBNull.Value ? DataUtils.ToDateTime(reader["eventtime"].ToString()) : DateTime.MinValue,
             };
         }
 
@@ -84,9 +85,9 @@
             var item = new VirtualRacingDetail
             {
                 EventId = reader["eventid"] != DBNull.Value ? int.Parse(reader["eventid"].ToString()) : 0,
-                Placing = reader["placing"] != DBNull.Value ? int.Parse(reader["placing"].ToString()) : 0,
-                RacerId = reader["racerid"] != DBNull.Value ? int.Parse(reader["racerid"].ToString()) : 0,
-                Orid = reader["orid"] != DBNull.Value ? int.Parse(reader["orid"].ToString()) : 0,
+                Placing = reader["placing"] != DBNull.Value ? DataUtils.ToInt32(reader["placing"].ToString()) : 0,
+                RacerId = reader["racerid"] != DBNull.Value ? DataUtils.ToInt32(reader["racerid"].ToString()) : 0,
+                Orid = reader["orid"] != DBNull.Value ? DataUtils.ToInt32(reader["orid"].ToString()) : 0,
                 Lane = reader["lane"] != DBNull.Value ? reader["lane"].ToString() : string.Empty,
             };
 

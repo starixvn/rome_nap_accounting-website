@@ -1,6 +1,7 @@
 ﻿namespace Fanex.Tarus.BetList.Business
 {
     using Fanex.Tarus.BetList.Criteria;
+    using Fanex.Tarus.BetList.Entities.BetList;
     using Fanex.Tarus.BetList.Models;
     using Fanex.Tarus.BetList.Param;
     using System;
@@ -9,6 +10,8 @@
 
     public interface IBetListService
     {
+        IList<ProductEntity> GetProductList();
+
         void AssignCountry(IEnumerable<TicketDetail> tickets);
 
         IList<TicketDetail> GetMixParlayTickets(long transId, long refNo, int custId, bool removeSabaWord);

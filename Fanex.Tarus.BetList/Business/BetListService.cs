@@ -31,6 +31,7 @@ namespace Fanex.Tarus.BetList.Business
     using Fanex.Logging.Extensions.Web;
     using Fanex.RemotingRef;
     using Fanex.Tarus.BetList.DataAccess.Results;
+    using Fanex.Tarus.BetList.Entities.BetList;
     using Fanex.Tarus.BetList.Param;
     using Fanex.Tarus.Infrastructure.Configurations;
     using Models;
@@ -194,6 +195,9 @@ namespace Fanex.Tarus.BetList.Business
             }, _cacheService, _iPInfoDataAccess);
             _betListRepository = new BetListRepository();
         }
+
+        public IList<ProductEntity> GetProductList()
+            => _betListRepository.GetProductList(new SelectProductCriteria());
 
         public void AssignCountry(IEnumerable<TicketDetail> tickets)
         {
@@ -1375,6 +1379,11 @@ namespace Fanex.Tarus.BetList.Business
             {
                 const int VirtualSports4ProductId = 83;
                 sportName = GetProductName(VirtualSports4ProductId);
+            }
+            else if (ReportService.IsVirtualSports7(betTypeId))
+            {
+                const int VirtualSports7ProductId = 106;
+                sportName = GetProductName(VirtualSports7ProductId);
             }
             else if (ReportService.IsSabaclub(betTypeId))
             {
