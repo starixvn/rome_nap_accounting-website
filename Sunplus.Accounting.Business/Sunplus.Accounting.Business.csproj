@@ -131,7 +131,7 @@
       <HintPath>..\packages\Fanex.RemotingRef.1.5.4\lib\net461\Fanex.RemotingRef.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Admin, Version=1.0.5.12, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Admin.1.0.5.19-directmember001\lib\net461\Fanex.Tarus.Admin.dll</HintPath>
+      <HintPath>..\packages\Fanex.Tarus.Admin.1.0.5.19\lib\net461\Fanex.Tarus.Admin.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.DataAccess.Implement, Version=1.0.1.12, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Tarus.DataAccess.Implement.1.0.1.13\lib\net40\Fanex.Tarus.DataAccess.Implement.dll</HintPath>
@@ -263,7 +263,7 @@
       <HintPath>..\packages\Sunplus.Accounting.Core.2.0.4.32\lib\net461\Sunplus.Accounting.Core.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.DataAccess, Version=2.0.9.8, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.9.9-Beta04\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
+      <HintPath>..\packages\Sunplus.Accounting.DataAccess.2.0.9.9\lib\net461\Sunplus.Accounting.DataAccess.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.Entities, Version=2.0.3.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Accounting.Entities.2.0.3.2\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
