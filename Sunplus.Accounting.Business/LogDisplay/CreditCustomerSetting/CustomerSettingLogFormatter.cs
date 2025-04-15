@@ -64,6 +64,13 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
         private const int UpdateAgentPTOnMemberOthersActionId = 528;
         private const int UpdateAgentPTOnGroupedMemberOthersActionId = 525;
 
+        private const int UpdateSuperPTOnDirectMemberActionId = 200011;
+        private const int UpdateMasterPTOnDirectMemberActionId = 200012;
+        private const int UpdateSuperPTOnDirectMasterMemberActionId = 200013;
+        private const int UpdateSuperPTOnDirectMemberOthersActionId = 200014;
+        private const int UpdateMasterPTOnDirectMemberOthersActionId = 200015;
+        private const int UpdateSuperPTOnDirectMasterMemberOthersActionId = 200016;
+
         private const int UpdateSuperParlayMaxPayoutActionId = 220000;
         private const int UpdateSuperIndirectParlayMaxPayoutActionId = 220001;
         private const int UpdateMasterParlayMaxPayoutActionId = 220002;
@@ -76,6 +83,8 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
         private const int UpdateMasterSBCommActionId = 252;
         private const int UpdateAgentSBCommActionId = 253;
         private const int UpdateMemberSBCommActionId = 254;
+        private const int UpdateSuperDirectMemberSBCommActionId = 257;
+        private const int UpdateMasterDirectMemberSBCommActionId = 258;
         private const int UpdateOthersCommActionId = 255;
 
 
@@ -140,6 +149,13 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
             UpdateAgentPTOnMemberOthersActionId,
             UpdateAgentPTOnGroupedMemberOthersActionId,
 
+            UpdateSuperPTOnDirectMemberActionId,
+            UpdateMasterPTOnDirectMemberActionId,
+            UpdateSuperPTOnDirectMasterMemberActionId,
+            UpdateSuperPTOnDirectMemberOthersActionId,
+            UpdateMasterPTOnDirectMemberOthersActionId,
+            UpdateSuperPTOnDirectMasterMemberOthersActionId,
+
             UpdateSuperParlayMaxPayoutActionId,
             UpdateSuperIndirectParlayMaxPayoutActionId,
             UpdateMasterParlayMaxPayoutActionId,
@@ -151,6 +167,8 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
             UpdateMasterSBCommActionId,
             UpdateAgentSBCommActionId,
             UpdateMemberSBCommActionId,
+            UpdateSuperDirectMemberSBCommActionId,
+            UpdateMasterDirectMemberSBCommActionId,
             UpdateOthersCommActionId,
             UpdateSuperSBBetSettingActionId,
             UpdateSuperIndirectSBBetSettingActionId,
@@ -756,8 +774,16 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
                 case UpdateAgentPTOnGroupedMemberOthersActionId:
                 case UpdateMasterPTOnGroupedMemberOthersActionId:
                 case UpdateSuperPTOnGroupedMemberOthersActionId:
+                case UpdateSuperPTOnDirectMemberActionId:
+                case UpdateMasterPTOnDirectMemberActionId:
+                case UpdateSuperPTOnDirectMasterMemberActionId:
+                case UpdateSuperPTOnDirectMemberOthersActionId:
+                case UpdateMasterPTOnDirectMemberOthersActionId:
+                case UpdateSuperPTOnDirectMasterMemberOthersActionId:
                 case UpdateMemberParlayMaxPayoutActionId:
                 case UpdateMemberSBCommActionId:
+                case UpdateSuperDirectMemberSBCommActionId:
+                case UpdateMasterDirectMemberSBCommActionId:
                 case UpdateMemberSBBetSettingActionId:
                 case UpdateSuperIndirectBetSetting154ActionId:
                 case UpdateMasterIndirectBetSetting154ActionId:
@@ -802,6 +828,9 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
             || actionId == UpdateAgentPTOnMemberActionId
             || actionId == UpdateMasterPTOnMemberActionId
             || actionId == UpdateSuperPTOnMemberActionId
+            || actionId == UpdateSuperPTOnDirectMemberActionId
+            || actionId == UpdateMasterPTOnDirectMemberActionId
+            || actionId == UpdateSuperPTOnDirectMasterMemberActionId
             || actionId == UpdateAgentPTOnGroupedMemberActionId
             || actionId == UpdateMasterPTOnGroupedMemberActionId
             || actionId == UpdateSuperPTOnGroupedMemberActionId;
@@ -818,7 +847,10 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
             || actionId == UpdateAgentPTOthersActionId
             || actionId == UpdateAgentMinPTOthersActionId
             || actionId == UpdateAgentPTOnMemberOthersActionId
-            || actionId == UpdateAgentPTOnGroupedMemberOthersActionId;
+            || actionId == UpdateAgentPTOnGroupedMemberOthersActionId
+            || actionId == UpdateSuperPTOnDirectMemberOthersActionId
+            || actionId == UpdateMasterPTOnDirectMemberOthersActionId
+            || actionId == UpdateSuperPTOnDirectMasterMemberOthersActionId            ;
 
         private bool IsSBBetSettingActionId(int actionId)
             => actionId == CreateSuperBetSettingActionId
@@ -847,7 +879,10 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
             || actionId == UpdateSuperSBCommActionId
             || actionId == UpdateMasterSBCommActionId
             || actionId == UpdateAgentSBCommActionId
-            || actionId == UpdateMemberSBCommActionId;
+            || actionId == UpdateMemberSBCommActionId
+            || actionId == UpdateSuperDirectMemberSBCommActionId
+            || actionId == UpdateMasterDirectMemberSBCommActionId
+            ;
 
         private bool IsCommActionId(int actionId)
             => actionId == UpdateOthersCommActionId;

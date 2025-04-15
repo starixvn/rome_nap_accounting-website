@@ -97,6 +97,7 @@
                 Utils.ToBoolean(reader["ClosedBySuper"]),
                 Utils.ToBoolean(reader["ClosedByMaster"]),
                 Utils.ToBoolean(reader["ClosedByAgent"]),
-                Utils.ToBoolean(reader["ClosedMember"]));
+                Utils.ToBoolean(reader["ClosedMember"]),
+                Utils.ToInt32(reader["AgentId"]));
     }
 }

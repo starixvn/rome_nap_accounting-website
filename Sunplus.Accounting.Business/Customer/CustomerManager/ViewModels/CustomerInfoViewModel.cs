@@ -96,6 +96,13 @@
 
         public bool HideRNGGames { get; private set; } = true;
 
+        public bool SuperDirectMember => (SearchAccountRoleId == (int)Role.Member &&
+                                         Utils.ToInt32(lineInfoRow["AgentID"]) == -4);
+
+
+        public bool MasterDirectMember => (SearchAccountRoleId == (int)Role.Member &&
+                                          Utils.ToInt32(lineInfoRow["AgentID"]) == -3);
+
         public CustomerDetail CustParent
         {
             get
@@ -108,6 +115,8 @@
                 return customerDetail;
             }
         }
+
+       
 
         private void GetShowedHiddenProduct(DataTable dynamicSettingtable)
         {

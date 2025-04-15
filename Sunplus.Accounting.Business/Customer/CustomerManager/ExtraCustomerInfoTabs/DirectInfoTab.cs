@@ -15,7 +15,6 @@
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "hideonmember");
             }
-          
 
             if (!Permissions.HasPermission(Enumerations.Functions.Customer.ContactInfo))
             {

@@ -466,11 +466,13 @@ function left_Tab1_Click(item) {
     $('#box_04_contents').each(function () {
         $(this).children().css("display", "none");
     });
+    $(".pagerbox").css("display", "none");
+    $(".pagerdirectmemberbox").css("display", "none");
 
     if (item.id.indexOf("_1") >= 0) {
         $("#box_04_content_1").css("display", "block");
         $('#pane2').jScrollPane({ showArrows: true, scrollbarWidth: 15, arrowSize: 16 });
-        $(".pagerbox").css("display", "none");
+     
     }
     else if (item.id.indexOf("_2") >= 0) {
         $("#box_04_content_2").css("display", "block");
@@ -482,13 +484,22 @@ function left_Tab1_Click(item) {
             $(".pagerbox").css("display", "block");
         }
     }
+    else if (item.id.indexOf("_4") >= 0) {
+        $("#box_04_content_4").css("display", "block");
+        try {
+            $('#ctrDirectMember').jScrollPane({ showArrows: true, scrollbarWidth: 15, arrowSize: 16 });
+        }
+        catch (error) { }      
+        if (totalDirectMemberPage > 1) {
+            $(".pagerdirectmemberbox").css("display", "block");
+        }
+    }
     else {
         $("#box_04_content_3").css("display", "block");
         try {
             $('#ctrInfo').jScrollPane({ showArrows: true, scrollbarWidth: 15, arrowSize: 16 });
         }
-        catch (error) { }
-        $(".pagerbox").css("display", "none");
+        catch (error) { }    
     }
 }
 

@@ -62,7 +62,9 @@ namespace Fanex.Tarus.Customer.ViewModels.CustomerSetting.Suspend
 
         public bool pSuspend { get; }
 
-        public SuspendMatrix(int roleId, bool suspend, bool ssuspend, bool msuspend, bool asuspend, bool psuspend)
+        public int AgentId { get; }
+
+        public SuspendMatrix(int roleId, bool suspend, bool ssuspend, bool msuspend, bool asuspend, bool psuspend, int agentid)
         {
             RoleId = roleId;
             Suspend = suspend;
@@ -70,6 +72,7 @@ namespace Fanex.Tarus.Customer.ViewModels.CustomerSetting.Suspend
             mSuspend = msuspend;
             aSuspend = asuspend;
             pSuspend = psuspend;
+            AgentId = agentid;
         }
     }
 }

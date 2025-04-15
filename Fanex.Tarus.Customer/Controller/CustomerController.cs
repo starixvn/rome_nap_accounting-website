@@ -184,6 +184,20 @@ namespace Fanex.Tarus.Customer.Controller
         }
 
         [NAPCustomerAuthFilter]
+        public ActionResult CreateDirectMember(CreateDirectMemberRequest request)
+        {
+            request.NoPermissionEditCredit = !Permissions.GetHostPermission(Enumerations.Functions.Customer.Credit);
+            var viewModel = new CreateDirectMemberViewModel(
+                request,
+                new AppConfiguration(GetApplicationPath()),
+                cdnUri,
+                GetAssetsVersion(),
+                GetHashKey());
+
+            return View("~/Views/Customer/CreateDirectMember.cshtml", viewModel);
+        }
+
+        [NAPCustomerAuthFilter]
         public ActionResult EditCustomer(EditCustomerRequest request)
         {
             request.NoPermissionEditCredit = !Permissions.GetHostPermission(Enumerations.Functions.Customer.Credit);
@@ -214,9 +228,19 @@ namespace Fanex.Tarus.Customer.Controller
         }
 
         public async Task<ActionResult> GetCustomerSetting(GetCustomerSettingRequest request)
-        {
-            return Content(await customerService.GetCustomerSetting(request.CustId, request.RoleId, CustomerClientManager.ClientConfigs.SystemId, request.UplineRoleId, request.Language, request.IsGetUpLine, request.ProductGroupId, request.SiteLabel, request.IsMultipleMode, "", request.IsCopy));
-        }
+            => Content(await customerService.GetCustomerSetting(
+                request.CustId,
+                request.RoleId,
+                CustomerClientManager.ClientConfigs.SystemId,
+                request.UplineRoleId,
+                request.Language,
+                request.IsGetUpLine,
+                request.ProductGroupId,
+                request.SiteLabel,
+                request.IsMultipleMode,
+                "",
+                request.IsCopy,
+                request.AgentId));
 
         public async Task<ActionResult> GetCurrentWinLossAmount(int custId, int sportType, int betType, string language = "en-US")
             => Content(await customerService.GetCustomerCurrentWinLossAmounts(custId, sportType, betType, language));
@@ -269,6 +293,7 @@ namespace Fanex.Tarus.Customer.Controller
                 generalInfo.SiteLabel,
                 ObjectDbExtensions.GetSiteDBConfigBySite(request.GeneralInfo.Site).CustDBGroupID,
                 request.Group,
+                request.NumberOfAccounts,
                 CreationModes.FullMode));
 
             return Content(response);
@@ -291,7 +316,8 @@ namespace Fanex.Tarus.Customer.Controller
                 ObjectDbExtensions.GetSiteDBConfigByCustId(request.CustId)?.CustDBGroupID ?? 0,
                 request.Site,
                 request.SiteLabel,
-                request.Group));
+                request.Group,
+                request.AgentId));
 
             return Content(response);
         }
@@ -315,7 +341,8 @@ namespace Fanex.Tarus.Customer.Controller
                       request.CustomerNames,
                       request.Site,
                       request.SiteLabel,
-                      request.Group));
+                      string.Empty,
+                      0));
 
             return Content(response);
         }
@@ -325,14 +352,20 @@ namespace Fanex.Tarus.Customer.Controller
             const int SystemCode_NAP = 1;
             var appPath = GetApplicationPath();
             request.ApplicationPath = appPath;
-            var viewModel = new Fanex.Tarus.Customer.ViewModels.ManageSuperSettings.SportBookInformationViewModel(
-                new Fanex.Tarus.Customer.ViewModels.ManageSuperSettings.AppConfigurationViewModel(appPath, SystemCode_NAP),
+            var viewModel = new ViewModels.ManageSuperSettings.SportBookInformationViewModel(
+                new ViewModels.ManageSuperSettings.AppConfigurationViewModel(appPath, SystemCode_NAP),
                 ConfigurationManager.AppSettings["Fanex.Customer:CdnUri"],
                 GetAssetsVersion(),
                 request.ToJson());
 
             return PartialView("SportBookInformation", viewModel);
         }
+
+        public async Task<ActionResult> SearchSuggestDirectMembers(int uplineCustId, string searchUsername)
+            => Json(await customerService.SearchSuggestDirectMembers(uplineCustId, searchUsername), JsonRequestBehavior.AllowGet);
+
+        public async Task<int> CheckDirectMemberUserName(int uplineCustId, string searchUsername)
+            => await customerService.CheckDirectMemberUserName(uplineCustId, searchUsername);
 
         private string GetApplicationPath()
         {

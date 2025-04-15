@@ -85,7 +85,7 @@ var LeftPanelManager = function () {
             productId: productId
         };
         var url = "ProductStatusSetting/Index?" + $.param(param);
-        var width = 680;
+        var width = 810;
         var height = 320;
         if (productId === 8) {
             height = 520;
@@ -113,8 +113,8 @@ var LeftPanelManager = function () {
             isGroup: true
         };
         var url = "ProductStatusSetting/Index?" + $.param(param);
-        var width = 680;
-        var height = 320;
+        var width = 850;
+        var height = 360;
 
         parent.OpenNextPopup("ProductStatusSetting", url, title, width, height, true, false, window, 0, null, null);
     };

@@ -13,7 +13,7 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Customer
     {
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
-        string GenDownlineList(int custId, int roleId, int pageIndex);
+        string GenDownlineList(int custId, bool isdirectmember, int roleId, int pageIndex);
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]

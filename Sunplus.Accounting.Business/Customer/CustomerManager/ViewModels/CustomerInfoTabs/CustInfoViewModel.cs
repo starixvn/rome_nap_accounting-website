@@ -35,7 +35,7 @@
 
         public string Fullname => $"{Firstname} - {Lastname}";
 
-        public string DirectDownlineRoleName => SearchAccountRoleId == 1 ? string.Empty : LevelNames[SearchAccountRoleId -1];
+        public string DirectDownlineRoleName => SearchAccountRoleId == 1 ? string.Empty : LevelNames[SearchAccountRoleId - 1];
 
         public bool Important => Utils.ToBoolean(customerInfoRow["important"]);
 
@@ -48,6 +48,8 @@
         public bool IsDeposit => WebSettings.IsApplySplitingDepositeCustomer && Utils.ToBoolean(customerInfoRow["IsDeposit"]);
 
         public bool IsHeadline => SearchAccountRoleId == (int)Role.Headline;
+
+        public bool IsAllowAddDirectMember => SearchAccountRoleId == (int)Role.Super || SearchAccountRoleId == (int)Role.Master;
 
         public string LastLoginDate => Convert.IsDBNull(customerInfoRow["lastlogged"]) ? string.Empty : Converter.ToDateTime(customerInfoRow["lastlogged"]).ToShortDateString();
 
@@ -77,7 +79,7 @@
 
         public string Fax => Converter.ToString2(customerInfoRow["fax"]);
 
-        public string Nickname => Converter.ToString2(customerInfoRow["username2"]);        
+        public string Nickname => Converter.ToString2(customerInfoRow["username2"]);
 
         public bool Enabled => Utils.ToBoolean(customerInfoRow["Enabled"]);
 
@@ -95,7 +97,7 @@
 
         public string Headline => Converter.ToString2(customerInfoRow["headline"]);
 
-        public int LimitPerIP => Converter.ToInt(customerInfoRow["LimitPerIP"]);     
+        public int LimitPerIP => Converter.ToInt(customerInfoRow["LimitPerIP"]);
 
         public bool HasDownline => Utils.ToBoolean(customerInfoRow["HasDownline"]);
 

@@ -64,13 +64,17 @@
 
         public bool PClosed { get; }
 
+        public int AgentId { get; }
+
         public ClosedMatrix(
             int roleId,
             bool closed,
             bool sclosed,
             bool mclosed,
             bool aclosed,
-            bool pclosed)
+            bool pclosed,
+            int agentId
+            )
         {
             RoleId = roleId;
             Closed = closed;
@@ -78,6 +82,7 @@
             MClosed = mclosed;
             AClosed = aclosed;
             PClosed = pclosed;
+            AgentId = agentId;
         }
     }
 }

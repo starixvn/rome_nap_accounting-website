@@ -55,11 +55,12 @@
             decimal memberNetPositionMBC,
             decimal member3rdPendingTransfer)
         {
+            int agentId = Converter.ToInt(lineInfoRow["agentId"]);
             switch (SearchAccountRoleId)
             {
                 case 1: // member       
                     PendingTransfer3rd = member3rdPendingTransfer;
-                    ParentId = Converter.ToInt(lineInfoRow["agentId"]);
+                    ParentId = agentId == -4 ? Converter.ToInt(lineInfoRow["superId"]) : agentId == -3 ? Converter.ToInt(lineInfoRow["masterid"]) : agentId;
                     YesterdayCash = Converter.ToDecimal(cashRow["Yesterday_Cash"]);
                     AccOutstanding = IsInternalUser ? Converter.ToDecimal(cashRow["outstanding"]) : memberOutstandingMBC;
                     Cash = IsInternalUser ? Converter.ToDecimal(cashRow["cash"]) : memberBalanceMBC + memberOutstandingMBC + PendingTransfer3rd;

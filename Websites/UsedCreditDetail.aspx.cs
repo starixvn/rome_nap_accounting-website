@@ -27,6 +27,8 @@ public partial class UsedCreditDetail : RequiredAuthorizationPage
     protected void Page_Load(object sender, EventArgs e)
     {
         string _s = string.Empty;
+        string _s2 = string.Empty;
+        string _sHeader = string.Empty;
         try
         {
             _accid = Convert.ToInt32(Session["AccId"] as object ?? -1);
@@ -39,26 +41,31 @@ public partial class UsedCreditDetail : RequiredAuthorizationPage
             string _resetall = Request["resetAll"] as string ?? string.Empty;
             if (!string.IsNullOrEmpty(_resetclosedonly))
             {
-                _s = AgentResetMemberCredit(_custid, true);
+                _s = AgentResetMemberCredit(_custid,true);
             }
             else if (!string.IsNullOrEmpty(_resetall))
             {
-                _s = AgentResetMemberCredit(_custid, false);
+                _s = AgentResetMemberCredit(_custid,false);
             }
             else
             {
                 switch (_roleid)
                 {
                     case 2: //agent
+                        _sHeader = HeaderTab("","");
                         _s = "<form method=\"post\">" + AgentCredit(_custid) + "</form>";
                         break;
 
                     case 3: //master
+                        _sHeader = HeaderTab("Agent", "Direct Member");
                         _s = MasterCredit(_custid);
+                        _s2 = "<form method=\"post\">" + AgentCredit(_custid) + "</form>";
                         break;
 
                     case 4: // super
+                        _sHeader = HeaderTab("Master", "Direct Member");
                         _s = SuperCredit(_custid);
+                        _s2 = "<form method=\"post\">" + AgentCredit(_custid) + "</form>";
                         break;
 
                     default:
@@ -76,8 +83,35 @@ public partial class UsedCreditDetail : RequiredAuthorizationPage
             Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
         }
         this.sBody.Text = _s;
+        this.sBody2.Text = _s2;
+        this.sHeader.Text = _sHeader;
     }
 
+    private string HeaderTab(string tab1, string tab2)
+    {
+        string sHeader = string.Empty;
+        try
+        {
+            if (string.IsNullOrEmpty(tab1) || string.IsNullOrEmpty(tab2))
+            {
+                sHeader = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("UserCredit/HeaderDefault.htm");
+            }
+            else
+            {
+                sHeader = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("UserCredit/HeaderTab.htm");
+                TemplateHandler.Assign(ref sHeader, "{tab1}", tab1);
+                TemplateHandler.Assign(ref sHeader, "{tab2}", tab2);
+            }
+        }
+        catch (Exception ex)
+        {
+            Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+            throw;
+        }
+        return sHeader;
+    }
+
+    
     private string AgentCredit(int _custid)
     {
         string sAgent = string.Empty;

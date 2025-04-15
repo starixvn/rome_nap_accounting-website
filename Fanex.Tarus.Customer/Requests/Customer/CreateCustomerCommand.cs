@@ -9,5 +9,7 @@ namespace Fanex.Tarus.Customer.Requests.Customer
         public string Group { get; set; }
 
         public string ProductGroups { get; set; }
+
+        public int NumberOfAccounts { get; set; } = 1;
     }
 }

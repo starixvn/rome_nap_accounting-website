@@ -166,10 +166,13 @@
                         </a>
                     </li>
                     <!--hideonmember-->
-                    <li id="left_tab1_2" onclick="left_Tab1_Click(this)"><a href="javascript:;"><span>Downline</span></a></li>
+                    <li id="left_tab1_2" onclick="left_Tab1_Click(this)"><a href="javascript:;"><span>{DirectDownlineLevel}</span></a></li>
                     <!--/hideonmember-->
+                    <!--hasdirectmember-->
+                    <li id="left_tab1_4" onclick="left_Tab1_Click(this)"><a href="javascript:;"><span>Member</span></a></li>
+                    <!--/hasdirectmember-->
                     <!--directinfotab-->
-                    <li id="left_tab1_3" onclick="left_Tab1_Click(this)"><a href="javascript:;"><span>Information</span></a></li>
+                    <li id="left_tab1_3" onclick="left_Tab1_Click(this)"><a href="javascript:;"><span>Info</span></a></li>
                     <!--/directinfotab-->
                 </ul>
             </div>
@@ -189,6 +192,17 @@
                     </div>
                 </div>
             </div>
+            <!--directmembertabcontent-->
+            <div id="box_04_content_4">
+                <div class="holder osX">
+                    <div id="ctrDirectMember" style="height: 265px; width: 248px; text-align: center;">
+                        <div id="directmembercontent">
+                            {DirectMemberList}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--directmembertabcontent-->
             <!--directinfotabcontent-->
             <div id="box_04_content_3">
                 <div class="holder osX">
@@ -269,11 +283,16 @@
             </div>
             <!--/directinfotabcontent-->
         </div>
-        <div class="pagerbox">
-            <div id="dllpager">
-                Pager:
-            </div>
-        </div>
+    <div class="pagerbox">
+	    <div id="dllpager">
+		    Pager:
+	    </div>
+    </div>
+    <div class="pagerdirectmemberbox">
+	    <div id="dllpagerdirectmember">
+		    Pager:
+	    </div>
+    </div>
         <!--box balnace - downline list-->
         <!--box setting detail login onlinelist-->
         <div class="box_header">
@@ -482,6 +501,11 @@
                                     Add New
                                 </a><br />
                             </span>
+                            <!--addNewDirectMember-->
+                            <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{linkAddNewDirectMember}');">
+                                Add New Direct Member
+                            </a><br />
+                            <!--/addNewDirectMember-->
                             <!--/addNew-Deposite-->
                             <!--editTransferTime-->
                             <span class="{IsHidden1}">

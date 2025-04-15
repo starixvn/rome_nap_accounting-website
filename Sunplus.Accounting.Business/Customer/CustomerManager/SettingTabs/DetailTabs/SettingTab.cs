@@ -2,6 +2,7 @@
 {
     using System;
     using DNAide.Web;
+    using Fanex.Tarus.Infrastructure.Constants;
 
     public partial class CustomerManager
     {
@@ -34,55 +35,50 @@
             int custId = customerInfoViewModel.CustId;
             var superId = customerInfoViewModel.SuperId;
             var masterId = customerInfoViewModel.MasterId;
+            var agentId = customerInfoViewModel.AgentId;
 
             string infoUrl = string.Empty;
             string downlineListURL = string.Empty;
             string addDownlineURL = string.Empty;
+            string addNewDirectMemberUrl = string.Empty;
 
             var agCasinoLinkSetting = string.Empty;
 
-            var creditDCSLink = string.Empty;
-
             switch (roleId)
             {
-                case 0:
-                    break;
-
                 case 1: // member
                     infoUrl = "Customer/EditCustomerInfo.aspx?custId=" + custId + "&type=Super";
                     agCasinoLinkSetting = string.Format("AGCasino/EditAGCasinoGameSetting?customerId={0}&uplineId={1}&roleId={2}", custId, parentId, roleId);
                     TemplateHandler.Assign(ref htmlcontent, "{IsHidden1}", "hidden");
                     TemplateHandler.Assign(ref htmlcontent, "{IsShow1}", "");
-                    creditDCSLink = "DCS/ViewCustomerSetting?productId={0}&language=en-US&customerLevel=1&uplinelevel=2&customerId=" + custId;
                     break;
 
                 case 2: // agent
                     downlineListURL = "Customer/MemberList.aspx?agentId=" + custId;
-                    addDownlineURL = customerInfoViewModel.IsDeposit ? "DepositCustomer/AddNewAgent" : "Customer/CreateCustomer?theme=nap&uplineId=" + custId + "&uplineRoleId=2";
+                    addDownlineURL = customerInfoViewModel.IsDeposit ? "DepositCustomer/AddNewAgent" : "Customer/CreateCustomer?theme=nap&uplineId=" + custId + "&uplineRoleId=2&UplineUsername=" + userName;
                     infoUrl = "Customer/EditCustomerInfo.aspx?custId=" + custId + "&type=Agent";
                     agCasinoLinkSetting = string.Format("AGCasino/EditAGCasinoGameSetting?customerId={0}&uplineId={1}&roleId={2}", custId, masterId, roleId);
                     TemplateHandler.Assign(ref htmlcontent, "{type}", "Agent");
                     if (!CustomerUtils.IsTransferDaily(Convert.ToString(masterId))) TemplateHandler.RemoveBlock(ref htmlcontent, "editTransferTime");
-                    creditDCSLink = "DCS/ViewCustomerSetting?productId={0}&language=en-US&customerLevel=2&customerId=" + custId;
                     break;
 
                 case 3: // master
                     infoUrl = "Customer/EditCustomerInfo.aspx?custId=" + custId + "&type=Master";
-                    addDownlineURL = customerInfoViewModel.IsDeposit ? "DepositCustomer/AddNewAgent" : "Customer/CreateCustomer?theme=nap&uplineId=" + custId + "&uplineRoleId=3";
+                    addDownlineURL = customerInfoViewModel.IsDeposit ? "DepositCustomer/AddNewAgent" : "Customer/CreateCustomer?theme=nap&uplineId=" + custId + "&uplineRoleId=3&UplineUsername=" + userName;
                     downlineListURL = "Customer/AgentList.aspx?masterId=" + custId;
                     agCasinoLinkSetting = string.Format("AGCasino/EditAGCasinoGameSetting?customerId={0}&uplineId={1}&roleId={2}", custId, superId, roleId);
                     TemplateHandler.Assign(ref htmlcontent, "{type}", "Master");
-                    creditDCSLink = "DCS/ViewCustomerSetting?productId={0}&language=en-US&customerLevel=3&customerId=" + custId;
+                    addNewDirectMemberUrl = "Customer/CreateDirectMember?theme=nap&uplineId=" + custId + "&uplineRoleId=3&agentId=-3&UplineUsername=" + userName;
                     break;
 
                 case 4: // super
-                    addDownlineURL = customerInfoViewModel.IsDeposit ? "DepositCustomer/AddNewAgent" : "Customer/CreateCustomer?theme=nap&uplineId=" + custId + "&uplineRoleId=4";
+                    addDownlineURL = customerInfoViewModel.IsDeposit ? "DepositCustomer/AddNewAgent" : "Customer/CreateCustomer?theme=nap&uplineId=" + custId + "&uplineRoleId=4&UplineUsername=" + userName;
                     downlineListURL = "Customer/MasterAgentList.aspx?superId=" + custId;
                     infoUrl = "Customer/EditCustomerInfo.aspx?custId=" + custId + "&type=Super";
                     agCasinoLinkSetting = string.Format("AGCasino/EditAGCasinoGameSetting?customerId={0}&uplineId={1}&roleId={2}&exchangeId={3}", custId, 0, roleId, customerInfoViewModel.ExchangeId);
                     TemplateHandler.Assign(ref htmlcontent, "{type}", "Super");
                     if (custId < 100) TemplateHandler.RemoveBlock(ref htmlcontent, "editTransferTime"); // for dummy super
-                    creditDCSLink = "DCS/ViewCustomerSetting?productId={0}&language=en-US&customerLevel=4&customerId=" + custId;
+                    addNewDirectMemberUrl = "Customer/CreateDirectMember?theme=nap&uplineId=" + custId + "&uplineRoleId=4&agentId=-4&UplineUsername=" + userName;
                     break;
 
                 default:
@@ -90,28 +86,44 @@
             }
 
             TemplateHandler.Assign(ref htmlcontent, "{linkSettingInfo}", infoUrl);
-            TemplateHandler.Assign(ref htmlcontent, "{liveAndRNGCasinoLinkSetting}", BuildDetailUrl(customerInfoViewModel.IsDeposit, custId, roleId, userName, customerInfoViewModel.CustomerSite, ProductGroupIdConstants.LiveAndRNGCasino));
-            TemplateHandler.Assign(ref htmlcontent, "{rngGamesLinkSetting}", BuildDetailUrl(customerInfoViewModel.IsDeposit, custId, roleId, userName, customerInfoViewModel.CustomerSite, ProductGroupIdConstants.RNGGames));
+            TemplateHandler.Assign(ref htmlcontent, "{liveAndRNGCasinoLinkSetting}", BuildDetailUrl(customerInfoViewModel.IsDeposit, custId, roleId, userName, customerInfoViewModel.CustomerSite, ProductGroupIdConstants.LiveAndRNGCasino, agentId));
+            TemplateHandler.Assign(ref htmlcontent, "{rngGamesLinkSetting}", BuildDetailUrl(customerInfoViewModel.IsDeposit, custId, roleId, userName, customerInfoViewModel.CustomerSite, ProductGroupIdConstants.RNGGames, agentId));
             TemplateHandler.Assign(ref htmlcontent, "{agcasinoLinkSetting}", agCasinoLinkSetting);
 
             //---- for menu details -----------
-            TemplateHandler.Assign(ref htmlcontent, "{linkSettingDetail}", BuildDetailUrl(customerInfoViewModel.IsDeposit, custId, roleId, userName, customerInfoViewModel.CustomerSite, ProductGroupIdConstants.SportsBook));
+            TemplateHandler.Assign(ref htmlcontent, "{linkSettingDetail}", BuildDetailUrl(customerInfoViewModel.IsDeposit, custId, roleId, userName, customerInfoViewModel.CustomerSite, ProductGroupIdConstants.SportsBook, agentId));
             TemplateHandler.Assign(ref htmlcontent, "{linkDownlineList}", downlineListURL);
             TemplateHandler.Assign(ref htmlcontent, "{linkAddnewDownline}", addDownlineURL);
+            TemplateHandler.Assign(ref htmlcontent, "{linkAddNewDirectMember}", addNewDirectMemberUrl);
             TemplateHandler.Assign(ref htmlcontent, "{IsShow1}", "hidden");
 
             return htmlcontent;
         }
 
-        private string BuildDetailUrl(bool isDeposit, int custId, int roleId, string userName, string site, int productGroupId)
+        private string BuildDetailUrl(bool isDeposit, int custId, int roleId, string userName, string site, int productGroupId, int agentId)
         {
+            var uplineRoleId = roleId + 1;
+            if (agentId == -4)
+            {
+                uplineRoleId = RoleIdConstants.Super;
+            }
+            else if (agentId == -3)
+            {
+                uplineRoleId = RoleIdConstants.Master;
+            }
+
             return isDeposit
                 ? "DepositCustomer/EditSettingAgent"
-                : $"Customer/EditCustomer?theme=nap&uplineRoleId={roleId + 1}&custId={custId}&roleId={roleId}&uname={userName}&siteName={site}&productGroupId={productGroupId}";
+                : $"Customer/EditCustomer?theme=nap&uplineRoleId={uplineRoleId}&custId={custId}&roleId={roleId}&uname={userName}&siteName={site}&productGroupId={productGroupId}&agentId={agentId}";
         }
 
         private string RemoveSettingBlock(string htmlcontent, CustomerInfoViewModel customerInfoViewModel)
         {
+            if (!customerInfoViewModel.IsAllowAddDirectMember)
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "addNewDirectMember");
+            }
+
             if (customerInfoViewModel.IsDeposit)
             {
                 TemplateHandler.RemoveBlock(ref htmlcontent, "addNew-Deposite");

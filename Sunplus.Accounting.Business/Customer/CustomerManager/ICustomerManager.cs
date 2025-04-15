@@ -11,7 +11,7 @@ namespace Sunplus.Accounting.Business.Customer
 
         CustDetail GetCustomerInfoMoveSite(string username);
 
-        Hashtable GenDownlineList(int custId, int roleId, int pageIndex);
+        Hashtable GenDownlineList(int custId, bool isDirectMember, int roleId, int pageIndex);
 
         string GenOnlineList(int custId);
 

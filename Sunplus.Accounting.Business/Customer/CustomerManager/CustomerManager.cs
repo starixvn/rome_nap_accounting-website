@@ -298,6 +298,12 @@
 
             htmlcontent = GenTransLinskBox(htmlcontent, customerInfoViewModel);
             TemplateHandler.Assign(ref htmlcontent, "{jsparams}", AssignJS(customerInfoViewModel.JsParam));
+            if (!(customerInfoViewModel.SearchAccountRoleId == (int)Enumerations.Role.Super ||
+                customerInfoViewModel.SearchAccountRoleId == (int)Enumerations.Role.Master))
+            {
+                TemplateHandler.RemoveBlock(ref htmlcontent, "hasdirectmember");
+            }
+
             return htmlcontent;
         }
 

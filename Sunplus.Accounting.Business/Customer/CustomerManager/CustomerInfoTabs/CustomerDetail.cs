@@ -131,6 +131,8 @@ namespace Sunplus.Accounting.Business.Customer
                 TemplateHandler.RemoveBlock(ref htmlcontent, "UpdateInfo");
             }
 
+            TemplateHandler.Assign(ref htmlcontent, "{DirectDownlineLevel}", customerInfoViewModel.SearchAccountRoleId == (int)Enumerations.Role.Super ? "Master" : customerInfoViewModel.SearchAccountRoleId == (int)Enumerations.Role.Master ? "Agent" : "Downline");
+
             TemplateHandler.Assign(ref htmlcontent, "{statusClass}", statusClass);
             TemplateHandler.Assign(ref htmlcontent, "{UserName}", shortUserName);
             TemplateHandler.Assign(ref htmlcontent, "{isHiddenReview}", string.IsNullOrWhiteSpace(customerInfoViewModel.DisplayReview) ? "none" : "");

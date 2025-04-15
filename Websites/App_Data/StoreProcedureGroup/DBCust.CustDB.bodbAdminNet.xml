@@ -25,7 +25,7 @@
     <Setting Key="CustomerSetting_InsertSuper" SpName="Acc_CustomerInsMember_Com" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_CustomerInsMember_MAg" SpName="Acc_CustomerInsMember_MAg" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_CustomerInsMember_SAg" SpName="Acc_CustomerInsMember_SAg" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="Acc_CustomerUpdDoubleCommLosing" SpName="Acc_CustomerUpdDoubleCommLosing" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerUpdDoubleCommLosing" SpName="Acc_CustomerUpdDoubleCommLosing_UAT2" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_CustomerSettingsCloneFromRealAccount" SpName="Acc_CustomerSettingsCloneFromRealAccount" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_CustSetting_DCSSettingCopyInsertMember" SpName="Acc_CustSetting_DCSSettingCopyInsertMember" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
@@ -35,9 +35,9 @@
   <Function Name="Sportbook">
     <Setting Key="Acc_CustomerUpdAgent_All" SpName="Acc_CustomerUpdAgent_All" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_CustomerUpdClosed" SpName="Acc_CustomerUpdClosed" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="Acc_CustomerUpdCredit" SpName="Acc_CustomerUpdCredit" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerUpdCredit" SpName="Acc_CustomerUpdCredit_UAT2" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_CustomerUpdDisableNumber" SpName="Acc_CustomerUpdDisableNumber" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="Acc_CustomerUpdDisableOutright" SpName="Acc_CustomerUpdDisableOutright" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerUpdDisableOutright" SpName="Acc_CustomerUpdDisableOutright_UAT2" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_CustomerUpdMaster_All" SpName="Acc_CustomerUpdMaster_All" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_CustomerUpdMaster_DisableAutoMPT" SpName="Acc_CustomerUpdMaster_DisableAutoMPT" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_CustomerUpdMember_All" SpName="Acc_CustomerUpdMember_All" DbName="DBCust.CustDB.wsv_nap" />
@@ -57,18 +57,18 @@
     <Setting Key="Acc_CustomerCopyVRSetting" SpName="Acc_CustomerCopyVRSetting" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Customer Credit">
-    <Setting Key="Acc_CustomerSelUsedCredit_Ag" SpName="Acc_CustomerSelUsedCredit_Ag" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerSelUsedCredit_Ag" SpName="Acc_CustomerSelUsedCredit_Ag_UAT2" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_CustomerSelUsedCredit_MAg" SpName="Acc_CustomerSelUsedCredit_MAg" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_CustomerSelUsedCredit_SAg" SpName="Acc_CustomerSelUsedCredit_SAg" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_CustomerUpdClearCredit" SpName="Acc_CustomerUpdClearCredit" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="Acc_CustomerUpdResetMemberCredit" SpName="Acc_CustomerUpdResetMemberCredit" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerUpdResetMemberCredit" SpName="Acc_CustomerUpdResetMemberCredit_UAT2" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Special Status - Function">
     <Setting Key="Acc_CustAllowListDel" SpName="Acc_CustAllowListDel" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_CustAllowListIns" SpName="Acc_CustAllowListIns" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_CustAllowListSel" SpName="Acc_CustAllowListSel" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_CustAllowListUpd" SpName="Acc_CustAllowListUpd" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="Acc_CustomerUpdAutoSuspend" SpName="Acc_CustomerUpdAutoSuspend" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerUpdAutoSuspend" SpName="Acc_CustomerUpdAutoSuspend_UAT2" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="UpdateCustomerStatusAbnormal" SpName="Acc_CustomerUpdAbnormal" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_CustomerUpdImportant" SpName="Acc_CustomerUpdImportant" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_CustomerUpdPwdReset" SpName="Acc_CustomerUpdPwdReset" DbName="DBCust.CustDB.wsv_nap" />
@@ -89,10 +89,10 @@
     <Setting Key="Acc_CustomerList_SuspendInfoSel" SpName="Acc_CustomerList_SuspendInfoSel" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_Customer_SuspendInfoSel" SpName="Acc_Customer_SuspendInfoSel" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_Customer_SuspendInfoDetailSel" SpName="Acc_Customer_SuspendInfoDetailSel" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="Acc_Customer_SuspendInfoMatrixSel" SpName="Acc_Customer_SuspendInfoMatrixSel" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_Customer_SuspendInfoMatrixSel" SpName="Acc_Customer_SuspendInfoMatrixSel_UAT2" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_Customer_CloseInfoSel" SpName="Acc_Customer_CloseInfoSel" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_Customer_CloseInfoDetailSel" SpName="Acc_Customer_CloseInfoDetailSel" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="Acc_Customer_CloseInfoMatrixSel" SpName="Acc_Customer_CloseInfoMatrixSel" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_Customer_CloseInfoMatrixSel" SpName="Acc_Customer_CloseInfoMatrixSel_UAT2" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Move Customer">
     <Setting Key="Acc_CustomerUpdMoveAgent" SpName="Acc_CustomerUpdMoveAgent" DbName="DBCust.CustDB.wsv_nap" />
@@ -205,7 +205,7 @@
   </Function>
   <Function Name="DCS">
     <Function Name="Enable Status">
-      <Setting Key="Acc_CustSetting_StatusSettingSelect" SpName="Acc_CustSetting_StatusSettingSelect" DbName="DBCust.CustDB.wsv_nap" />
+      <Setting Key="Acc_CustSetting_StatusSettingSelect" SpName="Acc_CustSetting_StatusSettingSelect_UAT2" DbName="DBCust.CustDB.wsv_nap" />
       <Setting Key="Acc_CustSetting_DisableStatUpd" SpName="Acc_CustSetting_DisableStatUpd" DbName="DBCust.CustDB.wsv_nap" />
       <Setting Key="Acc_CustSetting_CheckIsDeposit" SpName="Acc_CustSetting_CheckIsDeposit" DbName="DBCust.CustDB.wsv_nap" />
       <Setting Key="Acc_CustSetting_CheckListDeposit" SpName="Acc_CustSetting_CheckListDeposit" DbName="DBCust.CustDB.wsv_nap" />
@@ -295,15 +295,15 @@
   <Function Name="Product Status Setting">
     <Setting Key="Acc_AdminSelStatusByProductId" SpName="Acc_AdminSelStatusByProductID" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_Admin_DisableGameStatusSelect" SpName="Acc_Admin_DisableGameStatusSelect" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="Acc_Admin_DisableNewProductStatusSelect" SpName="Acc_Admin_DisableNewProductStatusSelect" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_Admin_DisableNewProductStatusSelect" SpName="Acc_Admin_DisableNewProductStatusSelect_UAT2" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_AdminCheckAllowedDownlinesByLevel" SpName="Acc_AdminCheckAllowedDownlinesByLevel" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_AdminUpdCSStatus_Cust" SpName="Acc_AdminUpdCSStatus_Cust" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_AdminUpdDisableColossusBet" SpName="Acc_AdminUpdDisableColossusBet" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_Admin_DisableGameStatusUpd" SpName="Acc_Admin_DisableGameStatusUpd" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="Acc_Admin_DisableNewProductStatusUpd" SpName="Acc_Admin_DisableNewProductStatusUpd" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_Admin_DisableNewProductStatusUpd" SpName="Acc_Admin_DisableNewProductStatusUpd_UAT2" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_CustSetting_ProductProfileSelect" SpName="Acc_CustSetting_ProductProfileSelect" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="Acc_Admin_DisableNewProductStatus_160_Select" SpName="Acc_Admin_DisableNewProductStatus_160_Select" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="Acc_Admin_DisableNewProductStatus_160_Upd" SpName="Acc_Admin_DisableNewProductStatus_160_Upd" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_Admin_DisableNewProductStatus_160_Select" SpName="Acc_Admin_DisableNewProductStatus_160_Select_UAT2" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_Admin_DisableNewProductStatus_160_Upd" SpName="Acc_Admin_DisableNewProductStatus_160_Upd_UAT2" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="NAP API - Update Dangerous Customers">
     <Setting Key="Acc_CustomerSelDangerCust" SpName="Acc_CustomerSelDangerCust" DbName="DBCust.CustDB.wsv_nap" />
@@ -397,8 +397,8 @@
     <Setting Key="Acc_FinanceTransferMulInsTmpExcel" SpName="Acc_FinanceTransferMulInsTmpExcel" DbName="DBCUST.CustDB.wsv_nap" />
   </Function>
   <Function Name="ParlayMaxPayout">
-    <Setting Key="Acc_CustSetting_MaxPayoutSelect" SpName="Acc_CustSetting_MaxPayoutSelect" DbName="DBCUST.CustDB.wsv_nap" />
-    <Setting Key="Acc_CustSetting_MaxPayoutUpd" SpName="Acc_CustSetting_MaxPayoutUpd" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustSetting_MaxPayoutSelect" SpName="Acc_CustSetting_MaxPayoutSelect_UAT2" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustSetting_MaxPayoutUpd" SpName="Acc_CustSetting_MaxPayoutUpd_UAT2" DbName="DBCUST.CustDB.wsv_nap" />
     <Setting Key="Acc_CustSetting_MaxPayoutCheckDownline" SpName="Acc_CustSetting_MaxPayoutCheckDownline" DbName="DBCUST.CustDB.wsv_nap" />
   </Function>
   <Function Name="Admin - Headline/External Group Mapping">
@@ -410,8 +410,8 @@
     <Setting Key="Acc_ExternalGroupHeadline_MappingSuper" SpName="Acc_ExternalGroupHeadline_MappingSuper" DbName="DBCUST.CustDB.wsv_nap" />
   </Function>
   <Function Name="Admin - Dormant Account List">
-    <Setting Key="Acc_DormantAccountListByHeadline_Sel" SpName="Acc_DormantAccountListByHeadline_Sel" DbName="DBCUST.CustDB.wsv_nap" />
-    <Setting Key="Acc_DormantDownlineListByHeadline_Sel" SpName="Acc_DormantDownlineListByHeadline_Sel" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_DormantAccountListByHeadline_Sel" SpName="Acc_DormantAccountListByHeadline_Sel_UAT2" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_DormantDownlineListByHeadline_Sel" SpName="Acc_DormantDownlineListByHeadline_Sel_UAT2" DbName="DBCUST.CustDB.wsv_nap" />
   </Function>
   <Function Name="Customer - Copy Super Setting">
     <Setting Key="Acc_CopySetting_CustomerCheckSuperList" SpName="Acc_CopySetting_CustomerCheckSuperList" DbName="DBCUST.CustDB.wsv_nap" />

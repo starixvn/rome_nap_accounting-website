@@ -18,6 +18,6 @@
 
         public string SiteLabel { get; set; }
 
-        public string Group { get; set; }
+        public int? AgentId { get; set; }
     }
 }

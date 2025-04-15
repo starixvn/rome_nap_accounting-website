@@ -79,6 +79,7 @@
                 TemplateHandler.Assign(ref balanceinfo, "{masterhidden}", string.Empty);
                 TemplateHandler.Assign(ref balanceinfo, "{agenthidden}", string.Empty);
                 TemplateHandler.Assign(ref balanceinfo, "{memberhidden}", string.Empty);
+                TemplateHandler.Assign(ref balanceinfo, "{agentmemberhidden}", "hidden");
             }
             else
             {
@@ -98,6 +99,9 @@
 
                 TemplateHandler.Assign(ref balanceinfo, "{GivenCreditCurrency}", customerInfoViewModel.Currency + " ");
                 TemplateHandler.Assign(ref balanceinfo, "{GivenCredit}", string.Format("{0:n}", customerInfoViewModel.Credit));
+              
+                TemplateHandler.Assign(ref balanceinfo, "{agentmemberhidden}", customerInfoViewModel.SearchAccountRoleId > 2 ? "" : "hidden");
+
                 if (customerInfoViewModel.SearchAccountRoleId > 1)
                 {
                     TemplateHandler.RemoveBlock(ref balanceinfo, "betcredit");
@@ -120,7 +124,7 @@
                     TemplateHandler.Assign(ref balanceinfo, "{ishiddenmember}", "");
                     TemplateHandler.Assign(ref balanceinfo, "{masterhidden}", "hidden");
                     TemplateHandler.Assign(ref balanceinfo, "{agenthidden}", "hidden");
-                    TemplateHandler.Assign(ref balanceinfo, "{memberhidden}", "hidden");
+                    TemplateHandler.Assign(ref balanceinfo, "{memberhidden}", "hidden");                   
                 }
             }
 
@@ -165,6 +169,10 @@
             TemplateHandler.Assign(ref balanceInfo, "{memberactive}",
                                     string.Format("<span style='color:blue'>{0}</span>/<span style='color:red'>{1}</span>/{2}",
                                                     customerInfoViewModel.MemberActive, customerInfoViewModel.MemberClosed, customerInfoViewModel.MemberSuspended));
+
+            TemplateHandler.Assign(ref balanceInfo, "{directmemberactive}",
+                string.Format("<span style='color:blue'>{0}</span>/<span style='color:red'>{1}</span>/{2}",
+                    customerInfoViewModel.DirectMemberActive, customerInfoViewModel.DirectMemberClosed, customerInfoViewModel.DirectMemberSuspended));
 
             TemplateHandler.Assign(ref balanceInfo, "{statuscounttooltip}", _statusCountTooltipMBC);
             TemplateHandler.Assign(ref balanceInfo, "{statuscounttitle}", _statusCountTitleMBC);

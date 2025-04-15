@@ -463,7 +463,7 @@
                 RoleId = customerInfoViewModel.SearchAccountRoleId,
                 Htmlcontent = htmlcontent,
                 IsManageCustomerAccess = customerInfoViewModel.ManageCustomerAccess
-            }, htmlcontent);
+            }, htmlcontent, customerInfoViewModel.AgentId);
 
             return htmlcontent;
         }

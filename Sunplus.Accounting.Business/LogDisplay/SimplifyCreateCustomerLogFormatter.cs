@@ -31,6 +31,8 @@ namespace Sunplus.Accounting.Business.LogDisplay
 
         private const int SettingsLogActionId_Member = 95095;
 
+        private const int SettingsLogActionId_SuperDirectMember = 264001;
+
         private const int CompactLogActionId_Member = 95096;
 
         private const int PTTemplateIns_Master = 475;
@@ -58,6 +60,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
             CompactLogActionId_Agent,
             SettingsLogActionId_Member,
             CompactLogActionId_Member,
+            SettingsLogActionId_SuperDirectMember,
             //PTTemplateIns_Master,
             //PTTemplateUpd_Master,
             ////PTTemplateDel_Master,
@@ -644,6 +647,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
                     return 2;
 
                 case SettingsLogActionId_Member:
+                case SettingsLogActionId_SuperDirectMember:
                 case CompactLogActionId_Member:
                 case PTTemplateIns_Member:
                 case PTTemplateUpd_Member:
