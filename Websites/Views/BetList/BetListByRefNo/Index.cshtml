@@ -98,7 +98,7 @@
                                     <option value="-1"> Please select...</option>
                                     @foreach (var item in Model.ProductList)
                                     {
-                                        <option value="@item.ProductID">@item.ProductName</option>
+                                        <option value="@item.ProductID" data-type="@item.Group">@item.ProductName</option>
                                     }
                                 </select>
                             </td>

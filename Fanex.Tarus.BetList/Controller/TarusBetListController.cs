@@ -53,7 +53,7 @@ namespace Fanex.Tarus.BetList.Controller
             var allProducts = _betListService.GetProductList();
             var activeProduct = allProducts
                 .Where(i => i.Enabled &&
-                        i.Group !=0 &&
+                        i.Group != 0 &&
                         i.GroupType == 0 &&
                         !excludeProductIds.Any(j => j == i.ProductID));
             var viewModel = new BetListByRefNoViewModel(activeProduct);

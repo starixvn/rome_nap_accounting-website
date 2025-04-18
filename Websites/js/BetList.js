@@ -1052,6 +1052,29 @@ function showMicroGamingLCBetDetails(refno, winlossDate, custId, transType) {
     openResultsPopUp(params);
 }
 
+function showLiveCasinoBetDetails(refno, winlossDate, custId, transType, sporttypeId, sporttypeName) {
+    var params = {
+        url: "AGCasinoBetList/BetDetails",
+        title: sporttypeName + " - Detailed Bet list - " + winlossDate.split(" ")[0],
+        jsonParam: { Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: sporttypeId, PageSize: 500 },
+        width: 1250,
+        height: 600
+    };
+
+    openResultsPopUp(params);
+}
+
+function showRNGBetDetails(refno, winlossDate, custId, transType, sporttypeId, sporttypeName) {
+    var params = {
+        url: "RNGCasinoBetList/BetDetails",
+        title: sporttypeName + " - Detailed Bet list - " + winlossDate.split(" ")[0],
+        jsonParam: { TransId: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: sporttypeId, PageSize: 500 },
+        width: 1250,
+        height: 600
+    };
+
+    openResultsPopUp(params);
+}
 
 function showHotDogBetDetails(refno, winlossDate, custId, transType) {
     var params = {
