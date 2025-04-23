@@ -2,12 +2,14 @@
 {
     using System.Collections.Generic;
     using System.Web.Mvc;
+    using System.Linq;
     using CustomerSetting.Module.Core.Web.Controllers;
     using Fanex.Result.Core.ThirdParty;
     using Fanex.Result.Core.ThirdParty.Models;
     using Fanex.Tarus.BetList.ViewModel;
     using Infrastructure.Caching;
     using Sunplus.Accounting.DataAccess;
+    using Fanex.Tarus.BetList.Configurations;
 
     public class ThirdPartyController : BaseController
     {
@@ -15,6 +17,23 @@
 
         public ThirdPartyController()
         { }
+
+        public ActionResult ViewResult(ThirdPartyResultRequest request)
+        {
+            var result3rd = Result3rdSection.Instance.InternalUrlCollection.OfType<Result3rdElement>().FirstOrDefault(x => x.SportTypeId == request.SportTypeId);
+            var title = CacheRef.GetSportName(request.SportTypeId);
+            var config = new ThirdPartyConfigs(result3rd.Url, result3rd.Debug, 0, string.Empty, string.Empty, 0);
+            var service = new ThirdPartyResult(config);
+            var resultRequest = new ResultRequest(request.CustId, request.TransId3rd, request.GameId3rd, request.CurrencyId, request.SiteId)
+            {
+                BetTypeId = request.BetTypeId,
+                EndTime = request.EndTime,
+                Platform = "D"
+            };
+            var result = service.GetResultGET(resultRequest);
+
+            return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(title, result));
+        }
 
         public ActionResult MicrogamingLiveResult(ThirdPartyResultRequest request)
             => BaseResult(request, "MicrogamingLiveResultConfigs");
@@ -312,12 +331,18 @@
         public ActionResult HotDogResult(ThirdPartyResultRequest request)
             => BaseResult(request, "HotDogResultConfigs");
 
-        private void SetProductResultTitle(int productId)
-            => ProductResultTitle = CacheRef.GetProductName(productId) + " Result";
+        private string SetProductResultTitle(int id)
+        {
+            var titel = CacheRef.GetProductName(id);
+
+            return string.IsNullOrEmpty(titel) ? CacheRef.GetSportName(id) : titel;  
+        }
+            
     }
 
     public class ThirdPartyResultRequest
     {
+        public int SportTypeId { get; set; }
         public int ProductId { get; set; }
 
         public string SiteId { get; set; }
