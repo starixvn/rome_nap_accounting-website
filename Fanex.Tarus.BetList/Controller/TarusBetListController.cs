@@ -49,12 +49,11 @@ namespace Fanex.Tarus.BetList.Controller
         [SmartPunterFilter(SmartPunterFilter.AuthenticationType.Read)]
         public ActionResult BetListByRefNo_Main()
         {
-            var excludeProductIds = new List<int> { 6, 11, 50 };
-            var casinoType = new List<int> { 1, 2 };
+            var excludeProductIds = new List<int> { 6, 11, 50 };            
             var allProducts = _betListService.GetProductList();
             var activeProduct = allProducts
                 .Where(i => i.Enabled &&
-                        casinoType.Any(j => j == i.CasinoType) &&
+                        i.Group !=0 &&
                         i.GroupType == 0 &&
                         !excludeProductIds.Any(j => j == i.ProductID));
             var viewModel = new BetListByRefNoViewModel(activeProduct);
