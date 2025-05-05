@@ -1,5 +1,4 @@
-﻿using Fanex.Tarus.Infrastructure.Configurations.InternalLogin;
-using System.Configuration;
+﻿using System.Configuration;
 
 namespace Fanex.Tarus.BetList.Configurations
 {  
