@@ -20,7 +20,7 @@
 
         public ActionResult ViewResult(ThirdPartyResultRequest request)
         {
-            var result3rd = Result3rdSection.Instance.InternalUrlCollection.OfType<Result3rdElement>().FirstOrDefault(x => x.SportTypeId == request.SportTypeId);
+            /*var result3rd = Result3rdSection.Instance.InternalUrlCollection.OfType<Result3rdElement>().FirstOrDefault(x => x.SportTypeId == request.SportTypeId);
             var title = CacheRef.GetSportName(request.SportTypeId);
             var config = new ThirdPartyConfigs(result3rd.Url, result3rd.Debug, 0, string.Empty, string.Empty, 0);
             var service = new ThirdPartyResult(config);
@@ -31,8 +31,8 @@
                 Platform = "D"
             };
             var result = service.GetResultGET(resultRequest);
-
-            return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(title, result));
+            */
+            return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(string.Empty, string.Empty));
         }
 
         public ActionResult MicrogamingLiveResult(ThirdPartyResultRequest request)
