@@ -1052,6 +1052,29 @@ function showMicroGamingLCBetDetails(refno, winlossDate, custId, transType) {
     openResultsPopUp(params);
 }
 
+function showLiveCasinoBetDetails(refno, winlossDate, custId, transType, sporttypeId, sporttypeName) {
+    var params = {
+        url: "AGCasinoBetList/BetDetails",
+        title: sporttypeName + " - Detailed Bet list - " + winlossDate.split(" ")[0],
+        jsonParam: { Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: sporttypeId, PageSize: 500 },
+        width: 1250,
+        height: 600
+    };
+
+    openResultsPopUp(params);
+}
+
+function showRNGBetDetails(refno, winlossDate, custId, transType, sporttypeId, sporttypeName) {
+    var params = {
+        url: "RNGCasinoBetList/BetDetails",
+        title: sporttypeName + " - Detailed Bet list - " + winlossDate.split(" ")[0],
+        jsonParam: { TransId: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: sporttypeId, PageSize: 500 },
+        width: 1250,
+        height: 600
+    };
+
+    openResultsPopUp(params);
+}
 
 function showHotDogBetDetails(refno, winlossDate, custId, transType) {
     var params = {
@@ -1362,6 +1385,9 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
         case 139:
             return getHotDogParam(custId, transId3rd, gameId3rd, currencyId, siteId, bettype, winlostdate);
         default:
+            if (sporttype > 99) {
+                return getResult3rdParam(custId, transId3rd, gameId3rd, currencyId, siteId, bettype, winlostdate, transDesc , sporttype);
+            }
             return undefined;
     }
 }
@@ -2230,6 +2256,25 @@ function getHotDogParam(custId, transId3rd, gameId3rd, currencyId, siteId, betTy
         jsonParam:
         {
             productId: 95,
+            custId: custId,
+            transId3rd: transId3rd,
+            gameId3rd: gameId3rd,
+            BetTypeId: betType,
+            EndTime: endTime,
+            SiteId: siteId,
+            CurrencyId: currencyId
+        },
+        width: 945,
+        height: 500
+    };
+}
+function getResult3rdParam(custId, transId3rd, gameId3rd, currencyId, siteId, betType, endTime, sportName, sportId) {
+    return {
+        url: "ThirdParty/ViewResult",
+        title: sportName + " Result",
+        jsonParam:
+        {
+            SportTypeId: sportId,
             custId: custId,
             transId3rd: transId3rd,
             gameId3rd: gameId3rd,
