@@ -87,7 +87,7 @@
                                     <option value="h" @(item.OddsGroup.Equals("h") ? "selected" : string.Empty)>h</option>
                                     <option value="j" @(item.OddsGroup.Equals("j") ? "selected" : string.Empty)>j</option>
                                 }
-                                @if (displayFlags["LVWXYZ"])
+                                @if (displayFlags["NOPRSTULVWXYZ"])
                                 {
                                     foreach (var group in new[] { "n", "o", "p", "r", "s", "t", "t", "l", "v", "w", "x", "y", "z" })
                                     {
