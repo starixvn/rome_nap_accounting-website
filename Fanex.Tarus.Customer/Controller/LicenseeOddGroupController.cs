@@ -121,7 +121,7 @@ namespace Fanex.Tarus.Customer.Controller
 
         private void ConfigureOddsGroupVisibility(string siteName)
         {
-            var oddsGroupTypes = new[] { "I", "M", "Q", "G", "K", "HJ", "LVWXYZ" };
+            var oddsGroupTypes = new[] { "I", "M", "Q", "G", "K", "HJ", "NOPRSTULVWXYZ" };
 
             foreach (var type in oddsGroupTypes)
             {
