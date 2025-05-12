@@ -152,7 +152,7 @@ BetList.BetListByRefNo = (function ($) {
             return false;
         }
 
-        if ((typeSelected == "1" || typeSelected == "5") && $betId.val().trim() === "") {
+        if ((typeSelected == "1" || typeSelected == "5" || typeSelected == "4") && $betId.val().trim() === "") {
             showError("BetID is required");
             return false;
         }
