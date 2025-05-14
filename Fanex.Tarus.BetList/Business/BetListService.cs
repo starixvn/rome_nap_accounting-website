@@ -454,7 +454,8 @@ namespace Fanex.Tarus.BetList.Business
             {
                 IList<BetType> siteDBTickets = new List<BetType>();
                 IList<BetType> mainDBTickets = new List<BetType>();
-                if (siteDB.IsSiteDB && mainCriteria.ToDate > ReportService.BalanceUp.MoveBetsDay)
+                var sabaCoin = !string.IsNullOrEmpty(mainCriteria.ShadowIds);
+                if (!sabaCoin && siteDB.IsSiteDB && mainCriteria.ToDate > ReportService.BalanceUp.MoveBetsDay)
                 {
                     var siteDBCriteria = new BetTypeByDateInSiteDBCriteria
                     {
@@ -469,13 +470,14 @@ namespace Fanex.Tarus.BetList.Business
                 if (!siteDB.IsSiteDB ||
                     (siteDB.IsSiteDB && mainCriteria.FromDate <= ReportService.BalanceUp.MoveBetsDay))
                 {
+                    var excludeBettrans = sabaCoin ? false : siteDB.IsSiteDB;
                     mainDBTickets = _betListRepository.GetBetTypeByDate(new BetTypeByDateCriteria
                     {
                         CustId = mainCriteria.CustId,
                         ShadowIds = mainCriteria.ShadowIds,
                         FromDate = mainCriteria.FromDate,
                         ToDate = mainCriteria.ToDate,
-                        ExcludeBettrans = siteDB.IsSiteDB
+                        ExcludeBettrans = excludeBettrans
                     });
                 }
 
@@ -516,7 +518,8 @@ namespace Fanex.Tarus.BetList.Business
                 var ticketData = new List<ITicketData>();
                 var siteDBTickets = new KeyValuePair<dynamic, IList<TicketDetail>>(null, new List<TicketDetail>());
                 var mainTickets = new KeyValuePair<dynamic, IList<TicketDetail>>(null, new List<TicketDetail>());
-                if (siteDB.IsSiteDB && toDate > ReportService.BalanceUp.MoveBetsDay)
+                var sabaCoin = !string.IsNullOrEmpty(shadowIds);
+                if (!sabaCoin && siteDB.IsSiteDB && toDate > ReportService.BalanceUp.MoveBetsDay)
                 {
                     var siteDBCriteria = new SiteDBBetListByCustInfoCriteria
                     {
@@ -542,6 +545,7 @@ namespace Fanex.Tarus.BetList.Business
                 if (!siteDB.IsSiteDB ||
                     (siteDB.IsSiteDB && fromDate <= ReportService.BalanceUp.MoveBetsDay))
                 {
+                    var excludeBettrans = sabaCoin? false: siteDB.IsSiteDB;
                     var mainCriteria = new BetListByCustInfoCriteria
                     {
                         CustId = custId,
@@ -555,7 +559,7 @@ namespace Fanex.Tarus.BetList.Business
                         ErrCode = 0,
                         ErrMsg = string.Empty,
                         MaxTotalRow = ReportService.BetlistMaxTotalRow,
-                        ExcludeBettrans = siteDB.IsSiteDB
+                        ExcludeBettrans = excludeBettrans
                     };
                     mainTickets = _betListRepository.FetchWithOutputs<TicketDetail>(mainCriteria, mapTicketObjectFunction, ref ticketData);
                     if (mainTickets.Key.errCode != 0)
@@ -607,6 +611,7 @@ namespace Fanex.Tarus.BetList.Business
             {
                 IList<TicketDetail> tickets = new List<TicketDetail>();
                 List<ITicketData> outputLiveCasino = new List<ITicketData>();
+                var excludeBettrans = !string.IsNullOrEmpty(shadowIds) ? false : siteDB.IsSiteDB;
                 if (siteDB.IsSiteDB)
                 {
                     var siteDBCriteria = new SiteDBBetListByCustInfoByRefnoCriteria()
@@ -629,7 +634,7 @@ namespace Fanex.Tarus.BetList.Business
                         ShadowIds = shadowIds,
                         MoveBetsDay = ReportService.BalanceUp.MoveBetsDay,
                         BalanceUpDay = ReportService.BalanceUp.BalanceUpDay,
-                        ExcludeBettrans = siteDB.IsSiteDB
+                        ExcludeBettrans = excludeBettrans
                     };
                     tickets = _betListRepository.Fetch<TicketDetail>(mainCriteria, mapTicketObjectFunction, ref outputLiveCasino);
                 }
