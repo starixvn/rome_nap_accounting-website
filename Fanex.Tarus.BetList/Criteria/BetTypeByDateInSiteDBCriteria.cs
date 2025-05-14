@@ -9,6 +9,8 @@
         [SpParam(SqlParamName = "CustId")]
         public int CustId { get; set; }
 
+        public string ShadowIds { get; set; }
+
         public DateTime FromDate { get; set; }
 
         public DateTime ToDate { get; set; }

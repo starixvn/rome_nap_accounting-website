@@ -600,6 +600,12 @@ function OpenViewClosed(username) {
     parent.resetMenu();
 }
 
+function OpenSabaAccount(sabaId) {
+    var url = 'SabaCoin/index?sabaId=' + sabaId;
+    parent.gotoURL('centerFr', url);
+    parent.resetMenu();
+}
+
 function collapseInfo() {
     var curr = $("#btnupdownCustInfo");
     var obj = $("#custInfoDetal");

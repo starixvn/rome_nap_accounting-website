@@ -386,6 +386,7 @@
     <Compile Include="Business\ManageSuperSettings\ManageSuperSettingsService.cs" />
     <Compile Include="Business\MultipleUpdateSuperStatus\MultipleUpdateSuperStatusService.cs" />
     <Compile Include="Business\ParlayMaxPayout\ParlayMaxPayoutService.cs" />
+    <Compile Include="Business\SabaCoin\SabaCoinService.cs" />
     <Compile Include="Business\SettingCustomer\OpenCustomer\OpenCustomerService.cs" />
     <Compile Include="Business\SettingCustomer\OpenCustomer\OpenCustomerServiceImpl.cs" />
     <Compile Include="Business\TextToUsernames\TextToUsernamesService.cs" />
@@ -418,6 +419,7 @@
     <Compile Include="Constants\RoleIdConstants.cs" />
     <Compile Include="Constants\ToastMessageSiteFunctionIdConstants.cs" />
     <Compile Include="Constants\ToastMessageTypeConstants.cs" />
+    <Compile Include="Controller\SabaCoinController.cs" />
     <Compile Include="Controller\AGCasinoController.cs" />
     <Compile Include="Controller\AutoTransferAll\AutoTransferAllController.cs" />
     <Compile Include="Controller\BetCreditHistoryController.cs" />
@@ -570,6 +572,7 @@
     <Compile Include="Criteria\OpenCustomer\GetSingleOpenCustomerInfoCriteria.cs" />
     <Compile Include="Criteria\Player3rd\SearchPlayer3rdCriteria.cs" />
     <Compile Include="Criteria\ReplicateLicenseeSettings\DoReplicateLicenseeSettingsCriteria.cs" />
+    <Compile Include="Criteria\SabaCoin\GetSabaCoinAccountCriteria.cs" />
     <Compile Include="Criteria\Suspend\GetSuspendCustomerDetailInfoCriteria.cs" />
     <Compile Include="Criteria\Suspend\GetSuspendInfoMatrixCriteria.cs" />
     <Compile Include="Criteria\Suspend\GetMultipleSuspendCustomerInfoCriteria.cs" />
@@ -742,6 +745,7 @@
     <Compile Include="Entities\ManageSuperSettings\WinLossLimitModel.cs" />
     <Compile Include="Entities\MultipleUpdateSuperStatus\SuperStatusEntity.cs" />
     <Compile Include="Entities\Player3rd\Player3rd.cs" />
+    <Compile Include="Entities\SabaCoin\SabaCoinModel.cs" />
     <Compile Include="Entities\SettingCustomer\OpenCustomer\SingleOpenDownline.cs" />
     <Compile Include="Entities\SettingCustomer\OpenCustomer\SingleOpenAffectedDownline.cs" />
     <Compile Include="Entities\SettingCustomer\Suspend\Multiple\MultipleUpdateViewModel.cs" />

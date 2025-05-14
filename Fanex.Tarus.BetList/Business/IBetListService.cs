@@ -1,7 +1,9 @@
 ﻿namespace Fanex.Tarus.BetList.Business
 {
+    using Fanex.Tarus.BetList.Controllers;
     using Fanex.Tarus.BetList.Criteria;
     using Fanex.Tarus.BetList.Entities.BetList;
+    using Fanex.Tarus.BetList.Entities;
     using Fanex.Tarus.BetList.Models;
     using Fanex.Tarus.BetList.Param;
     using System;
@@ -11,6 +13,9 @@
     public interface IBetListService
     {
         IList<ProductEntity> GetProductList();
+
+
+        IEnumerable<ShadowAccountModel> GetShadowAccount(int custId);
 
         void AssignCountry(IEnumerable<TicketDetail> tickets);
 
@@ -22,10 +27,11 @@
 
         IList<TicketDetail> GetBetListByProduct(BetListByProductParam betListByProductCriteria);
 
-        IList<BetType> GetBetTypeByDate(BetTypeByDateCriteria betTypebyDateCriteria);
+        IList<BetType> GetBetTypeByDate(GetBettypeRequest betTypebyDateCriteria);
 
         KeyValuePair<string, IList<TicketDetail>> GetBetListByCustInfo_DateRange(
             int custId,
+            string shadowIds,
             DateTime fromDate,
             DateTime toDate,
             int betType,
@@ -34,7 +40,7 @@
             int pageIndex,
             ref int quantity);
 
-        KeyValuePair<string, IList<TicketDetail>> GetBetListByCustInfo_Refno(string transactionId, int customerId);
+        KeyValuePair<string, IList<TicketDetail>> GetBetListByCustInfo_Refno(string transactionId, int customerId, string shadowIds);
 
         SystemParlayModel GetBetListByCustInfo_SystemParLayTab(string transId, int custId);
 
