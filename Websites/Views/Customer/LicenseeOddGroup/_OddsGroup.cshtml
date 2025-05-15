@@ -15,7 +15,8 @@
         { "Q", ViewData.GetBoolean("IsDisplayOddsGroupQ") },
         { "G", ViewData.GetBoolean("IsDisplayOddsGroupG") },
         { "K", ViewData.GetBoolean("IsDisplayOddsGroupK") },
-        { "HJ", ViewData.GetBoolean("IsDisplayOddsGroupHJ") }
+        { "HJ", ViewData.GetBoolean("IsDisplayOddsGroupHJ") },
+        { "NOPRSTULVWXYZ", ViewData.GetBoolean("IsDisplayOddsGroupNOPRSTULVWXYZ") }
     };
     }
 
@@ -85,6 +86,14 @@
                                 {
                                     <option value="h" @(item.OddsGroup.Equals("h") ? "selected" : string.Empty)>h</option>
                                     <option value="j" @(item.OddsGroup.Equals("j") ? "selected" : string.Empty)>j</option>
+                                }
+                                @if (displayFlags["NOPRSTULVWXYZ"])
+                                {
+                                    foreach (var group in new[] { "n", "o", "p", "r", "s", "t", "u", "l", "v", "w", "x", "y", "z" })
+                                    {
+                                        <option value="@group" @(item.OddsGroup.Equals(group) ? "selected" : string.Empty)>@group</option>
+                                    }
+                                  
                                 }
                                 <option value="" @(string.IsNullOrWhiteSpace(item.OddsGroup) ? "selected" : string.Empty)>N/A</option>
                             </select>
