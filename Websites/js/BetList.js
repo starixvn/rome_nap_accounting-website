@@ -1812,9 +1812,9 @@ function getSabaClubParam(custId, gameRoundId, gameId, siteId, sportType) {
 
 function getMacauGamesParam(custId, transId3rd, gameId3rd, currencyId, siteId) {
     return {
-        url: "ThirdParty/VoidbridgeResult",
+        url: "ThirdParty/ViewResult",
         title: "Macau Games Result",
-        jsonParam: { custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, siteId: siteId, currencyId: currencyId, productId: 22 },
+        jsonParam: { custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, siteId: siteId, currencyId: currencyId, productId: 22, sportTypeId: 212 },
         width: 945,
         height: 500
     };
