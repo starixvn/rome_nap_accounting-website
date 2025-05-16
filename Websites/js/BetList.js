@@ -1299,6 +1299,7 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
         case 244: // SaGaming.
         case 233: // WM
         case 159: // YeeBet
+        case 136: // W Casino
             return getLiveCasinoParam(transId3rd, gameId3rd, bettype, sporttype);
 
         case 212: // Macau Games.
@@ -1574,6 +1575,7 @@ function getLiveCasinoParam(transdesc, betcheck, bettype, sporttype) {
     sporttypes["244"] = "SA Gaming Result";
     sporttypes["233"] = "WM Result";
     sporttypes["159"] = "YeeBet Result";
+    sporttypes["136"] = "W Casino Result";
 
     var resultPageBySportTypes = {};
     resultPageBySportTypes["211"] = "Report/ViewAllbetCasinoResult.aspx";
@@ -1581,6 +1583,7 @@ function getLiveCasinoParam(transdesc, betcheck, bettype, sporttype) {
     resultPageBySportTypes["244"] = "Report/ViewSAGamingResult.aspx";
     resultPageBySportTypes["233"] = "Report/ViewWMResult.aspx";
     resultPageBySportTypes["159"] = "Report/ViewWMResult.aspx";
+    resultPageBySportTypes["136"] = "Report/ViewWCasinoResult.aspx";
 
     var title = sporttypes[sporttype];
     var url = resultPageBySportTypes[sporttype];

@@ -12,6 +12,6 @@
 </head>
 <body>
     <div style="margin-bottom:5px;"></div>
-    <asp:Literal ID="lResult" runat="server"></asp:Literal>  
+    <asp:Literal ID="lResult" runat="server"></asp:Literal>  <a href="../UserGuide/">../UserGuide/</a>
 </body>
 </html>

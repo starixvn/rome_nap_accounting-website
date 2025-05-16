@@ -179,8 +179,8 @@
     <Reference Include="Fanex.BetList.Live22, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Live22.1.0.0.1\lib\net461\Fanex.BetList.Live22.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.LiveCasinoCore, Version=1.0.0.8, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.LiveCasinoCore.1.0.0.8\lib\net461\Fanex.BetList.LiveCasinoCore.dll</HintPath>
+    <Reference Include="Fanex.BetList.LiveCasinoCore, Version=1.0.0.9, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.LiveCasinoCore.1.0.0.9-wcasino-02\lib\net461\Fanex.BetList.LiveCasinoCore.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.MaxGame, Version=2.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.MaxGame.2.0.0.2\lib\net461\Fanex.BetList.MaxGame.dll</HintPath>
@@ -459,6 +459,9 @@
     </Reference>
     <Reference Include="Fanex.Result.Core.VirtualRacing, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.VirtualRacing.1.0.0.1\lib\net461\Fanex.Result.Core.VirtualRacing.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Result.Core.WCasino, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Result.Core.WCasino.1.0.0.1-wcasino-01\lib\net461\Fanex.Result.Core.WCasino.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Result.Core.WM, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.WM.2.0.0\lib\net461\Fanex.Result.Core.WM.dll</HintPath>
