@@ -5,6 +5,9 @@ namespace Fanex.Tarus.Customer.ViewModels.TextToUsernames
     public class GetUsernamesViewModel
     {
         public string ValidUsernames { get; set; }
+
+        public string ValidNicknames { get; set; }
+
         public IEnumerable<UsernameViewModel> InvalidUsernames { get; set; }
     }
 }
