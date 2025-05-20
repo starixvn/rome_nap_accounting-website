@@ -1,6 +1,6 @@
 ﻿var textToUsernames = {
     init: function () {
-        $('#copy-tipsy').tipsy({
+        $('#copy-tipsy, #copy-tipsy-nicknames').tipsy({
             html: true,
             gravity: 'nw'
         });
@@ -47,8 +47,8 @@
                 document.body.removeChild(input);
             }
 
-            $('#copy-tipsy').tipsy('show');
-            setTimeout(function () { $('#copy-tipsy').tipsy('hide'); }, 3000);
+            $('#copy-tipsy-nicknames').tipsy('show');
+            setTimeout(function () { $('#copy-tipsy-nicknames').tipsy('hide'); }, 3000);
         });
 
         $(".tab-ttu-icon-collapse-expand").click(function () {
@@ -94,8 +94,8 @@
                     $(".tbl-valid-usernames").addClass("hidden");
                 }
 
-                if (data.ValidUsernames) {
-                    $(".tbl-valid-nicknames .row-nicknames").html(data.ValidUsernames);
+                if (data.ValidNicknames) {
+                    $(".tbl-valid-nicknames .row-nicknames").html(data.ValidNicknames);
                     $(".tbl-valid-nicknames").removeClass("hidden");
                 } else {
                     $(".tbl-valid-nicknames").addClass("hidden");
