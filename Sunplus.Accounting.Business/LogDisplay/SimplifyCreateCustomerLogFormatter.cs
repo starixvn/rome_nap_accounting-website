@@ -235,6 +235,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
                     case 155: // Win Loss Limit
                     case 158: // Stake Levels
                     case 159: // Group Stake Levels
+                    case 162: // Potential Win Limit
                         trackingGroup = ParseTrackingTable(groupType, groupId, DisplayType.SportType);
                         break;
 

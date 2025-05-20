@@ -279,4 +279,7 @@
   <data name="SuperDiscount" xml:space="preserve">
     <value>Comm For Super</value>
   </data>
+  <data name="GroupType_162" xml:space="preserve">
+    <value>Potential Win Limit</value>
+  </data>
 </root>

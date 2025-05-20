@@ -23,7 +23,8 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
             G_GT_SportType_Bettype = 5,
             SB_Com = 6
         }
-
+        private const int CreatePotentialWinLimitActionId = 265000;
+        private const int EditPotentialWinLimitActionId = 854;
         private const int CreateSuperPTActionId = 263000;
         private const int CreateSuperCommActionId = 261000;
         private const int CreateSuperBetSettingActionId = 262000;
@@ -106,6 +107,8 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
         private const int UpdateWinLossLimit155ActionId = 852;
 
         private readonly int[] ActionIds = {
+            CreatePotentialWinLimitActionId,
+            EditPotentialWinLimitActionId,
             CreateSuperPTActionId,
             CreateSuperCommActionId,
             CreateSuperBetSettingActionId,
@@ -236,6 +239,9 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
             int groupId = 1;
             switch (logAction)
             {
+                case LogAction.WinLimit: // Win Limit
+                    trackingGroup = ParseTrackingTable(ele, 162, DisplayType.SportType, out groupId);
+                    break;
                 case LogAction.SBPT: // PT
                     trackingGroup = ParseSBPositionTakingTrackingTable(ele, custLevel);
                     break;
@@ -280,6 +286,9 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
             TrackingGroup trackingGroup = new TrackingGroup();
             switch (groupType)
             {
+                case "WinLimit": // Win Limit
+                    trackingGroup = ParseWinLimitSettingLog(ele);
+                    break;
                 case "PT": // PT
                     trackingGroup = ParseSBPositionTakingTrackingTable(ele, custLevel);
                     break;
@@ -651,6 +660,28 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
             return trackingGroup;
         }
 
+        private TrackingGroup ParseWinLimitSettingLog(XElement groupType)
+        {
+            TrackingGroup trackingGroup = new TrackingGroup();
+            trackingGroup.N = GetCreateCustomerResource($"GroupType_162");
+            trackingGroup.Vals = new List<TrackingElement>();
+
+
+            foreach (var item in groupType.Elements())
+            {
+                if (HasData(item))
+                {
+                    continue;
+                }
+                foreach (var attr in item.Attributes())
+                {
+                    trackingGroup.Vals.Add(LogFormater.FormatElement(attr));
+                }
+            }
+
+            return trackingGroup;
+        }
+
         private TrackingElement FormatSMACommElement(
             XAttribute attr,
             int groupId,
@@ -746,6 +777,8 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
                 case UpdateMasterSBBetSettingActionId:
                 case UpdateMasterIndirectSBBetSettingActionId:
                     return 3;
+                case CreatePotentialWinLimitActionId:
+                case EditPotentialWinLimitActionId:
                 case CreateAgentPTActionId:
                 case CreateAgentCommActionId:
                 case CreateAgentBetSettingActionId:
@@ -900,9 +933,12 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
             => actionId == UpdateStakeLevel158ActionId;
         private bool IsWinlossLimitActionId(int actionId)
             => actionId == UpdateWinLossLimit155ActionId;
-
+        private bool IsWinLimitActionId(int actionId)
+            => actionId == EditPotentialWinLimitActionId;
         private LogAction GetLogAction(int actionId)
         {
+            if (IsWinLimitActionId(actionId))
+                return LogAction.WinLimit;
             if (IsSBPTActionId(actionId))
                 return LogAction.SBPT;
             if (IsOthersPTActionId(actionId))
@@ -936,5 +972,6 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
         ParlayMaxPayout,
         WinlossLimit,
         StakeLevel,
+        WinLimit
     }
 }
