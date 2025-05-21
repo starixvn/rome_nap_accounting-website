@@ -58,6 +58,20 @@ namespace Fanex.Tarus.BetList.Configurations
             }
         }
 
+
+        [ConfigurationProperty("VendorId", IsRequired = false)]
+        public int VendorId
+        {
+            get
+            {
+                return (int)this["VendorId"];
+            }
+            set
+            {
+                this["VendorId"] = value;
+            }
+        }
+
         [ConfigurationProperty("Url", IsRequired = true)]
         public string Url
         {
