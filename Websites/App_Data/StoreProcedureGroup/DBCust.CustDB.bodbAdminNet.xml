@@ -418,7 +418,7 @@
     <Setting Key="Acc_CustSetting_WinLossLimitSelect" SpName="Acc_CustSetting_WinLossLimitSelect" DbName="DBCUST.CustDB.wsv_nap" />
     <Setting Key="Acc_CustSetting_WinLossLimitUpd" SpName="Acc_CustSetting_WinLossLimitUpd" DbName="DBCUST.CustDB.wsv_nap" />
     <Setting Key="Acc_CopySetting_CustomerSelStatus" SpName="Acc_CopySetting_CustomerSelStatus" DbName="DBCUST.CustDB.wsv_nap" />
-    <Setting Key="Acc_CustomerUsername_Split" SpName="Acc_CustomerUsername_Split_xtest" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerUsername_Split" SpName="Acc_CustomerUsername_Split" DbName="DBCUST.CustDB.wsv_nap" />
     <Setting Key="Acc_CustomerCheckSuperList" SpName="Acc_CustomerCheckSuperList" DbName="DBCUST.CustDB.wsv_nap" />
   </Function>
   <Function Name="Protected Status">
