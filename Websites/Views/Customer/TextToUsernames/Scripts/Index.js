@@ -1,6 +1,6 @@
 ﻿var textToUsernames = {
     init: function () {
-        $('#copy-tipsy').tipsy({
+        $('#copy-tipsy, #copy-tipsy-nicknames').tipsy({
             html: true,
             gravity: 'nw'
         });
@@ -30,6 +30,25 @@
 
             $('#copy-tipsy').tipsy('show');
             setTimeout(function () { $('#copy-tipsy').tipsy('hide'); }, 3000);
+        });
+
+        $("#copy-valids-nicknames").click(function () {
+            var copyText = $(".row-nicknames");
+            var text = copyText.html();
+
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(text);
+            } else {
+                const input = document.createElement('textarea');
+                input.value = text;
+                document.body.appendChild(input);
+                input.select();
+                document.execCommand('copy');
+                document.body.removeChild(input);
+            }
+
+            $('#copy-tipsy-nicknames').tipsy('show');
+            setTimeout(function () { $('#copy-tipsy-nicknames').tipsy('hide'); }, 3000);
         });
 
         $(".tab-ttu-icon-collapse-expand").click(function () {
@@ -73,6 +92,13 @@
                     $(".tbl-valid-usernames").removeClass("hidden");
                 } else {
                     $(".tbl-valid-usernames").addClass("hidden");
+                }
+
+                if (data.ValidNicknames) {
+                    $(".tbl-valid-nicknames .row-nicknames").html(data.ValidNicknames);
+                    $(".tbl-valid-nicknames").removeClass("hidden");
+                } else {
+                    $(".tbl-valid-nicknames").addClass("hidden");
                 }
 
                 if (data.InvalidUsernames.length === 0) {

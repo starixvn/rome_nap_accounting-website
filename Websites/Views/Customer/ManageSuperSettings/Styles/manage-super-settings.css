@@ -180,7 +180,7 @@ textarea {
 .button-submit{
     margin-top: 10px;
 }
-.tbl-valid-usernames, .tbl-invalid-usernames {
+.tbl-valid-usernames, .tbl-invalid-usernames, .tbl-valid-nicknames {
     margin-top: 10px;
     width: 450px;
     border-collapse: collapse;
@@ -192,7 +192,7 @@ textarea {
     font-size: 20px;
     cursor: pointer;
 }
-.tbl-valid-usernames tr th {
+.tbl-valid-usernames tr th, .tbl-valid-nicknames tr th {
     background: #E5F4EE;
 }
 .tbl-invalid-usernames tr th {

@@ -15,6 +15,7 @@
         public GetUsernamesViewModel GetUsernames(GetUsernamesCriteria criteria)
         {
             var validUsernames = new List<string>();
+            var validNicknames = new List<string>();
             var invalidUsernames = new List<UsernameViewModel>();
 
             using (var db = new ObjectDb(criteria.GetSettingKey()))
@@ -24,12 +25,18 @@
 
                     while (reader.Read())
                     {
-                        var isValid = int.Parse(reader["ErrCode"].ToString()) == 0;
+                        int errorCode = int.Parse(reader["ErrCode"].ToString());
                         var username = reader["Username"].ToString();
 
-                        if (isValid)
-                        {
+                        if (errorCode == 0)
+                        {                            
                             validUsernames.Add(username);
+                            continue;
+                        }
+
+                        if (errorCode == 99)
+                        {
+                            validNicknames.Add(username);
                             continue;
                         }
 
@@ -44,6 +51,7 @@
                 var result = new GetUsernamesViewModel
                 {
                     ValidUsernames = string.Join(", ", validUsernames),
+                    ValidNicknames = string.Join(", ", validNicknames),
                     InvalidUsernames = invalidUsernames
                 };
 
