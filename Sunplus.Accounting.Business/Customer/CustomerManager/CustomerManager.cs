@@ -130,7 +130,7 @@
                     int tableCount = ds != null ? ds.ResultSet.Tables.Count : 0;
                     if (ds.Outputs.Count > 0 && CastAide.AsInt32(ds.Outputs["errcode"]) > 0)
                     {
-                        arrcontent.Add("strcontent", AlertMessage.GetMsg(ds.Outputs["errmsg"].ToString(), AlertMessage.MsgType.Error));
+                        arrcontent.Add("strcontent", AlertMessage.GetMsg(ds.Outputs["errmsg"].ToString() + " Error Code: " + ds.Outputs["errcode"].ToString(), AlertMessage.MsgType.Error));
                         return arrcontent;
                     }
 
