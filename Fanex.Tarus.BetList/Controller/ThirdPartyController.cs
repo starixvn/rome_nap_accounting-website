@@ -22,7 +22,7 @@
         {
             var result3rd = Result3rdSection.Instance.InternalUrlCollection.OfType<Result3rdElement>().FirstOrDefault(x => x.SportTypeId == request.SportTypeId);
             var title = CacheRef.GetSportName(request.SportTypeId);
-            var config = new ThirdPartyConfigs(result3rd.Url, result3rd.Debug, 0, string.Empty, string.Empty, 0);
+            var config = new ThirdPartyConfigs(result3rd.Url, result3rd.Debug, result3rd.VendorId, string.Empty, string.Empty, 0);
             var service = new ThirdPartyResult(config);
             var resultRequest = new ResultRequest(request.CustId, request.TransId3rd, request.GameId3rd, request.CurrencyId, request.SiteId)
             {
