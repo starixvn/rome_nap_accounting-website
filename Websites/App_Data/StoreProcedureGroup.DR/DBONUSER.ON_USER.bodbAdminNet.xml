@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Functions>
   <Function Name="Loin">
-    <Setting Key="UserUpdLogout" SpName="Acc_CheckOut" DbName="DBONUSER.ON_USER.wsv_nap" />
+	  <!--<Setting Key="UserUpdLogout" SpName="Acc_CheckOut" DbName="DBONUSER.ON_USER.wsv_nap" />
     <Setting Key="UserUpd" SpName="Acc_Recheckin" DbName="DBONUSER.ON_USER.wsv_nap" />
-    <Setting Key="Checkin" SpName="Acc_Checkin" DbName="DBONUSER.ON_USER.wsv_nap" />
-    <!--<Setting Key="UserUpdLogout" SpName="Acc_CheckOut_KL" DbName="DBONUSER.ON_USER.wsv_nap" />
+    <Setting Key="Checkin" SpName="Acc_Checkin" DbName="DBONUSER.ON_USER.wsv_nap" />-->
+    <Setting Key="UserUpdLogout" SpName="Acc_CheckOut_KL" DbName="DBONUSER.ON_USER.wsv_nap" />
     <Setting Key="UserUpd" SpName="Acc_Recheckin_KL" DbName="DBONUSER.ON_USER.wsv_nap" />
-    <Setting Key="Checkin" SpName="Acc_Checkin_KL" DbName="DBONUSER.ON_USER.wsv_nap" />-->
+    <Setting Key="Checkin" SpName="Acc_Checkin_KL" DbName="DBONUSER.ON_USER.wsv_nap" />
     <Setting Key="UserLoginClaimed_out" SpName="UserLoginClaimed_out" DbName="DBONUSER.ON_USER.wsv_nap" />
     <Setting Key="Age_OnUser_ForceKickedout" SpName="Age_OnUser_ForceKickedout" DbName="DBONUSER.ON_USER.wsv_nap" />
   </Function>
