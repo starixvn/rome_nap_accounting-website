@@ -154,7 +154,7 @@
     <Setting Key="Acc_OperatorUpd" SpName="Acc_OperatorUpd" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Customer - Login">
-    <Setting Key="Acc_LoginAdmin" SpName="Acc_LoginAdmin" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_LoginAdmin" SpName="Acc_LoginAdmin_KL" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Exchange Daily">
     <Setting Key="Acc_ExchangeIns" SpName="Acc_ExchangeIns" DbName="DBCust.CustDB.wsv_nap" />
