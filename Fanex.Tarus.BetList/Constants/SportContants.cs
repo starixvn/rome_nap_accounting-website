@@ -108,6 +108,7 @@
         public const int GPI = 145;
         public const int GPILiveCasino = 144;
         public const int MicrogamingLive = 124;
+        public const int PlayTechLive = 129;
         public const int WCasino = 136;
     }
 }

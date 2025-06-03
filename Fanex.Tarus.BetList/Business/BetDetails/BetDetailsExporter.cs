@@ -81,6 +81,7 @@
                 sportType == SportContants.ONCasino ||
                 sportType == SportContants.GPILiveCasino||
                 sportType == SportContants.MicrogamingLive ||
+                sportType == SportContants.PlayTechLive ||
                 sportType == SportContants.WCasino)
             {
                 return GetLiveCasinoTickets(refNo, custId, transType, winlostDate);
