@@ -7,8 +7,8 @@
     <Setting Key="NAP_Admin_AddNewSite" SpName="NAP_Admin_AddNewSite" DbName="DBGLOB.GlobCustDB.wsv_nap" />
   </Function>
   <Function Name="Scaleout DB">
-    <Setting Key="Acc_ServerDBConfigSel" SpName="Acc_ServerDBConfigSel" DbName="DBGLOB.GlobCustDB.wsv_nap" />
-    <Setting Key="Acc_ServerDBConfigSelByCust" SpName="Acc_ServerDBConfigSelByCust" DbName="DBGLOB.GlobCustDB.wsv_nap" />
+    <Setting Key="Acc_ServerDBConfigSel" SpName="Acc_ServerDBConfigSel_KL" DbName="DBGLOB.GlobCustDB.wsv_nap" />
+    <Setting Key="Acc_ServerDBConfigSelByCust" SpName="Acc_ServerDBConfigSelByCust_KL" DbName="DBGLOB.GlobCustDB.wsv_nap" />
     <Setting Key="Acc_Dep_CustomerGenLicenseeSubUsername" SpName="Acc_Dep_CustomerGenLicenseeSubUsername" DbName="DBGLOB.GlobCustDB.wsv_nap" />
   </Function>
   <Function Name="Change UserName">
