@@ -35,9 +35,17 @@
                 PTSettingTab,
                 CommissionSettingTab,
                 ProductCategorySettingTab,
-                WinLossLimitTab
+                WinLossLimitTab,
+                PotentialWinLimitTab
             };
         }
+
+        private object PotentialWinLimitTab => new
+        {
+            name = "PotentialWinLimit",
+            id = "PotentialWinLimitSettingTab",
+            isActive = TabIndex == 6,
+        };
 
         private object BetSettingTab => new
         {
