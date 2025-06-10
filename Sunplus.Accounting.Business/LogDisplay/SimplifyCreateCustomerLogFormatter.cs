@@ -33,6 +33,10 @@ namespace Sunplus.Accounting.Business.LogDisplay
 
         private const int SettingsLogActionId_SuperDirectMember = 264001;
 
+        private const int SettingsLogActionId_CashMember = 264003;
+
+        private const int SettingsLogActionId_RegisterCashMember = 264005;
+
         private const int CompactLogActionId_Member = 95096;
 
         private const int PTTemplateIns_Master = 475;
@@ -61,6 +65,8 @@ namespace Sunplus.Accounting.Business.LogDisplay
             SettingsLogActionId_Member,
             CompactLogActionId_Member,
             SettingsLogActionId_SuperDirectMember,
+            SettingsLogActionId_CashMember,
+            SettingsLogActionId_RegisterCashMember
             //PTTemplateIns_Master,
             //PTTemplateUpd_Master,
             ////PTTemplateDel_Master,
@@ -235,6 +241,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
                     case 155: // Win Loss Limit
                     case 158: // Stake Levels
                     case 159: // Group Stake Levels
+                    case 161: // Win Limit
                     case 162: // Potential Win Limit
                         trackingGroup = ParseTrackingTable(groupType, groupId, DisplayType.SportType);
                         break;
@@ -649,6 +656,8 @@ namespace Sunplus.Accounting.Business.LogDisplay
 
                 case SettingsLogActionId_Member:
                 case SettingsLogActionId_SuperDirectMember:
+                case SettingsLogActionId_CashMember:
+                case SettingsLogActionId_RegisterCashMember:
                 case CompactLogActionId_Member:
                 case PTTemplateIns_Member:
                 case PTTemplateUpd_Member:

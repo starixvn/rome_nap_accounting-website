@@ -282,4 +282,7 @@
   <data name="GroupType_162" xml:space="preserve">
     <value>Potential Win Limit</value>
   </data>
+  <data name="GroupType_161" xml:space="preserve">
+    <value>Win Limit </value>
+  </data>
 </root>
