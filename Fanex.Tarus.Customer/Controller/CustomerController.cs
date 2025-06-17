@@ -254,6 +254,9 @@ namespace Fanex.Tarus.Customer.Controller
         public async Task<ActionResult> GetMaxPayoutSettingInformation(string site, string siteLabel = "", string language = "en-US")
             => Content(await customerService.GetMaxPayoutSettingInformation(site, siteLabel, language));
 
+        public async Task<ActionResult> GetBetLimitInformation(string site, string siteLabel = "", string language = "en-US")
+            => Content(await customerService.GetBetLimitInformation(site, siteLabel, language));
+
         public async Task<ActionResult> GetPTSettingInformation(int? custId, string site, string language = "en-US")
             => Content(await customerService.GetPTSettingInformation(custId, AccCommon.IsLocalTest, site, language));
 

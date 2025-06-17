@@ -51,7 +51,7 @@
         {
             name = "BetSetting",
             id = "BetSettingTab",
-            url = "",
+            url = ApplicationPath + "Customer/GetBetLimitInformation?site=" + Site + "&siteLabel=" + SiteLabel,
             isActive = TabIndex == 0,
         };
 
