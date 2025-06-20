@@ -229,6 +229,8 @@ public class UploadFinanceTrans : IHttpHandler, IRequiresSessionState
                 StringWriter collection = new StringWriter();
                 HttpUtility.HtmlDecode(Convert.ToBoolean(row["IsCollection"]) ? "Yes" : "No", collection);
                 TemplateHandler.Assign(ref strTmp, "collection", collection.ToString());
+                
+                TemplateHandler.Assign(ref strTmp, "buid", "123");
 
                 if (hasReason) 
                 {
@@ -270,7 +272,7 @@ public class UploadFinanceTrans : IHttpHandler, IRequiresSessionState
                             rowStyle = "add-customer-bggray";
                         }
                     }
-
+                   
                     TemplateHandler.Assign(ref strTmp, "rowstyle", rowStyle);
                     TemplateHandler.Assign(ref strTmp, "reason", remark);
                     TemplateHandler.Assign(ref strTmp, "reasonCss", remarkCss);

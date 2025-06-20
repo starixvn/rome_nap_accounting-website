@@ -27,6 +27,7 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
     private readonly List<StringBuilder> arrToAmt = new List<StringBuilder>();
     private readonly List<StringBuilder> arrDescription = new List<StringBuilder>();
     private readonly List<StringBuilder> arrCollection = new List<StringBuilder>();
+    private readonly List<StringBuilder> arrBUId = new List<StringBuilder>();
 
     public void ProcessRequest(HttpContext context)
     {
@@ -85,67 +86,7 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
         }
     }
 
-    public DataTable GetDataFromExcel_AutoCrossCurTransfer(string ExcelPath)
-    {
-        try
-        {
-            DataTable dtb = new DataTable();
-            DataColumn col = new DataColumn();
-            col.ColumnName = "From Cust";
-            col.DataType = typeof(string);
-            dtb.Columns.Add(col);
-
-            col = new DataColumn();
-            col.ColumnName = "To Cust";
-            col.DataType = typeof(string);
-            dtb.Columns.Add(col);
-
-            col = new DataColumn();
-            col.ColumnName = "From Amount";
-            col.DataType = typeof(double);
-            dtb.Columns.Add(col);
-
-            col = new DataColumn();
-            col.ColumnName = "To Amount";
-            col.DataType = typeof(double);
-            dtb.Columns.Add(col);
-
-            col = new DataColumn();
-            col.ColumnName = "Remark";
-            col.DataType = typeof(string);
-            dtb.Columns.Add(col);
-
-            col = new DataColumn();
-            col.ColumnName = "Collection";
-            col.DataType = typeof(string);
-            dtb.Columns.Add(col);
-
-            ExcelUtil.Spreadsheet.ExcelFile excelFile = new ExcelUtil.Spreadsheet.ExcelFile();
-            excelFile.LoadXls(ExcelPath);
-            var workSheet = excelFile.Worksheets[0];
-
-            if (workSheet.Rows.Count <= 0) return dtb;
-
-            for (int i = 1; i < workSheet.Rows.Count; ++i)
-            {
-                var row = dtb.NewRow();
-                row[0] = DNAide.Core.CastAide.AsString(workSheet.Rows[i].Cells[0].Value);
-                row[1] = DNAide.Core.CastAide.AsString(workSheet.Rows[i].Cells[1].Value);
-                row[2] = DNAide.Core.CastAide.AsDouble(workSheet.Rows[i].Cells[2].Value);
-                row[3] = DNAide.Core.CastAide.AsDouble(workSheet.Rows[i].Cells[3].Value);
-                row[4] = DNAide.Core.CastAide.AsString(workSheet.Rows[i].Cells[4].Value);
-                row[5] = DNAide.Core.CastAide.AsString(workSheet.Rows[i].Cells[5].Value);
-                dtb.Rows.Add(row);
-            }
-            return dtb;
-        }
-        catch (Exception ex)
-        {
-            LogExtensions.ExceptionHandler(ex);
-            throw new Exception("Please choose a Microsoft Excel file (.xls)");
-        }
-    }
-
+   
     private void DeleteEmptyRow(DataTable dataTable)
     {
         List<int> listEmptyRowsIndex = new List<int>();
@@ -208,7 +149,7 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
         for (int i = 0; i < arrFromCust.Count; ++i)
         {
             var rs = userService.InsDataTmpExcelFinanceCrossTransfer(AppSession.AccId, arrFromCust[i].ToString().Trim()
-            , arrToCust[i].ToString().Trim(), arrFromAmt[i].ToString(), arrToAmt[i].ToString(), arrDescription[i].ToString(), arrCollection[i].ToString());
+            , arrToCust[i].ToString().Trim(), arrFromAmt[i].ToString(), arrToAmt[i].ToString(), arrDescription[i].ToString(), arrCollection[i].ToString(), arrBUId[i].ToString() );
 
             if (rs.ErrorCode > 0)
                 isSuccess = false;
@@ -291,6 +232,7 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
 
             TemplateHandler.Assign(ref strConentTemp, "remark", remark);
             TemplateHandler.Assign(ref strConentTemp, "collection", collection);
+            TemplateHandler.Assign(ref strConentTemp, "buid", row.IsNull(6) ? string.Empty : row[6].ToString());
 
             CustomerExRate fromCustomerExRate = null;       //=> 
             CustomerExRate toCustomerExRate = null;
