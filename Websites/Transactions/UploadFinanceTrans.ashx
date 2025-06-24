@@ -163,6 +163,8 @@ public class UploadFinanceTrans : IHttpHandler, IRequiresSessionState
                 .Append(HttpUtility.HtmlEncode(drow[5].ToString().Trim()))
                 .Append("\" IsCollection=\"")
                 .Append(string.Equals("yes", drow[6].ToString().Trim(), StringComparison.OrdinalIgnoreCase) ? 1 : 0)
+                .Append("\" BUInfo=\"")
+                .Append(HttpUtility.HtmlEncode(drow[7].ToString().Trim()))
                 .Append("\"></Transfer>");
         }
 
@@ -230,7 +232,7 @@ public class UploadFinanceTrans : IHttpHandler, IRequiresSessionState
                 HttpUtility.HtmlDecode(Convert.ToBoolean(row["IsCollection"]) ? "Yes" : "No", collection);
                 TemplateHandler.Assign(ref strTmp, "collection", collection.ToString());
                 
-                TemplateHandler.Assign(ref strTmp, "buid", "123");
+                TemplateHandler.Assign(ref strTmp, "buid", row["BUInfo"].ToString());
 
                 if (hasReason) 
                 {

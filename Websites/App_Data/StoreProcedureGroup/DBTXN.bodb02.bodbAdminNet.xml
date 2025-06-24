@@ -10,13 +10,13 @@
     <Setting Key="Acc_CustomerSelForexAccount" SpName="Acc_CustomerSelForexAccount" DbName="DBTXN.bodb02.wsv_nap" />
   </Function>
   <Function Name="Transfer">
-    <Setting Key="Acc_FinanceCrossTransferMulUpd" SpName="Acc_FinanceCrossTransferMulUpd" DbName="DBTXN.bodb02.wsv_nap"></Setting>
-    <Setting Key="Acc_FinanceCrossTransferBettransIns" SpName="Acc_FinanceCrossTransferBettransIns" DbName="DBTXN.bodb02.wsv_nap"></Setting>
-    <Setting Key="SiteDB_Acc_FinanceCrossTransferBettransIns" SpName="SiteDB_Acc_FinanceCrossTransferBettransIns" DbName="DBTXN.bodb02.wsv_nap"></Setting>
+    <Setting Key="Acc_FinanceCrossTransferMulUpd" SpName="Acc_FinanceCrossTransferMulUpd_UAT2" DbName="DBTXN.bodb02.wsv_nap"></Setting>
+    <Setting Key="Acc_FinanceCrossTransferBettransIns" SpName="Acc_FinanceCrossTransferBettransIns_UAT2" DbName="DBTXN.bodb02.wsv_nap"></Setting>
+    <Setting Key="SiteDB_Acc_FinanceCrossTransferBettransIns" SpName="SiteDB_Acc_FinanceCrossTransferBettransIns_UAT2" DbName="DBTXN.bodb02.wsv_nap"></Setting>
     <Setting Key="Acc_FinanceCrossTransferMulUpd_WrtieLog" SpName="Acc_FinanceCrossTransferMulUpd_WrtieLog" DbName="DBTXN.bodb02.wsv_nap"></Setting>
-    <Setting Key="Acc_FinanceTransferMulUpd" SpName="Acc_FinanceTransferMulUpd" DbName="DBTXN.bodb02.wsv_nap"></Setting>
-    <Setting Key="Acc_FinanceTransferBettransIns" SpName="Acc_FinanceTransferBettransIns" DbName="DBTXN.bodb02.wsv_nap"></Setting>
-    <Setting Key="SiteDB_Acc_FinanceTransferBettransIns" SpName="SiteDB_Acc_FinanceTransferBettransIns" DbName="DBTXN.bodb02.wsv_nap"></Setting>
+    <Setting Key="Acc_FinanceTransferMulUpd" SpName="Acc_FinanceTransferMulUpd_UAT2" DbName="DBTXN.bodb02.wsv_nap"></Setting>
+    <Setting Key="Acc_FinanceTransferBettransIns" SpName="Acc_FinanceTransferBettransIns_UAT2" DbName="DBTXN.bodb02.wsv_nap"></Setting>
+    <Setting Key="SiteDB_Acc_FinanceTransferBettransIns" SpName="SiteDB_Acc_FinanceTransferBettransIns_UAT2" DbName="DBTXN.bodb02.wsv_nap"></Setting>
     <Setting Key="Acc_FinanceTransferMulUpd_WrtieLog" SpName="Acc_FinanceTransferMulUpd_WrtieLog" DbName="DBTXN.bodb02.wsv_nap"></Setting>
     <Setting Key="Acc_BettransInsTransaction" SpName="Acc_BettransInsTransaction" DbName="DBTXN.bodb02.wsv_nap"></Setting>
     <Setting Key="Acc_CustomerInsClearBalance" SpName="Acc_CustomerInsClearBalance" DbName="DBTXN.bodb02.wsv_nap"></Setting>
