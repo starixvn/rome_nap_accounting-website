@@ -86,7 +86,7 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
         }
     }
 
-   
+
     private void DeleteEmptyRow(DataTable dataTable)
     {
         List<int> listEmptyRowsIndex = new List<int>();
@@ -204,11 +204,11 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
         double toamount;
         string collection = string.Empty;
         string remark = string.Empty;
-
+        string buid = string.Empty;
         StringBuilder stb = new StringBuilder();
 
         List<CustomerExRate> listCust = new List<CustomerExRate>();
-    
+
         int rowIndex = -1;
         foreach (DataRow row in dataTable.Rows)
         {
@@ -223,6 +223,7 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
 
             remark = row.IsNull(4) ? string.Empty : row[4].ToString();
             collection = row.IsNull(5) ? string.Empty : row[5].ToString();
+            buid = row.IsNull(6)?string.Empty: row[6].ToString();
 
             TemplateHandler.Assign(ref strConentTemp, "fromcust", fromcust);
             TemplateHandler.Assign(ref strConentTemp, "tocust", tocust);
@@ -232,7 +233,7 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
 
             TemplateHandler.Assign(ref strConentTemp, "remark", remark);
             TemplateHandler.Assign(ref strConentTemp, "collection", collection);
-            TemplateHandler.Assign(ref strConentTemp, "buid", row.IsNull(6) ? string.Empty : row[6].ToString());
+            TemplateHandler.Assign(ref strConentTemp, "buid", buid);
 
             CustomerExRate fromCustomerExRate = null;       //=> 
             CustomerExRate toCustomerExRate = null;
@@ -276,6 +277,7 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
                         arrToAmt.Add(new StringBuilder());
                         arrDescription.Add(new StringBuilder());
                         arrCollection.Add(new StringBuilder());
+                        arrBUId.Add(new StringBuilder());
 
                         arrFromCust[0].Append(fromcust + "");
                         arrToCust[0].Append(tocust + "");
@@ -285,6 +287,7 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
 
                         arrDescription[0].Append(remark + "");
                         arrCollection[0].Append((string.Equals("yes", collection, StringComparison.OrdinalIgnoreCase) ? 1 : 0) + "");
+                        arrBUId[0].Append(buid + "");
                     }
                     else
                     {
@@ -297,6 +300,7 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
 
                         arrDescription[currentIndex].Append(remark + "");
                         arrCollection[currentIndex].Append((string.Equals("yes", collection, StringComparison.OrdinalIgnoreCase) ? 1 : 0) + "");
+                        arrBUId[currentIndex].Append(buid + "");
                     }
                 }
                 else
@@ -307,6 +311,7 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
                     arrToAmt.Add(new StringBuilder());
                     arrDescription.Add(new StringBuilder());
                     arrCollection.Add(new StringBuilder());
+                    arrBUId.Add(new StringBuilder());
 
                     int currentIndex = arrFromCust.Count - 1;
                     arrFromCust[currentIndex].Append(fromcust + "");
@@ -317,6 +322,7 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
 
                     arrDescription[currentIndex].Append(remark + "");
                     arrCollection[currentIndex].Append((string.Equals("yes", collection, StringComparison.OrdinalIgnoreCase) ? 1 : 0) + "");
+                    arrBUId[currentIndex].Append(buid + "");
                 }
                 listValidRow.Add(rowIndex);
                 continue;
@@ -340,6 +346,7 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
         if (currentMaxLength < arrToAmt[currentIndex].Length) currentMaxLength = arrToAmt[currentIndex].Length;
         if (currentMaxLength < arrDescription[currentIndex].Length) currentMaxLength = arrDescription[currentIndex].Length;
         if (currentMaxLength < arrCollection[currentIndex].Length) currentMaxLength = arrCollection[currentIndex].Length;
+        if (currentMaxLength < arrBUId[currentIndex].Length) currentMaxLength = arrBUId[currentIndex].Length;
 
         return currentMaxLength > MaxLength;
     }
@@ -360,15 +367,16 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
         decimal toamount;
         string remark = string.Empty;
         string collection = string.Empty;
+            string buid = string.Empty;
         const int digits = 4;
-        
+
         StringBuilder stb = new StringBuilder();
 
         int rowIndex = -1;
-        
+
         var customerManager = CommonBootStrapper.Locator.GetInstance<Sunplus.Accounting.Business.Customer.ICustomerManager>();
-       
-        
+
+
         foreach (DataRow row in dataTable.Rows)
         {
             ++rowIndex;
@@ -384,13 +392,14 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
 
             remark = row.IsNull(4) ? string.Empty : row[4].ToString();
             collection = row.IsNull(5) ? string.Empty : row[5].ToString();
-            
+            buid = row.IsNull(6) ? string.Empty : row[6].ToString();
+
             var fromCustomerExRate =  DNAide.Core.CastAide.AsDecimal(customerManager.SelectCustomerExRate(fromcust.Trim()).actualrate);
             var toCustomerExRate =  DNAide.Core.CastAide.AsDecimal(customerManager.SelectCustomerExRate(tocust.Trim()).actualrate);
             decimal systemExRate = fromCustomerExRate / toCustomerExRate;
-          
+
             decimal transExRate = Math.Round(toamount/fromamount,digits,MidpointRounding.AwayFromZero);
-            
+
             decimal systemExRateMin = Math.Round(systemExRate * 0.92M,digits,MidpointRounding.AwayFromZero) ; // -8%
             decimal systemExRateMax = Math.Round(systemExRate * 1.08M,digits,MidpointRounding.AwayFromZero); // +8%
 
@@ -405,9 +414,10 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
             TemplateHandler.Assign(ref strConentTemp, "systemexrate", Math.Round(systemExRate,digits,MidpointRounding.AwayFromZero));
             TemplateHandler.Assign(ref strConentTemp, "transexrate", transExRate);
             TemplateHandler.Assign(ref strConentTemp, "exratecss", exRateCss);
-            
+
             TemplateHandler.Assign(ref strConentTemp, "remark", remark);
             TemplateHandler.Assign(ref strConentTemp, "collection", collection);
+            TemplateHandler.Assign(ref strConentTemp, "buid", buid);
 
             TemplateHandler.Assign(ref strConentTemp, "rowstyle", string.Empty);
             stb.Append(strConentTemp);
@@ -415,7 +425,7 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
         TemplateHandler.ReplaceBlock(ref strTemplate, "content", stb.ToString());
     }
 
-    
+
     private bool UserNameIsValid(string username, ref CustomerExRate cust, ref List<CustomerExRate> listCust)
     {
         if (ExistedCustInList(username, ref listCust, ref cust))

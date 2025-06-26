@@ -71,6 +71,7 @@
     <Setting Key="Acc_DailyTxn_FinanceBettype_Sel" SpName="Acc_DailyTxn_FinanceBettype_Sel" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="Acc_CustomerSelFITransferStatus" SpName="Acc_CustomerSelFITransferStatus" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="Acc_CustomerSelInfoByUsername" SpName="Acc_CustomerSelInfoByUsername" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_Transfer_GetBUList" SpName="Acc_Transfer_GetBUList" DbName="DBACC.bodb02.wsv_nap" />
   </Function>
   <Function Name="Customer - Virtual Rate">
     <Setting Key="Customer_VirtualRate_GetVirtualRate" SpName="Acc_CustomerSelVirtualMultiplier" DbName="DBACC.bodb02.wsv_nap" />

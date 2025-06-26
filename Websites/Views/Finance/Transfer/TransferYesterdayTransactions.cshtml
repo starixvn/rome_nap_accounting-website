@@ -52,13 +52,26 @@
 				<input type="text" class="txt" id="remark" name="remark" size="50" />
 			</td>
 		</tr>
-		<tr>
-			<td></td>
-			<td colspan="3" class="l">
-				<input id="chk-collection-yesterday" type="checkbox" class="chk-collection" />
-				<label for="chk-collection-yesterday">Collection</label>
-			</td>
-		</tr>
+        <tr>
+            <td></td>
+            <td class="l">
+                <input id="chk-collection-yesterday" type="checkbox" class="chk-collection" />
+                <label for="chk-collection-yesterday">Collection</label>
+            </td>
+            <td class="l b">
+                Business Unit:
+            </td>
+            <td class="l">
+                <div align="left" style="width: 140px; text-align: left">
+                    <select id="selectYesterdayBusinessUnit" style="width: 120px">
+                        @foreach (var item in Model.BusinessUnits)
+                        {
+                            <option value="@item.Id")>@item.Name</option>
+                        }
+                    </select>
+                </div>
+            </td>
+        </tr>
 	</table>
 
 	@if (Model.IsShowReward)
