@@ -101,10 +101,10 @@ function EditProduct(index) {
     $('#ProductPrefix').val(cachedProductData.ProductEntities[index].ProductPrefix);
     $('#Enabled').prop('checked', cachedProductData.ProductEntities[index].Enabled === 'True' ? true : false);
     $('#EndOfSupportDate').val(cachedProductData.ProductEntities[index].EndOfSupportDate);
-    $('#BalanceType').val(cachedProductData.ProductEntities[index].BalanceType);
+    $('#BalanceType').val(cachedProductData.ProductEntities[index].BalanceType).trigger('change');
     $('#SubProductBalanceType').val(cachedProductData.ProductEntities[index].SubProductBalanceType);
-    $('#GroupType').val(cachedProductData.ProductEntities[index].GroupType);
-    $('#CasinoType').val(cachedProductData.ProductEntities[index].CasinoType);
+    $('#GroupType').val(cachedProductData.ProductEntities[index].GroupType).trigger('change');
+    $('#CasinoType').val(cachedProductData.ProductEntities[index].CasinoType).trigger('change');
     $('#IsOfferPlayForFun').prop('checked', cachedProductData.ProductEntities[index].IsOfferPlayForFun === 'True' ? true : false);
     $('#VendorId').val(cachedProductData.ProductEntities[index].VendorID);
     $('#OrderNo').val(cachedProductData.ProductEntities[index].OrderNo);
