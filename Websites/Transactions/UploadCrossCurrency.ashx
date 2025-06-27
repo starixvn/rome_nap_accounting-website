@@ -220,10 +220,11 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
 
             fromamount = row.IsNull(2) ? 0 : DNAide.Core.CastAide.AsDouble(row[2].ToString().Trim());
             toamount = row.IsNull(3) ? 0 : DNAide.Core.CastAide.AsDouble(row[3].ToString().Trim());
+                buid = row.IsNull(4)?string.Empty: row[4].ToString();
 
-            remark = row.IsNull(4) ? string.Empty : row[4].ToString();
-            collection = row.IsNull(5) ? string.Empty : row[5].ToString();
-            buid = row.IsNull(6)?string.Empty: row[6].ToString();
+            remark = row.IsNull(5) ? string.Empty : row[5].ToString();
+            collection = row.IsNull(6) ? string.Empty : row[6].ToString();
+            
 
             TemplateHandler.Assign(ref strConentTemp, "fromcust", fromcust);
             TemplateHandler.Assign(ref strConentTemp, "tocust", tocust);
@@ -389,10 +390,10 @@ public class UploadCrossCurrency : IHttpHandler, System.Web.SessionState.IRequir
 
             fromamount = row.IsNull(2) ? 0 : DNAide.Core.CastAide.AsDecimal(row[2].ToString().Trim());
             toamount = row.IsNull(3) ? 0 : DNAide.Core.CastAide.AsDecimal(row[3].ToString().Trim());
-
-            remark = row.IsNull(4) ? string.Empty : row[4].ToString();
-            collection = row.IsNull(5) ? string.Empty : row[5].ToString();
-            buid = row.IsNull(6) ? string.Empty : row[6].ToString();
+                buid = row.IsNull(4) ? string.Empty : row[4].ToString();
+            remark = row.IsNull(5) ? string.Empty : row[5].ToString();
+            collection = row.IsNull(6) ? string.Empty : row[6].ToString();
+            
 
             var fromCustomerExRate =  DNAide.Core.CastAide.AsDecimal(customerManager.SelectCustomerExRate(fromcust.Trim()).actualrate);
             var toCustomerExRate =  DNAide.Core.CastAide.AsDecimal(customerManager.SelectCustomerExRate(tocust.Trim()).actualrate);
