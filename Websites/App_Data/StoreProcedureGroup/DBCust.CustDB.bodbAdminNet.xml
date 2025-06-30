@@ -234,7 +234,7 @@
     <Setting Key="Acc_Dep_CustSetting_DisableStatUpd" SpName="Acc_Dep_CustSetting_DisableStatUpd" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Admin - Site manabement">
-    <Setting Key="NAP_Admin_VerifySiteName" SpName="NAP_Admin_VerifySiteName" DbName="DBCust.CustDB.wsv_nap" /> 
+    <Setting Key="NAP_Admin_VerifySiteName" SpName="NAP_Admin_VerifySiteName" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="External - Admin">
     <Setting Key="Acc_GroupExtraPT_GroupByProduct_Upd" SpName="Acc_GroupExtraPT_GroupByProduct_Upd" DbName="DBCust.CustDB.wsv_nap" />
@@ -275,7 +275,7 @@
       <Setting Key="Acc_Dep_CustSetting_StatusUpd" SpName="Acc_Dep_CustSetting_StatusUpd" DbName="DBCust.CustDB.wsv_nap" />
     </Function>
     <Function Name="Setting Type 0 - Global Stake Level">
-      <Setting Key="Acc_Dep_CustSetting_GlobalStakeLevelSelect" SpName="Acc_Dep_CustSetting_GlobalStakeLevelSelect" DbName="DBCust.CustDB.wsv_nap" />     
+      <Setting Key="Acc_Dep_CustSetting_GlobalStakeLevelSelect" SpName="Acc_Dep_CustSetting_GlobalStakeLevelSelect" DbName="DBCust.CustDB.wsv_nap" />
     </Function>
     <Function Name="Setting Type 7, 8 - Stake Level, Stake Group Level">
       <Setting Key="Acc_Dep_CustSetting_StakeLevelSelect" SpName="Acc_Dep_CustSetting_StakeLevelSelect" DbName="DBCust.CustDB.wsv_nap" />
@@ -371,7 +371,7 @@
     <Setting Key="Acc_VendorGlobalSetting_Ins" SpName="Acc_VendorGlobalSetting_Ins" DbName="DBCUST.CustDB.wsv_nap" Plain="0" />
     <Setting Key="Acc_VendorGlobalSetting_Upd" SpName="Acc_VendorGlobalSetting_Upd" DbName="DBCUST.CustDB.wsv_nap" Plain="0" />
     <Setting Key="Acc_VendorGlobalSetting_Del" SpName="Acc_VendorGlobalSetting_Del" DbName="DBCUST.CustDB.wsv_nap" Plain="0" />
-    <Setting Key="Acc_UMTool_MarketSel" SpName="Acc_UMTool_MarketSel" DbName="DBCUST.CustDB.wsv_nap" Plain="0" />  
+    <Setting Key="Acc_UMTool_MarketSel" SpName="Acc_UMTool_MarketSel" DbName="DBCUST.CustDB.wsv_nap" Plain="0" />
   </Function>
   <Function Name="UM On product">
     <Setting Key="Acc_CheckUM" SpName="Acc_CheckUM" DbName="DBCUST.CustDB.wsv_nap" />
@@ -450,7 +450,6 @@
   <Function Name="Ex.rate">
     <Setting Key="Acc_ExchangeMultiBaseRateUpd" SpName="Acc_ExchangeMultiBaseRateUpd" DbName="DBCUST.CustDB.wsv_nap" />
   </Function>
-
   <Function Name="Licensee Configuration &gt; New Licensee Member">
     <Setting Key="Acc_Dep_CheckExistedAccount" SpName="Acc_Dep_CheckExistedAccount" DbName="DBCUST.CustDB.wsv_nap" />
   </Function>

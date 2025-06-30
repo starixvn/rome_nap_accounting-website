@@ -230,7 +230,8 @@ transfer.crossCurrencyTransfer = {
             ToExRate: transfer.crossCurrencyTransfer.rowToUser.actualrate,
             ForexUsername: $("#selectForexAccount").val(),
             Remark: ($("#tbxDescription").val() == "" ? " " : $("#tbxDescription").val()),
-            IsCollection: $("#chk-collection-cross-transfer").is(":checked")
+            IsCollection: $("#chk-collection-cross-transfer").is(":checked"),
+            /*BUID: $("#selectCrossBusinessUnit").val()*/
         };
         $.post("CrossCurrencyTransferInsert", param, function (data) {
             if (parseInt(data.ErrorCode) != 0) {
@@ -847,7 +848,8 @@ transfer.YesterdayTransactionsForm = {
                 exRate: _exRate,
                 amount: parseFloat(_amount),
                 remark: $("#remark").val(),
-                isCollection: $("#chk-collection-yesterday").is(":checked")
+                isCollection: $("#chk-collection-yesterday").is(":checked"),
+                /*BUID: $("#selectYesterdayBusinessUnit").val(),*/
             };
         }
 

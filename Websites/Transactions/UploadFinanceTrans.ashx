@@ -159,10 +159,12 @@ public class UploadFinanceTrans : IHttpHandler, IRequiresSessionState
                 .Append(CastAide.AsDouble(drow[3]))
                 .Append("\" ExRate=\"")
                 .Append(CastAide.AsDouble(drow[4]))
-                .Append("\" Description=\"")
+                .Append("\" BUInfo=\"")
                 .Append(HttpUtility.HtmlEncode(drow[5].ToString().Trim()))
+                .Append("\" Description=\"")
+                .Append(HttpUtility.HtmlEncode(drow[6].ToString().Trim()))
                 .Append("\" IsCollection=\"")
-                .Append(string.Equals("yes", drow[6].ToString().Trim(), StringComparison.OrdinalIgnoreCase) ? 1 : 0)
+                .Append(string.Equals("yes", drow[7].ToString().Trim(), StringComparison.OrdinalIgnoreCase) ? 1 : 0)                
                 .Append("\"></Transfer>");
         }
 
@@ -222,6 +224,7 @@ public class UploadFinanceTrans : IHttpHandler, IRequiresSessionState
                 double Num;
                 TemplateHandler.Assign(ref strTmp, "amount", double.TryParse(row["amount"].ToString(), out Num) ? NumberFormat.DecFormat(row["amount"], 2) : row["amount"].ToString());
                 TemplateHandler.Assign(ref strTmp, "actualrate", SplitString(row["ExRate"].ToString()));
+                    TemplateHandler.Assign(ref strTmp, "buid", row["BUInfo"].ToString());
                 StringWriter des = new StringWriter();
                 HttpUtility.HtmlDecode(row["Description"].ToString(), des);
                 TemplateHandler.Assign(ref strTmp, "description", des.ToString());
@@ -270,7 +273,7 @@ public class UploadFinanceTrans : IHttpHandler, IRequiresSessionState
                             rowStyle = "add-customer-bggray";
                         }
                     }
-
+                   
                     TemplateHandler.Assign(ref strTmp, "rowstyle", rowStyle);
                     TemplateHandler.Assign(ref strTmp, "reason", remark);
                     TemplateHandler.Assign(ref strTmp, "reasonCss", remarkCss);

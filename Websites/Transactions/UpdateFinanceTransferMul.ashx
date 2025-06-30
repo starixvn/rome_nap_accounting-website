@@ -100,6 +100,7 @@ public class UpdateFinanceTransferMul : IHttpHandler, IRequiresSessionState
                 TemplateHandler.Assign(ref strTmp, "amount", NumberFormat.DecFormat(row["amount"], 2));
                 TemplateHandler.Assign(ref strTmp, "actualrate", SplitString(row["ExchangeRate"].ToString()));
                 TemplateHandler.Assign(ref strTmp, "description", row["Description"]);
+                TemplateHandler.Assign(ref strTmp, "buid", row["BUId"]);
                 TemplateHandler.Assign(ref strTmp, "collection", Convert.ToBoolean(row["IsCollection"]) ? "Yes" : "No");
                 if (hasReason)
                     TemplateHandler.Assign(ref strTmp, "reason", CastAide.AsString(row["reason"], string.Empty));
