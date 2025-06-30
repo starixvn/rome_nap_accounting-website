@@ -101,7 +101,7 @@ public class UpdateCrossCurrencyTransfer : IHttpHandler, System.Web.SessionState
         double toamount;
         string remark = string.Empty;
         string collection = string.Empty;
-
+            string buinfo = string.Empty;
         StringBuilder stb = new StringBuilder();
 
         foreach (DataRow row in dataTable.Rows)
@@ -113,16 +113,16 @@ public class UpdateCrossCurrencyTransfer : IHttpHandler, System.Web.SessionState
 
             fromamount = row.IsNull(2) ? 0 : DNAide.Core.CastAide.AsDouble(row[2].ToString().Trim());
             toamount = row.IsNull(3) ? 0 : DNAide.Core.CastAide.AsDouble(row[3].ToString().Trim());
-
-            remark = row.IsNull(4) ? string.Empty : row[4].ToString();
-            collection = row.IsNull(5) ? string.Empty : Convert.ToBoolean(row[5]) ? "Yes" : "No";
+                buinfo = row["BUInfo"].ToString();
+            remark = row.IsNull(5) ? string.Empty : row[5].ToString();
+            collection = row.IsNull(6) ? string.Empty : Convert.ToBoolean(row[6]) ? "Yes" : "No";
 
             TemplateHandler.Assign(ref strConentTemp, "fromcust", fromcust);
             TemplateHandler.Assign(ref strConentTemp, "tocust", tocust);
 
             TemplateHandler.Assign(ref strConentTemp, "fromamount", IBCUtils.FormatHandler.FormatNumber2(fromamount));
             TemplateHandler.Assign(ref strConentTemp, "toamount", IBCUtils.FormatHandler.FormatNumber2(toamount));
-
+            TemplateHandler.Assign(ref strConentTemp, "buid", buinfo);
             TemplateHandler.Assign(ref strConentTemp, "remark", remark);
             TemplateHandler.Assign(ref strConentTemp, "collection", collection);
 
@@ -149,7 +149,7 @@ public class UpdateCrossCurrencyTransfer : IHttpHandler, System.Web.SessionState
         double toamount;
         string remark = string.Empty;
         string collection = string.Empty;
-
+        string buinfo = string.Empty;
         StringBuilder stb = new StringBuilder();
 
         foreach (DataRow row in dataTable.Rows)
@@ -161,16 +161,16 @@ public class UpdateCrossCurrencyTransfer : IHttpHandler, System.Web.SessionState
 
             fromamount = row.IsNull(2) ? 0 : DNAide.Core.CastAide.AsDouble(row[2].ToString().Trim());
             toamount = row.IsNull(3) ? 0 : DNAide.Core.CastAide.AsDouble(row[3].ToString().Trim());
-
-            remark = row.IsNull(4) ? string.Empty : row[4].ToString();
-            collection = row.IsNull(5) ? string.Empty : Convert.ToBoolean(row[5]) ? "Yes" : "No";
+                buinfo = row[4].ToString();
+            remark = row.IsNull(5) ? string.Empty : row[5].ToString();
+            collection = row.IsNull(6) ? string.Empty : Convert.ToBoolean(row[6]) ? "Yes" : "No";
 
             TemplateHandler.Assign(ref strConentTemp, "fromcust", fromcust);
             TemplateHandler.Assign(ref strConentTemp, "tocust", tocust);
 
             TemplateHandler.Assign(ref strConentTemp, "fromamount", IBCUtils.FormatHandler.FormatNumber2(fromamount));
             TemplateHandler.Assign(ref strConentTemp, "toamount", IBCUtils.FormatHandler.FormatNumber2(toamount));
-
+            TemplateHandler.Assign(ref strConentTemp, "buid", buinfo);
             TemplateHandler.Assign(ref strConentTemp, "remark", remark);
             TemplateHandler.Assign(ref strConentTemp, "collection", collection);
 
