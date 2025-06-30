@@ -9,8 +9,8 @@
     <Setting Key="Balance_ResetWinning_ExtraPT" SpName="Task_ResetWinning_ExtraPT" DbName="DBACC.bodb02.wsv_nap" TimeOut="0" />
   </Function>
   <Function Name="Finance Module">
-    <Setting Key="Acc_StatementFinance" SpName="Acc_StatementFinance_UAT2" DbName="DBACC.bodb02.wsv_nap" />
-    <Setting Key="Acc_StatementFinanceByRefno" SpName="Acc_StatementFinanceByRefno_UAT2" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_StatementFinance" SpName="Acc_StatementFinance" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_StatementFinanceByRefno" SpName="Acc_StatementFinanceByRefno" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="Acc_FinanceAccountByCustId" SpName="Acc_FinanceAccountByCustId" DbName="DBACC.bodb02.wsv_nap" />
   </Function>
   <Function Name="Daily Transaction">
@@ -70,7 +70,7 @@
     <Setting Key="Acc_DailyTxn_FinanceBettype_Sel" SpName="Acc_DailyTxn_FinanceBettype_Sel" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="Acc_CustomerSelFITransferStatus" SpName="Acc_CustomerSelFITransferStatus" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="Acc_CustomerSelInfoByUsername" SpName="Acc_CustomerSelInfoByUsername" DbName="DBACC.bodb02.wsv_nap" />
-    <Setting Key="Acc_Transfer_GetBUList" SpName="Acc_Transfer_GetBUList_UAT2" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_Transfer_GetBUList" SpName="Acc_Transfer_GetBUList" DbName="DBACC.bodb02.wsv_nap" />
   </Function>
   <Function Name="Customer - Virtual Rate">
     <Setting Key="Customer_VirtualRate_GetVirtualRate" SpName="Acc_CustomerSelVirtualMultiplier" DbName="DBACC.bodb02.wsv_nap" />

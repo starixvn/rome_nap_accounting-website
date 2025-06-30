@@ -1,58 +1,58 @@
 ﻿<div>
-	<table class="tbllayout yesterdaytransfer" style="width: 620px;">
-		<tr>
-			<td colspan="4" class="l" style="background-color:#b5c4d0  !important">
-				<input id="chk-confrimtransfer" checked="checked" type="checkbox" class="chk-confrimtransfer" onclick="transfer.YesterdayTransactionsForm.checkTransfer();" />
-                <label for="chk-confrimtransfer" class="b">Transfer Main Wallet</label>
-			</td>
-		</tr>
-		<tr>
-			<td class="l b">
-				From:
-				<td class="l">
-					<span class="b" id="fromuser">
-						@Model.FromCustName
-					</span>
-				</td>
-			</td>
-			<td class="l b">
-				To:
-			</td>
-			<td class="l">
-				<input class="txt" type="text" id="touser" name="touser" size="10" />
-			</td>
-		</tr>
-		<tr>
-			<td class="l b">
-				Ex.Rate:
-			</td>
-			<td class="l">
-				<input class="txt" type="text" id="exrate" name="exrate" size="5" value="1.00" onkeypress="return CheckDecNumber(event);" />
-			</td>
-			<td class="l b">
-				Amount:
-			</td>
-			<td class="l">
-				<input type="text" class="txt" id="txtamount" name="txtamount" size="10" value="@Model.FromAmount"
-				       style="text-align: right" onfocusout="transfer.YesterdayTransactionsForm.CalclateTotal()" /> <span class="b" id="fromCurrencyText"></span>
-			</td>
-		</tr>
-		<tr>
-			<td class="l b">
-				System Ex.Rate
-				<span id="systemExRateText"></span>
-			</td>
-			<td class="l">
-				<span id="systemExRateValue" class="b"></span>
-			</td>
-			<td class="l b">
-				Description:
-			</td>
-			<td class="l">
-				<input type="text" class="txt" id="remark" name="remark" size="50" />
-			</td>
-		</tr>
+    <table class="tbllayout yesterdaytransfer" style="width: 620px;">
         <tr>
+            <td colspan="4" class="l" style="background-color:#b5c4d0  !important">
+                <input id="chk-confrimtransfer" checked="checked" type="checkbox" class="chk-confrimtransfer" onclick="transfer.YesterdayTransactionsForm.checkTransfer();" />
+                <label for="chk-confrimtransfer" class="b">Transfer Main Wallet</label>
+            </td>
+        </tr>
+        <tr>
+            <td class="l b">
+                From:
+            <td class="l">
+                <span class="b" id="fromuser">
+                    @Model.FromCustName
+                </span>
+            </td>
+            </td>
+            <td class="l b">
+                To:
+            </td>
+            <td class="l">
+                <input class="txt" type="text" id="touser" name="touser" size="10" />
+            </td>
+        </tr>
+        <tr>
+            <td class="l b">
+                Ex.Rate:
+            </td>
+            <td class="l">
+                <input class="txt" type="text" id="exrate" name="exrate" size="5" value="1.00" onkeypress="return CheckDecNumber(event);" />
+            </td>
+            <td class="l b">
+                Amount:
+            </td>
+            <td class="l">
+                <input type="text" class="txt" id="txtamount" name="txtamount" size="10" value="@Model.FromAmount"
+                       style="text-align: right" onfocusout="transfer.YesterdayTransactionsForm.CalclateTotal()" /> <span class="b" id="fromCurrencyText"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="l b">
+                System Ex.Rate
+                <span id="systemExRateText"></span>
+            </td>
+            <td class="l">
+                <span id="systemExRateValue" class="b"></span>
+            </td>
+            <td class="l b">
+                Description:
+            </td>
+            <td class="l">
+                <input type="text" class="txt" id="remark" name="remark" size="50" />
+            </td>
+        </tr>
+        @*<tr>
             <td></td>
             <td class="l">
                 <input id="chk-collection-yesterday" type="checkbox" class="chk-collection" />
@@ -71,8 +71,16 @@
                     </select>
                 </div>
             </td>
+        </tr>*@
+
+        <tr>
+            <td></td>
+            <td colspan="3" class="l">
+                <input id="chk-collection-yesterday" type="checkbox" class="chk-collection" />
+                <label for="chk-collection-yesterday">Collection</label>
+            </td>
         </tr>
-	</table>
+    </table>
 
 	@if (Model.IsShowReward)
 	{

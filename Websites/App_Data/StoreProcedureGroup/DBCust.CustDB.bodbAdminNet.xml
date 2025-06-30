@@ -392,9 +392,9 @@
     <Setting Key="Acc_GroupExtraPT_Product_Sel" SpName="Acc_GroupExtraPT_Product_Sel" DbName="DBCUST.CustDB.wsv_nap" />
   </Function>
   <Function Name="Transaction - Automate Finance Transfer">
-    <Setting Key="Acc_FinanceCrossTransferMulInsTmpExcel" SpName="Acc_FinanceCrossTransferMulInsTmpExcel_UAT2" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_FinanceCrossTransferMulInsTmpExcel" SpName="Acc_FinanceCrossTransferMulInsTmpExcel" DbName="DBCUST.CustDB.wsv_nap" />
     <Setting Key="Acc_FinanceTransferMulDelTmpExcel" SpName="Acc_FinanceTransferMulDelTmpExcel" DbName="DBCUST.CustDB.wsv_nap" />
-    <Setting Key="Acc_FinanceTransferMulInsTmpExcel" SpName="Acc_FinanceTransferMulInsTmpExcel_UAT2" DbName="DBCUST.CustDB.wsv_nap" />
+    <Setting Key="Acc_FinanceTransferMulInsTmpExcel" SpName="Acc_FinanceTransferMulInsTmpExcel" DbName="DBCUST.CustDB.wsv_nap" />
   </Function>
   <Function Name="ParlayMaxPayout">
     <Setting Key="Acc_CustSetting_MaxPayoutSelect" SpName="Acc_CustSetting_MaxPayoutSelect" DbName="DBCUST.CustDB.wsv_nap" />
