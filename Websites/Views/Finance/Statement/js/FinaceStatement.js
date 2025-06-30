@@ -180,7 +180,7 @@
             html += ' <td><div class="r table-cell" style="width:110px;' + (row.ListTrans[0].AccumTotal.search('NOT EQUAL') == -1 ? 'min-height:42px;' : 'height:56px;') + '">' + Helper.formatCSS(firstTran.AccumTotal) + '</div></td>';
         }
 
-        html += '<td><div class="c" style="width:70px;font-size: 10px;">' + firstTran.TransDate + '</div></td><td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:100px;">' + row.RefNo + '</div></td><td rowspan ="' + rowspanCreator + '"><div class="c" style="width:80px;">' + firstTran.Creator + '</div></td><td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:80px;">' + row.CheckerName + '</div></td><td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:80px;">' + row.CheckerTime + '</div></td><td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:80px;">' + row.BusinessUnit + '</div></td>';
+        html += '<td><div class="c" style="width:70px;font-size: 10px;">' + firstTran.TransDate + '</div></td><td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:100px;">' + row.RefNo + '</div></td><td rowspan ="' + rowspanCreator + '"><div class="c" style="width:80px;">' + firstTran.Creator + '</div></td><td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:80px;">' + row.CheckerName + '</div></td><td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:80px;">' + row.CheckerTime + '</div></td><td rowspan ="' + rowspanWinLoss + '"><div class="c" style="width:40px;">' + row.BusinessUnit + '</div></td>';
 
         var ReverseHTML = '';
 
@@ -563,7 +563,7 @@
                 for (var j = 0; j < subrowspan; j++) {
                     subTran = tran.ListSubTrans[j];
                     if (j == 0) {
-                        tplMain += '<td><div style="width:235px;' + (Helper.isExistLongWord(subTran.Remark) ? 'min-height:42px;display:block' : 'height:42px;') + '" class="b table-cell" ><a onclick="financeStatement.showHide(false, this,\'' + row.RefNo + '\')"  class="tree-expanded"> </a>' + subTran.Remark + '</div></td><td><div class="r" style="width:110px;">' + Helper.formatCSS(subTran.Amount) + '</div></td><td rowspan=' + subrowspan + '><div class="r" style="width:110px;">' + Helper.formatCSS(tran.Total) + '</div></td><td rowspan=' + subrowspan + '><div class="r" style="width:110px;">' + Helper.formatCSS(tran.AccumTotal) + '</div></td><td ><div class="c" style="width:70px;font-size: 10px;">' + tran.TransDate + '</div></td><td rowspan=' + rowspanWinLoss + '><div class="c" style="width:100px;">' + row.RefNo + '</div></td><td rowspan=' + rowspanCreator + '><div class="c" style="width:80px;">' + tran.Creator + '</div></td><td rowspan=' + rowspanWinLoss + '><div class="c" style="width:80px;">' + row.CheckerName + '</div></td><td rowspan=' + rowspanWinLoss + '><div class="c" style="width:80px;">' + row.CheckerTime + '</div></td><td rowspan=' + rowspanWinLoss + '><div class="c" style="width:80px;">' + row.BusinessUnit + '</div></td><td rowspan=' + rowspanWinLoss + '><div class="c" style="width:55px;"></div></td><td rowspan=' + rowspanWinLoss + '><div class="c" style="width:55px;"></div></td><td rowspan=' + rowspanWinLoss + '><div class="c" style="width:55px;"></div></td></tr>';
+                        tplMain += '<td><div style="width:235px;' + (Helper.isExistLongWord(subTran.Remark) ? 'min-height:42px;display:block' : 'height:42px;') + '" class="b table-cell" ><a onclick="financeStatement.showHide(false, this,\'' + row.RefNo + '\')"  class="tree-expanded"> </a>' + subTran.Remark + '</div></td><td><div class="r" style="width:110px;">' + Helper.formatCSS(subTran.Amount) + '</div></td><td rowspan=' + subrowspan + '><div class="r" style="width:110px;">' + Helper.formatCSS(tran.Total) + '</div></td><td rowspan=' + subrowspan + '><div class="r" style="width:110px;">' + Helper.formatCSS(tran.AccumTotal) + '</div></td><td ><div class="c" style="width:70px;font-size: 10px;">' + tran.TransDate + '</div></td><td rowspan=' + rowspanWinLoss + '><div class="c" style="width:100px;">' + row.RefNo + '</div></td><td rowspan=' + rowspanCreator + '><div class="c" style="width:80px;">' + tran.Creator + '</div></td><td rowspan=' + rowspanWinLoss + '><div class="c" style="width:80px;">' + row.CheckerName + '</div></td><td rowspan=' + rowspanWinLoss + '><div class="c" style="width:80px;">' + row.CheckerTime + '</div></td><td rowspan=' + rowspanWinLoss + '><div class="c" style="width:40px;">' + row.BusinessUnit + '</div></td><td rowspan=' + rowspanWinLoss + '><div class="c" style="width:55px;"></div></td><td rowspan=' + rowspanWinLoss + '><div class="c" style="width:55px;"></div></td><td rowspan=' + rowspanWinLoss + '><div class="c" style="width:55px;"></div></td></tr>';
                     }
                     else {
                         tplMain += '<tr name="' + row.RefNo + '_Detail"><td><div style="width:235px;' + (Helper.isExistLongWord(subTran.Remark) ? 'min-height:42px;display:block' : 'height:42px;') + '" class="b table-cell">' + subTran.Remark + '</div></td><td><div class="r" style="width:110px;">' + Helper.formatCSS(subTran.Amount) + '</div></td><td><div class="c" style="width:70px; font-size: 10px;">' + Helper.formatCSS(tran.TransDate) + '</div></td></tr>';
@@ -740,7 +740,7 @@
                 manualCopyHeader: true,
                 fullWidth: true,
                 fullHeight: true,
-                gridWidth: 1285,
+                gridWidth: 1340,
                 gridHeight: 113,
                 freezeWidth: 435,
                 numberFreezeCol: 2
@@ -752,7 +752,7 @@
                 manualCopyHeader: true,
                 fullWidth: true,
                 fullHeight: true,
-                gridWidth: 1285,
+                gridWidth: 1340,
                 gridHeight: 90,
                 freezeWidth: 435,
                 numberFreezeCol: 2
