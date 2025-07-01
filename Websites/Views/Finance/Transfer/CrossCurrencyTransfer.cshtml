@@ -127,7 +127,7 @@
                                     <select id="selectForexAccount" style="width: 120px"></select>
                                 </div>
                             </td>
-                            @*<td><div style="width: 50px;"></div></td>
+                            <td><div style="width: 50px;"></div></td>
                             <td>
                                 <div align="left" style="width: 90px; text-align: left; font-weight: bold">
                                     Business Unit:
@@ -136,13 +136,14 @@
                             <td class="left">
                                 <div align="left" style="width: 125px; text-align: left">
                                     <select id="selectCrossBusinessUnit" style="width: 125px">
+                                        <option value="0"> </option>
                                         @foreach (var item in Model.BusinessUnits)
                                         {
-                                            <option value="@item.Id" )>@item.Name</option>
+                                            <option value="@item.Id">@item.Name</option>
                                         }
                                     </select>
                                 </div>
-                            </td>*@
+                            </td>
                         </tr>
                     </table>
                 </td>

@@ -740,7 +740,7 @@
                 manualCopyHeader: true,
                 fullWidth: true,
                 fullHeight: true,
-                gridWidth: 1340,
+                gridWidth: 1330,
                 gridHeight: 113,
                 freezeWidth: 435,
                 numberFreezeCol: 2
@@ -752,7 +752,7 @@
                 manualCopyHeader: true,
                 fullWidth: true,
                 fullHeight: true,
-                gridWidth: 1340,
+                gridWidth: 1330,
                 gridHeight: 90,
                 freezeWidth: 435,
                 numberFreezeCol: 2
