@@ -796,7 +796,7 @@ var Helper = {
     formatCSS: function (num) {
         if (num) {
             if (num.indexOf("-") != -1) {
-                return '<div style="color:red; overflow: hidden; width:100px;">' + num + '</div>'
+                return '<div style="color:red;">' + num + '</div>'
             }
             return num;
         }
