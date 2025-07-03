@@ -351,7 +351,7 @@
                         if (a.indexOf(b) < 0) a.push(b);
                         return a;
                     }, []);
-;
+
                     if (successRefNos && successRefNos.length > 0) {
                         message = "<div style='color:green'>Update successfully: " + successRefNos.join(', ') + "</div>";
                     }
@@ -563,10 +563,10 @@
                 for (var j = 0; j < subrowspan; j++) {
                     subTran = tran.ListSubTrans[j];
                     if (j == 0) {
-                        tplMain += '<td><div style="width:235px;' + (Helper.isExistLongWord(subTran.Remark) ? 'min-height:42px;display:block' : 'height:42px;') + '" class="b table-cell" ><a onclick="financeStatement.showHide(false, this,\'' + row.RefNo + '\')"  class="tree-expanded"> </a>' + subTran.Remark + '</div></td><td><div class="r" style="width:110px;">' + Helper.formatCSS(subTran.Amount) + '</div></td><td rowspan=' + subrowspan + '><div class="r" style="width:110px;">' + Helper.formatCSS(tran.Total) + '</div></td><td rowspan=' + subrowspan + '><div class="r" style="width:110px;">' + Helper.formatCSS(tran.AccumTotal) + '</div></td><td ><div class="c" style="width:70px;font-size: 10px;">' + tran.TransDate + '</div></td><td rowspan=' + rowspanWinLoss + '><div class="c" style="width:100px;">' + row.RefNo + '</div></td><td rowspan=' + rowspanCreator + '><div class="c" style="width:80px;">' + tran.Creator + '</div></td><td rowspan=' + rowspanWinLoss + '><div class="c" style="width:80px;">' + row.CheckerName + '</div></td><td rowspan=' + rowspanWinLoss + '><div class="c" style="width:80px;">' + row.CheckerTime + '</div></td><td rowspan=' + rowspanWinLoss + '><div class="c" style="width:40px;">' + row.BusinessUnit + '</div></td><td rowspan=' + rowspanWinLoss + '><div class="c" style="width:55px;"></div></td><td rowspan=' + rowspanWinLoss + '><div class="c" style="width:55px;"></div></td><td rowspan=' + rowspanWinLoss + '><div class="c" style="width:55px;"></div></td></tr>';
+                        tplMain += '<td><div style="width:245px;' + (Helper.isExistLongWord(subTran.Remark) ? 'min-height:42px;display:block' : 'height:42px;') + '" class="b table-cell" ><a onclick="financeStatement.showHide(false, this,\'' + row.RefNo + '\')"  class="tree-expanded"> </a>' + subTran.Remark + '</div></td><td><div class="r" style="width:100px;">' + Helper.formatCSS(subTran.Amount) + '</div></td><td rowspan=' + subrowspan + '><div class="r" style="width:110px;">' + Helper.formatCSS(tran.Total) + '</div></td><td rowspan=' + subrowspan + '><div class="r" style="width:110px;">' + Helper.formatCSS(tran.AccumTotal) + '</div></td><td ><div class="c" style="width:70px;font-size: 10px;">' + tran.TransDate + '</div></td><td rowspan=' + rowspanWinLoss + '><div class="c" style="width:100px;">' + row.RefNo + '</div></td><td rowspan=' + rowspanCreator + '><div class="c" style="width:80px;">' + tran.Creator + '</div></td><td rowspan=' + rowspanWinLoss + '><div class="c" style="width:80px;">' + row.CheckerName + '</div></td><td rowspan=' + rowspanWinLoss + '><div class="c" style="width:80px;">' + row.CheckerTime + '</div></td><td rowspan=' + rowspanWinLoss + '><div class="c" style="width:40px;">' + row.BusinessUnit + '</div></td><td rowspan=' + rowspanWinLoss + '><div class="c" style="width:55px;"></div></td><td rowspan=' + rowspanWinLoss + '><div class="c" style="width:55px;"></div></td><td rowspan=' + rowspanWinLoss + '><div class="c" style="width:55px;"></div></td></tr>';
                     }
                     else {
-                        tplMain += '<tr name="' + row.RefNo + '_Detail"><td><div style="width:235px;' + (Helper.isExistLongWord(subTran.Remark) ? 'min-height:42px;display:block' : 'height:42px;') + '" class="b table-cell">' + subTran.Remark + '</div></td><td><div class="r" style="width:110px;">' + Helper.formatCSS(subTran.Amount) + '</div></td><td><div class="c" style="width:70px; font-size: 10px;">' + Helper.formatCSS(tran.TransDate) + '</div></td></tr>';
+                        tplMain += '<tr name="' + row.RefNo + '_Detail"><td><div style="width:245px;' + (Helper.isExistLongWord(subTran.Remark) ? 'min-height:42px;display:block' : 'height:42px;') + '" class="b table-cell">' + subTran.Remark + '</div></td><td><div class="r" style="width:100px;">' + Helper.formatCSS(subTran.Amount) + '</div></td><td><div class="c" style="width:70px; font-size: 10px;">' + Helper.formatCSS(tran.TransDate) + '</div></td></tr>';
                     }
                 }
             }
@@ -574,10 +574,10 @@
                 for (var j = 0; j < subrowspan; j++) {
                     subTran = tran.ListSubTrans[j];
                     if (j == 0) {
-                        tplMain += '<tr name="' + row.RefNo + '_Detail"><td><div style="width:235px;' + (Helper.isExistLongWord(subTran.Remark) ? 'min-height:42px;display:block' : 'height:42px;') + '" class="b table-cell" >' + subTran.Remark + '</div></td><td><div class="r" style="width:110px;">' + Helper.formatCSS(subTran.Amount) + '</div></td><td rowspan=' + subrowspan + '><div class="r" style="width:110px;">' + Helper.formatCSS(tran.Total) + '</div></td><td rowspan=' + subrowspan + '><div class="r" style="width:110px;">' + Helper.formatCSS(tran.AccumTotal) + '</div></td><td ><div class="c" style="width:70px;font-size: 10px;">' + tran.TransDate + '</div></td><td rowspan=' + rowspanCreator + '><div class="c" style="width:80px;">' + tran.Creator + '</div></td></tr>';
+                        tplMain += '<tr name="' + row.RefNo + '_Detail"><td><div style="width:245px;' + (Helper.isExistLongWord(subTran.Remark) ? 'min-height:42px;display:block' : 'height:42px;') + '" class="b table-cell" >' + subTran.Remark + '</div></td><td><div class="r" style="width:100px;">' + Helper.formatCSS(subTran.Amount) + '</div></td><td rowspan=' + subrowspan + '><div class="r" style="width:110px;">' + Helper.formatCSS(tran.Total) + '</div></td><td rowspan=' + subrowspan + '><div class="r" style="width:110px;">' + Helper.formatCSS(tran.AccumTotal) + '</div></td><td ><div class="c" style="width:70px;font-size: 10px;">' + tran.TransDate + '</div></td><td rowspan=' + rowspanCreator + '><div class="c" style="width:80px;">' + tran.Creator + '</div></td></tr>';
                     }
                     else {
-                        tplMain += '<tr name="' + row.RefNo + '_Detail"><td><div style="width:235px;' + (Helper.isExistLongWord(subTran.Remark) ? 'min-height:42px;display:block' : 'height:42px;') + '" class="b table-cell">' + subTran.Remark + '</div></td><td><div class="r" style="width:110px;">' + Helper.formatCSS(subTran.Amount) + '</div></td><td><div class="c" style="width:70px;font-size: 10px;">' + Helper.formatCSS(tran.TransDate) + '</div></td></tr>';
+                        tplMain += '<tr name="' + row.RefNo + '_Detail"><td><div style="width:245px;' + (Helper.isExistLongWord(subTran.Remark) ? 'min-height:42px;display:block' : 'height:42px;') + '" class="b table-cell">' + subTran.Remark + '</div></td><td><div class="r" style="width:100px;">' + Helper.formatCSS(subTran.Amount) + '</div></td><td><div class="c" style="width:70px;font-size: 10px;">' + Helper.formatCSS(tran.TransDate) + '</div></td></tr>';
                     }
                 }
             }
@@ -585,7 +585,7 @@
                 for (var j = 0; j < subrowspan; j++) {
                     subTran = tran.ListSubTrans[j];
                     if (j == 0) {
-                        tplMain += '<tr name="' + row.RefNo + '_Detail"><td><div style="width:235px;' + (Helper.isExistLongWord(subTran.Remark) ? 'min-height:42px;display:block' : 'height:42px;') + '" class="b table-cell" >' + subTran.Remark + '</div></td><td><div class="r" style="width:110px;">' + Helper.formatCSS(subTran.Amount) + '</div></td><td rowspan=' + subrowspan + '><div class="r" style="width:110px;">' + Helper.formatCSS(tran.Total) + '</div></td><td rowspan=' + subrowspan + '><div class="r" style="width:110px;">' + Helper.formatCSS(tran.AccumTotal) + '</div></td><td ><div class="c" style="width:70px;font-size: 10px;">' + tran.TransDate + '</div></td>';
+                        tplMain += '<tr name="' + row.RefNo + '_Detail"><td><div style="width:245px;' + (Helper.isExistLongWord(subTran.Remark) ? 'min-height:42px;display:block' : 'height:42px;') + '" class="b table-cell" >' + subTran.Remark + '</div></td><td><div class="r" style="width:100px;">' + Helper.formatCSS(subTran.Amount) + '</div></td><td rowspan=' + subrowspan + '><div class="r" style="width:110px;">' + Helper.formatCSS(tran.Total) + '</div></td><td rowspan=' + subrowspan + '><div class="r" style="width:110px;">' + Helper.formatCSS(tran.AccumTotal) + '</div></td><td ><div class="c" style="width:70px;font-size: 10px;">' + tran.TransDate + '</div></td>';
                         if (countTrans < 3 && row.IsReverse) {
                             tplMain += '<td rowspan=' + rowspanCreator + '><div class="c" style="width:80px;">' + tran.Creator + '</div></td></tr>';
                         }
@@ -594,7 +594,7 @@
                         }
                     }
                     else {
-                        tplMain += '<tr name="' + row.RefNo + '_Detail"><td><div style="width:235px;' + (Helper.isExistLongWord(subTran.Remark) ? 'min-height:42px;display:block' : 'height:42px;') + '" class="b table-cell">' + subTran.Remark + '</div></td><td><div class="r" style="width:110px;">' + Helper.formatCSS(subTran.Amount) + '</div></td><td><div class="c" style="width:70px;font-size: 10px;">' + Helper.formatCSS(tran.TransDate) + '</div></td></tr>';
+                        tplMain += '<tr name="' + row.RefNo + '_Detail"><td><div style="width:245px;' + (Helper.isExistLongWord(subTran.Remark) ? 'min-height:42px;display:block' : 'height:42px;') + '" class="b table-cell">' + subTran.Remark + '</div></td><td><div class="r" style="width:100px;">' + Helper.formatCSS(subTran.Amount) + '</div></td><td><div class="c" style="width:70px;font-size: 10px;">' + Helper.formatCSS(tran.TransDate) + '</div></td></tr>';
                     }
                 }
             }
@@ -609,10 +609,10 @@
                 for (var j = 0; j < subrowspan; j++) {
                     subTran = tran.ListSubTrans[j];
                     if (j == 0) {
-                        tplLef += '<td><div style="width:235px;' + (Helper.isExistLongWord(subTran.Remark) ? 'min-height:42px;display:block' : 'height:42px;') + '" class="b table-cell" ><a onclick="financeStatement.showHide(false, this,\'' + row.RefNo + '\')"  class="tree-expanded"> </a>' + subTran.Remark + '</div></td><td><div class="r" style="width:110px;">' + Helper.formatCSS(subTran.Amount) + '</div></td></tr>';
+                        tplLef += '<td><div style="width:245px;' + (Helper.isExistLongWord(subTran.Remark) ? 'min-height:42px;display:block' : 'height:42px;') + '" class="b table-cell" ><a onclick="financeStatement.showHide(false, this,\'' + row.RefNo + '\')"  class="tree-expanded"> </a>' + subTran.Remark + '</div></td><td><div class="r" style="width:100px;">' + Helper.formatCSS(subTran.Amount) + '</div></td></tr>';
                     }
                     else {
-                        tplLef += '<tr name="' + row.RefNo + '_Detail"><td><div style="width:235px;' + (Helper.isExistLongWord(subTran.Remark) ? 'min-height:42px;display:block' : 'height:42px;') + '" class="b table-cell">' + subTran.Remark + '</div></td><td><div class="r" style="width:110px;">' + Helper.formatCSS(subTran.Amount) + '</div></td></tr>';
+                        tplLef += '<tr name="' + row.RefNo + '_Detail"><td><div style="width:245px;' + (Helper.isExistLongWord(subTran.Remark) ? 'min-height:42px;display:block' : 'height:42px;') + '" class="b table-cell">' + subTran.Remark + '</div></td><td><div class="r" style="width:100px;">' + Helper.formatCSS(subTran.Amount) + '</div></td></tr>';
                     }
                 }
             }
@@ -620,10 +620,10 @@
                 for (var j = 0; j < subrowspan; j++) {
                     subTran = tran.ListSubTrans[j];
                     if (j == 0) {
-                        tplLef += '<tr name="' + row.RefNo + '_Detail"><td><div style="width:235px;' + (Helper.isExistLongWord(subTran.Remark) ? 'min-height:42px;display:block' : 'height:42px;') + '" class="b table-cell" >' + subTran.Remark + '</div></td><td><div class="r" style="width:110px;">' + Helper.formatCSS(subTran.Amount) + '</div></td></tr>';
+                        tplLef += '<tr name="' + row.RefNo + '_Detail"><td><div style="width:245px;' + (Helper.isExistLongWord(subTran.Remark) ? 'min-height:42px;display:block' : 'height:42px;') + '" class="b table-cell" >' + subTran.Remark + '</div></td><td><div class="r" style="width:100px;">' + Helper.formatCSS(subTran.Amount) + '</div></td></tr>';
                     }
                     else {
-                        tplLef += '<tr name="' + row.RefNo + '_Detail"><td><div style="width:235px;' + (Helper.isExistLongWord(subTran.Remark) ? 'min-height:42px;display:block' : 'height:42px;') + '" class="b table-cell">' + subTran.Remark + '</div></td><td><div class="r" style="width:110px;">' + Helper.formatCSS(subTran.Amount) + '</div></td></tr>';
+                        tplLef += '<tr name="' + row.RefNo + '_Detail"><td><div style="width:245px;' + (Helper.isExistLongWord(subTran.Remark) ? 'min-height:42px;display:block' : 'height:42px;') + '" class="b table-cell">' + subTran.Remark + '</div></td><td><div class="r" style="width:100px;">' + Helper.formatCSS(subTran.Amount) + '</div></td></tr>';
                     }
                 }
 
@@ -752,7 +752,7 @@
                 manualCopyHeader: true,
                 fullWidth: true,
                 fullHeight: true,
-                gridWidth: 1330,
+                gridWidth: 1400,
                 gridHeight: 90,
                 freezeWidth: 435,
                 numberFreezeCol: 2
@@ -796,7 +796,7 @@ var Helper = {
     formatCSS: function (num) {
         if (num) {
             if (num.indexOf("-") != -1) {
-                return '<div style="color:red; overflow: hidden; width:110px;">' + num + '</div>'
+                return '<div style="color:red; overflow: hidden; width:100px;">' + num + '</div>'
             }
             return num;
         }
