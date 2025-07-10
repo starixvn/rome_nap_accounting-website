@@ -1,0 +1,282 @@
+/*
+ * A partial implementation of the Ruby list functions from Compass:
+ * https://github.com/Compass/compass/blob/stable/lib/compass/sass_extensions/functions/lists.rb
+ */
+/*
+ * A partial implementation of the Ruby constants functions from Compass:
+ * https://github.com/Compass/compass/blob/stable/lib/compass/sass_extensions/functions/constants.rb
+ */
+/*
+ * A partial implementation of the Ruby display functions from Compass:
+ * https://github.com/Compass/compass/blob/stable/core/lib/compass/core/sass_extensions/functions/display.rb
+ */
+body {
+  font-family: Tahoma, Arial, helvetica, sans-serif;
+  font-size: 11px;
+  position: relative;
+}
+
+input[type=text], select {
+  font-size: 11px;
+}
+
+[ng\:cloak],
+[ng-cloak],
+[data-ng-cloak],
+[x-ng-cloak],
+.ng-cloak,
+.x-ng-cloak {
+  display: none !important;
+}
+
+.block-overlay {
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 100;
+}
+
+.block-overlay {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.block-loading {
+  background: url(images/loading.gif) no-repeat center center;
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 101;
+}
+
+button {
+  background-image: linear-gradient(#8594a2, #344d61, #849ba8);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #344d61;
+  background-repeat: no-repeat;
+  border: 0;
+  color: #fff;
+  cursor: pointer;
+  float: right;
+  font-weight: bold;
+  font-size: 11px;
+  line-height: 16px;
+  min-width: 70px;
+  padding: 4px 12px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+}
+
+ul li {
+  list-style: none;
+  display: inline;
+}
+
+.container .header {
+  border: 1px solid #7c98a4;
+  background-color: #e6e9f0;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.container .header ul {
+  padding: 0;
+  margin: 0 0 10px 0;
+}
+
+.container .header ul li {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.container .header ul li label {
+  cursor: pointer;
+}
+
+.container .header ul li label input {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 5px 0 0;
+}
+
+.container .header .matrix-form {
+  overflow: hidden;
+  *zoom: 1;
+}
+
+.container .header .matrix-form .form-control {
+  display: -moz-inline-stack;
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  zoom: 1;
+  *display: inline;
+  margin: 0 10px 0 0;
+}
+
+.container .header .matrix-form .form-control label {
+  margin: 0 10px 0 0;
+}
+
+.container .header .matrix-form .form-control input[type=text] {
+  width: 60%;
+}
+
+.container .header .matrix-form .check-box-control {
+  width: 80px;
+}
+
+.container .error-message-container {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid 1px #7c98a4;
+  background-color: #f6f5f2;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.container .error-message-container .error-icon {
+  background-image: url("Images/sprite.png");
+  background-position: -51px 0;
+  background-repeat: no-repeat;
+  display: inline-block;
+  height: 16px;
+  width: 13px;
+  vertical-align: middle;
+}
+
+.container .error-message-container .content {
+  display: inline-block;
+  line-height: 15px;
+  padding-left: 10px;
+  color: #e9322d;
+}
+
+.container .main-content {
+  border: 1px solid #7c98a4;
+  background-color: #fff;
+  padding: 10px;
+}
+
+.container .main-content .customer-line {
+  margin: 0 0 20px 0;
+  font-size: 12px;
+}
+
+.container .main-content .customer-line .active {
+  font-weight: bold;
+}
+
+.container .main-content .customer-line .level-name {
+  width: 70px;
+  text-transform: uppercase;
+}
+
+.container .main-content .group-matrix {
+  margin: 5px 0;
+}
+
+.container .main-content .group-matrix.group-matrix-setting-level-4 {
+  border: 1px solid #7c98a4;
+}
+
+.container .main-content .group-matrix.group-matrix-setting-level-4 .group-name {
+  border-width: 0 0 1px 0;
+}
+
+.container .main-content .group-matrix .group-name {
+  padding: 5px 10px;
+  font-weight: bold;
+  background-color: #66afe9;
+  border: 1px solid #7c98a4;
+  border-width: 1px 1px 0 1px;
+}
+
+.container .main-content .group-matrix .item-matrix {
+  border: 1px solid #7c98a4;
+}
+
+.container .main-content .group-matrix .item-matrix.item-matrix-setting-level-4 {
+  margin: 20px;
+}
+
+.container .main-content .group-matrix .item-matrix.item-matrix-setting-level-4 .item-name {
+  background-color: #eeecee;
+}
+
+.container .main-content .group-matrix .item-matrix .item-name {
+  padding: 5px;
+  background-color: #66afe9;
+  font-weight: bold;
+  border-bottom: 1px solid #7c98a4;
+}
+
+.container .main-content .group-matrix .item-matrix .pt-icon {
+  background: #EEECEE;
+}
+
+.container .main-content .group-matrix .item-matrix .pt-icon.not-allow {
+  background: #fce9fb;
+}
+
+.container .main-content .group-matrix .item-matrix .pt-icon .icon-auto-pt {
+  background: url("images/auto-pt.gif") no-repeat center #EEECEE;
+  width: 15px;
+  height: 14px;
+  margin: 0 auto;
+}
+
+.container .main-content .group-matrix .item-matrix .pt-icon .icon-not-auto-pt {
+  background: url("images/not-allow-auto-pt.gif") no-repeat center #fce9fb;
+  width: 8px;
+  height: 14px;
+  margin: 0 auto;
+}
+
+.container .main-content .group-matrix .item-matrix .not-auto-pt {
+  background: #fce9fb;
+}
+
+.container .main-content .group-matrix .item-matrix table, .container .main-content .group-matrix .item-matrix tr, .container .main-content .group-matrix .item-matrix td, .container .main-content .group-matrix .item-matrix th {
+  border: 1px solid #7c98a4;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+.container .main-content .group-matrix .item-matrix table {
+  margin: 20px;
+}
+
+.container .main-content .group-matrix .item-matrix table th {
+  background-color: #b5c4d0;
+  text-align: center;
+}
+
+.container .main-content .group-matrix .item-matrix table th, .container .main-content .group-matrix .item-matrix table td {
+  height: 25px;
+}
+
+.container .main-content .group-matrix .item-matrix table tr:hover, .container .main-content .group-matrix .item-matrix table tr:hover td {
+  background-color: #e2f3d1;
+}
+
+.container .main-content .group-matrix .item-matrix table .customer-level {
+  text-align: left;
+  font-weight: bold;
+  background-color: #b5c4d0;
+}
+
+/*# sourceMappingURL=customer-setting-matrix.css.map */
