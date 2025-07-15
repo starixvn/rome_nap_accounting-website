@@ -170,7 +170,18 @@
 
         public ActionResult BGResult(ThirdPartyResultRequest request) => BaseResult(request, "BGResultConfigs");
 
-        public ActionResult RNGCasinoResult(ThirdPartyResultRequest request) => BaseResult(request, "RNGCasinoResultConfigs");
+        public ActionResult RNGCasinoResult(ThirdPartyResultRequest request)
+        {
+            SetProductResultTitle(request.ProductId);
+            var service = new ThirdPartyResult("RNGCasinoResultConfigs");
+            var resultRequest = new ResultRequest(request.CustId, request.TransId3rd, request.GameId3rd, request.CurrencyId, request.SiteId)
+            {
+                BetTypeId = request.BetTypeId
+            };
+            var result = service.GetResultGET(resultRequest);
+
+            return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(ProductResultTitle, result));
+        }        
 
         public ActionResult VoidbridgeResult(ThirdPartyResultRequest request)
         => BaseResult(request, "VoidbridgeResultConfigs");

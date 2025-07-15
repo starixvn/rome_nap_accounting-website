@@ -1267,7 +1267,7 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
         case 208:
         case 209:
         case 210: // RNG Casino.
-            return getRNGCasinoParam(custId, transId3rd, gameId3rd, currencyId, siteId);
+            return getRNGCasinoParam(bettype, custId, transId3rd, gameId3rd, currencyId, siteId);
 
         case 224: //Funky Games (Old)
             return getRNGWarCasinoParam(custId, transId3rd, gameId3rd, currencyId, siteId);
@@ -1556,12 +1556,12 @@ function getBetbyParam(matchid, sporttype, league) {
 }
 
 
-function getRNGCasinoParam(custId, transId3rd, gameId3rd, currencyId, siteId) {
+function getRNGCasinoParam(bettypeId, custId, transId3rd, gameId3rd, currencyId, siteId) {
     return {
         url: "ThirdParty/RNGCasinoResult",
         title: "Saba Casino Result",
         jsonParam: {
-            custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, currencyId: currencyId, siteId: siteId, productId: 6
+            bettypeId: bettypeId,custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, currencyId: currencyId, siteId: siteId, productId: 6
         },
         width: 835,
         height: 675
