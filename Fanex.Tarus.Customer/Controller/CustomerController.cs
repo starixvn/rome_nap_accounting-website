@@ -198,10 +198,10 @@ namespace Fanex.Tarus.Customer.Controller
         }
 
         [NAPCustomerAuthFilter]
-        public ActionResult EditCustomer(EditCustomerRequest request)
+        public async Task<ActionResult> EditCustomer(EditCustomerRequest request)
         {
             request.NoPermissionEditCredit = !Permissions.GetHostPermission(Enumerations.Functions.Customer.Credit);
-
+            request.ServiceType = await customerService.GetCashServiceStatus(request.CustId);
             var editCustomerViewModel = new EditCustomerViewModel(
                 request,
                 new AppConfiguration(GetApplicationPath()),
@@ -242,8 +242,22 @@ namespace Fanex.Tarus.Customer.Controller
                 request.IsCopy,
                 request.AgentId));
 
+        public async Task<ActionResult> GetCashCustomerSetting(GetCustomerSettingRequest request)
+            => Content(await customerService.GetCashCustomerSetting(
+                request.CustId,
+                request.RoleId,
+                CustomerClientManager.ClientConfigs.SystemId,
+                request.UplineRoleId,
+                request.Language,
+                request.IsGetUpLine,
+                request.ProductGroupId,
+                request.SiteLabel));
+
         public async Task<ActionResult> GetCurrentWinLossAmount(int custId, int sportType, int betType, string language = "en-US")
             => Content(await customerService.GetCustomerCurrentWinLossAmounts(custId, sportType, betType, language));
+
+        public async Task<ActionResult> GetCurrentWinAmount(int custId, int sportType, int betType, string language = "en-US")
+            => Content(await customerService.GetCurrentWinAmounts(custId, sportType, betType, language));
 
         public async Task<ActionResult> CheckExistedCustomer(string username)
             => Json(await customerService.CheckExistedCustomer(username), JsonRequestBehavior.AllowGet);
