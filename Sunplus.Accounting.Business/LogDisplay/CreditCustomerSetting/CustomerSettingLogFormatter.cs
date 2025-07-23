@@ -105,6 +105,7 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
 
         private const int UpdateStakeLevel158ActionId = 220050;
         private const int UpdateWinLossLimit155ActionId = 852;
+        private const int UpdateWinLimit155ActionId = 853;
 
         private readonly int[] ActionIds = {
             CreatePotentialWinLimitActionId,
@@ -182,6 +183,7 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
             UpdateMemberSBBetSettingActionId,
             UpdateStakeLevel158ActionId,
             UpdateWinLossLimit155ActionId,
+            UpdateWinLimit155ActionId,
 
             UpdateSuperIndirectBetSetting154ActionId,
             UpdateMasterIndirectBetSetting154ActionId,
@@ -239,7 +241,7 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
             int groupId = 1;
             switch (logAction)
             {
-                case LogAction.WinLimit: // Win Limit
+                case LogAction.PotentialWinLimit: // Win Limit
                     trackingGroup = ParseTrackingTable(ele, 162, DisplayType.SportType, out groupId);
                     break;
                 case LogAction.SBPT: // PT
@@ -266,8 +268,11 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
                 case LogAction.StakeLevel: // Stake Level
                     trackingGroup = ParseTrackingTable(ele, 158, DisplayType.SportType, out groupId);
                     break;
-                case LogAction.WinlossLimit: // Stake Level
+                case LogAction.WinlossLimit:
                     trackingGroup = ParseTrackingTable(ele, 155, DisplayType.SportType, out groupId);
+                    break;
+                case LogAction.WinLimit:
+                    trackingGroup = ParseTrackingTable(ele, 161, DisplayType.SportType, out groupId);
                     break;
             }
 
@@ -763,6 +768,7 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
                 case UpdateSuperIndirectSBBetSettingActionId:
                 case UpdateStakeLevel158ActionId:
                 case UpdateWinLossLimit155ActionId:
+                case UpdateWinLimit155ActionId:
                     return 4;
                 case CreateMasterPTActionId:
                 case CreateMasterCommActionId:
@@ -933,12 +939,12 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
             => actionId == UpdateStakeLevel158ActionId;
         private bool IsWinlossLimitActionId(int actionId)
             => actionId == UpdateWinLossLimit155ActionId;
-        private bool IsWinLimitActionId(int actionId)
+        private bool IsPotentialWinLimitActionId(int actionId)
             => actionId == EditPotentialWinLimitActionId;
         private LogAction GetLogAction(int actionId)
         {
-            if (IsWinLimitActionId(actionId))
-                return LogAction.WinLimit;
+            if (IsPotentialWinLimitActionId(actionId))
+                return LogAction.PotentialWinLimit;
             if (IsSBPTActionId(actionId))
                 return LogAction.SBPT;
             if (IsOthersPTActionId(actionId))
@@ -972,6 +978,7 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
         ParlayMaxPayout,
         WinlossLimit,
         StakeLevel,
+        PotentialWinLimit,
         WinLimit
     }
 }
