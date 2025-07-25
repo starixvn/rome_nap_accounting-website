@@ -97,5 +97,18 @@ namespace Fanex.Tarus.BetList.Configurations
                 this["Debug"] = value;
             }
         }
+
+        [ConfigurationProperty("IsPostMethod", IsRequired = true)]
+        public bool IsPostMethod
+        {
+            get
+            {
+                return (bool)this["IsPostMethod"];
+            }
+            set
+            {
+                this["IsPostMethod"] = value;
+            }
+        }
     }
 }
