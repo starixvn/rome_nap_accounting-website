@@ -287,9 +287,6 @@
         public ActionResult ONCasinoResult(ThirdPartyResultRequest request)
             => BaseResult(request, "ONCasinoResultConfigs");
 
-        public ActionResult PlaytechResult(ThirdPartyResultRequest request)
-            => BaseResult(request, "PlaytechResultConfigs");
-
         public ActionResult GPIResult(ThirdPartyResultRequest request)
             => BaseResult(request, "GPIRNGResultConfigs");
 
