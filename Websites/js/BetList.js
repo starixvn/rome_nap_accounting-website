@@ -2270,6 +2270,9 @@ function getHotDogParam(custId, transId3rd, gameId3rd, currencyId, siteId, betTy
     };
 }
 function getResult3rdParam(custId, transId3rd, gameId3rd, currencyId, siteId, betType, endTime, sportName, sportId) {
+    if (sportId == 148) {
+        sportName = "Playtech";
+    }
     return {
         url: "ThirdParty/ViewResult",
         title: sportName + " Result",
