@@ -3,6 +3,7 @@ using System;
 using System.Data;
 using System.Text;
 using DNAide.Web;
+using Fanex.Tarus.Infrastructure.Constants;
 using IBCUtils;
 using Sunplus.Accounting.Business;
 using Sunplus.Accounting.Business.Security;
@@ -52,20 +53,21 @@ public partial class UsedCreditDetail : RequiredAuthorizationPage
                 switch (_roleid)
                 {
                     case 2: //agent
-                        _sHeader = HeaderTab("","");
-                        _s = "<form method=\"post\">" + AgentCredit(_custid) + "</form>";
+                        _sHeader = HeaderTab("Credit Member", "Cash Member");
+                        _s = "<form method=\"post\">" + AgentCredit(_custid, 0) + "</form>";
+                        _s2 = "<form method=\"post\">" + AgentCredit(_custid, 1) + "</form>";
                         break;
 
                     case 3: //master
                         _sHeader = HeaderTab("Agent", "Direct Member");
                         _s = MasterCredit(_custid);
-                        _s2 = "<form method=\"post\">" + AgentCredit(_custid) + "</form>";
+                        _s2 = "<form method=\"post\">" + AgentCredit(_custid, 0) + "</form>";
                         break;
 
                     case 4: // super
                         _sHeader = HeaderTab("Master", "Direct Member");
                         _s = SuperCredit(_custid);
-                        _s2 = "<form method=\"post\">" + AgentCredit(_custid) + "</form>";
+                        _s2 = "<form method=\"post\">" + AgentCredit(_custid, 0) + "</form>";
                         break;
 
                     default:
@@ -112,7 +114,7 @@ public partial class UsedCreditDetail : RequiredAuthorizationPage
     }
 
     
-    private string AgentCredit(int _custid)
+    private string AgentCredit(int _custid, int serviceType)
     {
         string sAgent = string.Empty;
         try
@@ -126,7 +128,7 @@ public partial class UsedCreditDetail : RequiredAuthorizationPage
             bool hasInactive = false;
             double _activeSum = 0.0, _inactiveSum = 0.0;
             string odd_even = "";
-            using (DataTable dt = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.UserCredit.SelectAgentCredit(_custid))
+            using (DataTable dt = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.UserCredit.SelectAgentCredit(_custid, serviceType))
             {
                 foreach(DataRow dr in dt.Rows)
                 {
@@ -180,6 +182,10 @@ public partial class UsedCreditDetail : RequiredAuthorizationPage
             {
                 TemplateHandler.RemoveBlock(ref sAgent, "no-intotal");
                 TemplateHandler.Assign(ref sAgent, "{inactiveContent}", AccCommon.GenNoInformation("4"));
+            }
+            if (serviceType == ServiceType.Cash)
+            {
+                TemplateHandler.RemoveBlock(ref sAgent, "reset-buttons");
             }
         }
         catch (Exception ex)
