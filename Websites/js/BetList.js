@@ -1358,10 +1358,7 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
         case 125:
         case 126:
         case 127:
-            return getVS2Param(matchid, sporttype, winlostdate);
-
-        case 148: //Playtech
-            return getPlaytechParam(custId, transId3rd, gameId3rd, currencyId, siteId, bettype, winlostdate);
+            return getVS2Param(matchid, sporttype, winlostdate);        
 
         case 145: //GPI RNG
             return getGPIParam(custId, transId3rd, gameId3rd, currencyId, siteId, bettype, winlostdate);
@@ -2273,6 +2270,9 @@ function getHotDogParam(custId, transId3rd, gameId3rd, currencyId, siteId, betTy
     };
 }
 function getResult3rdParam(custId, transId3rd, gameId3rd, currencyId, siteId, betType, endTime, sportName, sportId) {
+    if (sportId == 148) {
+        sportName = "Playtech";
+    }
     return {
         url: "ThirdParty/ViewResult",
         title: sportName + " Result",

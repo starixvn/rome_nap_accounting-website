@@ -1,15 +1,14 @@
 ﻿namespace Fanex.Tarus.BetList.Controller
 {
-    using System.Collections.Generic;
-    using System.Web.Mvc;
-    using System.Linq;
     using CustomerSetting.Module.Core.Web.Controllers;
     using Fanex.Result.Core.ThirdParty;
     using Fanex.Result.Core.ThirdParty.Models;
+    using Fanex.Tarus.BetList.Configurations;
     using Fanex.Tarus.BetList.ViewModel;
     using Infrastructure.Caching;
     using Sunplus.Accounting.DataAccess;
-    using Fanex.Tarus.BetList.Configurations;
+    using System.Linq;
+    using System.Web.Mvc;
 
     public class ThirdPartyController : BaseController
     {
@@ -22,17 +21,22 @@
         {
             var result3rd = Result3rdSection.Instance.InternalUrlCollection.OfType<Result3rdElement>().FirstOrDefault(x => x.SportTypeId == request.SportTypeId);
             var title = CacheRef.GetSportName(request.SportTypeId);
-            var config = new ThirdPartyConfigs(result3rd.Url, result3rd.Debug, result3rd.VendorId, string.Empty, string.Empty, 0);
-            var service = new ThirdPartyResult(config);
-            var resultRequest = new ResultRequest(request.CustId, request.TransId3rd, request.GameId3rd, request.CurrencyId, request.SiteId)
+            var resultLink = string.Empty;
+            if (result3rd != null)
             {
-                BetTypeId = request.BetTypeId,
-                EndTime = request.EndTime,
-                Platform = "D"
-            };
-            var result = service.GetResultGET(resultRequest);
+                var config = new ThirdPartyConfigs(result3rd.Url, result3rd.Debug, result3rd.VendorId, string.Empty, string.Empty, 0);
+                var service = new ThirdPartyResult(config);
+                var resultRequest = new ResultRequest(request.CustId, request.TransId3rd, request.GameId3rd, request.CurrencyId, request.SiteId)
+                {
+                    BetTypeId = request.BetTypeId,
+                    EndTime = request.EndTime,
+                    Platform = "D"
+                };
 
-            return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(title, result));
+                resultLink = result3rd.IsPostMethod ? service.GetResultPOST(resultRequest) : service.GetResultGET(resultRequest);
+            }
+
+            return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(title, resultLink));
         }
 
         public ActionResult MicrogamingLiveResult(ThirdPartyResultRequest request)
@@ -181,7 +185,7 @@
             var result = service.GetResultGET(resultRequest);
 
             return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(ProductResultTitle, result));
-        }        
+        }
 
         public ActionResult VoidbridgeResult(ThirdPartyResultRequest request)
         => BaseResult(request, "VoidbridgeResultConfigs");
@@ -283,9 +287,6 @@
         public ActionResult ONCasinoResult(ThirdPartyResultRequest request)
             => BaseResult(request, "ONCasinoResultConfigs");
 
-        public ActionResult PlaytechResult(ThirdPartyResultRequest request)
-            => BaseResult(request, "PlaytechResultConfigs");
-
         public ActionResult GPIResult(ThirdPartyResultRequest request)
             => BaseResult(request, "GPIRNGResultConfigs");
 
@@ -346,9 +347,9 @@
         {
             var titel = CacheRef.GetProductName(id);
 
-            return string.IsNullOrEmpty(titel) ? CacheRef.GetSportName(id) : titel;  
+            return string.IsNullOrEmpty(titel) ? CacheRef.GetSportName(id) : titel;
         }
-            
+
     }
 
     public class ThirdPartyResultRequest
