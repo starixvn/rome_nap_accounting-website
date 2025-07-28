@@ -160,8 +160,8 @@
     <Reference Include="Fanex.BetList.Spadegaming, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Spadegaming.2.0.0.1\lib\net461\Fanex.BetList.Spadegaming.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.TableGames, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.TableGames.2.0.0\lib\net461\Fanex.BetList.TableGames.dll</HintPath>
+    <Reference Include="Fanex.BetList.TableGames, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.TableGames.2.0.0.1-result-02\lib\net461\Fanex.BetList.TableGames.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.VirtualGames, Version=2.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.VirtualGames.2.0.0.2\lib\net461\Fanex.BetList.VirtualGames.dll</HintPath>
@@ -225,6 +225,9 @@
     </Reference>
     <Reference Include="Fanex.Result.Core.Happy5, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core.Happy5.2.0.0\lib\net461\Fanex.Result.Core.Happy5.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Result.Core.KenoLotteryTG, Version=3.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Result.Core.KenoLotteryTG.3.0.2-statement-01\lib\net461\Fanex.Result.Core.KenoLotteryTG.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Result.Core.LeapGaming, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Result.Core-LeapGaming.2.0.0\lib\net461\Fanex.Result.Core.LeapGaming.dll</HintPath>

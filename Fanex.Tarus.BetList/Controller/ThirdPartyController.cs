@@ -1,14 +1,17 @@
 ﻿namespace Fanex.Tarus.BetList.Controller
 {
     using CustomerSetting.Module.Core.Web.Controllers;
+    using Fanex.Result.Core.KenoLotteryTG;
     using Fanex.Result.Core.ThirdParty;
     using Fanex.Result.Core.ThirdParty.Models;
     using Fanex.Tarus.BetList.Configurations;
     using Fanex.Tarus.BetList.ViewModel;
     using Infrastructure.Caching;
     using Sunplus.Accounting.DataAccess;
+    using System;
     using System.Linq;
     using System.Web.Mvc;
+    using System.Web.WebPages;
 
     public class ThirdPartyController : BaseController
     {
@@ -343,6 +346,27 @@
         public ActionResult HotDogResult(ThirdPartyResultRequest request)
             => BaseResult(request, "HotDogResultConfigs");
 
+        public ActionResult StatementResult(ThirdPartyResultRequest request)
+        {
+            var result3rd = Result3rdSection.Instance.InternalUrlCollection.OfType<Result3rdElement>().FirstOrDefault(x => x.SportTypeId == request.SportTypeId);
+            var title = CacheRef.GetSportName(request.SportTypeId);
+            var resultLink = string.Empty;
+            if (result3rd != null)
+            {
+                var config = new KenoLotteryTGConfigs
+                {
+                    Url = result3rd.Url,
+                    Debug = result3rd.Debug,
+                    SiteId = request.SiteId
+                };
+                var service = new KenoLotteryTGStatementResult(config);
+
+                resultLink = service.GetStatement(request.CustId.ToString(), true, DateTime.Parse(request.EventDate), request.RefNo, string.IsNullOrWhiteSpace(request.SiteId) ? "4100200" : request.SiteId, "C", string.Empty);
+            }
+
+            return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(title, resultLink));
+        }
+
         private string SetProductResultTitle(int id)
         {
             var titel = CacheRef.GetProductName(id);
@@ -355,6 +379,7 @@
     public class ThirdPartyResultRequest
     {
         public int SportTypeId { get; set; }
+
         public int ProductId { get; set; }
 
         public string SiteId { get; set; }
@@ -374,6 +399,11 @@
         public string EndTime { get; set; }
 
         public string Site { get; set; }
+
         public string TransDesc { get; set; }
+
+        public string RefNo { get; set; }
+
+        public string EventDate { get; set; }
     }
 }

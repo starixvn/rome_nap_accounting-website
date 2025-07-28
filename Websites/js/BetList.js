@@ -1383,6 +1383,13 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
 
         case 139:
             return getHotDogParam(custId, transId3rd, gameId3rd, currencyId, siteId, bettype, winlostdate);
+
+        // Meber Site result TableGames, Keno, Lottery
+        case 202:
+        case 220:
+        case 222:
+            return getStatementResultParam(custId, currencyId, siteId, bettype, winlostdate, refno, transDesc, sporttype);
+
         default:
             if (sporttype > 99 && !virtualSports.includes(sporttype)) {
                 return getResult3rdParam(custId, transId3rd, gameId3rd, currencyId, siteId, bettype, winlostdate, transDesc, sporttype);
@@ -2269,6 +2276,26 @@ function getHotDogParam(custId, transId3rd, gameId3rd, currencyId, siteId, betTy
         height: 500
     };
 }
+
+function getStatementResultParam(custId, currencyId, siteId, betType, eventDate, refNo, sportName, sportId) {
+    return {
+        url: "ThirdParty/StatementResult",
+        title: sportName + " Result",
+        jsonParam:
+        {
+            SportTypeId: sportId,
+            custId: custId,
+            BetTypeId: betType,
+            EventDate: eventDate,
+            SiteId: siteId,
+            CurrencyId: currencyId,
+            RefNo: refNo
+        },
+        width: 945,
+        height: 500
+    };
+}
+
 function getResult3rdParam(custId, transId3rd, gameId3rd, currencyId, siteId, betType, endTime, sportName, sportId) {
     if (sportId == 148) {
         sportName = "Playtech";
