@@ -61,7 +61,7 @@
             }
 
             //Check Given Credit Permission
-            if (customerInfoViewModel.AllowUpdateGivenCredit)
+            if (customerInfoViewModel.AllowUpdateGivenCredit && !customerInfoViewModel.IsCashMember)
             {
                 TemplateHandler.Assign(ref balanceinfo, "{givencreditOnclick}", "return ChangeGivenCredit(true);");
                 TemplateHandler.Assign(ref balanceinfo, "{givencreditClass}", "canchange");
