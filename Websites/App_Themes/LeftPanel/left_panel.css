@@ -546,6 +546,7 @@ body {
         color: #E7731E;
     }
 
+
 /* Customize UI for setting tab */
 
 .container {
@@ -670,4 +671,18 @@ span.canchange {
     display: inline-block;
     background-size: 100% 100%;
     background-repeat: no-repeat;
+}
+
+.icon-cash-member {
+    background: url(../Images/cashservice.svg) no-repeat center center / cover;
+    height: 12px;
+    width: 12px;
+    display: none;
+    vertical-align: middle;
+    position: relative;
+    top: -1px;
+    margin: 0 1px 0 3px;
+}
+.icon-cash-member.True {
+    display: inline-block;
 }
