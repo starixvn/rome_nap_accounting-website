@@ -29,7 +29,12 @@
                         <a onclick="ViewLogs('Setting','{FullUserName}')">• Setting</a><br />
                         <a onclick="ViewLogs('Status','{FullUserName}')">• Status</a><br />
                         <a onclick="ViewLogs('Credit','{FullUserName}')">• Credit</a><br />
-                        <a onclick="ViewLogs('Login','{FullUserName}')">• Login</a>
+                        <a onclick="ViewLogs('Login','{FullUserName}')">• Login</a><br />
+
+                        <!--ViewLogCashService-->
+                        <a onclick="ViewLogs('CashService','{FullUserName}', '{CustomerSite}')">• Cash Service</a>
+                        <!--/ViewLogCashService-->
+
                         <input id="TabLogs" type="hidden" value="" />
                     </div>
                     <div onmouseout="mclosetime()" onmouseover="mcancelclosetime()" id="InfoID">
@@ -290,16 +295,16 @@
             </div>
             <!--/directinfotabcontent-->
         </div>
-    <div class="pagerbox">
-	    <div id="dllpager">
-		    Pager:
-	    </div>
-    </div>
-    <div class="pagerdirectmemberbox">
-	    <div id="dllpagerdirectmember">
-		    Pager:
-	    </div>
-    </div>
+        <div class="pagerbox">
+            <div id="dllpager">
+                Pager:
+            </div>
+        </div>
+        <div class="pagerdirectmemberbox">
+            <div id="dllpagerdirectmember">
+                Pager:
+            </div>
+        </div>
         <!--box balnace - downline list-->
         <!--box setting detail login onlinelist-->
         <div class="box_header">

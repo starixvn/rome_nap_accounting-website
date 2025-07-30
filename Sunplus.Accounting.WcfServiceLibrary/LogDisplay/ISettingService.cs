@@ -23,5 +23,9 @@ namespace Sunplus.Accounting.WcfServiceLibrary.LogDisplay
         [OperationContract]
         [WebGet(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
         Sunplus.Accounting.Entities.LogDisplay.ResultLog GetLogCredit(string custName, DateTime fromDate, DateTime toDate, int page, int pageSize);
+        
+        [OperationContract]
+        [WebGet(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        Sunplus.Accounting.Entities.LogDisplay.ResultLog GetLogCashService(string custName, DateTime fromDate, DateTime toDate, int viewBy, int page, int pageSize);
     }
 }

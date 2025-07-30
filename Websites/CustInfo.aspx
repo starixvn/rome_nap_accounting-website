@@ -322,7 +322,7 @@
 </head>
 <body>
     <script type="text/javascript">
-        function ViewLogs(TabName, CustName) {
+        function ViewLogs(TabName, CustName, SiteName) {
             document.getElementById('TabLogs').value = TabName;
             var params = "?tabid=CustomerSetting&custname=" + CustName;
             if (TabName == "Login")
@@ -333,8 +333,9 @@
                 parent.frames["centerFr"].location = "LogDisplay/Setting/Display.aspx?tabid=Status&custname=" + CustName + '&fromdate=' + '<%=DateTime.Now.AddDays(-1).ToString("MM/dd/yyyy")%>' + '&todate=' + '<%=DateTime.Now.ToString("MM/dd/yyyy")%>';
             else if (TabName == "Credit")
                 parent.frames["centerFr"].location = "LogDisplay/Setting/Display.aspx?tabid=Credit&custname=" + CustName + '&fromdate=' + '<%=DateTime.Now.AddDays(-1).ToString("MM/dd/yyyy")%>' + '&todate=' + '<%=DateTime.Now.ToString("MM/dd/yyyy")%>';
+            else if (TabName == "CashService")
+                parent.frames["centerFr"].location = "LogDisplay/Setting/Display.aspx?tabid=CashService&siteName=" + SiteName + "&custname=" + CustName + '&fromdate=' + '<%=DateTime.Now.AddDays(-1).ToString("MM/dd/yyyy")%>' + '&todate=' + '<%=DateTime.Now.ToString("MM/dd/yyyy")%>';
         }
-
 
     </script>
     <script type="text/javascript" src="js/ToolTip/wz_tooltip/wz_tooltip.js?v=<%= AccCommon.Version() %>"></script>

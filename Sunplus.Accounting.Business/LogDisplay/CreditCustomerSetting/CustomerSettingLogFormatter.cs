@@ -889,7 +889,7 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
             || actionId == UpdateAgentPTOnGroupedMemberOthersActionId
             || actionId == UpdateSuperPTOnDirectMemberOthersActionId
             || actionId == UpdateMasterPTOnDirectMemberOthersActionId
-            || actionId == UpdateSuperPTOnDirectMasterMemberOthersActionId            ;
+            || actionId == UpdateSuperPTOnDirectMasterMemberOthersActionId;
 
         private bool IsSBBetSettingActionId(int actionId)
             => actionId == CreateSuperBetSettingActionId

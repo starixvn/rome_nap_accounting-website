@@ -15,5 +15,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
         Sunplus.Accounting.Entities.LogDisplay.ResultLogin GetLogLogin(string custName, DateTime fromDate, DateTime toDate, int page, int pageSize);
 
         Sunplus.Accounting.Entities.LogDisplay.ResultCredit GetLogCredit(string custName, DateTime fromDate, DateTime toDate, int page, int pageSize);
+
+        Sunplus.Accounting.Entities.LogDisplay.ResultSp GetLogCashService(string custName, DateTime fromDate, DateTime toDate, int viewBy, int page, int pageSize);
     }
 }

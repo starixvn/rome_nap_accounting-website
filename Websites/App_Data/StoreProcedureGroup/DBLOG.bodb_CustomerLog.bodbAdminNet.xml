@@ -16,5 +16,7 @@
     <Setting Key="GetLogCreditTotal" SpName="NAP_UserLog_CreditSelTotalRecords" DbName="DBLOG.bodb_CustomerLog.wsv_nap" />
     <Setting Key="WriteLog_UserLog_RunSP" SpName="WriteLog_UserLog_RunSP" DbName="DBLOG.bodb_CustomerLog.wsv_nap" />
     <Setting Key="WriteLog_UserLog_RunSP_RewardPayment" SpName="WriteLog_UserLog_RunSP_RewardPayment" DbName="DBLOG.bodb_CustomerLog.wsv_nap" />
+    <Setting Key="GetLogCashService" SpName="Acc_CashService_UserLog_RunSPSel_uat2" DbName="DBLOG.bodb_CustomerLog.wsv_CashService" />
+    <Setting Key="GetLogCashServiceTotal" SpName="Acc_CashService_UserLog_RunSPSelTotalRecords_uat2" DbName="DBLOG.bodb_CustomerLog.wsv_CashService" />
   </Function>
 </Functions>
