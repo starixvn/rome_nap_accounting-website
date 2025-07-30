@@ -741,6 +741,19 @@ function ShowBonusDetails(refCode, transId) {
     parent.OpenNextPopup("TransactionDetails", url, 'Transaction Details', 1010, 480, true, false, window, 0, null, null);
 }
 
+function showJackpotWonDetails(transId, custId, betType, winlostdate) {
+    var title = "Jackpot Won Details";
+    var param = {
+        url: "RNGCasinoBetList/JackpotDetails",
+        title: title,
+        jsonParam: { TransId: transId, CustId: custId, BetType: betType, WinLostDate: winlostdate, Title: title },
+        width: 1250,
+        height: 600
+    };
+
+    openResultsPopUp(param);
+}
+
 function showProgressiveJackpotWonDetails(transId, custId, betType, winlostdate) {
     var title = "Progressive Jackpot Won Details";
     var param = {
