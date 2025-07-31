@@ -53,9 +53,10 @@ public partial class UsedCreditDetail : RequiredAuthorizationPage
                 switch (_roleid)
                 {
                     case 2: //agent
-                        _sHeader = HeaderTab("Credit Member", "Cash Member");
+                        var cashMemberHtml = AgentCredit(_custid, 1);
+                        _sHeader = HeaderTab("Credit Member", string.IsNullOrWhiteSpace(cashMemberHtml) ? null : "Cash Member");
                         _s = "<form method=\"post\">" + AgentCredit(_custid, 0) + "</form>";
-                        _s2 = "<form method=\"post\">" + AgentCredit(_custid, 1) + "</form>";
+                        _s2 = "<form method=\"post\">" + cashMemberHtml + "</form>";
                         break;
 
                     case 3: //master
@@ -130,7 +131,12 @@ public partial class UsedCreditDetail : RequiredAuthorizationPage
             string odd_even = "";
             using (DataTable dt = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.UserCredit.SelectAgentCredit(_custid, serviceType))
             {
-                foreach(DataRow dr in dt.Rows)
+                if (dt.Rows.Count <= 0)
+                {
+                    return string.Empty;
+                }
+
+                foreach (DataRow dr in dt.Rows)
                 {
                     string _s = _sRow;
                     _hasClosed = Convert.ToBoolean(dr["closed"]);
