@@ -741,8 +741,8 @@ function ShowBonusDetails(refCode, transId) {
     parent.OpenNextPopup("TransactionDetails", url, 'Transaction Details', 1010, 480, true, false, window, 0, null, null);
 }
 
-function showJackpotWonDetails(transId, custId, betType, winlostdate) {
-    var title = "Jackpot Won Details";
+function showRNGJackpotWonDetails(transId, custId, betType, winlostdate, sportName) {
+    var title = sportName + " Jackpot Won Details";
     var param = {
         url: "RNGCasinoBetList/JackpotDetails",
         title: title,
