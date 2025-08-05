@@ -121,7 +121,9 @@
             }
         }
 
-       
+        public int ServiceType => Utils.ToInt32(customerInfoRow["ServiceType"]);
+        
+        public bool IsCashMember => SearchAccountRoleId == (int)Role.Member && ServiceType == 1;
 
         private void GetShowedHiddenProduct(DataTable dynamicSettingtable)
         {

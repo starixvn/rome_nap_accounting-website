@@ -21,7 +21,7 @@
                 return htmlcontent;
             }
 
-            bool hasTransferPermission = Permissions.GetHostPermission(Enumerations.Functions.Transfer.OtherTrans); // 2: Transfer
+            bool hasTransferPermission = Permissions.GetHostPermission(Enumerations.Functions.Transfer.OtherTrans) && !customerInfoViewModel.IsCashMember; // 2: Transfer
 
             string balanceinfo = WebUtils.LoadTemplateBySystem("CustomerInfo/BalanceInfo.htm");
             TemplateHandler.Assign(ref balanceinfo, "{colorTotalCash}", (hasTransferPermission ? " canchange" : string.Empty) + ((customerInfoViewModel.Cash >= 0) ? " b" : " hilight"));
@@ -61,7 +61,7 @@
             }
 
             //Check Given Credit Permission
-            if (customerInfoViewModel.AllowUpdateGivenCredit)
+            if (customerInfoViewModel.AllowUpdateGivenCredit && !customerInfoViewModel.IsCashMember)
             {
                 TemplateHandler.Assign(ref balanceinfo, "{givencreditOnclick}", "return ChangeGivenCredit(true);");
                 TemplateHandler.Assign(ref balanceinfo, "{givencreditClass}", "canchange");

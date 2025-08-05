@@ -64,6 +64,7 @@ namespace Sunplus.Accounting.Business.Customer
                 {
                     TemplateHandler.Assign(ref htmlcontent, "{memberClass}", "memberClass");
                     TemplateHandler.Assign(ref htmlcontent, "{onclickUName}", "onclick=\"parent.submitSearch('" + customerInfoViewModel.UserName + "');\" ");
+                    TemplateHandler.Assign(ref htmlcontent, "{isCashMember}", customerInfoViewModel.IsCashMember);
                 }
                 else
                 {
