@@ -128,7 +128,7 @@
       <HintPath>..\packages\Sunplus.Accounting.Entities.2.0.3.2\lib\net40\Sunplus.Accounting.Entities.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Accounting.Services, Version=1.0.2.12, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Accounting.Services.1.0.2.13-Beta1\lib\net40\Sunplus.Accounting.Services.dll</HintPath>
+      <HintPath>..\packages\Sunplus.Accounting.Services.1.0.2.13\lib\net40\Sunplus.Accounting.Services.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Data.DataAbstract, Version=2.0.0.9, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Data.DataAbstract.2.0.0.9\lib\net40\Sunplus.Data.DataAbstract.dll</HintPath>
