@@ -54,7 +54,7 @@ public partial class UsedCreditDetail : RequiredAuthorizationPage
                 {
                     case 2: //agent
                         var cashMemberHtml = AgentCredit(_custid, 1);
-                        bool isCashMemberNoInfo = cashMemberHtml.Contains("tdNoInfomation");
+                        bool isCashMemberNoInfo = cashMemberHtml.Split(new string[] { "tdNoInfomation" }, StringSplitOptions.None).Length - 1 >= 2;
                         _sHeader = HeaderTab("Credit Member", isCashMemberNoInfo ? null : "Cash Member");
                         _s = "<form method=\"post\">" + AgentCredit(_custid, 0) + "</form>";
                         _s2 = "<form method=\"post\">" + cashMemberHtml + "</form>";
