@@ -51,6 +51,8 @@ decimal agentWinlost = betdetail.Ticket.AgentWinlost;
 var betTypeId = betdetail.Ticket.BetTypeId;
 
 var isShowWinLoss = statusTemp != "running";
+
+    var jackpotBettype = new List<int> { 2198, 2398, 2998, 4297, 1698, 4599, 12998 };
     <tr class="c">
         <td>
             <div class="c width30 table-cell">
@@ -79,7 +81,7 @@ var isShowWinLoss = statusTemp != "running";
         </td>
         <td class="r">
             <div class="column-winloss table-cell">
-                @if (betTypeId.Equals(2198) || betTypeId.Equals(2398) || betTypeId.Equals(2998))
+                @if (jackpotBettype.Contains(betTypeId))
                 {
                     <div class="margin-top-5">
                         -
