@@ -14,7 +14,7 @@
     }
 
     bool betListStatement = ViewData["BetListStatement"] != null && Convert.ToBoolean(ViewData["BetListStatement"]);
-    var jackpotBettype = new List<int> { 4297, 1698, 4599, 12998 };
+    var jackpotBettype = new List<int> { 2198, 2398, 2998, 4297, 1698, 4599, 12998 };
 }
 <div class="margin-top-5">
     @if (jackpotBettype.Contains(ticket.BetTypeId))
