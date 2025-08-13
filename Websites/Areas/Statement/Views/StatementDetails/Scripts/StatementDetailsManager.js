@@ -24,7 +24,7 @@ var StatementDetailsManager = function () {
         if (statementListLength) {
             for (var i = 0; i < statementListLength; i++) {
                 var statement = statementReport.StatementList[i];
-                var remark = statement.TransactionType + "<br>" + statement.Description +
+                var remark = (statement.IsHideTransactionType ? "" : (statement.TransactionType + "<br>")) + statement.Description +
                     (transferDetailsCriteria.SiteName == "NAP" && statement.ExchangeRate ?
                         " - " + statementResources.Symbol_ExchangeRate + ":" + statement.ExchangeRate :
                         '');
