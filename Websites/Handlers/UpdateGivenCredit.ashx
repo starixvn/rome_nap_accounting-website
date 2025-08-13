@@ -37,8 +37,14 @@ public class UpdateGivenCredit : BaseHandler
                 var roleid = context.Request["roleid"];
                 if (roleid == "1")
                 {
+                    var accumCredit = UpdateCustomer.GetTotalCashMemberReturnCredit(UplineId);
                     var totalAmt = UpdateCustomer.GetTotalAmount(_custid);
-                    Credit.UpdateMemberCredit(_accid, _custid, amount, totalAmt);
+                    Credit.UpdateMemberCredit(_accid, _custid, amount, totalAmt, accumCredit);
+                }
+                else if (roleid == "2")
+                {
+                    var accumCredit = UpdateCustomer.GetTotalCashMemberReturnCredit(_custid);
+                    Credit.UpdateAgentCredit(_accid, _custid, amount, accumCredit);
                 }
                 else
                 {
