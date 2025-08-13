@@ -17,6 +17,9 @@ function GetCustId() {
 function GetCustName() {
     return obj('custName').value;
 }
+function GetParentId() {
+    return obj('parentid').value;
+}
 function ClearUsername() {
     obj('username').value = "";
     window.location.reload(true);
@@ -73,7 +76,7 @@ function checkKeyPress(e) {
             }
             var fr = self.frames['frmUpdate'];
             if (typeof fr != 'undefined' && fr) {
-                fr.location.href = 'Handlers/UpdateGivenCredit.ashx?amount=' + givencredit + '&custid=' + GetCustId() + '&roleid=' + document.AgLoginForm.roleId.value;
+                fr.location.href = 'Handlers/UpdateGivenCredit.ashx?amount=' + givencredit + '&custid=' + GetCustId() + '&roleid=' + document.AgLoginForm.roleId.value + '&uplineid=' + GetParentId();
                 ChangeGivenCredit();
                 return true;
             }
