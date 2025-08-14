@@ -516,6 +516,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
             record.Date = CastAide.AsString(row["logdate"]);
             record.UEId = CastAide.AsInt32(row["userid"]);
             record.UNId = CastAide.AsInt32(row["custid"]);
+            record.UEdit = CastAide.AsString(row["username"]);
             return record;
         }
 

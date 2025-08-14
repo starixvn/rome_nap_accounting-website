@@ -26,10 +26,10 @@
                     [<span class="canchange" onmouseover="mopen('LogID')" onmouseout="mclosetime()">Log</span>
                     | <span class="canchange" onmouseover="mopen('InfoID')" onmouseout="mclosetime()">Info</span>]
                     <div onmouseout="mclosetime()" onmouseover="mcancelclosetime()" id="LogID">
-                        <a onclick="ViewLogs('Setting','{FullUserName}')">• Setting</a><br />
-                        <a onclick="ViewLogs('Status','{FullUserName}')">• Status</a><br />
-                        <a onclick="ViewLogs('Credit','{FullUserName}')">• Credit</a><br />
-                        <a onclick="ViewLogs('Login','{FullUserName}')">• Login</a><br />
+                        <a onclick="ViewLogs('Setting','{FullUserName}', '{CustomerSite}')">• Setting</a><br />
+                        <a onclick="ViewLogs('Status','{FullUserName}', '{CustomerSite}')">• Status</a><br />
+                        <a onclick="ViewLogs('Credit','{FullUserName}', '{CustomerSite}')">• Credit</a><br />
+                        <a onclick="ViewLogs('Login','{FullUserName}', '{CustomerSite}')">• Login</a><br />
 
                         <!--ViewLogCashService-->
                         <a onclick="ViewLogs('CashService','{FullUserName}', '{CustomerSite}')">• Cash Service</a>

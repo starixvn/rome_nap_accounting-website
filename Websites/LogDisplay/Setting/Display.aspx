@@ -33,7 +33,7 @@
 
     <script src="../../js/jQuery/Template/jquery.tmpl.js" type="text/javascript"></script>
     <script src="../../js/Common/Functions.js" type="text/javascript"></script>
-    <script src="Scripts/LogSetting.js?v=519<%=Sunplus.Accounting.Core.Configurations.WebSettings.Version%>" type="text/javascript"></script>
+    <script src="Scripts/LogSetting.js?v=619<%=Sunplus.Accounting.Core.Configurations.WebSettings.Version%>" type="text/javascript"></script>
     <script type="text/javascript">
         function getQuerystring(key, default_) {
             if (default_ == null) default_ = "";

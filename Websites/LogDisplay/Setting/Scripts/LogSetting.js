@@ -293,6 +293,8 @@
         return false;
     },
     redirect: function (tab) {
+        debugger;
+
         if (tab) {
             var cls = 'current', idTab = $(tab).parent().attr('id').toString();
             $('li.tablog').removeClass(cls);
@@ -308,7 +310,7 @@
                     $('span#log_type').hide();
                     $('span#log_type_cashservice').hide();
                     break;
-                case "cashService":
+                case "cashservice":
                     $('span#log_type').hide();
                     $('span#log_type_cashservice').show();
                     break;
@@ -329,6 +331,7 @@
         var cls = 'current';
         if (tab.toLowerCase().indexOf('setting') != -1) {
             this.logType = 'setting';
+            $('span#log_type_cashservice').hide();
             $('span#log_type').show();
         } else if (tab.toLowerCase().indexOf('status') != -1) {
             this.logType = 'status';
@@ -338,9 +341,11 @@
             this.logType = 'login';
         } else if (tab.toLowerCase().indexOf('cashservice') != -1) {
             this.logType = 'cashservice';
+            $('span#log_type').hide();
             $('span#log_type_cashservice').show();
         } else {
             this.logType = 'setting';
+            $('span#log_type_cashservice').hide();
             $('span#log_type').show();
         }
         $('input#tabid').val(tab);
