@@ -963,7 +963,7 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
                 return LogAction.StakeLevel;
             if (IsWinlossLimitActionId(actionId))
                 return LogAction.WinlossLimit;
-            throw new InvalidOperationException("ActionId is invalid or not supported.");
+            throw new InvalidOperationException("ActionId is invalid or not supported.(" + actionId + ")");
         }
     }
 
