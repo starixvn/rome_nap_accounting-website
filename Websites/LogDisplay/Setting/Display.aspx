@@ -469,12 +469,9 @@
                                 <li id="login" class="tablog">
                                     <a href="javascript:;" onclick="LogPT.redirect(this);"><span>Login </span></a>
                                 </li>
-                                <% if (isSupportCashService)
-                                    { %>
                                 <li id="cashservice" class="tablog">
                                     <a href="javascript:;" onclick="LogPT.redirect(this);"><span>Cash Service </span></a>
                                 </li>
-                                <% } %>
                             </ul>
                         </div>
                     </div>

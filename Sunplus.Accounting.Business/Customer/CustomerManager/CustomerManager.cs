@@ -306,11 +306,6 @@
                 TemplateHandler.RemoveBlock(ref htmlcontent, "hasdirectmember");
             }
 
-            if (!AppSettings.IsSupportCashService(customerInfoViewModel.CustomerSite))
-            {
-                TemplateHandler.RemoveBlock(ref htmlcontent, "ViewLogCashService");
-            }
-
             return htmlcontent;
         }
 
