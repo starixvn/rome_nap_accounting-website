@@ -81,5 +81,23 @@ namespace Sunplus.Accounting.WcfServiceLibrary.LogDisplay
 
             return service.GetLogDisplay(logParam);
         }
+
+        public Sunplus.Accounting.Entities.LogDisplay.ResultLog GetLogCashService(string custName, DateTime fromDate, DateTime toDate, int viewBy, int page, int pageSize)
+        {
+            var service = CommonBootStrapper.Locator.GetInstance<ISettingManager>();
+
+            var logParam = new LogParam()
+            {
+                CustName = custName,
+                FromDate = fromDate,
+                ToDate = toDate,
+                ViewBy = viewBy,
+                Page = page,
+                PageSize = pageSize,
+                Type = (int)ELogType.CashService
+            };
+
+            return service.GetLogDisplay(logParam);
+        }
     }
 }

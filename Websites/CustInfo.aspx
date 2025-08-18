@@ -95,7 +95,7 @@
         );
 
         var currlevelbox = "";
-           
+
 
         function OpenCloseMenuAbnormal() {
 
@@ -147,7 +147,7 @@
                             if (isNumberNotNull("txtpage")) {
                                 var cpage = $("#txtpage").val();
                                 if (parseInt(cpage) <= totalPage) {
-                                    ajaxGetDownlinelist(custid,  roleid, cpage, "");
+                                    ajaxGetDownlinelist(custid, roleid, cpage, "");
                                 }
                             }
                             return false;
@@ -166,7 +166,7 @@
             });
         }
 
-         function ajaxGetDirectMemberlist(custid, roleid, pageindex, iscallbypager) {
+        function ajaxGetDirectMemberlist(custid, roleid, pageindex, iscallbypager) {
             var params = '{"custId":' + custid + ',"isdirectmember":true,"roleId":' + roleid + ', "pageIndex":' + pageindex + '}';
             $.ajax({
                 type: "POST",
@@ -190,7 +190,7 @@
                             if (isNumberNotNull("txtpage")) {
                                 var cpage = $("#txtpage").val();
                                 if (parseInt(cpage) <= totalPage) {
-                                    ajaxGetDirectMemberlist(custid,  roleid, cpage, "");
+                                    ajaxGetDirectMemberlist(custid, roleid, cpage, "");
                                 }
                             }
                             return false;
@@ -296,7 +296,7 @@
 
     </script>
     <script language="javascript" type="text/javascript">
-       
+
         function updateAutoSuspendStatus(id, roleIds) {
             var title = 'Update Auto Suspend Status';
             var url = 'Customer/Setting/AutoSuspendStatus/Index.aspx?custId=' + id;
@@ -304,7 +304,7 @@
             var height = 260;
             parent.OpenPopup(url, title, width, height, true, true, window, 2000, null, null);
         }
-      
+
         function updateAGCasinoStatus(id, roleIds) {
             var title = 'Update AG Casino Status';
             var url = 'AGCasino/AGCasinoStatus?custId=' + id + '&roleId=' + roleIds;
@@ -322,19 +322,20 @@
 </head>
 <body>
     <script type="text/javascript">
-        function ViewLogs(TabName, CustName) {
+        function ViewLogs(TabName, CustName, SiteName) {
             document.getElementById('TabLogs').value = TabName;
             var params = "?tabid=CustomerSetting&custname=" + CustName;
             if (TabName == "Login")
-                parent.frames["centerFr"].location = "LogDisplay/Setting/Display.aspx?tabid=Login&custname=" + CustName + '&fromdate=' + '<%=DateTime.Now.AddDays(-1).ToString("MM/dd/yyyy")%>' + '&todate=' + '<%=DateTime.Now.ToString("MM/dd/yyyy")%>';
+                parent.frames["centerFr"].location = "LogDisplay/Setting/Display.aspx?tabid=Login&siteName=" + SiteName + "&custname=" + CustName + '&fromdate=' + '<%=DateTime.Now.AddDays(-1).ToString("MM/dd/yyyy")%>' + '&todate=' + '<%=DateTime.Now.ToString("MM/dd/yyyy")%>';
             else if (TabName == "Setting")
-                parent.frames["centerFr"].location = "LogDisplay/Setting/Display.aspx?tabid=CustomerSetting&custname=" + CustName + '&fromdate=' + '<%=DateTime.Now.AddDays(-1).ToString("MM/dd/yyyy")%>' + '&todate=' + '<%=DateTime.Now.ToString("MM/dd/yyyy")%>';
+                parent.frames["centerFr"].location = "LogDisplay/Setting/Display.aspx?tabid=CustomerSetting&siteName=" + SiteName + "&custname=" + CustName + '&fromdate=' + '<%=DateTime.Now.AddDays(-1).ToString("MM/dd/yyyy")%>' + '&todate=' + '<%=DateTime.Now.ToString("MM/dd/yyyy")%>';
             else if (TabName == "Status")
-                parent.frames["centerFr"].location = "LogDisplay/Setting/Display.aspx?tabid=Status&custname=" + CustName + '&fromdate=' + '<%=DateTime.Now.AddDays(-1).ToString("MM/dd/yyyy")%>' + '&todate=' + '<%=DateTime.Now.ToString("MM/dd/yyyy")%>';
+                parent.frames["centerFr"].location = "LogDisplay/Setting/Display.aspx?tabid=Status&siteName=" + SiteName + "&custname=" + CustName + '&fromdate=' + '<%=DateTime.Now.AddDays(-1).ToString("MM/dd/yyyy")%>' + '&todate=' + '<%=DateTime.Now.ToString("MM/dd/yyyy")%>';
             else if (TabName == "Credit")
-                parent.frames["centerFr"].location = "LogDisplay/Setting/Display.aspx?tabid=Credit&custname=" + CustName + '&fromdate=' + '<%=DateTime.Now.AddDays(-1).ToString("MM/dd/yyyy")%>' + '&todate=' + '<%=DateTime.Now.ToString("MM/dd/yyyy")%>';
+                parent.frames["centerFr"].location = "LogDisplay/Setting/Display.aspx?tabid=Credit&siteName=" + SiteName + "&custname=" + CustName + '&fromdate=' + '<%=DateTime.Now.AddDays(-1).ToString("MM/dd/yyyy")%>' + '&todate=' + '<%=DateTime.Now.ToString("MM/dd/yyyy")%>';
+            else if (TabName == "CashService")
+                parent.frames["centerFr"].location = "LogDisplay/Setting/Display.aspx?tabid=CashService&siteName=" + SiteName + "&custname=" + CustName + '&fromdate=' + '<%=DateTime.Now.AddDays(-1).ToString("MM/dd/yyyy")%>' + '&todate=' + '<%=DateTime.Now.ToString("MM/dd/yyyy")%>';
         }
-
 
     </script>
     <script type="text/javascript" src="js/ToolTip/wz_tooltip/wz_tooltip.js?v=<%= AccCommon.Version() %>"></script>

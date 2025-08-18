@@ -89,6 +89,12 @@ namespace Sunplus.Accounting.Business.LogDisplay
                     logResult.Login = resultLogin.Rows;
                     break;
 
+                case (int)ELogType.CashService:
+                    var resultCashService = GetLogCashService(param.CustName, param.FromDate, param.ToDate, param.ViewBy, param.Page, param.PageSize);
+                    logResult.Total = resultCashService.Total;
+                    logResult.Setting = resultCashService.Rows;
+                    break;
+
                 default:
                     break;
             }
@@ -102,14 +108,14 @@ namespace Sunplus.Accounting.Business.LogDisplay
                 }
                 else
                 {
-                   var resultCredit = GetLogCredit(logParam.CustName, logParam.FromDate, logParam.ToDate, logParam.Page,
-                        logParam.PageSize);
+                    var resultCredit = GetLogCredit(logParam.CustName, logParam.FromDate, logParam.ToDate, logParam.Page,
+                         logParam.PageSize);
                     resultLog.Total = resultCredit.Total;
                     resultLog.Credit = resultCredit.Rows;
                 }
             }
         }
-      
+
 
         /**
             @Function GetLogSetting
@@ -176,11 +182,12 @@ namespace Sunplus.Accounting.Business.LogDisplay
                             //trackingvalueold = trackingvalueold.Replace("=\"\"", "=\"Unassigned\"");
                             _customerSettingLogFormatter.GenerateDetail(record, actionId, trackingvalue, trackingvalueold, spName, actionName);
                             record.Diffs = _DiffsTrackingValue(trackingvalue, CastAide.AsString(trackingvalueold, string.Empty), true);
-                        }else
+                        }
+                        else
                         if (_newFormatCommissionLogFormatter.IsNewFormatCommissionActionId(actionId))
                         {
-                            record.Detail= _newFormatCommissionLogFormatter.GenerateDetail(trackingvalue, spName, actionName);
-                            record.Diffs = _DiffsTrackingValue(trackingvalue, CastAide.AsString(trackingvalueold, string.Empty),true);
+                            record.Detail = _newFormatCommissionLogFormatter.GenerateDetail(trackingvalue, spName, actionName);
+                            record.Diffs = _DiffsTrackingValue(trackingvalue, CastAide.AsString(trackingvalueold, string.Empty), true);
                         }
                         else
                         {
@@ -406,6 +413,66 @@ namespace Sunplus.Accounting.Business.LogDisplay
             return logResult;
         }
 
+        public Sunplus.Accounting.Entities.LogDisplay.ResultSp GetLogCashService(string custName, DateTime fromDate, DateTime toDate, int viewBy, int page, int pageSize)
+        {
+            ResultSp logResult = new ResultSp();
+            try
+            {
+                int custId = CustomerUtils.GetCustomerIdByUserName(custName);
+                string logType = "cashService";
+
+                var param = new Hashtable();
+                param.Add("custid", custId);
+                param.Add("custname", custName);
+
+                param.Add("fromdate", fromDate);
+                param.Add("todate", toDate);
+
+                param.Add("actiontypeid", viewBy); //-1:All, 1:PT, 2:Comm, 3:BetSet, 4:General
+
+                // hard code
+                param.Add("isinternal", 1);
+                param.Add("LowerActionId", null);
+                param.Add("UpperActionId", null);
+
+                param.Add("pageindex", page > 0 ? page - 1 : 0);
+                param.Add("pagesize", pageSize);
+                DataTable data = null;
+                if (custId > 0)
+                {
+                    data = _logDAO.GetLogDisplay(param, logType);
+                }
+
+                if (data != null && data.Rows.Count > 0)
+                {
+                    logResult.Total = _logDAO.GetLogDisplayTotal(param, logType);
+                    logResult.Rows = new List<RecordSp>();
+
+                    foreach (DataRow row in data.Rows)
+                    {
+                        // get record value
+                        var record = _GetCashServiceLogRecord(row);
+                        var actionId = CastAide.AsInt32(row["actionid"], 0);
+                        // get tracking value
+                        string trackingvalue = FormatPermissionSubAccount(CastAide.AsString(row["trackingvalue"]));
+                        string trackingvalueold = FormatPermissionSubAccount(CastAide.AsString(row["trackingvalueold"]));
+                        string spName = CastAide.AsString(row["SPName"]);
+                        string actionName = CastAide.AsString(row["actionnameen"]);
+
+                        record.Detail = _newFormatCommissionLogFormatter.GenerateDetail(trackingvalue, spName, actionName);
+                        record.Diffs = _DiffsTrackingValue(trackingvalue, CastAide.AsString(trackingvalueold, string.Empty), true);
+
+                        logResult.Rows.Add(record);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return logResult;
+        }
+
         private TrackingLog ParseTrackingValue(int actionId, string trackingValue, string spName, string actionName)
         {
             if (_newLicenseeLogFormatter.IsNewLicenseeActionId(actionId))
@@ -437,6 +504,19 @@ namespace Sunplus.Accounting.Business.LogDisplay
             record.UEId = CastAide.AsInt32(row["userid"]);
             record.UName = CastAide.AsString(row["custname"]);
             record.UNId = CastAide.AsInt32(row["custid"]);
+            return record;
+        }
+
+        private RecordSp _GetCashServiceLogRecord(DataRow row)
+        {
+            var record = new RecordSp();
+            record.ID = CastAide.AsInt64(row["logid"], 0);
+            record.Aid = CastAide.AsInt32(row["actionid"], 0);
+            record.Act = CastAide.AsString(row["actionnameen"], "");
+            record.Date = CastAide.AsString(row["logdate"]);
+            record.UEId = CastAide.AsInt32(row["userid"]);
+            record.UNId = CastAide.AsInt32(row["custid"]);
+            record.UEdit = CastAide.AsString(row["username"]);
             return record;
         }
 
@@ -751,7 +831,8 @@ namespace Sunplus.Accounting.Business.LogDisplay
 
                 var group = new TrackingGroup { N = LogFormater.GetResourceName(sport.Label), Vals = sportVals };
                 groups.Add(group);
-            };
+            }
+            ;
             return groups;
         }
 

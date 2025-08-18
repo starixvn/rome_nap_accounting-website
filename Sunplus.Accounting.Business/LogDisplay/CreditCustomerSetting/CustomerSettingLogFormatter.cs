@@ -889,7 +889,7 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
             || actionId == UpdateAgentPTOnGroupedMemberOthersActionId
             || actionId == UpdateSuperPTOnDirectMemberOthersActionId
             || actionId == UpdateMasterPTOnDirectMemberOthersActionId
-            || actionId == UpdateSuperPTOnDirectMasterMemberOthersActionId            ;
+            || actionId == UpdateSuperPTOnDirectMasterMemberOthersActionId;
 
         private bool IsSBBetSettingActionId(int actionId)
             => actionId == CreateSuperBetSettingActionId
@@ -939,8 +939,13 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
             => actionId == UpdateStakeLevel158ActionId;
         private bool IsWinlossLimitActionId(int actionId)
             => actionId == UpdateWinLossLimit155ActionId;
+
         private bool IsPotentialWinLimitActionId(int actionId)
             => actionId == EditPotentialWinLimitActionId;
+
+        private bool IsWinLimitActionId(int actionId)
+            => actionId == UpdateWinLimit155ActionId;
+
         private LogAction GetLogAction(int actionId)
         {
             if (IsPotentialWinLimitActionId(actionId))
@@ -963,7 +968,9 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
                 return LogAction.StakeLevel;
             if (IsWinlossLimitActionId(actionId))
                 return LogAction.WinlossLimit;
-            throw new InvalidOperationException("ActionId is invalid or not supported.");
+            if (IsWinLimitActionId(actionId))
+                return LogAction.WinLimit;                
+            throw new InvalidOperationException("ActionId is invalid or not supported.(" + actionId + ")");
         }
     }
 

@@ -21,7 +21,9 @@
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Configuration;
     using System.Data;
+    using System.Linq;
     using System.Web;
     using static Fanex.Tarus.Infrastructure.Common.Enumerations;
     using ConverterCommon = Fanex.Common.Converter;
@@ -148,11 +150,11 @@
                         decimal memberBalanceMBC = 0;
                         decimal memberNetPositionMBC = 0;
                         decimal member3rdPendingTransfer = 0;
-                        var IsInternalUser = customerInfoRow.Table.Columns.Contains("IsInternal") && 
+                        var IsInternalUser = customerInfoRow.Table.Columns.Contains("IsInternal") &&
                             Fanex.CustomerSetting.Module.Core.Utils.ToBoolean(customerInfoRow["IsInternal"]);
 
                         if (roleId == (int)Role.Member && !IsInternalUser)
-                        {                          
+                        {
                             memberOutstandingMBC = _customerDAO.GetMemberOustandingMBC(searchAccountId);
                             var memberMBCBalanceModel = _customerDAO.GetMemberMBCBalanceModel(searchAccountId);
                             memberBalanceMBC = memberMBCBalanceModel.Balance;
@@ -161,10 +163,10 @@
                         }
 
                         var customerInfoViewModel = new CustomerInfoViewModel(
-                            customerInfoRow, 
-                            lineInfoRow, 
-                            cashRow, 
-                            downlineStatusInfoRow, 
+                            customerInfoRow,
+                            lineInfoRow,
+                            cashRow,
+                            downlineStatusInfoRow,
                             dynamicSettingtable,
                             memberOutstandingMBC,
                             memberBalanceMBC,
@@ -256,7 +258,7 @@
             result = _customerDAO.UpdateCustomerSite(custId, newSite, AppSession.AccId, HttpContext.Current.Request.UserHostAddress);
 
             return result;
-        }       
+        }
 
         public CustomerExRate SelectCustomerExRate(string username)
         {
@@ -404,7 +406,7 @@
             jsscript += "</script>";
             return jsscript;
         }
-
-        #endregion private functions
     }
+
+    #endregion private functions
 }

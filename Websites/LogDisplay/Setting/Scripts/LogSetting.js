@@ -33,7 +33,7 @@
         this.custName = _custName;
         this.fromDate = $('#fromDate').val();
         this.toDate = $('#toDate').val();
-        this.viewBy = $('#viewBy').val();
+        this.viewBy = this.logType == 'cashservice' ? $('#viewBy_cashservice').val() : $('#viewBy').val();
         this.page = _page;
         this.getPage();
     },
@@ -59,9 +59,14 @@
             case 'login':
                 _method = 'GetLogLogin';
                 break;
+            case 'cashservice':
+                _method = 'GetLogCashService';
+                _param = $.extend(_param, { viewBy: this.viewBy });
+                break;
             default:
                 break;
         }
+
         JAjax.call({
             url: 'Services/Setting.svc/'.concat(_method),
             data: _param,
@@ -106,6 +111,10 @@
             case 4: // for login
                 $.extend(resp, { Rows: resp.Login });
                 $('#tpl_login').tmpl(resp).appendTo('#log_content');
+                break;
+            case 5: // for cash service
+                $.extend(resp, { Rows: resp.Setting });
+                $('#tpl_sp').tmpl(resp).appendTo('#log_content');
                 break;
             default:
                 break;
@@ -284,6 +293,8 @@
         return false;
     },
     redirect: function (tab) {
+        debugger;
+
         if (tab) {
             var cls = 'current', idTab = $(tab).parent().attr('id').toString();
             $('li.tablog').removeClass(cls);
@@ -291,11 +302,17 @@
             switch (idTab) {
                 case "setting":
                     $('span#log_type').show();
+                    $('span#log_type_cashservice').hide();
                     break;
                 case "status":
                 case "credit":
                 case "login":
                     $('span#log_type').hide();
+                    $('span#log_type_cashservice').hide();
+                    break;
+                case "cashservice":
+                    $('span#log_type').hide();
+                    $('span#log_type_cashservice').show();
                     break;
                 default:
                     break;
@@ -314,6 +331,7 @@
         var cls = 'current';
         if (tab.toLowerCase().indexOf('setting') != -1) {
             this.logType = 'setting';
+            $('span#log_type_cashservice').hide();
             $('span#log_type').show();
         } else if (tab.toLowerCase().indexOf('status') != -1) {
             this.logType = 'status';
@@ -321,8 +339,13 @@
             this.logType = 'credit';
         } else if (tab.toLowerCase().indexOf('login') != -1) {
             this.logType = 'login';
+        } else if (tab.toLowerCase().indexOf('cashservice') != -1) {
+            this.logType = 'cashservice';
+            $('span#log_type').hide();
+            $('span#log_type_cashservice').show();
         } else {
             this.logType = 'setting';
+            $('span#log_type_cashservice').hide();
             $('span#log_type').show();
         }
         $('input#tabid').val(tab);

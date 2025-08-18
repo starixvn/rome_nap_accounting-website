@@ -42,6 +42,7 @@
     <Setting Key="SiteDB3_Acc_OutstandingMemberSel" SpName="Acc_OutstandingMemberSel" DbName="DBBOF.bodb02.wsv_nap" Plain="0" />
     <Setting Key="SiteDB3_Acc_BalanceMemberSel" SpName="Acc_BalanceMemberSel" DbName="DBTXN.BODB02.wsv_nap" Plain="0" />
     <Setting Key="SiteDB3_Acc_CustomerTotalAmountSel" SpName="Acc_CustomerTotalAmountSel" DbName="DBTXN.BODB02.wsv_nap" Plain="0" />
+    <Setting Key="Age_CashAccumCredit_AgSel" SpName="Age_CashAccumCredit_AgSel" DbName="DBSIC.bodb02.wsv_nap" Plain="0" />
   </Function>
 
   <Function Name="ResetWinning">

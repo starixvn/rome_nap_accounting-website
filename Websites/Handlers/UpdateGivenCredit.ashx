@@ -9,14 +9,12 @@ using IBCUtils;
 using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
 public class UpdateGivenCredit : BaseHandler
 {
-
     public override void ProcessRequest(HttpContext context)
     {
         base.ProcessRequest(context);
 
         try
         {
-
             context.Response.ContentType = "text/html";
             string sAmount = context.Request["amount"] as string ?? string.Empty;
             if (string.IsNullOrEmpty(sAmount)) throw new AccException("Invalid amount!");
@@ -37,8 +35,15 @@ public class UpdateGivenCredit : BaseHandler
                 var roleid = context.Request["roleid"];
                 if (roleid == "1")
                 {
+                    var uplineId = UpdateCustomer.GetUplineByCustId(_custid);
+                    var accumCredit = UpdateCustomer.GetTotalCashMemberReturnCredit(uplineId);
                     var totalAmt = UpdateCustomer.GetTotalAmount(_custid);
-                    Credit.UpdateMemberCredit(_accid, _custid, amount, totalAmt);
+                    Credit.UpdateMemberCredit(_accid, _custid, amount, totalAmt, accumCredit);
+                }
+                else if (roleid == "2")
+                {
+                    var accumCredit = UpdateCustomer.GetTotalCashMemberReturnCredit(_custid);
+                    Credit.UpdateAgentCredit(_accid, _custid, amount, accumCredit);
                 }
                 else
                 {
