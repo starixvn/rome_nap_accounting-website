@@ -35,8 +35,8 @@
   <Function Name="Sportbook">
     <Setting Key="Acc_CustomerUpdAgent_All" SpName="Acc_CustomerUpdAgent_All" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_CustomerUpdClosed" SpName="Acc_CustomerUpdClosed" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="Age_CustSetting_GetUplineByCustID" SpName="Age_CustSetting_GetUplineByCustID_UAT2" DbName="DBCUST.CustDB.wsv_nap" Plain="0" />
-    <Setting Key="Acc_CustomerUpdCredit" SpName="Acc_CustomerUpdCredit_UAT2" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Age_CustSetting_GetUplineByCustID" SpName="Age_CustSetting_GetUplineByCustID" DbName="DBCUST.CustDB.wsv_nap" Plain="0" />
+    <Setting Key="Acc_CustomerUpdCredit" SpName="Acc_CustomerUpdCredit" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_CustomerUpdDisableNumber" SpName="Acc_CustomerUpdDisableNumber" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_CustomerUpdDisableOutright" SpName="Acc_CustomerUpdDisableOutright" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_CustomerUpdMaster_All" SpName="Acc_CustomerUpdMaster_All" DbName="DBCust.CustDB.wsv_nap" />
@@ -58,8 +58,8 @@
     <Setting Key="Acc_CustomerCopyVRSetting" SpName="Acc_CustomerCopyVRSetting" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Customer Credit">
-    <Setting Key="Acc_CustomerSelUsedCredit_Ag" SpName="Acc_CustomerSelUsedCredit_Ag_UAT2" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="Acc_CustomerSelUsedCredit_MAg" SpName="Acc_CustomerSelUsedCredit_MAg_UAT2" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerSelUsedCredit_Ag" SpName="Acc_CustomerSelUsedCredit_Ag" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerSelUsedCredit_MAg" SpName="Acc_CustomerSelUsedCredit_MAg" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_CustomerSelUsedCredit_SAg" SpName="Acc_CustomerSelUsedCredit_SAg" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_CustomerUpdClearCredit" SpName="Acc_CustomerUpdClearCredit" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_CustomerUpdResetMemberCredit" SpName="Acc_CustomerUpdResetMemberCredit" DbName="DBCust.CustDB.wsv_nap" />
@@ -78,7 +78,7 @@
     <Setting Key="Acc_CustomerUpdIPLimit" SpName="Acc_CustomerUpdIPLimit" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_CustomerUpdMatchLimit" SpName="Acc_CustomerUpdMatchLimit" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_CustomerUpdSelectedBetting" SpName="Acc_CustomerUpdSelectedBetting" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="Acc_CustomerUpdUserGroup" SpName="Acc_CustomerUserGroupWrapper_Upd_UAT2" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerUpdUserGroup" SpName="Acc_CustomerUserGroupWrapper_Upd" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_CustomerUpdUserName" SpName="Acc_CustomerUpdUserName" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="DBSite1_Acc_CustomerUpdUserName" SpName="Acc_CustomerUpdUserName" DbName="DBCust1.CustDB.wsv_nap" />
     <Setting Key="DBSite2_Acc_CustomerUpdUserName" SpName="Acc_CustomerUpdUserName" DbName="DBCust2.CustDB.wsv_nap" />
