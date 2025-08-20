@@ -265,6 +265,9 @@ namespace Fanex.Tarus.Customer.Controller
         public async Task<ActionResult> GetGlobalSetting(string siteLabel, string site, int currency)
             => Content(await customerService.GetGlobalSetting(siteLabel, site, currency, CustomerClientManager.ClientConfigs.SystemId));
 
+        public async Task<ActionResult> GetMaxPayoutSettingInformation(string site, string siteLabel = "", string language = "en-US")
+            => Content(await customerService.GetMaxPayoutSettingInformation(site, siteLabel, language));
+
         public async Task<ActionResult> GetBetLimitInformation(string site, string siteLabel = "", string language = "en-US")
             => Content(await customerService.GetBetLimitInformation(site, siteLabel, language));
 
