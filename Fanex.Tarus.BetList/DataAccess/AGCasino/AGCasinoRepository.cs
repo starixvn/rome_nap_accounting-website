@@ -5,11 +5,10 @@
     using Fanex.Data;
     using Fanex.Tarus.BetList.Criteria;
     using Models;
+    using Sunplus.Accounting.Core.Extensions;
     using System;
     using System.Collections.Generic;
     using System.Data;
-    using System.Linq;
-    using Sunplus.Accounting.Core.Extensions;
 
     public class AGCasinoRepository : IAGCasinoRepository
     {
@@ -68,7 +67,10 @@
                                 SiteId = HasColumn(reader, "SiteId") ? Converter.ToString2(reader["SiteId"]) : "",
                                 LeagueId = Converter.ToInt(reader["leagueid"]),
                                 EventDate = HasColumn(reader, "EventDate") ? Converter.ToDateTime(reader["EventDate"]) : (DateTime?)null,
-                                ExtraInfo = Converter.ToString2(reader["ExtraInfo"])
+                                ExtraInfo = Converter.ToString2(reader["ExtraInfo"]),
+                                BetdaqId = Converter.To<long>(reader["BetdaqId"]),
+                                OddsSpread = Converter.ToDecimal(reader["OddsSpread"]),
+                                JackpotInfo = HasColumn(reader, "JackpotInfo") ? Converter.ToString2(reader["JackpotInfo"]) : null,
                             },
                             ChoiceHtml = string.Empty,
                             OddHtml = string.Empty,
@@ -140,7 +142,10 @@
                                 SiteId = HasColumn(reader, "SiteId") ? Converter.ToString2(reader["SiteId"]) : "",
                                 LeagueId = Converter.ToInt(reader["leagueid"]),
                                 EventDate = HasColumn(reader, "EventDate") ? Converter.ToDateTime(reader["EventDate"]) : (DateTime?)null,
-                                ExtraInfo = Converter.ToString2(reader["ExtraInfo"])
+                                ExtraInfo = Converter.ToString2(reader["ExtraInfo"]),
+                                BetdaqId = Converter.To<long>(reader["BetdaqId"]),
+                                OddsSpread = Converter.ToDecimal(reader["OddsSpread"]),
+                                JackpotInfo = HasColumn(reader, "JackpotInfo") ? Converter.ToString2(reader["JackpotInfo"]) : null,
                             },
                             ChoiceHtml = string.Empty,
                             OddHtml = string.Empty,
