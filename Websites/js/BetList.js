@@ -754,6 +754,10 @@ function showRNGJackpotWonDetails(transId, custId, betType, winlostdate, sportNa
     openResultsPopUp(param);
 }
 
+function showLCJackpotWonDetails(transId, custId, betType, winlostdate, sportName) {
+    showRNGJackpotWonDetails(transId, custId, betType, winlostdate, sportName);
+}
+
 function showProgressiveJackpotWonDetails(transId, custId, betType, winlostdate) {
     var title = "Progressive Jackpot Won Details";
     var param = {
