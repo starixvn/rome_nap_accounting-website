@@ -108,7 +108,7 @@ var BetDetailsManager = function () {
                 sportName: formData.sportName,
                 hideSabaText: formData.hideSabaText == '' ? false : formData.hideSabaText
             };
-            var url = window.rootUrl + "TarusBetList/ExportBetDetails?" + $.param(exportData);
+            var url = window.rootUrl + "TarusBetList/ExportRNGBetDetails?" + $.param(exportData);
             $("#frmExportExcel").attr("src", url);
         });
     };
