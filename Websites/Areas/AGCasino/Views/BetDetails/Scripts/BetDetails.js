@@ -89,7 +89,7 @@
 		        transType: formData.transType,
                 winlostDate: formData.winlossDate
 		    };
-		    var url = window.rootUrl + "TarusBetList/ExportBetDetails?" + $.param(exportData);
+			var url = window.rootUrl + "TarusBetList/ExportOthersBetDetails?" + $.param(exportData);
 		    $("#frmExportExcel").attr("src", url);
 		});
 	};

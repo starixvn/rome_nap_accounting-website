@@ -9,7 +9,9 @@
     {
         string GetFileNameWithoutExtension(int sportType, string sportName);
 
-        IEnumerable<TicketDetail> GetTicketDetails(int sportType, long refNo, int custId, byte transType, DateTime winlostDate);
+        IEnumerable<TicketDetail> GetOthersTicketDetails(int sportType, long refNo, int custId, byte transType, DateTime winlostDate);
+
+        IEnumerable<TicketDetail> GetRNGTicketDetails(long refNo, int custId, byte transType, DateTime winlostDate);
 
         IEnumerable<TicketDetail> GetJackpotDetails(long transId, int custId, int betType, DateTime winlostDate);
 

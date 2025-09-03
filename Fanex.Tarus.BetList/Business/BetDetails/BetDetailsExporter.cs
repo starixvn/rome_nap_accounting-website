@@ -60,40 +60,24 @@
                 $"{name}_Details";
         }
 
-        public IEnumerable<TicketDetail> GetTicketDetails(
-            int sportType,
+        public IEnumerable<TicketDetail> GetRNGTicketDetails(
             long refNo,
             int custId,
             byte transType,
             DateTime winlostDate)
         {
-            if (sportType == SportContants.AllBet ||
-                sportType == SportContants.SaGaming ||
-                sportType == SportContants.SexyGaming ||
-                sportType == SportContants.GTCasino ||
-                sportType == SportContants.IonCasino ||
-                sportType == SportContants.WM ||
-                sportType == SportContants.BigGame ||
-                sportType == SportContants.PPLiveCasino ||
-                sportType == SportContants.FGG ||
-                sportType == SportContants.YeeBet ||
-                sportType == SportContants.WE ||
-                sportType == SportContants.ONCasino ||
-                sportType == SportContants.GPILiveCasino||
-                sportType == SportContants.MicrogamingLive ||
-                sportType == SportContants.PlayTechLive ||
-                sportType == SportContants.WCasino)
-            {
-                return GetLiveCasinoTickets(refNo, custId, transType, winlostDate);
-            }
-
-            if (sportType == SportContants.BBin)
-            {
-                return GetBBinTickets(refNo, custId, transType);
-            }
-
             return GetRNGCasinoTickets(refNo, custId, transType, winlostDate);
         }
+
+        public IEnumerable<TicketDetail> GetOthersTicketDetails(
+            int sportType,
+            long refNo,
+            int custId,
+            byte transType,
+            DateTime winlostDate)
+            => sportType == SportContants.BBin ? 
+                GetBBinTickets(refNo, custId, transType) : 
+                GetLiveCasinoTickets(refNo, custId, transType, winlostDate);
 
         public IEnumerable<TicketDetail> GetJackpotDetails(long transId, int custId, int betType, DateTime winlostDate)
         {
@@ -155,7 +139,7 @@
 
             var workbook = builder.GetBetList();
             workbook.Write(stream, true);
-        }        
+        }
 
         private static void AddHeader(IBetListExcelBuilder builder, int sportType)
         {
