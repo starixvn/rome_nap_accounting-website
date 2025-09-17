@@ -27,16 +27,24 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
         private const int EditPotentialWinLimitActionId = 854;
         private const int CreateSuperPTActionId = 263000;
         private const int CreateSuperCommActionId = 261000;
+        
         private const int CreateSuperBetSettingActionId = 262000;
+        private const int CreateSuperBetSettingActionIdNew = 262004;
         private const int CreateMasterPTActionId = 263001;
         private const int CreateMasterCommActionId = 261001;
         private const int CreateMasterBetSettingActionId = 262001;
+        private const int CreateMasterBetSettingActionIdNew = 262005;
+
         private const int CreateAgentPTActionId = 263002;
         private const int CreateAgentCommActionId = 261002;
+
         private const int CreateAgentBetSettingActionId = 262002;
+        private const int CreateAgentBetSettingActionIdNew = 262006;
+
         private const int CreateMemberPTActionId = 263003;
         private const int CreateMemberCommActionId = 261003;
         private const int CreateMemberBetSettingActionId = 262003;
+        private const int CreateMemberBetSettingActionIdNew = 262007;
 
         private const int UpdateSuperPTActionId = 511;
         private const int UpdateSuperMinPTActionId = 520;
@@ -90,12 +98,22 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
 
 
         private const int UpdateSuperSBBetSettingActionId = 220037;
+        private const int UpdateSuperSBBetSettingActionIdNew = 220051;
+
         private const int UpdateSuperIndirectSBBetSettingActionId = 220038;
+        private const int UpdateSuperIndirectSBBetSettingActionIdNew = 220052;
         private const int UpdateMasterSBBetSettingActionId = 220039;
+        private const int UpdateMasterSBBetSettingActionIdNew = 220053;
+
         private const int UpdateMasterIndirectSBBetSettingActionId = 220040;
+        private const int UpdateMasterIndirectSBBetSettingActionIdNew = 220054;
+
         private const int UpdateAgentSBBetSettingActionId = 220041;
+        private const int UpdateAgentSBBetSettingActionIdNew = 220055;
         private const int UpdateAgentIndirectSBBetSettingActionId = 220042;
+        private const int UpdateAgentIndirectSBBetSettingActionIdNew = 220056;
         private const int UpdateMemberSBBetSettingActionId = 220043;
+        private const int UpdateMemberSBBetSettingActionIdNew = 220057;
 
         private const int UpdateSuperIndirectBetSetting154ActionId = 220044;
         private const int UpdateMasterIndirectBetSetting154ActionId = 220045;
@@ -113,15 +131,19 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
             CreateSuperPTActionId,
             CreateSuperCommActionId,
             CreateSuperBetSettingActionId,
+            CreateSuperBetSettingActionIdNew,
             CreateMasterPTActionId,
             CreateMasterCommActionId,
             CreateMasterBetSettingActionId,
+            CreateMasterBetSettingActionIdNew,
             CreateAgentPTActionId,
             CreateAgentCommActionId,
             CreateAgentBetSettingActionId,
+            CreateAgentBetSettingActionIdNew,
             CreateMemberPTActionId,
             CreateMemberCommActionId,
             CreateMemberBetSettingActionId,
+            CreateMemberBetSettingActionIdNew,
 
             UpdateSuperPTActionId,
             UpdateSuperMinPTActionId,
@@ -175,12 +197,19 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
             UpdateMasterDirectMemberSBCommActionId,
             UpdateOthersCommActionId,
             UpdateSuperSBBetSettingActionId,
+            UpdateSuperSBBetSettingActionIdNew,
             UpdateSuperIndirectSBBetSettingActionId,
+            UpdateSuperIndirectSBBetSettingActionIdNew,
             UpdateMasterSBBetSettingActionId,
+            UpdateMasterSBBetSettingActionIdNew,
             UpdateMasterIndirectSBBetSettingActionId,
+            UpdateMasterIndirectSBBetSettingActionIdNew,
             UpdateAgentSBBetSettingActionId,
+            UpdateAgentSBBetSettingActionIdNew,
             UpdateAgentIndirectSBBetSettingActionId,
+            UpdateAgentIndirectSBBetSettingActionIdNew,
             UpdateMemberSBBetSettingActionId,
+            UpdateMemberSBBetSettingActionIdNew,
             UpdateStakeLevel158ActionId,
             UpdateWinLossLimit155ActionId,
             UpdateWinLimit155ActionId,
@@ -756,6 +785,7 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
                 case CreateSuperPTActionId:
                 case CreateSuperCommActionId:
                 case CreateSuperBetSettingActionId:
+                case CreateSuperBetSettingActionIdNew:
                 case UpdateSuperPTActionId:
                 case UpdateSuperPTOthersActionId:
                 case UpdateSuperMinPTActionId:
@@ -765,7 +795,9 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
                 case UpdateSuperSBCommActionId:
                 case UpdateOthersCommActionId:
                 case UpdateSuperSBBetSettingActionId:
+                case UpdateSuperSBBetSettingActionIdNew:
                 case UpdateSuperIndirectSBBetSettingActionId:
+                case UpdateSuperIndirectSBBetSettingActionIdNew:
                 case UpdateStakeLevel158ActionId:
                 case UpdateWinLossLimit155ActionId:
                 case UpdateWinLimit155ActionId:
@@ -773,6 +805,7 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
                 case CreateMasterPTActionId:
                 case CreateMasterCommActionId:
                 case CreateMasterBetSettingActionId:
+                case CreateMasterBetSettingActionIdNew:
                 case UpdateMasterPTActionId:
                 case UpdateMasterMinPTActionId:
                 case UpdateMasterPTOthersActionId:
@@ -781,13 +814,16 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
                 case UpdateMasterIndirectParlayMaxPayoutActionId:
                 case UpdateMasterSBCommActionId:
                 case UpdateMasterSBBetSettingActionId:
+                case UpdateMasterSBBetSettingActionIdNew:
                 case UpdateMasterIndirectSBBetSettingActionId:
+                case UpdateMasterIndirectSBBetSettingActionIdNew:
                     return 3;
                 case CreatePotentialWinLimitActionId:
                 case EditPotentialWinLimitActionId:
                 case CreateAgentPTActionId:
                 case CreateAgentCommActionId:
                 case CreateAgentBetSettingActionId:
+                case CreateAgentBetSettingActionIdNew:
                 case UpdateAgentPTActionId:
                 case UpdateAgentMinPTActionId:
                 case UpdateAgentPTOthersActionId:
@@ -796,11 +832,14 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
                 case UpdateAgentIndirectParlayMaxPayoutActionId:
                 case UpdateAgentSBCommActionId:
                 case UpdateAgentSBBetSettingActionId:
+                case UpdateAgentSBBetSettingActionIdNew:
                 case UpdateAgentIndirectSBBetSettingActionId:
+                case UpdateAgentIndirectSBBetSettingActionIdNew:
                     return 2;
                 case CreateMemberPTActionId:
                 case CreateMemberCommActionId:
                 case CreateMemberBetSettingActionId:
+                case CreateMemberBetSettingActionIdNew:
                 case UpdateAgentPTOnMemberActionId:
                 case UpdateMasterPTOnMemberActionId:
                 case UpdateSuperPTOnMemberActionId:
@@ -824,6 +863,7 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
                 case UpdateSuperDirectMemberSBCommActionId:
                 case UpdateMasterDirectMemberSBCommActionId:
                 case UpdateMemberSBBetSettingActionId:
+                case UpdateMemberSBBetSettingActionIdNew:
                 case UpdateSuperIndirectBetSetting154ActionId:
                 case UpdateMasterIndirectBetSetting154ActionId:
                 case UpdateAgentIndirectBetSetting154ActionId:
@@ -893,16 +933,27 @@ namespace Sunplus.Accounting.Business.LogDisplay.CreditCustomerSetting
 
         private bool IsSBBetSettingActionId(int actionId)
             => actionId == CreateSuperBetSettingActionId
+            || actionId == CreateSuperBetSettingActionIdNew
             || actionId == CreateMasterBetSettingActionId
+            || actionId == CreateMasterBetSettingActionIdNew
             || actionId == CreateAgentBetSettingActionId
+            || actionId == CreateAgentBetSettingActionIdNew
             || actionId == CreateMemberBetSettingActionId
+            || actionId == CreateMemberBetSettingActionIdNew
             || actionId == UpdateSuperSBBetSettingActionId
+            || actionId == UpdateSuperSBBetSettingActionIdNew
             || actionId == UpdateSuperIndirectSBBetSettingActionId
+            || actionId == UpdateSuperIndirectSBBetSettingActionIdNew
             || actionId == UpdateMasterSBBetSettingActionId
+            || actionId == UpdateMasterSBBetSettingActionIdNew
             || actionId == UpdateMasterIndirectSBBetSettingActionId
+            || actionId == UpdateMasterIndirectSBBetSettingActionIdNew
             || actionId == UpdateAgentSBBetSettingActionId
+            || actionId == UpdateAgentSBBetSettingActionIdNew
             || actionId == UpdateAgentIndirectSBBetSettingActionId
-            || actionId == UpdateMemberSBBetSettingActionId;
+            || actionId == UpdateAgentIndirectSBBetSettingActionIdNew
+            || actionId == UpdateMemberSBBetSettingActionId
+            || actionId == UpdateMemberSBBetSettingActionIdNew;
 
         private bool IsBetSetting154ActionId(int actionId)
             => actionId == UpdateSuperIndirectBetSetting154ActionId
