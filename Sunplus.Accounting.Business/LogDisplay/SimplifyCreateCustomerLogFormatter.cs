@@ -22,18 +22,23 @@ namespace Sunplus.Accounting.Business.LogDisplay
         }
 
         private const int SettingsLogActionId_Master = 95088;
+        private const int SettingsLogActionId_MasterNew = 95124;
 
         private const int CompactLogActionId_Master = 95089;
 
         private const int SettingsLogActionId_Agent = 95092;
+        private const int SettingsLogActionId_AgentNew = 95125;
 
         private const int CompactLogActionId_Agent = 95093;
 
         private const int SettingsLogActionId_Member = 95095;
+        private const int SettingsLogActionId_MemberNew = 95126;
 
         private const int SettingsLogActionId_SuperDirectMember = 264001;
+        private const int SettingsLogActionId_SuperDirectMemberNew = 264006;
 
         private const int SettingsLogActionId_CashMember = 264003;
+        private const int SettingsLogActionId_CashMemberNew = 264007;
 
         private const int SettingsLogActionId_RegisterCashMember = 264005;
 
@@ -59,13 +64,18 @@ namespace Sunplus.Accounting.Business.LogDisplay
 
         private readonly int[] ActionIds = {
             SettingsLogActionId_Master,
+            SettingsLogActionId_MasterNew,
             CompactLogActionId_Master,
             SettingsLogActionId_Agent,
+            SettingsLogActionId_AgentNew,
             CompactLogActionId_Agent,
             SettingsLogActionId_Member,
+            SettingsLogActionId_MemberNew,
             CompactLogActionId_Member,
             SettingsLogActionId_SuperDirectMember,
+            SettingsLogActionId_SuperDirectMemberNew,
             SettingsLogActionId_CashMember,
+            SettingsLogActionId_CashMemberNew,
             SettingsLogActionId_RegisterCashMember
             //PTTemplateIns_Master,
             //PTTemplateUpd_Master,
@@ -641,6 +651,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
             switch (actionId)
             {
                 case SettingsLogActionId_Master:
+                case SettingsLogActionId_MasterNew:
                 case CompactLogActionId_Master:
                 case PTTemplateIns_Master:
                 case PTTemplateUpd_Master:
@@ -648,6 +659,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
                     return 3;
 
                 case SettingsLogActionId_Agent:
+                case SettingsLogActionId_AgentNew:
                 case CompactLogActionId_Agent:
                 case PTTemplateIns_Agent:
                 case PTTemplateUpd_Agent:
@@ -655,8 +667,11 @@ namespace Sunplus.Accounting.Business.LogDisplay
                     return 2;
 
                 case SettingsLogActionId_Member:
+                case SettingsLogActionId_MemberNew:
                 case SettingsLogActionId_SuperDirectMember:
+                case SettingsLogActionId_SuperDirectMemberNew:
                 case SettingsLogActionId_CashMember:
+                case SettingsLogActionId_CashMemberNew:
                 case SettingsLogActionId_RegisterCashMember:
                 case CompactLogActionId_Member:
                 case PTTemplateIns_Member:

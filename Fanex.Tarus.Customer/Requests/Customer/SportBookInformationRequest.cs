@@ -8,7 +8,7 @@
 
         public byte RoleId { get; set; }
 
-        public int TabIndex { get; set; }
+        public string TabName { get; set; }
 
         public string Site { get; set; }
 
@@ -32,6 +32,7 @@
             {
                 BetSettingTab,
                 MaxPayoutSettingTab,
+                MaxWinSettingTab,
                 PTSettingTab,
                 CommissionSettingTab,
                 ProductCategorySettingTab,
@@ -39,12 +40,19 @@
                 PotentialWinLimitTab
             };
         }
-
+        private object MaxWinSettingTab => new
+        {
+            name = "MaxWinSettingTabTitle",
+            id = "MaxWinSettingTab",
+            url = "",
+            isActive = TabName == "MaxWinSettingTab",
+        };
+        
         private object PotentialWinLimitTab => new
         {
             name = "PotentialWinLimit",
             id = "PotentialWinLimitSettingTab",
-            isActive = TabIndex == 6,
+            isActive = TabName == "PotentialWinLimitSettingTab",
         };
 
         private object BetSettingTab => new
@@ -52,7 +60,7 @@
             name = "BetSetting",
             id = "BetSettingTab",
             url = ApplicationPath + "Customer/GetBetLimitInformation?site=" + Site + "&siteLabel=" + SiteLabel,
-            isActive = TabIndex == 0,
+            isActive = TabName == "BetSettingTab",
         };
 
         private object MaxPayoutSettingTab => new
@@ -60,7 +68,7 @@
             name = "MaxPayout",
             id = "MaxPayoutSettingTab",
             url = ApplicationPath + "Customer/GetMaxPayoutSettingInformation?site=" + Site + "&siteLabel=" + SiteLabel,
-            isActive = TabIndex == 1,
+            isActive = TabName == "MaxPayoutSettingTab",
         };
 
         private object PTSettingTab => new
@@ -68,7 +76,7 @@
             name = "PositionTaking",
             id = "PTSettingTab",
             url = ApplicationPath + "Customer/GetPTSettingInformation?custId=" + CustId + "&site=" + Site,
-            isActive = TabIndex == 2,
+            isActive = TabName == "PTSettingTab",
         };
 
         private object CommissionSettingTab => new
@@ -76,7 +84,7 @@
             name = "Commission",
             id = "CommissionHintTab",
             url = ApplicationPath + "Customer/GetCommissionHint?custId=" + CustId + "&site=" + Site,
-            isActive = TabIndex == 3,
+            isActive = TabName == "CommissionHintTab",
         };
 
         private object ProductCategorySettingTab => new
@@ -84,7 +92,7 @@
             name = "ProductCategories",
             id = "ProductCategorySettingTab",
             url = ApplicationPath + "Customer/GetProductCategories?custId=" + CustId + "&site=" + Site + "&currency=" + Currency,
-            isActive = TabIndex == 4,
+            isActive = TabName == "ProductCategorySettingTab",
         };
 
         private object WinLossLimitTab => new
@@ -92,7 +100,7 @@
             name = "WinLossLimit",
             id = "WinLossLimitTab",
             url = ApplicationPath + "Customer/GetWinLossLimitInformation?custId=" + CustId + "&site=" + Site + "&currency=" + Currency,
-            isActive = TabIndex == 5,
+            isActive = TabName == "WinLossLimitTab",
         };
     }
 }
