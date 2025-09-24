@@ -61,8 +61,6 @@
         public ActionResult VirtualGamesResult(ThirdPartyResultRequest request)
             => BaseResult(request, "VirtualGamesResultConfigs");
 
-        public ActionResult LinkedGamesResult(ThirdPartyResultRequest request) => BaseResult(request, "LinkedGamesResultConfigs");
-
         public ActionResult MaxGameResult(ThirdPartyResultRequest request)
         {
             SetProductResultTitle(request.ProductId);
