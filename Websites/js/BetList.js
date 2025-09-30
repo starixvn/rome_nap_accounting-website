@@ -700,18 +700,6 @@ function showBGBetDetails(refno, winlossDate, custId, transType) {
     openResultsPopUp(params);
 }
 
-function showSabaClubDetails(refno, winlossDate, custId, transType) {
-    var rngCasinoParam = {
-        url: "RNGCasinoBetList/BetDetails",
-        title: "Saba.games Details",
-        jsonParam: { TransId: refno, Refno: refno, WinLossDate: winlossDate, CustId: custId, TransType: transType, SportType: 200, PageSize: 500 },
-        width: 1250,
-        height: 600
-    };
-
-    openResultsPopUp(rngCasinoParam);
-}
-
 function showVGamingDetails(refno, winlossDate, custId, transType) {
     var rngCasinoParam = {
         url: "RNGCasinoBetList/BetDetails",
@@ -799,19 +787,6 @@ function showSGJackpotWonDetails(transId, custId, betType, winlostdate) {
 
 function showVGamingJackpotWonDetails(transId, custId, betType, winlostdate) {
     var title = "Vgaming Jackpot Won Details";
-    var param = {
-        url: "RNGCasinoBetList/JackpotDetails",
-        title: title,
-        jsonParam: { TransId: transId, CustId: custId, BetType: betType, WinLostDate: winlostdate, Title: title },
-        width: 1250,
-        height: 600
-    };
-
-    openResultsPopUp(param);
-}
-
-function showSabaClubJackpotWonDetails(transId, custId, betType, winlostdate) {
-    var title = "Saba.games Jackpot Won Details";
     var param = {
         url: "RNGCasinoBetList/JackpotDetails",
         title: title,
@@ -1273,10 +1248,6 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
 
         case 186: // Virtual Tennis.
             return getVirtualHRAndTennisParam(matchid, sporttype);
-        case 150:
-        case 200: // Saba.games
-            // custId, gameroundid, gameid, siteId
-            return getSabaClubParam(custId, transId3rd, bettype, gameId3rd, sporttype);
 
         case 208:
         case 209:
@@ -1810,17 +1781,6 @@ function getSabaxDParam(custId, transId3rd, currencyId, siteId) {
         },
         width: 945,
         height: 500
-    };
-}
-function getSabaClubParam(custId, gameRoundId, gameId, siteId, sportType) {
-
-    return {
-        url: "../Report/ViewSabaClubResult.aspx",
-        title: "Saba.games Result",
-        jsonParam: { custId: custId, GameRoundId: gameRoundId, GameId: gameId, SiteId: siteId, SportType: sportType },
-        width: 945,
-        height: 500,
-        iframe: "innerFrameSabagamesResult"
     };
 }
 
