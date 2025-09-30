@@ -2238,6 +2238,11 @@ function getResult3rdParam(custId, transId3rd, gameId3rd, currencyId, siteId, be
     if (sportId == 148) {
         sportName = "Playtech";
     }
+    var width = 945;
+    if (sportId == 200) {
+        width = 1300;
+    }
+
     return {
         url: "ThirdParty/ViewResult",
         title: sportName + " Result",
@@ -2252,7 +2257,7 @@ function getResult3rdParam(custId, transId3rd, gameId3rd, currencyId, siteId, be
             SiteId: siteId,
             CurrencyId: currencyId
         },
-        width: 945,
+        width: width,
         height: 500
     };
 }

@@ -34,3 +34,8 @@ body {
     width: 1380px;
     height: 636px;
 }
+
+.third-party-result200 iframe {
+    width: 100%;
+    height: 500px;
+}
