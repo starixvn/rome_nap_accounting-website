@@ -33,6 +33,9 @@
                     Platform = "D"
                 };
 
+                ViewBag.SportTypeId = request.SportTypeId;
+                ViewBag.IsResizePopUp = result3rd.IsResizePopup;
+
                 resultLink = result3rd.IsPostMethod ? service.GetResultPOST(resultRequest) : service.GetResultGET(resultRequest);
             }
 

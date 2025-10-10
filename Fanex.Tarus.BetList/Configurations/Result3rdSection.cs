@@ -110,5 +110,18 @@ namespace Fanex.Tarus.BetList.Configurations
                 this["IsPostMethod"] = value;
             }
         }
+
+        [ConfigurationProperty("IsResizePopup", IsRequired = false)]
+        public bool IsResizePopup
+        {
+            get
+            {
+                return (bool)this["IsResizePopup"];
+            }
+            set
+            {
+                this["IsResizePopup"] = value;
+            }
+        }
     }
 }
