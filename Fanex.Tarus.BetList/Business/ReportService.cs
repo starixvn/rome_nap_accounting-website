@@ -254,6 +254,11 @@
             return 3151 <= betTypeId && betTypeId <= 3200;
         }
 
+        public static bool IsVirtualSports6(int betTypeId)
+        {
+            return 13000 <= betTypeId && betTypeId <= 13199;
+        }
+
         public static int GetSportFromBetTypeId(int betTypeId)
         {
             if (5601 <= betTypeId && betTypeId <= 5699)

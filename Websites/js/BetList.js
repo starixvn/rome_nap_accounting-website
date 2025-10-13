@@ -1194,7 +1194,7 @@ function isFM2(betttype) {
 }
 
 function getResultParamBySportType(matchid, race, bettype, sporttype, refno, username, winlostdate, refno_mixparlay, league, is_outright, currencyId, gameId3rd, custId, transId3rd, siteId, transDesc) {
-    var virtualSports = [125, 126, 127, 134, 147, 161, 164, 175, 177, 178, 179, 180, 182, 183, 184, 185, 186, 188, 190, 191, 192, 193, 194, 195, 196, 197, 198, 201, 211, 231, 233, 241, 242, 243, 244, 250, 251, 255, 1000];
+    var virtualSports = [125, 126, 127, 134, 147, 161, 164, 175, 177, 178, 179, 180, 182, 183, 184, 185, 186, 188, 190, 191, 192, 193, 194, 195, 196, 197, 198, 201, 211, 231, 233, 241, 242, 243, 244, 250, 251, 255, 1000, 116, 114];
     switch (sporttype) {
         case 5: // Tennis.
             return getTennisParam();
@@ -1366,6 +1366,12 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
         case 131: //Funky Games
             return getFunkyGamesParam(custId, transId3rd, gameId3rd, currencyId, siteId, bettype, winlostdate);
 
+        case 116: //eSoccer
+            return getESoccerParam(matchid, sporttype, league);
+
+        case 114: //eVolleyball
+            return getEVolleyballParam(matchid, sporttype, league);
+
         case 139:
             return getHotDogParam(custId, transId3rd, gameId3rd, currencyId, siteId, bettype, winlostdate);
         default:
@@ -1536,7 +1542,21 @@ function getBetbyParam(matchid, sporttype, league) {
         jsonParam: { matchid: matchid, sporttype: sporttype, league: league }
     };
 }
+function getESoccerParam(matchid, sporttype, league) {
+    return {
+        url: "Report/ViewESoccerResult.aspx",
+        title: "eSoccer",
+        jsonParam: { matchid: matchid, sporttype: sporttype, league: league }
+    };
+}
 
+function getEVolleyballParam(matchid, sporttype, league) {
+    return {
+        url: "Report/ViewEVolleyballResult.aspx",
+        title: "eVolleyball",
+        jsonParam: { matchid: matchid, sporttype: sporttype, league: league }
+    };
+}
 
 function getRNGCasinoParam(bettypeId, custId, transId3rd, gameId3rd, currencyId, siteId) {
     return {

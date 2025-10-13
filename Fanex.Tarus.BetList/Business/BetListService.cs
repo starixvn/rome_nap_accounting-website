@@ -1455,6 +1455,11 @@ namespace Fanex.Tarus.BetList.Business
             {
                 sportName = ticketHelper.GetSportNameById(SportContants.YeeBet);
             }
+            else if (ReportService.IsVirtualSports6(betTypeId))
+            {
+                const int VirtualSports6ProductId = 71;
+                sportName = GetProductName(VirtualSports6ProductId);
+            }
             else
             {
                 var sport = ReportService.GetSportFromBetTypeId(betTypeId);
