@@ -1249,9 +1249,6 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
         case 167: // CG
             return getCGParam(custId, transId3rd, gameId3rd, currencyId, siteId);
 
-        case 168: // Happy5 Linked Games
-            return getLinkedGamesParam(custId, refno, gameId3rd, currencyId, siteId);
-
         case 169: // Sports Lottery
             return getSportsLotteryParam(custId, transId3rd, gameId3rd, currencyId, siteId);
 
@@ -1917,15 +1914,6 @@ function getSportsLotteryParam(custId, transId3rd, gameId3rd, currencyId, siteId
         height: 800
     };
 
-}
-function getLinkedGamesParam(custId, transId3rd, gameId3rd, currencyId, siteId) {
-    return {
-        url: "ThirdParty/LinkedGamesResult",
-        title: "Happy 5 Linked Games Result",
-        jsonParam: { productId: 3, custId: custId, transId3rd: transId3rd, gameId3rd: gameId3rd, CurrencyId: currencyId, SiteId: siteId },
-        width: 945,
-        height: 800
-    };
 }
 
 
