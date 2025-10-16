@@ -14,7 +14,6 @@ public partial class Report_ViewResult : System.Web.UI.Page
         int matchID = CastAide.AsInt32(Request.QueryString["matchid"], 0);
         int sportType = CastAide.AsInt32(Request.QueryString["sporttype"], 0);
         int league = CastAide.AsInt32(Request.QueryString["league"], 0);
-        resultTitle.Value = string.Format(TitlePopupFormat, CacheRef.GetSportName(sportType), CacheRef.GetLeagueName3rd(league));
         this.lResult.Text = new BetbyResultService().GetResult(matchID, sportType);
         ClientScript.RegisterStartupScript(typeof(ScriptManager), "updateDialogTitle", "updateDialogTitle();");
     }

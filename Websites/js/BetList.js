@@ -1538,14 +1538,14 @@ function getVirtualHRAndTennisParam(matchid, sporttype) {
 function getBetbyParam(matchid, sporttype, league) {
     return {
         url: "Report/ViewBetbyResult.aspx",
-        title: "Virtual Betby Basketball",
+        title: "Result",
         jsonParam: { matchid: matchid, sporttype: sporttype, league: league }
     };
 }
 function getESoccerParam(matchid, sporttype, league) {
     return {
         url: "Report/ViewESoccerResult.aspx",
-        title: "eSoccer",
+        title: "Result",
         jsonParam: { matchid: matchid, sporttype: sporttype, league: league }
     };
 }
@@ -1553,7 +1553,7 @@ function getESoccerParam(matchid, sporttype, league) {
 function getEVolleyballParam(matchid, sporttype, league) {
     return {
         url: "Report/ViewEVolleyballResult.aspx",
-        title: "eVolleyball",
+        title: "Result",
         jsonParam: { matchid: matchid, sporttype: sporttype, league: league }
     };
 }

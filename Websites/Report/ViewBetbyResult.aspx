@@ -4,7 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1">
-    <title>Virtually Soccer</title>
+    <title>Result</title>
     <link href="../App_Themes/Public/common.css" rel="stylesheet" type="text/css" />
     <link rel="Stylesheet" type ="text/css" href ="../App_Themes/BetList/Betlist.css" />
     <link rel="stylesheet" type="text/css" href="../App_Themes/Public/table.css"/>
@@ -13,13 +13,6 @@
 </head>
 <body>
     <div style="margin-bottom:5px;"></div>
-    <input id="resultTitle" style="display: none;" runat="server"/>
     <asp:Literal ID="lResult" runat="server"></asp:Literal>
 </body>
-    <script type="text/javascript">
-        function updateDialogTitle() {
-            window.parent.$("#ui-dialog-title-dialog-modalVirtuallyBetby").text(document.getElementById('resultTitle').value);
-        };
-        window.onload = updateDialogTitle;
-    </script>
 </html>

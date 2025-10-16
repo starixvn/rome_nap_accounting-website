@@ -47,7 +47,7 @@
                 IsPopupOpenFromBetList = true,
                 LanguageCode = "en-US",
                 VisibleMatchCodeIDColumn = false,
-                VisiblePopUpTitle = false
+                VisiblePopUpTitle = true
             };
         }
     }
