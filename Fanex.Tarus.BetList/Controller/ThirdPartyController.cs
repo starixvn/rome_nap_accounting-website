@@ -38,7 +38,7 @@
 
                 resultLink = result3rd.IsPostMethod ? service.GetResultPOST(resultRequest) : service.GetResultGET(resultRequest);
             }
-
+            ViewBag.ProductId = request.SportTypeId;
             return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(title, resultLink));
         }
 
