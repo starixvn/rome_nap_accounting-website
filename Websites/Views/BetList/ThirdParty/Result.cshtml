@@ -2,7 +2,12 @@
 @model ThirdPartyResultViewModel
 @{
     Layout = null;
-    var classPopup ="third-party-result"+ ViewBag.ProductId;
+    var classPopup = "third-party-result" + ViewBag.ProductId;
+    var isResizePopUp = ViewBag.IsResizePopUp ?? false;
+    if (isResizePopUp)
+    {
+        classPopup = "third-party-result-sport-" + ViewBag.SportTypeId;
+    }
 }
 <!DOCTYPE html>
 <html>

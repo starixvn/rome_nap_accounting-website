@@ -33,9 +33,12 @@
                     Platform = "D"
                 };
 
+                ViewBag.SportTypeId = request.SportTypeId;
+                ViewBag.IsResizePopUp = result3rd.IsResizePopup;
+
                 resultLink = result3rd.IsPostMethod ? service.GetResultPOST(resultRequest) : service.GetResultGET(resultRequest);
             }
-
+            ViewBag.ProductId = request.SportTypeId;
             return View("~/Views/BetList/ThirdParty/Result.cshtml", new ThirdPartyResultViewModel(title, resultLink));
         }
 
