@@ -230,8 +230,8 @@
     <Reference Include="Fanex.BetList.RNGWar, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.RNGWar.2.0.0.1\lib\net461\Fanex.BetList.RNGWar.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.SabaClub, Version=2.0.0.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.SabaClub.2.0.0.5\lib\net461\Fanex.BetList.SabaClub.dll</HintPath>
+    <Reference Include="Fanex.BetList.SabaClub, Version=2.0.0.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.SabaClub.2.0.0.6-beta-01\lib\net461\Fanex.BetList.SabaClub.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.SABAKeno, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.SABAKeno.1.0.0\lib\net461\Fanex.BetList.SABAKeno.dll</HintPath>
