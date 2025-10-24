@@ -14,6 +14,7 @@ namespace Fanex.Tarus.BetList.Business
     using Fanex.BetList.Core.Entities;
     using Fanex.BetList.Core.Factories;
     using Fanex.BetList.Core.TicketHelper;
+    using Fanex.BetList.Core.Builder.HybridParlayBuilder;
     using Fanex.Caching;
     using Fanex.Common;
     using Fanex.CustomerSetting.Module.Core;
@@ -1322,6 +1323,45 @@ namespace Fanex.Tarus.BetList.Business
         public string GetSiteNameByCustId(int custId)
         {
             return _betListRepository.GetSiteNameByCustId(new BetListGetSiteIdByCustIdCriteria { CustId = custId });
+        }
+
+        public string GetBetBuilderPlusTicketsDetailsHtml(long transId, long refNo, int custId, string transDesc)
+        {
+            var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(custId);
+            if (siteDB != null)
+            {
+                IList<TicketDetail> siteDBTickets = new List<TicketDetail>();
+                if (siteDB.IsSiteDB)
+                {
+                    var siteDBCriteria = new SiteDBMixParlayDetailCriteria
+                    {
+                        CustId = custId,
+                        RefNo = refNo,
+                        TransId = transId,
+                        MoveBetsDay = ReportService.BalanceUp.MoveBetsDay,
+                        BalanceUpDay = ReportService.BalanceUp.BalanceUpDay
+                    };
+                    siteDBTickets = _betListRepository.Fetch<TicketDetail>(siteDBCriteria, siteDB.AGIP, mapTicketObjectFunctionForMixParlay);
+                }
+                var mainCriteria = new MixParlayDetailCriteria
+                {
+                    CustId = custId,
+                    RefNo = refNo,
+                    TransId = transId,
+                    ExcludeBettrans = siteDB.IsSiteDB,
+                    MoveBetsDay = ReportService.BalanceUp.MoveBetsDay,
+                    BalanceUpDay = ReportService.BalanceUp.BalanceUpDay
+                };
+
+                var mainTickets = _betListRepository.Fetch<TicketDetail>(mainCriteria, mapTicketObjectFunctionForMixParlay);
+                AssignCountry(mainTickets);
+                var tickets = siteDBTickets.Concat(mainTickets).Distinct().Select(t => t.Ticket).ToList();
+                var betBuilderPlusBuilder = new HyBridParlayBuilder();
+
+                return betBuilderPlusBuilder.Build(ticketHelper, tickets, transDesc, false);
+            }
+
+            return string.Empty;
         }
 
         private bool IsShowOddsWithChoice(int betTypeId)

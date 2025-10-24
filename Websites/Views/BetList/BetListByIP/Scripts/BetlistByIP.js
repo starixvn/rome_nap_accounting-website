@@ -358,6 +358,40 @@ function showNewCombMP(transId, transIndex, refNo, handicap1, handicap2, betchec
     }
 }
 
+function showBetBuilderPlus(transId, transIndex, refNo, custId, transDesc){
+    try { parent.BlockUI(); } catch (e) { }
+    var divChoiceRight = $("#choice_right_" + transId);
+    var divCombinationOfferName = divChoiceRight.find("#combinationOfferName_" + transId + transIndex);
+    var divMaxPayout = divChoiceRight.find("#maxPayout_" + transId + transIndex);
+    var divParlay = divChoiceRight.find("#divEvent_" + transId + transIndex);
+    var language = $("#languageCodeHidden").val();
+    var params = [
+        "transid=", transId, "&refno=", refNo, "&custId=", custId, "&language=", language, "&transDesc=", transDesc
+    ];
+    $.ajax({
+        type: "POST",
+        url: window.rootUrl + "BetBuilderPlus/GetBetBuilderPlusDetail",
+        data: params.join(""),
+        success: function (result) {
+            divParlay.html(result).css("display", "block");
+            divCombinationOfferName.addClass("hide");
+            if (divMaxPayout.length > 0) {
+                divMaxPayout.addClass("hide");
+                divParlay.find(".max-payout").each(function () {
+                    $(this).removeClass("hide");
+                });
+            }
+            $("#BetlistByRefNo").gridScroller(BetList.BetListByRefNo.gridOpts);
+        },
+        error: function () {
+            try { parent.jQuery.unblockUI(); } catch (e) { }
+        },
+        complete: function () {
+            try { parent.jQuery.unblockUI(); } catch (e) { }
+        }
+    });
+}
+
 head.ready(function (event) {
     Helper.renderCalendar();
     if (_fromDate != 'nodate') {
