@@ -1036,7 +1036,7 @@ function showBetBuilderPlus(transId, transIndex, refNo, custId, transDesc){
     var divParlay = divChoiceRight.find("#divEvent_" + transId + transIndex);
     var language = $("#languageCodeHidden").val();
     var params = [
-        "transid=", transId, "&refno=", refNo, "&custId=", custId, "&language=", language, "&transDesc=", transDesc
+        "transid=", transId, "&refno=", refNo, "&custId=", custId, "&language=", language, "&transDesc=", JSON.stringify(transDesc)
     ];
     $.ajax({
         type: "POST",
