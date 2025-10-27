@@ -368,6 +368,11 @@ namespace Fanex.Tarus.BetList.Business
                 tickets = _betListRepository.Fetch<TicketDetail>(mainCriteria, mapTicketObjectFunction, ref outputLiveCasino);
             }
 
+            if (!tickets.Any())
+            {
+                return tickets;
+            }
+
             var factory = new BetListHTMLFactory();
             var builder = factory.CreateBuilder();
             GetCachePropertyById funcGetOddsTypeName = ticketHelper.GetOddsTypeNameById;
