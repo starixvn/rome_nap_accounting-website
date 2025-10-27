@@ -219,8 +219,12 @@ function showDetail(id) {
     $("#BetlistByIP_Soccer").gridScroller(BetListByIP_SportType.gridOpts_Soccer);
 }
 
-function showCombMPDetail(tranid, date, matchid, betteam) {
+function showCombMPDetail(tranid, date, matchid, betteam, bettypeName) {
     var title = betteam === "1" ? "Mix Parlay" : "System Parlay";
+    if(undefined !== bettypeName && bettypeName !== ""){
+        title = bettypeName;
+    }
+    
     var combinationOfferNameContainer = $("#combinationOfferName_" + tranid + "0");
 
     if (combinationOfferNameContainer.is("span")) {

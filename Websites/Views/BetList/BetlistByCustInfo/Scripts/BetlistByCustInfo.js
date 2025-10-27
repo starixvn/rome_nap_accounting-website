@@ -877,8 +877,12 @@ function OpenIPInfo(ip) {
     window.location.href = window.rootUrl + "TarusBetList/BetListByIP?IsLink=True&FromDate=" + BetListByCustInfo.paramGetBetBetlist.fromDate + "&IP=" + ip;
 }
 
-function showCombMPDetail(tranid, date, matchid, betteam) {
+function showCombMPDetail(tranid, date, matchid, betteam, bettypeName) {
     var title = betteam === "1" ? "Mix Parlay" : "System Parlay";
+    if(undefined !== bettypeName && bettypeName !== ""){
+        title = bettypeName;
+    }
+    
     var combinationOfferNameContainer = $("#combinationOfferName_" + tranid + "0");
 
     if (combinationOfferNameContainer.is("span")) {
