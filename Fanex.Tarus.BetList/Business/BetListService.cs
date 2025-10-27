@@ -56,6 +56,7 @@ namespace Fanex.Tarus.BetList.Business
         private readonly ICacheService _cacheService;
         private readonly IIPInfoDataAccess _iPInfoDataAccess;
         private readonly IDynamicRepository dynamicRepository;
+
         private readonly Func<DataRow, TicketDetail> mapTicketObjectFunction = r => new TicketDetail
         {
             Ticket = new Ticket
@@ -184,6 +185,7 @@ namespace Fanex.Tarus.BetList.Business
             SpecialPlatfrom = r.Table.Columns.Contains("SpecialPlatfrom") ? Converter.ToInt(r["SpecialPlatfrom"]) : 0,
             DeviceType = r.Table.Columns.Contains("DeviceType") && !r.IsNull("DeviceType") ? Converter.To<int>(r["DeviceType"]) : (int?)null
         };
+
         public BetListService()
         {
             _cacheService = new CacheService();
@@ -207,19 +209,22 @@ namespace Fanex.Tarus.BetList.Business
 
         public void AssignCountry(IEnumerable<TicketDetail> tickets)
         {
-            var ipList = tickets
+            if (tickets.Any())
+            {
+                var ipList = tickets
              .Where(t => !string.IsNullOrWhiteSpace(t.IP) && (AppSession.ViewIPVN || !IpManagement.IsVNIP(t.IP.Trim())))
              .Select(t => t.IP.Trim())
              .Distinct();
-            var countryDictionary = GetCountries(ipList);
+                var countryDictionary = GetCountries(ipList);
 
-            string country;
-            foreach (var item in tickets)
-            {
-                if (!string.IsNullOrWhiteSpace(item.IP)
-                    && countryDictionary.TryGetValue(item.IP.Trim(), out country))
+                string country;
+                foreach (var item in tickets)
                 {
-                    ((TicketDetail)item).Country = country;
+                    if (!string.IsNullOrWhiteSpace(item.IP)
+                        && countryDictionary.TryGetValue(item.IP.Trim(), out country))
+                    {
+                        item.Country = country;
+                    }
                 }
             }
         }
@@ -551,7 +556,7 @@ namespace Fanex.Tarus.BetList.Business
                 if (!siteDB.IsSiteDB ||
                     (siteDB.IsSiteDB && fromDate <= ReportService.BalanceUp.MoveBetsDay))
                 {
-                    var excludeBettrans = sabaCoin? false: siteDB.IsSiteDB;
+                    var excludeBettrans = sabaCoin ? false : siteDB.IsSiteDB;
                     var mainCriteria = new BetListByCustInfoCriteria
                     {
                         CustId = custId,
@@ -599,7 +604,6 @@ namespace Fanex.Tarus.BetList.Business
                         betDetail.StatusHtml = betlistHelper.BuildStatus(betDetail.Ticket, ticketHelper, ticketData, factory, builder);
                         betDetail.IP = betDetail.Ticket.IP;
                         newTickets.Add(betDetail);
-
                     }
                     AssignCountry(newTickets);
 
@@ -728,7 +732,6 @@ namespace Fanex.Tarus.BetList.Business
                             combinationTypeComboNames
                         );
                         firstTicketDetail.IP = firstTicketDetail.Ticket.IP;
-
                     }
 
                     var factoryParlayDetaily = new BetListHTMLFactory();
@@ -1229,7 +1232,6 @@ namespace Fanex.Tarus.BetList.Business
                     return betDetails;
                 }
             }
-
 
             return new List<TicketDetail>();
         }
