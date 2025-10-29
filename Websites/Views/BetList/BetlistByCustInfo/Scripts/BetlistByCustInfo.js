@@ -1048,7 +1048,6 @@ function showBetBuilderPlus(transId, transIndex, refNo, custId, transDesc){
         data: params.join(""),
         success: function (result) {
             divParlay.html(result).css("display", "block");
-            divCombinationOfferName.addClass("hide");
             if (divMaxPayout.length > 0) {
                 divMaxPayout.addClass("hide");
                 divParlay.find(".max-payout").each(function () {
