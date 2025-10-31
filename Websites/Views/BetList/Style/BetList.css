@@ -748,7 +748,7 @@ span.underdog, span.favorite {
         position: relative;
         padding-right: 20px;
         padding: 5px 10px 5px 0;
-        border-right: 2px solid #000;
+        border-right: 2px solid #0066CC;
         font-weight: bold;
     }
 
@@ -756,10 +756,10 @@ span.underdog, span.favorite {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            right: -7px;
-            width: 10px;
-            height: 10px;
-            border: 1px solid #000;
+            right: -5px;
+            width: 6px;
+            height: 6px;
+            border: 1px solid #0066CC;
             background-color: #fff;
             border-radius: 50%;
             content: '';
@@ -798,12 +798,11 @@ span.underdog, span.favorite {
 
 .hybrid-parlay-match-ticket-list .status {
     border-radius: 23px;
-    border: 1px solid #000;
+    border: 1px solid #337ab7;
     padding: 0 5px 1px 5px;
     font-size: 11px;
     font-weight: bold;
-    color: #000;
-    background-color: #fff;
+    color: #337ab7;
     margin: 2px 0 2px 5px;
     display: inline-block;
     text-transform: capitalize;
