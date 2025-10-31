@@ -101,7 +101,7 @@
       <HintPath>..\packages\Fanex.BetList.ColossusBets.2.0.0\lib\net461\Fanex.BetList.ColossusBets.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.Core, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.Core.3.0.6.2-betbuilderPlus-18\lib\net461\Fanex.BetList.Core.dll</HintPath>
+      <HintPath>..\packages\Fanex.BetList.Core.3.0.6.2-betbuilderPlus-23\lib\net461\Fanex.BetList.Core.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.Core.RemotingRef, Version=1.1.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.Core.RemotingRef.2.0.0.3\lib\net461\Fanex.BetList.Core.RemotingRef.dll</HintPath>
@@ -720,6 +720,7 @@
     <Compile Include="Models\VirtualHRPopupModel.cs" />
     <Compile Include="Models\VirtualTennisModel.cs" />
     <Compile Include="Models\WinLossModel.cs" />
+    <Compile Include="Param\BetBuilderPlusDetailParam.cs" />
     <Compile Include="Param\BetListByRefNoParam.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\BetListResources.Designer.cs">

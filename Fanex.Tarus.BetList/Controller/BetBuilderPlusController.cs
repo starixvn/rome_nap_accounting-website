@@ -4,29 +4,26 @@ namespace Fanex.Tarus.BetList.Controller
     using System.Threading;
     using System.Web.Mvc;
     using Fanex.Tarus.BetList.Business;
-    using Fanex.Tarus.BetList.Constants;
+    using Fanex.Tarus.BetList.Param;
 
     public class BetBuilderPlusController : Controller
     {
         private readonly IBetListService _betListService;
-        private readonly IResultService _resultService;
-        private readonly IBetListDetailService _betListDetailService;
 
         public BetBuilderPlusController()
         {
             _betListService = new BetListService();
-            _resultService = new ResultService();
-            _betListDetailService = new BetListDetailService();
         }
 
-        public ActionResult GetBetBuilderPlusDetail(long transId, long refNo, int custId, string transDesc, bool removeSabaWord = false, string language = Language.Default)
+        [HttpPost]
+        public ActionResult GetBetBuilderPlusDetail(BetBuilderPlusDetailParam betBuilderPlusDetailParam)
         {
-            SetCulture(language);
-            var result = _betListService.GetBetBuilderPlusTicketsDetailsHtml(transId, refNo, custId, transDesc);
+            SetCulture(betBuilderPlusDetailParam.Language);
+            var result = _betListService.GetBetBuilderPlusTicketsDetailsHtml(betBuilderPlusDetailParam);
 
             return Content(result);
         }
-        private void SetCulture(string language)
+        private static void SetCulture(string language)
         {
             Thread.CurrentThread.CurrentCulture = new CultureInfo(language);
             Thread.CurrentThread.CurrentUICulture = Thread.CurrentThread.CurrentCulture;

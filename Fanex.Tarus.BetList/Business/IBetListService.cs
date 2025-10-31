@@ -81,6 +81,6 @@
 
         string GetSiteNameByCustId(int custId);
 
-        string GetBetBuilderPlusTicketsDetailsHtml(long transId, long refNo, int custId, string tranDesc);
+        string GetBetBuilderPlusTicketsDetailsHtml(BetBuilderPlusDetailParam betBuilderPlusDetailParam);
     }
 }

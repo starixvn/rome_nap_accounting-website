@@ -1293,6 +1293,30 @@ namespace Fanex.Tarus.BetList.Business
             return false;
         }
 
+        public string GetBetBuilderCombinationTypeComboNames(
+            string betTeam,
+            string betCheck,
+            decimal hdp1,
+            decimal hdp2,
+            string currency,
+            decimal stake)
+        {
+            var combinationTypeCombo = Fanex.Tarus.Infrastructure.Caching.CacheRef.GetCombinationTypeCombo(
+                betTeam, betCheck, (int)hdp1, (int)hdp2);
+
+            if (combinationTypeCombo == null || combinationTypeCombo.Length == 0)
+            {
+                return string.Empty;
+            }
+
+            return string.Format(
+                    "<div class=\"offer-name-list\"><div>{0} x <span class=\"unit-stake\">{1} {2}</span></div></div>",
+                    combinationTypeCombo[0],
+                    currency,
+                    stake.ToString("N0"));
+
+        }
+
         public string GetCombinationTypeComboNames(
             string betTeam,
             string betCheck,
@@ -1332,9 +1356,9 @@ namespace Fanex.Tarus.BetList.Business
             return _betListRepository.GetSiteNameByCustId(new BetListGetSiteIdByCustIdCriteria { CustId = custId });
         }
 
-        public string GetBetBuilderPlusTicketsDetailsHtml(long transId, long refNo, int custId, string transDesc)
+        public string GetBetBuilderPlusTicketsDetailsHtml(BetBuilderPlusDetailParam betBuilderPlusDetailParam)
         {
-            var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(custId);
+            var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(betBuilderPlusDetailParam.CustId);
             if (siteDB != null)
             {
                 IList<TicketDetail> siteDBTickets = new List<TicketDetail>();
@@ -1342,9 +1366,9 @@ namespace Fanex.Tarus.BetList.Business
                 {
                     var siteDBCriteria = new SiteDBMixParlayDetailCriteria
                     {
-                        CustId = custId,
-                        RefNo = refNo,
-                        TransId = transId,
+                        CustId = betBuilderPlusDetailParam.CustId,
+                        RefNo = betBuilderPlusDetailParam.RefNo,
+                        TransId = betBuilderPlusDetailParam.TransId,
                         MoveBetsDay = ReportService.BalanceUp.MoveBetsDay,
                         BalanceUpDay = ReportService.BalanceUp.BalanceUpDay
                     };
@@ -1352,9 +1376,9 @@ namespace Fanex.Tarus.BetList.Business
                 }
                 var mainCriteria = new MixParlayDetailCriteria
                 {
-                    CustId = custId,
-                    RefNo = refNo,
-                    TransId = transId,
+                    CustId = betBuilderPlusDetailParam.CustId,
+                    RefNo = betBuilderPlusDetailParam.RefNo,
+                    TransId = betBuilderPlusDetailParam.TransId,
                     ExcludeBettrans = siteDB.IsSiteDB,
                     MoveBetsDay = ReportService.BalanceUp.MoveBetsDay,
                     BalanceUpDay = ReportService.BalanceUp.BalanceUpDay
@@ -1365,7 +1389,7 @@ namespace Fanex.Tarus.BetList.Business
                 var tickets = siteDBTickets.Concat(mainTickets).Distinct().Select(t => t.Ticket).ToList();
                 var betBuilderPlusBuilder = new HyBridParlayBuilder();
 
-                return betBuilderPlusBuilder.Build(ticketHelper, tickets, transDesc, false);
+                return betBuilderPlusBuilder.Build(ticketHelper, tickets, betBuilderPlusDetailParam.TransDesc, (int)betBuilderPlusDetailParam.Handicap1, (int)betBuilderPlusDetailParam.Handicap2, betBuilderPlusDetailParam.BetCheck, betBuilderPlusDetailParam.BetTeam, betBuilderPlusDetailParam.Currency, betBuilderPlusDetailParam.Stake, false);
             }
 
             return string.Empty;
