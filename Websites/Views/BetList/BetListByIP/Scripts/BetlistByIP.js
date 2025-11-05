@@ -363,47 +363,65 @@ function showNewCombMP(transId, transIndex, refNo, handicap1, handicap2, betchec
 }
 
 function showBetBuilderPlus(transId, transIndex, refNo, custId, transDesc, handicap1, handicap2, betcheck, betteam, currency, stake){
-    try { parent.BlockUI(); } catch (e) { }
     var divChoiceRight = $("#choice_right_" + transId);
     var divCombinationOfferName = divChoiceRight.find("#combinationOfferName_" + transId + transIndex);
     var divMaxPayout = divChoiceRight.find("#maxPayout_" + transId + transIndex);
     var divParlay = divChoiceRight.find("#divEvent_" + transId + transIndex);
-    var language = $("#languageCodeHidden").val();
-    var params = {
-        transid: transId,
-        refno: refNo,
-        custId:  custId,
-        language: language,
-        transDesc: JSON.stringify(transDesc),
-        handicap1: handicap1,
-        handicap2: handicap2,
-        betcheck: betcheck,
-        betteam: betteam,
-        stake: stake,
-        currency: currency
-    };
-    $.ajax({
-        type: "POST",
-        url: window.rootUrl + "BetBuilderPlus/GetBetBuilderPlusDetail",
-        data: params,
-        success: function (result) {
-            divParlay.html(result).css("display", "block");
-            divCombinationOfferName.addClass("hide");
-            if (divMaxPayout.length > 0) {
-                divMaxPayout.addClass("hide");
-                divParlay.find(".max-payout").each(function () {
-                    $(this).removeClass("hide");
-                });
-            }
-            $("#BetlistByRefNo").gridScroller(BetList.BetListByRefNo.gridOpts);
-        },
-        error: function () {
-            try { parent.jQuery.unblockUI(); } catch (e) { }
-        },
-        complete: function () {
-            try { parent.jQuery.unblockUI(); } catch (e) { }
+    if (divParlay.css("display") === "none") {
+        if ($.trim(divParlay.html()) === "") {
+            try { parent.BlockUI(); } catch (e) { }
+            var params = {
+                transid: transId,
+                refno: refNo,
+                custId:  custId,
+                transDesc: JSON.stringify(transDesc),
+                handicap1: handicap1,
+                handicap2: handicap2,
+                betcheck: betcheck,
+                betteam: betteam,
+                stake: stake,
+                currency: currency
+            };
+            $.ajax({
+                type: "POST",
+                url: window.rootUrl + "BetBuilderPlus/GetBetBuilderPlusDetail",
+                data: params,
+                success: function (result) {
+                    divParlay.html(result).css("display", "block");
+                    divCombinationOfferName.addClass("hide");
+                    if (divMaxPayout.length > 0) {
+                        divMaxPayout.addClass("hide");
+                        divParlay.find(".max-payout").each(function () {
+                            $(this).removeClass("hide");
+                        });
+                    }
+                    $("#BetlistByIP_Soccer").gridScroller(BetListByIP_SportType.gridOpts_Soccer);
+                },
+                error: function () {
+                    try { parent.jQuery.unblockUI(); } catch (e) { }
+                },
+                complete: function () {
+                    try { parent.jQuery.unblockUI(); } catch (e) { }
+                }
+            });
         }
-    });
+        else {
+            divParlay.css("display", "block");
+            if (divMaxPayout.length > 0) {
+                divMaxPayout.toggleClass("hide");
+            }
+            divCombinationOfferName.toggleClass("hide");
+            $("#BetlistByIP_Soccer").gridScroller(BetListByIP_SportType.gridOpts_Soccer);
+        }
+    }
+    else {
+        divParlay.css("display", "none");
+        if (divMaxPayout.length > 0) {
+            divMaxPayout.toggleClass("hide");
+        }
+        divCombinationOfferName.toggleClass("hide");
+        $("#BetlistByIP_Soccer").gridScroller(BetListByIP_SportType.gridOpts_Soccer);
+    }
 }
 
 head.ready(function (event) {

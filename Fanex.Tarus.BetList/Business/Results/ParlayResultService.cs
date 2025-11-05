@@ -9,8 +9,10 @@
 
 namespace Fanex.Tarus.BetList.Business.Results
 {
+    using Fanex.BetList.Core.Entities;
     using Fanex.Result.Core;
     using Fanex.Result.Core.Base;
+    using Fanex.Result.Core.Sportsbook.DTO;
     using Fanex.Tarus.BetList.Criteria.Results;
     using Fanex.Tarus.BetList.DataAccess.Results;
     using Sunplus.Accounting.Core.Common;
@@ -37,7 +39,14 @@ namespace Fanex.Tarus.BetList.Business.Results
                 RefNo = refNo
             });
 
-            return ResultEngine.HtmlParser(parlayData.ToList(), this.GetFanexResultSetting()).Replace("original-title", " title ");
+            var distinctParlayData = parlayData.Select(p => new Parlay
+            {
+                SportId = p.SportId,
+                LeagueId = p.LeagueId,
+                Sportbook = p.Sportbook.GroupBy(sb => sb.MatchId).Select(g => g.First()).ToList()
+            });
+
+            return ResultEngine.HtmlParser(distinctParlayData.ToList(), this.GetFanexResultSetting()).Replace("original-title", " title ");
         }
 
         public string Get3rdResult(long refNo)

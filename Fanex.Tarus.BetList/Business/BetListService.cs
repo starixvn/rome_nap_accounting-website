@@ -2,19 +2,28 @@
 
 namespace Fanex.Tarus.BetList.Business
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.Data;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
+    using System.Text;
     using Alpha.IPInfo.DataAccess;
     using Alpha.IPInfo.Models;
     using Alpha.IPInfo.Services;
+    using BetListNPOI.SS.Formula.Functions;
     using Constants;
     using Core;
     using Criteria;
     using DataAccess;
     using Extensions;
     using Fanex.BetList.Core.Builder;
+    using Fanex.BetList.Core.Builder.HybridParlayBuilder;
     using Fanex.BetList.Core.Entities;
     using Fanex.BetList.Core.Factories;
     using Fanex.BetList.Core.TicketHelper;
-    using Fanex.BetList.Core.Builder.HybridParlayBuilder;
+    using Fanex.BetList.Core.Utils.Parsers;
     using Fanex.Caching;
     using Fanex.Common;
     using Fanex.CustomerSetting.Module.Core;
@@ -24,8 +33,8 @@ namespace Fanex.Tarus.BetList.Business
     using Fanex.RemotingRef;
     using Fanex.Tarus.BetList.Controllers;
     using Fanex.Tarus.BetList.DataAccess.Results;
-    using Fanex.Tarus.BetList.Entities.BetList;
     using Fanex.Tarus.BetList.Entities;
+    using Fanex.Tarus.BetList.Entities.BetList;
     using Fanex.Tarus.BetList.Param;
     using Fanex.Tarus.Infrastructure.Configurations;
     using Models;
@@ -34,13 +43,6 @@ namespace Fanex.Tarus.BetList.Business
     using Sunplus.Accounting.Core.Common;
     using Sunplus.Accounting.Core.Extensions;
     using Sunplus.Accounting.DataAccess.Report;
-    using System;
-    using System.Collections.Generic;
-    using System.Configuration;
-    using System.Data;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Linq;
-    using System.Text;
 
     public class BetListService : IBetListService
     {
@@ -712,8 +714,20 @@ namespace Fanex.Tarus.BetList.Business
                     betDetail.IP = betDetail.Ticket.IP;
                 }
                 AssignCountry(systempParlayModel.TicketsDetailList);
+                systempParlayModel.IsBetBuilderPlus = systempParlayModel.TicketsDetailList.Any(ticket => ticket.Ticket.OddsSpread == 3);
 
-                if (systempParlayModel.SystemParlayChoice != null)
+                if (systempParlayModel.SystemParlayChoice != null && systempParlayModel.SystemParlayChoice.Any() && systempParlayModel.IsBetBuilderPlus)
+                {
+                    var betBuilderPlusFactory = new HyBridParlayBuilder();
+                    var tickets = systempParlayModel.SystemParlayChoice.Select(ticketDetail => ticketDetail.Ticket).ToList();
+                    var firstTicketDetail = systempParlayModel.TicketsDetailList[0];
+                    var mainTicket = firstTicketDetail.Ticket;
+
+                    var mainLegOddsInfo = ExtraInfoParser.ParseLegOddsTransDesc(mainTicket.TransDesc).LegOddsbyMatch;
+                    var betCheck = Math.Pow(2, mainLegOddsInfo.Count - 1);
+                    firstTicketDetail.ChoiceHtml += betBuilderPlusFactory.Build(ticketHelper, tickets, mainTicket.TransDesc, (int)mainTicket.Handicap1, mainLegOddsInfo.Count, betCheck.ToString(), mainTicket.BetTeam, tickets[0].Currency, mainTicket.Stake, false);
+                }
+                else if (systempParlayModel.SystemParlayChoice != null)
                 {
                     // Combo Parlay.
                     var firstTicketDetail = systempParlayModel.TicketsDetailList[0];

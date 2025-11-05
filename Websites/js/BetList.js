@@ -1899,7 +1899,7 @@ function getJokerParam(custId, transId3rd, gameId3rd, currencyId, siteId) {
 function getSystemParlayParam(matchid, refno, bettype, betid) {
     return {
         url: "Report/ViewMixParlayResult.aspx",
-        title: bettype === 9 ? "System Parlay" : "Mix Parlay",
+        title: "Result",
         jsonParam: { refno: refno, matchid: matchid, bettype: bettype, betid: betid },
         width: 945,
         height: 500
