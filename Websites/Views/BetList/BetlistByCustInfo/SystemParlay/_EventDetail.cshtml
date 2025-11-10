@@ -126,7 +126,17 @@
                             </td>
                             <td>
                                 <div class="width120 height34 table-cell r">
-                                    @if (Model.IsParlayBoost)
+                                    @if (Model.IsBetBuilderPlus)
+                                    {
+                                        <span class="underdog strikethrough">
+                                            @eventTmp.OddsText2
+                                        </span>
+                                        <br />
+                                        <span class="oddstype">
+                                            <span class="underdog">@eventTmp.MasterOddsText2</span>
+                                        </span>
+                                    }
+                                    else if (Model.IsParlayBoost)
                                     {
                                         <span class="underdog strikethrough">
                                             @eventTmp.OddsText

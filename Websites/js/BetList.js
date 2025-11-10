@@ -1376,10 +1376,10 @@ function getResultParamBySportType(matchid, race, bettype, sporttype, refno, use
     }
 }
 
-function getResultParamByBetType(matchid, race, bettype, sporttype, refno, username, winlostdate, refno_mixparlay, league, is_outright, betid, custId) {
+function getResultParamByBetType(matchid, race, bettype, sporttype, refno, username, winlostdate, refno_mixparlay, league, is_outright, betid, matchcode) {
     switch (true) {
         case bettype === 9 || bettype === 29 || bettype === 2799 || bettype == 10449: // System Parlay, MixParlayVirtualSports2
-            return getSystemParlayParam(matchid, refno_mixparlay, bettype, betid);
+            return getSystemParlayParam(matchid, refno_mixparlay, bettype, betid, matchcode);
 
         case bettype === 11099:
             return getParlay3rdParam(refno_mixparlay);
@@ -1896,10 +1896,19 @@ function getJokerParam(custId, transId3rd, gameId3rd, currencyId, siteId) {
         height: 800
     };
 }
-function getSystemParlayParam(matchid, refno, bettype, betid) {
+function getSystemParlayParam(matchid, refno, bettype, betid, betTypeNameId) {
+    let title = "System Parlay";
+    if (betTypeNameId === '9') {
+        title = "Mix Parlay";
+    }
+
+    if (betTypeNameId === '9-3') { 
+        title = "Bet Builder<sup>+</sup>"
+    }
+
     return {
         url: "Report/ViewMixParlayResult.aspx",
-        title: "Result",
+        title: title,
         jsonParam: { refno: refno, matchid: matchid, bettype: bettype, betid: betid },
         width: 945,
         height: 500
