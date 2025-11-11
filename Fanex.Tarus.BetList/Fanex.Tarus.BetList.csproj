@@ -139,8 +139,8 @@
     <Reference Include="Fanex.BetList.RnGCasino, Version=2.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.RnGCasino.2.0.0.2\lib\net461\Fanex.BetList.RnGCasino.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.RNGCore, Version=1.1.0.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.BetList.RNGCore.1.1.0.2-WowGaming\lib\net461\Fanex.BetList.RNGCore.dll</HintPath>
+    <Reference Include="Fanex.BetList.RNGCore, Version=1.1.0.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.BetList.RNGCore.1.1.0.3-WowGaming-02\lib\net461\Fanex.BetList.RNGCore.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.RNGWar, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.BetList.RNGWar.2.0.0.1\lib\net461\Fanex.BetList.RNGWar.dll</HintPath>
