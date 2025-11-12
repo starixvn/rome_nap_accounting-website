@@ -191,8 +191,11 @@ function showNewCombMP(transId, transIndex, refNo, handicap1, handicap2, betchec
     }
 }
 
-function showCombMPDetail(tranid, date, matchid, betteam) {
+function showCombMPDetail(tranid, date, matchid, betteam, bettypeName) {
     var title = betteam === "1" ? "Mix Parlay" : "System Parlay";
+    if(undefined !== bettypeName && bettypeName !== ""){
+        title = bettypeName;
+    }
     var combinationOfferNameContainer = $("#combinationOfferName_" + tranid + "0");
 
     if (combinationOfferNameContainer.is("span")) {
