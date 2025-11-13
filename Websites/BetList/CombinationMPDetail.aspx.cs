@@ -147,18 +147,22 @@ public partial class BetList_CombinationMPDetail : RequiredAuthorizationPage
                 var betBuilderPlusExtrainfo = tblMaster.AsEnumerable().FirstOrDefault()["extrainfo"];
                 const string SportsbookTag = "p1";
                 const string OddsBetBuilderPlusAttribute = "o";
-                IEnumerable<string> SettledStatus = new List<string> { "won", "lose", "refund", "lost" };
+                IEnumerable<string> SettledStatus = new List<string> { "won", "lose", "refund", "lost", "draw" };
                 var oddsBetBuilderPlus = string.Empty;
                 
                 if (betBuilderPlusExtrainfo != DBNull.Value && betBuilderPlusExtrainfo.ToString().HasAttributeInXmlTag(SportsbookTag, OddsBetBuilderPlusAttribute))
                 {
                     oddsBetBuilderPlus = betBuilderPlusExtrainfo.ToString().GetXmlTagAttributeValue(SportsbookTag, OddsBetBuilderPlusAttribute);
-                    isChangeOddsBetBuilder = rowMaster["odds"] != DBNull.Value && CastAide.AsDecimal(rowMaster["odds"]) != CastAide.AsDecimal(oddsBetBuilderPlus);
+                    isChangeOddsBetBuilder = rowMaster["modds"] != DBNull.Value && CastAide.AsDecimal(rowMaster["modds"]) != CastAide.AsDecimal(oddsBetBuilderPlus);
                     TemplateHandler.Assign(ref rowTemp, "{Odds}", ConvertByBetType.CommValue(oddsBetBuilderPlus));
                     if(isChangeOddsBetBuilder && SettledStatus.Any((string i) => i.Equals(status.ToLowerInvariant())))
                     {
                         TemplateHandler.Assign(ref rowTemp, "{cssClassName}", "strikethrough");
-                        TemplateHandler.Assign(ref moddsTemp, "{mOdds}", ConvertByBetType.CommValue(rowMaster["odds"]));
+                        TemplateHandler.Assign(ref moddsTemp, "{mOdds}", ConvertByBetType.CommValue(rowMaster["modds"]));
+                    }
+                    else
+                    {
+                        moddsTemp = string.Empty;
                     }
                 }
                 else if (isParlayBoost)
