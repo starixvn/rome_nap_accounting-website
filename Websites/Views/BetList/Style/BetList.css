@@ -833,3 +833,11 @@ span.underdog, span.favorite {
 .hybrid-parlay-match-ticket-list .odds .cur-odds {
     font-weight: bold;
 }
+
+.offer-name-list.void {
+    text-decoration: line-through;
+}
+
+.hybrid-parlay-match-ticket-list.void, .hybrid-parlay-match-ticket-list .list-builder .void {
+    text-decoration: line-through;
+}
