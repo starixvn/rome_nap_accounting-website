@@ -19,21 +19,21 @@
   </Function>
   <Function Name="Betlist">
     <Setting Key="Acc_BetList_SelBookedBet" SpName="Acc_BetList_SelBookedBet" DbName="DBACC.bodb02.wsv_nap" />
-    <Setting Key="Acc_BetList_SelBettype" SpName="Acc_BetList_SelBettype" DbName="DBACC.bodb02.wsv_nap" />
-    <Setting Key="SiteDB_Acc_BetList_SelBettype" SpName="SiteDB_Acc_BetList_SelBettype" DbName="DBACC.bodb02.wsv_nap" />
-    <Setting Key="Acc_BetlistCombinationParlay_Details" SpName="Acc_BetlistCombinationParlay_Details" DbName="DBACC.bodb02.wsv_nap" />
-    <Setting Key="SiteDB_Acc_BetList_SelCombinationParlayDetail" SpName="SiteDB_Acc_BetList_SelCombinationParlayDetail" DbName="DBACC.bodb02.wsv_nap" />
-    <Setting Key="BetList_IP_OtherSports" SpName="Acc_BetListByIP_OtherSports" DbName="DBACC.bodb02.wsv_nap" />
-    <Setting Key="BetList_IP_Soccer" SpName="Acc_BetListByIP_Soccer" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_BetList_SelBettype" SpName="Acc_BetList_SelBettype_xtest" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="SiteDB_Acc_BetList_SelBettype" SpName="SiteDB_Acc_BetList_SelBettype_xtest" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_BetlistCombinationParlay_Details" SpName="Acc_BetlistCombinationParlay_Details_xtest" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="SiteDB_Acc_BetList_SelCombinationParlayDetail" SpName="SiteDB_Acc_BetList_SelCombinationParlayDetail_xtest" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="BetList_IP_OtherSports" SpName="Acc_BetListByIP_OtherSports_xtest" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="BetList_IP_Soccer" SpName="Acc_BetListByIP_Soccer_xtest" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="BetList_IP_Username" SpName="Acc_BetListbyIP_Username" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="Acc_Statement" SpName="Acc_Statement" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="Acc_AllStatement4Agent" SpName="Acc_AllStatement4Agent" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="Acc_AllStatementCompany" SpName="Acc_AllStatementCompany" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="Acc_BetList_LicenseeBonus_Detail" SpName="Acc_BetList_LicenseeBonus_Detail" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="Age_BetList_SelMatchResultParlay" SpName="Age_BetList_SelMatchResultParlay" DbName="DBACC.bodb02.wsv_nap" />
-    <Setting Key="Acc_BetsSelBetList_ByTransID" SpName="Acc_BetsSelBetList_ByTransID" DbName="DBACC.bodb02.wsv_nap" />
-    <Setting Key="SiteDB_Acc_BetList_SelByRefNo_Mem" SpName="SiteDB_Acc_BetList_SelByRefNo_Mem" DbName="DBACC.bodb02.wsv_nap" />
-    <Setting Key="Acc_BetList_Mem" SpName="Acc_BetList_Mem" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_BetsSelBetList_ByTransID" SpName="Acc_BetsSelBetList_ByTransID_xtest" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="SiteDB_Acc_BetList_SelByRefNo_Mem" SpName="SiteDB_Acc_BetList_SelByRefNo_Mem_xtest" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="Acc_BetList_Mem" SpName="Acc_BetList_Mem_xtest" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="SiteDB_Acc_BetList_Mem" SpName="SiteDB_Acc_BetList_Mem_xtest" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="Acc_BetList_CashOut_History" SpName="Acc_BetList_CashOut_History" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="SiteDB_Acc_BetList_CashOut_History" SpName="SiteDB_Acc_BetList_CashOut_History" DbName="DBACC.bodb02.wsv_nap" />

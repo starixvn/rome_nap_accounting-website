@@ -709,7 +709,8 @@ namespace Fanex.Tarus.BetList.Business
                     betDetail.OddHtml = builder.BuildOdds(betDetail.Ticket, outputLiveCasino, funcGetOddsTypeName);
                     betDetail.StatusHtml = betListHelper.BuildStatus(betDetail.Ticket, ticketHelper, outputLiveCasino, factory, builder);
                     if (betDetail.StatusHtml.Contains("Void")
-                        || betDetail.StatusHtml.Contains("Abnormal Bet"))
+                        || betDetail.StatusHtml.Contains("Abnormal Bet")
+                        || betDetail.Ticket.OddsSpread == 3)
                     {
                         systempParlayModel.HideCombinationDetail = true;
                     }
