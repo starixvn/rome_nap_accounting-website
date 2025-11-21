@@ -18,7 +18,7 @@ namespace Fanex.Tarus.Customer.Criteria.ParlayMaxPayout
 
         public override bool IsValid()
         {
-            return CustId > 0 && SettingStatus >= 0 && SettingStatus <= 1;
+            return CustId > 0;
         }
 
         public override string GetSettingKey()
