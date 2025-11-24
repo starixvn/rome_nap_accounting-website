@@ -12,7 +12,6 @@ namespace Fanex.Tarus.BetList.Business
     using Alpha.IPInfo.DataAccess;
     using Alpha.IPInfo.Models;
     using Alpha.IPInfo.Services;
-    using BetListNPOI.SS.Formula.Functions;
     using Constants;
     using Core;
     using Criteria;
@@ -24,8 +23,6 @@ namespace Fanex.Tarus.BetList.Business
     using Fanex.BetList.Core.Factories;
     using Fanex.BetList.Core.TicketHelper;
     using Fanex.BetList.Core.Utils.Parsers;
-    using Fanex.BetList.Core.Utils.StringExt;
-    using Fanex.BetList.Core.Utils.TicketExt;
     using Fanex.Caching;
     using Fanex.Common;
     using Fanex.CustomerSetting.Module.Core;
@@ -718,17 +715,6 @@ namespace Fanex.Tarus.BetList.Business
                 }
                 AssignCountry(systempParlayModel.TicketsDetailList);
                 systempParlayModel.IsBetBuilderPlus = systempParlayModel.TicketsDetailList.Any(ticket => ticket.Ticket.OddsSpread == 3);
-
-                const string SportsbookTag = "p1";
-                const string OddsBetBuilderPlusAttribute = "o";
-                if (systempParlayModel.IsBetBuilderPlus && systempParlayModel.SystemParlayDetail.EventList.Any()
-                    && systempParlayModel.TicketsDetailList.FirstOrDefault().Ticket.IsRunningWaiting() || systempParlayModel.TicketsDetailList.FirstOrDefault().Ticket.IsSettled())
-                {
-                    var oddsBetBuilderPlus = systempParlayModel.TicketsDetailList.FirstOrDefault().Ticket.ExtraInfo.HasAttributeInXmlTag(SportsbookTag, OddsBetBuilderPlusAttribute) ?
-                        systempParlayModel.TicketsDetailList.FirstOrDefault().Ticket.ExtraInfo.GetXmlTagAttributeValue(SportsbookTag, OddsBetBuilderPlusAttribute) :
-                        "0";
-                    systempParlayModel.SystemParlayDetail.EventList[0].Odds = Converter.ToDecimal(oddsBetBuilderPlus);
-                }
 
                 if (systempParlayModel.SystemParlayChoice != null && systempParlayModel.SystemParlayChoice.Any() && systempParlayModel.IsBetBuilderPlus)
                 {

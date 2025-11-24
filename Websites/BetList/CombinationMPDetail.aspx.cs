@@ -144,7 +144,7 @@ public partial class BetList_CombinationMPDetail : RequiredAuthorizationPage
                 #region odds
                 var isChangeOddsBetBuilder = false;
 
-                var betBuilderPlusExtrainfo = tblMaster.AsEnumerable().FirstOrDefault()["extrainfo"];
+                var betBuilderPlusExtrainfo = rowMaster["extrainfo"];
                 const string SportsbookTag = "p1";
                 const string OddsBetBuilderPlusAttribute = "o";
                 IEnumerable<string> SettledStatus = new List<string> { "won", "lose", "refund", "lost", "draw" };

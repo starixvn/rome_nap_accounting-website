@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Functions SiteId="104" SiteName="NAP - Accounting">
   <Function Name="BetList">
-    <Setting Key="BetListByDayAll" SpName="Acc_BetListByDayAll_xtest" DbName="DBAGE.bodb02.wsv_nap" />
-    <Setting Key="SiteDB_Acc_BetList_Statement" SpName="SiteDB_Acc_BetList_Statement_xtest" DbName="DBAGE.bodb02.wsv_nap" />
+    <Setting Key="BetListByDayAll" SpName="Acc_BetListByDayAll" DbName="DBAGE.bodb02.wsv_nap" />
+    <Setting Key="SiteDB_Acc_BetList_Statement" SpName="SiteDB_Acc_BetList_Statement" DbName="DBAGE.bodb02.wsv_nap" />
   </Function>
   <Function Name="Customer - Smart punter">
     <Setting Key="Acc_CustomerSelCheckSmartPunter" SpName="Acc_CustomerSelCheckSmartPunter" DbName="DBCust.CustDB.wsv_nap" />
@@ -27,18 +27,18 @@
     <Setting Key="Acc_BetList_HRSelMatchResult2" SpName="Acc_BetList_HRSelMatchResult2" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="SelMatchResultNumberGame" SpName="Age_BetList_SelMatchResultNumberGame" DbName="DBAGE.bodb02.wsv_nap" />
     <Setting Key="Age_BetList_SelRaceResult" SpName="Age_BetList_SelRaceResult" DbName="DBAGE.bodb02.wsv_nap" />
-    <Setting Key="BetList_CustInfo_SystemParlay" SpName="Acc_BetlistCombinationParlay_ByTransID_xtest" DbName="DBAGE.bodb02.wsv_nap">
+    <Setting Key="BetList_CustInfo_SystemParlay" SpName="Acc_BetlistCombinationParlay_ByTransID" DbName="DBAGE.bodb02.wsv_nap">
       <Mapping DataField="ip" ObjectProperty="IP" />
     </Setting>
-    <Setting Key="SiteDB_Acc_BetList_Parlay_SelByRefNo" SpName="SiteDB_Acc_BetList_Parlay_SelByRefNo_xtest" DbName="DBAGE.bodb02.wsv_nap">
+    <Setting Key="SiteDB_Acc_BetList_Parlay_SelByRefNo" SpName="SiteDB_Acc_BetList_Parlay_SelByRefNo" DbName="DBAGE.bodb02.wsv_nap">
       <Mapping DataField="ip" ObjectProperty="IP" />
     </Setting>
     <Setting Key="BetList_MixParlayBetsSel" SpName="Acc_BetsSelBetCheckM_All" DbName="DBAGE.bodb02.wsv_nap">
       <Mapping DataField="ip" ObjectProperty="IP" />
     </Setting>
     <Setting Key="SiteDB_Acc_BetList_SelParlayDetail" SpName="SiteDB_Acc_BetList_SelParlayDetail" DbName="DBAGE.bodb02.wsv_nap" />
-    <Setting Key="BetList_SelByRefNo" SpName="Acc_BetList_SelByRefNo_xtest" DbName="DBACC.bodb02.wsv_nap" />
-    <Setting Key="SiteDB_Acc_BetList_SelByRefNo" SpName="SiteDB_Acc_BetList_SelByRefNo_xtest" DbName="DBACC.bodb02.wsv_nap">
+    <Setting Key="BetList_SelByRefNo" SpName="Acc_BetList_SelByRefNo" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="SiteDB_Acc_BetList_SelByRefNo" SpName="SiteDB_Acc_BetList_SelByRefNo" DbName="DBACC.bodb02.wsv_nap">
       <Mapping DataField="ip" ObjectProperty="IP" />
     </Setting>
     <Setting Key="BetList_SelByProduct" SpName="Acc_BetList_SelByProduct" DbName="DBAGE.bodb02.wsv_nap" />
