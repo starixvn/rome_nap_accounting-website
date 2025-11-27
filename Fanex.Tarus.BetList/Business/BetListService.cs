@@ -2,6 +2,13 @@
 
 namespace Fanex.Tarus.BetList.Business
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.Data;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
+    using System.Text;
     using Alpha.IPInfo.DataAccess;
     using Alpha.IPInfo.Models;
     using Alpha.IPInfo.Services;
@@ -11,9 +18,11 @@ namespace Fanex.Tarus.BetList.Business
     using DataAccess;
     using Extensions;
     using Fanex.BetList.Core.Builder;
+    using Fanex.BetList.Core.Builder.HybridParlayBuilder;
     using Fanex.BetList.Core.Entities;
     using Fanex.BetList.Core.Factories;
     using Fanex.BetList.Core.TicketHelper;
+    using Fanex.BetList.Core.Utils.Parsers;
     using Fanex.Caching;
     using Fanex.Common;
     using Fanex.CustomerSetting.Module.Core;
@@ -23,8 +32,8 @@ namespace Fanex.Tarus.BetList.Business
     using Fanex.RemotingRef;
     using Fanex.Tarus.BetList.Controllers;
     using Fanex.Tarus.BetList.DataAccess.Results;
-    using Fanex.Tarus.BetList.Entities.BetList;
     using Fanex.Tarus.BetList.Entities;
+    using Fanex.Tarus.BetList.Entities.BetList;
     using Fanex.Tarus.BetList.Param;
     using Fanex.Tarus.Infrastructure.Configurations;
     using Models;
@@ -33,13 +42,6 @@ namespace Fanex.Tarus.BetList.Business
     using Sunplus.Accounting.Core.Common;
     using Sunplus.Accounting.Core.Extensions;
     using Sunplus.Accounting.DataAccess.Report;
-    using System;
-    using System.Collections.Generic;
-    using System.Configuration;
-    using System.Data;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Linq;
-    using System.Text;
 
     public class BetListService : IBetListService
     {
@@ -55,6 +57,7 @@ namespace Fanex.Tarus.BetList.Business
         private readonly ICacheService _cacheService;
         private readonly IIPInfoDataAccess _iPInfoDataAccess;
         private readonly IDynamicRepository dynamicRepository;
+
         private readonly Func<DataRow, TicketDetail> mapTicketObjectFunction = r => new TicketDetail
         {
             Ticket = new Ticket
@@ -183,6 +186,7 @@ namespace Fanex.Tarus.BetList.Business
             SpecialPlatfrom = r.Table.Columns.Contains("SpecialPlatfrom") ? Converter.ToInt(r["SpecialPlatfrom"]) : 0,
             DeviceType = r.Table.Columns.Contains("DeviceType") && !r.IsNull("DeviceType") ? Converter.To<int>(r["DeviceType"]) : (int?)null
         };
+
         public BetListService()
         {
             _cacheService = new CacheService();
@@ -206,19 +210,22 @@ namespace Fanex.Tarus.BetList.Business
 
         public void AssignCountry(IEnumerable<TicketDetail> tickets)
         {
-            var ipList = tickets
+            if (tickets.Any())
+            {
+                var ipList = tickets
              .Where(t => !string.IsNullOrWhiteSpace(t.IP) && (AppSession.ViewIPVN || !IpManagement.IsVNIP(t.IP.Trim())))
              .Select(t => t.IP.Trim())
              .Distinct();
-            var countryDictionary = GetCountries(ipList);
+                var countryDictionary = GetCountries(ipList);
 
-            string country;
-            foreach (var item in tickets)
-            {
-                if (!string.IsNullOrWhiteSpace(item.IP)
-                    && countryDictionary.TryGetValue(item.IP.Trim(), out country))
+                string country;
+                foreach (var item in tickets)
                 {
-                    ((TicketDetail)item).Country = country;
+                    if (!string.IsNullOrWhiteSpace(item.IP)
+                        && countryDictionary.TryGetValue(item.IP.Trim(), out country))
+                    {
+                        item.Country = country;
+                    }
                 }
             }
         }
@@ -365,6 +372,11 @@ namespace Fanex.Tarus.BetList.Business
                     ExcludeBettrans = false
                 };
                 tickets = _betListRepository.Fetch<TicketDetail>(mainCriteria, mapTicketObjectFunction, ref outputLiveCasino);
+            }
+
+            if (!tickets.Any())
+            {
+                return tickets;
             }
 
             var factory = new BetListHTMLFactory();
@@ -545,7 +557,7 @@ namespace Fanex.Tarus.BetList.Business
                 if (!siteDB.IsSiteDB ||
                     (siteDB.IsSiteDB && fromDate <= ReportService.BalanceUp.MoveBetsDay))
                 {
-                    var excludeBettrans = sabaCoin? false: siteDB.IsSiteDB;
+                    var excludeBettrans = sabaCoin ? false : siteDB.IsSiteDB;
                     var mainCriteria = new BetListByCustInfoCriteria
                     {
                         CustId = custId,
@@ -593,7 +605,6 @@ namespace Fanex.Tarus.BetList.Business
                         betDetail.StatusHtml = betlistHelper.BuildStatus(betDetail.Ticket, ticketHelper, ticketData, factory, builder);
                         betDetail.IP = betDetail.Ticket.IP;
                         newTickets.Add(betDetail);
-
                     }
                     AssignCountry(newTickets);
 
@@ -695,15 +706,28 @@ namespace Fanex.Tarus.BetList.Business
                     betDetail.OddHtml = builder.BuildOdds(betDetail.Ticket, outputLiveCasino, funcGetOddsTypeName);
                     betDetail.StatusHtml = betListHelper.BuildStatus(betDetail.Ticket, ticketHelper, outputLiveCasino, factory, builder);
                     if (betDetail.StatusHtml.Contains("Void")
-                        || betDetail.StatusHtml.Contains("Abnormal Bet"))
+                        || betDetail.StatusHtml.Contains("Abnormal Bet")
+                        || betDetail.Ticket.OddsSpread == 3)
                     {
                         systempParlayModel.HideCombinationDetail = true;
                     }
                     betDetail.IP = betDetail.Ticket.IP;
                 }
                 AssignCountry(systempParlayModel.TicketsDetailList);
+                systempParlayModel.IsBetBuilderPlus = systempParlayModel.TicketsDetailList.Any(ticket => ticket.Ticket.OddsSpread == 3);
 
-                if (systempParlayModel.SystemParlayChoice != null)
+                if (systempParlayModel.SystemParlayChoice != null && systempParlayModel.SystemParlayChoice.Any() && systempParlayModel.IsBetBuilderPlus)
+                {
+                    var betBuilderPlusFactory = new HyBridParlayBuilder();
+                    var tickets = systempParlayModel.SystemParlayChoice.Select(ticketDetail => ticketDetail.Ticket).ToList();
+                    var firstTicketDetail = systempParlayModel.TicketsDetailList[0];
+                    var mainTicket = firstTicketDetail.Ticket;
+
+                    var mainLegOddsInfo = ExtraInfoParser.ParseLegOddsTransDesc(mainTicket.TransDesc).LegOddsbyMatch;
+                    var betCheck = Math.Pow(2, mainLegOddsInfo.Count - 1);
+                    firstTicketDetail.ChoiceHtml += betBuilderPlusFactory.Build(ticketHelper, tickets, mainTicket.TransDesc, (int)mainTicket.Handicap1, mainLegOddsInfo.Count, betCheck.ToString(), mainTicket.BetTeam, tickets[0].Currency, mainTicket.Stake, false);
+                }
+                else if (systempParlayModel.SystemParlayChoice != null)
                 {
                     // Combo Parlay.
                     var firstTicketDetail = systempParlayModel.TicketsDetailList[0];
@@ -722,7 +746,6 @@ namespace Fanex.Tarus.BetList.Business
                             combinationTypeComboNames
                         );
                         firstTicketDetail.IP = firstTicketDetail.Ticket.IP;
-
                     }
 
                     var factoryParlayDetaily = new BetListHTMLFactory();
@@ -747,7 +770,6 @@ namespace Fanex.Tarus.BetList.Business
                 }
 
                 systempParlayModel.SystemParlayDetail.EventList = systempParlayModel.SystemParlayDetail.EventList.OrderBy(i => SystemParlayConstants.GetStatusOrderId(i.Status)).ToList();
-
                 return systempParlayModel;
             }
 
@@ -1224,7 +1246,6 @@ namespace Fanex.Tarus.BetList.Business
                 }
             }
 
-
             return new List<TicketDetail>();
         }
 
@@ -1285,6 +1306,30 @@ namespace Fanex.Tarus.BetList.Business
             return false;
         }
 
+        public string GetBetBuilderCombinationTypeComboNames(
+            string betTeam,
+            string betCheck,
+            decimal hdp1,
+            decimal hdp2,
+            string currency,
+            decimal stake)
+        {
+            var combinationTypeCombo = Fanex.Tarus.Infrastructure.Caching.CacheRef.GetCombinationTypeCombo(
+                betTeam, betCheck, (int)hdp1, (int)hdp2);
+
+            if (combinationTypeCombo == null || combinationTypeCombo.Length == 0)
+            {
+                return string.Empty;
+            }
+
+            return string.Format(
+                    "<div class=\"offer-name-list\"><div>{0} x <span class=\"unit-stake\">{1} {2}</span></div></div>",
+                    combinationTypeCombo[0],
+                    currency,
+                    stake.ToString("N0"));
+
+        }
+
         public string GetCombinationTypeComboNames(
             string betTeam,
             string betCheck,
@@ -1322,6 +1367,45 @@ namespace Fanex.Tarus.BetList.Business
         public string GetSiteNameByCustId(int custId)
         {
             return _betListRepository.GetSiteNameByCustId(new BetListGetSiteIdByCustIdCriteria { CustId = custId });
+        }
+
+        public string GetBetBuilderPlusTicketsDetailsHtml(BetBuilderPlusDetailParam betBuilderPlusDetailParam)
+        {
+            var siteDB = ObjectDbExtensions.GetSiteDBConfigByCustId(betBuilderPlusDetailParam.CustId);
+            if (siteDB != null)
+            {
+                IList<TicketDetail> siteDBTickets = new List<TicketDetail>();
+                if (siteDB.IsSiteDB)
+                {
+                    var siteDBCriteria = new SiteDBMixParlayDetailCriteria
+                    {
+                        CustId = betBuilderPlusDetailParam.CustId,
+                        RefNo = betBuilderPlusDetailParam.RefNo,
+                        TransId = betBuilderPlusDetailParam.TransId,
+                        MoveBetsDay = ReportService.BalanceUp.MoveBetsDay,
+                        BalanceUpDay = ReportService.BalanceUp.BalanceUpDay
+                    };
+                    siteDBTickets = _betListRepository.Fetch<TicketDetail>(siteDBCriteria, siteDB.AGIP, mapTicketObjectFunctionForMixParlay);
+                }
+                var mainCriteria = new MixParlayDetailCriteria
+                {
+                    CustId = betBuilderPlusDetailParam.CustId,
+                    RefNo = betBuilderPlusDetailParam.RefNo,
+                    TransId = betBuilderPlusDetailParam.TransId,
+                    ExcludeBettrans = siteDB.IsSiteDB,
+                    MoveBetsDay = ReportService.BalanceUp.MoveBetsDay,
+                    BalanceUpDay = ReportService.BalanceUp.BalanceUpDay
+                };
+
+                var mainTickets = _betListRepository.Fetch<TicketDetail>(mainCriteria, mapTicketObjectFunctionForMixParlay);
+                AssignCountry(mainTickets);
+                var tickets = siteDBTickets.Concat(mainTickets).Distinct().Select(t => t.Ticket).ToList();
+                var betBuilderPlusBuilder = new HyBridParlayBuilder();
+
+                return betBuilderPlusBuilder.Build(ticketHelper, tickets, betBuilderPlusDetailParam.TransDesc, (int)betBuilderPlusDetailParam.Handicap1, (int)betBuilderPlusDetailParam.Handicap2, betBuilderPlusDetailParam.BetCheck, betBuilderPlusDetailParam.BetTeam, betBuilderPlusDetailParam.Currency, betBuilderPlusDetailParam.Stake, false);
+            }
+
+            return string.Empty;
         }
 
         private bool IsShowOddsWithChoice(int betTypeId)

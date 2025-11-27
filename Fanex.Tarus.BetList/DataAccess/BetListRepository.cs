@@ -788,24 +788,33 @@
         public IEnumerable<SportBettypeMatrixModel> SelectSportBettypeMatrix()
         {
             var criteria = new GetSportBettypeMatrixCriteria();
-            var entities = new List<SportBettypeMatrixModel>();
+            var seen = new HashSet<(int SportType, int BetType)>();
+            var result = new List<SportBettypeMatrixModel>();
+
             using (var objDb = new ObjectDb(criteria.GetSettingKey()))
             {
                 var reader = objDb.ExecuteReader(criteria.GetSpParams());
                 while (reader.Read())
                 {
-                    entities.Add(new SportBettypeMatrixModel
+                    int sportType = Converter.To<int>(reader["SportType"]);
+                    int betType = Converter.To<int>(reader["BetType"]);
+                    var key = (sportType, betType);
+
+                    if (seen.Add(key))
                     {
-                        SportType = Converter.To<int>(reader["SportType"]),
-                        BetType = Converter.To<int>(reader["BetType"]),
-                        ProductId = Converter.To<int>(reader["ProductID"])
-                    });
+                        result.Add(new SportBettypeMatrixModel
+                        {
+                            SportType = sportType,
+                            BetType = betType,
+                            ProductId = Converter.To<int>(reader["ProductID"])
+                        });
+                    }
                 }
 
                 reader.Close();
             }
 
-            return entities;
+            return result;
         }
     }
 }

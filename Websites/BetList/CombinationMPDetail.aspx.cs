@@ -8,6 +8,8 @@ using System.Web;
 using DNAide.Core;
 using DNAide.Web;
 using Fanex.BetList.Core.Utils;
+using Fanex.BetList.Core.Utils.StringExt;
+using Fanex.BetList.Core.Utils.TicketExt;
 using Fanex.Tarus.BetList.Constants;
 using Sunplus.Accounting.Core.Cache;
 using Sunplus.Accounting.Core.Extensions;
@@ -44,7 +46,6 @@ public partial class BetList_CombinationMPDetail : RequiredAuthorizationPage
         {
             return WebUtils.LoadTemplate("BetList\\CombinationMP\\noinfo.htm");
         }
-
         var tblMaster = ds.Tables[0];
         if (tblMaster != null && tblMaster.Rows.Count > 5000)
         {
@@ -63,10 +64,12 @@ public partial class BetList_CombinationMPDetail : RequiredAuthorizationPage
         string footer = WebUtils.LoadTemplate("BetList\\CombinationMP\\footer.htm");
         string row = WebUtils.LoadTemplate("BetList\\CombinationMP\\row.htm");
         string oddsType = WebUtils.LoadTemplate("BetList\\CombinationMP\\oddsType.htm");
+        string mOdds = WebUtils.LoadTemplate("BetList\\CombinationMP\\modds.htm");
         var subtotal = WebUtils.LoadTemplate("BetList\\CombinationMP\\subtotal.htm");
         var note = WebUtils.LoadTemplate("BetList\\CombinationMP\\note.htm");
         string rowTemp = string.Empty;
         var oddsTypeTemp = string.Empty;
+        var moddsTemp = string.Empty;
         var subtotalTemp = string.Empty;
 
         var tblDetail = ds.Tables[1];
@@ -105,6 +108,7 @@ public partial class BetList_CombinationMPDetail : RequiredAuthorizationPage
                 status = CastAide.AsString(rowMaster["status"]);
                 rowTemp = CastAide.AsString(row.Clone());
                 oddsTypeTemp = CastAide.AsString(oddsType.Clone());
+                moddsTemp = CastAide.AsString(mOdds.Clone());
                 #region date
 
                 if (isFirstRows)
@@ -138,16 +142,39 @@ public partial class BetList_CombinationMPDetail : RequiredAuthorizationPage
                 #endregion event
 
                 #region odds
+                var isChangeOddsBetBuilder = false;
 
-                TemplateHandler.Assign(ref rowTemp, "{cssClassName}", isParlayBoost ? "strikethrough" : string.Empty);                
-                if (isParlayBoost)
+                var betBuilderPlusExtrainfo = rowMaster["extrainfo"];
+                const string SportsbookTag = "p1";
+                const string OddsBetBuilderPlusAttribute = "o";
+                IEnumerable<string> SettledStatus = new List<string> { "won", "lose", "refund", "lost", "draw" };
+                var oddsBetBuilderPlus = string.Empty;
+                
+                if (betBuilderPlusExtrainfo != DBNull.Value && betBuilderPlusExtrainfo.ToString().HasAttributeInXmlTag(SportsbookTag, OddsBetBuilderPlusAttribute))
                 {
+                    oddsBetBuilderPlus = betBuilderPlusExtrainfo.ToString().GetXmlTagAttributeValue(SportsbookTag, OddsBetBuilderPlusAttribute);
+                    isChangeOddsBetBuilder = rowMaster["modds"] != DBNull.Value && CastAide.AsDecimal(rowMaster["modds"]) != CastAide.AsDecimal(oddsBetBuilderPlus);
+                    TemplateHandler.Assign(ref rowTemp, "{Odds}", ConvertByBetType.CommValue(oddsBetBuilderPlus));
+                    if(isChangeOddsBetBuilder && SettledStatus.Any((string i) => i.Equals(status.ToLowerInvariant())))
+                    {
+                        TemplateHandler.Assign(ref rowTemp, "{cssClassName}", "strikethrough");
+                        TemplateHandler.Assign(ref moddsTemp, "{mOdds}", ConvertByBetType.CommValue(rowMaster["modds"]));
+                    }
+                    else
+                    {
+                        moddsTemp = string.Empty;
+                    }
+                }
+                else if (isParlayBoost)
+                {
+                    TemplateHandler.Assign(ref rowTemp, "{cssClassName}", "strikethrough");
                     TemplateHandler.Assign(ref rowTemp, "{Odds}", ConvertByBetType.CommValue(rowMaster["odds"]));
                     TemplateHandler.Assign(ref oddsTypeTemp, "{boostOdds}", ConvertByBetType.CommValue(rowMaster["modds"]));
                     TemplateHandler.Assign(ref oddsTypeTemp, "{boostRate}", ConvertByBetType.FormatBoostRate(Cast.AsDecimal(rowMaster["extravalue"])));
                 }
                 else
                 {
+                    TemplateHandler.Assign(ref rowTemp, "{cssClassName}", string.Empty);
                     TemplateHandler.Assign(ref rowTemp, "{Odds}", ConvertByBetType.CommValue(rowMaster["modds"]));
                 }
 
@@ -174,7 +201,7 @@ public partial class BetList_CombinationMPDetail : RequiredAuthorizationPage
                 #endregion status
 
                 //----------------------------------------------------
-                TemplateHandler.Assign(ref rowTemp, "{OddsType}", isParlayBoost ? oddsTypeTemp : string.Empty);
+                TemplateHandler.Assign(ref rowTemp, "{OddsType}", isParlayBoost ? oddsTypeTemp : isChangeOddsBetBuilder ? moddsTemp : string.Empty);
                 strBody.Append(rowTemp);
             }
 

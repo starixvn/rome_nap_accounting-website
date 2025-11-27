@@ -32,5 +32,7 @@ namespace Fanex.Tarus.BetList.Models
         public bool HideCombinationDetail { get; set; }
 
         public bool IsParlayBoost { get; set; }
+
+        public bool IsBetBuilderPlus { get; set; }
     }
 }

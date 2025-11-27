@@ -80,5 +80,7 @@
         string GetCombinationTypeComboNames(string betTeam, string betCheck, decimal hdp1, decimal hdp2, IList<TicketDetail> ticketDetails);
 
         string GetSiteNameByCustId(int custId);
+
+        string GetBetBuilderPlusTicketsDetailsHtml(BetBuilderPlusDetailParam betBuilderPlusDetailParam);
     }
 }
